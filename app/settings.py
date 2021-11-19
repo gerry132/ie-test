@@ -70,63 +70,9 @@ INSTALLED_APPS = [
     'storages',
 
     #
-    'app',
-
-    #
-    'wagtail.contrib.modeladmin',
-    'wagtail.contrib.routable_page',
-    'wagtail.contrib.table_block',
-
-    #  Wagtail extra
-    'wagtail.locales',
-    'wagtail.contrib.simple_translation',
-
-    # Site
-    'ogcio_wagtail_site_cookie_consent',
-    'ogcio_wagtail_site_healthcheck',
-    'ogcio_wagtail_site_language_redirection',
-
-    # Blocks
-    'ogcio_wagtail_block',
-    'ogcio_wagtail_block_document',
-    'ogcio_wagtail_block_image',
-    'ogcio_wagtail_block_jumpbox',
-    'ogcio_wagtail_block_jumpbox_with_image',
-    'ogcio_wagtail_block_richtext',
-    'ogcio_wagtail_block_section',
-    'ogcio_wagtail_block_table',
-    'ogcio_wagtail_block_youtube_video',
-
-    # Types
-    'ogcio_wagtail_type_alert',
-    'ogcio_wagtail_type_composite_index',
-    'ogcio_wagtail_type_contact_detail',
-    'ogcio_wagtail_type_corporate_information',
-    'ogcio_wagtail_type_event',
-    'ogcio_wagtail_type_homepage',
-    'ogcio_wagtail_type_menu',
-    'ogcio_wagtail_type_news',
-    'ogcio_wagtail_type_people',
-    'ogcio_wagtail_type_place',
-    'ogcio_wagtail_type_policy',
-    'ogcio_wagtail_type_press_release',
-    'ogcio_wagtail_type_publication',
-    'ogcio_wagtail_type_site_information',
-    'ogcio_wagtail_type_site_metadata',
-
-    # Tenants
-    'ogcio_wagtail_tenant_igees_gov_ie',
-    'ogcio_wagtail_tenant_csvision_gov_ie',
-    'ogcio_wagtail_tenant_g2g_testing_gov_ie',
-    'ogcio_wagtail_tenant_hr_per_gov_ie',
-    'ogcio_wagtail_tenant_localhost_8000',
-    'ogcio_wagtail_tenant_localhost_8001',
-    'ogcio_wagtail_tenant_nsso_gov_ie',
-    'ogcio_wagtail_tenant_ogcio_gov_ie',
-
-    # Assets
-    'ogcio_wagtail_assets_g2g',
-
+    'health_check',
+    'tenant_ireland_ie',
+    'type_homapage',
 ]
 
 if DEBUG_TOOLBAR is True:
@@ -272,7 +218,7 @@ if USE_S3 is True:
 
 # Wagtail settings
 
-WAGTAIL_SITE_NAME = 'Wagtail site'
+WAGTAIL_SITE_NAME = 'Ireland.ie'
 
 
 BASE_URL = os.environ.get('BASE_URL', 'http://127.0.0.1:8000')
