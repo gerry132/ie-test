@@ -1,4 +1,4 @@
-# G2G sites wagtail cms
+# Ireland.ie Wagtail CMS
 
 
 ## Setup for local development
@@ -32,3 +32,6 @@ AWS_STATIC_BUCKET_NAME - AWS bucket name if planning to use s3 bucket for static
 ### Wagtail
 BASE_URL - Base URL for wagtail to use, defaults to `http://localhost:8000`
 
+### Caching
+CACHE_URL - ??
+CACHE_PORT - ??
