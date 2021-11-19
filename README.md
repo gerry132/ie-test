@@ -33,5 +33,5 @@ AWS_STATIC_BUCKET_NAME - AWS bucket name if planning to use s3 bucket for static
 BASE_URL - Base URL for wagtail to use, defaults to `http://localhost:8000`
 
 ### Caching
-CACHE_URL - ??
-CACHE_PORT - ??
+USE_CACHE - Set to True if planning to use cache, defaults to `False`
+CACHE_ADDRESS - Base URL for cache backend, defaults to blank

@@ -216,12 +216,27 @@ if USE_S3 is True:
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
+USE_CACHE = eval(os.environ.get('USE_CACHE', '0')) in [True, 'True', '1', 1]
+
+if USE_CACHE is True:
+    CACHE_ADDRESS = os.environ['CACHE_ADDRESS']
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': f"redis://{CACHE_ADDRESS}",
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            }
+        }
+    }
+
+
 # Wagtail settings
 
 WAGTAIL_SITE_NAME = 'Ireland.ie'
 
 
-BASE_URL = os.environ.get('BASE_URL', 'http://127.0.0.1:8000')
+BASE_URL = os.environ.get('BASE_URL', 'http://localhost:8000')
 
 
 WAGTAIL_I18N_ENABLED = True
