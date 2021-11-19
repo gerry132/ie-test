@@ -1,0 +1,7 @@
+*.tfstate
+*.tfstate.backup
+.terraform.tfstate.lock.info
+.terraform
+
+.aws/*
+!.aws/*.example
