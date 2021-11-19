@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from django.conf import settings as dj_settings
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
@@ -13,10 +12,6 @@ from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 
-if dj_settings.DEBUG_TOOLBAR is True:
-    import debug_toolbar
-
-
 PREFIX_DEFAULT_LANGUAGE = getattr(
     dj_settings,
     'PREFIX_DEFAULT_LANGUAGE',
@@ -25,14 +20,17 @@ PREFIX_DEFAULT_LANGUAGE = getattr(
 
 
 urlpatterns = [
+    path('', include('health_check.urls')),
     path('django-admin/', admin.site.urls),
     path('admin/', include(wagtailadmin_urls)),
     path('', include(wagtaildocs_urls)),
-    path('', include('ogcio_wagtail_site_healthcheck.urls')),
 ]
 
 
 if dj_settings.DEBUG_TOOLBAR is True:
+
+    import debug_toolbar
+
     urlpatterns += [
         path('__debug__/', include(debug_toolbar.urls)),
     ]
@@ -54,14 +52,6 @@ urlpatterns += i18n_patterns(
 
 
 urlpatterns += [
-    path(
-        '',
-        include('ogcio_wagtail_site_language_redirection.urls')
-    ),
-    path(
-        '',
-        include('ogcio_wagtail_site_cookie_consent.urls')
-    ),
     path(
         '',
         RedirectView.as_view(url=f'/{dj_settings.LANGUAGE_CODE}/'),
