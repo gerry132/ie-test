@@ -35,7 +35,7 @@ locals {
   account_id                    = data.aws_caller_identity.current.account_id
   elb_account_arn               = data.aws_elb_service_account.elb.arn
   environment_name              = "dev"
-  project_domain                = "content.ireland.ie"
+  project_domain                = "content.ireland.testing.gov.ie"
   project_name                  = "ireland_ie"
   region                        = "eu-west-1"
   # DB
@@ -56,7 +56,7 @@ locals {
 
 
 locals {
-  domain_ireland_ie           = "ireland.ie"
+  domain_ireland_ie           = "ireland.testing.gov.ie"
 }
 
 
@@ -912,7 +912,7 @@ locals {
   SETTINGS_AWS_ACCESS_KEY_ID        = aws_ssm_parameter.AWS_ACCESS_KEY_ID.value
   SETTINGS_AWS_SECRET_ACCESS_KEY    = aws_ssm_parameter.AWS_SECRET_ACCESS_KEY.value
   SETTINGS_AWS_STATIC_BUCKET_NAME   = aws_s3_bucket.assets.id
-  SETTINGS_BASE_URL                 = "http://www.${local.project_domain}"
+  SETTINGS_BASE_URL                 = "http://www.${local.domain_ireland_ie}"
   SETTINGS_DATABASE_URL             = local.db_master_url
   SETTINGS_SECRET_KEY               = data.aws_ssm_parameter.random_secret_key.value
 }
@@ -935,10 +935,12 @@ data "template_file" "task_definition" {
     SETTINGS_AWS_SECRET_ACCESS_KEY      = local.SETTINGS_AWS_SECRET_ACCESS_KEY
     SETTINGS_AWS_STATIC_BUCKET_NAME     = local.SETTINGS_AWS_STATIC_BUCKET_NAME
     SETTINGS_BASE_URL                   = local.SETTINGS_BASE_URL
+    SETTINGS_CACHE_ADDRESS              = ""
     SETTINGS_DATABASE_URL               = local.SETTINGS_DATABASE_URL
     SETTINGS_DEBUG                      = local.SETTINGS_DEBUG
     SETTINGS_DEBUG_TOOLBAR              = local.SETTINGS_DEBUG_TOOLBAR
     SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
+    SETTINGS_USE_CACHE                  = "0"
     SETTINGS_USE_S3                     = local.SETTINGS_USE_S3
   }
 }
