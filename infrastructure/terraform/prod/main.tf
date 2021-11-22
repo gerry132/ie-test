@@ -957,7 +957,7 @@ locals {
   SETTINGS_BASE_URL                 = "http://www.${local.domain_ireland_ie}"
   SETTINGS_DATABASE_URL             = local.db_master_url
   SETTINGS_SECRET_KEY               = data.aws_ssm_parameter.random_secret_key.value
-  SETTINGS_CACHE_ADDRESS            = ""
+  SETTINGS_CACHE_ADDRESS            = aws_elasticache_cluster.cluster_address
 }
 
 # Task definition
