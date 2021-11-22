@@ -1,3 +1,9 @@
-from django.shortcuts import render
+# -*- coding: utf-8 -*-
+from django.shortcuts import HttpResponse
+from django.views import View
 
-# Create your views here.
+
+class HealthCheckView(View):
+
+    def get(self, request):
+        return HttpResponse()

@@ -41,6 +41,10 @@
                 "value": "${SETTINGS_BASE_URL}"
             },
             {
+                "name": "CACHE_ADDRESS",
+                "value": "${SETTINGS_CACHE_ADDRESS}"
+            },
+            {
                 "name": "DATABASE_URL",
                 "value": "${SETTINGS_DATABASE_URL}"
             },
@@ -53,8 +57,16 @@
                 "value": "${SETTINGS_DEBUG_TOOLBAR}"
             },
             {
+                "name": "HEALTH_CHECK_PATH",
+                "value": "${SETTINGS_HEALTH_CHECK_PATH}"
+            },
+            {
                 "name": "SECRET_KEY",
                 "value": "${SETTINGS_SECRET_KEY}"
+            },
+            {
+                "name": "USE_CACHE",
+                "value": "${SETTINGS_USE_CACHE}"
             },
             {
                 "name": "USE_S3",
