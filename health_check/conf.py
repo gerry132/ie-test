@@ -8,6 +8,7 @@ class Settings:
 
     VAR_NAME_HEALTH_CHECK_PATH = 'HEALTH_CHECK_PATH'
 
+    @property
     def HEALTH_CHECK_PATTERN(self):
 
         path = getattr(

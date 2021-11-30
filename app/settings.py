@@ -71,14 +71,19 @@ INSTALLED_APPS = [
 
     #
     'health_check',
+
+    #
     'tenant_ireland_ie',
-    'type_homapage',
+
+    #
+    'type_homepage',
 ]
 
 if DEBUG_TOOLBAR is True:
     INSTALLED_APPS += [
         'debug_toolbar',
     ]
+
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
