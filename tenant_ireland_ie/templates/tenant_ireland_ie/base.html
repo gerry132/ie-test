@@ -21,6 +21,28 @@
     </head>
     <body>
         {% include 'tenant_ireland_ie/blocks/menus/main_menu.html' %}
+
+        <div class="container" style="min-height: 60vh;">
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <hr />
+                </div>
+            </div>
+
+            {% include 'tenant_ireland_ie/blocks/alerts/default.html' with status='danger' message='Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="#">Aenean</a> efficitur, metus a euismod imperdiet, urna mauris imperdiet eros, nec finibus ante massa quis ipsum. Suspendisse ac justo velit.' %}
+            {% include 'tenant_ireland_ie/blocks/alerts/default.html' with status='warning' message='Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="#">Aenean</a> efficitur, metus a euismod imperdiet, urna mauris imperdiet eros, nec finibus ante massa quis ipsum. Suspendisse ac justo velit.' %}
+            {% include 'tenant_ireland_ie/blocks/alerts/default.html' with status='info' message='Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="#">Aenean</a> efficitur, metus a euismod imperdiet, urna mauris imperdiet eros, nec finibus ante massa quis ipsum. Suspendisse ac justo velit.' %}
+            {% include 'tenant_ireland_ie/blocks/alerts/default.html' with status='success' message='Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="#">Aenean</a> efficitur, metus a euismod imperdiet, urna mauris imperdiet eros, nec finibus ante massa quis ipsum. Suspendisse ac justo velit.' %}
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <hr />
+                </div>
+            </div>
+
+        </div>
+
         {% block content %}{% endblock %}
         {% include 'tenant_ireland_ie/blocks/menus/footer.html' %}
         <script src="{% static '/tenant_ireland_ie/jquery/jquery.min.js' %}"></script>
