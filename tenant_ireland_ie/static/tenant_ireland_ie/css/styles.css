@@ -5,39 +5,16 @@ body {
 }
 
 
-.main-menu {
-    background-color: #004D46;
-    border-radius: 0px;
-    border-width: 0px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
+.main-menu { background-color: #004D46; border-radius: 0px; border-width: 0px; padding-top: 10px; padding-bottom: 10px; }
 .main-menu.navbar { margin-bottom: 0px; }
+.main-menu.navbar-default .navbar-brand { color: #FFFFFF; font-weight: bold; font-size: 16px; padding: 7.5px 15px; }
+.main-menu.navbar-default .navbar-brand img { max-height: 40px; }
 
-.main-menu.navbar-default .navbar-brand {
-    color: #FFFFFF;
-    font-weight: bold;
-    font-size: 16px;
-    padding: 7.5px 15px;
-}
-
-.main-menu.navbar-default .navbar-brand img {
-    max-height: 40px;
-}
-
-.main-menu.navbar-default .navbar-nav > li > a {
-    color: #FFFFFF;
-    font-weight: bold;
-    font-size: 16px;
-}
+.main-menu.navbar-default .navbar-nav > li > a { color: #FFFFFF; font-weight: bold; font-size: 16px; }
 
 .main-menu.navbar-default .navbar-nav > .open >a,
 .navbar-default .navbar-nav > .open > a:focus,
-.navbar-default .navbar-nav > .open > a:hover {
-    color: #F2F2F2;
-    background-color: #413E4C;
-}
+.navbar-default .navbar-nav > .open > a:hover { color: #F2F2F2; background-color: #413E4C; }
 
 
 .alert { border-radius: 0px; border-width: 0px; margin: 0px; padding: 15px; }
@@ -51,22 +28,22 @@ body {
 .alert-success { background-color: #58902D; }
 
 
+.label { border-radius: 15px; padding: 0.3em 0.6em 0.3em; }
+.label.label-primary { background-color: #004D46; color: #FFFFFF; }
 
-.footer {
-    background-color: #004D46;
-    padding-top: 40px;
-    padding-bottom: 40px;
-}
 
-.footer .brand img {
-    max-height: 40px;
-}
+.jumpbox-with-image { padding-bottom: 121.25%; background-color: #6D6B77; margin-bottom: 30px; background-size: cover; background-position: center; }
+.jumpbox-with-image .label { position: absolute; top: 10px; }
+.jumpbox-with-image p { background-color: rgba(0, 77, 70, 0.9); color: #FFFFFF; position: absolute; bottom: 0; width: 80%; padding: 10px; }
+.jumpbox-with-image p a { color: #FFFFFF; font-weight: bold; font-size: 18px; }
 
+
+.footer { background-color: #004D46; padding-top: 40px; padding-bottom: 40px; }
+.footer .brand img { max-height: 40px; }
 .footer .social-media {}
 .footer .social-media ul { padding: 0px; margin: 0px; list-style: none; }
 .footer .social-media ul li { display: inline-block; }
 .footer .social-media ul li img { max-height: 40px; }
-
 .footer h3 { font-size: 18px; color: #FFFFFF; font-weight: bold; }
 .footer ul { padding: 0px; margin: 0px; list-style: none; }
 .footer ul li { margin-bottom: 10px; }
