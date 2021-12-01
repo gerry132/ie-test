@@ -1,6 +1,7 @@
 body {
     font-family: 'Outfit', sans-serif;
     font-size: 16px !important;
+    background-color: #EBE9E1;
 }
 
 
@@ -37,6 +38,17 @@ body {
     color: #F2F2F2;
     background-color: #413E4C;
 }
+
+
+.alert { border-radius: 0px; border-width: 0px; margin: 0px; padding: 15px; }
+.alert h2 { color: #FFFFFF; padding: 0px; margin: 0px; font-size: 18px; margin-bottom: 10px; }
+.alert h2 glyphicon { font-weight: normal; }
+.alert a { color: #FFFFFF; text-decoration: underline; }
+.alert p { color: #FFFFFF; font-weight: bold; }
+.alert-danger { background-color: #B71C38; }
+.alert-warning { background-color: #B49C4F; }
+.alert-info { background-color: #A09267; }
+.alert-success { background-color: #58902D; }
 
 
 
