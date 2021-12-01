@@ -70,6 +70,18 @@ INSTALLED_APPS = [
     'storages',
 
     #
+    'app',
+
+    #
+    'wagtail.contrib.modeladmin',
+    'wagtail.contrib.routable_page',
+    'wagtail.contrib.table_block',
+
+    #
+    'wagtail.locales',
+    'wagtail.contrib.simple_translation',
+
+    #
     'health_check',
 
     #
@@ -262,7 +274,7 @@ if DEBUG_TOOLBAR is True:
     ]
 
 
-WAGTAILADMIN_COMMENTS_ENABLED = True
+WAGTAILADMIN_COMMENTS_ENABLED = False
 WAGTAIL_MODERATION_ENABLED = False
 
 

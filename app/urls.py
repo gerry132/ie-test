@@ -39,6 +39,7 @@ if dj_settings.DEBUG_TOOLBAR is True:
 if dj_settings.USE_S3 is True:
     urlpatterns += staticfiles_urlpatterns()
 
+
 urlpatterns += static(
     dj_settings.MEDIA_URL,
     document_root=dj_settings.MEDIA_ROOT
@@ -58,3 +59,8 @@ urlpatterns += [
         name='no-language-home'
     ),
 ]
+
+
+handler403 = 'tenant_ireland_ie.error_handlers.handle_error_403'
+handler404 = 'tenant_ireland_ie.error_handlers.handle_error_404'
+handler500 = 'tenant_ireland_ie.error_handlers.handle_error_500'
