@@ -1,0 +1,44 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px !important;
+}
+
+
+.footer {
+    background-color: #004D46;
+}
+
+
+.main-menu .navbar-collapse { border-width: 0px; }
+.main-menu { padding: 5px 0px; background-color: #004D46; border-radius: 0px; border-width: 0px; margin-bottom: 0px; }
+.main-menu ul.dropdown-menu { border-radius: 0px; }
+.navbar-default.main-menu .navbar-nav > li > a,
+.navbar-default.main-menu .navbar-nav > li > a:hover { color: #FFFFFF; background-color: #004D46; font-size: 18px; }
+.navbar-default.main-menu .navbar-nav .dropdown-menu > li > a { font-size: 18px; }
+.main-menu .navbar-brand { padding: 0px; }
+.main-menu .navbar-nav li.separator > img { width: auto; }
+.main-menu .navbar-brand > img { width: auto; }
+.navbar-default.main-menu .navbar-toggle { border: 0px; padding: 5px 5px; background-color: #004D46; }
+@media (min-width: 767px){
+    .navbar > .container .navbar-brand { margin-left: 0px; }
+}
+@media (max-width: 767px){
+    .container>.navbar-header { margin-left: 0px; }
+    .main-menu .navbar-brand { margin-left: 10px; }
+    .navbar-default.main-menu .navbar-nav .dropdown-menu > li > a { color: #FFFFFF; }
+    .navbar-default.main-menu .navbar-nav .dropdown-menu > li > a:hover { color: #E6E6E6; }
+}
+@media (min-width: 768px) and (max-width: 992px) {
+    .main-menu .navbar-brand { padding-left: 10px; }
+    .navbar-header { float: none; }
+    .navbar-toggle { display: block; margin-right: 0px; }
+    .navbar-collapse { border-top: 1px solid transparent; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
+    .navbar-collapse.collapse { display: none !important; }
+    .navbar-nav { float: none !important; margin: 7.5px -15px; }
+    .navbar-nav > li { float: none; }
+    .navbar-nav > li > a { padding-top: 10px; padding-bottom: 10px; }
+    .collapse.in { display: block !important; }
+    .navbar-nav .open .dropdown-menu { position: static; float: none; width: auto; margin-top: 0; background-color: transparent; border: 0; -webkit-box-shadow: none; box-shadow: none; }
+    .navbar-default.main-menu .navbar-nav .dropdown-menu > li > a { color: #FFFFFF; background-color: #004D46; }
+    .navbar-default.main-menu .navbar-nav .dropdown-menu > li > a:hover { color: #E6E6E6; background-color: #004D46; }
+}

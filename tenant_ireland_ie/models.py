@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# from django.db import models
 from django.utils.translation import gettext as _
 
 from type_homepage.models import AbstractHomepagePage
@@ -16,6 +15,6 @@ class HomepagePage(AbstractHomepagePage):
 
     max_count = 1
     subpage_types = []
-    template = ''
+    template = settings.HOMEPAGE_TEMPLATE
 
     content_panels = AbstractHomepagePage.content_panels + []

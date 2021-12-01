@@ -8,8 +8,7 @@
         <title>{% project_title request %} - {{ page.title }}</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{% static '/tenant_ireland_ie/bootstrap/bootstrap.min.css' %}">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -19,7 +18,9 @@
         {% block extra_head %}{% endblock %}
     </head>
     <body>
+        {% include 'tenant_ireland_ie/blocks/menus/main_menu.html' %}
         {% block content %}{% endblock %}
+        {% include 'tenant_ireland_ie/blocks/menus/footer.html' %}
         <script src="{% static '/tenant_ireland_ie/jquery/jquery.min.js' %}"></script>
         <script src="{% static '/tenant_ireland_ie/bootstrap/bootstrap.min.js' %}"></script>
         {% block extra_js %}{% endblock %}
