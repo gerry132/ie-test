@@ -41,6 +41,28 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    {% static 'tenant_ireland_ie/img/test_image.jpg' as JUMBOX_TEST_IMAGE %}
+                    {% include 'tenant_ireland_ie/blocks/jumpboxes/with_image.html' with topic='Lorem ipsum' image=JUMBOX_TEST_IMAGE link_text='Lorem ipsum dolor sit amet' text='Lorem ipsum dolor sit amet, consectetur adipiscing elit' url='#' %}
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    {% include 'tenant_ireland_ie/blocks/jumpboxes/with_image.html' with topic='' image=JUMBOX_TEST_IMAGE link_text='Lorem ipsum dolor sit amet' text='Lorem ipsum dolor sit amet, consectetur adipiscing elit' url='#' %}
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    {% include 'tenant_ireland_ie/blocks/jumpboxes/with_image.html' with topic='Lorem ipsum dolor sit' image=JUMBOX_TEST_IMAGE link_text='Lorem ipsum dolor sit amet' text='' url='#' %}
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    {% include 'tenant_ireland_ie/blocks/jumpboxes/with_image.html' with topic='' image=JUMBOX_TEST_IMAGE link_text='Lorem ipsum dolor sit amet, consectetur adipiscing elit.' text='' url='#' %}
+                </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <hr />
+                </div>
+            </div>
+
         </div>
 
         {% block content %}{% endblock %}
