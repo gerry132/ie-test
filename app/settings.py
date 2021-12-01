@@ -198,17 +198,10 @@ STATICFILES_FINDERS = [
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(PROJECT_DIR, '/static/'),
 ]
 
-# ManifestStaticFilesStorage is recommended in production, to prevent outdated
-# JavaScript / CSS assets being served from cache
-# (e.g. after a Wagtail upgrade).
-# See https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles ->
-# -> /#manifeststaticfilesstorage
-
-STATICFILES_STORAGE = (
-    'django.contrib.staticfiles.storage.ManifestStaticFilesStorage')
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 STATIC_URL = '/static/'
@@ -220,7 +213,6 @@ MEDIA_URL = '/media/'
 #
 
 USE_S3 = eval(os.environ.get('USE_S3', '0')) in [True, 'True', '1', 1]
-
 if USE_S3 is True:
 
     AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
@@ -234,7 +226,6 @@ if USE_S3 is True:
 
 
 USE_CACHE = eval(os.environ.get('USE_CACHE', '0')) in [True, 'True', '1', 1]
-
 if USE_CACHE is True:
     CACHE_ADDRESS = os.environ['CACHE_ADDRESS']
     CACHES = {
@@ -287,3 +278,6 @@ OGCIO_WAGTAIL_MENU_CODENAMES = [
     OGCIO_WAGTAIL_MAIN_MENU_CHOICE,
     OGCIO_WAGTAIL_FOOTER_MENU_CHOICE,
 ]
+
+
+DEBUG_PROPAGATE_EXCEPTIONS = True
