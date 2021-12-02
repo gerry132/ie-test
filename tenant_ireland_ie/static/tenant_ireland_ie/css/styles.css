@@ -32,7 +32,15 @@ body {
 .label.label-primary { background-color: #004D46; color: #FFFFFF; }
 
 
+.jumpbox { border: #004D46 solid 2px; border-radius: 10px; padding-bottom: 50%; background-color: #F1F0F5; margin-bottom: 30px; }
+.jumpbox .inner-container { position: absolute; top: 0; bottom: 0; left: 0; right: 0; padding: 20px 25px; }
+.jumpbox .glyphicon { color: #004D46; font-size: 24px; }
+.jumpbox p { font-size: 16px; color: #004D46; }
+.jumpbox p a { font-size: 18px; color: #004D46; font-weight: bold; text-decoration: underline; }
+
+
 .jumpbox-with-image { padding-bottom: 121.25%; background-color: #6D6B77; margin-bottom: 30px; background-size: cover; background-position: center; }
+.jumpbox-with-image .inner-container { position: absolute; top: 10px; bottom: 10px; left: 15px; right: 15px; }
 .jumpbox-with-image .label { position: absolute; top: 10px; }
 .jumpbox-with-image p { background-color: rgba(0, 77, 70, 0.9); color: #FFFFFF; position: absolute; bottom: 0; width: 80%; padding: 10px; }
 .jumpbox-with-image p a { color: #FFFFFF; font-weight: bold; font-size: 18px; }
