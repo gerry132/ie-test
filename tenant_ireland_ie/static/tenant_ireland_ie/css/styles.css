@@ -1,7 +1,8 @@
 body {
     font-family: 'Outfit', sans-serif;
     font-size: 16px !important;
-    background-color: #EBE9E1;
+    /* background-color: #EBE9E1; */
+    background-color: #FFFFFF;
 }
 
 
@@ -32,7 +33,7 @@ body {
 .label.label-primary { background-color: #004D46; color: #FFFFFF; }
 
 
-.jumpbox { border: #004D46 solid 2px; border-radius: 10px; padding-bottom: 50%; background-color: #F1F0F5; margin-bottom: 30px; }
+.jumpbox { border: #004D46 solid 2px; border-radius: 10px; padding-bottom: 50%; /* background-color: #F1F0F5; */ margin-bottom: 30px; }
 .jumpbox .inner-container { position: absolute; top: 0; bottom: 0; left: 0; right: 0; padding: 20px 25px; }
 .jumpbox .glyphicon { color: #004D46; font-size: 24px; }
 .jumpbox p { font-size: 16px; color: #004D46; }
