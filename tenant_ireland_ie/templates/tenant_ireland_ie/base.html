@@ -6,9 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Site title - page title</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200&display=swap" rel="stylesheet">
+        <link href="http://fonts.cdnfonts.com/css/sofia-pro" rel="stylesheet">
         <link href="{% static '/tenant_ireland_ie/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
         <link href="{% static '/tenant_ireland_ie/css/styles.css' %}" rel="stylesheet">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -41,6 +39,25 @@
                 </div>
             </div>
 
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    {% static 'tenant_ireland_ie/img/test_hero.jpg' as HERO_TEST_IMAGE %}
+                    {% include 'tenant_ireland_ie/blocks/hero_image/default.html' with text='This is Ireland' summary='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur, metus a euismod imperdiet, urna mauris imperdiet eros, nec finibus ante massa quis ipsum. Suspendisse ac justo velit.' image=HERO_TEST_IMAGE %}
+                </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <hr />
+                </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 section">
+                <div class="row">
+                    <h2 class="heading">Jumpboxes</h2>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     {% include 'tenant_ireland_ie/blocks/jumpboxes/default.html' with link_text='Lorem ipsum dolor sit amet' text='Lorem ipsum dolor sit amet, consectetur adipiscing elit' url='#' %}
@@ -59,6 +76,12 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="row">
                     <hr />
+                </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 section">
+                <div class="row">
+                    <h2 class="heading">Jumpboxes with images</h2>
                 </div>
             </div>
 
