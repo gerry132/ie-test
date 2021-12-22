@@ -72,13 +72,12 @@ INSTALLED_APPS = [
 
     #
     'wagtail_localize',
-    'wagtail.locales',
+    'wagtail_localize.locales',
     'wagtail.contrib.forms',
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.redirects',
     'wagtail.contrib.routable_page',
     'wagtail.contrib.settings',
-    'wagtail.contrib.simple_translation',
     'wagtail.contrib.table_block',
     'wagtail.embeds',
     'wagtail.sites',

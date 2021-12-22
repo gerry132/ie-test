@@ -59,7 +59,7 @@ virtualenv==20.4.3
 wagtail==2.15.1
 wagtail-accessibility==0.2.1
 wagtail-django-recaptcha==1.0
-wagtail-localize==0.9.5
+wagtail-localize==1.0.1
 webencodings==0.5.1
 Willow==1.4
 xlrd==2.0.1
