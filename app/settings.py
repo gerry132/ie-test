@@ -371,6 +371,9 @@ WAGTAILSEARCH_BACKENDS = {
 }
 
 
+WAGTAIL_EXPERIMENTAL_FEATURES = ['slim-sidebar']
+
+
 # Ireland.ie app
 
 AUTH_USER_MODEL = 'irelandie_users.User'
