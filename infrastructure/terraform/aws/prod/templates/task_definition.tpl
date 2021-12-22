@@ -22,7 +22,7 @@
         "environment": [
             {
                 "name": "ALLOWED_HOSTS",
-                "value": "[\"*\"]"
+                "value": "*"
             },
             {
                 "name": "AWS_SECRET_ACCESS_KEY",
@@ -55,10 +55,6 @@
             {
                 "name": "DEBUG_TOOLBAR",
                 "value": "${SETTINGS_DEBUG_TOOLBAR}"
-            },
-            {
-                "name": "HEALTH_CHECK_PATH",
-                "value": "${SETTINGS_HEALTH_CHECK_PATH}"
             },
             {
                 "name": "SECRET_KEY",
