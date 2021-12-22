@@ -36,15 +36,12 @@ locals {
   elb_account_arn               = data.aws_elb_service_account.elb.arn
   environment_name              = "prod"
   project_domain                = "content.ireland.ie"
-  project_name                  = "ireland_ie"
+  project_name                  = "g2g"
   region                        = "eu-west-1"
   # DB
   db_instance_class             = "db.m5.large"
-  # REDIS
-  redis_node_type               = "cache.m5.large"
-  redis_num_cache_nodes         = 1
   # ECS
-  autoscaling_max_capacity      = 6
+  autoscaling_max_capacity      = 2
   autoscaling_min_capacity      = 1
   autoscaling_target_value      = 60
   service_contrainer_port       = 8000
@@ -54,13 +51,13 @@ locals {
   health_check_path             = "/health-check/"
   SETTINGS_DEBUG                = 0
   SETTINGS_DEBUG_TOOLBAR        = 0
-  SETTINGS_USE_CACHE            = 1
   SETTINGS_USE_S3               = 1
+  SETTINGS_USE_CACHE            = 0
 }
 
 
 locals {
-  domain_ireland_ie           = "ireland.ie"
+  domain_ireland_ie        	    = "ireland.ie"
 }
 
 
@@ -185,11 +182,6 @@ resource "aws_security_group" "db" {
     vpc_id  = module.network.vpc_id
 }
 
-resource "aws_security_group" "redis" {
-  name   = "${local.environment_name}-redis"
-  vpc_id = module.network.vpc_id
-}
-
 
 # -----------------------------------------------------------------------------
 # Security group rules
@@ -237,6 +229,26 @@ resource "aws_security_group_rule" "public_network_to_lb_443" {
   protocol                  = "all"
   security_group_id         = aws_security_group.lb_gov_network.id
   cidr_blocks               = ["${module.network.public_ip}/32"]
+}
+
+resource "aws_security_group_rule" "maris_aws_dev_to_lb_443" {
+  description               = "Maris AWS dev machine"
+  type                      = "ingress"
+  from_port                 = 0
+  to_port                   = 0
+  protocol                  = "all"
+  security_group_id         = aws_security_group.lb_gov_network.id
+  cidr_blocks               = ["54.77.246.14/32"]
+}
+
+resource "aws_security_group_rule" "rachel_aws_dev_to_lb_443" {
+  description               = "Rachel dev machine"
+  type                      = "ingress"
+  from_port                 = 0
+  to_port                   = 0
+  protocol                  = "all"
+  security_group_id         = aws_security_group.lb_gov_network.id
+  cidr_blocks               = ["139.162.182.140/32"]
 }
 
 # Internal thing rules
@@ -295,15 +307,6 @@ resource "aws_security_group_rule" "ecs_to_db_5432" {
   security_group_id         = aws_security_group.db.id
 }
 
-resource "aws_security_group_rule" "ecs_to_redis_6379" {
-  type                     = "ingress"
-  from_port                = 6379
-  to_port                  = 6379
-  protocol                 = "tcp"
-  source_security_group_id = aws_security_group.ecs.id
-  security_group_id        = aws_security_group.redis.id
-}
-
 
 # -----------------------------------------------------------------------------
 # Buckets
@@ -329,6 +332,11 @@ resource "aws_s3_bucket" "logs" {
 
 resource "aws_s3_bucket" "lb_logs" {
   bucket  = "${local.environment_name}-${local.project_name}-lb-logs"
+  acl     = "private"
+}
+
+resource "aws_s3_bucket" "private_lb_logs" {
+  bucket  = "${local.environment_name}-${local.project_name}-private-lb-logs"
   acl     = "private"
 }
 
@@ -382,6 +390,33 @@ resource "aws_s3_bucket_policy" "lb_logs" {
         },
         Action      = "s3:*"
         Resource    = "${aws_s3_bucket.lb_logs.arn}/*/AWSLogs/${local.account_id}/*"
+      },
+    ]
+  })
+}
+
+resource "aws_s3_bucket_policy" "private_lb_logs" {
+
+  bucket = aws_s3_bucket.private_lb_logs.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect      = "Allow",
+        Principal   = {
+          AWS       = local.elb_account_arn
+        },
+        Action      = "s3:*"
+        Resource    = "${aws_s3_bucket.private_lb_logs.arn}/*/AWSLogs/${local.account_id}/*"
+      },
+      {
+        Effect      = "Allow",
+        Principal   = {
+          AWS       = "arn:aws:iam::${local.account_id}:root"
+        },
+        Action      = "s3:*"
+        Resource    = "${aws_s3_bucket.private_lb_logs.arn}/*/AWSLogs/${local.account_id}/*"
       },
     ]
   })
@@ -554,7 +589,7 @@ resource "aws_lb_listener" "project_443" {
   }
 }
 
-# All other site listeners
+# Public site listeners
 
 resource "aws_lb_listener" "public_sites_80" {
   load_balancer_arn   = aws_lb.public_sites.arn
@@ -587,7 +622,8 @@ resource "aws_lb_listener" "public_sites_443" {
   }
 }
 
-# ADMIN SITE RULES
+
+#
 
 resource "aws_lb_listener_rule" "project_443" {
 
@@ -605,6 +641,9 @@ resource "aws_lb_listener_rule" "project_443" {
     }
   }
 }
+
+
+# Force non-www to be used for admin site
 
 resource "aws_lb_listener_rule" "www_project_443" {
 
@@ -626,7 +665,7 @@ resource "aws_lb_listener_rule" "www_project_443" {
   }
 }
 
-# PUBLIC SITES ADMIN RULE
+# Public sites /admin redirects to admin site
 
 resource "aws_lb_listener_rule" "www_ireland_ie_443_admin_redirect" {
 
@@ -651,7 +690,7 @@ resource "aws_lb_listener_rule" "www_ireland_ie_443_admin_redirect" {
   }
 }
 
-# IRELAND.IE RULES
+# Public facing site rule
 
 resource "aws_lb_listener_rule" "ireland_ie_443" {
 
@@ -669,40 +708,20 @@ resource "aws_lb_listener_rule" "ireland_ie_443" {
   }
 }
 
-# resource "aws_lb_listener_rule" "www_ireland_ie_443" {
-#
-#   listener_arn    = aws_lb_listener.public_sites_443.arn
-#   priority        = 5
-#
-#   action {
-#     type              = "redirect"
-#     redirect {
-#       host            = local.domain_ireland_ie
-#       status_code     = "HTTP_301"
-#     }
-#   }
-#
-#   condition {
-#     host_header {
-#       values  = ["www.${local.domain_ireland_ie}"]
-#     }
-#   }
-# }
-
 
 # -----------------------------------------------------------------------------
 # Listener certificates
 # -----------------------------------------------------------------------------
 
-# resource "aws_lb_listener_certificate" "project_certificate" {
-#   listener_arn    = aws_lb_listener.public_sites_443.arn
-#   certificate_arn = aws_acm_certificate.project.arn
-# }
+resource "aws_lb_listener_certificate" "ireland_ie_certificate" {
+  listener_arn    = aws_lb_listener.public_sites_443.arn
+  certificate_arn = aws_acm_certificate.ireland_ie_ssl.arn
+}
 
-# resource "aws_lb_listener_certificate" "ireland_ie_certificate" {
-#   listener_arn    = aws_lb_listener.public_sites_443.arn
-#   certificate_arn = aws_acm_certificate.ireland_ie_ssl.arn
-# }
+resource "aws_lb_listener_certificate" "admin_ireland_ie_certificate" {
+  listener_arn    = aws_lb_listener.project_443.arn
+  certificate_arn = aws_acm_certificate.project.arn
+}
 
 
 # -----------------------------------------------------------------------------
@@ -754,30 +773,6 @@ module "database" {
 
 locals {
     db_master_url   = "postgres://${module.database.db_username}:${data.aws_ssm_parameter.random_db_password.value}@${module.database.address}:${module.database.db_port}/${module.database.db_name}"
-}
-
-
-# -----------------------------------------------------------------------------
-# REDIS
-# -----------------------------------------------------------------------------
-
-resource "aws_elasticache_parameter_group" "redis" {
-  name   = "redis-${local.project_name}-${local.environment_name}-parameter-group"
-  family = "redis5.0"
-}
-
-resource "aws_elasticache_cluster" "redis" {
-  cluster_id               = "redis-${local.project_name}-${local.environment_name}"
-  engine                   = "redis"
-  node_type                = local.redis_node_type
-  num_cache_nodes          = local.redis_num_cache_nodes
-  parameter_group_name     = aws_elasticache_parameter_group.redis.name
-  engine_version           = "5.0.6"
-  subnet_group_name        = "${var.environment_name}-private-subnet"  # ??? not sure this is right
-  security_group_ids       = [aws_security_group.redis.id]
-  apply_immediately        = true
-  snapshot_window          = "02:00-04:00"
-  snapshot_retention_limit = 7
 }
 
 
@@ -947,20 +942,18 @@ data "aws_ssm_parameter" "random_secret_key" {
   ]
 }
 
-# Vars for task definition
+# Task definition
 
 locals {
   SETTINGS_ALLOWED_HOSTS            = join(", ", ["*"])
   SETTINGS_AWS_ACCESS_KEY_ID        = aws_ssm_parameter.AWS_ACCESS_KEY_ID.value
   SETTINGS_AWS_SECRET_ACCESS_KEY    = aws_ssm_parameter.AWS_SECRET_ACCESS_KEY.value
   SETTINGS_AWS_STATIC_BUCKET_NAME   = aws_s3_bucket.assets.id
-  SETTINGS_BASE_URL                 = "http://www.${local.domain_ireland_ie}"
+  SETTINGS_BASE_URL                 = "http://www.${local.project_domain}"
+  SETTINGS_CACHE_ADDRESS            = ""
   SETTINGS_DATABASE_URL             = local.db_master_url
   SETTINGS_SECRET_KEY               = data.aws_ssm_parameter.random_secret_key.value
-  SETTINGS_CACHE_ADDRESS            = aws_elasticache_cluster.cluster_address
 }
-
-# Task definition
 
 data "template_file" "task_definition" {
 
@@ -984,7 +977,6 @@ data "template_file" "task_definition" {
     SETTINGS_DATABASE_URL               = local.SETTINGS_DATABASE_URL
     SETTINGS_DEBUG                      = local.SETTINGS_DEBUG
     SETTINGS_DEBUG_TOOLBAR              = local.SETTINGS_DEBUG_TOOLBAR
-    SETTINGS_HEALTH_CHECK_PATH          = local.health_check_path
     SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
     SETTINGS_USE_CACHE                  = local.SETTINGS_USE_CACHE
     SETTINGS_USE_S3                     = local.SETTINGS_USE_S3
