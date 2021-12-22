@@ -366,6 +366,10 @@ WAGTAILIMAGES_FEATURE_DETECTION_ENABLED = False
 WAGTAILDOCS_DOCUMENT_MODEL = 'irelandie_documents.CustomDocument'
 
 
+WAGTAILSEARCH_BACKENDS = {
+    'default': {'BACKEND': 'wagtail.search.backends.database'}
+}
+
 
 # Ireland.ie app
 
