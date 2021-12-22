@@ -978,7 +978,7 @@ data "template_file" "task_definition" {
     SETTINGS_DEBUG                      = local.SETTINGS_DEBUG
     SETTINGS_DEBUG_TOOLBAR              = local.SETTINGS_DEBUG_TOOLBAR
     SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
-    SETTINGS_USE_USE_CACHE              = local.SETTINGS_USE_CACHE
+    SETTINGS_USE_CACHE                  = local.SETTINGS_USE_CACHE
     SETTINGS_USE_S3                     = local.SETTINGS_USE_S3
   }
 }
