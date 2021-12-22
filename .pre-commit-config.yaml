@@ -23,4 +23,4 @@ repos:
       - id: name-tests-test
         args:
           - --django
-        exclude: ^tests/testapp|^tests/management/|^tests/collisions/|^tests/pythonrc.py
+        exclude: ^tests/testapp|^tests/management/|^tests/collisions/|^tests/pythonrc.py|^ireland*

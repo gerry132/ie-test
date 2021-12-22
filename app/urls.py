@@ -61,6 +61,5 @@ urlpatterns += [
 ]
 
 
-handler403 = 'tenant_ireland_ie.error_handlers.handle_error_403'
-handler404 = 'tenant_ireland_ie.error_handlers.handle_error_404'
-handler500 = 'tenant_ireland_ie.error_handlers.handle_error_500'
+handler404 = 'irelandie_utils.views.page_not_found'
+handler500 = 'irelandie_utils.views.server_error'
