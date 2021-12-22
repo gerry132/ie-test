@@ -376,7 +376,7 @@ WAGTAIL_EXPERIMENTAL_FEATURES = ['slim-sidebar']
 
 # Ireland.ie app
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'irelandie_users.User'
 
 ROOT_MODEL_CLASS = 'irelandie_home.HomePage'
 MISSION_MODEL_CLASS = 'ireland_missions.Mission'
