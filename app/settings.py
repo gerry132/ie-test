@@ -363,6 +363,15 @@ WAGTAILADMIN_COMMENTS_ENABLED = False
 WAGTAIL_MODERATION_ENABLED = False
 WAGTAILIMAGES_IMAGE_MODEL = 'irelandie_images.CustomImage'
 WAGTAILIMAGES_FEATURE_DETECTION_ENABLED = False
+WAGTAILDOCS_DOCUMENT_MODEL = 'irelandie_documents.CustomDocument'
+
+
+WAGTAILSEARCH_BACKENDS = {
+    'default': {'BACKEND': 'wagtail.search.backends.database'}
+}
+
+
+WAGTAIL_EXPERIMENTAL_FEATURES = ['slim-sidebar']
 
 
 # Ireland.ie app
