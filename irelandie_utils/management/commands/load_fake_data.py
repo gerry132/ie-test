@@ -28,6 +28,8 @@ from irelandie_corporate_information.models import (
 )
 from irelandie_events.models import EventPage, EventPageIndex
 from irelandie_images.models import CustomImage
+from wagtail_localize.models import LocaleSynchronization
+from wagtail_localize.synctree import PageIndex
 from irelandie_missions.models import CountryGroupPageIndex, CountryPage, MissionPage
 from irelandie_news.models import NewsPage, NewsPageIndex
 from irelandie_people.models import PersonPage, PersonPageIndex, RolePage, RolePageIndex
@@ -172,6 +174,15 @@ class Command(BaseCommand):
                 for _ in range(number):
                     self.create_fake_page(parent, page_type["child"])
 
+    def sync_locale_trees(self):
+        # wagtail runs after_create_page() hooks at the view layer
+        # rather than the model layer
+        # so we need to sync the new pages to other synced locales
+        # when we create objects programatically
+        page_index = PageIndex.from_database().sort_by_tree_position()
+        for locale_sync in LocaleSynchronization.objects.all():
+            locale_sync.sync_trees(page_index=page_index)
+
     @transaction.atomic
     def handle(self, **options):
         self.stdout.write("Importing init data...")
@@ -187,5 +198,6 @@ class Command(BaseCommand):
         self.create_hierarchy()
         self.create_users_and_groups()
         self.create_fake_pages(options["number"])
+        self.sync_locale_trees()
 
         self.stdout.write("...Done")

@@ -4,20 +4,23 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.template.response import TemplateResponse
 from django.utils.cache import add_never_cache_headers, patch_cache_control
 
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Site
 from wagtail.search.models import Query
 
 from irelandie_utils.cache import get_default_cache_control_kwargs
 
 
 def search(request):
+    root_page = Site.find_for_request(request).root_page.localized
     search_query = request.GET.get("query", None)
     page = request.GET.get("page", 1)
 
     # Search
     if search_query:
-        search_results = Page.objects.live().search(
-            search_query, operator="and", partial_match=False
+        search_results = (
+            Page.objects.live()
+            .descendant_of(root_page)
+            .search(search_query, operator="and", partial_match=False)
         )
         query = Query.get(search_query)
 
