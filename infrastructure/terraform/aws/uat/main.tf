@@ -35,11 +35,11 @@ locals {
   account_id                    = data.aws_caller_identity.current.account_id
   elb_account_arn               = data.aws_elb_service_account.elb.arn
   environment_name              = "uat"
-  project_domain                = "ireland.testing.gov.ie"
+  project_domain                = "content.ireland.testing.gov.ie"
   project_name                  = "g2g"
   region                        = "eu-west-1"
   # DB
-  db_instance_class             = "db.m5.large"
+  db_instance_class             = "db.m5.2xlarge"
   # ECS
   autoscaling_max_capacity      = 2
   autoscaling_min_capacity      = 1
@@ -57,7 +57,7 @@ locals {
 
 
 locals {
-  domain_ireland_ie        	    = "content.ireland.testing.gov.ie"
+  domain_ireland_ie        	    = "ireland.testing.gov.ie"
 }
 
 
@@ -249,6 +249,16 @@ resource "aws_security_group_rule" "rachel_aws_dev_to_lb_443" {
   protocol                  = "all"
   security_group_id         = aws_security_group.lb_gov_network.id
   cidr_blocks               = ["139.162.182.140/32"]
+}
+
+resource "aws_security_group_rule" "chris_shaw_to_lb_443" {
+  description               = "Chris Shaw (torchbox)"
+  type                      = "ingress"
+  from_port                 = 0
+  to_port                   = 0
+  protocol                  = "all"
+  security_group_id         = aws_security_group.lb_gov_network.id
+  cidr_blocks               = ["81.106.63.209/32"]
 }
 
 # Internal thing rules
