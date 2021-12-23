@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+from django import forms
 from django.db import models
 
+from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.core.blocks import RichTextBlock
 from wagtail.core.fields import StreamField
@@ -36,6 +38,7 @@ class AlertPage(Page, TranslatableMixin):
         blank=True,
         null=True,
     )
+    countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
 
     parent_page_types = ["AlertPageIndex"]
     subpage_types = []
@@ -43,4 +46,5 @@ class AlertPage(Page, TranslatableMixin):
     content_panels = Page.content_panels + [
         FieldPanel("alert_type"),
         StreamFieldPanel("body"),
+        FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
     ]
