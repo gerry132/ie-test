@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'health_check',
 
     #
+    'irelandie_admin',
     'irelandie_documents',
     # 'irelandie_forms',
     'irelandie_home',
@@ -121,6 +122,7 @@ MIDDLEWARE = [
     # Wagtail extra
     'django.middleware.locale.LocaleMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+    'irelandie_utils.middleware.ReplaceViewsMiddleware',
 ]
 
 if DEBUG_TOOLBAR is True:
