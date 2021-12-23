@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+from django import forms
 from django.db import models
 
+from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.core.blocks import RichTextBlock
 from wagtail.core.fields import StreamField
@@ -35,6 +37,7 @@ class ContactDetailPage(Page, TranslatableMixin):
         blank=True,
         null=True,
     )
+    countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("first_published_at"),
@@ -43,6 +46,7 @@ class ContactDetailPage(Page, TranslatableMixin):
         FieldPanel("emails"),
         FieldPanel("telephone_numbers"),
         FieldPanel("faxes"),
+        FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
     ]
 
     parent_page_types = [ContactDetailPageIndex]

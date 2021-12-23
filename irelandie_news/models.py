@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+from django import forms
 from django.db import models
 
+from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, TranslatableMixin
@@ -33,6 +35,7 @@ class NewsPage(Page, TranslatableMixin):
         null=True,
     )
     description = models.TextField(blank=True)
+    countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
 
     parent_page_types = [
         "NewsPageIndex",
@@ -43,4 +46,5 @@ class NewsPage(Page, TranslatableMixin):
         FieldPanel("first_published_at"),
         StreamFieldPanel("body"),
         FieldPanel("description"),
+        FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
     ]

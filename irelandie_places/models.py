@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+from django import forms
 from django.db import models
+
+from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, TranslatableMixin
@@ -53,6 +56,8 @@ class PlacePage(Page, TranslatableMixin):
     opening_hours_sunday_from = models.TimeField(blank=True, null=True)
     opening_hours_sunday_to = models.TimeField(blank=True, null=True)
 
+    countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
+
     parent_page_types = [
         "PlacePageIndex",
     ]
@@ -81,4 +86,5 @@ class PlacePage(Page, TranslatableMixin):
         FieldPanel("opening_hours_saturday_to"),
         FieldPanel("opening_hours_sunday_from"),
         FieldPanel("opening_hours_sunday_to"),
+        FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
     ]

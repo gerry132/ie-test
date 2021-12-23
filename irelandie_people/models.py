@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+from django import forms
 from django.db import models
 
+from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import FieldPanel, PageChooserPanel, StreamFieldPanel
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, TranslatableMixin
@@ -35,6 +37,7 @@ class PersonPage(Page, TranslatableMixin):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
 
     parent_page_types = [
         "PersonPageIndex",
@@ -46,6 +49,7 @@ class PersonPage(Page, TranslatableMixin):
         FieldPanel("description"),
         StreamFieldPanel("body"),
         ImageChooserPanel("image"),
+        FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
     ]
 
 
@@ -75,6 +79,7 @@ class RolePage(Page, TranslatableMixin):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
 
     parent_page_types = [
         "RolePageIndex",
@@ -86,4 +91,5 @@ class RolePage(Page, TranslatableMixin):
         FieldPanel("description"),
         StreamFieldPanel("body"),
         PageChooserPanel("role_holder"),
+        FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
     ]
