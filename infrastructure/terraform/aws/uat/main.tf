@@ -317,6 +317,16 @@ resource "aws_security_group_rule" "ecs_to_db_5432" {
   security_group_id         = aws_security_group.db.id
 }
 
+resource "aws_security_group_rule" "maris_aws_dev_to_db_5432" {
+  description               = "Maris AWS dev machine"
+  type                      = "ingress"
+  from_port                 = 5432
+  to_port                   = 5432
+  protocol                  = "tcp"
+  security_group_id         = aws_security_group.db.id
+  cidr_blocks               = ["54.77.246.14/32"]
+}
+
 
 # -----------------------------------------------------------------------------
 # Buckets
