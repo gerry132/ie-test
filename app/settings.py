@@ -102,6 +102,7 @@ INSTALLED_APPS = [
 
     #
     'pattern_library',
+    'rest_framework',
 ]
 
 if DEBUG_TOOLBAR is True:
