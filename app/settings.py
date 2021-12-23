@@ -371,7 +371,7 @@ WAGTAILSEARCH_BACKENDS = {
 }
 
 
-WAGTAIL_EXPERIMENTAL_FEATURES = ['slim-sidebar']
+# WAGTAIL_EXPERIMENTAL_FEATURES = ['slim-sidebar']
 
 
 # Ireland.ie app
