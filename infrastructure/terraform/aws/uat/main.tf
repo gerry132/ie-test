@@ -49,7 +49,7 @@ locals {
   task_memory                   = 2048  # min 2048
   # APP
   health_check_path             = "/health-check/"
-  SETTINGS_DEBUG                = 1
+  SETTINGS_DEBUG                = 0
   SETTINGS_DEBUG_TOOLBAR        = 0
   SETTINGS_USE_S3               = 1
   SETTINGS_USE_CACHE            = 0
@@ -800,8 +800,8 @@ data "aws_ssm_parameter" "random_db_password" {
 
 module "database" {
   source                = "github.com/ogcio/terraform-aws-db-instance-postgres-12-4"
-  db_name               = "${local.environment_name}_db_name"
-  db_username           = "${local.environment_name}_db_username"
+  db_name               = "${local.environment_name}_db_name_change_me"
+  db_username           = "${local.environment_name}_db_name_change_me"
   db_password           = data.aws_ssm_parameter.random_db_password.value
   db_instance_class     = local.db_instance_class
   name                  = "${local.environment_name}-db"
