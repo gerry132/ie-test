@@ -1,0 +1,21 @@
+{% comment %}
+    Variables:
+    - IMAGE_URL
+    - IMAGE_ALT_TEXT
+    - HEADING
+    - SUMMARY
+    - FORM_URL
+    - LABEL_TEXT
+    - BUTTON_TEXT
+{% endcomment %}
+
+<div style="background: url('{{ IMAGE_URL }}'); background-position: center center; background-size: cover;">
+    <span class="screen-readers-only">IMAGE: {{ IMAGE_ALT_TEXT }}</span>
+    <h1>{{ HEADING }}</h1>
+    <p>{{ SUMMARY }}</p>
+    <form action="{{ FORM_URL }}" method="POST">
+        <label>{{ LABEL_TEXT }}</label>
+        <input type="text" name="q" />
+        <button>{{ BUTTON_TEXT }}</button>
+    </form>
+</div>

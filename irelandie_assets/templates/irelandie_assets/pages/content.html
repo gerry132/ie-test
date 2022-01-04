@@ -1,0 +1,13 @@
+{% block content %}
+
+    {% define page as PAGE %}
+
+    <div>
+        {% include 'irelandie_assets/components/headers/default.html' with IMAGE_URL='' IMAGE_ALT_TEXT='' HEADING=PAGE.title %}
+    </div>
+
+    <div>
+        {{ PAGE.content }}
+    </div>
+
+{% endblock %}
