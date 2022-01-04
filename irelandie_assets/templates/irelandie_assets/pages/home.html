@@ -1,0 +1,16 @@
+{% extends 'irelandie_assets/base.html' %}
+{% load irelandie_assets_tags %}
+
+{% block content %}
+
+    {% define page as PAGE %}
+
+    <div>
+        {% include 'irelandie_assets/components/headers/search_jumbotron.html' with IMAGE_URL='' IMAGE_ALT_TEXT='' HEADING='' SUMMARY='' FORM_URL='#' LABEL_TEXT='Search by name' BUTTON_TEXT='Search' %}
+    </div>
+
+    <div>
+        { include 'irelandie_assets/components/cards/default.html' with IMAGE_URL='' IMAGE_ALT_TEXT='' HEADING='' SUMMARY='' LINK_TEXT='1' LINK_URL='#' %}
+    </div>
+
+{% endblock %}

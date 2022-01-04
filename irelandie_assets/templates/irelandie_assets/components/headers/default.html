@@ -1,0 +1,16 @@
+{% comment %}
+    Variables:
+    - IMAGE_URL
+    - IMAGE_ALT_TEXT
+    - HEADING
+    - SUMMARY
+    - LINK_TEXT
+    - LINK_URL
+{% endcomment %}
+
+<div style="background: url('{{ IMAGE_URL }}'); background-position: center center; background-size: cover;">
+    <span class="screen-readers-only">IMAGE: {{ IMAGE_ALT_TEXT }}</span>
+    <h1>{{ HEADING }}</h1>
+    <p>{{ SUMMARY }}</p>
+    <a href="{{ LINK_URL }}">{{ LINK_TEXT }}</a>
+</div>
