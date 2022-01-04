@@ -1,0 +1,30 @@
+{% load i18n %}
+<form method="GET" action="{% url 'wagtailadmin_pages:search' %}">
+    <nav class="listing-filter" aria-labelledby="parent-country-title">
+        <h3 id="parent-country-title" class="filter-title">{% trans "Country" %}</h3>
+        <div class="filter-options">
+            <input type="hidden" name="q" value="{{ query_string|urlencode }}" />
+            <div class="field choice_field select">
+                <div class="field-content">
+                    <div class="input">
+                        <select name="parent_country" id="parent_country_chooser">
+                            {% if not selected_country %}
+                                <option selected>All</option>
+                            {% else %}
+                                <option value="">All</option>
+                            {% endif %}
+                            {% for country in country_pages %}
+                                {% if country.pk == selected_country %}
+                                    <option value="{{ country.pk }}" selected>{{ country.title }} ({{ country.locale }})</option>
+                                {% else %}
+                                    <option value="{{ country.pk }}">{{ country.title }} ({{ country.locale }})</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</form>
