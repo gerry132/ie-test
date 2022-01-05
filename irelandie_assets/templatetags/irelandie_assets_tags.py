@@ -35,6 +35,7 @@ def footer(context):
 def main_menu(context):
     request = context.get('request', None)
     return {
+        'page': context['page'],
         'request': request
     }
 
