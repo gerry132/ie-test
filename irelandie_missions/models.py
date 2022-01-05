@@ -7,6 +7,7 @@ from irelandie_home.models import HomePage
 
 
 class CountryGroupPageIndex(Page, TranslatableMixin):
+    template = "irelandie_assets/pages/countries.html"
 
     description = models.TextField(blank=True)
 
@@ -19,12 +20,14 @@ class CountryGroupPageIndex(Page, TranslatableMixin):
 
 
 class CountryPage(Page, TranslatableMixin):
+    template = "irelandie_assets/pages/country.html"
 
     parent_page_types = ["CountryGroupPageIndex"]
     subpage_types = ["MissionPage"]
 
 
 class MissionPage(Page, TranslatableMixin):
+    template = "irelandie_assets/pages/mission.html"
 
     parent_page_types = ["CountryPage"]
     subpage_types = [
