@@ -9,14 +9,14 @@ register = template.Library()
 # SIMPLE TAGS
 # -----------------------------------------------------------------------------
 
-@register.simple_tag(takes_context=True)
+@register.simple_tag()
 def define(value):
     return value
 
 
-@register.simple_tag(takes_context=True)
+@register.simple_tag()
 def project_title():
-    return 'PROJECT TTITLE'
+    return 'PROJECT TITLE'
 
 
 # -----------------------------------------------------------------------------
