@@ -78,6 +78,7 @@ def _get_random_title():
 
 def _create_index_page(parent, class_, title):
     index_page = class_(title=title)
+    index_page.show_in_menus = True
     parent.add_child(instance=index_page)
     index_page.save_revision()
     return index_page
@@ -164,6 +165,7 @@ class Command(BaseCommand):
     def create_fake_page(self, parent, child_type):
         title = _get_random_title()
         fake_page = child_type(title=title)
+        fake_page.show_in_menus = True
         parent.add_child(instance=fake_page)
         fake_page.save_revision().publish()
         print("published fake page " + title)

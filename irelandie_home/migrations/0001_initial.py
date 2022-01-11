@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('wagtailcore', '0062_comment_models_and_pagesubscription'),
+        ('wagtailcore', '0040_page_draft_title'),
     ]
 
     operations = [

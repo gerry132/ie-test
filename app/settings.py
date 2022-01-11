@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
     #
     'irelandie_admin',
+    'irelandie_assets',
     'irelandie_documents',
     # 'irelandie_forms',
     'irelandie_home',

@@ -7,7 +7,7 @@ from irelandie_utils import blocks
 
 
 class HomePage(Page, TranslatableMixin):
-    template = "patterns/pages/home/home_page.html"
+    template = "irelandie_assets/pages/home.html"
 
     # Only allow creating HomePages at the root level
     parent_page_types = ["wagtailcore.Page"]
