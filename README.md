@@ -6,9 +6,11 @@
 - clone this repo
 - navigate to directory with manage.py file in it
 - create virtual environment `python3 -m venv .venv`
+- activate virtual environment `source .venv/bin/activate`
 - install dependencies `pip install -r requirements.txt`
-- copy environment variables file `cp app/.env.example app/.env`
+- copy environment variables file `cp app/.env_example app/.env`
 - apply migrations `python3 manage.py makemigrations`
+- migrate `python3 manage.py migrate`
 - run server `python3 manage.py runserver 8000`
 
 
