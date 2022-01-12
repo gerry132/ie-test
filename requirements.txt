@@ -39,7 +39,6 @@ nodeenv==1.5.0
 openpyxl==3.0.7
 packaging==21.3
 Pillow==8.2.0
-pkg_resources==0.0.0
 polib==1.1.1
 pre-commit==2.12.0
 psycopg2==2.9.1
