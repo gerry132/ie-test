@@ -40,6 +40,8 @@ locals {
   region                        = "eu-west-1"
   # DB
   db_instance_class             = "db.m5.2xlarge"
+  # CACHE
+  cache_instance_class          = "cache.m5.large"
   # ECS
   autoscaling_max_capacity      = 2
   autoscaling_min_capacity      = 1
@@ -52,7 +54,7 @@ locals {
   SETTINGS_DEBUG                = 0
   SETTINGS_DEBUG_TOOLBAR        = 0
   SETTINGS_USE_S3               = 1
-  SETTINGS_USE_CACHE            = 0
+  SETTINGS_USE_CACHE            = 1
 }
 
 
@@ -179,6 +181,11 @@ resource "aws_security_group" "ecs" {
 
 resource "aws_security_group" "db" {
     name    = "${local.environment_name}-db"
+    vpc_id  = module.network.vpc_id
+}
+
+resource "aws_security_group" "redis" {
+    name    = "${local.environment_name}-redis"
     vpc_id  = module.network.vpc_id
 }
 
@@ -315,6 +322,15 @@ resource "aws_security_group_rule" "ecs_to_db_5432" {
   protocol                  = "tcp"
   source_security_group_id  = aws_security_group.ecs.id
   security_group_id         = aws_security_group.db.id
+}
+
+resource "aws_security_group_rule" "ecs_to_redis_5432" {
+  type                      = "ingress"
+  from_port                 = 6379
+  to_port                   = 6379
+  protocol                  = "tcp"
+  source_security_group_id  = aws_security_group.ecs.id
+  security_group_id         = aws_security_group.redis.id
 }
 
 resource "aws_security_group_rule" "maris_aws_dev_to_db_5432" {
@@ -719,6 +735,7 @@ resource "aws_lb_listener_rule" "www_ireland_ie_443_admin_redirect" {
 #
 #   listener_arn    = aws_lb_listener.public_sites_80.arn
 #   priority        = 5
+#
 #   action {
 #     type                = "forward"
 #     target_group_arn    = aws_lb_target_group.default.arn
@@ -735,6 +752,7 @@ resource "aws_lb_listener_rule" "ireland_ie_443" {
 
   listener_arn    = aws_lb_listener.public_sites_443.arn
   priority        = 6
+
   action {
     type                = "forward"
     target_group_arn    = aws_lb_target_group.default.arn
@@ -812,6 +830,39 @@ module "database" {
 
 locals {
     db_master_url   = "postgres://${module.database.db_username}:${data.aws_ssm_parameter.random_db_password.value}@${module.database.address}:${module.database.db_port}/${module.database.db_name}"
+}
+
+
+# -----------------------------------------------------------------------------
+# Cache
+# -----------------------------------------------------------------------------
+
+resource "aws_elasticache_subnet_group" "redis" {
+  name       = "redis-${local.environment_name}-subnet-group"
+  subnet_ids = module.network.public_subnet_ids
+}
+
+resource "aws_elasticache_parameter_group" "redis" {
+  name   = "redis-${local.environment_name}-parameter-group"
+  family = "redis5.0"
+}
+
+resource "aws_elasticache_cluster" "redis" {
+  cluster_id                = "redis-${local.environment_name}"
+  engine                    = "redis"
+  node_type                 = local.cache_instance_class
+  num_cache_nodes           = 1
+  parameter_group_name      = aws_elasticache_parameter_group.redis.name
+  engine_version            = "5.0.6"
+  security_group_ids        = [aws_security_group.redis.id]
+  apply_immediately         = true
+  snapshot_window           = "02:00-04:00"
+  snapshot_retention_limit  = 7
+  subnet_group_name         = aws_elasticache_subnet_group.redis.name
+}
+
+locals {
+  cache_address   = "${aws_elasticache_cluster.redis.cache_nodes.0.address}:6379"
 }
 
 
@@ -989,7 +1040,7 @@ locals {
   SETTINGS_AWS_SECRET_ACCESS_KEY    = aws_ssm_parameter.AWS_SECRET_ACCESS_KEY.value
   SETTINGS_AWS_STATIC_BUCKET_NAME   = aws_s3_bucket.assets.id
   SETTINGS_BASE_URL                 = "http://www.${local.project_domain}"
-  SETTINGS_CACHE_ADDRESS            = ""
+  SETTINGS_CACHE_ADDRESS            = local.cache_address
   SETTINGS_DATABASE_URL             = local.db_master_url
   SETTINGS_SECRET_KEY               = data.aws_ssm_parameter.random_secret_key.value
 }
