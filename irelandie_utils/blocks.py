@@ -7,6 +7,45 @@ from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 
 
+class StoryLinkBlock(blocks.StructBlock):
+    page = blocks.PageChooserBlock(required=False)
+    title = blocks.CharBlock(
+        help_text="Leave blank to use the page's own title", required=False
+    )
+    summary = blocks.CharBlock(required=False)
+
+    class Meta:
+        template = ("TODO",)
+
+
+class StoryBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=True)
+    page = blocks.PageChooserBlock(required=False)
+    title = blocks.CharBlock(required=False)
+    summary = blocks.CharBlock(required=False)
+    links = blocks.StreamBlock(
+        [
+            ('link', StoryLinkBlock()),
+        ],
+        max_num=3,
+        min_num=0,
+        required=False,
+    )
+
+    class Meta:
+        template = ("TODO",)
+
+
+class PinnedStoryBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=True)
+    page = blocks.PageChooserBlock(required=False)
+    title = blocks.CharBlock(required=False)
+    summary = blocks.CharBlock(required=False)
+
+    class Meta:
+        template = ("TODO",)
+
+
 class ImageBlock(blocks.StructBlock):
     image = ImageChooserBlock()
     caption = blocks.CharBlock(required=False)
