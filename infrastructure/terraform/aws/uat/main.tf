@@ -862,7 +862,7 @@ resource "aws_elasticache_cluster" "redis" {
 }
 
 locals {
-  cache_address   = aws_elasticache_cluster.redis.cache_nodes.0.address
+  cache_address   = "${aws_elasticache_cluster.redis.cache_nodes.0.address}:6379"
 }
 
 
