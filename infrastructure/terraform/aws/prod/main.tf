@@ -40,6 +40,8 @@ locals {
   region                        = "eu-west-1"
   # DB
   db_instance_class             = "db.m5.large"
+  # CACHE
+  cache_instance_class          = "cache.m5.large"
   # ECS
   autoscaling_max_capacity      = 2
   autoscaling_min_capacity      = 1
@@ -52,7 +54,7 @@ locals {
   SETTINGS_DEBUG                = 0
   SETTINGS_DEBUG_TOOLBAR        = 0
   SETTINGS_USE_S3               = 1
-  SETTINGS_USE_CACHE            = 0
+  SETTINGS_USE_CACHE            = 1
 }
 
 
@@ -182,6 +184,11 @@ resource "aws_security_group" "db" {
     vpc_id  = module.network.vpc_id
 }
 
+resource "aws_security_group" "redis" {
+    name    = "${local.environment_name}-redis"
+    vpc_id  = module.network.vpc_id
+}
+
 
 # -----------------------------------------------------------------------------
 # Security group rules
@@ -305,6 +312,15 @@ resource "aws_security_group_rule" "ecs_to_db_5432" {
   protocol                  = "tcp"
   source_security_group_id  = aws_security_group.ecs.id
   security_group_id         = aws_security_group.db.id
+}
+
+resource "aws_security_group_rule" "ecs_to_redis_5432" {
+  type                      = "ingress"
+  from_port                 = 6379
+  to_port                   = 6379
+  protocol                  = "tcp"
+  source_security_group_id  = aws_security_group.ecs.id
+  security_group_id         = aws_security_group.redis.id
 }
 
 
@@ -777,6 +793,39 @@ locals {
 
 
 # -----------------------------------------------------------------------------
+# Cache
+# -----------------------------------------------------------------------------
+
+resource "aws_elasticache_subnet_group" "redis" {
+  name       = "redis-${local.environment_name}-subnet-group"
+  subnet_ids = module.network.public_subnet_ids
+}
+
+resource "aws_elasticache_parameter_group" "redis" {
+  name   = "redis-${local.environment_name}-parameter-group"
+  family = "redis5.0"
+}
+
+resource "aws_elasticache_cluster" "redis" {
+  cluster_id                = "redis-${local.environment_name}"
+  engine                    = "redis"
+  node_type                 = local.cache_instance_class
+  num_cache_nodes           = 1
+  parameter_group_name      = aws_elasticache_parameter_group.redis.name
+  engine_version            = "5.0.6"
+  security_group_ids        = [aws_security_group.redis.id]
+  apply_immediately         = true
+  snapshot_window           = "02:00-04:00"
+  snapshot_retention_limit  = 7
+  subnet_group_name         = aws_elasticache_subnet_group.redis.name
+}
+
+locals {
+  cache_address   = aws_elasticache_cluster.redis.cache_nodes.0.address
+}
+
+
+# -----------------------------------------------------------------------------
 # Logs
 # -----------------------------------------------------------------------------
 
@@ -950,7 +999,7 @@ locals {
   SETTINGS_AWS_SECRET_ACCESS_KEY    = aws_ssm_parameter.AWS_SECRET_ACCESS_KEY.value
   SETTINGS_AWS_STATIC_BUCKET_NAME   = aws_s3_bucket.assets.id
   SETTINGS_BASE_URL                 = "http://www.${local.project_domain}"
-  SETTINGS_CACHE_ADDRESS            = ""
+  SETTINGS_CACHE_ADDRESS            = local.cache_address
   SETTINGS_DATABASE_URL             = local.db_master_url
   SETTINGS_SECRET_KEY               = data.aws_ssm_parameter.random_secret_key.value
 }
