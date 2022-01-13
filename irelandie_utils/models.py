@@ -16,7 +16,7 @@ from wagtail.admin.edit_handlers import (
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Orderable, Page
+from wagtail.core.models import Orderable, Page, TranslatableMixin
 from wagtail.core.query import PageQuerySet
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
@@ -28,6 +28,82 @@ SEARCH_DESCRIPTION_LABEL = "Meta description"  # NOTE changing this requires mig
 
 
 IMAGE_MODEL = str(dj_settings.WAGTAILIMAGES_IMAGE_MODEL)
+
+
+class HeroPage(Page, TranslatableMixin):
+    hero_title = models.CharField(blank=True, max_length=255)
+    hero_image = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    hero_video = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    summary = models.CharField(blank=True, max_length=255)
+    link_page = models.ForeignKey(
+        Page,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    link_text = models.CharField(blank=True, max_length=255)
+    secondary_title = models.CharField(blank=True, max_length=255)
+
+    class Meta:
+        abstract = True
+
+    def clean(self):
+        if not self.hero_image and not self.hero_video:
+            raise ValidationError(
+                {
+                    "hero_image": ValidationError(
+                        "You must specify hero image or hero video."
+                    ),
+                    "hero_video": ValidationError(
+                        "You must specify hero image or hero video."
+                    ),
+                }
+            )
+
+        if self.hero_image and self.hero_video:
+            raise ValidationError(
+                {
+                    "hero_image": ValidationError(
+                        "You must specify hero image or hero video. You can't use both."
+                    ),
+                    "hero_video": ValidationError(
+                        "You must specify hero image or hero video. You can't use both."
+                    ),
+                }
+            )
+
+    content_panels = Page.content_panels + [
+        MultiFieldPanel(
+            [
+                FieldPanel("hero_title"),
+                ImageChooserPanel("hero_image"),
+                ImageChooserPanel("hero_video"),
+                FieldPanel("summary"),
+                MultiFieldPanel(
+                    [
+                        PageChooserPanel("link_page"),
+                        FieldPanel("link_text"),
+                    ],
+                    "link",
+                ),
+            ],
+            "hero",
+        ),
+        FieldPanel("secondary_title"),
+    ]
 
 
 class LinkFields(models.Model):
