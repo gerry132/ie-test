@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 
 DEBUG = int(os.environ.get('DEBUG', '0'))
-DEBUG_TOOLBAR = int(os.environ.get('DEBUG_TOOLBAR', '0'))
+DEBUG_TOOLBAR = bool(int(os.environ.get('DEBUG_TOOLBAR', '0')))
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
