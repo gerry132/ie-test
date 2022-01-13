@@ -179,7 +179,7 @@ if DATABASE_URL in [None, 'None', '']:
     }
 else:
     import dj_database_url
-    DATABASES['default'] = dj_database_url.config()
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 
 # Password validation
@@ -387,6 +387,9 @@ MISSION_MODEL_CLASS = 'ireland_missions.Mission'
 
 
 #
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
 
 LOGGING = {
     "version": 1,
