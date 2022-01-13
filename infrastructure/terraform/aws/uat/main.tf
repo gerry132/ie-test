@@ -39,9 +39,9 @@ locals {
   project_name                  = "g2g"
   region                        = "eu-west-1"
   # DB
-  db_instance_class             = "db.m5.2xlarge"
+  db_instance_class             = "db.m6g.large"  # "db.m6g.2xlarge"
   # CACHE
-  cache_instance_class          = "cache.m5.large"
+  cache_instance_class          = "cache.t3.medium"  # "cache.m6g.large"
   # ECS
   autoscaling_max_capacity      = 2
   autoscaling_min_capacity      = 1
