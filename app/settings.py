@@ -233,7 +233,7 @@ MEDIA_URL = '/media/'
 
 #
 
-USE_CACHE = int(os.environ.get('USE_CACHE', '0')) in [True, 'True', '1', 1]
+USE_CACHE = os.environ.get('USE_CACHE', '0') in TRUE
 if USE_CACHE is True:
     CACHE_ADDRESS = os.environ['CACHE_ADDRESS']
     CACHES = {
