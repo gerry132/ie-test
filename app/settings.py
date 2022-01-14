@@ -17,6 +17,9 @@ import os
 from dotenv import load_dotenv
 
 
+TRUE = ['1', 'True', 'true', 1, True]
+
+
 load_dotenv()
 
 
@@ -26,8 +29,7 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 
-DEBUG = int(os.environ.get('DEBUG', '0'))
-DEBUG_TOOLBAR = bool(int(os.environ.get('DEBUG_TOOLBAR', '0')))
+DEBUG_TOOLBAR = os.environ.get('DEBUG_TOOLBAR', '0') in TRUE
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -35,7 +37,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.environ['DEBUG'])
+DEBUG = os.environ.get('DEBUG', '0') in TRUE
 
 
 ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
@@ -234,15 +236,6 @@ MEDIA_URL = '/media/'
 USE_CACHE = int(os.environ.get('USE_CACHE', '0')) in [True, 'True', '1', 1]
 if USE_CACHE is True:
     CACHE_ADDRESS = os.environ['CACHE_ADDRESS']
-    # CACHES = {
-    #     'default': {
-    #         'BACKEND': 'django_redis.cache.RedisCache',
-    #         'LOCATION': f'redis://{CACHE_ADDRESS}',
-    #         'OPTIONS': {
-    #             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-    #         }
-    #     }
-    # }
     CACHES = {
         'default': {
             'BACKEND': 'django_redis.cache.RedisCache',
@@ -301,15 +294,15 @@ if DEBUG_TOOLBAR is True:
 
 #
 
-ALLOW_MAIL = int(os.environ.get('ALLOW_MAIL', '0')) in [True, 'True', '1', 1]
+ALLOW_MAIL = os.environ.get('ALLOW_MAIL', '0') in TRUE
 if ALLOW_MAIL is True:
-    EMAIL_HOST = os.environ["EMAIL_HOST"]
-    EMAIL_PORT = int(os.environ.get("EMAIL_PORT", '587'))
-    EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
-    EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+    EMAIL_HOST = os.environ['EMAIL_HOST']
+    EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
+    EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+    EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
     EMAIL_USE_TLS = True
-    EMAIL_SUBJECT_PREFIX = os.environ["EMAIL_SUBJECT_PREFIX"]
-    SERVER_EMAIL = DEFAULT_FROM_EMAIL = os.environ["SERVER_EMAIL"]
+    EMAIL_SUBJECT_PREFIX = os.environ['EMAIL_SUBJECT_PREFIX']
+    SERVER_EMAIL = DEFAULT_FROM_EMAIL = os.environ['SERVER_EMAIL']
 
 
 # Wagtail settings
@@ -335,7 +328,7 @@ LOCALE_PATHS = [
 WAGTAIL_LOCALIZE_DEFAULT_TRANSLATION_MODE = 'simple'
 
 
-USE_S3 = eval(os.environ.get('USE_S3', '0')) in [True, 'True', '1', 1]
+USE_S3 = eval(os.environ.get('USE_S3', '0')) in TRUE
 if USE_S3 is True:
 
     INSTALLED_APPS = INSTALLED_APPS + ['storages', 'wagtail_storages']
