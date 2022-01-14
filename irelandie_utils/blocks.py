@@ -104,6 +104,14 @@ class TableBlock(WagtailTableBlock):
     pass
 
 
+class SocialLinkBlock(blocks.StructBlock):
+    class Meta:
+        label = "Social Link"
+        template = ("TODO",)
+
+    url = blocks.URLBlock(required=False)
+
+
 class YoutubeLinkValue(blocks.StructValue):
     def embedding_url(self):
 
