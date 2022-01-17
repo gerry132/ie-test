@@ -1,9 +1,15 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings as dj_settings
+from django.db import models
 from modelcluster.models import ClusterableModel
-from wagtail.admin.edit_handlers import StreamFieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
+from wagtail.images.edit_handlers import ImageChooserPanel
+
+
+IMAGE_MODEL = str(dj_settings.WAGTAILIMAGES_IMAGE_MODEL)
 
 
 class LinkBlock(blocks.StructBlock):
@@ -28,11 +34,15 @@ class LinkColumnWithHeader(blocks.StructBlock):
 
 @register_setting(icon="list-ul")
 class NavigationSettings(BaseSetting, ClusterableModel):
+    site_logo = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
     primary_navigation = StreamField(
         [("link", LinkBlock())], blank=True, help_text="Main site navigation"
-    )
-    secondary_navigation = StreamField(
-        [("link", LinkBlock())], blank=True, help_text="Alternative navigation"
     )
     footer_navigation = StreamField(
         [("column", LinkColumnWithHeader())],
@@ -44,10 +54,21 @@ class NavigationSettings(BaseSetting, ClusterableModel):
         blank=True,
         help_text="Single list of elements at the base of the page.",
     )
+    footer_email = models.EmailField(
+        max_length=255,
+        blank=True,
+        verbose_name='email address',
+    )
 
     panels = [
+        ImageChooserPanel("site_logo"),
         StreamFieldPanel("primary_navigation"),
-        StreamFieldPanel("secondary_navigation"),
-        StreamFieldPanel("footer_navigation"),
-        StreamFieldPanel("footer_links"),
+        MultiFieldPanel(
+            [
+                StreamFieldPanel("footer_navigation"),
+                StreamFieldPanel("footer_links"),
+                FieldPanel('footer_email'),
+            ],
+            "Footer"
+        )
     ]

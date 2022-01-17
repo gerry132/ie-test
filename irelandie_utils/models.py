@@ -21,6 +21,7 @@ from wagtail.core.query import PageQuerySet
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 
+from irelandie_utils.blocks import SocialLinkBlock
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
 
@@ -346,6 +347,11 @@ class SocialMediaSettings(BaseSetting):
         blank=True,
         default="Ireland.ie",
         help_text="Site name, used by Open Graph.",
+    )
+    social_links = StreamField(
+        [("profile", SocialLinkBlock())],
+        blank=True,
+        help_text="List of links to social media profiles"
     )
 
 
