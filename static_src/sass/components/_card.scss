@@ -1,0 +1,17 @@
+.card {
+    padding: 20px;
+    background-color: $color--tertiary;
+    // Background-matching border, so cards are visible in high-contrast mode with no background.
+    border: 1px solid $color--tertiary;
+    transition: background-color $transition;
+
+    &:hover {
+        background-color: darken($color--tertiary, 10%);
+    }
+}
+
+.card-with-image {
+    &:only-child {
+        max-width: 260px;
+    }
+}
