@@ -1,0 +1,28 @@
+context:
+  value:
+    title: Stub content
+    summary: Check out our awesome stub content
+    page: foobar
+    links:
+      - title: Stub content
+        summary: Check out our awesome stub content
+        page: foobar
+      - title: Stub content
+        summary: Check out our awesome stub content
+        page: foobar
+      - title: Stub content
+        summary: Check out our awesome stub content
+        page: foobar
+
+tags:
+  image:
+    value.image width-400:
+      raw: |
+        <img src="https://source.unsplash.com/400x300?ocean" width="400" height="300" alt="Some alt">
+  pageurl:
+    value.page as href:
+      target_var: href
+      raw: "#"
+  include_block:
+    'link':
+      template_name: 'patterns/molecules/streamfield/blocks/story_link_block.html'

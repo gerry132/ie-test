@@ -1,0 +1,9 @@
+{% load wagtailcore_tags %}
+
+{% pageurl value.page as href %}
+
+<a href="{{ href }}">
+  {{ value.title }}
+</a>
+
+{{ value.summary }}

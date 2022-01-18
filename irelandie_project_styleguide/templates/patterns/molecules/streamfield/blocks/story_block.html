@@ -1,0 +1,19 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+<div>
+  {% image value.image width-400 %}
+
+  {% if value.page %}
+    {% pageurl value.page as href %}
+    <h3><a href="{{ href }}">{{ value.title }}</a></h3>
+  {% else %}
+    <h3>{{ value.title }}</h3>
+  {% endif %}
+
+  <p>{{ value.summary }}</p>
+
+  {% for link in value.links %}
+    {% include_block link %}
+  {% endfor %}
+</div>
