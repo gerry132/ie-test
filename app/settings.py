@@ -82,6 +82,7 @@ INSTALLED_APPS = [
     'wagtail.contrib.redirects',
     'wagtail.contrib.routable_page',
     'wagtail.contrib.settings',
+    'wagtail.contrib.search_promotions',
     'wagtail.contrib.table_block',
     'wagtail.embeds',
     'wagtail.sites',
@@ -106,6 +107,7 @@ INSTALLED_APPS = [
 
     #
     'pattern_library',
+    'irelandie_project_styleguide.apps.ProjectStyleguideConfig',
     'rest_framework',
 ]
 
@@ -156,9 +158,24 @@ TEMPLATES = [
                 # Wagtail extra
                 'django.template.context_processors.i18n'
             ],
+            'builtins': ['pattern_library.loader_tags'],
         },
     },
 ]
+
+
+# Django Pattern Library
+PATTERN_LIBRARY_ENABLED = os.environ.get('PATTERN_LIBRARY_ENABLED', '0') in TRUE
+PATTERN_LIBRARY = {
+    "SECTIONS": (
+        ("atoms", ["patterns/atoms"]),
+        ("molecules", ["patterns/molecules"]),
+        ("pages", ["patterns/pages"]),
+    ),
+    "TEMPLATE_SUFFIX": ".html",
+    "PATTERN_BASE_TEMPLATE_NAME": "patterns/base.html",
+    "BASE_TEMPLATE_NAMES": ["patterns/base_page.html"],
+}
 
 
 WSGI_APPLICATION = 'app.wsgi.application'
