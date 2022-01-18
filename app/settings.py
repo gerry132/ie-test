@@ -381,7 +381,8 @@ MISSION_MODEL_CLASS = 'ireland_missions.Mission'
 
 #
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+if USE_CACHE is True:
+    SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
 
 LOGGING = {
