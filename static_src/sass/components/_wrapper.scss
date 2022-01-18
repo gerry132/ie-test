@@ -1,0 +1,27 @@
+.wrapper {
+    &--small {
+        max-width: $wrapper--small;
+        margin: 0 auto;
+    }
+
+    &--large {
+        max-width: $site-width;
+        margin: 0 auto;
+    }
+
+    &--main {
+        padding: 20px;
+        background-color: $color--white;
+        // Color-matching border for high-contrast mode users to distinguish the header and footer from main.
+        border: 1px solid $color--white;
+    }
+
+    &--flex {
+        display: flex;
+        flex-direction: column;
+
+        @include media-query(medium) {
+            flex-direction: row;
+        }
+    }
+}
