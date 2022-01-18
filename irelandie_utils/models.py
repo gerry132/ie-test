@@ -92,7 +92,7 @@ class HeroPage(Page, TranslatableMixin):
             [
                 FieldPanel("hero_title"),
                 ImageChooserPanel("hero_image"),
-                MediaChooserPanel("hero_video"),
+                MediaChooserPanel("hero_video", media_type="video"),
                 FieldPanel("summary"),
                 MultiFieldPanel(
                     [
