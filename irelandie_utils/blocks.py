@@ -15,7 +15,7 @@ class StoryLinkBlock(blocks.StructBlock):
     summary = blocks.CharBlock(required=False)
 
     class Meta:
-        template = ("TODO",)
+        template = "patterns/molecules/streamfield/blocks/story_link_block.html"
 
 
 class StoryBlock(blocks.StructBlock):
@@ -33,7 +33,7 @@ class StoryBlock(blocks.StructBlock):
     )
 
     class Meta:
-        template = ("TODO",)
+        template = "patterns/molecules/streamfield/blocks/story_block.html"
 
 
 class PinnedStoryBlock(blocks.StructBlock):
@@ -43,7 +43,7 @@ class PinnedStoryBlock(blocks.StructBlock):
     summary = blocks.CharBlock(required=False)
 
     class Meta:
-        template = ("TODO",)
+        template = "patterns/molecules/streamfield/blocks/pinned_story_block.html"
 
 
 class ImageBlock(blocks.StructBlock):

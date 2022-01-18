@@ -1,0 +1,10 @@
+context:
+  value:
+    title: Stub content
+    summary: Check out our awesome stub content
+
+tags:
+  pageurl:
+    value.page as href:
+      target_var: href
+      raw: "#"
