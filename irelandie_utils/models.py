@@ -20,6 +20,7 @@ from wagtail.core.models import Orderable, Page, TranslatableMixin
 from wagtail.core.query import PageQuerySet
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
+from wagtailmedia.edit_handlers import MediaChooserPanel
 
 from irelandie_utils.blocks import SocialLinkBlock
 from irelandie_utils.cache import get_default_cache_control_decorator
@@ -41,7 +42,7 @@ class HeroPage(Page, TranslatableMixin):
         related_name="+",
     )
     hero_video = models.ForeignKey(
-        IMAGE_MODEL,
+        "wagtailmedia.Media",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -91,7 +92,7 @@ class HeroPage(Page, TranslatableMixin):
             [
                 FieldPanel("hero_title"),
                 ImageChooserPanel("hero_image"),
-                ImageChooserPanel("hero_video"),
+                MediaChooserPanel("hero_video", media_type="video"),
                 FieldPanel("summary"),
                 MultiFieldPanel(
                     [

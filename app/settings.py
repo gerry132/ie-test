@@ -94,6 +94,7 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail.core',
     'wagtailaccessibility',
+    'wagtailmedia',
 
     'modelcluster',
     'taggit',
@@ -395,6 +396,11 @@ AUTH_USER_MODEL = 'irelandie_users.User'
 ROOT_MODEL_CLASS = 'irelandie_home.HomePage'
 MISSION_MODEL_CLASS = 'ireland_missions.Mission'
 
+# wagtailmedia
+# https://github.com/torchbox/wagtailmedia
+WAGTAILMEDIA = {
+    "VIDEO_EXTENSIONS": ['mp4'],  # list of extensions
+}
 
 #
 
