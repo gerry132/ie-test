@@ -69,7 +69,7 @@
         }
 
         &--secondary {
-            font-weight: $weight--light;
+            font-weight: $weight--normal;
         }
 
         &:last-child {
@@ -78,7 +78,7 @@
 
         @include media-query(medium) {
             width: auto;
-            font-weight: $weight--light;
+            font-weight: $weight--normal;
             text-align: left;
             border-bottom: 0;
         }

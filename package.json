@@ -8,6 +8,11 @@
     "type": "git",
     "url": ""
   },
+  "browserslist": [
+    "defaults",
+    "> 0.5%",
+    "ie 9-11"
+  ],
   "jest": {
     "testPathIgnorePatterns": [
       "/node_modules/",
@@ -34,7 +39,7 @@
     "compile:dev": "webpack --mode development --progress",
     "compile:watch": "npm run compile:dev -- --watch",
     "//[ Linting & formatting ]//": "",
-    "lint:css": "stylelint $npm_package_config_src_css'/**/**' && stylelint --report-needless-disables $npm_package_config_src_css'/**/**'",
+    "lint:css": "stylelint 'static_src/**/*.scss'",
     "lint:js": "eslint --report-unused-disable-directives .",
     "lint:format": "prettier --check '**/?(.)*.{md,css,scss,js,json,yaml,yml}'",
     "lint": "npm-run-all -p lint:format lint:js lint:css",
@@ -55,6 +60,7 @@
   "devDependencies": {
     "@babel/core": "^7.10.3",
     "@babel/preset-env": "^7.10.3",
+    "@babel/preset-react": "^7.10.1",
     "autoprefixer": "^9.7.3",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^26.0.1",
@@ -77,10 +83,10 @@
     "postcss-custom-properties": "^9.0.1",
     "postcss-loader": "^3.0.0",
     "prettier": "^2.0.5",
+    "query-string": "^5.1.1",
     "sass": "^1.24.4",
     "sass-loader": "^8.0.2",
     "stylelint": "^10.1.0",
-    "stylelint-config-torchbox": "^0.5.0",
     "url-loader": "^3.0.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"

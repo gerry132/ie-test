@@ -1,43 +1,27 @@
 // --------------------------------- Colors -------------------------------------
-$color--primary: #444;
+$color--primary: #004d46;
 $color--secondary: #fff;
-$color--tertiary: #f9f9f9;
+$color--tertiary: #636772;
 
 $color--white: #fff;
 $color--black: #000;
-$color--off-black: #141414;
+$color--off-black: #090b0e;
 $color--red: #f00;
 $color--border: rgba($color--off-black, 0.2);
 
 $color--default: $color--off-black;
 
-// Button colours
-$button-colours: (
-    primary: (
-        bg: $color--primary,
-        color: #fff,
-    ),
-    secondary: (
-        bg: $color--secondary,
-        color: #000,
-    ),
-    tertiary: (
-        bg: $color--tertiary,
-        color: #000,
-    ),
-);
-
 // --------------------------------- Fonts --------------------------------------
 
-$font--primary: sans-serif;
-$font--secondary: sans-serif;
+$font--primary: Inter;
+$font--secondary: Inter;
 
 // Font weights
+$weight--black: 900;
 $weight--bold: 700;
-$weight--semibold: 600;
+$weight--semibold: 700;
 $weight--medium: 500;
 $weight--normal: 400;
-$weight--light: 200;
 
 // Font sizes
 $base-font-size: 16px;
@@ -60,6 +44,7 @@ $breakpoints: ('medium' '(min-width: 599px)', 'large' '(min-width: 1023px)');
 
 // Wrappers
 $site-width: 1280px;
+$wrapper--large: 1140px;
 $wrapper--small: 790px;
 
 // Grid setup
