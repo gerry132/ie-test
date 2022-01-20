@@ -1,9 +1,8 @@
 {% load wagtailcore_tags %}
 
-{% pageurl value.page as href %}
-
-<a href="{{ href }}">
-  {{ value.title }}
+<!-- link_url & link_title are computed from the value.page(wagtail page) & value.url(external link) fields-->
+<a href="{{ link_url }}">
+  {{ link_title }}
 </a>
 
 {{ value.summary }}

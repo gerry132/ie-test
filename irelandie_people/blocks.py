@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
 from wagtail.core import blocks as wagtail_blocks
+from wagtail.images.blocks import ImageChooserBlock
 
 from irelandie_utils import blocks
+from irelandie_utils.blocks import StoryLinkBlock
 
 
 class PersonPageSectionBlock(blocks.BaseSectionBlock):
     class Meta:
         label = "SectionBlock"
         template = "TODO"
+
+    image = ImageChooserBlock()
+    page = wagtail_blocks.PageChooserBlock(required=False)
 
     body = wagtail_blocks.StreamBlock(
         [
@@ -21,6 +26,15 @@ class PersonPageSectionBlock(blocks.BaseSectionBlock):
             ),
             ("role", blocks.RoleBlock()),
         ],
+        required=False,
+    )
+
+    links = wagtail_blocks.StreamBlock(
+        [
+            ('link', StoryLinkBlock()),
+        ],
+        max_num=3,
+        min_num=0,
         required=False,
     )
 
