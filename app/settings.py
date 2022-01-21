@@ -95,6 +95,7 @@ INSTALLED_APPS = [
     'wagtail.core',
     'wagtailaccessibility',
     'wagtailmedia',
+    'wagtail.api.v2',
 
     'modelcluster',
     'taggit',
@@ -294,13 +295,12 @@ if USE_CACHE is True:
 # SECURE_CONTENT_TYPE_NOSNIFF = True
 
 
-# Waghtail DRF
-
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework.authentication.SessionAuthentication',
-#     )
-# }
+# Wagtail DRF
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
 
 
 if DEBUG_TOOLBAR is True:
