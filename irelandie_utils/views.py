@@ -19,13 +19,11 @@ class PagesAPIEndpoint(PagesAPIViewSet):
     base_serializer_class = PageSerializer
     filter_backends = [
         # NOTE: filters should be listed before the SearchFilter
-      MissionPageFieldFilter,
+        MissionPageFieldFilter,
     ] + PagesAPIViewSet.filter_backends
-    known_query_parameters = PagesAPIViewSet.known_query_parameters.union([
-        "mission",
-        "country",
-        "country_group"
-    ])
+    known_query_parameters = PagesAPIViewSet.known_query_parameters.union(
+        ["mission", "country", "country_group"]
+    )
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

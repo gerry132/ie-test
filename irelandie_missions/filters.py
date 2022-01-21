@@ -15,7 +15,7 @@ class MissionPageFieldFilter(BaseFilterBackend):
                 if field_name in request.GET:
                     value = request.GET[field_name]
                     queryset = queryset.filter(**{field_name: value})
-                    
+
             if self.country_parameter in request.GET:
                 country = request.GET[self.country_parameter]
                 country_page=CountryPage.objects.filter(title__iexact=country).first()
