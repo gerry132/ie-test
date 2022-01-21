@@ -14,6 +14,8 @@ from wagtail.documents import urls as wagtaildocs_urls
 from wagtail.api.v2.router import WagtailAPIRouter
 
 from irelandie_utils.views import PagesAPIEndpoint
+from irelandie_search import views as search_views
+
 
 PREFIX_DEFAULT_LANGUAGE = getattr(
     dj_settings,
@@ -29,6 +31,7 @@ urlpatterns = [
     path('', include('health_check.urls')),
     path('django-admin/', admin.site.urls),
     path('admin/', include(wagtailadmin_urls)),
+    path("search/", search_views.search, name="search"),
     path('', include(wagtaildocs_urls)),
     path("api/v2/", api_router.urls),
 ]

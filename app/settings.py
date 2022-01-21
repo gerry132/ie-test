@@ -390,6 +390,9 @@ WAGTAILSEARCH_BACKENDS = {
     'default': {'BACKEND': 'wagtail.search.backends.database'}
 }
 
+# Default size of the pagination used on the front-end.
+DEFAULT_PER_PAGE = 20
+
 
 # WAGTAIL_EXPERIMENTAL_FEATURES = ['slim-sidebar']
 
