@@ -143,6 +143,10 @@
                 <div>
                     {% footerlinks %}
                 </div>
+
+                {% for link in settings.utils.SocialMediaSettings.social_links %}
+                  {% include_block link %}
+                {% endfor %}
             </div>
 
             <div class="footer__credit">

@@ -1,0 +1,38 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags wagtailimages_tags static %}
+
+{% block content %}
+    <h1>{{ page.title }}</h1>
+
+    {% if page.hero_title %}
+      <div>{{ page.hero_title }}</div>
+    {% endif %}
+
+    {% if page.secondary_title %}
+      <div>{{ page.secondary_title }}</div>
+    {% endif %}
+
+    <div>
+      {% if page.hero_image %}
+        {% image page.hero_image width-400 %}
+      {% endif %}
+      {% if page.hero_video %}
+        <video src="{{ page.hero_video.url}}" autoplay loop muted playsinline type="video/mp4">
+      {% endif %}
+    </div>
+
+    {% if page.summary %}
+      <div>{{ page.summary }}</div>
+    {% endif %}
+
+    {% if page.link_page and page.link_text %}
+      <div>
+        {% pageurl page.link_page as href %}
+        <a href="{{ href }}">{{ page.link_text }}</a>
+      </div>
+    {% endif %}
+
+    {% block main %}
+    {% endblock %}
+
+{% endblock %}

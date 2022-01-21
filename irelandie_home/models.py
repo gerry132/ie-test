@@ -34,7 +34,7 @@ class HomePage(HeroPage):
     #
 
     max_count = 1
-    template = 'irelandie_assets/pages/home.html'
+    template = 'patterns/pages/home/home_page.html'
 
     #
 
