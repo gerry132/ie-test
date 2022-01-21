@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from wagtail.admin.edit_handlers import FieldPanel
-from wagtail.core.models import Page, TranslatableMixin
 
 from irelandie_home.models import HomePage
+from irelandie_utils.models import BasePage
 
 
-class CountryGroupPageIndex(Page, TranslatableMixin):
+class CountryGroupPageIndex(BasePage):
     template = "irelandie_assets/pages/countries.html"
 
     description = models.TextField(blank=True)
@@ -14,19 +14,19 @@ class CountryGroupPageIndex(Page, TranslatableMixin):
     parent_page_types = [HomePage]
     subpage_types = ["CountryPage"]
 
-    content_panels = Page.content_panels + [
+    content_panels = BasePage.content_panels + [
         FieldPanel("description"),
     ]
 
 
-class CountryPage(Page, TranslatableMixin):
+class CountryPage(BasePage):
     template = "irelandie_assets/pages/country.html"
 
     parent_page_types = ["CountryGroupPageIndex"]
     subpage_types = ["MissionPage"]
 
 
-class MissionPage(Page, TranslatableMixin):
+class MissionPage(BasePage):
     template = "irelandie_assets/pages/mission.html"
 
     parent_page_types = ["CountryPage"]
