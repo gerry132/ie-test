@@ -3,6 +3,7 @@ from django.views import defaults
 from wagtail.api.v2.serializers import PageSerializer
 from wagtail.api.v2.views import PagesAPIViewSet
 
+from irelandie_missions.filters import MissionPageFieldFilter
 from irelandie_utils.utils import get_locale_from_language_code_or_default
 
 
@@ -18,8 +19,12 @@ class PagesAPIEndpoint(PagesAPIViewSet):
     base_serializer_class = PageSerializer
     filter_backends = [
         # NOTE: filters should be listed before the SearchFilter
+      MissionPageFieldFilter,
     ] + PagesAPIViewSet.filter_backends
     known_query_parameters = PagesAPIViewSet.known_query_parameters.union([
+        "mission",
+        "country",
+        "country_group"
     ])
 
     def get_serializer_context(self):
