@@ -157,6 +157,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 # Wagtail extra
+                'wagtail.contrib.settings.context_processors.settings',
                 'django.template.context_processors.i18n'
             ],
             'builtins': ['pattern_library.loader_tags'],
