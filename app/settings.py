@@ -95,6 +95,7 @@ INSTALLED_APPS = [
     'wagtail.core',
     'wagtailaccessibility',
     'wagtailmedia',
+    'wagtail.api.v2',
 
     'modelcluster',
     'taggit',
@@ -110,6 +111,7 @@ INSTALLED_APPS = [
     'pattern_library',
     'irelandie_project_styleguide.apps.ProjectStyleguideConfig',
     'rest_framework',
+    'corsheaders',
 ]
 
 if DEBUG_TOOLBAR is True:
@@ -120,6 +122,7 @@ if DEBUG_TOOLBAR is True:
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -294,14 +297,15 @@ if USE_CACHE is True:
 # SECURE_CONTENT_TYPE_NOSNIFF = True
 
 
-# Waghtail DRF
-
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework.authentication.SessionAuthentication',
-#     )
-# }
-
+# Wagtail DRF
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
+# https://pypi.org/project/django-cors-headers/
+CORS_ALLOWED_ORIGINS = os.environ['CORS_ALLOWED_ORIGINS'].split(',')
+CORS_ALLOW_ALL_ORIGINS = os.environ.get('CORS_ALLOW_ALL_ORIGINS', False)
 
 if DEBUG_TOOLBAR is True:
     INTERNAL_IPS = [

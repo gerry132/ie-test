@@ -1,0 +1,68 @@
+{% load wagtailcore_tags %}
+{% wagtail_site as current_site %}
+<h1>{{ page.title }}</h1>
+<p>{{ page.description }}</p>
+
+<form>
+    {% csrf_token %}
+    <label for="query">Search</label>
+    <input type="text" id="query" list="country_mission_tags"/>
+    <!-- You can also use the API to get the list of page titles-->
+    <datalist id="country_mission_tags">
+        {% for mission_tag in page.mission_tags %}
+            <option value="{{ mission_tag.title}}"></option>
+        {% endfor %}
+            {% for country_tag in page.country_tags %}
+            <option value="{{ country_tag.title}}"></option>
+        {% endfor %}
+    </datalist>
+</form>
+
+<div id="country_group_results">
+
+</div>
+<div id="country_results">
+
+</div>
+<div id="search_results">
+
+</div>
+<script>
+let country_groups="";
+
+document.addEventListener('DOMContentLoaded', function(){
+    var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     document.getElementById("country_group_results").innerHTML = this.responseText;
+     this.country_groups=this.responseText;
+    }
+  };
+  xhttp.open("GET", "{{ current_site.full_url }}/api/v2/pages/?type=irelandie_missions.CountryGroupPageIndex&fields=title&locale={{ page.locale.language_code }}&format=json", true);
+  xhttp.send();
+}, false);
+
+document.addEventListener('DOMContentLoaded', function(){
+    var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     document.getElementById("country_results").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET", "{{ current_site.full_url }}/api/v2/pages/?type=irelandie_missions.CountryPage&fields=title&locale={{ page.locale.language_code }}&format=json", true);
+  xhttp.send();
+}, false);
+//search
+//search by country,country_group are also available
+//country=USA or country_group=Europe
+document.addEventListener('DOMContentLoaded', function(){
+    var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     document.getElementById("search_results").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET", "{{ current_site.full_url }}/api/v2/pages/?type=irelandie_missions.MissionPage&fields=title&locale={{ page.locale.language_code }}&mission=Mission page", true);
+  xhttp.send();
+}, false);
+</script>

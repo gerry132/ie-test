@@ -41,7 +41,8 @@ class HomePage(HeroPage):
     # Only allow creating HomePages at the root level
     parent_page_types = ['wagtailcore.Page']
     subpage_types = [
-        'irelandie_missions.CountryGroupPageIndex'
+        'irelandie_missions.CountryGroupPageIndex',
+        'irelandie_missions.MissionSearchPage',
     ]
 
     #
