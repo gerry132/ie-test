@@ -1,0 +1,9 @@
+tags:
+  image:
+    'page.hero_image width-400':
+      raw: |
+        <img src="https://source.unsplash.com/400x300?ocean" width="400" height="300" alt="Some alt">
+  pageurl:
+    'page.link_page as href':
+      target_var: href
+      raw: "#"

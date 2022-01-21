@@ -196,7 +196,7 @@ class TableBlock(WagtailTableBlock):
 class SocialLinkBlock(blocks.StructBlock):
     class Meta:
         label = "Social Link"
-        template = ("TODO",)
+        template = "patterns/molecules/streamfield/blocks/social_link_block.html"
 
     url = blocks.URLBlock(required=False)
 

@@ -11,7 +11,7 @@ register = template.Library()
 def primarynav(context):
     request = context["request"]
     return {
-        "primarynav": context["settings"]["navigation"][
+        "primarynav": context["settings"]["irelandie_navigation"][
             "NavigationSettings"
         ].primary_navigation,
         "request": request,
@@ -25,7 +25,7 @@ def primarynav(context):
 def secondarynav(context):
     request = context["request"]
     return {
-        "secondarynav": context["settings"]["navigation"][
+        "secondarynav": context["settings"]["irelandie_navigation"][
             "NavigationSettings"
         ].secondary_navigation,
         "request": request,
@@ -39,7 +39,7 @@ def secondarynav(context):
 def footernav(context):
     request = context["request"]
     return {
-        "footernav": context["settings"]["navigation"][
+        "footernav": context["settings"]["irelandie_navigation"][
             "NavigationSettings"
         ].footer_navigation,
         "request": request,
@@ -64,7 +64,7 @@ def sidebar(context):
 def footerlinks(context):
     request = context["request"]
     return {
-        "footerlinks": context["settings"]["navigation"][
+        "footerlinks": context["settings"]["irelandie_navigation"][
             "NavigationSettings"
         ].footer_links,
         "request": request,
