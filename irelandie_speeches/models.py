@@ -3,9 +3,11 @@ from django import forms
 from django.db import models
 
 from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.core.fields import StreamField
 from wagtail.core.models import Page
 
 from irelandie_missions.models import MissionPage
+from irelandie_speeches.blocks import SpeechPageBlock
 from irelandie_utils.models import BasePage, ArticlePage
 
 
@@ -23,6 +25,14 @@ class SpeechPageIndex(BasePage):
 
 
 class SpeechPage(ArticlePage):
+
+    override_related_articles = StreamField(
+        [
+            ("article", SpeechPageBlock()),
+        ],
+        blank=True,
+        max_num=3
+    )
 
     parent_page_types = [
         "SpeechPageIndex",

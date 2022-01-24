@@ -155,11 +155,9 @@ class JumpboxBlock(blocks.StructBlock):
 
 class ArticleBlock(blocks.PageChooserBlock):
     class Meta:
-        label = "ArticleBlock"
+        abstract = True
         template = "TODO"
 
-    def __init__(self):
-        super().__init__("irelandie_utils.ArticlePage")
 
 class PersonBlock(blocks.PageChooserBlock):
     class Meta:

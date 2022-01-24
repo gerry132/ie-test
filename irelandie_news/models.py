@@ -4,9 +4,11 @@ from django.db import models
 
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, TranslatableMixin
 
 from irelandie_missions.models import MissionPage
+from irelandie_news.blocks import NewsPageBlock
 from irelandie_utils.models import ArticlePage, BasePage
 
 
@@ -26,6 +28,13 @@ class NewsPageIndex(BasePage):
 class NewsPage(ArticlePage):
 
     countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
+    override_related_articles = StreamField(
+        [
+            ("article", NewsPageBlock()),
+        ],
+        blank=True,
+        max_num=3
+    )
 
     parent_page_types = [
         "NewsPageIndex",

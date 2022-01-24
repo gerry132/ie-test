@@ -451,14 +451,6 @@ class ArticlePage(BasePage):
         related_name='+'
     )
 
-    override_related_articles = StreamField(
-        [
-            ("page", custom_blocks.ArticleBlock()),
-        ],
-        blank=True,
-        max_num=3
-    )
-
     class Meta:
         abstract = True
 
@@ -501,6 +493,9 @@ class ArticlePage(BasePage):
                     ),
                 }
             )
+    @property
+    def override_related_articles(self):
+        raise NotImplementedError
 
     @cached_property
     def related_articles(self):
