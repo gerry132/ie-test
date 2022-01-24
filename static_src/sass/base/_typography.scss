@@ -26,7 +26,7 @@ html {
 }
 
 @mixin quote-text() {
-    font-family: $font--secondary;
+    font-family: $font--primary;
     font-style: italic;
     font-weight: inherit;
     text-transform: inherit;
@@ -55,23 +55,32 @@ blockquote {
 // Default sizes
 h1,
 .heading--1 {
-    @include font-size(xl);
+    @include font-size(xxl);
+    font-weight: $weight--extrabold;
+    line-height: 86px;
 }
 
 h2,
 .heading--2 {
-    @include font-size(l);
+    @include font-size(xl);
+    font-weight: $weight--bold;
+    line-height: 58px;
 }
 
 h3,
+.heading--3 {
+    @include font-size(l);
+    font-weight: $weight--bold;
+}
+
 h4,
 h5,
 h6,
-.heading--3,
 .heading--4,
 .heading--5,
 .heading--6 {
     @include font-size(m);
+    font-weight: $weight--semibold;
 }
 
 small {

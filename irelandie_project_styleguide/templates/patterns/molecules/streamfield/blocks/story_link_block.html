@@ -2,8 +2,15 @@
 
 {% pageurl value.page as href %}
 
-<a href="{{ href }}">
-  {{ value.title }}
+<a href="{{ href }}" class="story-link">
+    {% comment %} 
+        TODO: BE - add in optional icon chooser field
+        {% include "patterns/atoms/icons/icon.html" with name="magnifying-glass" classname="story-link__icon" %}
+    {% endcomment %}
+    <span class="story-link__content">
+        <span class="story-link__title">{{ value.title }}</span>
+        <span class="story-link__summary">{{ value.summary }}</span>
+    </span>
 </a>
 
-{{ value.summary }}
+

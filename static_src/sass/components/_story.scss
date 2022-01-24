@@ -1,0 +1,49 @@
+.story {
+    position: relative;
+
+    &__container {
+        position: relative;
+
+        @include media-query(medium) {
+            display: flex;
+        }
+    }
+
+    &__image {
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+        object-fit: cover;
+        height: 100%;
+    }
+
+    &__content {
+        color: $color--off-black;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 40px 80px;
+
+        @include media-query(medium) {
+            max-width: 560px;
+        }
+    }
+
+    &__title {
+        color: $color--off-black;
+    }
+
+    &__cta {
+        margin-top: $grid;
+    }
+
+    &__links {
+        background-color: $color--white;
+        border-radius: $border-radius;
+        box-shadow: 0 43px 63px 0 rgba(0, 0, 0, 0.1);
+        margin-top: auto;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        overflow: hidden;
+    }
+}
