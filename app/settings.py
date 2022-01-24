@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'irelandie_places',
     'irelandie_press_releases',
     'irelandie_publications',
+    'irelandie_speeches',
     'irelandie_site_information',
 
     #
@@ -94,6 +95,8 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail.core',
     'wagtailaccessibility',
+    'wagtailmedia',
+    'wagtail.api.v2',
 
     'modelcluster',
     'taggit',
@@ -109,6 +112,7 @@ INSTALLED_APPS = [
     'pattern_library',
     'irelandie_project_styleguide.apps.ProjectStyleguideConfig',
     'rest_framework',
+    'corsheaders',
 ]
 
 if DEBUG_TOOLBAR is True:
@@ -119,6 +123,7 @@ if DEBUG_TOOLBAR is True:
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -156,6 +161,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 # Wagtail extra
+                'wagtail.contrib.settings.context_processors.settings',
                 'django.template.context_processors.i18n'
             ],
             'builtins': ['pattern_library.loader_tags'],
@@ -293,14 +299,15 @@ if USE_CACHE is True:
 # SECURE_CONTENT_TYPE_NOSNIFF = True
 
 
-# Waghtail DRF
-
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework.authentication.SessionAuthentication',
-#     )
-# }
-
+# Wagtail DRF
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
+# https://pypi.org/project/django-cors-headers/
+CORS_ALLOWED_ORIGINS = os.environ['CORS_ALLOWED_ORIGINS'].split(',')
+CORS_ALLOW_ALL_ORIGINS = os.environ.get('CORS_ALLOW_ALL_ORIGINS', False)
 
 if DEBUG_TOOLBAR is True:
     INTERNAL_IPS = [
@@ -384,6 +391,9 @@ WAGTAILSEARCH_BACKENDS = {
     'default': {'BACKEND': 'wagtail.search.backends.database'}
 }
 
+# Default size of the pagination used on the front-end.
+DEFAULT_PER_PAGE = 20
+
 
 # WAGTAIL_EXPERIMENTAL_FEATURES = ['slim-sidebar']
 
@@ -395,6 +405,11 @@ AUTH_USER_MODEL = 'irelandie_users.User'
 ROOT_MODEL_CLASS = 'irelandie_home.HomePage'
 MISSION_MODEL_CLASS = 'ireland_missions.Mission'
 
+# wagtailmedia
+# https://github.com/torchbox/wagtailmedia
+WAGTAILMEDIA = {
+    "VIDEO_EXTENSIONS": ['mp4'],  # list of extensions
+}
 
 #
 

@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 import re
 
+from django.forms.utils import ErrorList
 from wagtail.contrib.table_block.blocks import TableBlock as WagtailTableBlock
 from wagtail.core import blocks
+from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
+from wagtailmedia.blocks import VideoChooserBlock
 
 
 class StoryLinkBlock(blocks.StructBlock):
@@ -13,9 +16,58 @@ class StoryLinkBlock(blocks.StructBlock):
         help_text="Leave blank to use the page's own title", required=False
     )
     summary = blocks.CharBlock(required=False)
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
 
     class Meta:
         template = "patterns/molecules/streamfield/blocks/story_link_block.html"
+
+    def clean(self, value):
+        errors = {}
+        values = [value["page"], value["url"]]
+        # Set only a Page OR a URL
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a page or set a URL."
+
+            errors["page"] = ErrorList([message])
+            errors["url"] = ErrorList([message])
+
+        # A URL must have title
+        if value["url"] and not value["title"]:
+            errors["title"] = ErrorList(["Please set a title for the URL"])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    def get_context(self, value, parent_context=None):
+        ctx = super().get_context(value, parent_context=parent_context)
+
+        # user input data
+        block_page = ctx["value"]["page"]
+        block_url = ctx["value"]["url"]
+        block_title = ctx["value"]["title"]
+
+        # based on the input data, determine the intended link title & URL
+        link_title = ""
+        link_url = ""
+
+        if block_page:
+            link_title = block_title or block_page.title
+            link_url = block_page.url
+
+        if block_url:
+            link_title = block_title
+            link_url = block_url
+
+        # added link_title,link_url in the context for FE to use them
+        ctx.update({"link_title": link_title, "link_url": link_url})
+
+        return ctx
 
 
 class StoryBlock(blocks.StructBlock):
@@ -34,6 +86,26 @@ class StoryBlock(blocks.StructBlock):
 
     class Meta:
         template = "patterns/molecules/streamfield/blocks/story_block.html"
+
+
+class FeaturedStoryBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=True)
+    page = blocks.PageChooserBlock(required=False)
+    title = blocks.CharBlock(required=False)
+
+    class Meta:
+        template = "patterns/molecules/streamfield/blocks/featured_story_block.html"
+
+class EmbassyStory(blocks.StructBlock):
+    image = ImageChooserBlock(required=True)
+    page = blocks.PageChooserBlock(
+        required=False,
+        page_type="irelandie_missions.MissionPage",
+    )
+    title = blocks.CharBlock(required=False)
+
+    class Meta:
+        template = "patterns/molecules/streamfield/blocks/embassy_block.html"
 
 
 class PinnedStoryBlock(blocks.StructBlock):
@@ -146,7 +218,7 @@ class TableBlock(WagtailTableBlock):
 class SocialLinkBlock(blocks.StructBlock):
     class Meta:
         label = "Social Link"
-        template = ("TODO",)
+        template = "patterns/molecules/streamfield/blocks/social_link_block.html"
 
     url = blocks.URLBlock(required=False)
 
@@ -172,12 +244,30 @@ class YoutubeLinkValue(blocks.StructValue):
 
 class YoutubeVideoBlock(blocks.StructBlock):
     class Meta:
-        label = "YoutubeVideoBlock"
+        label = "Youtube Video"
         value_class = YoutubeLinkValue
+        template = "patterns/molecules/streamfield/blocks/youtube_block.html"
 
     url = blocks.CharBlock()
+
+
+class CustomVideoChooserBlock(VideoChooserBlock):
+    pass
 
 
 class BaseSectionBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=False)
     body = blocks.StreamBlock([], required=False)
+
+
+class ArticleStoryBlock(blocks.StreamBlock):
+    contact_detail = ContactDetailBlock()
+    image = ImageBlock()
+    rich_text = blocks.RichTextBlock(features=["h3", "blockquote", "bold", "link", "document-link", "ul"])
+    person = PersonBlock()
+    place = PlaceBlock()
+    document = DocumentBlock()
+    table = TableBlock()
+    role = RoleBlock()
+    video = CustomVideoChooserBlock()
+    youtube_video = YoutubeVideoBlock()

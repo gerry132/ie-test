@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
-from django import forms
 from django.db import models
-
-from modelcluster.fields import ParentalManyToManyField
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, TranslatableMixin
 
 from irelandie_missions.models import MissionPage
+from irelandie_news.blocks import NewsPageBlock
+from irelandie_utils.models import ArticlePage, BasePage
 
-from .blocks import NewsPageSectionBlock
 
-
-class NewsPageIndex(Page, TranslatableMixin):
+class NewsPageIndex(BasePage):
+    template = "patterns/pages/irelandie_news/news_index.html"
 
     description = models.TextField(blank=True)
 
@@ -25,26 +23,18 @@ class NewsPageIndex(Page, TranslatableMixin):
     ]
 
 
-class NewsPage(Page, TranslatableMixin):
+class NewsPage(ArticlePage):
+    template = "patterns/pages/irelandie_news/news_page.html"
 
-    body = StreamField(
+    override_related_articles = StreamField(
         [
-            ("section", NewsPageSectionBlock()),
+            ("article", NewsPageBlock()),
         ],
         blank=True,
-        null=True,
+        max_num=3
     )
-    description = models.TextField(blank=True)
-    countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
 
     parent_page_types = [
         "NewsPageIndex",
     ]
     subpage_types = []
-
-    content_panels = Page.content_panels + [
-        FieldPanel("first_published_at"),
-        StreamFieldPanel("body"),
-        FieldPanel("description"),
-        FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
-    ]

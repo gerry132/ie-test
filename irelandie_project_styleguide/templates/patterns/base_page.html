@@ -1,6 +1,6 @@
 {% extends "patterns/base.html" %}
 
-{% load static wagtailuserbar wagtailcore_tags wagtailimages_tags navigation_tags util_tags %}
+{% load static wagtailuserbar wagtailcore_tags wagtailimages_tags navigation_tags util_tags i18n %}
 {% wagtail_site as current_site %}
 
 {% block meta_tags %}
@@ -83,8 +83,8 @@
             </a>
 
             <div class="header__menu-toggle">
-                <span>Menu</span>
-                <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="Mobile menu toggle">
+                <span>{% trans 'Menu' %}</span>
+                <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
                     <span class="button-menu-toggle__line"></span>
                     <span class="button-menu-toggle__line"></span>
                     <span class="button-menu-toggle__line"></span>
@@ -94,13 +94,12 @@
 
             <div class="header__menus header__menus--desktop">
                 <div class="header__inner--top">
-                    {% secondarynav %}
                     <form action="{% url 'search' %}" method="get" role="search" class="form form--header-search">
                         <input class="input" id="search" type="text" placeholder="Search…" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
-                        <label class="u-sr-only" for="search">Search this website</label>
+                        <label class="u-sr-only" for="search">{% trans 'Search this website' %}</label>
                         <button class="button" type="submit">
                             {% include "patterns/atoms/icons/icon.html" with name="magnifying-glass" %}
-                            <span class="u-sr-only">Search</span>
+                            <span class="u-sr-only">{% trans 'Search' %}</span>
                         </button>
                     </form>
                 </div>
@@ -122,7 +121,7 @@
             <div class="footer__nav-container">
                 {% if settings.utils.SocialMediaSettings.twitter_handle or settings.utils.SocialMediaSettings.facebook_app_id %}
                     <div class="footer__social-links">
-                        <p class="heading--5 footer__heading">Follow us:</p>
+                        <p class="heading--5 footer__heading">{% trans 'Follow us:' %}</p>
                         {% if settings.utils.SocialMediaSettings.twitter_handle %}
                             <a href="https://twitter.com/{{ settings.utils.SocialMediaSettings.twitter_handle }}">
                                 {% include "patterns/atoms/icons/icon.html" with name="twitter" classname="icon--footer-social" %}
@@ -143,13 +142,17 @@
                 <div>
                     {% footerlinks %}
                 </div>
+
+                {% for link in settings.utils.SocialMediaSettings.social_links %}
+                  {% include_block link %}
+                {% endfor %}
             </div>
 
             <div class="footer__credit">
                 {% if COPYRIGHT %}
                     <p>© {% now "Y" %} {{ COPYRIGHT }}</p>
                 {% endif %}
-                <div>Site by <a href="https://torchbox.com/">Torchbox</a></div>
+                <div>{% trans 'Site by ' %}<a href="https://torchbox.com/">Torchbox</a></div>
             </div>
         </div>
     </footer>
