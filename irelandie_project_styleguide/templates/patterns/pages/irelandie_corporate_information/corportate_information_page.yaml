@@ -8,9 +8,9 @@ context:
       width: 400
       height: 700
       file:
-        url: https://www.youtube.com/embed/dQw4w9WgXcQ
+        url: https://youtu.be/dQw4w9WgXcQ
     call_to_action:
-      get_link_url: https://www.youtube.com/embed/dQw4w9WgXcQ
+      get_link_url: https://youtu.be/dQw4w9WgXcQ
       get_link_text: CTA Link Text
     related_articles:
       - listing_title: lorem ipsum
