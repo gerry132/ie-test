@@ -13,6 +13,7 @@ from irelandie_utils.models import BasePage, ArticlePage
 
 
 class PublicationPageIndex(BasePage):
+    template = "patterns/pages/irelandie_publications/publication_page.html"
 
     description = models.TextField(blank=True)
 
@@ -26,6 +27,7 @@ class PublicationPageIndex(BasePage):
 
 
 class PublicationPage(ArticlePage):
+    template = "patterns/pages/irelandie_publications/publication_index.html"
 
     countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
     override_related_articles = StreamField(

@@ -12,6 +12,7 @@ from irelandie_utils.models import BasePage, ArticlePage
 
 
 class SiteInformationPageIndex(BasePage):
+    template = "patterns/pages/irelandie_site_information/site_information_index.html"
 
     parent_page_types = [MissionPage]
     subpage_types = ["SiteInformationPage"]
@@ -19,6 +20,7 @@ class SiteInformationPageIndex(BasePage):
 
 
 class SiteInformationPage(ArticlePage):
+    template = "patterns/pages/irelandie_site_information/site_information_page.html"
 
     countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
     override_related_articles = StreamField(

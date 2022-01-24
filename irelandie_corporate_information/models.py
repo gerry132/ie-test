@@ -12,6 +12,7 @@ from irelandie_utils.models import ArticlePage, BasePage
 
 
 class CorportateInformationPageIndex(BasePage):
+    template = "patterns/pages/irelandie_corporate_information/corportate_information_index.html"
 
     parent_page_types = [MissionPage]
     subpage_types = ["CorportateInformationPage"]
@@ -19,6 +20,7 @@ class CorportateInformationPageIndex(BasePage):
 
 
 class CorportateInformationPage(ArticlePage):
+    template = "patterns/pages/irelandie_corporate_information/corportate_information_page.html"
 
     countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
 
