@@ -28,14 +28,6 @@ class NewsPageIndex(BasePage):
 
 class NewsPage(ArticlePage):
 
-    body = StreamField(
-        [
-            ("section", NewsPageSectionBlock()),
-        ],
-        blank=True,
-        null=True,
-    )
-    description = models.TextField(blank=True)
     countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
 
     parent_page_types = [
@@ -43,9 +35,6 @@ class NewsPage(ArticlePage):
     ]
     subpage_types = []
 
-    content_panels = Page.content_panels + [
-        FieldPanel("first_published_at"),
-        StreamFieldPanel("body"),
-        FieldPanel("description"),
+    content_panels = ArticlePage.content_panels + [
         FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
     ]

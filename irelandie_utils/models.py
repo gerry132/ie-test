@@ -442,6 +442,7 @@ class ArticlePage(BasePage):
 
     body = StreamField(
         [
+            ("contact_detail", custom_blocks.ContactDetailBlock()),
             ("image", custom_blocks.ImageBlock()),
             (
                 "rich_text",
@@ -449,8 +450,11 @@ class ArticlePage(BasePage):
                     features=["h3", "blockquote", "bold", "link", "document-link", "ul"]
                 ),
             ),
+            ("person", custom_blocks.PersonBlock()),
+            ("place", custom_blocks.PlaceBlock()),
             ("document", custom_blocks.DocumentBlock()),
             ("table", custom_blocks.TableBlock()),
+            ("role", custom_blocks.RoleBlock()),
             ("youtube_video", custom_blocks.YoutubeVideoBlock()),
         ],
         blank=False,

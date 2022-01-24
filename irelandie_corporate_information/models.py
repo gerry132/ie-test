@@ -22,21 +22,11 @@ class CorportateInformationPageIndex(BasePage):
 
 class CorportateInformationPage(ArticlePage):
 
-    body = StreamField(
-        [
-            ("section", CorporateInformationPageSectionBlock()),
-        ],
-        blank=True,
-        null=True,
-    )
-    description = models.TextField(blank=True)
     countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
 
     parent_page_types = ["CorportateInformationPageIndex"]
     subpage_types = []
 
-    content_panels = Page.content_panels + [
-        FieldPanel("first_published_at"),
-        StreamFieldPanel("body"),
+    content_panels = ArticlePage.content_panels + [
         FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
     ]

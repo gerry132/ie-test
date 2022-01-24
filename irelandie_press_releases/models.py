@@ -28,14 +28,6 @@ class PressReleasePageIndex(BasePage):
 
 class PressReleasePage(ArticlePage):
 
-    description = models.TextField(blank=True)
-    body = StreamField(
-        [
-            ("section", PressReleasePageSectionBlock()),
-        ],
-        blank=True,
-        null=True,
-    )
     countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
 
     parent_page_types = [
@@ -43,9 +35,6 @@ class PressReleasePage(ArticlePage):
     ]
     subpage_types = []
 
-    content_panels = Page.content_panels + [
-        FieldPanel("first_published_at"),
-        FieldPanel("description"),
-        StreamFieldPanel("body"),
+    content_panels = ArticlePage.content_panels + [
         FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
     ]
