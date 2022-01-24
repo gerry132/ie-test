@@ -29,7 +29,6 @@ class PublicationPageIndex(BasePage):
 class PublicationPage(ArticlePage):
     template = "patterns/pages/irelandie_publications/publication_index.html"
 
-    countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
     override_related_articles = StreamField(
         [
             ("article", PublicationPageBlock()),
@@ -43,6 +42,3 @@ class PublicationPage(ArticlePage):
     ]
     subpage_types = []
 
-    content_panels = ArticlePage.content_panels + [
-        FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
-    ]

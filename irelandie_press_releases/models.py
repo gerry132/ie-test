@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-from django import forms
 from django.db import models
 
-from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, TranslatableMixin
@@ -29,7 +27,6 @@ class PressReleasePageIndex(BasePage):
 class PressReleasePage(ArticlePage):
     template = "patterns/pages/irelandie_press_releases/press_release.html"
 
-    countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
     override_related_articles = StreamField(
         [
             ("article", PressReleasePageBlock()),
@@ -37,11 +34,8 @@ class PressReleasePage(ArticlePage):
         blank=True,
         max_num=3
     )
+
     parent_page_types = [
         "PressReleasePageIndex",
     ]
     subpage_types = []
-
-    content_panels = ArticlePage.content_panels + [
-        FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
-    ]

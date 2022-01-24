@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-from django import forms
-
-from modelcluster.fields import ParentalManyToManyField
-from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, TranslatableMixin
 
@@ -22,8 +18,6 @@ class CorportateInformationPageIndex(BasePage):
 class CorportateInformationPage(ArticlePage):
     template = "patterns/pages/irelandie_corporate_information/corportate_information_page.html"
 
-    countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
-
     override_related_articles = StreamField(
         [
             ("article", CorportateInformationPageBlock()),
@@ -34,7 +28,3 @@ class CorportateInformationPage(ArticlePage):
 
     parent_page_types = ["CorportateInformationPageIndex"]
     subpage_types = []
-
-    content_panels = ArticlePage.content_panels + [
-        FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
-    ]
