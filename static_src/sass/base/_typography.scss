@@ -55,22 +55,34 @@ blockquote {
 // Default sizes
 h1,
 .heading--1 {
-    @include font-size(xxl);
+    @include font-size(xl);
     font-weight: $weight--extrabold;
-    line-height: 86px;
+
+    @include media-query(medium) {
+        @include font-size(xxl);
+        line-height: 86px;
+    }
 }
 
 h2,
 .heading--2 {
-    @include font-size(xl);
+    @include font-size(l);
     font-weight: $weight--bold;
-    line-height: 58px;
+
+    @include media-query(medium) {
+        @include font-size(xl);
+        line-height: 58px;
+    }
 }
 
 h3,
 .heading--3 {
-    @include font-size(l);
+    @include font-size(m);
     font-weight: $weight--bold;
+
+    @include media-query(medium) {
+        @include font-size(l);
+    }
 }
 
 h4,

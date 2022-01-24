@@ -3,30 +3,41 @@
 
 <div class="story">
     {% comment %} TODO: BE - add in background color chooser {% endcomment %}
+    {% comment %} TODO: BE - add in alignment chooser (left or right aligned) {% endcomment %}
     <div class="wrapper wrapper--large">
         <div class="story__container">
             {% image value.image width-460 class="story__image" %}
 
             <div class="story__content">
-                {% if value.page %}
-                    {% pageurl value.page as href %}
-                    <h3 class="story__heading heading--2"><a href="{{ href }}">{{ value.title }}</a></h3>
-                {% else %}
-                    <h3 class="story__heading heading--2">{{ value.title }}</h3>
-                {% endif %}
-            
-                <p>{{ value.summary }}</p>
-
+                <div class="story__copy">
+                    {% if value.page %}
+                        {% pageurl value.page as href %}
+                        <a href="{{ href }}">
+                            <h3 class="story__heading heading--2">{{ value.title }}</h3>
+                        </a>
+                    {% else %}
+                        <h3 class="story__heading heading--2">{{ value.title }}</h3>
+                    {% endif %}
+                
+                    <p>{{ value.summary }}</p>
+                
                 {% comment %} 
                     TODO: BE - add in optional CTA field
 
                     <a href="/" aria-label="Find out more about Ireland">Join us in Ireland</a> 
                 {% endcomment %}
+                </div>
 
-                <ul class="story__links">
-                    {% for link in value.links %}
-                        {% include_block link %} 
-                    {% endfor %}
+                <ul class="story__links" data-story-links-expander>
+                    <div class="story__links-container">
+                        {% for link in value.links %}
+                            {% include_block link %}
+                        {% endfor %}
+                    </div>
+
+                    <button class="story__links-expander" aria-hidden="true" data-story-links-toggle>
+                        {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="story__links-expander-icon" %}
+                    </button>
                 </ul>
             </div>
         </div>

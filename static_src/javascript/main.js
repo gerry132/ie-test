@@ -4,6 +4,7 @@ import MobileSubMenu from './components/mobile-sub-menu';
 import DesktopSubMenu from './components/desktop-sub-menu';
 import DesktopCloseMenus from './components/desktop-close-menus';
 import SkipLink from './components/skip-link';
+import StoryLinksExpander from './components/story-links-expander';
 
 /* feature:use_frontend_component_accordion */
 import Accordion from './components/accordion';
@@ -96,5 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (const skiplink of document.querySelectorAll(SkipLink.selector())) {
         new SkipLink(skiplink);
+    }
+
+    for (const storylinksexpander of document.querySelectorAll(
+        StoryLinksExpander.selector(),
+    )) {
+        new StoryLinksExpander(storylinksexpander);
     }
 });
