@@ -153,12 +153,6 @@ class JumpboxBlock(blocks.StructBlock):
     url = blocks.URLBlock(required=False)
 
 
-class ArticleBlock(blocks.PageChooserBlock):
-    class Meta:
-        abstract = True
-        template = "TODO"
-
-
 class PersonBlock(blocks.PageChooserBlock):
     class Meta:
         label = "PersonBlock"

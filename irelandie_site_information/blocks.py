@@ -1,7 +1,7 @@
-from irelandie_utils.blocks import ArticleBlock
+from wagtail.core import blocks
 
 
-class SiteInformationPageBlock(ArticleBlock):
+class SiteInformationPageBlock(blocks.PageChooserBlock):
 
     def __init__(self):
         super().__init__("irelandie_site_information.SiteInformationPage")

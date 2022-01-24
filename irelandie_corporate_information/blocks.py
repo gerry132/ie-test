@@ -1,7 +1,7 @@
-from irelandie_utils.blocks import ArticleBlock
+from wagtail.core import blocks
 
 
-class CorportateInformationPageBlock(ArticleBlock):
+class CorportateInformationPageBlock(blocks.PageChooserBlock):
 
     def __init__(self):
         super().__init__("irelandie_corporate_information.CorportateInformationPage")
