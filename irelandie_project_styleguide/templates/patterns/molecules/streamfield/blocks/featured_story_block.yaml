@@ -1,0 +1,14 @@
+context:
+  value:
+    title: Stub content
+    page: foobar
+
+tags:
+  image:
+    value.image width-400:
+      raw: |
+        <img src="https://source.unsplash.com/400x300?ocean" width="400" height="300" alt="Some alt">
+  pageurl:
+    value.page as href:
+      target_var: href
+      raw: "#"
