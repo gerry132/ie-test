@@ -3,14 +3,11 @@ from django import forms
 from django.db import models
 
 from modelcluster.fields import ParentalManyToManyField
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
-from wagtail.core.fields import StreamField
+from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.models import Page, TranslatableMixin
 
 from irelandie_missions.models import MissionPage
 from irelandie_utils.models import ArticlePage, BasePage
-
-from .blocks import NewsPageSectionBlock
 
 
 class NewsPageIndex(BasePage):
