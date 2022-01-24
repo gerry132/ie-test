@@ -8,18 +8,19 @@ from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, TranslatableMixin
 
 from irelandie_missions.models import MissionPage
+from irelandie_utils.models import ArticlePage, BasePage
 
 from .blocks import CorporateInformationPageSectionBlock
 
 
-class CorportateInformationPageIndex(Page, TranslatableMixin):
+class CorportateInformationPageIndex(BasePage):
 
     parent_page_types = [MissionPage]
     subpage_types = ["CorportateInformationPage"]
     max_count_per_parent = 1
 
 
-class CorportateInformationPage(Page, TranslatableMixin):
+class CorportateInformationPage(ArticlePage):
 
     body = StreamField(
         [

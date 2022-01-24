@@ -8,18 +8,19 @@ from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, TranslatableMixin
 
 from irelandie_missions.models import MissionPage
+from irelandie_utils.models import BasePage, ArticlePage
 
 from .blocks import SiteInformationPageSectionBlock
 
 
-class SiteInformationPageIndex(Page, TranslatableMixin):
+class SiteInformationPageIndex(BasePage):
 
     parent_page_types = [MissionPage]
     subpage_types = ["SiteInformationPage"]
     max_count_per_parent = 1
 
 
-class SiteInformationPage(Page, TranslatableMixin):
+class SiteInformationPage(ArticlePage):
 
     description = models.TextField(blank=True)
     body = StreamField(

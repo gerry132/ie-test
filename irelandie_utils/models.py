@@ -442,6 +442,7 @@ class ArticlePage(BasePage):
 
     body = StreamField(
         [
+            ("image", custom_blocks.ImageBlock()),
             (
                 "rich_text",
                 blocks.RichTextBlock(
@@ -456,7 +457,7 @@ class ArticlePage(BasePage):
     )
 
     call_to_action = models.ForeignKey(
-        'irelandie_utils.CallToActionSnippet',
+        CallToActionSnippet,
         blank=True,
         null=True,
         on_delete=models.SET_NULL,

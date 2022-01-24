@@ -8,11 +8,12 @@ from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, TranslatableMixin
 
 from irelandie_missions.models import MissionPage
+from irelandie_utils.models import BasePage, ArticlePage
 
 from .blocks import PublicationPageSectionBlock
 
 
-class PublicationPageIndex(Page, TranslatableMixin):
+class PublicationPageIndex(BasePage):
 
     description = models.TextField(blank=True)
 
@@ -25,7 +26,7 @@ class PublicationPageIndex(Page, TranslatableMixin):
     ]
 
 
-class PublicationPage(Page, TranslatableMixin):
+class PublicationPage(ArticlePage):
 
     description = models.TextField(blank=True)
     body = StreamField(

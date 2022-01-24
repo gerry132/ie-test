@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'irelandie_places',
     'irelandie_press_releases',
     'irelandie_publications',
+    'irelandie_speeches',
     'irelandie_site_information',
 
     #
