@@ -1,7 +1,8 @@
 context:
   value:
-    title: Stub content
-    summary: Check out our awesome stub content
+    image: true
+    title: A country unlike anywhere else on Earth
+    summary: Isn't it time you joined us in Ireland?
     page: foobar
     links:
       - title: Stub content
@@ -16,13 +17,13 @@ context:
 
 tags:
   image:
-    value.image width-400:
+    value.image width-460 class="story__image":
       raw: |
-        <img src="https://source.unsplash.com/400x300?ocean" width="400" height="300" alt="Some alt">
+        <img src="https://source.unsplash.com/460x500?ocean" width="460" height="500" alt="Some alt" class="story__image">
   pageurl:
     value.page as href:
       target_var: href
-      raw: "#"
+      raw: '#'
   include_block:
     'link':
       template_name: 'patterns/molecules/streamfield/blocks/story_link_block.html'

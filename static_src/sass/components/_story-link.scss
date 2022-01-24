@@ -1,0 +1,51 @@
+.story-link {
+    $root: &;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 15px 30px;
+    transition: background-color $transition, color $transition;
+
+    &:hover {
+        background-color: $color--primary;
+        color: $color--white;
+    }
+
+    &:nth-child(odd) {
+        border-right: 1px solid $color--border;
+    }
+
+    &__icon {
+        margin-right: 15px;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    &__title {
+        @include font-size(xs);
+        color: $color--primary;
+        font-weight: $weight--bold;
+        transition: color $transition;
+
+        #{$root}:hover & {
+            color: $color--white;
+        }
+    }
+
+    &__summary {
+        @include font-size(xxs);
+        color: $color--accessible-grey;
+        transition: color $transition;
+
+        #{$root}:hover & {
+            color: $color--white;
+        }
+    }
+}
