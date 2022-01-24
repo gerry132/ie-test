@@ -507,7 +507,7 @@ class ArticlePage(BasePage):
             ]
 
         return (
-            ArticlePage.objects.exact_type(type(self)).filter(locale=self.locale)
+            Page.objects.exact_type(type(self)).filter(locale=self.locale)
                 .public()  # type:ignore
                 .live()
                 .order_by("-first_published_at")[:3]
