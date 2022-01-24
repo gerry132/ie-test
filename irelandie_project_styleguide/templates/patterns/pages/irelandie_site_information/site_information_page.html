@@ -29,5 +29,5 @@
 <!-- related_articles -->
 {% for article in page.related_articles %}
     <h2>{{ article.listing_title }}</h2>
-    {% image page.listing_image width-400 %}
+    {% image article.listing_image width-400 %}
 {% endfor %}
