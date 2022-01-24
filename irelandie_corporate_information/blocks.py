@@ -1,29 +1,7 @@
-# -*- coding: utf-8 -*-
-from wagtail.core import blocks as wagtail_blocks
-
-from irelandie_utils import blocks
+from wagtail.core import blocks
 
 
-class CorporateInformationPageSectionBlock(blocks.BaseSectionBlock):
-    class Meta:
-        label = "SectionBlock"
-        template = "TODO"
+class CorportateInformationPageBlock(blocks.PageChooserBlock):
 
-    body = wagtail_blocks.StreamBlock(
-        [
-            ("contact_detail", blocks.ContactDetailBlock()),
-            ("document", blocks.DocumentBlock()),
-            ("image", blocks.ImageBlock()),
-            ("person", blocks.PersonBlock()),
-            ("place", blocks.PlaceBlock()),
-            (
-                "rich_text",
-                blocks.RichTextBlock(
-                    features=["h3", "blockquote", "bold", "link", "document-link", "ul"]
-                ),
-            ),
-            ("role", blocks.RoleBlock()),
-            ("table", blocks.TableBlock()),
-        ],
-        required=False,
-    )
+    def __init__(self):
+        super().__init__("irelandie_corporate_information.CorportateInformationPage")

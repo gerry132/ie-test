@@ -7,6 +7,7 @@ from wagtail.core import blocks
 from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
+from wagtailmedia.blocks import VideoChooserBlock
 
 
 class StoryLinkBlock(blocks.StructBlock):
@@ -26,7 +27,7 @@ class StoryLinkBlock(blocks.StructBlock):
 
     def clean(self, value):
         errors = {}
-        values = [value["page"],value["url"]]
+        values = [value["page"], value["url"]]
         # Set only a Page OR a URL
         if sum(value is not None and value != "" for value in values) != 1:
             message = "Please choose only a page or set a URL."
@@ -67,6 +68,7 @@ class StoryLinkBlock(blocks.StructBlock):
         ctx.update({"link_title": link_title, "link_url": link_url})
 
         return ctx
+
 
 class StoryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
@@ -228,6 +230,23 @@ class YoutubeVideoBlock(blocks.StructBlock):
     url = blocks.CharBlock()
 
 
+class CustomVideoChooserBlock(VideoChooserBlock):
+    pass
+
+
 class BaseSectionBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=False)
     body = blocks.StreamBlock([], required=False)
+
+
+class ArticleStoryBlock(blocks.StreamBlock):
+    contact_detail = ContactDetailBlock()
+    image = ImageBlock()
+    rich_text = blocks.RichTextBlock(features=["h3", "blockquote", "bold", "link", "document-link", "ul"])
+    person = PersonBlock()
+    place = PlaceBlock()
+    document = DocumentBlock()
+    table = TableBlock()
+    role = RoleBlock()
+    video = CustomVideoChooserBlock()
+    youtube_video = YoutubeVideoBlock()

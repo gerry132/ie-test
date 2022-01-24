@@ -1,0 +1,17 @@
+context:
+  page:
+    title: Ireland in the World
+    introduction: Etiam nac odio nec lectus posuere finibus eu at diam.
+    hero_title: Ireland in the World
+    hero_image: dummy
+    hero_video:
+      width: 400
+      height: 700
+      file:
+        url: https://youtu.be/dQw4w9WgXcQ
+    call_to_action:
+      get_link_url: https://youtu.be/dQw4w9WgXcQ
+      get_link_text: CTA Link Text
+    related_articles:
+      - listing_title: lorem ipsum
+        listing_image: dummy
