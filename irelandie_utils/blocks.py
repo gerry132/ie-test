@@ -153,6 +153,15 @@ class JumpboxBlock(blocks.StructBlock):
     url = blocks.URLBlock(required=False)
 
 
+class ArticleBlock(blocks.PageChooserBlock):
+    class Meta:
+        label = "ArticleBlock"
+        template = "TODO"
+
+    def __init__(self):
+        super().__init__("irelandie_utils.ArticlePage")
+
+
 class PersonBlock(blocks.PageChooserBlock):
     class Meta:
         label = "PersonBlock"

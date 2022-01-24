@@ -20,15 +20,15 @@ from wagtail.core.models import Orderable, Page, TranslatableMixin
 from wagtail.core.query import PageQuerySet
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
+from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
-from irelandie_utils.blocks import SocialLinkBlock
+from irelandie_utils import blocks as custom_blocks
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
 
 SEARCH_DESCRIPTION_LABEL = "Meta description"  # NOTE changing this requires migrations
-
 
 IMAGE_MODEL = str(dj_settings.WAGTAILIMAGES_IMAGE_MODEL)
 
@@ -163,7 +163,7 @@ class ListingFields(models.Model):
         max_length=255,
         blank=True,
         help_text="The text summary used when this page appears in listings. It's also used as "
-        f"the description for search engines if the '{SEARCH_DESCRIPTION_LABEL}' field above is not defined.",
+                  f"the description for search engines if the '{SEARCH_DESCRIPTION_LABEL}' field above is not defined.",
     )
 
     class Meta:
@@ -275,7 +275,7 @@ class SocialMediaSettings(BaseSetting):
         help_text="Site name, used by Open Graph.",
     )
     social_links = StreamField(
-        [("profile", SocialLinkBlock())],
+        [("profile", custom_blocks.SocialLinkBlock())],
         blank=True,
         help_text="List of links to social media profiles"
     )
@@ -312,6 +312,7 @@ class BasePage(SocialFields, ListingFields, Page):
         index.SearchField("listing_title"),
         index.SearchField("listing_summary"),
     ]
+
     @cached_property
     def related_pages(self) -> PageQuerySet:
         """
@@ -342,6 +343,7 @@ class Tracking(BaseSetting):
         blank="True",
         help_text="Your Google Tag Manager ID",
     )
+
 
 class HeroPage(BasePage):
     hero_title = models.CharField(blank=True, max_length=255)
@@ -417,3 +419,113 @@ class HeroPage(BasePage):
         ),
         FieldPanel("secondary_title"),
     ]
+
+
+class ArticlePage(BasePage):
+    introduction = models.TextField(blank=True)
+
+    hero_title = models.CharField(blank=True, max_length=255)
+    hero_image = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    hero_video = models.ForeignKey(
+        "wagtailmedia.Media",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+
+    body = StreamField(
+        [
+            (
+                "rich_text",
+                blocks.RichTextBlock(
+                    features=["h3", "blockquote", "bold", "link", "document-link", "ul"]
+                ),
+            ),
+            ("document", custom_blocks.DocumentBlock()),
+            ("table", custom_blocks.TableBlock()),
+            ("youtube_video", custom_blocks.YoutubeVideoBlock()),
+        ],
+        blank=False,
+    )
+
+    call_to_action = models.ForeignKey(
+        'irelandie_utils.CallToActionSnippet',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    override_related_articles = StreamField(
+        [
+            ("page", custom_blocks.ArticleBlock()),
+        ],
+        blank=True,
+        max_num=3
+    )
+
+    class Meta:
+        abstract = True
+
+    content_panels = Page.content_panels + [
+        FieldPanel("introduction"),
+        MultiFieldPanel(
+            [
+                FieldPanel("hero_title"),
+                ImageChooserPanel("hero_image"),
+                MediaChooserPanel("hero_video", media_type="video"),
+            ],
+            "hero",
+        ),
+        SnippetChooserPanel("call_to_action"),
+        StreamFieldPanel("body"),
+        StreamFieldPanel("override_related_articles"),
+    ]
+
+    def clean(self):
+        if not self.hero_image and not self.hero_video:
+            raise ValidationError(
+                {
+                    "hero_image": ValidationError(
+                        "You must specify hero image or hero video."
+                    ),
+                    "hero_video": ValidationError(
+                        "You must specify hero image or hero video."
+                    ),
+                }
+            )
+
+        if self.hero_image and self.hero_video:
+            raise ValidationError(
+                {
+                    "hero_image": ValidationError(
+                        "You must specify hero image or hero video. You can't use both."
+                    ),
+                    "hero_video": ValidationError(
+                        "You must specify hero image or hero video. You can't use both."
+                    ),
+                }
+            )
+
+    @cached_property
+    def related_articles(self):
+        if self.override_related_articles:
+            return [
+                article.value
+                for article in self.override_related_articles
+                if article.value.live
+            ]
+
+        return (
+            ArticlePage.objects.exact_type(type(self)).filter(locale=self.locale)
+                .public()  # type:ignore
+                .live()
+                .order_by("-first_published_at")[:3]
+        )
