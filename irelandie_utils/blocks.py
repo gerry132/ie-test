@@ -88,6 +88,26 @@ class StoryBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/story_block.html"
 
 
+class FeaturedStoryBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=True)
+    page = blocks.PageChooserBlock(required=False)
+    title = blocks.CharBlock(required=False)
+
+    class Meta:
+        template = "patterns/molecules/streamfield/blocks/featured_story_block.html"
+
+class EmbassyStory(blocks.StructBlock):
+    image = ImageChooserBlock(required=True)
+    page = blocks.PageChooserBlock(
+        required=False,
+        page_type="irelandie_missions.MissionPage",
+    )
+    title = blocks.CharBlock(required=False)
+
+    class Meta:
+        template = "patterns/molecules/streamfield/blocks/embassy_block.html"
+
+
 class PinnedStoryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(required=False)
@@ -224,8 +244,9 @@ class YoutubeLinkValue(blocks.StructValue):
 
 class YoutubeVideoBlock(blocks.StructBlock):
     class Meta:
-        label = "YoutubeVideoBlock"
+        label = "Youtube Video"
         value_class = YoutubeLinkValue
+        template = "patterns/molecules/streamfield/blocks/youtube_block.html"
 
     url = blocks.CharBlock()
 
