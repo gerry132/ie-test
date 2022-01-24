@@ -25,6 +25,7 @@ from wagtail.snippets.models import register_snippet
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
 from irelandie_utils import blocks as custom_blocks
+from irelandie_utils.blocks import ArticleStoryBlock
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
 
@@ -440,25 +441,7 @@ class ArticlePage(BasePage):
         related_name="+",
     )
 
-    body = StreamField(
-        [
-            ("contact_detail", custom_blocks.ContactDetailBlock()),
-            ("image", custom_blocks.ImageBlock()),
-            (
-                "rich_text",
-                blocks.RichTextBlock(
-                    features=["h3", "blockquote", "bold", "link", "document-link", "ul"]
-                ),
-            ),
-            ("person", custom_blocks.PersonBlock()),
-            ("place", custom_blocks.PlaceBlock()),
-            ("document", custom_blocks.DocumentBlock()),
-            ("table", custom_blocks.TableBlock()),
-            ("role", custom_blocks.RoleBlock()),
-            ("youtube_video", custom_blocks.YoutubeVideoBlock()),
-        ],
-        blank=False,
-    )
+    body = StreamField(ArticleStoryBlock(), blank=True)
 
     call_to_action = models.ForeignKey(
         CallToActionSnippet,

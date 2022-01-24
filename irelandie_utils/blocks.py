@@ -161,7 +161,6 @@ class ArticleBlock(blocks.PageChooserBlock):
     def __init__(self):
         super().__init__("irelandie_utils.ArticlePage")
 
-
 class PersonBlock(blocks.PageChooserBlock):
     class Meta:
         label = "PersonBlock"
@@ -240,3 +239,15 @@ class YoutubeVideoBlock(blocks.StructBlock):
 class BaseSectionBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=False)
     body = blocks.StreamBlock([], required=False)
+
+
+class ArticleStoryBlock(blocks.StreamBlock):
+    contact_detail = ContactDetailBlock()
+    image = ImageBlock()
+    rich_text = blocks.RichTextBlock(features=["h3", "blockquote", "bold", "link", "document-link", "ul"])
+    person = PersonBlock()
+    place = PlaceBlock()
+    document = DocumentBlock()
+    table = TableBlock()
+    role = RoleBlock()
+    youtube_video = YoutubeVideoBlock()
