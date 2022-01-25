@@ -4,6 +4,8 @@ context:
     title: A country unlike anywhere else on Earth
     summary: Isn't it time you joined us in Ireland?
     page: foobar
+    alignment: left
+    background: light
     links:
       - title: Stub content
         summary: Check out our awesome stub content
