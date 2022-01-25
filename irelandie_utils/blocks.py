@@ -11,7 +11,7 @@ from wagtailmedia.blocks import VideoChooserBlock
 
 
 class StoryLinkValue(StructValue):
-    def link_text(self):
+    def link_title(self):
         title = self.get('title')
         page = self.get('page')
         return title or page.title
@@ -24,6 +24,7 @@ class StoryLinkValue(StructValue):
 
 class StoryLinkBlock(blocks.StructBlock):
     page = blocks.PageChooserBlock(required=False)
+    icon = ImageChooserBlock(required=False)
     title = blocks.CharBlock(
         help_text="Leave blank to use the page's own title", required=False
     )
