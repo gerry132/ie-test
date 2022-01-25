@@ -80,10 +80,12 @@ class StoryBlock(blocks.StructBlock):
     alignment = blocks.ChoiceBlock(
         required=True,
         choices=StoryAlignment.choices,
+        default=StoryAlignment.LEFT,
     )
     background = blocks.ChoiceBlock(
         required=True,
-        choices=StoryBackground.choices
+        choices=StoryBackground.choices,
+        default=StoryBackground.LIGHT,
     )
     links = blocks.StreamBlock(
         [
@@ -93,7 +95,7 @@ class StoryBlock(blocks.StructBlock):
         min_num=0,
         required=False,
     )
-
+    
     class Meta:
         template = "patterns/molecules/streamfield/blocks/story_block.html"
 
