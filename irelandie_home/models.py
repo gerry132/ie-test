@@ -11,7 +11,7 @@ class HomePage(HeroPage):
 
     #
 
-    stories = StreamField(
+    top_stories = StreamField(
         [
             ('story', blocks.StoryBlock())
         ],
@@ -23,10 +23,22 @@ class HomePage(HeroPage):
 
     pinned_stories = StreamField(
         [
-            ('pinned_story', blocks.PinnedStoryBlock())
+            ('pinned_story_hero', blocks.PinnedStoryHeroBlock()),
+            ('pinned_story', blocks.PinnedStoryBlock()),
+        ],
+        block_counts={
+            'pinned_story_hero': {'max_num': 1},
+        },
+        min_num=0,
+        blank=True,
+        null=True,
+    )
+
+    secondary_stories = StreamField(
+        [
+            ('story', blocks.StoryBlock())
         ],
         min_num=0,
-        max_num=4,
         blank=True,
         null=True,
     )
@@ -48,6 +60,7 @@ class HomePage(HeroPage):
     #
 
     content_panels = HeroPage.content_panels + [
-        StreamFieldPanel('stories'),
+        StreamFieldPanel('top_stories'),
         StreamFieldPanel('pinned_stories'),
+        StreamFieldPanel('secondary_stories'),
     ]
