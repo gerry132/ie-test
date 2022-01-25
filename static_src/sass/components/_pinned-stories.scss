@@ -1,0 +1,45 @@
+.pinned-stories {
+    &__container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &__featured,
+    &__feed {
+        @include media-query(medium) {
+            flex: 1 0 50%;
+        }
+    }
+
+    &__featured {
+        margin: 0 auto;
+    }
+
+    &__featured-title,
+    &__featured-summary,
+    &__featured-link {
+        color: $color--white;
+    }
+
+    &__featured-content {
+        background-color: $color--primary;
+        background-image: url('../images/cssBackgrounds/ie-map.svg');
+        background-position: bottom right;
+        position: sticky;
+        height: 100%;
+        top: 0;
+        padding: $grid;
+    }
+
+    &__featured-link {
+        border-color: $color--white;
+    }
+
+    &__feed {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        overflow: hidden;
+        padding: $grid;
+    }
+}

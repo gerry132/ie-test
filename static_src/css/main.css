@@ -641,10 +641,14 @@ small {
 .button {
   background-color: transparent;
   background-image: none;
+  border-radius: 10px;
   border: 0;
-  box-shadow: none; }
+  box-shadow: none;
+  padding: 15px 30px; }
   .button:hover {
     cursor: pointer; }
+  .button--border {
+    border: 1px solid #004d46; }
 
 .button-menu-toggle {
   z-index: 30;
@@ -696,12 +700,35 @@ blockquote {
   border-left: 10px solid #fff; }
 
 .card {
-  padding: 20px;
-  background-color: #636772;
-  border: 1px solid #636772;
-  transition: background-color 0.25s ease-out; }
+  display: block;
+  border-radius: 16px;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  border: 1px solid transparent;
+  overflow: hidden;
+  max-width: 500px;
+  transition: box-shadow 0.25s ease-out; }
   .card:hover {
-    background-color: #4b4e57; }
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2); }
+    .card:hover .card__image {
+      transform: scale(1.1); }
+  .card__image-container {
+    max-height: 300px;
+    overflow: hidden;
+    position: relative; }
+  .card__image {
+    position: relative;
+    object-fit: cover;
+    width: 100%;
+    transform: scale(1);
+    transition: transform 0.25s ease-out; }
+  .card__content {
+    color: #292929;
+    padding: 20px; }
+  .card__title, .card__summary {
+    color: #292929; }
+  .card__link {
+    text-decoration: underline; }
 
 .card-with-image:only-child {
   max-width: 260px; }
@@ -709,6 +736,11 @@ blockquote {
 .call-to-action {
   padding: 1rem 0;
   margin: 1rem 0; }
+
+.featured-story {
+  margin: 0 auto;
+  position: sticky;
+  top: 0; }
 
 .form__container {
   margin-bottom: 20px; }
@@ -892,6 +924,42 @@ blockquote {
   @media only screen and (min-width: 599px) {
     .icon--footer-social {
       margin-right: 10px; } }
+
+.pinned-stories__container {
+  display: flex;
+  flex-wrap: wrap; }
+@media only screen and (min-width: 599px) {
+  .pinned-stories__featured, .pinned-stories__feed {
+    flex: 1 0 50%; } }
+.pinned-stories__featured {
+  margin: 0 auto; }
+.pinned-stories__featured-title, .pinned-stories__featured-summary, .pinned-stories__featured-link {
+  color: #fff; }
+.pinned-stories__featured-content {
+  background-color: #004d46;
+  background-image: url("../images/cssBackgrounds/ie-map.svg");
+  background-position: bottom right;
+  position: sticky;
+  height: 100%;
+  top: 0;
+  padding: 20px; }
+.pinned-stories__featured-link {
+  border-color: #fff; }
+.pinned-stories__feed {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 20px; }
+
+.pinned-story {
+  position: relative;
+  flex: 0 0 45%;
+  max-width: 45%;
+  margin-top: 20px; }
+  .pinned-story:nth-of-type(2n) {
+    margin-top: 100px;
+    margin-bottom: -80px; }
 
 .responsive-object {
   position: relative; }
