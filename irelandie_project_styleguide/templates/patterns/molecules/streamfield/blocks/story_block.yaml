@@ -3,6 +3,8 @@ context:
     title: Stub content
     summary: Check out our awesome stub content
     page: foobar
+    alignment: left
+    background: light
     links:
       - title: Stub content
         summary: Check out our awesome stub content
