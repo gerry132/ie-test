@@ -9,6 +9,8 @@ from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import VideoChooserBlock
 
+from irelandie_utils.constants import StoryAlignment, StoryBackground
+
 
 class StoryLinkBlock(blocks.StructBlock):
     page = blocks.PageChooserBlock(required=False)
@@ -75,9 +77,17 @@ class StoryBlock(blocks.StructBlock):
     page = blocks.PageChooserBlock(required=False)
     title = blocks.CharBlock(required=False)
     summary = blocks.CharBlock(required=False)
+    alignment = blocks.ChoiceBlock(
+        required=True,
+        choices=StoryAlignment.choices,
+    )
+    background = blocks.ChoiceBlock(
+        required=True,
+        choices=StoryBackground.choices
+    )
     links = blocks.StreamBlock(
         [
-            ('link', StoryLinkBlock()),
+            ("link", StoryLinkBlock()),
         ],
         max_num=3,
         min_num=0,
