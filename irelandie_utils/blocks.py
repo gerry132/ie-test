@@ -4,10 +4,22 @@ import re
 from django.forms.utils import ErrorList
 from wagtail.contrib.table_block.blocks import TableBlock as WagtailTableBlock
 from wagtail.core import blocks
-from wagtail.core.blocks.struct_block import StructBlockValidationError
+from wagtail.core.blocks.struct_block import StructBlockValidationError, StructValue
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import VideoChooserBlock
+
+
+class StoryLinkValue(StructValue):
+    def link_text(self):
+        title = self.get('title')
+        page = self.get('page')
+        return title or page.title
+
+    def link_url(self):
+        url = self.get('url')
+        page = self.get('page')
+        return url or page.url
 
 
 class StoryLinkBlock(blocks.StructBlock):
@@ -23,6 +35,7 @@ class StoryLinkBlock(blocks.StructBlock):
     )
 
     class Meta:
+        value_class = StoryLinkValue
         template = "patterns/molecules/streamfield/blocks/story_link_block.html"
 
     def clean(self, value):
@@ -43,31 +56,6 @@ class StoryLinkBlock(blocks.StructBlock):
             raise StructBlockValidationError(errors)
 
         return super().clean(value)
-
-    def get_context(self, value, parent_context=None):
-        ctx = super().get_context(value, parent_context=parent_context)
-
-        # user input data
-        block_page = ctx["value"]["page"]
-        block_url = ctx["value"]["url"]
-        block_title = ctx["value"]["title"]
-
-        # based on the input data, determine the intended link title & URL
-        link_title = ""
-        link_url = ""
-
-        if block_page:
-            link_title = block_title or block_page.title
-            link_url = block_page.url
-
-        if block_url:
-            link_title = block_title
-            link_url = block_url
-
-        # added link_title,link_url in the context for FE to use them
-        ctx.update({"link_title": link_title, "link_url": link_url})
-
-        return ctx
 
 
 class StoryBlock(blocks.StructBlock):

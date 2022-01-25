@@ -1,10 +1,5 @@
 context:
   value:
-    title: Stub content
-    summary: Check out our awesome stub content
-
-tags:
-  pageurl:
-    value.page as href:
-      target_var: href
-      raw: "#"
+    link_text: Link Text
+    link_url: https://youtu.be/dQw4w9WgXcQ
+    summary: Find out more
