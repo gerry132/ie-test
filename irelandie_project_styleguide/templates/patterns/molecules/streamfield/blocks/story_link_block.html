@@ -1,8 +1,12 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
-<!-- link_url & link_title are computed from the value.page(wagtail page) & value.url(external link) fields-->
-<a href="{{ link_url }}">
-  {{ link_title }}
-</a>
-
-{{ value.summary }}
+<!-- link_url & link_text are computed from the value.page(wagtail page) & value.url(external link) fields-->
+<div>
+    <a href="{{ value.link_url }}">
+        <span>
+            {% image value.icon fill-50x50 %}
+        </span>
+        {{ value.link_title }}
+    </a>
+    <p>{{ value.summary }}</p>
+</div>
