@@ -334,7 +334,8 @@ class BasePage(SocialFields, ListingFields, Page):
 
     @cached_property
     def custom_primary_navigation(self):
-        country_index = Page.objects.ancestor_of(self).exact_type("irelandie_missions.CountryGroupPageIndex").filter(locale=self.locale)
+        country_index = Page.objects.ancestor_of(self, inclusive=True).exact_type(
+            "irelandie_missions.CountryGroupPageIndex").filter(locale=self.locale)
         return country_index.override_primary_navigation or None
 
 
