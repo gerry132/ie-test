@@ -336,7 +336,7 @@ class BasePage(SocialFields, ListingFields, Page):
     def custom_primary_navigation(self):
         from irelandie_missions.models import CountryGroupPageIndex
         country_index = Page.objects.ancestor_of(self, inclusive=True).exact_type(
-            CountryGroupPageIndex).filter(locale=self.locale).first()
+            CountryGroupPageIndex).first()
         if country_index:
             return country_index.specific.override_primary_navigation
         return None
