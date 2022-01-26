@@ -268,6 +268,16 @@ resource "aws_security_group_rule" "chris_shaw_to_lb_443" {
   cidr_blocks               = ["81.106.63.209/32"]
 }
 
+resource "aws_security_group_rule" "jane_hughes_to_lb_443" {
+  description               = "Jane Hughes (torchbox)"
+  type                      = "ingress"
+  from_port                 = 0
+  to_port                   = 0
+  protocol                  = "all"
+  security_group_id         = aws_security_group.lb_gov_network.id
+  cidr_blocks               = ["82.5.195.241/32"]
+}
+
 # Internal thing rules
 
 resource "aws_security_group_rule" "lb_to_internet" {
