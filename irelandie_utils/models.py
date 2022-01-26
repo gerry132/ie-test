@@ -332,6 +332,11 @@ class BasePage(SocialFields, ListingFields, Page):
             exclude_non_matches=True,
         )
 
+    @cached_property
+    def custom_primary_navigation(self):
+        country_index = Page.objects.ancestor_of(self).exact_type("irelandie_missions.CountryGroupPageIndex").filter(locale=self.locale)
+        return country_index.override_primary_navigation or None
+
 
 BasePage._meta.get_field("seo_title").verbose_name = "Title tag"
 BasePage._meta.get_field("search_description").verbose_name = SEARCH_DESCRIPTION_LABEL

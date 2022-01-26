@@ -24,7 +24,9 @@ class CountryGroupPageIndex(BasePage):
     content_panels = BasePage.content_panels + [
         FieldPanel("description"),
     ]
-
+    settings_panels = BasePage.content_panels+ [
+        StreamFieldPanel("override_primary_navigation")
+    ]
 
 class CountryPage(HeroPage):
     template = "patterns/pages/missions/country_page.html"
