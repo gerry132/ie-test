@@ -14,14 +14,6 @@
             flex-basis: calc(30% - 20px);
         }
     }
-
-    &--narrow {
-        text-align: center;
-
-        @include media-query(medium) {
-            text-align: left;
-        }
-    }
 }
 
 @supports (display: grid) {
@@ -41,9 +33,7 @@
         }
 
         &--narrow {
-            justify-content: center;
-            text-align: center;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 250px));
 
             @include media-query(medium) {
                 justify-content: flex-start;

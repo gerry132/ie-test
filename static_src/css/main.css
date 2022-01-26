@@ -638,6 +638,36 @@ small {
   font-weight: 900;
   font-display: swap;
   src: url("../fonts/Inter-BlackItalic.woff2?v=3.19") format("woff2"), url("../fonts/Inter-BlackItalic.woff?v=3.19") format("woff"); }
+@font-face {
+  font-family: 'Sofia Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Sofia-Pro-Regular-Az.woff") format("woff"); }
+@font-face {
+  font-family: 'Sofia Pro';
+  font-style: italic;
+  font-weight: 400;
+  src: url("../fonts/Sofia-Pro-Regular-Italic-Az.woff") format("woff"); }
+@font-face {
+  font-family: 'Sofia Pro';
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/Sofia-Pro-Bold-Az.woff") format("woff"); }
+@font-face {
+  font-family: 'Sofia Pro';
+  font-style: italic;
+  font-weight: 700;
+  src: url("../fonts/Sofia-Pro-Bold-Italic-Az.woff") format("woff"); }
+@font-face {
+  font-family: 'Sofia Pro';
+  font-style: normal;
+  font-weight: 900;
+  src: url("../fonts/Sofia-Pro-Black-Az.woff") format("woff"); }
+@font-face {
+  font-family: 'Sofia Pro';
+  font-style: italic;
+  font-weight: 900;
+  src: url("../fonts/Sofia-Pro-Black-Italic-Az.woff") format("woff"); }
 .button {
   background-color: transparent;
   background-image: none;
@@ -853,11 +883,6 @@ blockquote {
     @media all and (min-width: 1024px) {
       .grid > * {
         flex-basis: calc(30% - 20px); } }
-  .grid--narrow {
-    text-align: center; }
-    @media only screen and (min-width: 599px) {
-      .grid--narrow {
-        text-align: left; } }
 
 @supports (display: grid) {
   .grid {
@@ -872,9 +897,7 @@ blockquote {
       flex-basis: initial;
       margin: 0; }
     .grid--narrow {
-      justify-content: center;
-      text-align: center;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 200px)); }
+      grid-template-columns: repeat(auto-fit, minmax(200px, 250px)); }
       @media only screen and (min-width: 599px) {
         .grid--narrow {
           justify-content: flex-start;
@@ -1182,18 +1205,15 @@ blockquote {
   .footercolumn-nav__item {
     width: 100%;
     padding-bottom: 5px;
-    margin-bottom: 0;
     border-bottom: 0;
-    font-weight: 700;
-    text-align: center; }
+    font-weight: 400;
+    margin-bottom: 20px; }
     @media only screen and (min-width: 599px) {
       .footercolumn-nav__item {
         width: auto;
         padding: 0;
-        margin: 0;
-        font-weight: 400;
-        text-align: left;
-        border-bottom: 0; } }
+        border-bottom: 0;
+        max-width: 200px; } }
   .footercolumn-nav__link {
     border-bottom: 1px solid transparent;
     transition: color, border 0.25s ease-out;
@@ -1204,7 +1224,7 @@ blockquote {
       border-bottom: 1px solid #fff; }
     @media only screen and (min-width: 599px) {
       .footercolumn-nav__link {
-        padding: 5px 0;
+        padding: 5px 0 0;
         margin: 0; } }
 
 .primary-nav {
@@ -1386,19 +1406,29 @@ blockquote {
           border-bottom: 1px solid #fff; } }
 
 .footer {
-  padding: 20px 10px;
+  font-family: Sofia Pro;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
   color: #fff;
-  background-color: #004d46; }
-  .footer__inner {
-    display: flex;
-    align-items: center;
-    flex-direction: column; }
+  background-color: #004d46;
+  padding: 40px 20px; }
+  @media only screen and (min-width: 599px) {
+    .footer {
+      padding: 40px; } }
+  .footer__header {
+    border-bottom: 1px solid rgba(234, 236, 237, 0.3);
+    padding-bottom: 30px; }
     @media only screen and (min-width: 599px) {
-      .footer__inner {
-        align-items: flex-end;
-        flex-direction: row;
-        justify-content: space-between; } }
+      .footer__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 55px; } }
+  .footer__logo {
+    height: 40px;
+    width: 160px; }
   .footer__nav-container {
+    border-bottom: 1px solid rgba(234, 236, 237, 0.3);
     width: 100%; }
     @media only screen and (min-width: 1023px) {
       .footer__nav-container {
@@ -1406,19 +1436,18 @@ blockquote {
         width: auto; } }
   .footer__social-links {
     display: flex;
-    justify-content: center;
-    margin-bottom: 10px; }
-    @media only screen and (min-width: 599px) {
-      .footer__social-links {
-        align-items: center;
-        justify-content: flex-start;
-        margin-bottom: 20px; } }
+    margin-top: 20px;
+    align-items: center;
+    justify-content: flex-start; }
+  .footer__social-link {
+    margin-right: 15px; }
+  .footer__social-icon {
+    color: #fff; }
   .footer__heading {
-    display: none; }
-    @media only screen and (min-width: 599px) {
-      .footer__heading {
-        display: block;
-        margin: 0 20px 0 0; } }
+    font-size: 16px;
+    font-size: 1rem;
+    display: block;
+    margin: 0 20px 0 0; }
   .footer__credit {
     margin-top: 10px; }
     @media only screen and (min-width: 599px) {
