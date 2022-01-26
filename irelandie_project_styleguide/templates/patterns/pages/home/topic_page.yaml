@@ -1,0 +1,35 @@
+context:
+  page:
+    title: topic page
+    hero_title: hero title
+    hero_image: fake
+    secondary_title: secondary title
+    summary: a block of summary text
+    link_page: fake
+    link_text: read more
+    featured_articles:
+      - render: '<a href="#">Featured Article 1</a>'
+        value:
+          title: Featured Article 1
+          specific:
+            listing_image: fake
+            introduction: bla bla bla bla bla bla bla
+
+      - render: '<a href="#">Featured Article 2</a>'
+        value:
+          title: Featured Article 2
+          specific:
+            listing_image: fake
+            introduction: bla bla bla bla bla bla bla
+
+      - render: '<a href="#">Featured Article 3</a>'
+        value:
+          title: Featured Article 3
+          specific:
+            listing_image: fake
+            introduction: bla bla bla bla bla bla bla
+
+tags:
+  include_block:
+    'page.body':
+      raw: <h3>heading3</h3><p>a paragraph of intro text</p>

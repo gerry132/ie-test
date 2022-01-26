@@ -1,0 +1,17 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div>
+  {{ article.render }}
+
+  <p>{{ article.value.specific.introduction }}</p>
+
+  {% if article.value.specific.listing_image %}
+    <a href="{% pageurl article.value %}">
+      {% image article.value.specific.listing_image fill-450x300 %}
+    </a>
+  {% elif article.value.specific.hero_image %}
+    <a href="{% pageurl article.value %}">
+      {% image article.value.specific.hero_image fill-450x300 %}
+    </a>
+  {% endif %}
+</div>

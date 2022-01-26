@@ -1,0 +1,20 @@
+context:
+  page:
+    title: campaign page
+    hero_title: hero title
+    hero_image: foobar
+    secondary_title: secondary title
+    summary: a block of summary text
+    link_page: foobar
+    link_text: read more
+
+tags:
+  include_block:
+    'page.top_stories':
+      template_name: 'patterns/molecules/streamfield/blocks/story_block.html'
+    'page.embeds':
+      template_name: 'patterns/molecules/streamfield/blocks/youtube_block.html'
+    'page.pinned_stories':
+      template_name: 'patterns/molecules/streamfield/blocks/pinned_story_block.html'
+    'page.secondary_stories':
+      template_name: 'patterns/molecules/streamfield/blocks/story_block.html'
