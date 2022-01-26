@@ -4,6 +4,7 @@ from django.utils.functional import cached_property
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.core.fields import StreamField
 
+from irelandie_navigation.models import LinkBlock
 from irelandie_utils import blocks
 from irelandie_home.models import HomePage
 from irelandie_utils.models import HeroPage, BasePage
@@ -13,6 +14,9 @@ class CountryGroupPageIndex(BasePage):
     template = "irelandie_assets/pages/countries.html"
 
     description = models.TextField(blank=True)
+    override_primary_navigation = StreamField(
+        [("link", LinkBlock())], blank=True, help_text="Override the site navigation"
+    )
 
     parent_page_types = [HomePage]
     subpage_types = ["CountryPage"]
