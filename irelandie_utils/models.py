@@ -334,9 +334,12 @@ class BasePage(SocialFields, ListingFields, Page):
 
     @cached_property
     def custom_primary_navigation(self):
+        from irelandie_missions.models import CountryGroupPageIndex
         country_index = Page.objects.ancestor_of(self, inclusive=True).exact_type(
-            "irelandie_missions.CountryGroupPageIndex").filter(locale=self.locale)
-        return country_index.override_primary_navigation or None
+            CountryGroupPageIndex).filter(locale=self.locale).first()
+        if country_index:
+            return country_index.specific.override_primary_navigation
+        return None
 
 
 BasePage._meta.get_field("seo_title").verbose_name = "Title tag"
