@@ -93,7 +93,7 @@
 
             <div class="header__menus header__menus--desktop">
                 <div class="header__inner--top">
-                    <!-- Start of locale selector -->
+                    <!-- Start of the locale selector -->
                     {% if page %}
                         <select name="locales" onchange="location = this.value;">'
                             {% get_language_info for page.locale.language_code as lang %}
@@ -105,7 +105,7 @@
                         </select>
                     {% endif %}
 
-                <!-- End of locale selector -->
+                <!-- End of the locale selector -->
                     <form action="{% url 'search' %}" method="get" role="search" class="form form--header-search">
                         <input class="input" id="search" type="text" placeholder="Search…" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
                         <label class="u-sr-only" for="search">{% trans 'Search this website' %}</label>
