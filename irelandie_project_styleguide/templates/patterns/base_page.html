@@ -95,16 +95,17 @@
                 <div class="header__inner--top">
                     <!-- Start of the locale selector -->
                     {% if page %}
-                        <select name="locales" onchange="location = this.value;">'
-                            {% get_language_info for page.locale.language_code as lang %}
-                            <option value="{{ page.locale.url }}" selected>{{ lang.name_local }}</option>
-                            {% for translation in page.get_translations.live %}
-                                {% get_language_info for translation.locale.language_code as lang %}
-                                <option value="{{ translation.url }}">{{ lang.name_local }}</option>
-                            {% endfor %}
-                        </select>
+                        {% get_language_info for page.locale.language_code as lang %}
+                        <a href="{{ page.url }}" rel="alternate" hreflang="{{ language_code }}">
+                            {{ lang.name_local }}
+                        </a>
+                        {% for translation in page.get_translations.live %}
+                            {% get_language_info for translation.locale.language_code as lang %}
+                            <a href="{% pageurl translation %}" rel="alternate" hreflang="{{ language_code }}">
+                                {{ lang.name_local }}
+                            </a>
+                        {% endfor %}
                     {% endif %}
-
                 <!-- End of the locale selector -->
                     <form action="{% url 'search' %}" method="get" role="search" class="form form--header-search">
                         <input class="input" id="search" type="text" placeholder="Search…" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
