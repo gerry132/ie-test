@@ -94,18 +94,21 @@
             <div class="header__menus header__menus--desktop">
                 <div class="header__inner--top">
                     <!-- Start of the locale selector -->
-                    {% if page %}
-                        {% get_language_info for page.locale.language_code as lang %}
-                        <a href="{{ page.url }}" rel="alternate" hreflang="{{ language_code }}">
-                            {{ lang.name_local }}
-                        </a>
-                        {% for translation in page.get_translations.live %}
-                            {% get_language_info for translation.locale.language_code as lang %}
-                            <a href="{% pageurl translation %}" rel="alternate" hreflang="{{ language_code }}">
-                                {{ lang.name_local }}
-                            </a>
-                        {% endfor %}
-                    {% endif %}
+                    <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                        <div class="footer__language-switcher">
+
+                            <select name="language" id="language-switcher"
+                                    onchange="this.form.submit()">
+                                {% get_current_language as language_code %}
+                                {% for code, name in local_languages %}
+                                    <option value="{{ code }}"{% if code == language_code %} selected{% endif %}>
+                                        {{ name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </form>
                 <!-- End of the locale selector -->
                     <form action="{% url 'search' %}" method="get" role="search" class="form form--header-search">
                         <input class="input" id="search" type="text" placeholder="Search…" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
