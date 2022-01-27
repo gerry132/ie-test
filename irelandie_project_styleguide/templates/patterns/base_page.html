@@ -103,18 +103,6 @@
                                 <option value="{{ translation.url }}">{{ lang.name_local }}</option>
                             {% endfor %}
                         </select>
-                    {% else %}
-                    {% get_current_language as current_language_code %}
-                        {% get_available_languages as languages %}
-                        {% for language_code, language_name in languages %}
-                            {% if language_code != current_language_code %}
-                                {% get_language_info for language_code as lang %}
-                                {% language language_code %}
-                                    {# HACK: Assuming only the search page needs this #}
-                                    <a href="{% url 'search' %}?{{ request.GET.urlencode }}">{{ lang.name_local }}</a>
-                                {% endlanguage %}
-                            {% endif %}
-                        {% endfor %}
                     {% endif %}
 
                 <!-- End of locale selector -->
