@@ -97,7 +97,6 @@
                     <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
                         <input name="next" type="hidden" value="{{ request.get_full_path }}">
                         <div class="footer__language-switcher">
-
                             <select name="language" id="language-switcher"
                                     onchange="this.form.submit()">
                                 {% get_current_language as language_code %}
