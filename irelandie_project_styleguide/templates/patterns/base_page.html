@@ -81,7 +81,6 @@
             <a href="/" aria-label="Ireland.ie">
                 <img class="header__logo" src="https://placehold.it/150x100" alt="">
             </a>
-
             <div class="header__menu-toggle">
                 <span>{% trans 'Menu' %}</span>
                 <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
@@ -94,6 +93,31 @@
 
             <div class="header__menus header__menus--desktop">
                 <div class="header__inner--top">
+                    <!-- Start of locale selector -->
+                    {% if page %}
+                        <select name="locales" onchange="location = this.value;">'
+                            {% get_language_info for page.locale.language_code as lang %}
+                            <option value="{{ page.locale.url }}" selected>{{ lang.name_local }}</option>
+                            {% for translation in page.get_translations.live %}
+                                {% get_language_info for translation.locale.language_code as lang %}
+                                <option value="{{ translation.url }}">{{ lang.name_local }}</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                    {% get_current_language as current_language_code %}
+                        {% get_available_languages as languages %}
+                        {% for language_code, language_name in languages %}
+                            {% if language_code != current_language_code %}
+                                {% get_language_info for language_code as lang %}
+                                {% language language_code %}
+                                    {# HACK: Assuming only the search page needs this #}
+                                    <a href="{% url 'search' %}?{{ request.GET.urlencode }}">{{ lang.name_local }}</a>
+                                {% endlanguage %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                <!-- End of locale selector -->
                     <form action="{% url 'search' %}" method="get" role="search" class="form form--header-search">
                         <input class="input" id="search" type="text" placeholder="Search…" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
                         <label class="u-sr-only" for="search">{% trans 'Search this website' %}</label>
