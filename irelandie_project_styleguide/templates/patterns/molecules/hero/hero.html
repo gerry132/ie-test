@@ -1,0 +1,51 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% if page.hero_image %}
+    <div class="hero hero--background-image background-image">
+{% else %}
+    <div class="hero{% if page.hero_video %} hero--background-video{% endif %}{% if classes %} {{ classes }}{% endif %}" data-video-container>
+{% endif %}
+
+    {% if page.hero_video %}
+        <figure class="hero__video-wrapper" aria-hidden="true">
+            <video class="hero__video" autoplay loop muted data-video>
+                <source src="{{ page.hero_video.url }}" type="video/mp4">
+            </video>
+        </figure>
+    {% endif %}
+
+    <div class="hero__content-container wrapper wrapper--large">
+        <div class="hero__content">
+            <div class="hero__copy">
+                <h1 class="hero__title">
+                    {% if page.hero_title %}
+                        {{ page.hero_title }}
+                    {% else %}
+                        {{ page.title }}
+                    {% endif %}
+                </h1>
+
+                {% if page.secondary_title %}
+                    <h2 class="hero__secondary-title">{{ page.secondary_title }}</h2>
+                {% endif %}
+
+                {% if page.summary %}
+                    <p>{{ page.summary }}</p>
+                {% endif %}
+
+                {% if page.link_page and page.link_text %}
+                    {% pageurl page.link_page as href %}
+                    <a href="{{ href }}" class="hero__button button">{{ page.link_text }}</a>
+                {% endif %}
+            </div>
+            {% if page.hero_video %}
+                <div class="hero__video-control-container" aria-hidden="true">
+                    <button class="hero__video-control-toggle" data-video-toggle>
+                        {% include "patterns/atoms/icons/icon.html" with name="play" classname="hero__video-control-icon hero__video-control-icon--play" %}
+                        {% include "patterns/atoms/icons/icon.html" with name="pause" classname="hero__video-control-icon hero__video-control-icon--pause" %}
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
