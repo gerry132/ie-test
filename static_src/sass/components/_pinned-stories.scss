@@ -27,7 +27,7 @@
         background-position: bottom right;
         position: sticky;
         height: 100%;
-        top: 0;
+        top: 20px;
         padding: $grid;
     }
 
@@ -40,6 +40,7 @@
         flex-wrap: wrap;
         justify-content: space-between;
         overflow: hidden;
-        padding: $grid;
+        margin-top: -20px;
+        padding: $grid $grid 100px $grid;
     }
 }
