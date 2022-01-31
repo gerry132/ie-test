@@ -56,6 +56,7 @@ blockquote {
 h1,
 .heading--1 {
     @include font-size(xl);
+    line-height: 52px;
     font-weight: $weight--extrabold;
 
     @include media-query(medium) {
@@ -68,6 +69,7 @@ h2,
 .heading--2 {
     @include font-size(l);
     font-weight: $weight--bold;
+    line-height: 48px;
 
     @include media-query(medium) {
         @include font-size(xl);

@@ -47,8 +47,12 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         height: 100%;
+        padding: 0 40px;
+
+        @include media-query(medium) {
+            padding: 0 80px;
+        }
     }
 
     &__content {
@@ -62,6 +66,7 @@
 
         @include media-query(medium) {
             flex-direction: row;
+            justify-content: flex-start;
         }
     }
 
@@ -72,8 +77,12 @@
         justify-content: center;
 
         @include media-query(medium) {
-            flex: 0 0 50%;
+            flex: 1 0 50%;
         }
+    }
+
+    &__copy {
+        max-width: 500px;
     }
 
     &__video-control-container {
