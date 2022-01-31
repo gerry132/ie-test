@@ -95,14 +95,6 @@ h6,
     font-weight: $weight--semibold;
 }
 
-.subheading {
-    padding: 20px 0;
-
-    @include media-query(medium) {
-        padding: 40px 0;
-    }
-}
-
 small {
     @include font-size(xxs);
 }
