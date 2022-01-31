@@ -1,9 +1,7 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 
-<div class="story">
-    {% comment %} TODO: BE - add in background color chooser {% endcomment %}
-    {% comment %} TODO: BE - add in alignment chooser (left or right aligned) {% endcomment %}
+<div class="story{% if value.background == 'dark' %} story--dark{% endif %} section section--padding">
     <div class="wrapper wrapper--large">
         <div class="story__container">
             {% image value.image width-460 class="story__image" %}
@@ -35,11 +33,13 @@
                         {% endfor %}
                     </div>
 
-                    <button class="story__links-expander" aria-hidden="true" data-story-links-toggle>
-                        {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="story__links-expander-icon" %}
-                    </button>
+                    {% if value.links|length > 2 %}
+                        <button class="story__links-expander" aria-hidden="true" data-story-links-toggle>
+                            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="story__links-expander-icon" %}
+                        </button>
+                    {% endif %}
                 </ul>
             </div>
         </div>
-    <div>
+    </div>
 </div>
