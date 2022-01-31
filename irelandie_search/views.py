@@ -20,7 +20,7 @@ def search(request):
         search_results = (
             Page.objects.live()
             .descendant_of(root_page)
-            .search(search_query, operator="and", partial_match=False)
+            .search(search_query, operator="and", partial_match=True)
         )
         query = Query.get(search_query)
 

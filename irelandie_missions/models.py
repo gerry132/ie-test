@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from wagtail.admin.edit_handlers import FieldPanel
-from wagtail.core.models import Page, TranslatableMixin
+from django.utils.functional import cached_property
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.core.fields import StreamField
 
+from irelandie_utils import blocks
 from irelandie_home.models import HomePage
+from irelandie_utils.models import HeroPage, BasePage
 
 
-class CountryGroupPageIndex(Page, TranslatableMixin):
+class CountryGroupPageIndex(BasePage):
     template = "irelandie_assets/pages/countries.html"
 
     description = models.TextField(blank=True)
@@ -14,19 +17,61 @@ class CountryGroupPageIndex(Page, TranslatableMixin):
     parent_page_types = [HomePage]
     subpage_types = ["CountryPage"]
 
-    content_panels = Page.content_panels + [
+    content_panels = BasePage.content_panels + [
         FieldPanel("description"),
     ]
 
 
-class CountryPage(Page, TranslatableMixin):
-    template = "irelandie_assets/pages/country.html"
+class CountryPage(HeroPage):
+    template = "patterns/pages/missions/country_page.html"
 
     parent_page_types = ["CountryGroupPageIndex"]
     subpage_types = ["MissionPage"]
+    stories = StreamField(
+        [
+            ('story', blocks.StoryBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+    embeds = StreamField(
+        [
+            ('youtube', blocks.YoutubeVideoBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+    featured_stories = StreamField(
+        [
+            ('featured_story', blocks.FeaturedStoryBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+    featured_embassies = StreamField(
+        [
+            ('embassy_story', blocks.EmbassyStory()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
 
+    content_panels = HeroPage.content_panels + [
+        StreamFieldPanel("stories"),
+        StreamFieldPanel("embeds"),
+        StreamFieldPanel("featured_stories"),
+        StreamFieldPanel("featured_embassies"),
+    ]
 
-class MissionPage(Page, TranslatableMixin):
+class MissionPage(BasePage):
     template = "irelandie_assets/pages/mission.html"
 
     parent_page_types = ["CountryPage"]
@@ -41,3 +86,24 @@ class MissionPage(Page, TranslatableMixin):
         "irelandie_publications.PublicationPageIndex",
         "irelandie_site_information.SiteInformationPageIndex",
     ]
+
+
+class MissionSearchPage(BasePage):
+    template = "patterns/pages/missions/mission_search_page.html"
+
+    description = models.TextField(blank=True)
+
+    parent_page_types = [HomePage]
+    subpage_types = []
+
+    content_panels = BasePage.content_panels + [
+        FieldPanel("description"),
+    ]
+
+    @cached_property
+    def mission_tags(self):
+        return MissionPage.objects.filter(locale=self.locale).live().public().values('title')
+
+    @cached_property
+    def country_tags(self):
+        return CountryPage.objects.filter(locale=self.locale).live().public().values('title')

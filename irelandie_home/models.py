@@ -8,29 +8,46 @@ from irelandie_utils.models import HeroPage
 
 
 class HomePage(HeroPage):
-    template = "irelandie_assets/pages/home.html"
 
-    # Only allow creating HomePages at the root level
-    parent_page_types = ["wagtailcore.Page"]
+    #
 
     stories = StreamField(
-        [("story", blocks.StoryBlock())],
+        [
+            ('story', blocks.StoryBlock())
+        ],
         min_num=0,
+        max_num=1,
         blank=True,
         null=True,
-        help_text="Move a story to the top of this list to promote it as the main story"
     )
+
     pinned_stories = StreamField(
-        [("pinned_story", blocks.PinnedStoryBlock())],
+        [
+            ('pinned_story', blocks.PinnedStoryBlock())
+        ],
         min_num=0,
+        max_num=4,
         blank=True,
         null=True,
     )
+
+    #
 
     max_count = 1
-    subpage_types = ["irelandie_missions.CountryGroupPageIndex"]
+    template = 'patterns/pages/home/home_page.html'
+
+    #
+
+    # Only allow creating HomePages at the root level
+    parent_page_types = ['wagtailcore.Page']
+    subpage_types = [
+        'irelandie_missions.CountryGroupPageIndex',
+        'irelandie_missions.MissionSearchPage',
+    ]
+
+    #
 
     content_panels = HeroPage.content_panels + [
-        StreamFieldPanel("stories"),
-        StreamFieldPanel("pinned_stories"),
+        StreamFieldPanel('stories'),
+        StreamFieldPanel('pinned_stories'),
     ]

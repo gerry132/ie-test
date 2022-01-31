@@ -1,0 +1,20 @@
+context:
+  page:
+    title: page title
+    hero_title: hero title
+    hero_image: foobar
+    secondary_title: secondary title
+    summary: a block of summary text
+    link_page: foobar
+    link_text: read more
+
+tags:
+  include_block:
+    'page.stories':
+      template_name: 'patterns/molecules/streamfield/blocks/story_block.html'
+    'page.embeds':
+      template_name: 'patterns/molecules/streamfield/blocks/youtube_block.html'
+    'page.featured_stories':
+      template_name: 'patterns/molecules/streamfield/blocks/featured_story_block.html'
+    'page.featured_embassies':
+      template_name: 'patterns/molecules/streamfield/blocks/embassy_block.html'

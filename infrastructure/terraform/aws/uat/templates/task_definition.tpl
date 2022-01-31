@@ -67,6 +67,14 @@
             {
                 "name": "USE_S3",
                 "value": "${SETTINGS_USE_S3}"
+            },
+            {
+                "name": "CORS_ALLOWED_ORIGINS",
+                "value": "${SETTINGS_CORS_ALLOWED_ORIGINS}"
+            },
+            {
+                "name": "CORS_ALLOW_ALL_ORIGINS",
+                "value": "${SETTINGS_CORS_ALLOW_ALL_ORIGINS}"
             }
         ],
         "secrets": []

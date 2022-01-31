@@ -268,6 +268,16 @@ resource "aws_security_group_rule" "chris_shaw_to_lb_443" {
   cidr_blocks               = ["81.106.63.209/32"]
 }
 
+resource "aws_security_group_rule" "jane_hughes_to_lb_443" {
+  description               = "Jane Hughes (torchbox)"
+  type                      = "ingress"
+  from_port                 = 0
+  to_port                   = 0
+  protocol                  = "all"
+  security_group_id         = aws_security_group.lb_gov_network.id
+  cidr_blocks               = ["82.5.195.241/32"]
+}
+
 # Internal thing rules
 
 resource "aws_security_group_rule" "lb_to_internet" {
@@ -1043,6 +1053,8 @@ locals {
   SETTINGS_CACHE_ADDRESS            = local.cache_address
   SETTINGS_DATABASE_URL             = local.db_master_url
   SETTINGS_SECRET_KEY               = data.aws_ssm_parameter.random_secret_key.value
+  SETTINGS_CORS_ALLOWED_ORIGINS	    = local.SETTINGS_BASE_URL 
+  SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
 }
 
 data "template_file" "task_definition" {
@@ -1070,6 +1082,8 @@ data "template_file" "task_definition" {
     SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
     SETTINGS_USE_CACHE                  = local.SETTINGS_USE_CACHE
     SETTINGS_USE_S3                     = local.SETTINGS_USE_S3
+    SETTINGS_CORS_ALLOWED_ORIGINS	= local.SETTINGS_CORS_ALLOWED_ORIGINS
+    SETTINGS_CORS_ALLOW_ALL_ORIGINS	= local.SETTINGS_CORS_ALLOW_ALL_ORIGINS
   }
 }
 

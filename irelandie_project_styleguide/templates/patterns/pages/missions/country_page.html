@@ -1,0 +1,9 @@
+{% extends "patterns/hero_page.html" %}
+{% load wagtailcore_tags wagtailimages_tags static %}
+
+{% block main %}
+    {% include_block page.stories %}
+    {% include_block page.embeds %}
+    {% include_block page.featured_stories %}
+    {% include_block page.featured_embassies %}
+{% endblock %}

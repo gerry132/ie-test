@@ -12,6 +12,7 @@ distlib==0.3.1
 dj-database-url==0.5.0
 Django==3.2.10
 django-cogwheels==0.3
+django-cors-headers==3.11.0
 django-debug-toolbar==3.2
 django-filter==2.4.0
 django-modelcluster==5.2
@@ -65,6 +66,7 @@ wagtail-accessibility==0.2.1
 wagtail-django-recaptcha==1.0
 wagtail-localize==1.0.1
 wagtail-storages==0.0.6
+wagtailmedia==0.8.0
 webencodings==0.5.1
 Willow==1.4
 wrapt==1.13.3
