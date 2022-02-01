@@ -1,0 +1,16 @@
+context:
+  featured_block:
+    image: True
+    title: Stub content
+    page: foobar
+
+tags:
+  image:
+    featured_block.image fill-768x768 as featured_image:
+      target_var: featured_image
+      raw:
+        url: https://source.unsplash.com/768x768?ocean
+  pageurl:
+    featured_block.page as href:
+      target_var: href
+      raw: '#'

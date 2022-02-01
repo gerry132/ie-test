@@ -1,4 +1,8 @@
 .section {
+    &--grey {
+        background-color: $color--background-grey;
+    }
+
     &--main {
         max-width: $wrapper--small;
 

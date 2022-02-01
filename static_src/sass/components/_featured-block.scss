@@ -1,0 +1,63 @@
+.featured-block {
+    $root: &;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+    position: relative;
+    display: block;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    padding: 40px;
+    height: 500px;
+    width: 100%;
+    transition: box-shadow $transition;
+    overflow: hidden;
+
+    @include media-query(medium) {
+        padding: 80px;
+    }
+
+    .featured-blocks & {
+        flex: 1 0 50%;
+    }
+
+    &:hover {
+        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+
+        #{$root}__content {
+            background-color: $color--primary;
+        }
+    }
+
+    &__image {
+        position: absolute;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        display: block;
+    }
+
+    &__content-wrapper {
+        position: relative;
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-end;
+    }
+
+    &__content {
+        background-color: rgba($color--primary, 0.65);
+        color: $color--white;
+        position: relative;
+        padding: $grid;
+        transition: background-color $transition;
+    }
+
+    &__title {
+        font-family: $font--secondary;
+        margin-bottom: 0;
+    }
+}
