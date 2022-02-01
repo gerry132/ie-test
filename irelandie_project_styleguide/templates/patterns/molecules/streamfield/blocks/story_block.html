@@ -1,7 +1,7 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 
-<div class="story{% if value.background == 'dark' %} story--dark{% endif %} section section--padding">
+<div class="story{% if value.background == 'dark' %} story--dark{% endif %}{% if value.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
     <div class="wrapper wrapper--large">
         <div class="story__container">
             {% image value.image width-460 class="story__image" %}
