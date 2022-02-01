@@ -47,7 +47,11 @@ $font-sizes: (
 $border-radius: 16px;
 
 // --------------------------------- Breakpoints --------------------------------------
-$breakpoints: ('medium' '(min-width: 599px)', 'large' '(min-width: 1023px)');
+$breakpoints: (
+    'small' '(min-width: 480px)',
+    'medium' '(min-width: 599px)',
+    'large' '(min-width: 1023px)'
+);
 
 // --------------------------------- Grid Dimensions --------------------------------------
 

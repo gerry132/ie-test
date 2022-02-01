@@ -1,7 +1,11 @@
 .pinned-stories {
+    background-color: $color--white;
+
     &__container {
-        display: flex;
-        flex-wrap: wrap;
+        @include media-query(medium) {
+            display: flex;
+            flex-wrap: wrap;
+        }
     }
 
     &__featured,
@@ -12,7 +16,11 @@
     }
 
     &__featured {
-        margin: 0 auto;
+        background-color: $color--primary;
+
+        @include media-query(medium) {
+            margin: 0 auto;
+        }
     }
 
     &__featured-title,
@@ -24,23 +32,49 @@
     &__featured-content {
         background-color: $color--primary;
         background-image: url('../images/cssBackgrounds/ie-map.svg');
-        background-position: bottom right;
-        position: sticky;
-        height: 100%;
-        top: 20px;
-        padding: $grid;
+        background-size: auto 1080px;
+        background-repeat: no-repeat;
+        background-position: 0% -100%;
+        padding: 40px $grid;
+        position: relative;
+
+        @include media-query(medium) {
+            height: 100vh;
+            position: sticky;
+            top: 0;
+
+            // Fills in the left-hand side green on wide screens
+            &::before {
+                content: '';
+                display: block;
+                position: absolute;
+                background-color: $color--primary;
+                height: 100%;
+                width: 50%;
+                left: -50%;
+                top: -20px;
+                z-index: -1;
+            }
+        }
     }
 
     &__featured-link {
-        border-color: $color--white;
+        border: 1px solid $color--white;
+        display: inline-block;
+        margin-top: $grid;
+        position: relative;
     }
 
     &__feed {
-        display: flex;
-        flex-wrap: wrap;
+        background-color: $color--white;
         justify-content: space-between;
         overflow: hidden;
         margin-top: -20px;
         padding: $grid $grid 100px $grid;
+
+        @include media-query(small) {
+            display: flex;
+            flex-wrap: wrap;
+        }
     }
 }
