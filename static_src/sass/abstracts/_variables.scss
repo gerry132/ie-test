@@ -7,6 +7,7 @@ $color--white: #fff;
 $color--black: #000;
 $color--off-black: #292929;
 $color--grey: #eaeced;
+$color--background-grey: #ebe9e1;
 $color--accessible-grey: #5d677a;
 
 $color--red: #f00;
@@ -48,7 +49,11 @@ $font-sizes: (
 $border-radius: 16px;
 
 // --------------------------------- Breakpoints --------------------------------------
-$breakpoints: ('medium' '(min-width: 599px)', 'large' '(min-width: 1023px)');
+$breakpoints: (
+    'small' '(min-width: 480px)',
+    'medium' '(min-width: 599px)',
+    'large' '(min-width: 1023px)'
+);
 
 // --------------------------------- Grid Dimensions --------------------------------------
 
@@ -71,6 +76,7 @@ $z-index: (
     base: 10,
     overlap: 20,
     header: 30,
+    menu-search-dropdown: 35,
     footer: 40,
     nav: 50,
     cookie-message: 100,

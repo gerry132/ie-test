@@ -64,7 +64,6 @@
     <meta property="og:site_name" content="{{ settings.utils.SocialMediaSettings.site_name }}" />
 {% endblock meta_tags %}
 
-
 {% block body_top %}
     {% if GOOGLE_TAG_MANAGER_ID %}
         {# To enable GTM code you need to specify GOOGLE_TAG_MANAGER_ID in Django settings #}
@@ -76,40 +75,49 @@
 
 {% block header %}
 {% include "patterns/molecules/skip-link/skip-link.html" %}
-    <header class="header">
-        <div class="header__inner wrapper wrapper--large">
-            <a href="/" aria-label="Ireland.ie">
-                <img class="header__logo" src="https://placehold.it/150x100" alt="">
-            </a>
-
-            <div class="header__menu-toggle">
-                <span>{% trans 'Menu' %}</span>
-                <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
-                    <span class="button-menu-toggle__line"></span>
-                    <span class="button-menu-toggle__line"></span>
-                    <span class="button-menu-toggle__line"></span>
-                    <span class="button-menu-toggle__line"></span>
-                </button>
+    <section aria-label="search">
+        <div class="header__search" data-search-dropdown>
+            <div class="wrapper wrapper--large">
+                {% include "patterns/molecules/search/search.html" with classes="search--dropdown" %}
             </div>
+        </div>
+    </section>
 
-            <div class="header__menus header__menus--desktop">
-                <div class="header__inner--top">
-                    <form action="{% url 'search' %}" method="get" role="search" class="form form--header-search">
-                        <input class="input" id="search" type="text" placeholder="Search…" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
-                        <label class="u-sr-only" for="search">{% trans 'Search this website' %}</label>
-                        <button class="button" type="submit">
-                            {% include "patterns/atoms/icons/icon.html" with name="magnifying-glass" %}
-                            <span class="u-sr-only">{% trans 'Search' %}</span>
-                        </button>
-                    </form>
+    <header class="header">
+        <div class="wrapper wrapper--large">
+            <div class="header__container">
+                <a href="/" aria-label="Ireland.ie">
+                    {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo" %}
+                </a>
+
+                <div class="header__menu-toggle">
+                    <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
+                        <span class="button-menu-toggle__line"></span>
+                        <span class="button-menu-toggle__line"></span>
+                        <span class="button-menu-toggle__line"></span>
+                        <span class="button-menu-toggle__line"></span>
+                    </button>
                 </div>
-                <div data-desktop-menu>
+
+                <div class="header__menus header__menus--desktop">
+                    <div data-desktop-menu>
+                        {% primarynav %}
+                    </div>
+
+                    <button class="header__search-toggle" aria-label="search" data-toggle-search>
+                        <svg class="header__search-icon" aria-hidden="true">
+                            <use href="#magnifying-glass"></use>
+                        </svg>
+        
+                        <svg class="header__search-icon header__search-icon--close" aria-hidden="true">
+                            <use xlink:href="#close"></use>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="header__menus header__menus--mobile" data-mobile-menu>
                     {% primarynav %}
                 </div>
-            </div>
-
-            <div class="header__menus header__menus--mobile" data-mobile-menu>
-                {% primarynav %}
             </div>
         </div>
     </header>
