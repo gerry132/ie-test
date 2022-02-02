@@ -109,6 +109,17 @@ class EmbassyStory(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/embassy_block.html"
 
 
+class PinnedStoryHeroBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=True)
+    title = blocks.CharBlock(required=False)
+    summary = blocks.CharBlock(required=False)
+    link_page = blocks.PageChooserBlock(required=False)
+    link_text = blocks.CharBlock(required=False)
+
+    class Meta:
+        template = "patterns/molecules/streamfield/blocks/pinned_story_hero_block.html"
+
+
 class PinnedStoryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(required=False)

@@ -1,0 +1,17 @@
+context:
+  article:
+    render: '<a href="#">Article title</a>'
+    value:
+      title: Article title
+      specific:
+        listing_image: fake
+        introduction: bla bla bla bla bla bla bla
+
+tags:
+  pageurl:
+    article.value:
+      raw: '#'
+  image:
+    article.value.specific.listing_image fill-450x300:
+      raw: |
+        <img src="https://source.unsplash.com/450x300?forest" width="450" height="300" alt="Some alt">

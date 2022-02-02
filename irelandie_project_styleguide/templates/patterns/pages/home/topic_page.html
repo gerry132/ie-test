@@ -1,0 +1,10 @@
+{% extends "patterns/hero_page.html" %}
+{% load wagtailcore_tags %}
+
+{% block main %}
+    {% include_block page.body %}
+
+    {% for article in page.featured_articles %}
+      {% include "patterns/molecules/topics/featured-article.html" with article=article %}
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+<div>
+  {% image value.image width-400 %}
+
+  <h3>{{ value.title }}</h3>
+  <p>{{ value.summary }}</p>
+
+  {% if value.link_page and value.link_text %}
+    {% pageurl value.link_page as href %}
+    <a href="{{ href }}">{{ value.link_text }}</a>
+  {% endif %}
+</div>
