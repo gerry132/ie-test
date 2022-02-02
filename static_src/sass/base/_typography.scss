@@ -43,6 +43,14 @@ h6,
     margin: 0 0 1rem;
 }
 
+.heading {
+    padding-top: 20px;
+
+    @include media-query(medium) {
+        padding-top: 40px;
+    }
+}
+
 html,
 .body-text {
     @include body-text();
@@ -68,8 +76,7 @@ h1,
 h2,
 .heading--2 {
     @include font-size(l);
-    font-weight: $weight--bold;
-    line-height: 48px;
+    font-weight: $weight--normal;
 
     @include media-query(medium) {
         @include font-size(xl);
