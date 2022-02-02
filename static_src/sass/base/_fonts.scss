@@ -151,3 +151,45 @@
     src: url('../fonts/Inter-BlackItalic.woff2?v=3.19') format('woff2'),
         url('../fonts/Inter-BlackItalic.woff?v=3.19') format('woff');
 }
+
+@font-face {
+    font-family: 'Sofia Pro';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/Sofia-Pro-Regular-Az.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Sofia Pro';
+    font-style: italic;
+    font-weight: 400;
+    src: url('../fonts/Sofia-Pro-Regular-Italic-Az.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Sofia Pro';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/Sofia-Pro-Bold-Az.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Sofia Pro';
+    font-style: italic;
+    font-weight: 700;
+    src: url('../fonts/Sofia-Pro-Bold-Italic-Az.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Sofia Pro';
+    font-style: normal;
+    font-weight: 900;
+    src: url('../fonts/Sofia-Pro-Black-Az.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Sofia Pro';
+    font-style: italic;
+    font-weight: 900;
+    src: url('../fonts/Sofia-Pro-Black-Italic-Az.woff') format('woff');
+}

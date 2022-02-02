@@ -1,21 +1,34 @@
 .footer {
-    padding: 20px 10px;
+    font-family: $font--secondary;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
     color: $color--secondary;
     background-color: $color--primary;
+    padding: 40px $grid;
 
-    &__inner {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
+    @include media-query(medium) {
+        padding: 40px;
+    }
+
+    &__header {
+        border-bottom: 1px solid rgba($color--border, 0.3);
+        padding-bottom: 30px;
 
         @include media-query(medium) {
-            align-items: flex-end;
-            flex-direction: row;
+            display: flex;
+            align-items: center;
             justify-content: space-between;
+            padding-bottom: 55px;
         }
     }
 
+    &__logo {
+        height: 40px;
+        width: 160px;
+    }
+
     &__nav-container {
+        border-bottom: 1px solid rgba($color--border, 0.3);
         width: 100%;
 
         @include media-query(large) {
@@ -26,23 +39,23 @@
 
     &__social-links {
         display: flex;
-        justify-content: center;
-        margin-bottom: 10px;
+        margin-top: $grid;
+        align-items: center;
+        justify-content: flex-start;
+    }
 
-        @include media-query(medium) {
-            align-items: center;
-            justify-content: flex-start;
-            margin-bottom: 20px;
-        }
+    &__social-link {
+        margin-right: 15px;
+    }
+
+    &__social-icon {
+        color: $color--white;
     }
 
     &__heading {
-        display: none;
-
-        @include media-query(medium) {
-            display: block;
-            margin: 0 20px 0 0;
-        }
+        @include font-size(s);
+        display: block;
+        margin: 0 20px 0 0;
     }
 
     &__credit {
