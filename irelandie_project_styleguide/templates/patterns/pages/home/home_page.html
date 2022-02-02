@@ -3,6 +3,12 @@
 
 {% block main %}
     {% include_block page.top_stories %}
-    {% include_block page.pinned_stories %}
+    
+    <div class="pinned-stories section section--padding">
+        <div class="pinned-stories__container wrapper wrapper--large">
+            {% include_block page.pinned_stories %}
+        </div>
+    </div>
+
     {% include_block page.secondary_stories %}
 {% endblock %}
