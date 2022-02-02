@@ -1,0 +1,24 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="pinned-stories section section--padding">
+    <div class="pinned-stories__container wrapper wrapper--large">
+        <div class="pinned-stories__featured">
+            <div class="pinned-stories__featured-content">
+                <h3 class="pinned-stories__featured-title heading--2">{{ featured_story.title }}</h3>
+                <p class="pinned-stories__featured-summary">{{ featured_story.summary }}</p>
+
+                {% if featured_story.page %}
+                {% pageurl featured_story.page as href %}
+                    <a href="{{ href }}" class="pinned-stories__featured-link button">
+                        Read this story
+                    </a>
+                {% endif %}
+            </div> 
+        </div>
+        <div class="pinned-stories__feed">
+            {% for story in pinned_stories %}
+                {% include "patterns/molecules/card/card.html" with card=story classes="pinned-story" %}
+            {% endfor %%}
+        </div>
+    </div>
+</div>
