@@ -1,0 +1,14 @@
+.pinned-story {
+    position: relative;
+    margin-top: $grid;
+
+    @include media-query(small) {
+        flex: 0 0 45%;
+        max-width: 45%;
+
+        &:nth-of-type(2n) {
+            margin-top: 100px;
+            margin-bottom: -80px;
+        }
+    }
+}

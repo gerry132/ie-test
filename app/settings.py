@@ -306,8 +306,10 @@ REST_FRAMEWORK = {
     )
 }
 # https://pypi.org/project/django-cors-headers/
-CORS_ALLOWED_ORIGINS = os.environ['CORS_ALLOWED_ORIGINS'].split(',')
-CORS_ALLOW_ALL_ORIGINS = os.environ.get('CORS_ALLOW_ALL_ORIGINS', False)
+CORS_ALLOW_ALL_ORIGINS = os.environ.get('CORS_ALLOW_ALL_ORIGINS', False) in TRUE
+if CORS_ALLOW_ALL_ORIGINS is False:
+    CORS_ALLOWED_ORIGINS = os.environ['CORS_ALLOWED_ORIGINS'].split(',')
+
 
 if DEBUG_TOOLBAR is True:
     INTERNAL_IPS = [

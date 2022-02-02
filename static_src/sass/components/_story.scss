@@ -2,6 +2,23 @@
     $root: &;
     position: relative;
 
+    &::before {
+        content: '';
+        background-image: url('../images/cssBackgrounds/ireland-outline-bg.svg');
+        height: 700px;
+        width: 600px;
+        display: block;
+        background-size: 100%;
+        background-position: center center;
+        position: absolute;
+        right: -200px;
+        bottom: -100px;
+    }
+
+    &--dark {
+        background-color: $color--background-grey;
+    }
+
     &__container {
         position: relative;
 
@@ -29,6 +46,7 @@
         color: $color--off-black;
         display: flex;
         flex-direction: column;
+        flex: 1 0 auto;
         justify-content: flex-start;
         margin: 0;
         padding: $grid 0;
@@ -69,7 +87,7 @@
         box-shadow: 0 43px 63px 0 rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: row;
-        height: 95px;
+        height: 80px;
         flex-wrap: wrap;
         overflow: hidden;
         position: relative;

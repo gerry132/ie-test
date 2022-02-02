@@ -6,6 +6,7 @@ import DesktopCloseMenus from './components/desktop-close-menus';
 import SkipLink from './components/skip-link';
 import StoryLinksExpander from './components/story-links-expander';
 import Search from './components/search';
+import VideoToggle from './components/video-toggle';
 
 /* feature:use_frontend_component_accordion */
 import Accordion from './components/accordion';
@@ -108,5 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (const search of document.querySelectorAll(Search.selector())) {
         new Search(search);
+    }
+
+    for (const videotoggle of document.querySelectorAll(
+        VideoToggle.selector(),
+    )) {
+        new VideoToggle(videotoggle);
     }
 });

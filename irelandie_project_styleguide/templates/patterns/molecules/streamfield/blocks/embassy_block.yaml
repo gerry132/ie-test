@@ -5,10 +5,11 @@ context:
 
 tags:
   image:
-    value.image width-400:
-      raw: |
-        <img src="https://source.unsplash.com/400x300?ocean" width="400" height="300" alt="Some alt">
+    value.image fill-768x768 as featured_image:
+      target_var: bg_image
+      raw:
+        url: https://source.unsplash.com/768x768?ocean
   pageurl:
     value.page as href:
       target_var: href
-      raw: "#"
+      raw: '#'

@@ -4,6 +4,13 @@
 {% block main %}
     {% include_block page.stories %}
     {% include_block page.embeds %}
-    {% include_block page.featured_stories %}
-    {% include_block page.featured_embassies %}
+
+    <div class="section section--padding section--grey">
+        <div class="wrapper wrapper--large">
+            <div class="featured-blocks">
+                {% include_block page.featured_stories %}
+                {% include_block page.featured_embassies %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
