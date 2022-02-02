@@ -1,4 +1,12 @@
 .section {
+    &--padding {
+        padding: 40px 0;
+
+        @include media-query(medium) {
+            padding: 80px 0;
+        }
+    }
+
     &--main {
         max-width: $wrapper--small;
 
