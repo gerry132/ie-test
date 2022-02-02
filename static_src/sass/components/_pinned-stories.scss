@@ -1,4 +1,5 @@
 .pinned-stories {
+    $root: &;
     background-color: $color--white;
 
     &__container {
@@ -25,6 +26,10 @@
     &__featured-summary,
     &__featured-link {
         color: $color--white;
+    }
+
+    &__featured-title {
+        text-decoration: underline;
     }
 
     &__featured-content-wrapper {
@@ -59,6 +64,11 @@
         background-color: rgba($color--primary, 0.7);
         padding: $grid;
         position: relative;
+        transition: background-color $transition;
+
+        #{$root}__featured-content-wrapper:hover & {
+            background-color: $color--primary;
+        }
 
         @include media-query(medium) {
             padding: 40px;
