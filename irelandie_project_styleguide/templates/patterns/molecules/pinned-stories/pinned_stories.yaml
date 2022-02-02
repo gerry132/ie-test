@@ -1,5 +1,6 @@
 context:
   featured_story:
+    image: True
     title: Stub content
     summary: Check out our awesome stub content
     page: foobar
@@ -28,7 +29,11 @@ tags:
     card.image width-500 class="card__image":
       raw: |
         <img src="https://source.unsplash.com/500x400?ocean" width="500" height="400" alt="Some alt" class="card__image">
-    pageurl:
-      featured_story.page as href:
-        target_var: href
-        raw: '#'
+    featured_story.image width-1080 as featured_image:
+      target_var: featured_image
+      raw: |
+        https://source.unsplash.com/1080x1080?ocean
+  pageurl:
+    featured_story.page as href:
+      target_var: href
+      raw: '#'
