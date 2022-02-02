@@ -5,6 +5,7 @@ import DesktopSubMenu from './components/desktop-sub-menu';
 import DesktopCloseMenus from './components/desktop-close-menus';
 import SkipLink from './components/skip-link';
 import StoryLinksExpander from './components/story-links-expander';
+import VideoToggle from './components/video-toggle';
 
 /* feature:use_frontend_component_accordion */
 import Accordion from './components/accordion';
@@ -103,5 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
         StoryLinksExpander.selector(),
     )) {
         new StoryLinksExpander(storylinksexpander);
+    }
+
+    for (const videotoggle of document.querySelectorAll(
+        VideoToggle.selector(),
+    )) {
+        new VideoToggle(videotoggle);
     }
 });

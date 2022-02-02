@@ -10,10 +10,7 @@
     }
 
     &--main {
-        padding: 20px;
         background-color: $color--white;
-        // Color-matching border for high-contrast mode users to distinguish the header and footer from main.
-        border: 1px solid $color--white;
     }
 
     &--flex {
@@ -23,5 +20,9 @@
         @include media-query(medium) {
             flex-direction: row;
         }
+    }
+
+    &--padding {
+        padding: 0 $grid;
     }
 }
