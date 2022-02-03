@@ -13,29 +13,15 @@ from irelandie_utils.constants import StoryAlignment, StoryBackground
 
 
 class AlternateLinkValue(StructValue):
-    def link_title(self):
-        link_title = ''
+    def link_url(self):
+        external_url = self.get('url')
+        page = self.get('page')
+        return external_url or page.url
 
+    def link_title(self):
         title = self.get('title')
         page = self.get('page')
-        if title:
-            link_title = title
-        elif page:
-            link_title = page.title
-
-        return link_title
-
-    def link_url(self):
-        link_url = ""
-
-        title = self.get('url')
-        page = self.get('page')
-        if title:
-            link_url = title
-        elif page:
-            link_url = page.url
-
-        return link_url
+        return title or page.title
 
 
 class StoryLinkBlock(blocks.StructBlock):
