@@ -1,7 +1,7 @@
 context:
   value:
-    title: Stub content
-    page: foobar
+    link_title: Stub content
+    link_url: foobar
 
 tags:
   image:
