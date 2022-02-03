@@ -12,16 +12,16 @@ from wagtailmedia.blocks import VideoChooserBlock
 from irelandie_utils.constants import StoryAlignment, StoryBackground
 
 
-class StoryLinkValue(StructValue):
+class AlternateLinkValue(StructValue):
+    def link_url(self):
+        external_url = self.get('url')
+        page = self.get('page')
+        return external_url or page.url
+
     def link_title(self):
         title = self.get('title')
         page = self.get('page')
         return title or page.title
-
-    def link_url(self):
-        url = self.get('url')
-        page = self.get('page')
-        return url or page.url
 
 
 class StoryLinkBlock(blocks.StructBlock):
@@ -38,7 +38,7 @@ class StoryLinkBlock(blocks.StructBlock):
     )
 
     class Meta:
-        value_class = StoryLinkValue
+        value_class = AlternateLinkValue
         template = "patterns/molecules/streamfield/blocks/story_link_block.html"
 
     def clean(self, value):
@@ -84,7 +84,7 @@ class StoryBlock(blocks.StructBlock):
         min_num=0,
         required=False,
     )
-    
+
     class Meta:
         template = "patterns/molecules/streamfield/blocks/story_block.html"
 
@@ -104,8 +104,14 @@ class EmbassyStory(blocks.StructBlock):
         page_type="irelandie_missions.MissionPage",
     )
     title = blocks.CharBlock(required=False)
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
 
     class Meta:
+        value_class = AlternateLinkValue
         template = "patterns/molecules/streamfield/blocks/embassy_block.html"
 
 
