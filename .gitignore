@@ -9,3 +9,4 @@ db.sqlite3
 .vscode
 static_compiled
 node_modules/
+.idea
