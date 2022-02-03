@@ -25,7 +25,7 @@
     @include z-index(header);
     position: relative;
     display: block;
-    width: 30px;
+    width: 40px;
     height: 20px;
     margin-top: 5px;
     background: transparent;
@@ -33,11 +33,15 @@
     transform: rotate(0deg);
     transition: $transition;
 
+    &:hover {
+        background-color: transparent;
+    }
+
     &__line {
         position: absolute;
         left: 0;
         display: block;
-        width: 100%;
+        width: 40px;
         height: 2px;
         background: $color--white;
         opacity: 1;
@@ -57,7 +61,6 @@
         &:nth-child(2),
         &:nth-child(3) {
             top: 10px;
-            opacity: 0.25;
 
             .is-open & {
                 opacity: 1;

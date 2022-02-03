@@ -59,6 +59,10 @@
         right: 0;
         top: 5px;
         padding: 0;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     &__button-icon,
