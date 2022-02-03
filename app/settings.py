@@ -162,7 +162,9 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 # Wagtail extra
                 'wagtail.contrib.settings.context_processors.settings',
-                'django.template.context_processors.i18n'
+                'django.template.context_processors.i18n',
+                # custom processors
+                'irelandie_utils.context_processors.local_languages'
             ],
             'builtins': ['pattern_library.loader_tags'],
         },

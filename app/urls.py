@@ -57,6 +57,8 @@ urlpatterns += static(
 
 
 urlpatterns += i18n_patterns(
+    # set up set language redirect view
+    path('i18n/', include('django.conf.urls.i18n')),
     path('', include(wagtail_urls)),
     prefix_default_language=PREFIX_DEFAULT_LANGUAGE,
 )
