@@ -2,7 +2,6 @@
 from wagtail.admin.edit_handlers import StreamFieldPanel
 from wagtail.core import blocks as wagtail_blocks
 from wagtail.core.fields import StreamField
-from wagtail.core.models import Page
 
 from irelandie_utils import blocks
 from irelandie_utils.models import HeroPage
@@ -22,18 +21,14 @@ class HomePage(HeroPage):
         null=True,
     )
 
-    pinned_stories = StreamField(
-        [
+    pinned_stories = StreamField([
+        ('pinned_story', wagtail_blocks.StructBlock([
             ('pinned_story_hero', blocks.PinnedStoryHeroBlock()),
-            ('pinned_story', blocks.PinnedStoryBlock()),
-        ],
-        block_counts={
-            'pinned_story_hero': {'max_num': 1},
-        },
-        min_num=0,
-        blank=True,
-        null=True,
-    )
+            ('pinned_stories', wagtail_blocks.ListBlock(blocks.PinnedStoryBlock())),
+        ], template='patterns/molecules/pinned-stories/pinned_stories.html')),
+    ], block_counts={
+        'pinned_story': {'max_num': 1},
+    }, blank=True, null=True)
 
     secondary_stories = StreamField(
         [
@@ -90,18 +85,14 @@ class CampaignPage(HeroPage):
         max_num=1,
     )
 
-    pinned_stories = StreamField(
-        [
+    pinned_stories = StreamField([
+        ('pinned_story', wagtail_blocks.StructBlock([
             ('pinned_story_hero', blocks.PinnedStoryHeroBlock()),
-            ('pinned_story', blocks.PinnedStoryBlock()),
-        ],
-        block_counts={
-            'pinned_story_hero': {'max_num': 1},
-        },
-        min_num=0,
-        blank=True,
-        null=True,
-    )
+            ('pinned_stories', wagtail_blocks.ListBlock(blocks.PinnedStoryBlock())),
+        ])),
+    ], block_counts={
+        'pinned_story': {'max_num': 1},
+    }, blank=True, null=True)
 
     secondary_stories = StreamField(
         [
