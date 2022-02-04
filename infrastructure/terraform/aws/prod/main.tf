@@ -36,8 +36,8 @@ locals {
   elb_account_arn               = data.aws_elb_service_account.elb.arn
   environment_name              = "prod"
   app_aws_username              = "PROD_APP_USER"
-  project_domain                = "content.ireland.ie"
-  domain_ireland_ie        	    = "ireland.ie"
+  project_domain                = "preprod.content.ireland.testing.gov.ie"
+  domain_ireland_ie             = "preprod.ireland.testing.gov.ie"
   project_name                  = "g2g"
   region                        = "eu-west-1"
   # DB
@@ -45,8 +45,8 @@ locals {
   # CACHE
   cache_instance_class          = "cache.t3.medium"
   # ECS
-  ecr_repository_name   = "${local.environment_name}-${local.project_name}"
-  autoscaling_max_capacity      = 2
+  ecr_repository_name           = "${local.environment_name}-${local.project_name}"
+  autoscaling_max_capacity      = 6
   autoscaling_min_capacity      = 1
   autoscaling_target_value      = 60
   service_contrainer_port       = 8000
@@ -58,6 +58,13 @@ locals {
   SETTINGS_DEBUG_TOOLBAR        = 0
   SETTINGS_USE_S3               = 1
   SETTINGS_USE_CACHE            = 1
+  gov_network_cird_blocks       = [
+    "169.254.192.0/18",
+    "137.191.224.0/19",
+    "193.178.64.0/19",
+    "193.178.96.0/20",
+    "139.162.239.108/32",
+  ]
 }
 
 # -----------------------------------------------------------------------------
@@ -194,6 +201,29 @@ resource "aws_security_group_rule" "internet_to_lb_443" {
   security_group_id         = aws_security_group.lb.id
   cidr_blocks               = ["0.0.0.0/0"]
 }
+
+# Allow List IPs for restrict areas
+
+resource "aws_security_group_rule" "gov_network_to_lb_443" {
+  description               = "Gov network"
+  type                      = "ingress"
+  from_port                 = 0
+  to_port                   = 0
+  protocol                  = "all"
+  security_group_id         = aws_security_group.lb_gov_network.id
+  cidr_blocks               = local.gov_network_cird_blocks
+}
+
+resource "aws_security_group_rule" "public_network_to_lb_443" {
+  description               = "Network public network ip"
+  type                      = "ingress"
+  from_port                 = 0
+  to_port                   = 0
+  protocol                  = "all"
+  security_group_id         = aws_security_group.lb_gov_network.id
+  cidr_blocks               = ["${module.network.public_ip}/32"]
+}
+
 
 # Internal thing rules
 
@@ -1036,6 +1066,5 @@ resource "aws_appautoscaling_policy" "cpu" {
     predefined_metric_specification {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
-
   }
 }

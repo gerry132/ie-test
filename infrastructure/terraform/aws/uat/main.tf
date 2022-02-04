@@ -45,7 +45,7 @@ locals {
   # CACHE
   cache_instance_class          = "cache.t3.medium"
   # ECS
-  ecr_repository_name   = "${local.environment_name}-${local.project_name}"
+  ecr_repository_name           = "${local.environment_name}-${local.project_name}"
   autoscaling_max_capacity      = 2
   autoscaling_min_capacity      = 1
   autoscaling_target_value      = 60
@@ -1070,7 +1070,7 @@ locals {
   SETTINGS_CACHE_ADDRESS            = local.cache_address
   SETTINGS_DATABASE_URL             = local.db_master_url
   SETTINGS_SECRET_KEY               = data.aws_ssm_parameter.random_secret_key.value
-  SETTINGS_CORS_ALLOWED_ORIGINS	    = local.SETTINGS_BASE_URL
+  SETTINGS_CORS_ALLOWED_ORIGINS     = local.SETTINGS_BASE_URL
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
 }
 
@@ -1099,8 +1099,8 @@ data "template_file" "task_definition" {
     SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
     SETTINGS_USE_CACHE                  = local.SETTINGS_USE_CACHE
     SETTINGS_USE_S3                     = local.SETTINGS_USE_S3
-    SETTINGS_CORS_ALLOWED_ORIGINS	= local.SETTINGS_CORS_ALLOWED_ORIGINS
-    SETTINGS_CORS_ALLOW_ALL_ORIGINS	= local.SETTINGS_CORS_ALLOW_ALL_ORIGINS
+    SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
+    SETTINGS_CORS_ALLOW_ALL_ORIGINS     = local.SETTINGS_CORS_ALLOW_ALL_ORIGINS
   }
 }
 
@@ -1169,6 +1169,5 @@ resource "aws_appautoscaling_policy" "cpu" {
     predefined_metric_specification {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
-
   }
 }
