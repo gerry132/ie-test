@@ -11,6 +11,9 @@ register = template.Library()
 def primarynav(context):
     request = context["request"]
 
+    # This was the code added for ticket 1994 whcih has brojen the search
+    # functionality. Nick is looking at a Fix for this and the comment here
+    # is a temporary meassure to reach the PEN testing stage.
     # custom_primary = context["page"].custom_primary_navigation
     # if custom_primary:
     #     navigation = custom_primary
