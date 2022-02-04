@@ -11,13 +11,13 @@ register = template.Library()
 def primarynav(context):
     request = context["request"]
 
-    custom_primary = context["page"].custom_primary_navigation
-    if custom_primary:
-        navigation = custom_primary
-    else:
-        navigation = context["settings"]["irelandie_navigation"][
-            "NavigationSettings"
-        ].primary_navigation
+    # custom_primary = context["page"].custom_primary_navigation
+    # if custom_primary:
+    #     navigation = custom_primary
+    # else:
+    navigation = context["settings"]["irelandie_navigation"][
+        "NavigationSettings"
+    ].primary_navigation
 
     return {
         "primarynav": navigation,
