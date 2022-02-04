@@ -35,14 +35,17 @@ locals {
   account_id                    = data.aws_caller_identity.current.account_id
   elb_account_arn               = data.aws_elb_service_account.elb.arn
   environment_name              = "uat"
+  app_aws_username              = "UAT_APP_USER"
   project_domain                = "content.ireland.testing.gov.ie"
+  domain_ireland_ie        	    = "ireland.testing.gov.ie"
   project_name                  = "g2g"
   region                        = "eu-west-1"
   # DB
-  db_instance_class             = "db.m6g.large"  # "db.m6g.2xlarge"
+  db_instance_class             = "db.m6g.large"
   # CACHE
-  cache_instance_class          = "cache.t3.medium"  # "cache.m6g.large"
+  cache_instance_class          = "cache.t3.medium"
   # ECS
+  ecr_repository_name   = "${local.environment_name}-${local.project_name}"
   autoscaling_max_capacity      = 2
   autoscaling_min_capacity      = 1
   autoscaling_target_value      = 60
@@ -55,15 +58,6 @@ locals {
   SETTINGS_DEBUG_TOOLBAR        = 0
   SETTINGS_USE_S3               = 1
   SETTINGS_USE_CACHE            = 1
-}
-
-
-locals {
-  domain_ireland_ie        	    = "ireland.testing.gov.ie"
-}
-
-
-locals {
   gov_network_cird_blocks       = [
     "169.254.192.0/18",
     "137.191.224.0/19",
@@ -71,14 +65,7 @@ locals {
     "193.178.96.0/20",
     "139.162.239.108/32",
   ]
-  app_aws_username              = "UAT_APP_USER"
 }
-
-
-locals {
-  ecr_repository_name   = "${local.environment_name}-${local.project_name}"
-}
-
 
 # -----------------------------------------------------------------------------
 # Values to fill after running terraform is ran, used for codebuild and secrets
@@ -124,9 +111,9 @@ resource "aws_ssm_parameter" "AWS_ACCESS_KEY_ID" {
 }
 
 
-#
-#
-#
+# -----------------------------------------------------------------------------
+# Systems Manager - Parameter Store
+# -----------------------------------------------------------------------------
 
 resource "aws_ssm_parameter" "AWS_DEFAULT_REGION" {
   name        = "${local.environment_name}_AWS_DEFAULT_REGION"
