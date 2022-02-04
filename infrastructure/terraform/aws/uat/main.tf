@@ -295,7 +295,7 @@ resource "aws_security_group_rule" "mel_to_lb_443" {
   to_port                   = 0
   protocol                  = "all"
   security_group_id         = aws_security_group.lb_gov_network.id
-  cidr_blocks               = ["78.32.251.194/32"]
+  cidr_blocks               = ["78.32.251.194/32", "82.16.132.142/32"]
 }
 
 resource "aws_security_group_rule" "gerry_to_lb_443" {
