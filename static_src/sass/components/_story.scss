@@ -1,19 +1,10 @@
 .story {
     $root: &;
+    background-image: url('../images/cssBackgrounds/ireland-outline-bg.svg');
+    background-repeat: no-repeat;
+    background-size: 600px 700px;
+    background-position: 100% 100%;
     position: relative;
-
-    &::before {
-        content: '';
-        background-image: url('../images/cssBackgrounds/ireland-outline-bg.svg');
-        height: 700px;
-        width: 600px;
-        display: block;
-        background-size: 100%;
-        background-position: center center;
-        position: absolute;
-        right: -200px;
-        bottom: -100px;
-    }
 
     &--dark {
         background-color: $color--background-grey;
@@ -21,6 +12,7 @@
 
     &__container {
         position: relative;
+        padding: 0 30px;
 
         @include media-query(medium) {
             display: flex;
@@ -68,6 +60,7 @@
 
     &__heading {
         color: $color--off-black;
+        font-weight: $weight--bold;
     }
 
     &__cta {
@@ -101,28 +94,28 @@
             height: auto;
         }
 
-        &::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 50px;
-            display: block;
-            width: 100%;
-            background-image: linear-gradient(
-                0deg,
-                rgba(255, 255, 255, 1) 1%,
-                rgba(255, 255, 255, 0) 100%
-            );
+        // &::after {
+        //     content: '';
+        //     position: absolute;
+        //     bottom: 0;
+        //     left: 0;
+        //     height: 50px;
+        //     display: block;
+        //     width: 100%;
+        //     background-image: linear-gradient(
+        //         0deg,
+        //         rgba(255, 255, 255, 1) 1%,
+        //         rgba(255, 255, 255, 0) 100%
+        //     );
 
-            #{$root}__links.is-open & {
-                display: none;
-            }
+        //     #{$root}__links.is-open & {
+        //         display: none;
+        //     }
 
-            @include media-query(medium) {
-                display: none;
-            }
-        }
+        //     @include media-query(medium) {
+        //         display: none;
+        //     }
+        // }
     }
 
     &__links-expander {

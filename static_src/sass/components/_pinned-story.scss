@@ -1,5 +1,6 @@
 .pinned-story {
     position: relative;
+    font-family: $font--secondary;
     margin-top: $grid;
 
     @include media-query(small) {

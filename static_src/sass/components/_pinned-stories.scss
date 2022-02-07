@@ -29,20 +29,26 @@
     }
 
     &__featured-title {
+        @include font-size(l);
+        font-family: $font--secondary;
         text-decoration: underline;
+
+        @include media-query(medium) {
+            font-size: 32px;
+        }
     }
 
     &__featured-content-wrapper {
-        background-size: 100% 1080px;
+        background-size: cover;
         background-repeat: no-repeat;
         display: flex;
-        height: 50vh;
+        height: 100vh;
         flex-direction: column;
         justify-content: flex-end;
         align-items: flex-start;
         padding: 40px $grid;
 
-        &:before {
+        &::before {
             content: '';
             background-color: rgba($color--black, 0.25);
             width: 100%;
@@ -53,6 +59,7 @@
         }
 
         @include media-query(large) {
+            background-size: 100% 1080px;
             padding: 10%;
             height: 100vh;
             position: sticky;
@@ -63,6 +70,7 @@
     &__featured-content {
         background-color: rgba($color--primary, 0.7);
         padding: $grid;
+        font-family: $font--secondary;
         position: relative;
         transition: background-color $transition;
 
@@ -72,6 +80,7 @@
 
         @include media-query(medium) {
             padding: 40px;
+            max-width: 80%;
         }
     }
 
