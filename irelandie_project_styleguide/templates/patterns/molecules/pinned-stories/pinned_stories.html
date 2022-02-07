@@ -4,24 +4,24 @@
     <div class="pinned-stories__container">
         {% image featured_story.image width-1080 as featured_image %}
         <div class="pinned-stories__featured">
-            {% if featured_story.page %}
-            {% pageurl featured_story.page as href %}
-                <a href="{{ href }}" class="pinned-stories__featured-content-wrapper" style="background-image:url({{ featured_image }});">
-            {% else %}
-                <div class="pinned-stories__featured-content-wrapper" style="background-image:url({{ featured_image }});">
-            {% endif %}
-                <div class="pinned-stories__featured-content">
-                    <h3 class="pinned-stories__featured-title heading--3">{{ featured_story.title }}</h3>
-                    <p class="pinned-stories__featured-summary">{{ featured_story.summary }}</p>
-                </div>
-            {% if featured_story.page %}
-            </a>
-            {% else %}
-            </div> 
-            {% endif %}
+            <div class="pinned-stories__featured-content">
+                <h3 class="pinned-stories__featured-title heading--2">{{ value.pinned_story_hero.title }}</h3>
+                <p class="pinned-stories__featured-summary">{{ value.pinned_story_hero.summary }}</p>
+                {% if value.pinned_story_hero.image %}
+                <figure class="pinned-stories_featured-image">
+                    {% image value.pinned_story_hero.image fill-800x600 %}
+                </figure>
+                {% endif %}
+                {% if value.pinned_story_hero.page %}
+                {% pageurl value.pinned_story_hero.page as href %}
+                    <a href="{{ href }}" class="pinned-stories__featured-link button">
+                        {{ value.pinned_story_hero.link_text }}
+                    </a>
+                {% endif %}
+            </div>
         </div>
         <div class="pinned-stories__feed">
-            {% for story in pinned_stories %}
+            {% for story in value.pinned_stories %}
                 {% include "patterns/molecules/card/card.html" with card=story classes="pinned-story" %}
             {% endfor %%}
         </div>

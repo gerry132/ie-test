@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'irelandie_publications',
     'irelandie_speeches',
     'irelandie_site_information',
+    'irelandie_forms',
 
     #
     'wagtail_localize',
@@ -162,7 +163,9 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 # Wagtail extra
                 'wagtail.contrib.settings.context_processors.settings',
-                'django.template.context_processors.i18n'
+                'django.template.context_processors.i18n',
+                # custom processors
+                'irelandie_utils.context_processors.local_languages'
             ],
             'builtins': ['pattern_library.loader_tags'],
         },
@@ -248,7 +251,7 @@ STATICFILES_DIRS = [
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
-STATIC_URL = '/static_compiled/'
+STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 MEDIA_URL = '/media/'
