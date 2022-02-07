@@ -235,9 +235,7 @@ class RoleBlock(blocks.PageChooserBlock):
 class TableBlock(WagtailTableBlock):
     class Meta:
         label = "TableBlock"
-        template = "TODO"
-
-    pass
+        template = "patterns/molecules/streamfield/blocks/table_block.html"
 
 
 class SocialLinkBlock(blocks.StructBlock):
