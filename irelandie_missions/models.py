@@ -24,7 +24,7 @@ class CountryGroupPageIndex(BasePage):
     content_panels = BasePage.content_panels + [
         FieldPanel("description"),
     ]
-    settings_panels = BasePage.content_panels+ [
+    settings_panels = BasePage.settings_panels + [
         StreamFieldPanel("override_primary_navigation")
     ]
 

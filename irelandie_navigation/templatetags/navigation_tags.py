@@ -11,13 +11,16 @@ register = template.Library()
 def primarynav(context):
     request = context["request"]
 
-    custom_primary = context["page"].custom_primary_navigation
-    if custom_primary:
-        navigation = custom_primary
-    else:
-        navigation = context["settings"]["irelandie_navigation"][
-            "NavigationSettings"
-        ].primary_navigation
+    # This was the code added for ticket 1994 whcih has brojen the search
+    # functionality. Nick is looking at a Fix for this and the comment here
+    # is a temporary meassure to reach the PEN testing stage.
+    # custom_primary = context["page"].custom_primary_navigation
+    # if custom_primary:
+    #     navigation = custom_primary
+    # else:
+    navigation = context["settings"]["irelandie_navigation"][
+        "NavigationSettings"
+    ].primary_navigation
 
     return {
         "primarynav": navigation,
