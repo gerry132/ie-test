@@ -28,7 +28,7 @@ locals {
   app_aws_username              = "PROD_APP_USER"
   project_domain                = "preprod.content.ireland.testing.gov.ie"
   domain_ireland_ie             = "preprod.ireland.testing.gov.ie"
-  project_name                  = "g2g"
+  project_name                  = "ireland-ie"
   region                        = "eu-west-1"
   # DB
   db_instance_class             = "db.m6g.large"

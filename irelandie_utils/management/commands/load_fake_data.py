@@ -73,7 +73,7 @@ letters = string.ascii_lowercase
 
 
 def _get_random_title():
-    return "".join(random.choice(letters) for i in range(10))
+    return "".join(random.choice(letters) for i in range(10))  # nosec
 
 
 def _create_index_page(parent, class_, title):
