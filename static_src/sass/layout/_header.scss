@@ -6,7 +6,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-evenly;
-        padding: $grid;
+        padding: $grid 30px;
     }
 
     &__menus {
@@ -71,6 +71,10 @@
         @include media-query(large) {
             display: none;
         }
+    }
+
+    &__language-switcher {
+        color: $color--white;
     }
 
     &__search-toggle {

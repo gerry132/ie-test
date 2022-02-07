@@ -1,0 +1,19 @@
+.language-switcher {
+    font-family: $font--secondary;
+    background-image: url('../images/cssBackgrounds/arrow.svg');
+    background-repeat: no-repeat;
+    background-size: 16px 8px;
+    background-position: right 8px;
+    color: $color--white;
+    position: relative;
+    display: block;
+    appearance: none;
+    background-color: transparent;
+    vertical-align: middle;
+    border: 0;
+    width: 80px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}

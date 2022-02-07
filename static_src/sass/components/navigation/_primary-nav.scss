@@ -68,10 +68,10 @@
     &__icon {
         color: $color--white;
         display: inline-block;
-        transform: rotate(90deg);
+        margin-top: 5px;
 
         .active & {
-            transform: rotate(270deg);
+            transform: rotate(180deg);
         }
 
         #{$root}__link:hover & {
