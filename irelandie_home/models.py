@@ -58,6 +58,7 @@ class HomePage(HeroPage):
         'irelandie_missions.MissionSearchPage',
         'irelandie_home.CampaignPage',
         'irelandie_home.TopicPage',
+        'irelandie_forms.FormPage',
     ]
 
     #
