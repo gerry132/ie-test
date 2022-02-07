@@ -16,7 +16,7 @@ terraform {
   }
 }
 
-variable "user_cird_blocks" {
+variable "non_gov_network_cird_blocks" {
   type = map(object({
     description  = string
     cidr_blocks  = list(string)
