@@ -2,8 +2,6 @@ parameters:
 - name: imageTag
   type: string
   default: latest
-- name: environment
-  type: string
 - name: clusterName
   type: string
 - name: serviceName
@@ -17,8 +15,8 @@ steps:
   - bash: |
       echo "Getting existing services"
       services=$(aws ecs describe-services \
-          --cluster ${{parameters.environment}}-${{ parameters.clusterName }} \
-          --service ${{parameters.environment}}-${{ parameters.serviceName }} \
+          --cluster ${{ parameters.clusterName }} \
+          --service ${{ parameters.serviceName }} \
           --region ${{ parameters.region }})
       echo "Existing services $services"
       serviceid=$(jq '.services[].deployments[0].id' <<< "$services")
@@ -31,8 +29,8 @@ steps:
   - bash: |
       echo "replacing service $(serviceId)"
       deployedservice=$(aws ecs update-service \
-          --cluster ${{parameters.environment}}-${{ parameters.clusterName }} \
-          --service ${{parameters.environment}}-${{ parameters.serviceName }} \
+          --cluster ${{ parameters.clusterName }} \
+          --service ${{ parameters.serviceName }} \
           --force-new-deployment \
           --region ${{ parameters.region }})
       echo "Result from deploy $deployedservice"
@@ -50,8 +48,8 @@ steps:
       while true; do
           echo "Polling for service state $(newServiceId)"
           services=$(aws ecs describe-services --cluster \
-              ${{parameters.environment}}-${{ parameters.clusterName }} \
-              --service ${{parameters.environment}}-${{ parameters.serviceName }} \
+              ${{ parameters.clusterName }} \
+              --service ${{ parameters.serviceName }} \
               --region ${{ parameters.region }})
           echo "current services"
           echo $(jq '.services[].deployments[]' <<< $services)
