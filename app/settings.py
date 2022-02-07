@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'irelandie_publications',
     'irelandie_speeches',
     'irelandie_site_information',
+    'irelandie_forms',
 
     #
     'wagtail_localize',
