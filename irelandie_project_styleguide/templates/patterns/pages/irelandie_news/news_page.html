@@ -1,33 +1,71 @@
-{% load wagtailcore_tags wagtailimages_tags wagtailembeds_tags %}
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags wagtailimages_tags static i18n %}
 
-<h1>{{ page.title }}</h1>
-<p>{{ page.introduction }}</p>
+{% block content %}
+        
+    {% comment %}
+        Responsive hero images
+    {% endcomment %}
+    {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
 
-<!-- Hero-->
-<h2>{{ page.hero_title }}</h2>
-{% with hero_image=page.hero_image %}
-    {% image hero_image width-400 %}
-{% endwith %}
+    {% include "patterns/molecules/hero/hero.html" with page=page classes="hero--article" %}
 
-{% with hero_video=page.hero_video %}
-    <video width="{{ hero_video.width }}" height="{{ hero_video.height }}" controls>
-        <source src="{{ hero_video.file.url }}" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-{% endwith %}
+    {% block main %}
+        <!-- CTA -->
+        {% comment %} 
+            TODO: Possibly not needed anymore.
+            <a href="{{ page.call_to_action.get_link_url }}">{{ page.call_to_action.get_link_text }}</a>
+        {% endcomment %}
 
-<!-- CTA -->
-<a href="{{ page.call_to_action.get_link_url }}">{{ page.call_to_action.get_link_text }}</a>
+        <!-- Body -->
+        <div class="section section--padding">
+            <div class="wrapper wrapper--small">
+                {% for block in page.body %}
+                    {% include_block block %}
+                {% endfor %}
+            </div>
+        </div>
 
-<!-- Body -->
-<article>
-    {% for block in page.body %}
-        <section>{% include_block block %}</section>
-    {% endfor %}
-</article>
+        <!-- related_articles -->
+        <div class="section section--padding section--grey">
+            <div class="wrapper wrapper--large">
+                <div class="related-articles">
+                    <h2 class="related-articles__title heading--2">
+                        {% trans 'You may also be interested in these articles' %}
+                    </h2>
+                    <div class="grid">
+                        {% for article in page.related_articles %}
+                            {% if article.page %}
+                            {% pageurl article.page as href %}
+                                <a href="{{ href }}" class="card{% if large %} card--large{% endif %}{% if classes %} {{ classes }}{% endif %}">
+                            {% else %}
+                                <div class="card">
+                            {% endif %}
+                                <div class="card__image-container">
+                                    {% image article.listing_image width-768 class="card__image" %}
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title">{{ article.listing_title }}</h3>
 
-<!-- related_articles -->
-{% for article in page.related_articles %}
-    <h2>{{ article.listing_title }}</h2>
-    {% image article.listing_image width-400 %}
-{% endfor %}
+                                    {% if article.listing_summary %}
+                                        <p class="card__summary">{{ article.listing_summary }}</p>
+                                    {% endif %}
+
+                                    {% if article.page %}
+                                        <span class="card__link">
+                                            {% trans 'Read this story' %}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            {% if card.page %}
+                                </a>
+                            {% else %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}

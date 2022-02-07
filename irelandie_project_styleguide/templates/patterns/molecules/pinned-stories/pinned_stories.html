@@ -10,7 +10,7 @@
                 {% if featured_story.page %}
                 {% pageurl featured_story.page as href %}
                     <a href="{{ href }}" class="pinned-stories__featured-link button">
-                        Read this story
+                        {% trans 'Read this story' %}
                     </a>
                 {% endif %}
             </div> 

@@ -1,0 +1,12 @@
+context:
+  related_articles:
+    - listing_title: lorem ipsum
+      listing_image: dummy
+    - listing_title: lorem ipsum
+      listing_image: dummy
+
+tags:
+  image:
+    article.listing_image width-768:
+      raw: |
+        <img src="https://source.unsplash.com/1920?1280" width="1920" height="1280" alt="Some alt">

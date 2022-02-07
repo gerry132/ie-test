@@ -151,7 +151,7 @@ class DocumentBlock(blocks.StructBlock):
 class AlertBlock(blocks.PageChooserBlock):
     class Meta:
         label = "AlertBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/alert_block.html"
 
     pass
 
@@ -159,7 +159,7 @@ class AlertBlock(blocks.PageChooserBlock):
 class ContactDetailBlock(blocks.PageChooserBlock):
     class Meta:
         label = "ContactDetailBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/contact_block.html"
 
     pass
 
@@ -190,7 +190,7 @@ class JumpboxBlock(blocks.StructBlock):
 class PersonBlock(blocks.PageChooserBlock):
     class Meta:
         label = "PersonBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/person_block.html"
 
     pass
 
@@ -198,7 +198,7 @@ class PersonBlock(blocks.PageChooserBlock):
 class PlaceBlock(blocks.PageChooserBlock):
     class Meta:
         label = "PlaceBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/place_block.html"
 
     pass
 
@@ -206,7 +206,7 @@ class PlaceBlock(blocks.PageChooserBlock):
 class RichTextBlock(blocks.RichTextBlock):
     class Meta:
         label = "RichTextBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/rich-text.html"
 
     pass
 
@@ -214,7 +214,7 @@ class RichTextBlock(blocks.RichTextBlock):
 class RoleBlock(blocks.PageChooserBlock):
     class Meta:
         label = "RoleBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/role_block.html"
 
     pass
 
@@ -222,7 +222,7 @@ class RoleBlock(blocks.PageChooserBlock):
 class TableBlock(WagtailTableBlock):
     class Meta:
         label = "TableBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/table_block.html"
 
     pass
 

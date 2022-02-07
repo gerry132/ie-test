@@ -24,7 +24,7 @@
         grid-template-columns: repeat(auto-fit, minmax(calc(50% - 20px), 1fr));
 
         @include media-query(medium) {
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(33.33%, 1fr));
         }
 
         > * {
