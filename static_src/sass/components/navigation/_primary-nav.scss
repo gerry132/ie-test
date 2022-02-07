@@ -15,8 +15,6 @@
     &__item {
         font-family: $font--secondary;
         width: 100%;
-        padding-bottom: 10px;
-        margin-bottom: 10px;
 
         &:last-child {
             border-bottom: 0;
@@ -34,13 +32,12 @@
     }
 
     &__link {
-        font-size: 32px;
-        line-height: 32px;
+        @include font-size(l);
         color: rgba($color--white, 0.8);
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid transparent;
-        padding: 20px 30px;
+        padding: 10px 30px;
         width: 100%;
         transition: background-color transition;
 
@@ -68,7 +65,7 @@
     &__icon {
         color: $color--white;
         display: inline-block;
-        margin-top: 5px;
+        transform: rotate(-90deg);
 
         .active & {
             transform: rotate(180deg);
