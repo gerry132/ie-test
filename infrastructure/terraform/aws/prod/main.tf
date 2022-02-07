@@ -7,24 +7,21 @@ terraform {
   }
 }
 
-
 terraform {
   backend "s3" {
     bucket                      = "ireland-ie-prod-infrastructure"
     key                         = "website/terraform.tfstate"
     region                      = "eu-west-1"
-    shared_credentials_file     = ".aws/credentials"
     encrypt                     = true
   }
 }
 
-
-provider "aws" {
-  profile                     = "default"
-  region                      = "eu-west-1"
-  shared_credentials_file     = ".aws/credentials"
+variable "user_cird_blocks" {
+  type = map(object({
+    description  = string
+    cidr_blocks  = list(string)
+  }))
 }
-
 
 data "aws_caller_identity" "current" {}
 
@@ -65,6 +62,16 @@ locals {
     "193.178.96.0/20",
     "139.162.239.108/32",
   ]
+  non_gov_network_cird_blocks   = {
+    rachel_dev = {
+      description = "Rachel Mannion OGCIO"
+      cidr_blocks = ["139.162.182.140/32"]
+    },
+    reinaldo_dev = {
+      description = "Reinaldo Sanches OGCIO"
+      cidr_blocks = ["172.105.95.186/32", "89.101.167.251/32"]
+    }
+  }
 }
 
 # -----------------------------------------------------------------------------
@@ -202,7 +209,7 @@ resource "aws_security_group_rule" "internet_to_lb_443" {
   cidr_blocks               = ["0.0.0.0/0"]
 }
 
-# Allow List IPs for restrict areas
+# Allow List IPs for restrict areas Gov Network
 
 resource "aws_security_group_rule" "gov_network_to_lb_443" {
   description               = "Gov network"
@@ -224,6 +231,19 @@ resource "aws_security_group_rule" "public_network_to_lb_443" {
   cidr_blocks               = ["${module.network.public_ip}/32"]
 }
 
+# Allow List IPs for restrict areas Outside Gov Network
+
+resource "aws_security_group_rule" "users_aws_dev_to_lb_443" {
+  for_each = local.non_gov_network_cird_blocks
+
+  description               = each.value.description
+  type                      = "ingress"
+  from_port                 = 0
+  to_port                   = 0
+  protocol                  = "all"
+  security_group_id         = aws_security_group.lb_gov_network.id
+  cidr_blocks               = each.value.cidr_blocks
+}
 
 # Internal thing rules
 
