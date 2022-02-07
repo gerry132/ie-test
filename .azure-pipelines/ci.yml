@@ -1,0 +1,64 @@
+trigger:
+  - $(trigger)
+
+pr: none
+
+pool:
+  vmImage: ubuntu-latest
+
+resources:
+  repositories:
+  - repository: azure-pipelines-templates
+    type: github
+    endpoint: ogcio
+    name: ogcio/azure-pipelines-templates
+    ref: refs/heads/develop
+
+stages:
+- stage: test
+  displayName: Test
+  jobs:
+  - template: templates/python-bandit.yml@azure-pipelines-templates
+    parameters:
+        srcDir: ireland_*
+
+
+- stage: deploy
+  displayName: Deploy
+  jobs:
+    - job: Deploy
+      steps:
+      - checkout: self
+        submodules: true
+        persistCredentials: true
+      - task: Bash@3
+        inputs:
+          targetType: inline
+          script: |
+            cd infrastructure/terraform/aws/$(env)/
+            terraform init -input=false -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY"
+            terraform apply -input=false -auto-approve
+            cd ../../../..
+          failOnStderr: true
+        displayName: Run terraform
+        env:
+          AWS_ACCESS_KEY_ID: $(aws_access_key)
+          AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
+          AWS_DEFAULT_REGION: $(aws_region)
+
+      - task: Bash@3
+        inputs:
+          targetType: inline
+          script: |
+            make build
+          failOnStderr: false
+        displayName: build and push image
+        env:
+          AWS_ACCESS_KEY_ID: $(aws_access_key)
+          AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
+
+      - template: templates/ecs-update-service.yml
+        parameters:
+          environment: $(env)
+          clusterName: $(imageName)
+          serviceName: $(imageName)
