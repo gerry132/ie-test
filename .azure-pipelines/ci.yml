@@ -60,6 +60,7 @@ stages:
           AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
           AWS_REGION: $(aws_region)
           AWS_ACCOUNT_ID: $(aws_account_id)
+          IMAGE_NAME: $(image_name)
           IMAGE_TAG: $(image_tag)
 
       - template: templates/ecs-update-service.yml
