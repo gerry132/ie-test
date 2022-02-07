@@ -16,13 +16,6 @@ terraform {
   }
 }
 
-variable "non_gov_network_cird_blocks" {
-  type = map(object({
-    description  = string
-    cidr_blocks  = list(string)
-  }))
-}
-
 data "aws_caller_identity" "current" {}
 
 data "aws_elb_service_account" "elb" {}
@@ -233,7 +226,7 @@ resource "aws_security_group_rule" "public_network_to_lb_443" {
 
 # Allow List IPs for restrict areas Outside Gov Network
 
-resource "aws_security_group_rule" "users_aws_dev_to_lb_443" {
+resource "aws_security_group_rule" "non_gov_network_to_lb_443" {
   for_each = local.non_gov_network_cird_blocks
 
   description               = each.value.description
