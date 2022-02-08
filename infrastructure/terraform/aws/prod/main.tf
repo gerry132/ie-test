@@ -64,6 +64,10 @@ locals {
       description = "Reinaldo Sanches - OGCIO"
       cidr_blocks = ["172.105.95.186/32", "89.101.167.251/32"]
     },
+    keith_po = {
+      description = "Keith Costello - OGCIO"
+      cidr_blocks = ["37.228.203.132/32"]
+    },
     gerry_dev = {
       description = "Gerry Mcbride - OGCIO"
       cidr_blocks = ["52.49.120.79/32", "37.228.234.245/32"]
@@ -385,7 +389,6 @@ resource "aws_s3_bucket_policy" "ecs_log_policy" {
 }
 
 resource "aws_s3_bucket_policy" "lb_logs" {
-
   bucket = aws_s3_bucket.lb_logs.id
 
   policy = jsonencode({
@@ -412,7 +415,6 @@ resource "aws_s3_bucket_policy" "lb_logs" {
 }
 
 resource "aws_s3_bucket_policy" "private_lb_logs" {
-
   bucket = aws_s3_bucket.private_lb_logs.id
 
   policy = jsonencode({
@@ -702,6 +704,7 @@ resource "aws_lb_listener_rule" "www_ireland_ie_443_admin_redirect" {
 resource "aws_lb_listener_rule" "ireland_ie_443" {
   listener_arn    = aws_lb_listener.public_sites_443.arn
   priority        = 4
+
   action {
     type                = "forward"
     target_group_arn    = aws_lb_target_group.default.arn
