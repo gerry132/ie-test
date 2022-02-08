@@ -83,29 +83,38 @@
         </div>
     </section>
 
-    <header class="header">
+    {% comment %} 
+        Add header--condensed class if secondary menu exists on a page
+        Placeholder conditional for now - will need updating
+    {% endcomment %}
+    <header class="header{% if page.secondary_menu %} header--condensed{% endif %}">
         <div class="wrapper wrapper--large">
             <div class="header__container">
-                <a href="/" aria-label="Ireland.ie">
+                <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">
                     {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo" %}
                 </a>
-
-                <div class="header__menu-toggle">
-                    <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
-                        <span class="button-menu-toggle__line"></span>
-                        <span class="button-menu-toggle__line"></span>
-                        <span class="button-menu-toggle__line"></span>
-                        <span class="button-menu-toggle__line"></span>
-                    </button>
-                </div>
 
                 <div class="header__menus header__menus--desktop">
                     <div data-desktop-menu>
                         {% primarynav %}
                     </div>
+                </div>
 
-                    <!-- Start of the locale selector -->
-                        <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                <div class="header__menus header__menus--mobile" data-mobile-menu>
+                    {% primarynav %}
+
+                    {% comment %} 
+                        Show secondary nav alongside primary nav in dropdown if available
+                    {% endcomment %}
+                    {% if page.secondary_menu %}
+                        {% secondarynav %}
+                    {% endif %}
+                </div>
+
+                <div class="header__menu-items">
+                    <!-- Start of the locale selector for condensed nav -->
+                        <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
                             <input name="next" type="hidden" value="{{ request.get_full_path }}">
                             <div class="header__language-switcher">
                                 <select name="language" id="language-switcher"
@@ -131,14 +140,47 @@
                             <use xlink:href="#close"></use>
                         </svg>
                     </button>
-                </div>
 
-                <div class="header__menus header__menus--mobile" data-mobile-menu>
-                    {% primarynav %}
+                    <div class="header__menu-toggle">
+                        <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
+                            <span class="button-menu-toggle__line"></span>
+                            <span class="button-menu-toggle__line"></span>
+                            <span class="button-menu-toggle__line"></span>
+                            <span class="button-menu-toggle__line"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
+
+    {% comment %} 
+        Only show secondary nav if available on the page
+        Placeholder conditional for now - will need updating 
+    {% endcomment %}
+    {% if page.secondary_nav %}
+        <div class="header header--secondary">
+            <div class="wrapper wrapper--large">
+                <div class="header__container">
+                    <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">
+                        {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo" %}
+                    </a>
+
+                    <div class="header__menus header__menus--desktop">
+                        <div data-desktop-menu>
+                            {% comment %} Add in correct nav name when BE is in place {% endcomment %}
+                            {% secondarynav %}
+                        </div>
+                    </div>
+
+                    <div class="header__menus header__menus--mobile" data-mobile-menu>
+                        {% comment %} Add in correct nav name when BE is in place {% endcomment %}
+                        {% secondarynav %}
+                    </div>
+                </div> 
+            </div>
+        </div>
+    {% endif %}
 {% endblock header %}
 
 {% block footer %}

@@ -11,7 +11,11 @@
     background-color: transparent;
     vertical-align: middle;
     border: 0;
-    width: 80px;
+    padding-right: 26px;
+
+    .header--condensed & {
+        @include font-size(xs);
+    }
 
     &:hover {
         cursor: pointer;

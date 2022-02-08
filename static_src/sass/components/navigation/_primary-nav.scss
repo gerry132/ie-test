@@ -10,6 +10,13 @@
         flex-direction: row;
         justify-content: flex-end;
         margin-right: 20px;
+
+        .header--condensed & {
+            flex-direction: column;
+            justify-content: flex-start;
+            margin: 0 auto;
+            max-width: $site-width;
+        }
     }
 
     &__item {
@@ -53,11 +60,27 @@
             margin: 0 20px;
             padding: 5px 0;
             color: $color--secondary;
+            width: auto;
 
             &:hover {
                 background-color: transparent;
                 color: lighten($color--secondary, 20%);
                 border-bottom: 1px solid $color--secondary;
+            }
+
+            .header--condensed & {
+                @include font-size(l);
+                display: flex;
+                justify-content: space-between;
+                border-bottom: 1px solid transparent;
+                padding: 10px 30px;
+                width: 100%;
+
+                &:hover {
+                    cursor: pointer;
+                    color: $color--white;
+                    background-color: rgba($color--white, 0.1);
+                }
             }
         }
     }
@@ -77,6 +100,10 @@
 
         @include media-query(large) {
             display: none;
+
+            .header--condensed {
+                display: inline-block;
+            }
         }
     }
 }

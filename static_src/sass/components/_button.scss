@@ -8,7 +8,7 @@
     border-radius: 10px;
     border: 0;
     box-shadow: none;
-    padding: 15px 30px;
+    padding: 10px 25px;
 
     &:hover {
         cursor: pointer;
@@ -33,6 +33,10 @@
     transition: $transition;
     padding: 0;
 
+    .header--condensed & {
+        width: 20px;
+    }
+
     &:hover {
         background-color: transparent;
     }
@@ -48,6 +52,10 @@
         transform: rotate(0deg);
         transition: top, width, opacity, transform, left, $transition;
 
+        .header--condensed & {
+            width: 20px;
+        }
+
         &:nth-child(1) {
             top: 0;
 
@@ -55,12 +63,20 @@
                 top: 10px;
                 left: 50%;
                 width: 0%;
+
+                .header--condensed & {
+                    top: 7px;
+                }
             }
         }
 
         &:nth-child(2),
         &:nth-child(3) {
             top: 10px;
+
+            .header--condensed & {
+                top: 7px;
+            }
 
             .is-open & {
                 opacity: 1;
@@ -82,10 +98,18 @@
         &:nth-child(4) {
             top: 20px;
 
+            .header--condensed & {
+                top: 14px;
+            }
+
             .is-open & {
                 top: 10px;
                 left: 50%;
                 width: 0%;
+
+                .header--condensed & {
+                    top: 7px;
+                }
             }
         }
     }
