@@ -22,9 +22,9 @@
             <div class="wrapper wrapper--small">
                 {% for block in page.body %}
                     {% if block.block_type == 'table' %}
-                    <section>{% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}</section>
+                        {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}
                     {% else %}
-                    <section>{% include_block block %}</section>
+                        {% include_block block %}
                     {% endif %}
                 {% endfor %}
             </div>
