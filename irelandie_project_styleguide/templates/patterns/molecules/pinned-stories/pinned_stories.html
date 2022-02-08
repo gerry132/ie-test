@@ -13,15 +13,6 @@
                 <div class="pinned-stories__featured-content">
                     <h3 class="pinned-stories__featured-title heading--3" id="featured-story-title">{{ value.pinned_story_hero.title }}</h3>
                     <p class="pinned-stories__featured-summary">{{ value.pinned_story_hero.summary }}</p>
-
-                    {% comment %}
-                    Not required anymore
-                    {% if value.pinned_story_hero.page %}
-                    {% pageurl value.pinned_story_hero.page as href %}
-                        <span class="pinned-stories__featured-link button">
-                            {{ value.pinned_story_hero.link_text }}
-                        </span>
-                    {% endif %} {% endcomment %}
                 </div>
             {% if value.pinned_story_hero.page %}
             </a>

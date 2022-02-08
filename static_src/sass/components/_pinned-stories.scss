@@ -59,7 +59,7 @@
         }
 
         @include media-query(large) {
-            background-size: 100% 1080px;
+            background-size: cover;
             padding: 10%;
             height: 100vh;
             position: sticky;
