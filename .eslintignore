@@ -1,0 +1,5 @@
+node_modules
+static_src/css
+coverage
+static_compiled
+.venv

@@ -1,0 +1,74 @@
+.search {
+    $root: &;
+    padding: $grid;
+
+    @include media-query(medium) {
+        padding: $grid 0;
+    }
+
+    &--dropdown {
+        @include media-query(medium) {
+            position: relative;
+            background-color: $color--primary;
+        }
+
+        #{$root}__icon {
+            fill: $color--grey;
+        }
+
+        #{$root}__input {
+            @include font-size(l);
+            font-weight: $weight--medium;
+            color: $color--grey;
+            border-bottom: 1px solid rgba($color--white, 0.5);
+
+            &:focus {
+                border-bottom: 1px solid $color--primary;
+            }
+        }
+    }
+
+    &__form {
+        max-width: 500px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    &__toggle {
+        display: inline-block;
+    }
+
+    &__input {
+        @include font-size(m);
+        font-family: $font--secondary;
+        width: 100%;
+        background: transparent;
+        border: 0;
+        padding: 15px 15px 15px 0;
+        height: 45px;
+        font-weight: $weight--normal;
+        outline: 0;
+        border-bottom: 1px solid $color--grey;
+        color: $color--grey;
+    }
+
+    &__button {
+        background: transparent;
+        border: 0;
+        position: absolute;
+        right: 0;
+        top: 5px;
+        padding: 0;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__button-icon,
+    &__icon {
+        color: $color--white;
+        width: 30px;
+        height: 30px;
+    }
+}

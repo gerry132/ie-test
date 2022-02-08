@@ -1,0 +1,40 @@
+context:
+  value:
+    image: true
+    title: A country unlike anywhere else on Earth
+    summary: Isn't it time you joined us in Ireland?
+    page: foobar
+    alignment: left
+    background: light
+    links:
+      - title: Stub content
+        summary: Check out our awesome stub content
+        page: foobar
+      - title: Stub content
+        summary: Check out our awesome stub content
+        page: foobar
+      - title: Stub content
+        summary: Check out our awesome stub content
+        page: foobar
+      - title: Stub content
+        summary: Check out our awesome stub content
+        page: foobar
+      - title: Stub content
+        summary: Check out our awesome stub content
+        page: foobar
+      - title: Stub content
+        summary: Check out our awesome stub content
+        page: foobar
+
+tags:
+  image:
+    value.image width-460 class="story__image":
+      raw: |
+        <img src="https://source.unsplash.com/460x500?ocean" width="460" height="500" alt="Some alt" class="story__image">
+  pageurl:
+    value.page as href:
+      target_var: href
+      raw: '#'
+  include_block:
+    'link':
+      template_name: 'patterns/molecules/streamfield/blocks/story_link_block.html'

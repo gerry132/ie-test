@@ -1,0 +1,17 @@
+{% load static wagtailcore_tags wagtailsearchpromotions_tags wagtailimages_tags %}
+
+{% if result.listing_image %}
+    <a href="{% pageurl result %}">
+        {% image result.listing_image fill-450x300 %}
+    </a>
+{% endif %}
+
+<h2>
+    <a href="{% pageurl result %}">
+        {% firstof result.listing_title result.title %}
+    </a>
+</h2>
+
+{% if pick.summary or result.listing_summary or result.search_description %}
+    <p>{% firstof pick.summary result.listing_summary result.search_description %}</p>
+{% endif %}

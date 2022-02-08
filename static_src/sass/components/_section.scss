@@ -1,0 +1,21 @@
+.section {
+    &--padding {
+        padding: 40px 0;
+
+        @include media-query(medium) {
+            padding: 80px 0;
+        }
+    }
+
+    &--grey {
+        background-color: $color--background-grey;
+    }
+
+    &--main {
+        max-width: $wrapper--small;
+
+        &:only-child {
+            margin: 0 auto;
+        }
+    }
+}

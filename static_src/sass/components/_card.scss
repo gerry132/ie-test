@@ -1,0 +1,54 @@
+.card {
+    $root: &;
+    display: block;
+    border-radius: $border-radius;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+    background-color: $color--white;
+    // Transparent border, so cards are visible in high-contrast mode with no background.
+    border: 1px solid transparent;
+    overflow: hidden;
+    max-width: 500px;
+    transition: box-shadow $transition;
+
+    &:hover {
+        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+
+        #{$root}__image {
+            transform: scale(1.1);
+        }
+    }
+
+    &__image-container {
+        max-height: 300px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    &__image {
+        position: relative;
+        object-fit: cover;
+        width: 100%;
+        transform: scale(1);
+        transition: transform $transition;
+    }
+
+    &__content {
+        color: $color--default;
+        padding: $grid;
+    }
+
+    &__title,
+    &__summary {
+        color: $color--default;
+    }
+
+    &__link {
+        text-decoration: underline;
+    }
+}
+
+.card-with-image {
+    &:only-child {
+        max-width: 260px;
+    }
+}

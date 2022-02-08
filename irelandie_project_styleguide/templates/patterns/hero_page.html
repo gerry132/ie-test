@@ -1,0 +1,15 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags wagtailimages_tags static %}
+
+{% block content %}
+    {% comment %}
+        Responsive hero images
+    {% endcomment %}
+    {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
+    
+    {% include "patterns/molecules/hero/hero.html" with page=page %}
+
+    {% block main %}
+    {% endblock %}
+
+{% endblock %}

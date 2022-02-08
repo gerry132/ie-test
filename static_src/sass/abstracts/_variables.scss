@@ -1,0 +1,87 @@
+// --------------------------------- Colors -------------------------------------
+$color--primary: #004d46;
+$color--secondary: #fff;
+$color--tertiary: #636772;
+
+$color--white: #fff;
+$color--black: #000;
+$color--off-black: #292929;
+$color--background-grey: #ebe9e1;
+$color--grey: #eaeced;
+$color--background-grey: #ebe9e1;
+$color--accessible-grey: #5d677a;
+
+$color--red: #f00;
+$color--border: $color--grey;
+
+$color--default: $color--off-black;
+
+// --------------------------------- Fonts --------------------------------------
+
+// --------------------------------- Fonts --------------------------------------
+
+$font--primary: Inter;
+$font--secondary: Sofia Pro;
+
+// Font weights
+$weight--black: 900;
+$weight--extrabold: 800;
+$weight--bold: 700;
+$weight--semibold: 600;
+$weight--medium: 500;
+$weight--normal: 400;
+
+// Font sizes
+$base-font-size: 16px;
+$base-line-height: 25px;
+$font-sizes: (
+    default: $base-font-size,
+    xxl: 72px,
+    xl: 48px,
+    l: 24px,
+    m: 20px,
+    s: 16px,
+    xs: 15px,
+    xxs: 14px,
+);
+
+// --------------------------------- Border radius --------------------------------------
+
+$border-radius: 16px;
+
+// --------------------------------- Breakpoints --------------------------------------
+$breakpoints: (
+    'small' '(min-width: 480px)',
+    'medium' '(min-width: 599px)',
+    'large' '(min-width: 1023px)'
+);
+
+// --------------------------------- Grid Dimensions --------------------------------------
+
+// Wrappers
+$site-width: 1280px;
+$wrapper--large: 1140px;
+$wrapper--small: 790px;
+
+// Grid setup
+$grid: 20px;
+
+// --------------------------------- Transitions --------------------------------------
+
+$transition: 0.25s ease-out;
+
+// --------------------------------- Z-indices --------------------------------------
+
+$z-index: (
+    under: -1,
+    video-hero: 0,
+    base: 10,
+    overlap: 20,
+    header: 30,
+    menu-search-dropdown: 35,
+    footer: 40,
+    nav: 50,
+    cookie-message: 100,
+    modal: 110,
+    modal-controls: 120,
+);

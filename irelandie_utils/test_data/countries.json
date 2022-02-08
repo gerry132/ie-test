@@ -1,0 +1,187 @@
+[
+  {
+    "region": "Caribbean",
+    "countries": [
+      {
+        "code": "AW",
+        "name": "Aruba",
+        "region": "Caribbean"
+      },
+      {
+        "code": "BS",
+        "name": "Bahamas",
+        "region": "Caribbean"
+      },
+      {
+        "code": "BB",
+        "name": "Barbados",
+        "region": "Caribbean"
+      },
+      {
+        "code": "KY",
+        "name": "Cayman Islands",
+        "region": "Caribbean"
+      },
+      {
+        "code": "CU",
+        "name": "Cuba",
+        "region": "Caribbean"
+      },
+      {
+        "code": "CW",
+        "name": "Curacao",
+        "region": "Caribbean"
+      },
+      {
+        "code": "DM",
+        "name": "Dominica",
+        "region": "Caribbean"
+      },
+      {
+        "code": "DO",
+        "name": "Dominican Republic",
+        "region": "Caribbean"
+      },
+      {
+        "code": "GD",
+        "name": "Grenada",
+        "region": "Caribbean"
+      },
+      {
+        "code": "HT",
+        "name": "Haiti",
+        "region": "Caribbean"
+      },
+      {
+        "code": "JM",
+        "name": "Jamaica",
+        "region": "Caribbean"
+      },
+      {
+        "code": "MQ",
+        "name": "Martinique",
+        "region": "Caribbean"
+      },
+      {
+        "code": "PR",
+        "name": "Puerto Rico",
+        "region": "Caribbean"
+      },
+      {
+        "code": "KN",
+        "name": "Saint Kitts and Nevis",
+        "region": "Caribbean"
+      },
+      {
+        "code": "LC",
+        "name": "Saint Lucia",
+        "region": "Caribbean"
+      },
+      {
+        "code": "VC",
+        "name": "Saint Vincent and the Grenadines",
+        "region": "Caribbean"
+      },
+      {
+        "code": "SX",
+        "name": "Saint Maarten",
+        "region": "Caribbean"
+      },
+      {
+        "code": "TT",
+        "name": "Trinidad and Tobago",
+        "region": "Caribbean"
+      },
+      {
+        "code": "TC",
+        "name": "Turks and Caicos Islands",
+        "region": "Caribbean"
+      }
+    ]
+  },
+  {
+    "region": "Western Europe",
+    "countries": [
+      {
+        "code": "AT",
+        "name": "Austria",
+        "region": "Western Europe"
+      },
+      {
+        "code": "BE",
+        "name": "Belgium",
+        "region": "Western Europe"
+      },
+      {
+        "code": "FR",
+        "name": "France",
+        "region": "Western Europe"
+      },
+      {
+        "code": "DE",
+        "name": "Germany",
+        "region": "Western Europe"
+      },
+      {
+        "code": "LI",
+        "name": "Liechtenstein",
+        "region": "Western Europe"
+      },
+      {
+        "code": "LU",
+        "name": "Luxembourg",
+        "region": "Western Europe"
+      },
+      {
+        "code": "MC",
+        "name": "Monaco",
+        "region": "Western Europe"
+      },
+      {
+        "code": "NL",
+        "name": "Netherlands",
+        "region": "Western Europe"
+      },
+      {
+        "code": "CH",
+        "name": "Switzerland",
+        "region": "Western Europe"
+      }
+    ]
+  },
+  {
+    "region": "Polynesia",
+    "countries": [
+      {
+        "code": "CK",
+        "name": "Cook Islands",
+        "region": "Polynesia"
+      },
+      {
+        "code": "PF",
+        "name": "French Polynesia",
+        "region": "Polynesia"
+      },
+      {
+        "code": "NU",
+        "name": "Niue",
+        "region": "Polynesia"
+      },
+      {
+        "code": "WS",
+        "name": "Samoa",
+        "region": "Polynesia"
+      },
+      {
+        "code": "TO",
+        "name": "Tonga",
+        "region": "Polynesia"
+      },
+      {
+        "code": "TV",
+        "name": "Tuvalu",
+        "region": "Polynesia"
+      }
+    ]
+  }
+]

@@ -1,0 +1,13 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<a href="{{ value.link_url }}" class="story-link">
+    {% comment %} 
+        TODO: BE - add in optional icon chooser field
+        {% include "patterns/atoms/icons/icon.html" with name="magnifying-glass" classname="story-link__icon" %}
+    {% endcomment %}
+
+    <span class="story-link__content">
+        <span class="story-link__title">{{ value.link_title }}</span>
+        <span class="story-link__summary">{{ value.summary }}</span>
+    </span>
+</a>

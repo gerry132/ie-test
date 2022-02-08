@@ -1,0 +1,13 @@
+{% load static wagtailcore_tags wagtailsearchpromotions_tags i18n %}
+
+<div class="search {% if classes %}{{ classes }}{% endif %}" {% if data_attribute %}{{ data_attribute }}{% endif %}>
+    <div class="wrapper wrapper--small">
+        <form action="{% url 'search' %}" method="get" role="search" class="search__form">
+            <input type="search" placeholder="Search&hellip;" name="query" {% if search_query %} value="{{ search_query }}"{% endif %} class="search__input" data-search-input>
+            <label class="u-sr-only" for="search">{% trans 'Search this website' %}</label>
+            <button class="search__button" aria-label="{% trans 'Submit Search' %}">
+                {% include "patterns/atoms/icons/icon.html" with name="magnifying-glass" classname="search__button-icon" %}
+            </button>
+        </form>
+    </div>
+</div>

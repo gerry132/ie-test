@@ -4,3 +4,9 @@ __pycache__
 db.sqlite3
 .env
 .venv
+
+# FE
+.vscode
+static_compiled
+node_modules/
+.idea

@@ -1,0 +1,45 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+<div class="story{% if value.background == 'dark' %} story--dark{% endif %}{% if value.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
+    <div class="wrapper wrapper--large">
+        <div class="story__container">
+            {% image value.image width-460 class="story__image" %}
+
+            <div class="story__content">
+                <div class="story__copy">
+                    {% if value.page %}
+                        {% pageurl value.page as href %}
+                        <a href="{{ href }}">
+                            <h3 class="story__heading heading--2">{{ value.title }}</h3>
+                        </a>
+                    {% else %}
+                        <h3 class="story__heading heading--2">{{ value.title }}</h3>
+                    {% endif %}
+                
+                    <p>{{ value.summary }}</p>
+                
+                {% comment %} 
+                    TODO: BE - add in optional CTA field
+
+                    <a href="/" aria-label="Find out more about Ireland">Join us in Ireland</a> 
+                {% endcomment %}
+                </div>
+
+                <ul class="story__links" data-story-links-expander>
+                    <div class="story__links-container">
+                        {% for link in value.links %}
+                            {% include_block link %}
+                        {% endfor %}
+                    </div>
+
+                    {% if value.links|length > 2 %}
+                        <button class="story__links-expander" aria-hidden="true" data-story-links-toggle>
+                            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="story__links-expander-icon" %}
+                        </button>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

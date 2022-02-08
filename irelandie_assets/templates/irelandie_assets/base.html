@@ -1,0 +1,20 @@
+{% load irelandie_assets_tags %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>{% project_title %} - {{ page.title }}</title>
+        {% block extra_blocking_js %}{% endblock %}
+        <link rel="stylesheet" href="{% static 'irelandie_assets/css/style.css' %}" />
+        {% block extra_css %}{% endblock %}
+    </head>
+    <body>
+        {% main_menu %}
+        {% block content %}{% endblock %}
+        {% footer %}
+        <script src="{% static 'irelandie_assets/js/app.js' %}"></script>
+        {% block extra_js %}{% endblock %}
+    </body>
+</html>

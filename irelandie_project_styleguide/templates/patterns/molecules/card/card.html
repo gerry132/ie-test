@@ -1,0 +1,34 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% comment %}
+
+This template can be used in different places. In streamfield block
+or directly in a page template. To use this template pass `card` into context.
+
+Example:
+    {% include "patterns/molecules/card/card.html" with card=card %}
+{% endcomment %}
+
+{% if card.page %}
+{% pageurl card.page as href %}
+    <a href="{{ href }}" class="card{% if large %} card--large{% endif %}{% if classes %} {{ classes }}{% endif %}">
+{% else %}
+    <div class="card">
+{% endif %}
+        <div class="card__image-container">
+            {% image card.image width-500 class="card__image" %}
+        </div>
+        <div class="card__content">
+            <h3 class="card__title">{{ card.title }}</h3>
+
+            <p class="card__summary">{{ card.summary }}</p>
+
+            <span class="card__link">
+                Read this story
+            </span>
+        </div>
+{% if card.page %}
+    </a>
+{% else %}
+    </div>
+{% endif %}

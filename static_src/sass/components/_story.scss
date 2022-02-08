@@ -1,0 +1,162 @@
+.story {
+    $root: &;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        background-image: url('../images/cssBackgrounds/ireland-outline-bg.svg');
+        height: 700px;
+        width: 600px;
+        display: block;
+        background-size: 100%;
+        background-position: center center;
+        position: absolute;
+        right: 0;
+        bottom: -100px;
+    }
+
+    &--dark {
+        background-color: $color--background-grey;
+    }
+
+    &__container {
+        position: relative;
+
+        @include media-query(medium) {
+            display: flex;
+            justify-content: space-between;
+
+            #{$root}--right-aligned & {
+                flex-direction: row-reverse;
+            }
+        }
+    }
+
+    &__image {
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+        object-fit: cover;
+
+        @include media-query(medium) {
+            max-width: 40%;
+        }
+    }
+
+    &__content {
+        color: $color--off-black;
+        display: flex;
+        flex-direction: column;
+        flex: 1 0 auto;
+        justify-content: flex-start;
+        margin: 0;
+        padding: $grid 0;
+
+        @include media-query(medium) {
+            padding: 40px 80px;
+
+            #{$root}--right-aligned & {
+                padding: 40px 80px 40px 0;
+            }
+        }
+    }
+
+    &__copy {
+        @include media-query(medium) {
+            max-width: 560px;
+        }
+    }
+
+    &__heading {
+        color: $color--off-black;
+    }
+
+    &__cta {
+        margin-top: $grid;
+    }
+
+    &__links {
+        margin-top: auto;
+        padding-top: $grid;
+        position: relative;
+    }
+
+    &__links-container {
+        align-items: stretch;
+        background-color: $color--white;
+        border-radius: $border-radius;
+        box-shadow: 0 43px 63px 0 rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: row;
+        height: 80px;
+        flex-wrap: wrap;
+        overflow: hidden;
+        position: relative;
+        z-index: 2;
+
+        @include media-query(medium) {
+            flex-direction: row;
+        }
+
+        #{$root}__links.is-open & {
+            height: auto;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 50px;
+            display: block;
+            width: 100%;
+            background-image: linear-gradient(
+                0deg,
+                rgba(255, 255, 255, 1) 1%,
+                rgba(255, 255, 255, 0) 100%
+            );
+
+            #{$root}__links.is-open & {
+                display: none;
+            }
+
+            @include media-query(medium) {
+                display: none;
+            }
+        }
+    }
+
+    &__links-expander {
+        background-color: $color--primary;
+        border: 0;
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+        color: $color--white;
+        position: absolute;
+        left: 50%;
+        top: 100%;
+        padding: 15px 5px 0;
+        text-align: center;
+        transform: translateY(-10px) translateX(-50%);
+        transition: transform $transition;
+
+        &:hover {
+            cursor: pointer;
+            transform: translateY(-5px) translateX(-50%);
+        }
+    }
+
+    &__links-expander-icon {
+        fill: $color--white;
+        color: $color--white;
+        height: 20px;
+        width: 20px;
+        transform: rotate(90deg);
+        transition: transform $transition;
+        z-index: 1;
+
+        #{$root}__links.is-open & {
+            transform: rotate(-90deg);
+        }
+    }
+}

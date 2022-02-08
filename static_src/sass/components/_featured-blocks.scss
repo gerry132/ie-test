@@ -1,0 +1,7 @@
+.featured-blocks {
+    position: relative;
+    display: grid;
+    margin: 30px 0;
+    grid-gap: $grid;
+    grid-template-columns: repeat(auto-fit, minmax(calc(50% - 30px), 1fr));
+}

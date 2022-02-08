@@ -1,0 +1,52 @@
+{% extends "patterns/base_page.html" %}
+{% load static wagtailcore_tags wagtailsearchpromotions_tags i18n %}
+
+{% block body_class %}template-searchresults{% endblock %}
+
+{% block title %}
+  {% if search_query %}
+    {% trans 'Search results for' %} &ldquo;{{ search_query }}&rdquo;
+  {% else %}
+    {% trans 'Search' %}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    <form action="{% url 'search' %}" method="get" role="search">
+        <input type="text" placeholder="Search…" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
+        <input type="submit" value="Search">
+    </form>
+
+    {% get_search_promotions search_query as search_picks %}
+    {% if search_picks %}
+         <ul>
+            {% for pick in search_picks %}
+                <li>
+                    {% include "patterns/molecules/search-result/search-result.html" with result=pick.page.specific %}
+                </li>
+             {% endfor %}
+         </ul>
+    {% endif %}
+
+    {% if search_results %}
+
+        {% with count=search_results.paginator.count %}
+            {% trans 'Results' %} ({{ count }})
+        {% endwith %}
+
+        <ul>
+            {% for result in search_results %}
+                <li>
+                    {% include "patterns/molecules/search-result/search-result.html" with result=result.specific %}
+                </li>
+            {% endfor %}
+        </ul>
+
+        {% include "patterns/molecules/pagination/pagination.html" with paginator_page=search_results %}
+
+    {% elif search_query and not search_picks %}
+        {% trans 'No results found.' %}
+    {% endif %}
+
+{% endblock %}

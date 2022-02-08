@@ -1,0 +1,28 @@
+.wrapper {
+    &--small {
+        max-width: $wrapper--small;
+        margin: 0 auto;
+    }
+
+    &--large {
+        max-width: $site-width;
+        margin: 0 auto;
+    }
+
+    &--main {
+        background-color: $color--white;
+    }
+
+    &--flex {
+        display: flex;
+        flex-direction: column;
+
+        @include media-query(medium) {
+            flex-direction: row;
+        }
+    }
+
+    &--padding {
+        padding: 0 $grid;
+    }
+}

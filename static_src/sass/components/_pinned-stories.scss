@@ -1,0 +1,80 @@
+.pinned-stories {
+    background-color: $color--white;
+
+    &__container {
+        @include media-query(medium) {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
+
+    &__featured,
+    &__feed {
+        @include media-query(medium) {
+            flex: 1 0 50%;
+        }
+    }
+
+    &__featured {
+        background-color: $color--primary;
+
+        @include media-query(medium) {
+            margin: 0 auto;
+        }
+    }
+
+    &__featured-title,
+    &__featured-summary,
+    &__featured-link {
+        color: $color--white;
+    }
+
+    &__featured-content {
+        background-color: $color--primary;
+        background-image: url('../images/cssBackgrounds/ie-map.svg');
+        background-size: auto 1080px;
+        background-repeat: no-repeat;
+        background-position: 0% -100%;
+        padding: 40px $grid;
+        position: relative;
+
+        @include media-query(medium) {
+            height: 100vh;
+            position: sticky;
+            top: 0;
+
+            // Fills in the left-hand side green on wide screens
+            &::before {
+                content: '';
+                display: block;
+                position: absolute;
+                background-color: $color--primary;
+                height: 100%;
+                width: 50%;
+                left: -50%;
+                top: -20px;
+                z-index: -1;
+            }
+        }
+    }
+
+    &__featured-link {
+        border: 1px solid $color--white;
+        display: inline-block;
+        margin-top: $grid;
+        position: relative;
+    }
+
+    &__feed {
+        background-color: $color--white;
+        justify-content: space-between;
+        overflow: hidden;
+        margin-top: -20px;
+        padding: $grid $grid 100px $grid;
+
+        @include media-query(small) {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
+}

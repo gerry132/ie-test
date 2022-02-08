@@ -1,0 +1,8 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% if hero_image %}
+    {# Hero image background images #}
+        {% image hero_image fill-768x1080 as mobile_image %}
+        {% image hero_image fill-1920x1080 as desktop_image %}
+    {% include "patterns/atoms/image/background_image_style.html" with class="hero--background-image" mobile_image=mobile_image desktop_image=desktop_image %}
+{% endif %}

@@ -1,0 +1,92 @@
+.button {
+    background-color: $color--primary;
+    color: $color--white;
+    display: inline-block;
+    font-weight: $weight--normal;
+    font-family: $font--secondary;
+    background-image: none;
+    border-radius: 10px;
+    border: 0;
+    box-shadow: none;
+    padding: 15px 30px;
+
+    &:hover {
+        cursor: pointer;
+        background-color: $color--white;
+        color: $color--primary;
+    }
+
+    &--border {
+        border: 1px solid $color--primary;
+    }
+}
+
+.button-menu-toggle {
+    @include z-index(header);
+    position: relative;
+    display: block;
+    width: 40px;
+    height: 20px;
+    background: transparent;
+    border: 0;
+    transform: rotate(0deg);
+    transition: $transition;
+    padding: 0;
+
+    &:hover {
+        background-color: transparent;
+    }
+
+    &__line {
+        position: absolute;
+        left: 0;
+        display: block;
+        width: 40px;
+        height: 2px;
+        background: $color--white;
+        opacity: 1;
+        transform: rotate(0deg);
+        transition: top, width, opacity, transform, left, $transition;
+
+        &:nth-child(1) {
+            top: 0;
+
+            .is-open & {
+                top: 10px;
+                left: 50%;
+                width: 0%;
+            }
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+            top: 10px;
+
+            .is-open & {
+                opacity: 1;
+            }
+        }
+
+        &:nth-child(2) {
+            .is-open & {
+                transform: rotate(45deg);
+            }
+        }
+
+        &:nth-child(3) {
+            .is-open & {
+                transform: rotate(-45deg);
+            }
+        }
+
+        &:nth-child(4) {
+            top: 20px;
+
+            .is-open & {
+                top: 10px;
+                left: 50%;
+                width: 0%;
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+context:
+  value:
+    title: Stub content
+    summary: Check out our awesome stub content
+    page: foobar
+
+tags:
+  image:
+    value.image width-500 class="card__image":
+      raw: |
+        <img src="https://source.unsplash.com/500x400?ocean" width="500" height="400" alt="Some alt" class="card__image">
+  pageurl:
+    value.page as href:
+      target_var: href
+      raw: '#'

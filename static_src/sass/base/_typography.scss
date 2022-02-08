@@ -1,0 +1,109 @@
+/* ============================================
+    Base font
+*/
+html {
+    font-size: ($base-font-size / 16px) * 100%;
+    line-height: $base-line-height / $base-font-size;
+    color: $color--default;
+}
+
+/* ============================================
+    Families – one mixin per typeface
+    :: For each font mixin defined here, make sure each property is negated (set
+    :: to its default value, usually `inherit`) in all other font mixins.
+*/
+@mixin heading-text() {
+    font-family: $font--primary;
+    font-style: inherit;
+    font-weight: inherit;
+}
+
+@mixin body-text() {
+    font-family: $font--primary;
+    font-style: inherit;
+    font-weight: inherit;
+    text-transform: inherit;
+}
+
+@mixin quote-text() {
+    font-family: $font--primary;
+    font-style: italic;
+    font-weight: inherit;
+    text-transform: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.heading {
+    @include heading-text();
+    margin: 0 0 1rem;
+}
+
+.heading {
+    padding-top: 20px;
+
+    @include media-query(medium) {
+        padding-top: 40px;
+    }
+}
+
+html,
+.body-text {
+    @include body-text();
+}
+
+blockquote {
+    @include quote-text();
+}
+
+// Default sizes
+h1,
+.heading--1 {
+    @include font-size(xl);
+    line-height: 52px;
+    font-weight: $weight--extrabold;
+
+    @include media-query(medium) {
+        @include font-size(xxl);
+        line-height: 86px;
+    }
+}
+
+h2,
+.heading--2 {
+    @include font-size(l);
+    font-weight: $weight--normal;
+
+    @include media-query(medium) {
+        @include font-size(xl);
+        line-height: 58px;
+    }
+}
+
+h3,
+.heading--3 {
+    @include font-size(m);
+    font-weight: $weight--bold;
+
+    @include media-query(medium) {
+        @include font-size(l);
+    }
+}
+
+h4,
+h5,
+h6,
+.heading--4,
+.heading--5,
+.heading--6 {
+    @include font-size(m);
+    font-weight: $weight--semibold;
+}
+
+small {
+    @include font-size(xxs);
+}
