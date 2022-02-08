@@ -76,6 +76,10 @@ locals {
       description = "Maris Erts - OGCIO"
       cidr_blocks = ["54.77.246.14/32"]
     },
+    kleverson_dev = {
+      description = "Kleverson Morais - OGCIO"
+      cidr_blocks = ["192.168.86.30/32"]
+    },
     nick_dev = {
       description = "Nick Moreton - Torchbox"
       cidr_blocks = ["217.35.72.151/32"]
