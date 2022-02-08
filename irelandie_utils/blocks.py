@@ -177,6 +177,14 @@ class ContactDetailBlock(blocks.PageChooserBlock):
     pass
 
 
+class HeadingBlock(blocks.StructBlock):
+    text = blocks.CharBlock()
+
+    class Meta:
+        icon = "title"
+        template = "patterns/molecules/streamfield/blocks/heading_block.html"
+
+
 class JumpboxWithImageBlock(blocks.StructBlock):
     class Meta:
         label = "JumpboxWithImageBlock"
@@ -283,6 +291,7 @@ class BaseSectionBlock(blocks.StructBlock):
 
 
 class ArticleStoryBlock(blocks.StreamBlock):
+    heading = HeadingBlock()
     contact_detail = ContactDetailBlock()
     image = ImageBlock()
     rich_text = blocks.RichTextBlock(features=["h3", "blockquote", "bold", "link", "document-link", "ul"])
