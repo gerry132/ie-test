@@ -972,21 +972,21 @@ data "aws_ssm_parameter" "random_secret_key" {
 # Task definition
 
 locals {
-  SETTINGS_ALLOWED_HOSTS            = join(", ", ["*"])
+  SETTINGS_ALLOWED_HOSTS            = "*"
   SETTINGS_AWS_ACCESS_KEY_ID        = aws_ssm_parameter.AWS_ACCESS_KEY_ID.value
   SETTINGS_AWS_SECRET_ACCESS_KEY    = aws_ssm_parameter.AWS_SECRET_ACCESS_KEY.value
   SETTINGS_AWS_STATIC_BUCKET_NAME   = aws_s3_bucket.assets.id
-  SETTINGS_BASE_URL                 = "http://www.${local.project_domain}"
+  SETTINGS_BASE_URL                 = "https://${local.project_domain}"
   SETTINGS_CACHE_ADDRESS            = local.cache_address
   SETTINGS_DATABASE_URL             = local.db_master_url
   SETTINGS_SECRET_KEY               = data.aws_ssm_parameter.random_secret_key.value
-  SETTINGS_CORS_ALLOWED_ORIGINS     = local.SETTINGS_BASE_URL
+  SETTINGS_CORS_ALLOWED_ORIGINS     = "${local.SETTINGS_BASE_URL},https://www.${local.project_domain}"
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
 }
 
 data "template_file" "task_definition" {
 
-  template    = file("templates/task_definition.tpl")
+  template    = file("../common/templates/task_definition.tpl")
 
   vars = {
     ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"

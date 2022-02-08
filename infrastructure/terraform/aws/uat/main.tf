@@ -1076,7 +1076,7 @@ locals {
 
 data "template_file" "task_definition" {
 
-  template    = file("templates/task_definition.tpl")
+  template    = file("../common/templates/task_definition.tpl")
 
   vars = {
     ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
