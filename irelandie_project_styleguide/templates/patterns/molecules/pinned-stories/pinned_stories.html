@@ -14,7 +14,7 @@
                 {% if value.pinned_story_hero.page %}
                 {% pageurl value.pinned_story_hero.page as href %}
                     <a href="{{ href }}" class="pinned-stories__featured-link button">
-                        {{ value.pinned_story_hero.link_text }}
+                        {% trans 'Read this story' %}
                     </a>
                 {% endif %}
             </div> 
