@@ -7,24 +7,14 @@ terraform {
   }
 }
 
-
 terraform {
   backend "s3" {
     bucket                      = "ireland-ie-infrastructure"
     key                         = "uat/terraform.tfstate"
     region                      = "eu-west-1"
-    shared_credentials_file     = ".aws/credentials"
     encrypt                     = true
   }
 }
-
-
-provider "aws" {
-  profile                     = "default"
-  region                      = "eu-west-1"
-  shared_credentials_file     = ".aws/credentials"
-}
-
 
 data "aws_caller_identity" "current" {}
 
@@ -37,7 +27,7 @@ locals {
   environment_name              = "uat"
   app_aws_username              = "UAT_APP_USER"
   project_domain                = "content.ireland.testing.gov.ie"
-  domain_ireland_ie        	    = "ireland.testing.gov.ie"
+  domain_ireland_ie             = "ireland.testing.gov.ie"
   project_name                  = "g2g"
   region                        = "eu-west-1"
   # DB
@@ -65,6 +55,44 @@ locals {
     "193.178.96.0/20",
     "139.162.239.108/32",
   ]
+  non_gov_network_cird_blocks   = {
+    rachel_dev = {
+      description = "Rachel Mannion - OGCIO"
+      cidr_blocks = ["139.162.182.140/32"]
+    },
+    reinaldo_dev = {
+      description = "Reinaldo Sanches - OGCIO"
+      cidr_blocks = ["172.105.95.186/32", "89.101.167.251/32"]
+    },
+    keith_po = {
+      description = "Keith Costello - OGCIO"
+      cidr_blocks = ["37.228.203.132/32"]
+    },
+    gerry_dev = {
+      description = "Gerry Mcbride - OGCIO"
+      cidr_blocks = ["52.49.120.79/32", "37.228.234.245/32"]
+    },
+    maris_dev = {
+      description = "Maris Erts - OGCIO"
+      cidr_blocks = ["54.77.246.14/32"]
+    },
+    nick_dev = {
+      description = "Nick Moreton - Torchbox"
+      cidr_blocks = ["217.35.72.151/32"]
+    },
+    mel_dev = {
+      description = "Melissa Joy - Torchbox"
+      cidr_blocks = ["78.32.251.194/32", "82.16.132.142/32"]
+    },
+    jane_dev = {
+      description = "Jane Hughes - Torchbox"
+      cidr_blocks = ["82.5.195.241/32"]
+    },
+    chris_dev = {
+      description = "Chris Shaw - Torchbox"
+      cidr_blocks = ["81.106.63.209/32"]
+    }
+  }
 }
 
 # -----------------------------------------------------------------------------
@@ -202,8 +230,7 @@ resource "aws_security_group_rule" "internet_to_lb_443" {
   cidr_blocks               = ["0.0.0.0/0"]
 }
 
-# Gov network SG rules
-# XXXX Add specific ip access here
+# Allow List IPs for restrict areas Gov Network
 
 resource "aws_security_group_rule" "gov_network_to_lb_443" {
   description               = "Gov network"
@@ -225,74 +252,18 @@ resource "aws_security_group_rule" "public_network_to_lb_443" {
   cidr_blocks               = ["${module.network.public_ip}/32"]
 }
 
-resource "aws_security_group_rule" "maris_aws_dev_to_lb_443" {
-  description               = "Maris AWS dev machine"
-  type                      = "ingress"
-  from_port                 = 0
-  to_port                   = 0
-  protocol                  = "all"
-  security_group_id         = aws_security_group.lb_gov_network.id
-  cidr_blocks               = ["54.77.246.14/32"]
-}
+# Allow List IPs for restrict areas Outside Gov Network
 
-resource "aws_security_group_rule" "rachel_aws_dev_to_lb_443" {
-  description               = "Rachel dev machine"
-  type                      = "ingress"
-  from_port                 = 0
-  to_port                   = 0
-  protocol                  = "all"
-  security_group_id         = aws_security_group.lb_gov_network.id
-  cidr_blocks               = ["139.162.182.140/32"]
-}
+resource "aws_security_group_rule" "non_gov_network_to_lb_443" {
+  for_each = local.non_gov_network_cird_blocks
 
-resource "aws_security_group_rule" "chris_shaw_to_lb_443" {
-  description               = "Chris Shaw (torchbox)"
+  description               = each.value.description
   type                      = "ingress"
   from_port                 = 0
   to_port                   = 0
   protocol                  = "all"
   security_group_id         = aws_security_group.lb_gov_network.id
-  cidr_blocks               = ["81.106.63.209/32"]
-}
-
-resource "aws_security_group_rule" "jane_hughes_to_lb_443" {
-  description               = "Jane Hughes (torchbox)"
-  type                      = "ingress"
-  from_port                 = 0
-  to_port                   = 0
-  protocol                  = "all"
-  security_group_id         = aws_security_group.lb_gov_network.id
-  cidr_blocks               = ["82.5.195.241/32"]
-}
-
-resource "aws_security_group_rule" "nick_to_lb_443" {
-  description               = "Nick (torchbox)"
-  type                      = "ingress"
-  from_port                 = 0
-  to_port                   = 0
-  protocol                  = "all"
-  security_group_id         = aws_security_group.lb_gov_network.id
-  cidr_blocks               = ["217.35.72.151/32"]
-}
-
-resource "aws_security_group_rule" "mel_to_lb_443" {
-  description               = "Mel (torchbox)"
-  type                      = "ingress"
-  from_port                 = 0
-  to_port                   = 0
-  protocol                  = "all"
-  security_group_id         = aws_security_group.lb_gov_network.id
-  cidr_blocks               = ["78.32.251.194/32", "82.16.132.142/32"]
-}
-
-resource "aws_security_group_rule" "gerry_to_lb_443" {
-  description               = "Gerry (torchbox)"
-  type                      = "ingress"
-  from_port                 = 0
-  to_port                   = 0
-  protocol                  = "all"
-  security_group_id         = aws_security_group.lb_gov_network.id
-  cidr_blocks               = ["52.49.120.79/32", "37.228.234.245/32"]
+  cidr_blocks               = each.value.cidr_blocks
 }
 
 # Internal thing rules
@@ -360,16 +331,6 @@ resource "aws_security_group_rule" "ecs_to_redis_5432" {
   security_group_id         = aws_security_group.redis.id
 }
 
-resource "aws_security_group_rule" "maris_aws_dev_to_db_5432" {
-  description               = "Maris AWS dev machine"
-  type                      = "ingress"
-  from_port                 = 5432
-  to_port                   = 5432
-  protocol                  = "tcp"
-  security_group_id         = aws_security_group.db.id
-  cidr_blocks               = ["54.77.246.14/32"]
-}
-
 
 # -----------------------------------------------------------------------------
 # Buckets
@@ -432,7 +393,6 @@ resource "aws_s3_bucket_policy" "ecs_log_policy" {
 }
 
 resource "aws_s3_bucket_policy" "lb_logs" {
-
   bucket = aws_s3_bucket.lb_logs.id
 
   policy = jsonencode({
@@ -459,7 +419,6 @@ resource "aws_s3_bucket_policy" "lb_logs" {
 }
 
 resource "aws_s3_bucket_policy" "private_lb_logs" {
-
   bucket = aws_s3_bucket.private_lb_logs.id
 
   policy = jsonencode({
@@ -681,25 +640,7 @@ resource "aws_lb_listener" "public_sites_443" {
   }
 }
 
-# resource "aws_lb_listener_rule" "project_80" {
-#
-#   listener_arn    = aws_lb_listener.project_80.arn
-#   priority        = 1
-#
-#   action {
-#     type                = "forward"
-#     target_group_arn    = aws_lb_target_group.default_admin.arn
-#   }
-#
-#   condition {
-#     host_header {
-#       values  = [local.project_domain]
-#     }
-#   }
-# }
-
 resource "aws_lb_listener_rule" "project_443" {
-
   listener_arn    = aws_lb_listener.project_443.arn
   priority        = 2
 
@@ -715,8 +656,9 @@ resource "aws_lb_listener_rule" "project_443" {
   }
 }
 
-resource "aws_lb_listener_rule" "www_project_443" {
+# Force non-www to be used for admin site
 
+resource "aws_lb_listener_rule" "www_project_443" {
   listener_arn    = aws_lb_listener.project_443.arn
   priority        = 3
 
@@ -735,8 +677,9 @@ resource "aws_lb_listener_rule" "www_project_443" {
   }
 }
 
-resource "aws_lb_listener_rule" "www_ireland_ie_443_admin_redirect" {
+# Public sites /admin redirects to admin site
 
+resource "aws_lb_listener_rule" "www_ireland_ie_443_admin_redirect" {
   listener_arn    = aws_lb_listener.public_sites_443.arn
   priority        = 4
 
@@ -758,25 +701,9 @@ resource "aws_lb_listener_rule" "www_ireland_ie_443_admin_redirect" {
   }
 }
 
-# resource "aws_lb_listener_rule" "ireland_ie_80" {
-#
-#   listener_arn    = aws_lb_listener.public_sites_80.arn
-#   priority        = 5
-#
-#   action {
-#     type                = "forward"
-#     target_group_arn    = aws_lb_target_group.default.arn
-#   }
-#
-#   condition {
-#     host_header {
-#       values  = ["www.${local.domain_ireland_ie}", local.domain_ireland_ie]
-#     }
-#   }
-# }
+# Public facing site rule
 
 resource "aws_lb_listener_rule" "ireland_ie_443" {
-
   listener_arn    = aws_lb_listener.public_sites_443.arn
   priority        = 6
 
@@ -820,7 +747,6 @@ resource "random_string" "random_db_password" {
   override_special = "/@£$"
 }
 
-
 resource "aws_ssm_parameter" "random_db_password" {
   name        = "${local.environment_name}-${local.project_name}-db-password"
   description = "-"
@@ -831,7 +757,6 @@ resource "aws_ssm_parameter" "random_db_password" {
     environment = local.environment_name
   }
 }
-
 
 data "aws_ssm_parameter" "random_db_password" {
   name = aws_ssm_parameter.random_db_password.name
@@ -1075,7 +1000,6 @@ locals {
 }
 
 data "template_file" "task_definition" {
-
   template    = file("../common/templates/task_definition.tpl")
 
   vars = {
