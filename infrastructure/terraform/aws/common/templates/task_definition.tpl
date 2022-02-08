@@ -75,6 +75,18 @@
             {
                 "name": "CORS_ALLOW_ALL_ORIGINS",
                 "value": "${SETTINGS_CORS_ALLOW_ALL_ORIGINS}"
+            },
+            {
+                "name": "EMAIL_HOST",
+                "value": "${SETTINGS_EMAIL_HOST}"
+            },
+            {
+                "name": "EMAIL_HOST_USER",
+                "value": "${SETTINGS_EMAIL_HOST_USER}"
+            },
+            {
+                "name": "EMAIL_HOST_PASSWORD",
+                "value": "${SETTINGS_EMAIL_HOST_PASSWORD}"
             }
         ],
         "secrets": []

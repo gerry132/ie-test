@@ -78,7 +78,7 @@ locals {
     },
     kleverson_dev = {
       description = "Kleverson Morais - OGCIO"
-      cidr_blocks = ["192.168.86.30/32"]
+      cidr_blocks = ["176.61.106.140/32"]
     },
     nick_dev = {
       description = "Nick Moreton - Torchbox"
@@ -988,6 +988,38 @@ data "aws_ssm_parameter" "random_secret_key" {
   ]
 }
 
+
+# -----------------------------------------------------------------------------
+# Simple Email Service (SES)
+# -----------------------------------------------------------------------------
+
+resource "aws_iam_user" "smtp_user" {
+  name = "${local.environment_name}-${local.project_name}-smtp-user"
+}
+
+resource "aws_iam_access_key" "smtp_user" {
+  user = aws_iam_user.smtp_user.name
+}
+
+data "aws_iam_policy_document" "ses_sender" {
+  statement {
+    actions   = ["ses:SendRawEmail"]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "ses_sender" {
+  name        = "ses_sender"
+  description = "Allows sending of e-mails via Simple Email Service"
+  policy      = data.aws_iam_policy_document.ses_sender.json
+}
+
+resource "aws_iam_user_policy_attachment" "smtp_user_attach" {
+  user       = aws_iam_user.smtp_user.name
+  policy_arn = aws_iam_policy.ses_sender.arn
+}
+
+
 # Task definition
 
 locals {
@@ -1001,6 +1033,9 @@ locals {
   SETTINGS_SECRET_KEY               = data.aws_ssm_parameter.random_secret_key.value
   SETTINGS_CORS_ALLOWED_ORIGINS     = local.SETTINGS_BASE_URL
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
+  SETTINGS_EMAIL_HOST               = "email-smtp.${local.region}.amazonaws.com"
+  SETTINGS_EMAIL_HOST_USER          = aws_iam_access_key.smtp_user.id
+  SETTINGS_EMAIL_HOST_PASSWORD      = aws_iam_access_key.smtp_user.ses_smtp_password_v4
 }
 
 data "template_file" "task_definition" {
@@ -1029,6 +1064,9 @@ data "template_file" "task_definition" {
     SETTINGS_USE_S3                     = local.SETTINGS_USE_S3
     SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
     SETTINGS_CORS_ALLOW_ALL_ORIGINS     = local.SETTINGS_CORS_ALLOW_ALL_ORIGINS
+    SETTINGS_EMAIL_HOST                 = local.SETTINGS_EMAIL_HOST
+    SETTINGS_EMAIL_HOST_USER            = local.SETTINGS_EMAIL_HOST_USER
+    SETTINGS_EMAIL_HOST_PASSWORD        = local.SETTINGS_EMAIL_HOST_PASSWORD
   }
 }
 
