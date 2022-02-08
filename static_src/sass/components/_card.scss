@@ -37,13 +37,21 @@
         padding: $grid;
     }
 
+    &__title {
+        #{$root}--no-summary & {
+            font-size: 32px;
+        }
+    }
+
     &__title,
     &__summary {
         color: $color--default;
+        font-family: $font--secondary;
     }
 
     &__link {
         text-decoration: underline;
+        color: $color--primary;
     }
 }
 

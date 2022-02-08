@@ -1,34 +1,40 @@
 context:
-  featured_story:
-    title: Stub content
-    summary: Check out our awesome stub content
-    page: foobar
-  pinned_stories:
-    - title: Stub content
+  value:
+    featured_story:
+      image: True
+      title: Stub content
       summary: Check out our awesome stub content
       page: foobar
-    - title: Stub content
-      summary: Check out our awesome stub content
-      page: foobar
-    - title: Stub content
-      summary: Check out our awesome stub content
-      page: foobar
-    - title: Stub content
-      summary: Check out our awesome stub content
-      page: foobar
-    - title: Stub content
-      summary: Check out our awesome stub content
-      page: foobar
-    - title: Stub content
-      summary: Check out our awesome stub content
-      page: foobar
+    pinned_stories:
+      - title: Stub content
+        summary: Check out our awesome stub content
+        page: foobar
+      - title: Stub content
+        summary: Check out our awesome stub content
+        page: foobar
+      - title: Stub content
+        summary: Check out our awesome stub content
+        page: foobar
+      - title: Stub content
+        summary: Check out our awesome stub content
+        page: foobar
+      - title: Stub content
+        summary: Check out our awesome stub content
+        page: foobar
+      - title: Stub content
+        summary: Check out our awesome stub content
+        page: foobar
 
 tags:
   image:
     card.image width-500 class="card__image":
       raw: |
         <img src="https://source.unsplash.com/500x400?ocean" width="500" height="400" alt="Some alt" class="card__image">
-    pageurl:
-      featured_story.page as href:
-        target_var: href
-        raw: '#'
+    value.pinned_story_hero.image width-1080 as featured_image:
+      target_var: featured_image
+      raw: |
+        https://source.unsplash.com/1080x1080?ocean
+  pageurl:
+    featured_story.page as href:
+      target_var: href
+      raw: '#'

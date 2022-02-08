@@ -1,5 +1,9 @@
 .story {
     $root: &;
+    background-image: url('../images/cssBackgrounds/ireland-outline-bg.svg');
+    background-repeat: no-repeat;
+    background-size: 600px 700px;
+    background-position: 100% 100%;
     position: relative;
     overflow: hidden;
 
@@ -22,6 +26,7 @@
 
     &__container {
         position: relative;
+        padding: 0 30px;
 
         @include media-query(medium) {
             display: flex;
@@ -69,6 +74,7 @@
 
     &__heading {
         color: $color--off-black;
+        font-weight: $weight--bold;
     }
 
     &__cta {
