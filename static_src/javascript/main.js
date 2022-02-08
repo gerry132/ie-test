@@ -5,6 +5,7 @@ import DesktopSubMenu from './components/desktop-sub-menu';
 import DesktopCloseMenus from './components/desktop-close-menus';
 import SkipLink from './components/skip-link';
 import StoryLinksExpander from './components/story-links-expander';
+import Search from './components/search';
 import VideoToggle from './components/video-toggle';
 
 /* feature:use_frontend_component_accordion */
@@ -104,6 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
         StoryLinksExpander.selector(),
     )) {
         new StoryLinksExpander(storylinksexpander);
+    }
+
+    for (const search of document.querySelectorAll(Search.selector())) {
+        new Search(search);
     }
 
     for (const videotoggle of document.querySelectorAll(

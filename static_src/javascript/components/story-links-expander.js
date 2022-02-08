@@ -10,17 +10,19 @@ class StoryLinksExpander {
     }
 
     bindEvents() {
-        this.toggle.addEventListener('click', (e) => {
-            e.preventDefault();
-            let open = this.expander.classList.contains('is-open');
-            this.expander.classList.toggle('is-open');
+        if (this.toggle) {
+            this.toggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                let open = this.expander.classList.contains('is-open');
+                this.expander.classList.toggle('is-open');
 
-            if (open) {
-                open = false;
-            } else {
-                open = true;
-            }
-        });
+                if (open) {
+                    open = false;
+                } else {
+                    open = true;
+                }
+            });
+        }
     }
 }
 

@@ -1,4 +1,4 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags i18n %}
 <nav aria-label="Primary">
      <ul class="primary-nav" data-primary-nav>
         {% for link in primarynav %}
@@ -10,7 +10,14 @@
                     {% include_block link with has_children=children.exists nav_type="primary-nav" %}
                     {% if children.exists %}
                         <ul class="sub-nav" data-subnav>
-                            <li class="sub-nav__item sub-nav__item--back"><a data-subnav-back href="#">&lsaquo; Back</a></li>
+                            <li class="sub-nav__item sub-nav__item--back">
+                                <a data-subnav-back href="#" class="sub-nav__link">
+                                    <span class="sub-nav__icon sub-nav__icon--back">
+                                        {% include "patterns/atoms/icons/icon.html" with name="arrow" %}
+                                    </span>
+                                    {% trans 'Back' %}
+                                </a>
+                            </li>
                             {% comment %}
                             The overview_title is passed through to the menu item and displayed after the page title if present. It allows for a link to the index page in the dropdown desktop menu because a click on the parent item simply opens and closes the menu drop-down.
                             {% endcomment %}

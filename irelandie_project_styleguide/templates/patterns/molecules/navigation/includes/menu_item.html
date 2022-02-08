@@ -4,6 +4,8 @@
     >
     {{ title|default:page.title }} {% if overview_title %} {{ overview_title }}{% endif %}
     {% if has_children %}
-        <span class="{{ nav_type }}__icon">&rsaquo;</span>
+        <span class="{{ nav_type }}__icon">
+            {% include "patterns/atoms/icons/icon.html" with name="arrow" %}
+        </span>
     {% endif %}
 </a>

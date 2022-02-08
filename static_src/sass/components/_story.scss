@@ -1,6 +1,7 @@
 .story {
     $root: &;
     position: relative;
+    overflow: hidden;
 
     &::before {
         content: '';
@@ -11,7 +12,7 @@
         background-size: 100%;
         background-position: center center;
         position: absolute;
-        right: -200px;
+        right: 0;
         bottom: -100px;
     }
 
