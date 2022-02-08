@@ -1,5 +1,10 @@
 .responsive-object {
     position: relative;
+    min-height: 500px;
+
+    @include media-query(medium) {
+        min-height: 768px;
+    }
 
     iframe,
     object,
