@@ -1,14 +1,18 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 
-<div>
-  {% image value.image width-400 %}
+<div class="pinned-stories__featured">
+    <div class="pinned-stories__featured-content">
+        {% image value.image width-400 %}
+        <h3 class="pinned-stories__featured-title heading--2">{{ value.title }}</h3>
+        <p class="pinned-stories__featured-summary">{{ value.summary }}</p>
 
-  <h3>{{ value.title }}</h3>
-  <p>{{ value.summary }}</p>
-
-  {% if value.link_page and value.link_text %}
-    {% pageurl value.link_page as href %}
-    <a href="{{ href }}">{{ value.link_text }}</a>
-  {% endif %}
+        {% if value.link_page and value.link_text %}
+        {% pageurl value.link_page as href %}
+            <a href="{{ href }}" class="pinned-stories__featured-link button">
+                {{ value.link_text }}
+            </a>
+        {% endif %}
+    </div> 
 </div>
+ 

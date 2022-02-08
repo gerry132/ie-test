@@ -1,8 +1,9 @@
 .pinned-stories {
+    $root: &;
     background-color: $color--white;
 
     &__container {
-        @include media-query(medium) {
+        @include media-query(large) {
             display: flex;
             flex-wrap: wrap;
         }
@@ -10,15 +11,13 @@
 
     &__featured,
     &__feed {
-        @include media-query(medium) {
+        @include media-query(large) {
             flex: 1 0 50%;
         }
     }
 
     &__featured {
-        background-color: $color--primary;
-
-        @include media-query(medium) {
+        @include media-query(large) {
             margin: 0 auto;
         }
     }
@@ -29,37 +28,63 @@
         color: $color--white;
     }
 
-    &__featured-content {
-        background-color: $color--primary;
-        background-image: url('../images/cssBackgrounds/ie-map.svg');
-        background-size: auto 1080px;
-        background-repeat: no-repeat;
-        background-position: 0% -100%;
-        padding: 40px $grid;
-        position: relative;
+    &__featured-title {
+        @include font-size(l);
+        font-family: $font--secondary;
+        text-decoration: underline;
 
         @include media-query(medium) {
+            font-size: 32px;
+        }
+    }
+
+    &__featured-content-wrapper {
+        background-size: cover;
+        background-repeat: no-repeat;
+        display: flex;
+        height: 100vh;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
+        padding: 40px $grid;
+
+        &::before {
+            content: '';
+            background-color: rgba($color--black, 0.25);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        @include media-query(large) {
+            background-size: cover;
+            padding: 10%;
             height: 100vh;
             position: sticky;
             top: 0;
+        }
+    }
 
-            // Fills in the left-hand side green on wide screens
-            &::before {
-                content: '';
-                display: block;
-                position: absolute;
-                background-color: $color--primary;
-                height: 100%;
-                width: 50%;
-                left: -50%;
-                top: -20px;
-                z-index: -1;
-            }
+    &__featured-content {
+        background-color: rgba($color--primary, 0.7);
+        padding: $grid;
+        font-family: $font--secondary;
+        position: relative;
+        transition: background-color $transition;
+
+        #{$root}__featured-content-wrapper:hover & {
+            background-color: $color--primary;
+        }
+
+        @include media-query(medium) {
+            padding: 40px;
+            max-width: 80%;
         }
     }
 
     &__featured-link {
-        border: 1px solid $color--white;
         display: inline-block;
         margin-top: $grid;
         position: relative;
@@ -75,6 +100,10 @@
         @include media-query(small) {
             display: flex;
             flex-wrap: wrap;
+        }
+
+        @include media-query(large) {
+            padding-right: 10%;
         }
     }
 }
