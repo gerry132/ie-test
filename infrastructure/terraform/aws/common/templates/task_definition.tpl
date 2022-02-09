@@ -33,6 +33,10 @@
                 "value": "${SETTINGS_AWS_ACCESS_KEY_ID}"
             },
             {
+                "name": "AWS_REGION",
+                "value": "${region}"
+            },
+            {
                 "name": "AWS_STATIC_BUCKET_NAME",
                 "value": "${SETTINGS_AWS_STATIC_BUCKET_NAME}"
             },
@@ -79,14 +83,6 @@
             {
                 "name": "EMAIL_HOST",
                 "value": "${SETTINGS_EMAIL_HOST}"
-            },
-            {
-                "name": "EMAIL_HOST_USER",
-                "value": "${SETTINGS_EMAIL_HOST_USER}"
-            },
-            {
-                "name": "EMAIL_HOST_PASSWORD",
-                "value": "${SETTINGS_EMAIL_HOST_PASSWORD}"
             }
         ],
         "secrets": []

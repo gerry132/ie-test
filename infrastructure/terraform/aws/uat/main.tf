@@ -1033,9 +1033,7 @@ locals {
   SETTINGS_SECRET_KEY               = data.aws_ssm_parameter.random_secret_key.value
   SETTINGS_CORS_ALLOWED_ORIGINS     = local.SETTINGS_BASE_URL
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
-  SETTINGS_EMAIL_HOST               = "email-smtp.${local.region}.amazonaws.com"
-  SETTINGS_EMAIL_HOST_USER          = aws_iam_access_key.smtp_user.id
-  SETTINGS_EMAIL_HOST_PASSWORD      = aws_iam_access_key.smtp_user.ses_smtp_password_v4
+  SETTINGS_EMAIL_HOST               = "email.${local.region}.amazonaws.com"
 }
 
 data "template_file" "task_definition" {
@@ -1065,8 +1063,6 @@ data "template_file" "task_definition" {
     SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
     SETTINGS_CORS_ALLOW_ALL_ORIGINS     = local.SETTINGS_CORS_ALLOW_ALL_ORIGINS
     SETTINGS_EMAIL_HOST                 = local.SETTINGS_EMAIL_HOST
-    SETTINGS_EMAIL_HOST_USER            = local.SETTINGS_EMAIL_HOST_USER
-    SETTINGS_EMAIL_HOST_PASSWORD        = local.SETTINGS_EMAIL_HOST_PASSWORD
   }
 }
 
