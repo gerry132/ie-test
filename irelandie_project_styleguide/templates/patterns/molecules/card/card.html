@@ -23,9 +23,11 @@ Example:
 
             <p class="card__summary">{{ card.summary }}</p>
 
-            <span class="card__link">
-                Read this story
-            </span>
+            {% if card.page %}
+                <span class="card__link">
+                    {% trans 'Read this story' %}
+                </span>
+            {% endif %}
         </div>
 {% if card.page %}
     </a>
