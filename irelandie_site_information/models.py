@@ -26,7 +26,7 @@ class SiteInformationPage(ArticlePage):
         max_num=3
     )
 
-    parent_page_types = [
-        "SiteInformationPageIndex",
-    ]
+    # parent_page_types = [
+    #     "SiteInformationPageIndex",
+    # ]
     subpage_types = []

@@ -1,15 +1,16 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
 {% if page.hero_image %}
-    <div class="hero hero--background-image background-image">
+    <div class="hero hero--background-image background-image{% if classes %} {{ classes }}{% endif %}">
 {% else %}
     <div class="hero{% if page.hero_video %} hero--background-video{% endif %}{% if classes %} {{ classes }}{% endif %}" data-video-container>
 {% endif %}
 
     {% if page.hero_video %}
         <figure class="hero__video-wrapper" aria-hidden="true">
-            <video class="hero__video" autoplay loop muted data-video>
+            <video class="hero__video" autoplay loop muted data-video controls>
                 <source src="{{ page.hero_video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
             </video>
         </figure>
     {% endif %}
@@ -29,8 +30,8 @@
                     <h2 class="hero__secondary-title">{{ page.secondary_title }}</h2>
                 {% endif %}
 
-                {% if page.summary %}
-                    <p>{{ page.summary }}</p>
+                {% if page.summary or page.introduction %}
+                    <p>{% firstof page.summary page.introduction %}</p>
                 {% endif %}
 
                 {% if page.link_page and page.link_text %}

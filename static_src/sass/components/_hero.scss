@@ -22,6 +22,24 @@
         z-index: 1;
     }
 
+    &--article {
+        height: 75vh;
+        padding-bottom: 30px;
+
+        @include media-query(medium) {
+            padding-bottom: 100px;
+        }
+
+        #{$root}__title {
+            font-family: $font--secondary;
+        }
+
+        #{$root}__content {
+            font-family: $font--secondary;
+            align-items: flex-end;
+        }
+    }
+
     &--background-video {
         min-height: 100%;
     }
