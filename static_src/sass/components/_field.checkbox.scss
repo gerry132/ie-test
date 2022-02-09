@@ -4,30 +4,38 @@
     position: absolute;
 
     + label {
-        padding: 0 0 0 30px;
+        padding: 0 0 0 35px;
         margin: 0;
         line-height: 1.2;
+        padding-top: 3px;
 
         // surrounding box
         &::before {
             content: '';
-            border: 1px solid;
-            height: 20px;
+            box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25);
+            border: 1px solid transparent;
+            border-radius: 5px;
+            background-color: $color--white;
+            height: 25px;
             left: 0;
             position: absolute;
             top: 0;
-            width: 20px;
+            width: 25px;
         }
 
         // inside checkbox
         &::after {
             content: '';
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background: $color--primary;
-            left: 5px;
+            left: 9px;
             top: 5px;
+            width: 7px;
+            height: 13px;
+            border: solid $color--primary;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
             opacity: 0;
             transition: opacity $transition;
         }

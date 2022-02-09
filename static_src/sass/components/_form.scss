@@ -1,5 +1,7 @@
 .form {
     $root: &;
+    margin-top: $grid;
+    max-width: $wrapper--small;
 
     &__container {
         margin-bottom: 20px;
