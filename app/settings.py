@@ -11,7 +11,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 '''
 
-import json
 import os
 
 from dotenv import load_dotenv
@@ -109,7 +108,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #
     'pattern_library',
     'irelandie_project_styleguide.apps.ProjectStyleguideConfig',
     'rest_framework',
@@ -190,12 +188,8 @@ PATTERN_LIBRARY = {
 WSGI_APPLICATION = 'app.wsgi.application'
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_PORT = 465
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_BACKEND = 'django_ses.SESBackend'
+
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -361,17 +355,19 @@ LOCALE_PATHS = [
 WAGTAIL_LOCALIZE_DEFAULT_TRANSLATION_MODE = 'simple'
 
 
+# AWS
+
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_SES_REGION_NAME = os.environ.get('AWS_REGION', 'eu-west-1')
+AWS_SES_REGION_ENDPOINT = os.environ.get('EMAIL_HOST')
+
 USE_S3 = eval(os.environ.get('USE_S3', '0')) in TRUE
 if USE_S3 is True:
-
     INSTALLED_APPS = INSTALLED_APPS + ['storages', 'wagtail_storages']
 
-    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
     AWS_DEFAULT_ACL = 'public-read'
     AWS_QUERYSTRING_AUTH = False
-    # AWS_S3_REGION_NAME = os.environ['AWS_S3_REGION_NAME']
-    # AWS_S3_CUSTOM_DOMAIN = os.environ['AWS_S3_CUSTOM_DOMAIN']
-    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STATIC_BUCKET_NAME']
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
