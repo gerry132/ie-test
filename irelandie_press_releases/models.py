@@ -35,7 +35,7 @@ class PressReleasePage(ArticlePage):
         max_num=3
     )
 
-    parent_page_types = [
-        "PressReleasePageIndex",
-    ]
+    # parent_page_types = [
+    #     "PressReleasePageIndex",
+    # ]
     subpage_types = []

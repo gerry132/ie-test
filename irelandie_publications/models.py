@@ -37,8 +37,8 @@ class PublicationPage(ArticlePage):
         max_num=3
     )
 
-    parent_page_types = [
-        "PublicationPageIndex",
-    ]
+    # parent_page_types = [
+    #     "PublicationPageIndex",
+    # ]
     subpage_types = []
 

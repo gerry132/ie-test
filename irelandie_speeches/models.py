@@ -36,7 +36,7 @@ class SpeechPage(ArticlePage):
         max_num=3
     )
 
-    parent_page_types = [
-        "SpeechPageIndex",
-    ]
+    # parent_page_types = [
+    #     "SpeechPageIndex",
+    # ]
     subpage_types = []
