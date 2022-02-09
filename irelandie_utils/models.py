@@ -434,7 +434,6 @@ class HeroPage(BasePage):
 class ArticlePage(BasePage):
     introduction = models.TextField(blank=True)
 
-    hero_title = models.CharField(blank=True, max_length=255)
     hero_image = models.ForeignKey(
         IMAGE_MODEL,
         null=True,
@@ -467,7 +466,6 @@ class ArticlePage(BasePage):
         FieldPanel("introduction"),
         MultiFieldPanel(
             [
-                FieldPanel("hero_title"),
                 ImageChooserPanel("hero_image"),
                 MediaChooserPanel("hero_video", media_type="video"),
             ],

@@ -164,7 +164,7 @@ class DocumentBlock(blocks.StructBlock):
 class AlertBlock(blocks.PageChooserBlock):
     class Meta:
         label = "AlertBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/alert_block.html"
 
     pass
 
@@ -172,9 +172,17 @@ class AlertBlock(blocks.PageChooserBlock):
 class ContactDetailBlock(blocks.PageChooserBlock):
     class Meta:
         label = "ContactDetailBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/contact_block.html"
 
     pass
+
+
+class HeadingBlock(blocks.StructBlock):
+    text = blocks.CharBlock()
+
+    class Meta:
+        icon = "title"
+        template = "patterns/molecules/streamfield/blocks/heading_block.html"
 
 
 class JumpboxWithImageBlock(blocks.StructBlock):
@@ -203,7 +211,7 @@ class JumpboxBlock(blocks.StructBlock):
 class PersonBlock(blocks.PageChooserBlock):
     class Meta:
         label = "PersonBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/person_block.html"
 
     pass
 
@@ -211,7 +219,7 @@ class PersonBlock(blocks.PageChooserBlock):
 class PlaceBlock(blocks.PageChooserBlock):
     class Meta:
         label = "PlaceBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/place_block.html"
 
     pass
 
@@ -219,7 +227,7 @@ class PlaceBlock(blocks.PageChooserBlock):
 class RichTextBlock(blocks.RichTextBlock):
     class Meta:
         label = "RichTextBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/rich-text.html"
 
     pass
 
@@ -227,7 +235,7 @@ class RichTextBlock(blocks.RichTextBlock):
 class RoleBlock(blocks.PageChooserBlock):
     class Meta:
         label = "RoleBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/role_block.html"
 
     pass
 
@@ -235,9 +243,6 @@ class RoleBlock(blocks.PageChooserBlock):
 class TableBlock(WagtailTableBlock):
     class Meta:
         label = "TableBlock"
-        template = "TODO"
-
-    pass
 
 
 class SocialLinkBlock(blocks.StructBlock):
@@ -286,6 +291,7 @@ class BaseSectionBlock(blocks.StructBlock):
 
 
 class ArticleStoryBlock(blocks.StreamBlock):
+    heading = HeadingBlock()
     contact_detail = ContactDetailBlock()
     image = ImageBlock()
     rich_text = blocks.RichTextBlock(features=["h3", "blockquote", "bold", "link", "document-link", "ul"])

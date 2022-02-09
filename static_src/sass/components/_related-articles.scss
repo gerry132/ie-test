@@ -1,0 +1,14 @@
+.related-articles {
+    position: relative;
+
+    &__title {
+        font-family: $font--secondary;
+        font-weight: $weight--bold;
+        margin-bottom: $grid;
+        max-width: $wrapper--small;
+
+        @include media-query(medium) {
+            margin-bottom: 40px;
+        }
+    }
+}
