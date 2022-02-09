@@ -1,8 +1,8 @@
-<a href="{{ value.document.url }}" class="streamfield document-block" target="_blank" rel="nofollow noreferrer">
+<a href="{{ value.document.url }}" class="streamfield document-block" target="_blank" rel="nofollow noreferrer" aria-labelledby="document-title">
     <div class="document-block__content">
         {% include "patterns/atoms/icons/icon.html" with name="file" classname="document-block__icon" %}
 
-        <span class="document-block__copy">
+        <span class="document-block__copy" id="document-title">
             {% firstof value.title value.document.title %}
         </span>
     </div>

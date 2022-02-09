@@ -2,6 +2,7 @@
     width: 20px;
     height: 20px;
     transition: fill $transition;
+    fill: $color--white;
 
     &--home {
         width: 15px;
