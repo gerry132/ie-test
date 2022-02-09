@@ -25,6 +25,9 @@
                     {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}
                     {% else %}
                     {% include_block block %}
+                        {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}
+                    {% else %}
+                        {% include_block block %}
                     {% endif %}
                 {% endfor %}
             </div>
