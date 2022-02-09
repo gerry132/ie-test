@@ -1,4 +1,11 @@
 {% load wagtailimages_tags %}
 
-{% image value.image width-1000 loading="lazy" %}
-<p>{{ value.caption }}</p>
+<div class="streamfield">
+    <figure class="image-block">
+        {% image value.image width-1000 loading="lazy" class="image" alt=value.alt %}
+
+        <figcaption class="image-block__caption">
+            {{ value.caption }}
+        </figcaption>
+    </figure>
+</div>

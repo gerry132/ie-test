@@ -4,6 +4,6 @@ context:
 
 tags:
   image:
-    value.image width-1000:
+    value.image width-1000 class="image":
       raw: |
         <img src="https://source.unsplash.com/1000x300?ocean" width="1000" height="300" alt="Some alt">
