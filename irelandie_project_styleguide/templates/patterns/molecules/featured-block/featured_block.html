@@ -1,24 +1,11 @@
-{% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 
-{% if featured_block.page %}
-{% pageurl featured_block.page as href %}
-<a href="{{ href }}" class="featured-block">
-{% else %}
-<div class="featured-block">
-{% endif %}
-    {% image featured_block.image fill-768x768 as featured_image %}
+<a href="{{ link_url }}" class="featured-block">
+    {% image image fill-768x768 as featured_image %}
     <div class="featured-block__image" style="background-image:url({{ featured_image.url }});"></div>
     <div class="featured-block__content-wrapper">
         <div class="featured-block__content">
-            <h3 class="featured-block__title heading--3">{{ featured_block.title }}</h3>
-            {% comment %}
-                TODO: Add summary/description field
-            {% endcomment %}
+            <h3 class="featured-block__title heading--3">{{ link_title }}</h3>
         </div>
     </div>
-{% if featured_block.page %}
 </a>
-{% else %}
-</div>
-{% endif %}
