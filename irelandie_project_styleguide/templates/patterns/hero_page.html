@@ -9,6 +9,12 @@
     
     {% include "patterns/molecules/hero/hero.html" with page=page %}
 
+    {% if page.secondary_title %}
+        <div class="wrapper wrapper--large wrapper--padding">
+            <h2 class="secondary-title">{{ page.secondary_title }}</h2>
+        </div>
+    {% endif %}
+
     {% block main %}
     {% endblock %}
 
