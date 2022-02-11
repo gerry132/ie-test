@@ -82,7 +82,7 @@ stages:
         inputs:
           targetType: inline
           script: |
-            docker run -e "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" -e "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" -e "AWS_STATIC_BUCKET_NAME=$AWS_STATIC_BUCKET_NAME" -e "USE_S3=1" "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG" "./manage.py collectstatic --noinput --clear"
+            docker run -e "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" -e "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" -e "AWS_STATIC_BUCKET_NAME=$AWS_STATIC_BUCKET_NAME" -e "USE_S3=1" -e "SECRET_KEY=$(base64 /dev/urandom | head -c50)" "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG" "./manage.py collectstatic --noinput --clear"
         env:
           AWS_ACCESS_KEY_ID: $(aws_access_key)
           AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
