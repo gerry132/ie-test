@@ -34,7 +34,7 @@ class NewsPage(ArticlePage):
         max_num=3
     )
 
-    # parent_page_types = [
-    #     "NewsPageIndex",
-    # ]
+    parent_page_types = [
+        "NewsPageIndex",
+    ]
     subpage_types = []
