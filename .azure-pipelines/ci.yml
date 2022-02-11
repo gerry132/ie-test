@@ -20,7 +20,7 @@ stages:
   jobs:
   - template: templates/python-bandit.yml@azure-pipelines-templates
     parameters:
-        srcDir: ireland_*
+        srcDir: irelandie_*
 
 
 - stage: deploy
@@ -31,7 +31,9 @@ stages:
       - checkout: self
         submodules: true
         persistCredentials: true
+
       - task: Bash@3
+        displayName: Run Terraform
         inputs:
           targetType: inline
           script: |
@@ -40,11 +42,32 @@ stages:
             terraform apply -input=false -auto-approve
             cd ../../../..
           failOnStderr: true
-        displayName: Run terraform
         env:
           AWS_ACCESS_KEY_ID: $(aws_access_key)
           AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
           AWS_DEFAULT_REGION: $(aws_region)
+
+      - task: NodeTool@0
+        displayName: Installing Node.js
+        inputs:
+          versionSpec: 14
+
+      - task: Bash@3
+        displayName: Build Static Files
+          targetType: inline
+          script: |
+            npm install
+            npm run build:prod
+
+      - task: Bash@3
+        displayName: Upload Static Files to S3
+          targetType: inline
+          script: |
+            AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY AWS_STATIC_BUCKET_NAME=$AWS_STATIC_BUCKET_NAME USE_S3=1 python manage.py collectstatic
+        env:
+          AWS_ACCESS_KEY_ID: $(aws_access_key)
+          AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
+          AWS_STATIC_BUCKET_NAME: $(aws_static_bucket_name)
 
       - task: Bash@3
         inputs:
