@@ -2,8 +2,6 @@
 
 python3 manage.py migrate --noinput
 
-python3 manage.py collectstatic --noinput
-
 init_username="system_admin"
 init_password="password1234!"
 
