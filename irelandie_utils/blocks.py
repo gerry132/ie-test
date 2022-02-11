@@ -93,9 +93,42 @@ class FeaturedStoryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(required=False)
     title = blocks.CharBlock(required=False)
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
 
     class Meta:
         template = "patterns/molecules/streamfield/blocks/featured_story_block.html"
+
+    def clean(self, value):
+        errors = {}
+        values = [value["page"], value["url"]]
+        # Set only a Page OR a URL
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a page or set a URL."
+
+            errors["page"] = ErrorList([message])
+            errors["url"] = ErrorList([message])
+
+        # A URL must have title
+        if value["url"] and not value["title"]:
+            errors["title"] = ErrorList(["Please set a title for the URL"])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context['image'] = value['image']
+        context['page'] = value['page']
+        context["link_url"] = value['url'] or value['page'].url
+        context["link_title"] = value['title'] or value['page'].title
+        return context
+
 
 class EmbassyStory(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
