@@ -54,6 +54,7 @@ stages:
 
       - task: Bash@3
         displayName: Build Static Files
+        inputs:
           targetType: inline
           script: |
             npm install
@@ -61,6 +62,7 @@ stages:
 
       - task: Bash@3
         displayName: Upload Static Files to S3
+        inputs:
           targetType: inline
           script: |
             AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY AWS_STATIC_BUCKET_NAME=$AWS_STATIC_BUCKET_NAME USE_S3=1 python manage.py collectstatic
