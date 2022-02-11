@@ -61,6 +61,7 @@ stages:
             npm run build:prod
 
       - task: Bash@3
+        displayName: Build and Push Image
         inputs:
           targetType: inline
           script: |
@@ -68,7 +69,6 @@ stages:
             docker build . -t "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
             docker push "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
           failOnStderr: false
-        displayName: build and push image
         env:
           AWS_ACCESS_KEY_ID: $(aws_access_key)
           AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
