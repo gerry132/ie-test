@@ -41,7 +41,6 @@ DEBUG = os.environ.get('DEBUG', '0') in TRUE
 
 ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -97,6 +96,8 @@ INSTALLED_APPS = [
     'wagtailaccessibility',
     'wagtailmedia',
     'wagtail.api.v2',
+    'captcha',
+    'wagtailcaptcha',
 
     'modelcluster',
     'taggit',
@@ -188,7 +189,11 @@ PATTERN_LIBRARY = {
 WSGI_APPLICATION = 'app.wsgi.application'
 
 
-EMAIL_BACKEND = 'django_ses.SESBackend'
+# In production, email is handled with Amazon SES
+if os.environ["EMAIL_BACKEND"]:
+    EMAIL_BACKEND = os.environ['EMAIL_BACKEND']
+else:
+    EMAIL_BACKEND = 'django_ses.SESBackend'
 
 
 # Database
@@ -415,6 +420,17 @@ MISSION_MODEL_CLASS = 'ireland_missions.Mission'
 WAGTAILMEDIA = {
     "VIDEO_EXTENSIONS": ['mp4'],  # list of extensions
 }
+
+
+
+# Recaptcha
+# These settings are required for the captcha challange to work.
+# https://github.com/springload/wagtail-django-recaptcha
+
+if "RECAPTCHA_PUBLIC_KEY" in os.environ and "RECAPTCHA_PRIVATE_KEY" in os.environ:
+    NOCAPTCHA = True
+    RECAPTCHA_PUBLIC_KEY = os.environ["RECAPTCHA_PUBLIC_KEY"]
+    RECAPTCHA_PRIVATE_KEY = os.environ["RECAPTCHA_PRIVATE_KEY"]
 
 #
 
