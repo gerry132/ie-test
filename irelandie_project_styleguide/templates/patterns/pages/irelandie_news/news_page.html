@@ -11,12 +11,6 @@
     {% include "patterns/molecules/hero/hero.html" with page=page classes="hero--article" %}
 
     {% block main %}
-        <!-- CTA -->
-        {% comment %} 
-            TODO: Possibly not needed anymore.
-            <a href="{{ page.call_to_action.get_link_url }}">{{ page.call_to_action.get_link_text }}</a>
-        {% endcomment %}
-
         <!-- Body -->
         <div class="section section--padding">
             <div class="wrapper wrapper--small">

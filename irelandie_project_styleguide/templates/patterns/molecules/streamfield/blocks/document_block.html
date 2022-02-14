@@ -1,5 +1,17 @@
-<p>
-    <a href="{{ value.document.url }}">
-        {% firstof value.title value.document.title %}
-    </a>
-</p>
+<a href="{{ value.document.url }}" class="streamfield document-block" target="_blank" rel="nofollow noreferrer" aria-labelledby="document-title">
+    <div class="document-block__content">
+        {% include "patterns/atoms/icons/icon.html" with name="file" classname="document-block__icon" %}
+
+        <span class="document-block__copy" id="document-title">
+            {% firstof value.title value.document.title %}
+        </span>
+    </div>
+    <div class="document-block__meta">
+        {% if value.document.file_extension %}
+            <span class="document-block__type">{{ value.document.file_extension }}</span>
+        {% endif %}
+        {% if value.document.file.size %}
+            <span class="document-block__size">{{ value.document.file.size|filesizeformat }}</span>
+        {% endif %}
+    </div>
+</a>

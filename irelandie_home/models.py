@@ -48,13 +48,13 @@ class HomePage(HeroPage):
 
     # Only allow creating HomePages at the root level
     parent_page_types = ['wagtailcore.Page']
-    # subpage_types = [
-    #     'irelandie_missions.CountryGroupPageIndex',
-    #     'irelandie_missions.MissionSearchPage',
-    #     'irelandie_home.CampaignPage',
-    #     'irelandie_home.TopicPage',
-    #     'irelandie_forms.FormPage',
-    # ]
+    subpage_types = [
+        'irelandie_missions.CountryGroupPageIndex',
+        'irelandie_missions.MissionSearchPage',
+        'irelandie_home.CampaignPage',
+        'irelandie_home.TopicPage',
+        'irelandie_forms.FormPage',
+    ]
 
     #
 
@@ -90,7 +90,7 @@ class CampaignPage(HeroPage):
         ('pinned_story', wagtail_blocks.StructBlock([
             ('pinned_story_hero', blocks.PinnedStoryHeroBlock()),
             ('pinned_stories', wagtail_blocks.ListBlock(blocks.PinnedStoryBlock())),
-        ])),
+        ], template='patterns/molecules/pinned-stories/pinned_stories.html')),
     ], block_counts={
         'pinned_story': {'max_num': 1},
     }, blank=True, null=True)

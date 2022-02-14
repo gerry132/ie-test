@@ -26,5 +26,5 @@ class CorportateInformationPage(ArticlePage):
         max_num=3
     )
 
-    # parent_page_types = ["CorportateInformationPageIndex"]
+    parent_page_types = ["CorportateInformationPageIndex"]
     subpage_types = []
