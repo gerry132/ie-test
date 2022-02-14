@@ -9,6 +9,7 @@ resources:
     name: ogcio/azure-pipelines-templates
     ref: refs/heads/develop
 
+stages:
 - stage: test
   displayName: Check the Code
   jobs:
@@ -29,7 +30,7 @@ resources:
       displayName: Install Requirements
 
     - script: python manager.py test
-        displayName: Unit Tests
+      displayName: Unit Tests
 
 - stage: statics
   displayName: Static Files
@@ -97,7 +98,7 @@ resources:
         IMAGE_NAME: $(image_name)
         IMAGE_TAG: $(image_tag)
 
-      - template: templates/ecs-update-service.yml
-        parameters:
-          clusterName: $(image_name)
-          serviceName: $(image_name)
+    - template: templates/ecs-update-service.yml
+      parameters:
+        clusterName: $(image_name)
+        serviceName: $(image_name)
