@@ -21,17 +21,17 @@ stages:
     - template: templates/python-bandit.yml@azure-pipelines-templates
       parameters:
         srcDir: irelandie_*
-    - job: Install Tools
+    - job: InstallTools
       steps:
       - script: python -m pip install --upgrade pip setuptools wheel
         displayName: Update Tools
       - script: pip install -r .azure-pipelines/requirements.txt
-        displayName: Install requirements
+        displayName: Install Requirements
     - job: Lint
       steps:
       - script: flake8 .
         displayName: PEP8 Checks
-    - job: Code Test
+    - job: CodeTest
       steps:
       - script: python manager.py test
         displayName: Unit Tests
@@ -39,7 +39,7 @@ stages:
 - stage: statics
   displayName: Static Files
   jobs:
-    - job: Build Static Files
+    - job: BuildStaticFiles
       steps:
       - task: NodeTool@0
         displayName: Installing Node.js
@@ -54,7 +54,7 @@ stages:
             npm install
             npm run build:prod
 
-    - job: Upload Static Files
+    - job: UploadStaticFiles
       steps:
       - script: AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY AWS_STATIC_BUCKET_NAME=$AWS_STATIC_BUCKET_NAME USE_S3=1 python manage.py collectstatic --noinput --clear
         env:
