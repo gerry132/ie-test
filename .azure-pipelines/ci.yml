@@ -15,18 +15,22 @@ resources:
     ref: refs/heads/develop
 
 stages:
-- stage: test
-  displayName: Check the Code
+- stage: setup
+  displayName: Install and Update Tools
   jobs:
-    - template: templates/python-bandit.yml@azure-pipelines-templates
-      parameters:
-        srcDir: irelandie_*
     - job: InstallTools
       steps:
       - script: python -m pip install --upgrade pip setuptools wheel
         displayName: Update Tools
       - script: pip install -r .azure-pipelines/requirements.txt
         displayName: Install Requirements
+
+- stage: test
+  displayName: Check the Code
+  jobs:
+    - template: templates/python-bandit.yml@azure-pipelines-templates
+      parameters:
+        srcDir: irelandie_*
     - job: Lint
       steps:
       - script: flake8 .
