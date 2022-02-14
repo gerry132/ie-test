@@ -16,18 +16,25 @@ resources:
 
 stages:
 - stage: test
-  displayName: Test
+  displayName: Check the Code
   jobs:
-    - script: pip install -r .azure-pipelines/requirements.txt
-      displayName: Install requirements
     - template: templates/python-bandit.yml@azure-pipelines-templates
       parameters:
         srcDir: irelandie_*
-    - script: |
-        flake8 .
-      displayName: Lint Tests
-    - script: python manager.py test
-      displayName: Unit Tests
+    - job: Install Tools
+      steps:
+      - script: python -m pip install --upgrade pip setuptools wheel
+        displayName: Update Tools
+      - script: pip install -r .azure-pipelines/requirements.txt
+        displayName: Install requirements
+    - job: Lint
+      steps:
+      - script: flake8 .
+        displayName: PEP8 Checks
+    - job: Code Test
+      steps:
+      - script: python manager.py test
+        displayName: Unit Tests
 
 - stage: statics
   displayName: Static Files
