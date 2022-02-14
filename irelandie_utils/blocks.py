@@ -260,7 +260,7 @@ class PlaceBlock(blocks.PageChooserBlock):
 class RichTextBlock(blocks.RichTextBlock):
     class Meta:
         label = "RichTextBlock"
-        template = "patterns/molecules/streamfield/blocks/rich-text.html"
+        template = "patterns/molecules/streamfield/blocks/paragraph_block.html"
 
     pass
 
@@ -315,6 +315,10 @@ class YoutubeVideoBlock(blocks.StructBlock):
 
 
 class CustomVideoChooserBlock(VideoChooserBlock):
+    class Meta:
+        label = "Custom Video Chooser"
+        template = "patterns/molecules/streamfield/blocks/video_block.html"
+
     pass
 
 
@@ -327,7 +331,7 @@ class ArticleStoryBlock(blocks.StreamBlock):
     heading = HeadingBlock()
     contact_detail = ContactDetailBlock()
     image = ImageBlock()
-    rich_text = blocks.RichTextBlock(features=["h3", "blockquote", "bold", "link", "document-link", "ul"])
+    rich_text = RichTextBlock(features=["h3", "blockquote", "bold", "link", "document-link", "ul"])
     person = PersonBlock()
     place = PlaceBlock()
     document = DocumentBlock()
