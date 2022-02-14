@@ -1,5 +1,6 @@
-trigger:
-  - $(trigger)
+trigger: none
+
+pr: none
 
 pool:
   vmImage: ubuntu-latest
@@ -57,12 +58,13 @@ stages:
 
     - script: |
         cat .azure-pipelines/.env_pipeline > app/.env
-        AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY AWS_STATIC_BUCKET_NAME=$AWS_STATIC_BUCKET_NAME USE_S3=1 python manage.py collectstatic --noinput --clear
+        python manage.py collectstatic --noinput --clear
       displayName: Upload Static Files to S3
       env:
         AWS_ACCESS_KEY_ID: $(aws_access_key)
         AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
         AWS_STATIC_BUCKET_NAME: $(aws_static_bucket_name)
+        USE_S3: 1
 
 - stage: deploy
   displayName: Deploy
