@@ -29,7 +29,9 @@ stages:
     - script: pip install -r .azure-pipelines/requirements_base.txt
       displayName: Install Requirements
 
-    - script: python manage.py test
+    - script: |
+        cat .azure-pipelines/.env_pipeline > app/.env
+        python manage.py test
       displayName: Unit Tests
 
 - stage: statics
@@ -50,7 +52,9 @@ stages:
     - script: pip install -r .azure-pipelines/requirementsi_s3.txt
       displayName: Install Requirements
 
-    - script: AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY AWS_STATIC_BUCKET_NAME=$AWS_STATIC_BUCKET_NAME USE_S3=1 python manage.py collectstatic --noinput --clear
+    - script: |
+        cat .azure-pipelines/.env_pipeline > app/.env
+        AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY AWS_STATIC_BUCKET_NAME=$AWS_STATIC_BUCKET_NAME USE_S3=1 python manage.py collectstatic --noinput --clear
       displayName: Upload Static Files to S3
       env:
         AWS_ACCESS_KEY_ID: $(aws_access_key)
