@@ -25,11 +25,7 @@
                         {{ page.title }}
                     {% endif %}
                 </h1>
-
-                {% if page.secondary_title %}
-                    <h2 class="hero__secondary-title">{{ page.secondary_title }}</h2>
-                {% endif %}
-
+                
                 {% if page.summary or page.introduction %}
                     <p>{% firstof page.summary page.introduction %}</p>
                 {% endif %}

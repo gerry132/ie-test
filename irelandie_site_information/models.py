@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from wagtail.core.fields import StreamField
-from wagtail.core.models import Page, TranslatableMixin
 
 from irelandie_missions.models import MissionPage
 from irelandie_site_information.blocks import SiteInformationPageBlock

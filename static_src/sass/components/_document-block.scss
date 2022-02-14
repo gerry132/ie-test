@@ -1,0 +1,35 @@
+.document-block {
+    position: relative;
+    display: block;
+    border-bottom: 3px solid $color--primary;
+    background-color: $color--background-grey;
+    width: 100%;
+    padding: $grid;
+
+    @include media-query(small) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__icon {
+        position: relative;
+        fill: $color--off-black;
+        height: 25px;
+        width: 25px;
+        margin-right: 10px;
+    }
+
+    &__content {
+        @include font-size(m);
+        font-family: $font--secondary;
+    }
+
+    &__copy {
+        text-decoration: underline;
+    }
+
+    &__meta {
+        @include font-size(xs);
+    }
+}

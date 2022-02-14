@@ -1,0 +1,8 @@
+.streamfield {
+    position: relative;
+    margin-top: $grid;
+
+    @include media-query(medium) {
+        margin-bottom: 40px;
+    }
+}
