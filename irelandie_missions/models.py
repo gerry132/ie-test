@@ -28,6 +28,7 @@ class CountryGroupPageIndex(BasePage):
         StreamFieldPanel("override_primary_navigation")
     ]
 
+
 class CountryPage(HeroPage):
     template = "patterns/pages/missions/country_page.html"
 
@@ -76,6 +77,7 @@ class CountryPage(HeroPage):
         StreamFieldPanel("featured_stories"),
         StreamFieldPanel("featured_embassies"),
     ]
+
 
 class MissionPage(BasePage):
     template = "irelandie_assets/pages/mission.html"

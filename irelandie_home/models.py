@@ -104,7 +104,6 @@ class CampaignPage(HeroPage):
         null=True,
     )
 
-
     template = 'patterns/pages/home/campaign_page.html'
 
     parent_page_types = ['irelandie_home.HomePage']
@@ -150,7 +149,6 @@ class TopicPage(HeroPage):
         blank=True,
         null=True,
     )
-
 
     template = 'patterns/pages/home/topic_page.html'
 

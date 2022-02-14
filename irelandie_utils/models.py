@@ -16,7 +16,7 @@ from wagtail.admin.edit_handlers import (
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Orderable, Page, TranslatableMixin
+from wagtail.core.models import Orderable, Page
 from wagtail.core.query import PageQuerySet
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
@@ -500,6 +500,7 @@ class ArticlePage(BasePage):
                     ),
                 }
             )
+
     @property
     def override_related_articles(self):
         raise NotImplementedError
