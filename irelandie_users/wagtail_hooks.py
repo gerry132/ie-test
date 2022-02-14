@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-from django.conf import settings
-from django.urls import reverse
 
 from wagtail.admin.menu import MenuItem
-from wagtail.core import hooks
 
 
 # Register shortcut to access django-defender's blocked list view within django admin

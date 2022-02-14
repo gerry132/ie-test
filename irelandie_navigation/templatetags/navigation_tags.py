@@ -70,7 +70,7 @@ def footerlinks(context):
         "footerlinks": context["settings"]["irelandie_navigation"][
             "NavigationSettings"
         ].footer_links,
-        "request": request,
+        "request": request
     }
 
 
