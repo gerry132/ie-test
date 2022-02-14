@@ -13,6 +13,16 @@ BE - add in search_tags filter {% endcomment %}
             </li>
         {% endif %}
 
+        <li class="current" aria-current="page">
+            <span class="pagination__link pagination__link--active">
+            {{ paginator_page.number }} <span class="u-sr-only">of {{ paginator_page.paginator.num_pages }}</span>
+            </span>
+        </li>
+
+        {% comment %} 
+
+        TBD: once the search_tags filter is available
+        
         {% for page_number in paginator_page.paginator.page_range %}
             <li class="pagination__item">
                 {% if paginator_page.number == page_number %}
@@ -25,7 +35,7 @@ BE - add in search_tags filter {% endcomment %}
                     </a>
                 {% endif %}
             </li>
-        {% endfor %}
+        {% endfor %} {% endcomment %}
 
         {% if paginator_page.has_next %}
             <li>
