@@ -1,0 +1,9 @@
+# requirements need for out of container Azure pipeline command execution
+Django==3.2.10
+django-cors-headers==3.11.0
+django-pattern-library==0.6.0
+python-dotenv==0.17.0
+wagtail==2.15.1
+wagtail-accessibility==0.2.1
+wagtail-localize==1.0.1
+wagtailmedia==0.8.0
