@@ -9,6 +9,7 @@
     border: 0;
     box-shadow: none;
     padding: 10px 25px;
+    transition: background-color $transition;
 
     &:hover {
         cursor: pointer;
