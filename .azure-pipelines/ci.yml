@@ -58,13 +58,12 @@ stages:
 
     - script: |
         cat .azure-pipelines/.env_pipeline > app/.env
-        python manage.py collectstatic --noinput --clear
+        export USE_S3=1
+        python manage.py collectstatic --noinput
       displayName: Upload Static Files to S3
       env:
         AWS_ACCESS_KEY_ID: $(aws_access_key)
         AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
-        AWS_STATIC_BUCKET_NAME: $(aws_static_bucket_name)
-        USE_S3: 1
 
 - stage: deploy
   displayName: Deploy
