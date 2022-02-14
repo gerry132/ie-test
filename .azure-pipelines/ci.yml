@@ -14,53 +14,48 @@ resources:
     name: ogcio/azure-pipelines-templates
     ref: refs/heads/develop
 
-stages:
-- stage: setup
-  displayName: Install and Update Tools
-  jobs:
-    - job: InstallTools
-      steps:
-      - script: python -m pip install --upgrade pip setuptools wheel
-        displayName: Update Tools
-      - script: pip install -r .azure-pipelines/requirements.txt
-        displayName: Install Requirements
-
 - stage: test
   displayName: Check the Code
   jobs:
     - template: templates/python-bandit.yml@azure-pipelines-templates
       parameters:
         srcDir: irelandie_*
+
     - job: Lint
       steps:
-      - script: flake8 .
+      - script: |
+          python -m pip install flake8
+          flake8 .
         displayName: PEP8 Checks
-    - job: CodeTest
+
+    - job: Test
       steps:
+      - script: pip install -r .azure-pipelines/requirements_base.txt
+        displayName: Install Requirements
+
       - script: python manager.py test
         displayName: Unit Tests
 
 - stage: statics
   displayName: Static Files
   jobs:
-    - job: BuildStaticFiles
+    - job: StaticFiles
       steps:
       - task: NodeTool@0
         displayName: Installing Node.js
         inputs:
           versionSpec: 14
 
-      - task: Bash@3
+      - script: |
+          npm install
+          npm run build:prod
         displayName: Build Static Files
-        inputs:
-          targetType: inline
-          script: |
-            npm install
-            npm run build:prod
 
-    - job: UploadStaticFiles
-      steps:
+      - script: pip install -r .azure-pipelines/requirementsi_s3.txt
+        displayName: Install Requirements
+
       - script: AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY AWS_STATIC_BUCKET_NAME=$AWS_STATIC_BUCKET_NAME USE_S3=1 python manage.py collectstatic --noinput --clear
+        displayName: Upload Static Files to S3
         env:
           AWS_ACCESS_KEY_ID: $(aws_access_key)
           AWS_SECRET_ACCESS_KEY: $(aws_secret_key)

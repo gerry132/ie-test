@@ -1,0 +1,4 @@
+# requirements need for out of container Azure pipeline command execution
+-r requirements_base.txt
+django-storages==1.11.1
+wagtail-storages==0.0.6
