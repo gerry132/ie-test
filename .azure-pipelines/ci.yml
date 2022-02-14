@@ -29,7 +29,7 @@ stages:
     - script: pip install -r .azure-pipelines/requirements_base.txt
       displayName: Install Requirements
 
-    - script: python manager.py test
+    - script: python manage.py test
       displayName: Unit Tests
 
 - stage: statics
