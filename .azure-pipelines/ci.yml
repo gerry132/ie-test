@@ -18,10 +18,42 @@ stages:
 - stage: test
   displayName: Test
   jobs:
-  - template: templates/python-bandit.yml@azure-pipelines-templates
-    parameters:
+    - script: pip install -r .azure-pipelines/requirements.txt
+      displayName: Install requirements
+    - template: templates/python-bandit.yml@azure-pipelines-templates
+      parameters:
         srcDir: irelandie_*
+    - script: |
+        flake8 .
+      displayName: Lint Tests
+    - script: python manager.py test
+      displayName: Unit Tests
 
+- stage: statics
+  displayName: Static Files
+  jobs:
+    - job: Build Static Files
+      steps:
+      - task: NodeTool@0
+        displayName: Installing Node.js
+        inputs:
+          versionSpec: 14
+
+      - task: Bash@3
+        displayName: Build Static Files
+        inputs:
+          targetType: inline
+          script: |
+            npm install
+            npm run build:prod
+
+    - job: Upload Static Files
+      steps:
+      - script: AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY AWS_STATIC_BUCKET_NAME=$AWS_STATIC_BUCKET_NAME USE_S3=1 python manage.py collectstatic --noinput --clear
+        env:
+          AWS_ACCESS_KEY_ID: $(aws_access_key)
+          AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
+          AWS_STATIC_BUCKET_NAME: $(aws_static_bucket_name)
 
 - stage: deploy
   displayName: Deploy
@@ -47,19 +79,6 @@ stages:
           AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
           AWS_DEFAULT_REGION: $(aws_region)
 
-      - task: NodeTool@0
-        displayName: Installing Node.js
-        inputs:
-          versionSpec: 14
-
-      - task: Bash@3
-        displayName: Build Static Files
-        inputs:
-          targetType: inline
-          script: |
-            npm install
-            npm run build:prod
-
       - task: Bash@3
         displayName: Build and Push Image
         inputs:
@@ -73,29 +92,6 @@ stages:
           AWS_ACCESS_KEY_ID: $(aws_access_key)
           AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
           AWS_REGION: $(aws_region)
-          AWS_ACCOUNT_ID: $(aws_account_id)
-          IMAGE_NAME: $(image_name)
-          IMAGE_TAG: $(image_tag)
-
-      - task: Bash@3
-        displayName: Upload Static Files to S3
-        inputs:
-          targetType: inline
-          script: |
-            docker run \
-            -e "AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)" \
-            -e "AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)" \
-            -e "AWS_STATIC_BUCKET_NAME=$(AWS_STATIC_BUCKET_NAME)" \
-            -e "USE_S3=1" \
-            -e "SECRET_KEY=$(base64 /dev/urandom | head -c50)" \
-            -e "ALLOWED_HOSTS=*" \
-            -e "CORS_ALLOW_ALL_ORIGINS=True" \
-            --entrypoint python3 "$(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com/$(IMAGE_NAME):$(IMAGE_TAG)" \
-            manage.py collectstatic --noinput --clear
-        env:
-          AWS_ACCESS_KEY_ID: $(aws_access_key)
-          AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
-          AWS_STATIC_BUCKET_NAME: $(aws_static_bucket_name)
           AWS_ACCOUNT_ID: $(aws_account_id)
           IMAGE_NAME: $(image_name)
           IMAGE_TAG: $(image_tag)
