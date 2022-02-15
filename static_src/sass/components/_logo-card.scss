@@ -7,16 +7,21 @@
     // Transparent border, so cards are visible in high-contrast mode with no background.
     border: 1px solid transparent;
     overflow: hidden;
-    max-width: 400px;
     transition: box-shadow $transition;
     position: relative;
+
+    @include media-query(medium) {
+        max-width: 400px;
+    }
 
     &:hover,
     &:focus {
         cursor: pointer;
 
-        #{$root}__logo-container {
-            opacity: 0;
+        @include media-query(medium) {
+            #{$root}__logo-container {
+                opacity: 0;
+            }
         }
     }
 
@@ -26,22 +31,32 @@
 
     &__logo-container {
         background-color: $color--white;
-        position: absolute;
-        display: flex;
-        align-items: center;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        opacity: 1;
-        transition: opacity $transition;
+        overflow: hidden;
+        position: relative;
+
+        @include media-query(medium) {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 1;
+            transition: opacity $transition;
+        }
     }
 
     &__logo {
         position: relative;
-        height: auto;
-        margin: 0 auto;
-        width: 250px;
+        padding: $grid $grid 0 $grid;
+
+        @include media-query(medium) {
+            height: auto;
+            margin: 0 auto;
+            width: 250px;
+            padding: 0;
+        }
     }
 
     &__content {
