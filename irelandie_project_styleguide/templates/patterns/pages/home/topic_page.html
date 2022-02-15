@@ -1,12 +1,22 @@
 {% extends "patterns/hero_page.html" %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags i18n %}
 
 {% block main %}
     <div class="wrapper wrapper--large wrapper--padding">
         {% include_block page.body %}
 
-        {% for article in page.featured_articles %}
-            {% include "patterns/molecules/topics/featured-article.html" with article=article %}
-        {% endfor %}
+        <div class="intro">
+            <h2 class="heading heading--3">
+                Business & Innovation
+            </h2>
+        </div>
+
+        {% if page.featured_articles %}
+            <div class="featured-blocks featured-blocks--three">
+                {% for article in page.featured_articles %}
+                    {% include "patterns/molecules/topics/featured-article.html" with article=article %}
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

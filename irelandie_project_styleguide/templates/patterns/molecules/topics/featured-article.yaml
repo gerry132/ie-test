@@ -12,6 +12,9 @@ tags:
     article.value:
       raw: '#'
   image:
-    article.value.specific.listing_image fill-450x300:
+    article.value.specific.listing_image width-500 class="card__image":
       raw: |
-        <img src="https://source.unsplash.com/450x300?forest" width="450" height="300" alt="Some alt">
+        <img src="https://source.unsplash.com/450x300?forest" width="450" height="300" alt="Some alt" class="card__image">
+    article.value.specific.hero_image width-500 class="card__image":
+      raw: |
+        <img src="https://source.unsplash.com/450x300?forest" width="450" height="300" alt="Some alt" class="card__image">
