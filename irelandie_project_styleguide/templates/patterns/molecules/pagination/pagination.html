@@ -22,8 +22,8 @@ BE - add in search_tags filter {% endcomment %}
         {% comment %} 
 
         TBD: once the search_tags filter is available
-        
-        {% for page_number in paginator_page.paginator.page_range %}
+
+        {% for page_number in paginator_page.paginator.page_range|slice_pagination:paginator_page.number %}
             <li class="pagination__item">
                 {% if paginator_page.number == page_number %}
                     <a href="#" class="pagination__link pagination__link--active" aria-label="Current Page, Page {{ page_number }}" aria-current="page">
