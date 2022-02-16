@@ -424,7 +424,8 @@ if "RECAPTCHA_PUBLIC_KEY" in os.environ and "RECAPTCHA_PRIVATE_KEY" in os.enviro
     RECAPTCHA_PUBLIC_KEY = os.environ["RECAPTCHA_PUBLIC_KEY"]
     RECAPTCHA_PRIVATE_KEY = os.environ["RECAPTCHA_PRIVATE_KEY"]
 
-#
+# To avoid failing github actions
+SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
 
 if USE_CACHE is True:
     SESSION_ENGINE = "django.contrib.sessions.backends.cache"
