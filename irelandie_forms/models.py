@@ -26,8 +26,6 @@ class FormField(AbstractFormField):
 # Never cache form pages since they include CSRF tokens.
 @method_decorator(never_cache, name="serve")
 class FormPage(WagtailCaptchaEmailForm, BasePage):
-    # The WagtailCaptchaEmailForm may need to be added back in later on.
-    # https://dev.azure.com/OGCIO-Digital-Services/Ireland.ie/_boards/board/t/Ireland.ie%20Team/Stories/?workitem=1923
     template = "patterns/pages/forms/form_page.html"
     landing_page_template = "patterns/pages/forms/form_page_landing.html"
 
