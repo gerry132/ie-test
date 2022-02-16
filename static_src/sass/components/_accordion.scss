@@ -44,6 +44,7 @@
     }
 
     &__title {
+        @include font-size(m);
         margin: 0;
         padding: 0;
 

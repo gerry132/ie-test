@@ -1,7 +1,80 @@
+{% extends "patterns/base_page.html" %}
 {% load wagtailcore_tags %}
+
 {% wagtail_site as current_site %}
-<h1>{{ page.title }}</h1>
-<p>{{ page.description }}</p>
+
+{% block content %}
+    <div class="section section--padding section--grey">
+        <div class="wrapper wrapper--large">
+            <div class="intro">
+                <div class="container">
+                    <h2 class="intro__title">{{ page.title }}</h1>
+                    <p>{{ page.introduction }}</p>
+                </div>
+            </div>
+
+            <div class="accordion__container">
+                <div class="accordion" data-accordion>
+                    <h2 class="accordion__header">
+                        <button
+                            id="missions"
+                            class="accordion__button"
+                            data-accordion-question
+                            aria-controls="missions-list"
+                            aria-expanded="false">
+                            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="accordion__icon" %}
+                            <span class="accordion__title">
+                                Missions
+                            </span>
+                        </button>
+                    </h2>
+                    <div
+                        id="missions-list"
+                        data-accordion-answer
+                        class="accordion__content"
+                        aria-labelledby="missions"
+                        aria-hidden="true">
+                        {% for mission_tag in page.mission_tags %}
+                            {{ mission_tag.title }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion__container">
+                <div class="accordion" data-accordion>
+                    <h2 class="accordion__header">
+                        <button
+                            id="countries"
+                            class="accordion__button"
+                            data-accordion-question
+                            aria-controls="countries-list"
+                            aria-expanded="false">
+                            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="accordion__icon" %}
+                            <span class="accordion__title">
+                                Countries
+                            </span>
+                        </button>
+                    </h2>
+                    <div
+                        id="countries-list"
+                        data-accordion-answer
+                        class="accordion__content"
+                        aria-labelledby="countries"
+                        aria-hidden="true">
+                        {% for mission_tag in page.mission_tags %}
+                            {{ mission_tag.title }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% comment %}
+
+TODO: Phase 2 search & filtering
 
 <form>
     {% csrf_token %}
@@ -65,4 +138,4 @@ document.addEventListener('DOMContentLoaded', function(){
   xhttp.open("GET", "{{ current_site.full_url }}/api/v2/pages/?type=irelandie_missions.MissionPage&fields=title&locale={{ page.locale.language_code }}&mission=Mission page", true);
   xhttp.send();
 }, false);
-</script>
+</script> {% endcomment %}
