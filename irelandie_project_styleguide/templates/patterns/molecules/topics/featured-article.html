@@ -1,22 +1,26 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 
-<a href="{% pageurl article.value %}" class="card">
+<a href="{% pageurl article %}" class="card">
     <div class="card__image-container">
-        {% if article.value.specific.listing_image %}
-            {% image article.value.specific.listing_image width-500 class="card__image" %}
-        {% elif article.value.specific.hero_image %}
-            {% image article.value.specific.hero_image width-500 class="card__image" %}
+        {% if article.specific.listing_image %}
+            {% image article.specific.listing_image width-500 class="card__image" %}
+        {% elif article.specific.hero_image %}
+            {% image article.specific.hero_image width-500 class="card__image" %}
         {% endif %}
     </div>
 
     <div class="card__content">
-        <h3 class="card__title">
-            {{ article.value.title }}
-        </h3>
+        {% if article.specific.listing_title %}
+        <h3 class="card__title">{{ article.specific.listing_title }}</h3>
+        {% else %}
+        <h3 class="card__title">{{ article.title }}</h3>
+        {% endif %}
 
-        <p class="card__summary">
-            {{ article.value.specific.introduction }}
-        </p>
+        {% if article.specific.listing_summary %}
+        <p class="card__summary">{{ article.specific.listing_summary }}</p>
+        {% else %}
+        <p class="card__summary">{{ article.specific.introduction }}</p>
+        {% endif %}
 
         <span class="card__link">
             {% trans 'Read story' %}
