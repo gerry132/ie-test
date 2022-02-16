@@ -2,49 +2,25 @@
 {% load wagtailcore_tags i18n %}
 
 {% block main %}
-        <div class="wrapper wrapper--large wrapper--padding">   
-            {% include_block page.body %}
-        </div>
+    <div class="wrapper wrapper--large wrapper--padding">   
+        {% include_block page.body %}
+    </div>
 
-        <div class="section section--padding">
-            <div class="wrapper wrapper--large wrapper--padding">
-                <div class="intro">
-                    <h2 class="intro__title">Business & Innovation</h2>
-                    <div class="intro__description">
-                        We are an educated, creative and resourceful people, recognised for our adaptability when faced with new challenges. 
+    <div class="section section--padding">
+        {% include_block page.featured_articles %}
+    </div>
 
-                        Our dynamic business environment and multi-cultural population have made Ireland the fastest growing economy in the European Union and home to global leaders across an array of sectors.
-                    </div>
-                </div>
+    <div class="wrapper wrapper--large wrapper--padding">
+        {{ page.articles }}
+    </div>
 
-                {% if page.featured_articles %}
-                    <div class="featured-blocks featured-blocks--three">
-                        {% for article in page.featured_articles %}
-                            {% include "patterns/molecules/topics/featured-article.html" with article=article %}
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-        </div>
+    <div class="wrapper wrapper--large wrapper--padding">
+        {% include_block page.embeds %}
+    </div>
 
+    <div class="section section--padding section--grey">
         <div class="wrapper wrapper--large wrapper--padding">
-            {% include "patterns/molecules/streamfield/blocks/youtube_block.html" %}
+            {% include_block page.logo_cards %}
         </div>
-
-        <div class="section section--padding section--grey">
-            <div class="wrapper wrapper--large wrapper--padding">
-                <div class="intro">
-                    <h2 class="intro__title">Links</h2>
-                    <div class="intro__description">
-                        Lorem ipsum dolor sit amet, consectetur adipscing elit, sed do eiusmod tempor incididunt ut labore et dolore magina aliquo. Lorem ipsum dolor sit amet, consectetur adipscing.
-                    </div>
-                </div>
-
-                <div class="logo-cards featured-blocks featured-blocks--four">
-                    {% for card in page.logo_cards %}
-                        {% include "patterns/molecules/logo-card/logo-card.html" with card=card %}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+    </div>
 {% endblock %}
