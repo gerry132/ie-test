@@ -476,6 +476,23 @@ class ArticlePage(BasePage):
         StreamFieldPanel("override_related_articles"),
     ]
 
+    search_fields = BasePage.search_fields + [
+        index.SearchField("introduction"),
+        index.SearchField("body"),
+    ]
+
+    @cached_property
+    def related_articles(self) -> PageQuerySet:
+        """
+        Return a `PageQuerySet` of items related to this page via the
+        `PageRelatedArticle` through model, and are suitable for display.
+        The result is ordered to match that specified by editors using
+        the 'page_related_articles' `InlinePanel`.
+        """
+
+        # NOTE: avoiding values_list() here for compatibility with preview
+        # See:
+
     def clean(self):
         if not self.hero_image and not self.hero_video:
             raise ValidationError(

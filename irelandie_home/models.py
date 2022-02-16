@@ -5,7 +5,7 @@ from wagtail.core.fields import StreamField
 
 from irelandie_utils import blocks
 from irelandie_utils.models import HeroPage
-
+from wagtail.search import index
 
 class HomePage(HeroPage):
 
@@ -158,4 +158,8 @@ class TopicPage(HeroPage):
     content_panels = HeroPage.content_panels + [
         StreamFieldPanel('body'),
         StreamFieldPanel('featured_articles'),
+    ]
+
+    search_fields = HeroPage.search_fields + [
+        index.SearchField('body'),
     ]
