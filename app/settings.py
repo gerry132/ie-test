@@ -184,7 +184,7 @@ WSGI_APPLICATION = "app.wsgi.application"
 
 
 # In production, email is handled with Amazon SES
-if os.environ["EMAIL_BACKEND"]:
+if "EMAIL_BACKEND" in os.environ:
     EMAIL_BACKEND = os.environ["EMAIL_BACKEND"]
 else:
     EMAIL_BACKEND = "django_ses.SESBackend"
