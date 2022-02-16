@@ -1,9 +1,11 @@
 .accordion {
     $root: &;
+    max-width: $wrapper--small;
+    margin-bottom: $grid;
 
     &.is-open {
         #{$root}__icon {
-            transform: rotate(90deg);
+            transform: rotate(180deg);
         }
 
         #{$root}__button {
@@ -16,19 +18,21 @@
     }
 
     &__button {
-        background: none;
+        background-color: $color--primary;
+        border-radius: $border-radius;
         border: 0;
         border-bottom: 1px solid $color--border;
+        color: $color--white;
         display: flex;
         align-items: center;
-        padding: 10px 5px;
+        justify-content: space-between;
+        padding: 10px $grid;
         transition: color 0.2s ease;
         text-decoration: none;
         width: 100%;
 
         &:hover {
             cursor: pointer;
-            color: $color--off-black;
         }
 
         /* stylelint-disable */
@@ -45,12 +49,13 @@
 
     &__title {
         @include font-size(m);
+        font-weight: $weight--bold;
+        line-height: 2;
         margin: 0;
         padding: 0;
 
         #{$root}__button:focus & {
-            background-color: $color--off-black;
-            color: $color--white;
+            text-decoration: underline;
         }
     }
 
@@ -68,7 +73,8 @@
 
     &__content {
         display: none;
-        margin-bottom: 10px;
+        margin-bottom: 40px;
         margin-top: 15px;
+        padding: 0 $grid;
     }
 }

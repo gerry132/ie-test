@@ -5,11 +5,11 @@
 
 {% block content %}
     <div class="section section--padding section--grey">
-        <div class="wrapper wrapper--large">
+        <div class="wrapper wrapper--large wrapper--padding">
             <div class="intro">
                 <div class="container">
-                    <h2 class="intro__title">{{ page.title }}</h1>
-                    <p>{{ page.introduction }}</p>
+                    <h1 class="intro__title">{{ page.title }}</h1>
+                    <p class="intro__description">{{ page.introduction }}</p>
                 </div>
             </div>
 
@@ -22,10 +22,10 @@
                             data-accordion-question
                             aria-controls="missions-list"
                             aria-expanded="false">
-                            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="accordion__icon" %}
                             <span class="accordion__title">
                                 Missions
                             </span>
+                            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="accordion__icon" %}
                         </button>
                     </h2>
                     <div
@@ -34,9 +34,12 @@
                         class="accordion__content"
                         aria-labelledby="missions"
                         aria-hidden="true">
-                        {% for mission_tag in page.mission_tags %}
-                            {{ mission_tag.title }}
-                        {% endfor %}
+                        <ul>
+                            {% comment %} TODO: BE - Add in links to each mission page {% endcomment %}
+                            {% for mission_tag in page.mission_tags %}
+                                <li>{{ mission_tag.title }}</li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -50,10 +53,10 @@
                             data-accordion-question
                             aria-controls="countries-list"
                             aria-expanded="false">
-                            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="accordion__icon" %}
                             <span class="accordion__title">
                                 Countries
                             </span>
+                            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="accordion__icon" %}
                         </button>
                     </h2>
                     <div
@@ -62,9 +65,12 @@
                         class="accordion__content"
                         aria-labelledby="countries"
                         aria-hidden="true">
-                        {% for mission_tag in page.mission_tags %}
-                            {{ mission_tag.title }}
-                        {% endfor %}
+                        <ul>
+                            {% comment %} TODO: BE - Add in links to each country page {% endcomment %}
+                            {% for country_tag in page.country_tags %}
+                                <li>{{ country_tag.title }}</li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
             </div>
