@@ -17,8 +17,9 @@
         <div class="wrapper wrapper--large wrapper--padding">
             <form action="{% url 'search' %}" method="get" role="search">
                 <div class="search-field">
-                    <input class="search-field__input" type="text" placeholder="Search…" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
-                    <button class="button search-field__submit" type="submit" aria-label="Search website">
+                    <label class="u-sr-only" for="search-results-input">{% trans 'Search this website' %}</label>
+                    <input class="search-field__input" id="search-results-input" type="text" placeholder="Search…" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
+                    <button class="button search-field__submit" type="submit" aria-label="{% trans 'Submit Search' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="magnifying-glass" classname="search-field__submit-icon" %}
                     </button>
                 </div>

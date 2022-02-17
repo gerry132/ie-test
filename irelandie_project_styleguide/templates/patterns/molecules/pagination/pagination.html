@@ -12,8 +12,8 @@
         {% endif %}
 
         <li class="current" aria-current="page">
-            <a href="{% querystring_modify page=page %}" class="pagination__link pagination__link--active" aria-label="Current Page, Page {{ page_number }}" aria-current="page">
-                {{ paginator_page.number }} <span class="u-sr-only">of {{ paginator_page.paginator.num_pages }}</span>
+            <a href="{% querystring_modify page=page %}" class="pagination__link pagination__link--active" aria-label="Current Page, Page {{ paginator_page.number }} of {{ paginator_page.paginator.num_pages }} pages" aria-current="page">
+                {{ paginator_page.number }}
             </a>
         </li>
 
