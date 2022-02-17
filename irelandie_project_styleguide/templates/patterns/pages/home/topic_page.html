@@ -2,9 +2,11 @@
 {% load wagtailcore_tags %}
 
 {% block main %}
-    {% include_block page.body %}
+    <div class="wrapper wrapper--large wrapper--padding">
+        {% include_block page.body %}
 
-    {% for article in page.featured_articles %}
-      {% include "patterns/molecules/topics/featured-article.html" with article=article %}
-    {% endfor %}
+        {% for article in page.featured_articles %}
+            {% include "patterns/molecules/topics/featured-article.html" with article=article %}
+        {% endfor %}
+    </div>
 {% endblock %}
