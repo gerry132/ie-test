@@ -4,7 +4,6 @@ from wagtail.core.fields import StreamField
 
 from irelandie_utils import blocks
 from irelandie_utils.models import HeroPage
-from wagtail.search import index
 
 
 class HomePage(HeroPage):
@@ -155,7 +154,7 @@ class TopicPage(HeroPage):
     )
 
     articles = StreamField(
-        [("articles", blocks.ArtilceCardsBlock())],
+        [("articles", blocks.ArticleCardsBlock())],
         blank=True,
         max_num=1,
     )

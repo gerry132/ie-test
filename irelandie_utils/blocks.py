@@ -326,7 +326,7 @@ class BaseSectionBlock(blocks.StructBlock):
     body = blocks.StreamBlock([], required=False)
 
 
-class CardBlock(blocks.StructBlock):
+class LogoCardBlock(blocks.StructBlock):
     image = ImageChooserBlock()
     title = blocks.CharBlock()
     summary = blocks.TextBlock()
@@ -341,7 +341,7 @@ class CardBlock(blocks.StructBlock):
 class LogoCardsBlock(blocks.StructBlock):
     title = blocks.CharBlock()
     summary = blocks.TextBlock()
-    cards = blocks.StreamBlock([("card", CardBlock())])
+    cards = blocks.StreamBlock([("card", LogoCardBlock())])
 
     class Meta:
         icon = "table"
@@ -349,7 +349,7 @@ class LogoCardsBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/logo_cards.html"
 
 
-class ArtilceCardBlock(blocks.StructBlock):
+class ArticleCardBlock(blocks.StructBlock):
     image = ImageChooserBlock()
     title = blocks.CharBlock()
     summary = blocks.TextBlock()
@@ -361,10 +361,10 @@ class ArtilceCardBlock(blocks.StructBlock):
         template = "patterns/molecules/article-card/article-card.html"
 
 
-class ArtilceCardsBlock(blocks.StructBlock):
+class ArticleCardsBlock(blocks.StructBlock):
     title = blocks.CharBlock()
     summary = blocks.TextBlock()
-    articles = blocks.StreamBlock([("article", ArtilceCardBlock())])
+    articles = blocks.StreamBlock([("article", ArticleCardBlock())])
 
     class Meta:
         icon = "table"
