@@ -1,6 +1,8 @@
 context:
   value:
+    image: True
     link_title: Stub content
+    url: /
 
 tags:
   image:
