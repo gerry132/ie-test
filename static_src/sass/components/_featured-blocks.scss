@@ -3,27 +3,48 @@
     margin: 30px 0;
 
     @include media-query(medium) {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(calc(50% - 30px), 1fr));
-        grid-gap: $grid;
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-wrap: wrap;
     }
 
-    &--three {
+    > * {
         @include media-query(medium) {
-            grid-template-columns: repeat(
-                auto-fit,
-                minmax(calc(33.33% - 30px), 1fr)
-            );
+            margin: 0 $grid;
+            flex-basis: calc(50% - 30px);
+
+            &--three {
+                flex-basis: calc(33.33% - 30px);
+            }
+
+            &--four {
+                flex-basis: calc(25% - 30px);
+            }
         }
     }
 
-    &--four {
+    @supports (display: grid) {
         @include media-query(medium) {
+            display: grid;
             grid-template-columns: repeat(
                 auto-fit,
-                minmax(calc(25% - 30px), 1fr)
+                minmax(calc(50% - 30px), 1fr)
             );
+            grid-gap: $grid;
+            grid-template-columns: 1fr;
+
+            &--three {
+                grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(calc(33.33% - 30px), 1fr)
+                );
+            }
+
+            &--four {
+                grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(calc(25% - 30px), 1fr)
+                );
+            }
         }
     }
 }

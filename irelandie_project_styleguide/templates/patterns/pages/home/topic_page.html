@@ -2,25 +2,35 @@
 {% load wagtailcore_tags i18n %}
 
 {% block main %}
-    <div class="wrapper wrapper--large wrapper--padding">   
+    <div class="wrapper wrapper--large wrapper--padding">
         {% include_block page.body %}
     </div>
 
-    <div class="section section--padding">
-        {% include_block page.featured_articles %}
-    </div>
-
-    <div class="wrapper wrapper--large wrapper--padding">
-        {{ page.articles }}
-    </div>
-
-    <div class="wrapper wrapper--large wrapper--padding">
-        {% include_block page.embeds %}
-    </div>
-
-    <div class="section section--padding section--grey">
-        <div class="wrapper wrapper--large wrapper--padding">
-            {% include_block page.logo_cards %}
+    {% if page.featured_articles %}
+        <div class="section section--padding">
+            {% include_block page.featured_articles %}
         </div>
-    </div>
+    {% endif %}
+
+    {% if page.articles %}
+        <div class="wrapper wrapper--large wrapper--padding">
+            {{ page.articles }}
+        </div>
+    {% endif %}
+
+    {% if page.embeds %}
+        <div class="wrapper wrapper--large wrapper--padding">
+            <div class="section section--padding">
+                {% include_block page.embeds %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if page.logo_cards %}
+        <div class="section section--padding section--grey">
+            <div class="wrapper wrapper--large wrapper--padding">
+                {% include_block page.logo_cards %}
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

@@ -49,7 +49,7 @@
 
     &__logo {
         position: relative;
-        padding: $grid $grid 0 $grid;
+        padding: 30px $grid 0 30px;
 
         @include media-query(medium) {
             height: auto;
