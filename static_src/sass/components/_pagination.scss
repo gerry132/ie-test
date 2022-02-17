@@ -1,7 +1,12 @@
 .pagination {
     position: relative;
-    display: inline-flex;
-    margin: 0 auto;
+    text-align: center;
+
+    &__list {
+        position: relative;
+        display: inline-flex;
+        margin: 0 auto;
+    }
 
     &__icon {
         margin-top: 7px;
@@ -32,8 +37,8 @@
         transition: background-color $transition;
 
         &:hover {
-            background-color: darken($color--white, 20);
-            color: $color--primary;
+            background-color: rgba($color--primary, 0.75);
+            color: $color--white;
         }
 
         &--active {

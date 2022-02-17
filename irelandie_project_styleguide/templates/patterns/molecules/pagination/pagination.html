@@ -1,45 +1,28 @@
-{% load querystring_modify %}{% if paginator_page.paginator.num_pages > 1 %}
+{% load querystring_modify static wagtailcore_tags wagtailsearchpromotions_tags i18n %}
+{% if paginator_page.paginator.num_pages > 1 %}
 
 {% comment %} TODO:
 
 BE - add in search_tags filter {% endcomment %}
-<nav aria-label="Pagination">
-    <ul class="pagination">
+<nav aria-label="Pagination" class="pagination">
+    <ul class="pagination__list">
         {% if paginator_page.has_previous %}
             <li>
-                <a href="{% querystring_modify page=paginator_page.previous_page_number %}" class="previous pagination__link">
+                <a href="{% querystring_modify page=paginator_page.previous_page_number %}" class="previous pagination__link"  rel="prev" aria-label="Goto previous page">
                     {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="pagination__icon pagination__icon--prev" %}
                 </a>
             </li>
         {% endif %}
 
         <li class="current" aria-current="page">
-            <span class="pagination__link pagination__link--active">
-            {{ paginator_page.number }} <span class="u-sr-only">of {{ paginator_page.paginator.num_pages }}</span>
-            </span>
+            <a href="{% querystring_modify page=page %}" class="pagination__link pagination__link--active" aria-label="Current Page, Page {{ page_number }}" aria-current="page">
+                {{ paginator_page.number }} <span class="u-sr-only">of {{ paginator_page.paginator.num_pages }}</span>
+            </a>
         </li>
-
-        {% comment %} 
-
-        TBD: once the search_tags filter is available
-
-        {% for page_number in paginator_page.paginator.page_range|slice_pagination:paginator_page.number %}
-            <li class="pagination__item">
-                {% if paginator_page.number == page_number %}
-                    <a href="#" class="pagination__link pagination__link--active" aria-label="Current Page, Page {{ page_number }}" aria-current="page">
-                        {{ page_number }}
-                    </a>
-                {% else %}
-                    <a class="pagination__link" href="{% querystring_modify paginator_page.page %}" aria-label="Goto Page {{ page_number }}">
-                        {{ page_number }}
-                    </a>
-                {% endif %}
-            </li>
-        {% endfor %} {% endcomment %}
 
         {% if paginator_page.has_next %}
             <li>
-                <a href="{% querystring_modify page=paginator_page.next_page_number %}" class="next pagination__link">
+                <a href="{% querystring_modify page=paginator_page.next_page_number %}" class="next pagination__link" rel="next" aria-label="Goto next page">
                     {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="pagination__icon pagination__icon--next" %}
                 </a>
             </li>

@@ -40,26 +40,26 @@
 
             <div class="search-results">
 
-                    {% with count=search_results.paginator.count %}
-                        <div class="search-results__count">
-                        {% trans 'Results' %} {{ search_results.start_index }}-{{ search_results.end_index }} of {{ count }} search results for <span class="search-results__query">{{ search_query }}</span>.
-                        </div>
-                    {% endwith %}
+                {% with count=search_results.paginator.count %}
+                    <div class="search-results__count">
+                    {% trans 'Results' %} {{ search_results.start_index }}-{{ search_results.end_index }} of {{ count }} search results for <span class="search-results__query">{{ search_query }}</span>.
+                    </div>
+                {% endwith %}
 
-                    <ul>
-                        {% for result in search_results %}
-                            <li>
-                                {% include "patterns/molecules/search-result/search-result.html" with result=result.specific %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-
-                    {% include "patterns/molecules/pagination/pagination.html" with paginator_page=search_results %}
+                <ul>
+                    {% for result in search_results %}
+                        <li>
+                            {% include "patterns/molecules/search-result/search-result.html" with result=result.specific %}
+                        </li>
+                    {% endfor %}
+                </ul>
 
                 {% elif search_query and not search_picks %}
                     {% trans 'No results found.' %}
                 {% endif %}
             </div>
+
+            {% include "patterns/molecules/pagination/pagination.html" with paginator_page=search_results %}
         </div>
     </div>
 
