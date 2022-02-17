@@ -11,10 +11,10 @@ from wagtail.admin.edit_handlers import (
     InlinePanel,
     MultiFieldPanel,
 )
-from wagtail.contrib.forms.models import AbstractFormField, AbstractEmailForm
+from wagtail.contrib.forms.models import AbstractFormField
 from wagtail.core.fields import RichTextField
 from wagtail.search import index
-# from wagtailcaptcha.models import WagtailCaptchaEmailForm
+from wagtailcaptcha.models import WagtailCaptchaEmailForm
 
 from irelandie_utils.models import BasePage
 
@@ -25,9 +25,7 @@ class FormField(AbstractFormField):
 
 # Never cache form pages since they include CSRF tokens.
 @method_decorator(never_cache, name="serve")
-class FormPage(AbstractEmailForm, BasePage):
-    # The WagtailCaptchaEmailForm may need to be added back in later on.
-    # https://dev.azure.com/OGCIO-Digital-Services/Ireland.ie/_boards/board/t/Ireland.ie%20Team/Stories/?workitem=1923
+class FormPage(WagtailCaptchaEmailForm, BasePage):
     template = "patterns/pages/forms/form_page.html"
     landing_page_template = "patterns/pages/forms/form_page_landing.html"
 
