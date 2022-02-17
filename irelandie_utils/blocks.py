@@ -335,7 +335,7 @@ class LogoCardBlock(blocks.StructBlock):
     class Meta:
         icon = "image"
         label = "Logo Card"
-        template = "patterns/molecules/logo-card/logo-card.html"
+        template = "patterns/molecules/logo_card/logo_card.html"
 
 
 class LogoCardsBlock(blocks.StructBlock):
@@ -358,7 +358,7 @@ class ArticleCardBlock(blocks.StructBlock):
     class Meta:
         icon = "image"
         label = "Article Card"
-        template = "patterns/molecules/article-card/article-card.html"
+        template = "patterns/molecules/article_card/article_card.html"
 
 
 class ArticleCardsBlock(blocks.StructBlock):
