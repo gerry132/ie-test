@@ -93,6 +93,7 @@ class MissionPage(BasePage):
         "irelandie_places.PlacePageIndex",
         "irelandie_publications.PublicationPageIndex",
         "irelandie_site_information.SiteInformationPageIndex",
+        "irelandie_speeches.SpeechPageIndex",
     ]
 
 
