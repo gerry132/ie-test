@@ -6,6 +6,7 @@
     background-position: 100% 100%;
     position: relative;
     overflow: hidden;
+    z-index: 2;
 
     &::before {
         content: '';
@@ -45,6 +46,7 @@
 
         @include media-query(medium) {
             max-width: 40%;
+            min-height: 450px;
         }
     }
 

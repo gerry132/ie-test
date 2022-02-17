@@ -8,7 +8,7 @@
             {% pageurl value.pinned_story_hero.page as href %}
                 <a href="{{ href }}" class="pinned-stories__featured-content-wrapper" style="background-image:url({{ featured_image.url }});" aria-labelledby="featured-story-title">
             {% else %}
-                <div class="pinned-stories__featured-content-wrapper" style="background-image:url({{ featured_image }});">
+                <div class="pinned-stories__featured-content-wrapper" style="background-image:url({{ featured_image.url }});">
             {% endif %}
                 <div class="pinned-stories__featured-content">
                     <h3 class="pinned-stories__featured-title heading--3" id="featured-story-title">{{ value.pinned_story_hero.title }}</h3>
