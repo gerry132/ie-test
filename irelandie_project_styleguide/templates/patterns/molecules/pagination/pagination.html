@@ -1,9 +1,6 @@
 {% load querystring_modify static wagtailcore_tags wagtailsearchpromotions_tags i18n %}
 {% if paginator_page.paginator.num_pages > 1 %}
 
-{% comment %} TODO:
-
-BE - add in search_tags filter {% endcomment %}
 <nav aria-label="Pagination" class="pagination">
     <ul class="pagination__list">
         {% if paginator_page.has_previous %}
