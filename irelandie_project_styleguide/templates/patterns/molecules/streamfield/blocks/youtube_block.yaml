@@ -1,3 +1,4 @@
 context:
   value:
     embedding_url: https://www.youtube.com/embed/8EAxHFhBteY
+    slido_embed: <iframe src="https://app.sli.do/event/258WkB7e7QvVWceutA7ok9" height="100%" width="100%" frameBorder="0" style="min-height: 560px;" title="Example Slido"></iframe>
