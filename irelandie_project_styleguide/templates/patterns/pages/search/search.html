@@ -2,51 +2,65 @@
 {% load static wagtailcore_tags wagtailsearchpromotions_tags i18n %}
 
 {% block body_class %}template-searchresults{% endblock %}
-
+     
 {% block title %}
-  {% if search_query %}
-    {% trans 'Search results for' %} &ldquo;{{ search_query }}&rdquo;
-  {% else %}
-    {% trans 'Search' %}
-  {% endif %}
+    {% if search_query %}
+        {% trans 'Search results for' %} &ldquo;{{ search_query }}&rdquo;
+    {% else %}
+        {% trans 'Search' %}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
 
-    <form action="{% url 'search' %}" method="get" role="search">
-        <input type="text" placeholder="Search…" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
-        <input type="submit" value="Search">
-    </form>
+    <div class="section section--padding section--grey">
+        <div class="wrapper wrapper--large wrapper--padding">
+            <form action="{% url 'search' %}" method="get" role="search">
+                <div class="search-field">
+                    <input class="search-field__input" type="text" placeholder="Search…" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
+                    <button class="button search-field__submit" type="submit" aria-label="Search website">
+                        {% include "patterns/atoms/icons/icon.html" with name="magnifying-glass" classname="search-field__submit-icon" %}
+                    </button>
+                </div>
+            </form>
 
-    {% get_search_promotions search_query as search_picks %}
-    {% if search_picks %}
-         <ul>
-            {% for pick in search_picks %}
-                <li>
-                    {% include "patterns/molecules/search-result/search-result.html" with result=pick.page.specific %}
-                </li>
-             {% endfor %}
-         </ul>
-    {% endif %}
+            {% get_search_promotions search_query as search_picks %}
 
-    {% if search_results %}
+            {% if search_picks %}
+                <ul>
+                    {% for pick in search_picks %}
+                        <li>
+                            {% include "patterns/molecules/search-result/search-result.html" with result=pick.page.specific %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
-        {% with count=search_results.paginator.count %}
-            {% trans 'Results' %} ({{ count }})
-        {% endwith %}
+            {% if search_results %}
 
-        <ul>
-            {% for result in search_results %}
-                <li>
-                    {% include "patterns/molecules/search-result/search-result.html" with result=result.specific %}
-                </li>
-            {% endfor %}
-        </ul>
+            <div class="search-results">
 
-        {% include "patterns/molecules/pagination/pagination.html" with paginator_page=search_results %}
+                    {% with count=search_results.paginator.count %}
+                        <div class="search-results__count">
+                        {% trans 'Results' %} {{ search_results.start_index }}-{{ search_results.end_index }} of {{ count }} search results for <span class="search-results__query">{{ search_query }}</span>.
+                        </div>
+                    {% endwith %}
 
-    {% elif search_query and not search_picks %}
-        {% trans 'No results found.' %}
-    {% endif %}
+                    <ul>
+                        {% for result in search_results %}
+                            <li>
+                                {% include "patterns/molecules/search-result/search-result.html" with result=result.specific %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    {% include "patterns/molecules/pagination/pagination.html" with paginator_page=search_results %}
+
+                {% elif search_query and not search_picks %}
+                    {% trans 'No results found.' %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

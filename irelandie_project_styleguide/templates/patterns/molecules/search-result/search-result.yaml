@@ -22,6 +22,6 @@ tags:
     result:
       raw: '#'
   image:
-    result.listing_image fill-450x300:
+    result.listing_image fill-100x100:
       raw: |
-        <img src="https://source.unsplash.com/450x300?forest" width="450" height="300" alt="Some alt">
+        <img src="https://source.unsplash.com/100x100?forest" width="100" height="100" alt="Some alt">

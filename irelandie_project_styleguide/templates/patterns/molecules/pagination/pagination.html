@@ -1,16 +1,38 @@
 {% load querystring_modify %}{% if paginator_page.paginator.num_pages > 1 %}
+
+{% comment %} TODO:
+
+BE - add in search_tags filter {% endcomment %}
 <nav aria-label="Pagination">
     <ul class="pagination">
         {% if paginator_page.has_previous %}
-            <li><a href="{% querystring_modify page=paginator_page.previous_page_number %}" class="previous">Previous <span class="u-sr-only">page</span></a></li>
+            <li>
+                <a href="{% querystring_modify page=paginator_page.previous_page_number %}" class="previous pagination__link">
+                    {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="pagination__icon pagination__icon--prev" %}
+                </a>
+            </li>
         {% endif %}
 
-        <li class="current" aria-current="page">
-            {{ paginator_page.number }}/{{ paginator_page.paginator.num_pages }}
-        </li>
+        {% for page_number in paginator_page.paginator.page_range %}
+            <li class="pagination__item">
+                {% if paginator_page.number == page_number %}
+                    <a href="#" class="pagination__link pagination__link--active" aria-label="Current Page, Page {{ page_number }}" aria-current="page">
+                        {{ page_number }}
+                    </a>
+                {% else %}
+                    <a class="pagination__link" href="{% querystring_modify paginator_page.page %}" aria-label="Goto Page {{ page_number }}">
+                        {{ page_number }}
+                    </a>
+                {% endif %}
+            </li>
+        {% endfor %}
 
         {% if paginator_page.has_next %}
-            <li><a href="{% querystring_modify page=paginator_page.next_page_number %}" class="next">Next <span class="u-sr-only">page</span></a></li>
+            <li>
+                <a href="{% querystring_modify page=paginator_page.next_page_number %}" class="next pagination__link">
+                    {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="pagination__icon pagination__icon--next" %}
+                </a>
+            </li>
         {% endif %}
     </ul>
 </nav>{% endif %}

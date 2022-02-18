@@ -1,0 +1,49 @@
+.pagination {
+    position: relative;
+    display: inline-flex;
+    margin: 0 auto;
+
+    &__icon {
+        margin-top: 7px;
+        height: 15px;
+        width: 15px;
+
+        &--next {
+            transform: rotate(-90deg);
+        }
+
+        &--prev {
+            transform: rotate(90deg);
+        }
+    }
+
+    &__link {
+        background-color: $color--white;
+        font-weight: $weight--bold;
+        border-radius: 5px;
+        color: $color--primary;
+        display: inline-block;
+        line-height: 30px;
+        height: 30px;
+        width: 30px;
+        margin: 0 5px;
+        position: relative;
+        text-align: center;
+        transition: background-color $transition;
+
+        &:hover {
+            background-color: darken($color--white, 20);
+            color: $color--primary;
+        }
+
+        &--active {
+            background-color: $color--primary;
+            color: $color--white;
+
+            &:hover {
+                background-color: darken($color--primary, 5);
+                color: $color--white;
+            }
+        }
+    }
+}

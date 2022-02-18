@@ -395,7 +395,7 @@ WAGTAILDOCS_DOCUMENT_MODEL = "irelandie_documents.CustomDocument"
 WAGTAILSEARCH_BACKENDS = {"default": {"BACKEND": "wagtail.search.backends.database"}}
 
 # Default size of the pagination used on the front-end.
-DEFAULT_PER_PAGE = 20
+DEFAULT_PER_PAGE = 10
 
 
 # WAGTAIL_EXPERIMENTAL_FEATURES = ['slim-sidebar']
