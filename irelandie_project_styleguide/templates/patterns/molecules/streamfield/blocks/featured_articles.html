@@ -1,0 +1,15 @@
+{% load i18n %}
+
+<div class="wrapper wrapper--large wrapper--padding">
+    <div class="intro">
+        <h2 class="intro__title">{{ value.title }}</h2>
+        <div class="intro__description">{{ value.summary }}</div>
+    </div>
+
+    <div class="featured-blocks featured-blocks--three">
+        {% for article in value.articles %}
+            {% include "patterns/molecules/topics/featured_article.html" with article=article %}
+        {% endfor %}
+    </div>
+
+</div>

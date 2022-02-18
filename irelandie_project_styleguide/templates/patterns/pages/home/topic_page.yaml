@@ -28,6 +28,25 @@ context:
           specific:
             listing_image: fake
             introduction: bla bla bla bla bla bla bla
+    logo_cards:
+      - logo: True
+        title: Bord lascaigh Mhara
+        summary: Bord Iascaigh Mhara helps to develop the Irish Seafood Industry by providing technical expertise, business support, funding, training and promoting responsible environmental practice.
+      - logo: True
+        title: Bord lascaigh Mhara
+        summary: Bord Iascaigh Mhara helps to develop the Irish Seafood Industry by providing technical expertise, business support, funding, training and promoting responsible environmental practice.
+      - logo: True
+        title: Bord lascaigh Mhara
+        summary: Bord Iascaigh Mhara helps to develop the Irish Seafood Industry by providing technical expertise.
+      - logo: True
+        title: Bord lascaigh Mhara
+        summary: Bord Iascaigh Mhara helps to develop the Irish Seafood Industry by providing technical expertise, business support, funding, training and promoting responsible environmental practice.
+      - logo: True
+        title: Bord lascaigh Mhara
+        summary: Bord Iascaigh Mhara helps to develop the Irish Seafood Industry by providing technical expertise, business support, funding, training and promoting responsible environmental practice.
+      - logo: True
+        title: Bord lascaigh Mhara
+        summary: Training and promoting responsible environmental practice.
 
 tags:
   include_block:

@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
 from wagtail.admin.edit_handlers import StreamFieldPanel
 from wagtail.core import blocks as wagtail_blocks
 from wagtail.core.fields import StreamField
 
 from irelandie_utils import blocks
 from irelandie_utils.models import HeroPage
-from wagtail.search import index
 
 
 class HomePage(HeroPage):
@@ -130,6 +128,11 @@ class CampaignPage(HeroPage):
 
 
 class TopicPage(HeroPage):
+    template = "patterns/pages/home/topic_page.html"
+
+    parent_page_types = ["irelandie_home.HomePage"]
+    subpage_types = []
+
     body = StreamField(
         [
             (
@@ -142,36 +145,37 @@ class TopicPage(HeroPage):
         blank=True,
         null=True,
     )
+
     featured_articles = StreamField(
-        [
-            (
-                "article",
-                wagtail_blocks.PageChooserBlock(
-                    page_type=[
-                        "irelandie_corporate_information.CorportateInformationPage",
-                        "irelandie_news.NewsPage",
-                        "irelandie_press_releases.PressReleasePage",
-                        "irelandie_publications.PublicationPage",
-                        "irelandie_speeches.SpeechPage",
-                        "irelandie_site_information.SiteInformationPage",
-                    ]
-                ),
-            ),
-        ],
+        [("featured_articles", blocks.FeaturedArticlesBlock())],
         blank=True,
         null=True,
+        max_num=1,
     )
 
-    template = "patterns/pages/home/topic_page.html"
+    articles = StreamField(
+        [("articles", blocks.ArticleCardsBlock())],
+        blank=True,
+        max_num=1,
+    )
+    embeds = StreamField(
+        [
+            ("youtube", blocks.YoutubeVideoBlock()),
+        ],
+        blank=True,
+        max_num=1,
+    )
 
-    parent_page_types = ["irelandie_home.HomePage"]
-    subpage_types = []
+    logo_cards = StreamField(
+        [("logo_cards", blocks.LogoCardsBlock())],
+        blank=True,
+        max_num=1,
+    )
 
     content_panels = HeroPage.content_panels + [
         StreamFieldPanel("body"),
         StreamFieldPanel("featured_articles"),
-    ]
-
-    search_fields = HeroPage.search_fields + [
-        index.SearchField("body"),
+        StreamFieldPanel("articles", heading="Article Cards"),
+        StreamFieldPanel("embeds"),
+        StreamFieldPanel("logo_cards", heading="Logo Cards"),
     ]
