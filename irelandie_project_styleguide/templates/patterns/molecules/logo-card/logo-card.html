@@ -1,0 +1,13 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="logo-card">
+    <div class="logo-card__logo-container">
+        {% image card.image width-250 class="card__logo" %}
+    </div>
+    <div class="logo-card__content">
+        <h3 class="logo-card__title">{{ card.title }}</h3>
+        <p class="logo-card__summary">
+            {{ card.summary }}
+        </p>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+context:
+  card:
+    image: True
+    title: Stub content
+    summary: Bord Iascaigh Mhara helps to develop the Irish Seafood Industry by providing technical expertise, business support, funding, training and promoting responsible environmental practice.
+    page: foobar
+
+tags:
+  image:
+    card.image width-250 class="card__logo":
+      raw: |
+        <img src="https://source.unsplash.com/250x150?ocean" width="250" height="150" alt="Some alt" class="logo-card__logo">
+  pageurl:
+    featured_story.page as href:
+      target_var: href
+      raw: '#'

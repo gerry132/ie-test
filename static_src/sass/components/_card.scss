@@ -18,6 +18,10 @@
         }
     }
 
+    .featured-blocks & {
+        margin-bottom: $grid;
+    }
+
     &__image-container {
         height: 300px;
         overflow: hidden;
