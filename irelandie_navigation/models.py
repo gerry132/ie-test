@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.conf import settings as dj_settings
 from django.db import models
 from modelcluster.models import ClusterableModel
@@ -6,8 +5,9 @@ from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, StreamField
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
+from wagtail.core.models import TranslatableMixin
 from wagtail.images.edit_handlers import ImageChooserPanel
-
+from wagtail.snippets.models import register_snippet
 
 IMAGE_MODEL = str(dj_settings.WAGTAILIMAGES_IMAGE_MODEL)
 
@@ -33,7 +33,7 @@ class LinkColumnWithHeader(blocks.StructBlock):
 
 
 @register_setting(icon="list-ul")
-class NavigationSettings(BaseSetting, ClusterableModel):
+class SiteSettings(BaseSetting, ClusterableModel):
     site_logo = models.ForeignKey(
         IMAGE_MODEL,
         null=True,
@@ -41,34 +41,89 @@ class NavigationSettings(BaseSetting, ClusterableModel):
         on_delete=models.SET_NULL,
         related_name="+",
     )
-    primary_navigation = StreamField(
-        [("link", LinkBlock())], blank=True, help_text="Main site navigation"
+
+    panels = [
+        ImageChooserPanel("site_logo"),
+    ]
+
+
+@register_snippet
+class PrimaryNavigation(TranslatableMixin):
+    # Snippets model is used so the navigation can be localised with TranslatableMixin.
+    lang = models.CharField(
+        max_length=255,
+        unique=True,
+        help_text="Internal name for this navigation, it's not displayed to a site user.",
+        verbose_name="Language",
     )
-    footer_navigation = StreamField(
+    navigation = StreamField(
+        [("link", LinkBlock())],
+        blank=True,
+        help_text="Main site navigation",
+        verbose_name="Links",
+    )
+
+    panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("lang"),
+                StreamFieldPanel("navigation"),
+            ],
+            heading="Primary Navigation",
+        )
+    ]
+
+    def __str__(self):
+        return self.lang
+
+    class Meta:
+        verbose_name = "Primary Navigation"
+        verbose_name_plural = "Primary Navigation"
+        unique_together = ("translation_key", "locale")
+
+
+@register_snippet
+class FooterNavigation(TranslatableMixin):
+    # Snippets model is used so the navigation can be localised with TranslatableMixin.
+    lang = models.CharField(
+        max_length=255,
+        unique=True,
+        help_text="Internal name for this navigation, it's not displayed to a site user.",
+        verbose_name="Language",
+    )
+    navigation = StreamField(
         [("column", LinkColumnWithHeader())],
         blank=True,
         help_text="Multiple columns of footer links with optional header.",
+        verbose_name="Columns",
     )
-    footer_links = StreamField(
+    links = StreamField(
         [("link", LinkBlock())],
         blank=True,
         help_text="Single list of elements at the base of the page.",
     )
-    footer_email = models.EmailField(
+    email_address = models.EmailField(
         max_length=255,
         blank=True,
-        verbose_name='email address',
+        verbose_name="email address",
     )
 
     panels = [
-        ImageChooserPanel("site_logo"),
-        StreamFieldPanel("primary_navigation"),
         MultiFieldPanel(
             [
-                StreamFieldPanel("footer_navigation"),
-                StreamFieldPanel("footer_links"),
-                FieldPanel('footer_email'),
+                FieldPanel("lang"),
+                StreamFieldPanel("navigation"),
+                StreamFieldPanel("links"),
+                FieldPanel("email_address"),
             ],
-            "Footer"
+            heading="Footer Navigation",
         )
     ]
+
+    def __str__(self):
+        return self.lang
+
+    class Meta:
+        verbose_name = "Footer Navigation"
+        verbose_name_plural = "Footer Navigation"
+        unique_together = ("translation_key", "locale")
