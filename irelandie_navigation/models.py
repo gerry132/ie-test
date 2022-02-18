@@ -1,5 +1,6 @@
 from django.conf import settings as dj_settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from modelcluster.models import ClusterableModel
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
@@ -15,7 +16,7 @@ IMAGE_MODEL = str(dj_settings.WAGTAILIMAGES_IMAGE_MODEL)
 class LinkBlock(blocks.StructBlock):
     page = blocks.PageChooserBlock()
     title = blocks.CharBlock(
-        help_text="Leave blank to use the page's own title", required=False
+        help_text=_("Leave blank to use the page's own title"), required=False
     )
 
     class Meta:
@@ -24,7 +25,7 @@ class LinkBlock(blocks.StructBlock):
 
 class LinkColumnWithHeader(blocks.StructBlock):
     heading = blocks.CharBlock(
-        required=False, help_text="Leave blank if no header required."
+        required=False, help_text=_("Leave blank if no header required.")
     )
     links = blocks.ListBlock(LinkBlock())
 
@@ -54,13 +55,13 @@ class PrimaryNavigation(TranslatableMixin):
         max_length=255,
         unique=True,
         help_text="Internal name for this navigation, it's not displayed to a site user.",
-        verbose_name="Language",
+        verbose_name=_("Language"),
     )
     navigation = StreamField(
         [("link", LinkBlock())],
         blank=True,
         help_text="Main site navigation",
-        verbose_name="Links",
+        verbose_name=_("Links"),
     )
 
     panels = [
@@ -69,7 +70,7 @@ class PrimaryNavigation(TranslatableMixin):
                 FieldPanel("lang"),
                 StreamFieldPanel("navigation"),
             ],
-            heading="Primary Navigation",
+            heading=_("Primary Navigation"),
         )
     ]
 
@@ -77,8 +78,8 @@ class PrimaryNavigation(TranslatableMixin):
         return self.lang
 
     class Meta:
-        verbose_name = "Primary Navigation"
-        verbose_name_plural = "Primary Navigation"
+        verbose_name = _("Primary Navigation")
+        verbose_name_plural = _("Primary Navigation")
         unique_together = ("translation_key", "locale")
 
 
@@ -89,23 +90,23 @@ class FooterNavigation(TranslatableMixin):
         max_length=255,
         unique=True,
         help_text="Internal name for this navigation, it's not displayed to a site user.",
-        verbose_name="Language",
+        verbose_name=_("Language"),
     )
     navigation = StreamField(
         [("column", LinkColumnWithHeader())],
         blank=True,
         help_text="Multiple columns of footer links with optional header.",
-        verbose_name="Columns",
+        verbose_name=_("Columns"),
     )
     links = StreamField(
         [("link", LinkBlock())],
         blank=True,
-        help_text="Single list of elements at the base of the page.",
+        help_text=_("Single list of elements at the base of the page."),
     )
     email_address = models.EmailField(
         max_length=255,
         blank=True,
-        verbose_name="email address",
+        verbose_name=_("email address"),
     )
 
     panels = [
@@ -116,7 +117,7 @@ class FooterNavigation(TranslatableMixin):
                 StreamFieldPanel("links"),
                 FieldPanel("email_address"),
             ],
-            heading="Footer Navigation",
+            heading=_("Footer Navigation"),
         )
     ]
 
@@ -124,6 +125,6 @@ class FooterNavigation(TranslatableMixin):
         return self.lang
 
     class Meta:
-        verbose_name = "Footer Navigation"
-        verbose_name_plural = "Footer Navigation"
+        verbose_name = _("Footer Navigation")
+        verbose_name_plural = _("Footer Navigation")
         unique_together = ("translation_key", "locale")
