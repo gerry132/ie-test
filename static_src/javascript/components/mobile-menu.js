@@ -6,6 +6,10 @@ class MobileMenu {
     constructor(node, openCb = () => {}, closeCb = () => {}) {
         this.node = node;
 
+        // search selectors
+        this.searchToggles = document.querySelectorAll('[data-toggle-search]');
+        this.searchDropdown = document.querySelector('[data-search-dropdown]');
+
         // Any callbacks to be called on open or close.
         this.openCb = openCb;
         this.closeCb = closeCb;
@@ -28,6 +32,7 @@ class MobileMenu {
             this.close();
         } else {
             this.open();
+            this.closeSearch();
         }
     }
 
@@ -43,6 +48,13 @@ class MobileMenu {
         this.closeCb();
 
         this.state.open = false;
+    }
+
+    closeSearch() {
+        this.searchToggles.forEach((searchToggle) =>
+            searchToggle.classList.remove('is-active'),
+        );
+        this.searchDropdown.classList.remove('is-active');
     }
 }
 

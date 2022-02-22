@@ -88,7 +88,6 @@
     &__icon {
         color: $color--white;
         display: inline-block;
-        transform: rotate(-90deg);
 
         .active & {
             transform: rotate(180deg);
@@ -105,5 +104,9 @@
                 display: inline-block;
             }
         }
+    }
+
+    &__svg {
+        margin-top: 8px;
     }
 }

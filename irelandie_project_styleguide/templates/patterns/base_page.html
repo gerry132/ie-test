@@ -85,9 +85,10 @@
 
     {% comment %} 
         Add header--condensed class if secondary menu exists on a page
-        Placeholder conditional for now - will need updating
+
+        Note: This is only implemented on the CountyGroupPageIndex at the moment 
     {% endcomment %}
-    <header class="header{% if page.secondary_menu %} header--condensed{% endif %}">
+    <header class="header{% if page.override_primary_navigation %} header--condensed{% endif %}">
         <div class="wrapper wrapper--large">
             <div class="header__container">
                 <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">
@@ -105,9 +106,11 @@
 
                     {% comment %} 
                         Show secondary nav alongside primary nav in dropdown if available
+
+                        Note: This is only implemented on the CountyGroupPageIndex at the moment 
                     {% endcomment %}
-                    {% if page.secondary_menu %}
-                        {% secondarynav %}
+                    {% if page.override_primary_navigation %}
+                        {% custom_primary_navigtaion page %}
                     {% endif %}
                 </div>
 
@@ -156,9 +159,10 @@
 
     {% comment %} 
         Only show secondary nav if available on the page
-        Placeholder conditional for now - will need updating 
+        
+        Note: This is only implemented on the CountyGroupPageIndex at the moment 
     {% endcomment %}
-    {% if page.secondary_nav %}
+    {% if page.override_primary_navigation %}
         <div class="header header--secondary">
             <div class="wrapper wrapper--large">
                 <div class="header__container">
@@ -168,14 +172,12 @@
 
                     <div class="header__menus header__menus--desktop">
                         <div data-desktop-menu>
-                            {% comment %} Add in correct nav name when BE is in place {% endcomment %}
-                            {% secondarynav %}
+                            {% custom_primary_navigtaion page %}
                         </div>
                     </div>
 
                     <div class="header__menus header__menus--mobile" data-mobile-menu>
-                        {% comment %} Add in correct nav name when BE is in place {% endcomment %}
-                        {% secondarynav %}
+                        {% custom_primary_navigtaion page %}
                     </div>
                 </div> 
             </div>
