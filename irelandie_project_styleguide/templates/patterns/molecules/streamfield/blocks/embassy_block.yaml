@@ -7,7 +7,7 @@ context:
 tags:
   image:
     value.image fill-768x768 as featured_image:
-      target_var: bg_image
+      target_var: featured_image
       raw:
         url: https://source.unsplash.com/768x768?ocean
   pageurl:
