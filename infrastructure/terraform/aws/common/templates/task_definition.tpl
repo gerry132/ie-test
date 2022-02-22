@@ -33,6 +33,10 @@
                 "value": "${SETTINGS_AWS_ACCESS_KEY_ID}"
             },
             {
+                "name": "AWS_REGION",
+                "value": "${region}"
+            },
+            {
                 "name": "AWS_STATIC_BUCKET_NAME",
                 "value": "${SETTINGS_AWS_STATIC_BUCKET_NAME}"
             },
@@ -75,6 +79,10 @@
             {
                 "name": "CORS_ALLOW_ALL_ORIGINS",
                 "value": "${SETTINGS_CORS_ALLOW_ALL_ORIGINS}"
+            },
+            {
+                "name": "EMAIL_HOST",
+                "value": "${SETTINGS_EMAIL_HOST}"
             }
         ],
         "secrets": []

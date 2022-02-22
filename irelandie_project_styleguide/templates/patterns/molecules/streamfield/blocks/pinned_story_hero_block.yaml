@@ -13,4 +13,4 @@ tags:
   pageurl:
     value.link_page as href:
       target_var: href
-      raw: "#"
+      raw: '#'

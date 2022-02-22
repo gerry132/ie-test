@@ -19,15 +19,20 @@
     }
 
     &__image-container {
-        max-height: 300px;
+        height: 300px;
         overflow: hidden;
         position: relative;
+
+        @include media-query(medium) {
+            height: 200px;
+        }
     }
 
     &__image {
         position: relative;
         object-fit: cover;
         width: 100%;
+        height: 100%;
         transform: scale(1);
         transition: transform $transition;
     }
@@ -37,13 +42,21 @@
         padding: $grid;
     }
 
+    &__title {
+        #{$root}--no-summary & {
+            font-size: 32px;
+        }
+    }
+
     &__title,
     &__summary {
         color: $color--default;
+        font-family: $font--secondary;
     }
 
     &__link {
         text-decoration: underline;
+        color: $color--primary;
     }
 }
 

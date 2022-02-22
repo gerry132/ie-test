@@ -1,4 +1,4 @@
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags i18n %}
 
 {% comment %}
 
@@ -11,9 +11,9 @@ Example:
 
 {% if card.page %}
 {% pageurl card.page as href %}
-    <a href="{{ href }}" class="card{% if large %} card--large{% endif %}{% if classes %} {{ classes }}{% endif %}">
+    <a href="{{ href }}" class="card{% if large %} card--large{% endif %}{% if not card.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
 {% else %}
-    <div class="card">
+    <div class="card{% if not card.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
 {% endif %}
         <div class="card__image-container">
             {% image card.image width-500 class="card__image" %}
@@ -23,9 +23,11 @@ Example:
 
             <p class="card__summary">{{ card.summary }}</p>
 
-            <span class="card__link">
-                Read this story
-            </span>
+            {% if card.page %}
+                <span class="card__link">
+                    {% trans 'Read this story' %}
+                </span>
+            {% endif %}
         </div>
 {% if card.page %}
     </a>

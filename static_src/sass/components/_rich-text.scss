@@ -1,4 +1,11 @@
 .rich-text {
+    @include font-size(m);
+    font-family: $font--secondary;
+
+    a {
+        text-decoration: underline;
+    }
+
     ul {
         list-style: inside disc;
     }

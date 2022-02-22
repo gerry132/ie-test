@@ -1,0 +1,10 @@
+.heading-block {
+    position: relative;
+    font-family: $font--secondary;
+    font-weight: $weight--bold;
+    margin-bottom: $grid;
+
+    @include media-query(medium) {
+        margin-bottom: 40px;
+    }
+}

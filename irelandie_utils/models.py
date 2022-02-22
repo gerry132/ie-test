@@ -16,7 +16,7 @@ from wagtail.admin.edit_handlers import (
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Orderable, Page, TranslatableMixin
+from wagtail.core.models import Orderable, Page
 from wagtail.core.query import PageQuerySet
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
@@ -434,7 +434,6 @@ class HeroPage(BasePage):
 class ArticlePage(BasePage):
     introduction = models.TextField(blank=True)
 
-    hero_title = models.CharField(blank=True, max_length=255)
     hero_image = models.ForeignKey(
         IMAGE_MODEL,
         null=True,
@@ -467,7 +466,6 @@ class ArticlePage(BasePage):
         FieldPanel("introduction"),
         MultiFieldPanel(
             [
-                FieldPanel("hero_title"),
                 ImageChooserPanel("hero_image"),
                 MediaChooserPanel("hero_video", media_type="video"),
             ],
@@ -502,6 +500,7 @@ class ArticlePage(BasePage):
                     ),
                 }
             )
+
     @property
     def override_related_articles(self):
         raise NotImplementedError

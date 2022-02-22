@@ -90,7 +90,7 @@ class CampaignPage(HeroPage):
         ('pinned_story', wagtail_blocks.StructBlock([
             ('pinned_story_hero', blocks.PinnedStoryHeroBlock()),
             ('pinned_stories', wagtail_blocks.ListBlock(blocks.PinnedStoryBlock())),
-        ])),
+        ], template='patterns/molecules/pinned-stories/pinned_stories.html')),
     ], block_counts={
         'pinned_story': {'max_num': 1},
     }, blank=True, null=True)
@@ -103,7 +103,6 @@ class CampaignPage(HeroPage):
         blank=True,
         null=True,
     )
-
 
     template = 'patterns/pages/home/campaign_page.html'
 
@@ -150,7 +149,6 @@ class TopicPage(HeroPage):
         blank=True,
         null=True,
     )
-
 
     template = 'patterns/pages/home/topic_page.html'
 

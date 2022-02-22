@@ -1,16 +1,23 @@
-{% extends 'irelandie_assets/base.html' %}
-{% load irelandie_assets_tags %}
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags navigation_tags %}
+
+{% block sub_navigation %}
+    {% comment %} 
+    This is only implemented on the CountyGroupPageIndex at the moment 
+    {% endcomment %}
+    {% if page.override_primary_navigation %}{% custom_primary_navigtaion page %}{% endif %}
+{% endblock %}
 
 {% block content %}
 
-    {% define page as PAGE %}
-
-    <div>
-        {% include 'irelandie_assets/components/headers/default.html' with IMAGE_URL='' IMAGE_ALT_TEXT='' HEADING='' SUMMARY='' LINK_TEXT='0' LINK_URL='#' %}
+    {% block main%}
+    <!-- Body -->
+    <div class="section section--padding">
+        <div class="wrapper wrapper--large">
+            <!-- COUNTRY LIST HERE -->
+            <h1>Country list</h1>
+        </div>
     </div>
-
-    <div>
-        <!-- COUNTRY LIST HERE -->
-    </div>
+    {% endblock %}
 
 {% endblock %}

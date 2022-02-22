@@ -93,9 +93,42 @@ class FeaturedStoryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(required=False)
     title = blocks.CharBlock(required=False)
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
 
     class Meta:
         template = "patterns/molecules/streamfield/blocks/featured_story_block.html"
+
+    def clean(self, value):
+        errors = {}
+        values = [value["page"], value["url"]]
+        # Set only a Page OR a URL
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a page or set a URL."
+
+            errors["page"] = ErrorList([message])
+            errors["url"] = ErrorList([message])
+
+        # A URL must have title
+        if value["url"] and not value["title"]:
+            errors["title"] = ErrorList(["Please set a title for the URL"])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context['image'] = value['image']
+        context['page'] = value['page']
+        context["link_url"] = value['url'] or value['page'].url
+        context["link_title"] = value['title'] or value['page'].title
+        return context
+
 
 class EmbassyStory(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
@@ -164,7 +197,7 @@ class DocumentBlock(blocks.StructBlock):
 class AlertBlock(blocks.PageChooserBlock):
     class Meta:
         label = "AlertBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/alert_block.html"
 
     pass
 
@@ -172,9 +205,17 @@ class AlertBlock(blocks.PageChooserBlock):
 class ContactDetailBlock(blocks.PageChooserBlock):
     class Meta:
         label = "ContactDetailBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/contact_block.html"
 
     pass
+
+
+class HeadingBlock(blocks.StructBlock):
+    text = blocks.CharBlock()
+
+    class Meta:
+        icon = "title"
+        template = "patterns/molecules/streamfield/blocks/heading_block.html"
 
 
 class JumpboxWithImageBlock(blocks.StructBlock):
@@ -203,7 +244,7 @@ class JumpboxBlock(blocks.StructBlock):
 class PersonBlock(blocks.PageChooserBlock):
     class Meta:
         label = "PersonBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/person_block.html"
 
     pass
 
@@ -211,7 +252,7 @@ class PersonBlock(blocks.PageChooserBlock):
 class PlaceBlock(blocks.PageChooserBlock):
     class Meta:
         label = "PlaceBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/place_block.html"
 
     pass
 
@@ -219,7 +260,7 @@ class PlaceBlock(blocks.PageChooserBlock):
 class RichTextBlock(blocks.RichTextBlock):
     class Meta:
         label = "RichTextBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/paragraph_block.html"
 
     pass
 
@@ -227,7 +268,7 @@ class RichTextBlock(blocks.RichTextBlock):
 class RoleBlock(blocks.PageChooserBlock):
     class Meta:
         label = "RoleBlock"
-        template = "TODO"
+        template = "patterns/molecules/streamfield/blocks/role_block.html"
 
     pass
 
@@ -235,9 +276,6 @@ class RoleBlock(blocks.PageChooserBlock):
 class TableBlock(WagtailTableBlock):
     class Meta:
         label = "TableBlock"
-        template = "TODO"
-
-    pass
 
 
 class SocialLinkBlock(blocks.StructBlock):
@@ -277,6 +315,10 @@ class YoutubeVideoBlock(blocks.StructBlock):
 
 
 class CustomVideoChooserBlock(VideoChooserBlock):
+    class Meta:
+        label = "Custom Video Chooser"
+        template = "patterns/molecules/streamfield/blocks/video_block.html"
+
     pass
 
 
@@ -286,9 +328,10 @@ class BaseSectionBlock(blocks.StructBlock):
 
 
 class ArticleStoryBlock(blocks.StreamBlock):
+    heading = HeadingBlock()
     contact_detail = ContactDetailBlock()
     image = ImageBlock()
-    rich_text = blocks.RichTextBlock(features=["h3", "blockquote", "bold", "link", "document-link", "ul"])
+    rich_text = RichTextBlock(features=["h3", "blockquote", "bold", "link", "document-link", "ul"])
     person = PersonBlock()
     place = PlaceBlock()
     document = DocumentBlock()

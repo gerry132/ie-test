@@ -1,0 +1,74 @@
+parameters:
+- name: imageTag
+  type: string
+  default: latest
+- name: clusterName
+  type: string
+- name: serviceName
+  type: string
+- name: region
+  type: string
+  default: eu-west-1
+
+
+steps:
+  - bash: |
+      echo "Getting existing services"
+      services=$(aws ecs describe-services \
+          --cluster ${{ parameters.clusterName }} \
+          --service ${{ parameters.serviceName }} \
+          --region ${{ parameters.region }})
+      echo "Existing services $services"
+      serviceid=$(jq '.services[].deployments[0].id' <<< "$services")
+      echo "Storing existing service ID $serviceid"
+      echo "##vso[task.setvariable variable=serviceId;]$serviceid"
+    env:
+      AWS_ACCESS_KEY_ID: $(aws_access_key)
+      AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
+    displayName: Get existing task ID
+  - bash: |
+      echo "replacing service $(serviceId)"
+      deployedservice=$(aws ecs update-service \
+          --cluster ${{ parameters.clusterName }} \
+          --service ${{ parameters.serviceName }} \
+          --force-new-deployment \
+          --region ${{ parameters.region }})
+      echo "Result from deploy $deployedservice"
+      echo "filtering for not $(serviceId)"
+      newserviceid=$(jq --arg s $(serviceId) \
+          '.service.deployments[] | select(.id!=$s).id' <<< "$deployedservice")
+      echo "Storing new service ID $newserviceid"
+      echo "##vso[task.setvariable variable=newServiceId;]$newserviceid"
+    env:
+      AWS_ACCESS_KEY_ID: $(aws_access_key)
+      AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
+    displayName: Force new deployment
+  - bash: |
+      echo "Waiting for deploy of service $(newServiceId)"
+      while true; do
+          echo "Polling for service state $(newServiceId)"
+          services=$(aws ecs describe-services --cluster \
+              ${{ parameters.clusterName }} \
+              --service ${{ parameters.serviceName }} \
+              --region ${{ parameters.region }})
+          echo "current services"
+          echo $(jq '.services[].deployments[]' <<< $services)
+          echo "State of service $(newServiceId)"
+          newservicestate=$(jq -r --arg s $(newServiceId) \
+              '.services[].deployments[] | select(.id==$s).rolloutState' <<< "$services")
+          echo "Service state is $newservicestate"
+          if [[ $newservicestate == "IN_PROGRESS" ]]; then
+              echo "Rollout IN_PROGRESS"
+              sleep 10
+          elif [[ $newservicestate == "COMPLETED" ]]; then
+              echo "Rollout COMPLETED"
+              break
+          else
+              echo "Rollout state is unknown"
+              exit 1
+          fi
+      done
+    env:
+      AWS_ACCESS_KEY_ID: $(aws_access_key)
+      AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
+    displayName: Wait for service live

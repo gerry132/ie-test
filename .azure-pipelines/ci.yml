@@ -1,0 +1,112 @@
+trigger: none
+
+pr: none
+
+pool:
+  vmImage: ubuntu-latest
+
+resources:
+  repositories:
+  - repository: azure-pipelines-templates
+    type: github
+    endpoint: ogcio
+    name: ogcio/azure-pipelines-templates
+    ref: refs/heads/develop
+
+stages:
+- stage: test
+  displayName: Check the Code
+  jobs:
+  - template: templates/python-bandit.yml@azure-pipelines-templates
+    parameters:
+      srcDir: irelandie_*
+
+  - job: Lint
+    steps:
+    - script: |
+        python -m pip install flake8
+        flake8 .
+      displayName: PEP8 Checks
+
+  - job: Test
+    steps:
+    - script: pip install -r .azure-pipelines/requirements_base.txt
+      displayName: Install Requirements
+
+    - script: |
+        cat .azure-pipelines/.env_pipeline > app/.env
+        python manage.py test
+      displayName: Unit Tests
+
+- stage: statics
+  displayName: Static Files
+  jobs:
+  - job: StaticFiles
+    steps:
+    - task: NodeTool@0
+      displayName: Installing Node.js
+      inputs:
+        versionSpec: 14
+
+    - script: |
+        npm install
+        npm run build:prod
+      displayName: Build Static Files
+
+    - script: pip install -r .azure-pipelines/requirements_s3.txt
+      displayName: Install Requirements
+
+    - script: |
+        cat .azure-pipelines/.env_pipeline > app/.env
+        export USE_S3=1
+        python manage.py collectstatic --noinput
+      displayName: Upload Static Files to S3
+      env:
+        AWS_ACCESS_KEY_ID: $(aws_access_key)
+        AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
+
+- stage: deploy
+  displayName: Deploy
+  jobs:
+  - job: Deploy
+    steps:
+    - checkout: self
+      submodules: true
+      persistCredentials: true
+
+    - task: Bash@3
+      displayName: Run Terraform
+      inputs:
+        targetType: inline
+        script: |
+          cd infrastructure/terraform/aws/$(env)/
+          terraform init -input=false -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY"
+          terraform apply -input=false -auto-approve
+          cd ../../../..
+        failOnStderr: true
+      env:
+        AWS_ACCESS_KEY_ID: $(aws_access_key)
+        AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
+        AWS_DEFAULT_REGION: $(aws_region)
+
+    - task: Bash@3
+      displayName: Build and Push Image
+      inputs:
+        targetType: inline
+        script: |
+          aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
+          docker build . -t "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
+          docker push "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
+        failOnStderr: false
+      env:
+        AWS_ACCESS_KEY_ID: $(aws_access_key)
+        AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
+        AWS_REGION: $(aws_region)
+        AWS_ACCOUNT_ID: $(aws_account_id)
+        IMAGE_NAME: $(image_name)
+        IMAGE_TAG: $(image_tag)
+
+    - template: templates/ecs-update-service.yml
+      parameters:
+        clusterName: $(image_name)
+        serviceName: $(image_name)

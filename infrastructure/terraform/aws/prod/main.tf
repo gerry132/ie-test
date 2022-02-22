@@ -57,12 +57,40 @@ locals {
   ]
   non_gov_network_cird_blocks   = {
     rachel_dev = {
-      description = "Rachel Mannion OGCIO"
+      description = "Rachel Mannion - OGCIO"
       cidr_blocks = ["139.162.182.140/32"]
     },
     reinaldo_dev = {
-      description = "Reinaldo Sanches OGCIO"
+      description = "Reinaldo Sanches - OGCIO"
       cidr_blocks = ["172.105.95.186/32", "89.101.167.251/32"]
+    },
+    keith_po = {
+      description = "Keith Costello - OGCIO"
+      cidr_blocks = ["37.228.203.132/32"]
+    },
+    gerry_dev = {
+      description = "Gerry Mcbride - OGCIO"
+      cidr_blocks = ["52.49.120.79/32", "37.228.234.245/32"]
+    },
+    kleverson_dev = {
+      description = "Kleverson Morais - OGCIO"
+      cidr_blocks = ["176.61.106.140/32"]
+    },
+    nick_dev = {
+      description = "Nick Moreton - Torchbox"
+      cidr_blocks = ["217.35.72.151/32"]
+    },
+    mel_dev = {
+      description = "Melissa Joy - Torchbox"
+      cidr_blocks = ["78.32.251.194/32", "82.16.132.142/32"]
+    },
+    jane_dev = {
+      description = "Jane Hughes - Torchbox"
+      cidr_blocks = ["82.5.195.241/32"]
+    },
+    chris_dev = {
+      description = "Chris Shaw - Torchbox"
+      cidr_blocks = ["81.106.63.209/32"]
     }
   }
 }
@@ -365,7 +393,6 @@ resource "aws_s3_bucket_policy" "ecs_log_policy" {
 }
 
 resource "aws_s3_bucket_policy" "lb_logs" {
-
   bucket = aws_s3_bucket.lb_logs.id
 
   policy = jsonencode({
@@ -392,7 +419,6 @@ resource "aws_s3_bucket_policy" "lb_logs" {
 }
 
 resource "aws_s3_bucket_policy" "private_lb_logs" {
-
   bucket = aws_s3_bucket.private_lb_logs.id
 
   policy = jsonencode({
@@ -616,11 +642,7 @@ resource "aws_lb_listener" "public_sites_443" {
   }
 }
 
-
-#
-
 resource "aws_lb_listener_rule" "project_443" {
-
   listener_arn    = aws_lb_listener.project_443.arn
   priority        = 1
 
@@ -636,11 +658,9 @@ resource "aws_lb_listener_rule" "project_443" {
   }
 }
 
-
 # Force non-www to be used for admin site
 
 resource "aws_lb_listener_rule" "www_project_443" {
-
   listener_arn    = aws_lb_listener.project_443.arn
   priority        = 2
 
@@ -662,7 +682,6 @@ resource "aws_lb_listener_rule" "www_project_443" {
 # Public sites /admin redirects to admin site
 
 resource "aws_lb_listener_rule" "www_ireland_ie_443_admin_redirect" {
-
   listener_arn    = aws_lb_listener.public_sites_443.arn
   priority        = 3
 
@@ -687,9 +706,9 @@ resource "aws_lb_listener_rule" "www_ireland_ie_443_admin_redirect" {
 # Public facing site rule
 
 resource "aws_lb_listener_rule" "ireland_ie_443" {
-
   listener_arn    = aws_lb_listener.public_sites_443.arn
   priority        = 4
+
   action {
     type                = "forward"
     target_group_arn    = aws_lb_target_group.default.arn
@@ -730,7 +749,6 @@ resource "random_string" "random_db_password" {
   override_special = "/@£$"
 }
 
-
 resource "aws_ssm_parameter" "random_db_password" {
   name        = "${local.environment_name}-${local.project_name}-db-password"
   description = "-"
@@ -741,7 +759,6 @@ resource "aws_ssm_parameter" "random_db_password" {
     environment = local.environment_name
   }
 }
-
 
 data "aws_ssm_parameter" "random_db_password" {
   name = aws_ssm_parameter.random_db_password.name
@@ -969,24 +986,56 @@ data "aws_ssm_parameter" "random_secret_key" {
   ]
 }
 
+
+# -----------------------------------------------------------------------------
+# Simple Email Service (SES)
+# -----------------------------------------------------------------------------
+
+resource "aws_iam_user" "smtp_user" {
+  name = "${local.environment_name}-${local.project_name}-smtp-user"
+}
+
+resource "aws_iam_access_key" "smtp_user" {
+  user = aws_iam_user.smtp_user.name
+}
+
+data "aws_iam_policy_document" "ses_sender" {
+  statement {
+    actions   = ["ses:SendRawEmail"]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "ses_sender" {
+  name        = "ses_sender"
+  description = "Allows sending of e-mails via Simple Email Service"
+  policy      = data.aws_iam_policy_document.ses_sender.json
+}
+
+resource "aws_iam_user_policy_attachment" "smtp_user_attach" {
+  user       = aws_iam_user.smtp_user.name
+  policy_arn = aws_iam_policy.ses_sender.arn
+}
+
+
 # Task definition
 
 locals {
-  SETTINGS_ALLOWED_HOSTS            = join(", ", ["*"])
+  SETTINGS_ALLOWED_HOSTS            = "*"
   SETTINGS_AWS_ACCESS_KEY_ID        = aws_ssm_parameter.AWS_ACCESS_KEY_ID.value
   SETTINGS_AWS_SECRET_ACCESS_KEY    = aws_ssm_parameter.AWS_SECRET_ACCESS_KEY.value
   SETTINGS_AWS_STATIC_BUCKET_NAME   = aws_s3_bucket.assets.id
-  SETTINGS_BASE_URL                 = "http://www.${local.project_domain}"
+  SETTINGS_BASE_URL                 = "https://${local.project_domain}"
   SETTINGS_CACHE_ADDRESS            = local.cache_address
   SETTINGS_DATABASE_URL             = local.db_master_url
   SETTINGS_SECRET_KEY               = data.aws_ssm_parameter.random_secret_key.value
-  SETTINGS_CORS_ALLOWED_ORIGINS     = local.SETTINGS_BASE_URL
+  SETTINGS_CORS_ALLOWED_ORIGINS     = "${local.SETTINGS_BASE_URL},https://www.${local.project_domain}"
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
+  SETTINGS_EMAIL_HOST               = "email.${local.region}.amazonaws.com"
 }
 
 data "template_file" "task_definition" {
-
-  template    = file("templates/task_definition.tpl")
+  template    = file("../common/templates/task_definition.tpl")
 
   vars = {
     ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
@@ -1011,6 +1060,7 @@ data "template_file" "task_definition" {
     SETTINGS_USE_S3                     = local.SETTINGS_USE_S3
     SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
     SETTINGS_CORS_ALLOW_ALL_ORIGINS     = local.SETTINGS_CORS_ALLOW_ALL_ORIGINS
+    SETTINGS_EMAIL_HOST                 = local.SETTINGS_EMAIL_HOST
   }
 }
 
