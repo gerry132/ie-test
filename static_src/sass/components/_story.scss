@@ -10,26 +10,47 @@
 
     &::before {
         content: '';
-        background-image: url('../images/cssBackgrounds/ireland-outline-bg.svg');
-        height: 700px;
-        width: 600px;
+        background-image: url('../images/cssBackgrounds/background-circles-dark.svg');
+        height: 100%;
+        width: 100%;
         display: block;
-        background-size: 100%;
-        background-position: center center;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
         position: absolute;
         right: 0;
-        bottom: -100px;
+        top: 0;
+        z-index: 0;
+    }
+
+    &::after {
+        content: '';
+        background-image: url('../images/cssBackgrounds/background-dots.svg');
+        height: 84px;
+        width: 242px;
+        display: block;
+        background-size: 100%;
+        background-position: center;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 0;
     }
 
     &--dark {
         background-color: $color--background-grey;
+
+        &::before {
+            background-image: url('../images/cssBackgrounds/background-circles-light.svg');
+            background-size: cover;
+        }
     }
 
     &__container {
         position: relative;
         padding: 0 30px;
 
-        @include media-query(medium) {
+        @include media-query(large) {
             display: flex;
             justify-content: space-between;
 
@@ -44,8 +65,8 @@
         border-top-right-radius: $border-radius;
         object-fit: cover;
 
-        @include media-query(medium) {
-            max-width: 40%;
+        @include media-query(large) {
+            max-width: 35%;
             min-height: 450px;
         }
     }
@@ -59,7 +80,7 @@
         margin: 0;
         padding: $grid 0;
 
-        @include media-query(medium) {
+        @include media-query(large) {
             padding: 40px 80px;
 
             #{$root}--right-aligned & {
@@ -69,7 +90,7 @@
     }
 
     &__copy {
-        @include media-query(medium) {
+        @include media-query(large) {
             max-width: 560px;
         }
     }
@@ -102,10 +123,6 @@
         position: relative;
         z-index: 2;
 
-        @include media-query(medium) {
-            flex-direction: row;
-        }
-
         #{$root}__links.is-open & {
             height: auto;
         }
@@ -128,7 +145,7 @@
                 display: none;
             }
 
-            @include media-query(medium) {
+            @include media-query(large) {
                 display: none;
             }
         }

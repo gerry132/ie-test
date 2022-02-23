@@ -2,7 +2,7 @@
 
 <a href="{{ link_url }}" class="featured-block">
     {% image image fill-768x768 as featured_image %}
-    <div class="featured-block__image" style="background-image:url({{ featured_image.url }});"></div>
+    <div class="featured-block__image" style="background-image:url({{ featured_image.url }}); {{ featured_image.background_position_style }}"></div>
     <div class="featured-block__content-wrapper">
         <div class="featured-block__content">
             <h3 class="featured-block__title heading--3">{{ link_title }}</h3>
