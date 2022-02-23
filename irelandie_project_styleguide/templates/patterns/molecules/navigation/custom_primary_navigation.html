@@ -1,0 +1,25 @@
+{% load i18n %}
+
+<div class="custom-nav">
+    <div class="wrapper wrapper--small">
+        <div class="custom-nav__wrapper">
+            <nav aria-label="Custom">
+                <ul class="custom-nav__links" data-primary-nav>
+                    {% for custom_link in customnav %}
+                    <li class="custom-nav__item">
+                        <a href="{{ custom_link.value.page.url }}" class="custom-nav__link">{{ custom_link.value.page.title }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+            <div class="custom-menu-toggle">
+                <button class="button button-menu-toggle" data-custom-menu-toggle aria-haspopup="true" aria-label="{% trans 'Custom menu toggle' %}">
+                    <span class="button-menu-toggle__line"></span>
+                    <span class="button-menu-toggle__line"></span>
+                    <span class="button-menu-toggle__line"></span>
+                    <span class="button-menu-toggle__line"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

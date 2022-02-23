@@ -2,7 +2,7 @@
 from django.db import models
 from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.fields import StreamField
-from wagtail.core.models import Page, TranslatableMixin
+from wagtail.core.models import Page
 
 from irelandie_missions.models import MissionPage
 from irelandie_news.blocks import NewsPageBlock
@@ -34,7 +34,7 @@ class NewsPage(ArticlePage):
         max_num=3
     )
 
-    # parent_page_types = [
-    #     "NewsPageIndex",
-    # ]
+    parent_page_types = [
+        "NewsPageIndex",
+    ]
     subpage_types = []

@@ -13,7 +13,7 @@ Example:
 {% pageurl card.page as href %}
     <a href="{{ href }}" class="card{% if large %} card--large{% endif %}{% if not card.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
 {% else %}
-    <div class="card{% if not card.summary %} card--no-summary{% endif %}">
+    <div class="card{% if not card.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
 {% endif %}
         <div class="card__image-container">
             {% image card.image width-500 class="card__image" %}

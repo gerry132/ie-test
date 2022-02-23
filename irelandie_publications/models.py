@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
-from django import forms
 from django.db import models
 
-from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.fields import StreamField
-from wagtail.core.models import Page, TranslatableMixin
+from wagtail.core.models import Page
 
 from irelandie_missions.models import MissionPage
 from irelandie_publications.blocks import PublicationPageBlock
@@ -37,8 +35,7 @@ class PublicationPage(ArticlePage):
         max_num=3
     )
 
-    # parent_page_types = [
-    #     "PublicationPageIndex",
-    # ]
+    parent_page_types = [
+        "PublicationPageIndex",
+    ]
     subpage_types = []
-

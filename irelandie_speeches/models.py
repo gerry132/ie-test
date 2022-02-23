@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from django import forms
 from django.db import models
 
 from wagtail.admin.edit_handlers import FieldPanel
@@ -36,7 +35,7 @@ class SpeechPage(ArticlePage):
         max_num=3
     )
 
-    # parent_page_types = [
-    #     "SpeechPageIndex",
-    # ]
+    parent_page_types = [
+        "SpeechPageIndex",
+    ]
     subpage_types = []

@@ -2,8 +2,16 @@
     position: relative;
     min-height: 500px;
 
+    &.streamfield {
+        max-height: 480px;
+    }
+
     @include media-query(medium) {
         min-height: 768px;
+
+        &.streamfield {
+            max-height: 480px;
+        }
     }
 
     iframe,

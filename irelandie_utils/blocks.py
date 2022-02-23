@@ -93,9 +93,42 @@ class FeaturedStoryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(required=False)
     title = blocks.CharBlock(required=False)
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
 
     class Meta:
         template = "patterns/molecules/streamfield/blocks/featured_story_block.html"
+
+    def clean(self, value):
+        errors = {}
+        values = [value["page"], value["url"]]
+        # Set only a Page OR a URL
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a page or set a URL."
+
+            errors["page"] = ErrorList([message])
+            errors["url"] = ErrorList([message])
+
+        # A URL must have title
+        if value["url"] and not value["title"]:
+            errors["title"] = ErrorList(["Please set a title for the URL"])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context['image'] = value['image']
+        context['page'] = value['page']
+        context["link_url"] = value['url'] or value['page'].url
+        context["link_title"] = value['title'] or value['page'].title
+        return context
+
 
 class EmbassyStory(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
@@ -227,7 +260,7 @@ class PlaceBlock(blocks.PageChooserBlock):
 class RichTextBlock(blocks.RichTextBlock):
     class Meta:
         label = "RichTextBlock"
-        template = "patterns/molecules/streamfield/blocks/rich-text.html"
+        template = "patterns/molecules/streamfield/blocks/paragraph_block.html"
 
     pass
 
@@ -282,6 +315,10 @@ class YoutubeVideoBlock(blocks.StructBlock):
 
 
 class CustomVideoChooserBlock(VideoChooserBlock):
+    class Meta:
+        label = "Custom Video Chooser"
+        template = "patterns/molecules/streamfield/blocks/video_block.html"
+
     pass
 
 
@@ -294,7 +331,7 @@ class ArticleStoryBlock(blocks.StreamBlock):
     heading = HeadingBlock()
     contact_detail = ContactDetailBlock()
     image = ImageBlock()
-    rich_text = blocks.RichTextBlock(features=["h3", "blockquote", "bold", "link", "document-link", "ul"])
+    rich_text = RichTextBlock(features=["h3", "blockquote", "bold", "link", "document-link", "ul"])
     person = PersonBlock()
     place = PlaceBlock()
     document = DocumentBlock()
