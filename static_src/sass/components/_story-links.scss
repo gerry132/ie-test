@@ -1,0 +1,17 @@
+.story-links {
+    $root: &;
+    margin-top: auto;
+    padding-top: $grid;
+    position: relative;
+    max-width: 100%;
+
+    &__container {
+        background-color: $color--white;
+        border-radius: $border-radius;
+        box-shadow: 0 43px 63px 0 rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-wrap: wrap;
+        overflow: hidden;
+        position: relative;
+    }
+}

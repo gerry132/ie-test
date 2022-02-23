@@ -26,19 +26,31 @@
                 {% endcomment %}
                 </div>
 
-                <ul class="story__links" data-story-links-expander>
-                    <div class="story__links-container">
+                {% comment %} <ul class="story-links" data-story-links-expander>
+                    <div class="story-links__container">
                         {% for link in value.links %}
                             {% include_block link %}
                         {% endfor %}
                     </div>
 
                     {% if value.links|length > 2 %}
-                        <button class="story__links-expander" aria-hidden="true" data-story-links-toggle>
-                            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="story__links-expander-icon" %}
+                        <button class="story-links__expander" aria-hidden="true" data-story-links-toggle>
+                            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="story-links__expander-icon" %}
                         </button>
                     {% endif %}
-                </ul>
+                </ul> {% endcomment %}
+
+                <div class="story-links__container">
+                    {% for link in value.links %}
+                        {% include_block link %}
+                    {% endfor %}
+                </div>
+
+                {% comment %} {% if value.links|length > 2 %}
+                    <button class="story-links__expander" aria-hidden="true" data-story-links-toggle>
+                        {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="story-links__expander-icon" %}
+                    </button>
+                {% endif %} {% endcomment %}
             </div>
         </div>
     </div>

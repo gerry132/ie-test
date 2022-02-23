@@ -1,5 +1,6 @@
 .story-link {
     $root: &;
+    border-bottom: 1px solid $color--border;
     position: relative;
     display: flex;
     align-items: flex-start;
