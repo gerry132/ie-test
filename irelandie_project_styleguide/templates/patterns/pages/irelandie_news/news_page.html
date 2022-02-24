@@ -13,7 +13,7 @@
     {% block main %}
         <!-- Body -->
         <div class="section section--padding">
-            <div class="wrapper wrapper--small">
+            <div class="wrapper wrapper--small wrapper--padding">
                 {% for block in page.body %}
                     {% if block.block_type == 'table' %}
                         {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}
@@ -27,7 +27,7 @@
         <!-- related_articles -->
         {% if page.related_articles %}
         <div class="section section--padding section--grey">
-            <div class="wrapper wrapper--large">
+            <div class="wrapper wrapper--large wrapper--padding">
                 <div class="related-articles">
                     <h2 class="related-articles__title heading--2">
                         {% trans 'You may also be interested in these articles' %}
