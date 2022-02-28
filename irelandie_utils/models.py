@@ -164,7 +164,7 @@ class ListingFields(models.Model):
         max_length=255,
         blank=True,
         help_text="The text summary used when this page appears in listings. It's also used as "
-                  f"the description for search engines if the '{SEARCH_DESCRIPTION_LABEL}' field above is not defined.",
+        f"the description for search engines if the '{SEARCH_DESCRIPTION_LABEL}' field above is not defined.",
     )
 
     class Meta:
@@ -278,7 +278,7 @@ class SocialMediaSettings(BaseSetting):
     social_links = StreamField(
         [("profile", custom_blocks.SocialLinkBlock())],
         blank=True,
-        help_text="List of links to social media profiles"
+        help_text="List of links to social media profiles",
     )
 
 
@@ -335,8 +335,12 @@ class BasePage(SocialFields, ListingFields, Page):
     @cached_property
     def custom_primary_navigation(self):
         from irelandie_missions.models import CountryGroupPageIndex
-        country_index = Page.objects.ancestor_of(self, inclusive=True).exact_type(
-            CountryGroupPageIndex).first()
+
+        country_index = (
+            Page.objects.ancestor_of(self, inclusive=True)
+            .exact_type(CountryGroupPageIndex)
+            .first()
+        )
         if country_index:
             return country_index.specific.override_primary_navigation
         return None
@@ -456,7 +460,7 @@ class ArticlePage(BasePage):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name="+",
     )
 
     class Meta:
@@ -474,6 +478,11 @@ class ArticlePage(BasePage):
         SnippetChooserPanel("call_to_action"),
         StreamFieldPanel("body"),
         StreamFieldPanel("override_related_articles"),
+    ]
+
+    search_fields = BasePage.search_fields + [
+        index.SearchField("introduction"),
+        index.SearchField("body"),
     ]
 
     def clean(self):
@@ -515,8 +524,10 @@ class ArticlePage(BasePage):
             ]
 
         return (
-            Page.objects.exact_type(type(self)).filter(locale=self.locale).exclude(pk=self.pk)
-                .public()  # type:ignore
-                .live()
-                .order_by("-first_published_at")[:3]
+            Page.objects.exact_type(type(self))
+            .filter(locale=self.locale)
+            .exclude(pk=self.pk)
+            .public()  # type:ignore
+            .live()
+            .order_by("-first_published_at")[:3]
         )

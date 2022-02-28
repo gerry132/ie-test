@@ -1,0 +1,9 @@
+.intro {
+    position: relative;
+    max-width: 500px;
+    margin: $grid 0 40px;
+
+    &__title {
+        font-weight: $weight--bold;
+    }
+}

@@ -6,29 +6,33 @@
         cursor: pointer;
         position: relative;
         line-height: 1.2;
-        padding-left: 5px;
+        padding-left: 10px;
+        padding-top: 3px;
 
         // surrounding circle
         &::before {
             content: '';
             position: absolute;
+            box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.45);
+            background-color: $color--white;
             left: -24px;
             top: 0;
             border-radius: 50%;
-            border: 1px solid;
-            width: 20px;
-            height: 20px;
+            border: 1px solid transparent;
+            width: 25px;
+            height: 25px;
         }
 
         // inner circle
         &::after {
             content: '';
+            color: $color--primary;
             position: absolute;
             left: -20px;
             top: 4px;
             border-radius: 50%;
-            width: 12px;
-            height: 12px;
+            width: 17px;
+            height: 17px;
             transition: background-color $transition;
         }
     }
