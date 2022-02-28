@@ -1,8 +1,8 @@
 terraform {
-  required_version = ">=0.13.2"
+  required_version = ">=1.1"
   required_providers {
-    aws         = ">=3.26.0"
-    random      = ">=3.0.1"
+    aws         = ">=4.0.0"
+    random      = ">=3.1.0"
     template    = ">=2.2.0"
   }
 }
@@ -56,6 +56,10 @@ locals {
     "139.162.239.108/32",
   ]
   non_gov_network_cird_blocks   = {
+    dfa_main = {
+      description = "DFA main IP address"
+      cidr_blocks = ["62.23.128.137/32"]
+    },
     rachel_dev = {
       description = "Rachel Mannion - OGCIO"
       cidr_blocks = ["139.162.182.140/32"]
@@ -338,7 +342,15 @@ resource "aws_security_group_rule" "ecs_to_redis_5432" {
 
 resource "aws_s3_bucket" "assets" {
   bucket  = "${local.environment_name}-${local.project_name}-assets"
-  acl     = "public-read"
+}
+
+resource "aws_s3_bucket_acl" "assets" {
+  bucket = aws_s3_bucket.assets.id
+  acl    = "public-read"
+}
+
+resource "aws_s3_bucket_cors_configuration" "assets" {
+  bucket = aws_s3_bucket.assets.id
 
   cors_rule {
     allowed_headers = ["*"]
@@ -351,18 +363,31 @@ resource "aws_s3_bucket" "assets" {
 
 resource "aws_s3_bucket" "logs" {
   bucket  = "${local.environment_name}-${local.project_name}-ecs-logs"
-  acl     = "private"
+}
+
+resource "aws_s3_bucket_acl" "logs" {
+  bucket = aws_s3_bucket.logs.id
+  acl    = "private"
 }
 
 resource "aws_s3_bucket" "lb_logs" {
   bucket  = "${local.environment_name}-${local.project_name}-lb-logs"
-  acl     = "private"
+}
+
+resource "aws_s3_bucket_acl" "lb_logs" {
+  bucket = aws_s3_bucket.lb_logs.id
+  acl    = "private"
 }
 
 resource "aws_s3_bucket" "private_lb_logs" {
   bucket  = "${local.environment_name}-${local.project_name}-private-lb-logs"
-  acl     = "private"
 }
+
+resource "aws_s3_bucket_acl" "private_lb_logs" {
+  bucket = aws_s3_bucket.private_lb_logs.id
+  acl    = "private"
+}
+
 
 # Policies
 
