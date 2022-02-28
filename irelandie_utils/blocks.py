@@ -80,7 +80,7 @@ class StoryBlock(blocks.StructBlock):
         [
             ("link", StoryLinkBlock()),
         ],
-        max_num=3,
+        max_num=6,
         min_num=0,
         required=False,
     )
