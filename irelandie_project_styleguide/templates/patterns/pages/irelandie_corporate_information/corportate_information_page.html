@@ -31,41 +31,7 @@
         </div>
 
         <!-- related_articles -->
-        {% if page.related_articles %}
-        <div class="section section--padding section--grey">
-            <div class="wrapper wrapper--large">
-                <div class="related-articles">
-                    <h2 class="related-articles__title heading--2">
-                        {% trans 'You may also be interested in these articles' %}
-                    </h2>
-                    <div class="grid">
-                        {% for article in page.related_articles %}
-                            {% pageurl article as href %}
-                            <a href="{{ href }}" class="card{% if large %} card--large{% endif %}{% if classes %} {{ classes }}{% endif %}">
-                                <div class="card">
-                                    <div class="card__image-container">
-                                        {% image article.listing_image width-768 class="card__image" %}
-                                    </div>
-                                    <div class="card__content">
-                                        <h3 class="card__title">{{ article.listing_title }}</h3>
+        {% include "patterns/molecules/related-articles/related-articles.html" with articles=page.related_articles %}
 
-                                        {% if article.listing_summary %}
-                                            <p class="card__summary">{{ article.listing_summary }}</p>
-                                        {% endif %}
-
-                                        {% if article %}
-                                            <span class="card__link">
-                                                {% trans 'Read story' %}
-                                            </span>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </a>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endif %}
     {% endblock %}
 {% endblock %}
