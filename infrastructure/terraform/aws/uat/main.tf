@@ -749,18 +749,6 @@ resource "aws_lb_listener_rule" "ireland_ie_443" {
 }
 
 
-resource "aws_lb_ssl_negotiation_policy" "ireland_ie_policy" {
-  name          = "ireland_ie_policy"
-  load_balancer = aws_lb.default.id
-  lb_port       = 443
-
-  attribute {
-    name  = "Reference-Security-Policy"
-    value = "ELBSecurityPolicy-TLS-1-2-2017-01"
-  }
-}
-
-
 # -----------------------------------------------------------------------------
 # Listener certificates
 # -----------------------------------------------------------------------------
