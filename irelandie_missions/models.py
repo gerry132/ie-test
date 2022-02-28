@@ -32,7 +32,7 @@ class CountryGroupPageIndex(BasePage):
 class CountryPage(HeroPage):
     template = "patterns/pages/missions/country_page.html"
 
-    parent_page_types = ["CountryGroupPageIndex"]
+    # parent_page_types = ["CountryGroupPageIndex"]
     subpage_types = ["MissionPage"]
     stories = StreamField(
         [
