@@ -1,6 +1,21 @@
 {% extends "patterns/base_page.html" %}
 {% load wagtailcore_tags wagtailimages_tags util_tags static %}
 
+{% load wagtailcore_tags honeypot_tags %}
+
+{% block extra_js %}
+  <script async>
+    var whf_name = "whf_name";
+    var data_whf_name = "[data-" + whf_name + "]";
+
+    document.querySelectorAll(data_whf_name).forEach(function(el) {
+        el.classList.add(whf_name);
+        el.setAttribute("style", "position: absolute;top: 0;left: 0;margin-left: 100%;");
+    });
+  </script>
+{% endblock extra_js %}
+
+
 {% block content %}
 <div class="section section--padding section--grey">
     <div class="wrapper wrapper--large">
@@ -23,10 +38,12 @@
                                     There were some errors with your form. Please amend the fields highlighted below.
                                 </div>
                             {% endif %}
-
+                            
                             {% for field in form %}
+                            {% honeypot_fields %}
                                 {% include "patterns/molecules/field/field.html" %}
                             {% endfor %}
+                            
 
                             <button class="form__submit button" type="submit">{% if page.action_text %}{{ page.action_text|safe }}{% else %}Submit{% endif %}</button>
                         </div>
