@@ -1,0 +1,18 @@
+.search-results {
+    max-width: $wrapper--small;
+
+    &__query {
+        font-weight: $weight--bold;
+    }
+
+    &__count {
+        @include font-size(xs);
+        font-family: $font--secondary;
+        position: relative;
+        margin-bottom: $grid;
+
+        @include media-query(medium) {
+            margin-bottom: 60px;
+        }
+    }
+}

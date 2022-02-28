@@ -18,6 +18,10 @@
         }
     }
 
+    .featured-blocks & {
+        margin-bottom: $grid;
+    }
+
     &__image-container {
         height: 300px;
         overflow: hidden;
@@ -56,6 +60,7 @@
 
     &__link {
         text-decoration: underline;
+        font-weight: $weight--bold;
         color: $color--primary;
     }
 }

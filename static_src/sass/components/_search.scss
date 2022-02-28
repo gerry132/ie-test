@@ -71,4 +71,14 @@
         width: 30px;
         height: 30px;
     }
+
+    &__results-input {
+        display: inline-block;
+        vertical-align: middle;
+
+        @include media-query(medium) {
+            max-width: $wrapper--small;
+            margin-right: $grid;
+        }
+    }
 }
