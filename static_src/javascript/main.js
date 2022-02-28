@@ -4,7 +4,6 @@ import MobileSubMenu from './components/mobile-sub-menu';
 import DesktopSubMenu from './components/desktop-sub-menu';
 import DesktopCloseMenus from './components/desktop-close-menus';
 import SkipLink from './components/skip-link';
-import StoryLinksExpander from './components/story-links-expander';
 import Search from './components/search';
 import VideoToggle from './components/video-toggle';
 
@@ -99,12 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (const skiplink of document.querySelectorAll(SkipLink.selector())) {
         new SkipLink(skiplink);
-    }
-
-    for (const storylinksexpander of document.querySelectorAll(
-        StoryLinksExpander.selector(),
-    )) {
-        new StoryLinksExpander(storylinksexpander);
     }
 
     for (const search of document.querySelectorAll(Search.selector())) {
