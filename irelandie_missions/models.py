@@ -110,11 +110,10 @@ class MissionSearchPage(BasePage):
 
     @cached_property
     def mission_tags(self):
-        return MissionPage.objects.filter(locale=self.locale).live().public().values('title')
-
+        return MissionPage.objects.filter(locale=self.locale).live().public()
     @cached_property
     def country_tags(self):
-        return CountryPage.objects.filter(locale=self.locale).live().public().values('title')
+        return CountryPage.objects.filter(locale=self.locale).live().public()
 
     def get_context(self, request):
         context = super().get_context(request)

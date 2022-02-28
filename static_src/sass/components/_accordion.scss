@@ -1,7 +1,6 @@
 .accordion {
     $root: &;
     max-width: $wrapper--small;
-    margin-bottom: $grid;
 
     &.is-open {
         #{$root}__icon {
@@ -18,15 +17,14 @@
     }
 
     &__button {
-        background-color: $color--primary;
-        border-radius: $border-radius;
+        background-color: transparent;
         border: 0;
-        border-bottom: 1px solid $color--border;
-        color: $color--white;
+        border-bottom: 1px solid darken($color--border, 10);
+        color: $color--default;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px $grid;
+        padding: 20px 0;
         transition: color 0.2s ease;
         text-decoration: none;
         width: 100%;
@@ -38,6 +36,7 @@
         /* stylelint-disable */
         &:focus {
             outline: 0; // focus style implemented directly on text instead
+            border-bottom: 0;
         }
         /* stylelint-enable */
     }
@@ -48,9 +47,9 @@
     }
 
     &__title {
-        @include font-size(m);
-        font-weight: $weight--bold;
-        line-height: 2;
+        font-size: 30px;
+        line-height: 36px;
+        letter-spacing: -1.35px;
         margin: 0;
         padding: 0;
 
@@ -60,11 +59,11 @@
     }
 
     &__icon {
-        width: 25px;
-        height: 25px;
+        width: 20px;
+        height: 10px;
         margin-right: 20px;
         transition: transform, fill, 0.2s ease;
-        fill: $color--primary;
+        fill: $color--default;
 
         @media screen and (-ms-high-contrast: active) {
             filter: brightness(400%);
@@ -73,8 +72,11 @@
 
     &__content {
         display: none;
-        margin-bottom: 40px;
+        padding: 0 0 20px 0;
         margin-top: 15px;
-        padding: 0 $grid;
+
+        #{$root}.is-open & {
+            border-bottom: 1px solid darken($color--border, 10);
+        }
     }
 }
