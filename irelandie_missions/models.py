@@ -93,7 +93,6 @@ class MissionPage(BasePage):
         "irelandie_places.PlacePageIndex",
         "irelandie_publications.PublicationPageIndex",
         "irelandie_site_information.SiteInformationPageIndex",
-        "irelandie_speeches.SpeechPageIndex",
     ]
 
 
@@ -124,3 +123,4 @@ class MissionSearchPage(BasePage):
         context['mission_tags'] = self.mission_tags
         context['country_tags'] = self.country_tags
         return context
+        
