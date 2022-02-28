@@ -11,5 +11,8 @@
         >
         </iframe>
     </div>
+    {% if value.slido_embed %}
+    <div>{{ value.slido_embed|safe }}</div>
+    {% endif %}
 </div>
 {% endif %}

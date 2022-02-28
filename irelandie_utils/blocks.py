@@ -1,6 +1,7 @@
 import re
 
 from django.forms.utils import ErrorList
+from django.utils.translation import gettext_lazy as _
 from wagtail.contrib.table_block.blocks import TableBlock as WagtailTableBlock
 from wagtail.core import blocks
 from wagtail.core.blocks.struct_block import StructBlockValidationError, StructValue
@@ -311,6 +312,12 @@ class YoutubeVideoBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/youtube_block.html"
 
     url = blocks.CharBlock()
+    slido_embed = blocks.TextBlock(
+        required=False,
+        help_text=_(
+            "Slido iframe code. Ensure that the code you add here is only Slido provided code."
+        ),
+    )
 
 
 class CustomVideoChooserBlock(VideoChooserBlock):
