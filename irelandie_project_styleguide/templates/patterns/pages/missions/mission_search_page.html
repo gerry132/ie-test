@@ -34,9 +34,9 @@
                         class="accordion__content"
                         aria-labelledby="countries"
                         aria-hidden="true">
-                        <ul>
+                        <ul class="accordion__list">
                             {% for country_tag in country_tags %}
-                                <li>
+                                <li class="accordion__list-item">
                                     <a href="{{ country_tag.url }}">{{ country_tag.title }}</a>
                                 </li>
                             {% endfor %}
