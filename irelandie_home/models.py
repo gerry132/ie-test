@@ -49,19 +49,11 @@ class HomePage(HeroPage):
     # Only allow creating HomePages at the root level
     parent_page_types = ['wagtailcore.Page']
     subpage_types = [
-<<<<<<< Updated upstream
-        'irelandie_missions.CountryGroupPageIndex',
-        'irelandie_missions.MissionSearchPage',
-        'irelandie_home.CampaignPage',
-        'irelandie_home.TopicPage',
-        'irelandie_forms.FormPage',
-=======
         "irelandie_missions.CountryPage",
         "irelandie_missions.MissionSearchPage",
         "irelandie_home.CampaignPage",
         "irelandie_home.TopicPage",
         "irelandie_forms.FormPage",
->>>>>>> Stashed changes
     ]
 
     #
