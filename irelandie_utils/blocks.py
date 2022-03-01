@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
 import re
 
 from django.forms.utils import ErrorList
+from django.utils.translation import gettext_lazy as _
 from wagtail.contrib.table_block.blocks import TableBlock as WagtailTableBlock
 from wagtail.core import blocks
 from wagtail.core.blocks.struct_block import StructBlockValidationError, StructValue
@@ -14,13 +14,13 @@ from irelandie_utils.constants import StoryAlignment, StoryBackground
 
 class AlternateLinkValue(StructValue):
     def link_url(self):
-        external_url = self.get('url')
-        page = self.get('page')
+        external_url = self.get("url")
+        page = self.get("page")
         return external_url or page.url
 
     def link_title(self):
-        title = self.get('title')
-        page = self.get('page')
+        title = self.get("title")
+        page = self.get("page")
         return title or page.title
 
 
@@ -123,10 +123,10 @@ class FeaturedStoryBlock(blocks.StructBlock):
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        context['image'] = value['image']
-        context['page'] = value['page']
-        context["link_url"] = value['url'] or value['page'].url
-        context["link_title"] = value['title'] or value['page'].title
+        context["image"] = value["image"]
+        context["page"] = value["page"]
+        context["link_url"] = value["url"] or value["page"].url
+        context["link_title"] = value["title"] or value["page"].title
         return context
 
 
@@ -150,7 +150,7 @@ class EmbassyStory(blocks.StructBlock):
 
 class AlernatePinnedStoryHeroLinkText(StructValue):
     def link_text(self):
-        text = self.get('button_text') or self.get('page')
+        text = self.get("button_text") or self.get("page")
         return text
 
 
@@ -312,6 +312,12 @@ class YoutubeVideoBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/youtube_block.html"
 
     url = blocks.CharBlock()
+    slido_embed = blocks.TextBlock(
+        required=False,
+        help_text=_(
+            "Slido iframe code. Ensure that the code you add here is only Slido provided code."
+        ),
+    )
 
 
 class CustomVideoChooserBlock(VideoChooserBlock):
@@ -327,11 +333,83 @@ class BaseSectionBlock(blocks.StructBlock):
     body = blocks.StreamBlock([], required=False)
 
 
+class LogoCardBlock(blocks.StructBlock):
+    image = ImageChooserBlock()
+    title = blocks.CharBlock()
+    summary = blocks.TextBlock()
+    url = blocks.URLBlock()
+
+    class Meta:
+        icon = "image"
+        label = "Logo Card"
+        template = "patterns/molecules/logo_card/logo_card.html"
+
+
+class LogoCardsBlock(blocks.StructBlock):
+    title = blocks.CharBlock()
+    summary = blocks.TextBlock()
+    cards = blocks.StreamBlock([("card", LogoCardBlock())])
+
+    class Meta:
+        icon = "table"
+        label = "Logo Cards"
+        template = "patterns/molecules/streamfield/blocks/logo_cards.html"
+
+
+class ArticleCardBlock(blocks.StructBlock):
+    image = ImageChooserBlock()
+    title = blocks.CharBlock()
+    summary = blocks.TextBlock()
+    page = blocks.PageChooserBlock()
+
+    class Meta:
+        icon = "image"
+        label = "Article Card"
+        template = "patterns/molecules/article_card/article_card.html"
+
+
+class ArticleCardsBlock(blocks.StructBlock):
+    title = blocks.CharBlock()
+    summary = blocks.TextBlock()
+    articles = blocks.StreamBlock([("article", ArticleCardBlock())])
+
+    class Meta:
+        icon = "table"
+        label = "Articles"
+        template = "patterns/molecules/streamfield/blocks/article_cards.html"
+
+
+class FeaturedArticlesBlock(blocks.StructBlock):
+    title = blocks.CharBlock()
+    summary = blocks.TextBlock()
+    articles = blocks.ListBlock(
+        blocks.PageChooserBlock(
+            page_type=[
+                "irelandie_corporate_information.CorportateInformationPage",
+                "irelandie_news.NewsPage",
+                "irelandie_press_releases.PressReleasePage",
+                "irelandie_publications.PublicationPage",
+                "irelandie_speeches.SpeechPage",
+                "irelandie_site_information.SiteInformationPage",
+            ]
+        ),
+        min_num=3,
+        max_num=3,
+    )
+
+    class Meta:
+        icon = "table"
+        label = "Featured Articles"
+        template = "patterns/molecules/streamfield/blocks/featured_articles.html"
+
+
 class ArticleStoryBlock(blocks.StreamBlock):
     heading = HeadingBlock()
     contact_detail = ContactDetailBlock()
     image = ImageBlock()
-    rich_text = RichTextBlock(features=["h3", "blockquote", "bold", "link", "document-link", "ul"])
+    rich_text = RichTextBlock(
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul"]
+    )
     person = PersonBlock()
     place = PlaceBlock()
     document = DocumentBlock()
