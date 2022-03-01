@@ -26,21 +26,13 @@
                 {% endcomment %}
                 </div>
 
-                {% if value.links %}
-                    <ul class="story__links" data-story-links-expander>
-                        <div class="story__links-container">
-                            {% for link in value.links %}
-                                {% include_block link %}
-                            {% endfor %}
-                        </div>
-
-                        {% if value.links|length > 2 %}
-                            <button class="story__links-expander" aria-hidden="true" data-story-links-toggle>
-                                {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="story__links-expander-icon" %}
-                            </button>
-                        {% endif %}
-                    </ul>
-                {% endif %}
+                <div class="story-links">
+                    <div class="story-links__container">
+                        {% for link in value.links %}
+                            {% include_block link %}
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
