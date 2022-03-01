@@ -124,4 +124,3 @@ class MissionSearchPage(BasePage):
         context['mission_tags'] = self.mission_tags
         context['country_tags'] = self.country_tags
         return context
-        

@@ -1,0 +1,35 @@
+.search-result {
+    font-family: $font--secondary;
+    position: relative;
+    margin-bottom: $grid;
+    display: flex;
+    justify-content: flex-start;
+
+    @include media-query(medium) {
+        margin-bottom: 40px;
+    }
+
+    &__image {
+        max-width: 150px;
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+        overflow: hidden;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
+        margin-right: $grid;
+
+        @include media-query(medium) {
+            margin-right: $grid;
+        }
+    }
+
+    &__title {
+        @include font-size(l);
+        color: $color--off-black;
+        font-weight: $weight--semibold;
+        text-decoration: underline;
+    }
+
+    &__summary {
+        @include font-size(s);
+    }
+}
