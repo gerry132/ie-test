@@ -118,7 +118,13 @@ class MissionSearchPage(BasePage):
 
     @cached_property
     def regions(self):
-        return CountryGroup.objects.all()
+        country_groups = CountryGroup.objects.all()
+        regions = []
+        for group in country_groups:
+            countries_count = CountryPage.objects.filter(region=group).count()
+            if countries_count:
+                regions.append(group)
+        return regions
 
     @cached_property
     def countries(self):
