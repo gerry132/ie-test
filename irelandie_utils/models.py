@@ -520,3 +520,11 @@ class ArticlePage(BasePage):
                 .live()
                 .order_by("-first_published_at")[:3]
         )
+
+
+@register_snippet
+class CountryGroup(models.Model):
+    region = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.region
