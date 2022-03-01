@@ -4,9 +4,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
-
 from modelcluster.fields import ParentalKey
-
 from wagtail.admin.edit_handlers import (
     FieldPanel,
     MultiFieldPanel,
@@ -164,7 +162,7 @@ class ListingFields(models.Model):
         max_length=255,
         blank=True,
         help_text="The text summary used when this page appears in listings. It's also used as "
-                  f"the description for search engines if the '{SEARCH_DESCRIPTION_LABEL}' field above is not defined.",
+        f"the description for search engines if the '{SEARCH_DESCRIPTION_LABEL}' field above is not defined.",
     )
 
     class Meta:
@@ -278,7 +276,7 @@ class SocialMediaSettings(BaseSetting):
     social_links = StreamField(
         [("profile", custom_blocks.SocialLinkBlock())],
         blank=True,
-        help_text="List of links to social media profiles"
+        help_text="List of links to social media profiles",
     )
 
 
@@ -335,8 +333,12 @@ class BasePage(SocialFields, ListingFields, Page):
     @cached_property
     def custom_primary_navigation(self):
         from irelandie_missions.models import CountryGroupPageIndex
-        country_index = Page.objects.ancestor_of(self, inclusive=True).exact_type(
-            CountryGroupPageIndex).first()
+
+        country_index = (
+            Page.objects.ancestor_of(self, inclusive=True)
+            .exact_type(CountryGroupPageIndex)
+            .first()
+        )
         if country_index:
             return country_index.specific.override_primary_navigation
         return None
@@ -456,7 +458,7 @@ class ArticlePage(BasePage):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name="+",
     )
 
     class Meta:
@@ -515,10 +517,12 @@ class ArticlePage(BasePage):
             ]
 
         return (
-            Page.objects.exact_type(type(self)).filter(locale=self.locale).exclude(pk=self.pk)
-                .public()  # type:ignore
-                .live()
-                .order_by("-first_published_at")[:3]
+            Page.objects.exact_type(type(self))
+            .filter(locale=self.locale)
+            .exclude(pk=self.pk)
+            .public()  # type:ignore
+            .live()
+            .order_by("-first_published_at")[:3]
         )
 
 

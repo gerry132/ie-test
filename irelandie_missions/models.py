@@ -1,13 +1,13 @@
 from django.db import models
 from django.utils.functional import cached_property
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, MultiFieldPanel
-from wagtail.snippets.edit_handlers import SnippetChooserPanel
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.core.fields import StreamField
+from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
+from irelandie_home.models import HomePage
 from irelandie_navigation.models import LinkBlock
 from irelandie_utils import blocks
-from irelandie_home.models import HomePage
-from irelandie_utils.models import HeroPage, BasePage, CountryGroup
+from irelandie_utils.models import BasePage, CountryGroup, HeroPage
 
 
 class CountryGroupPageIndex(BasePage):
@@ -36,7 +36,7 @@ class CountryPage(HeroPage):
     subpage_types = ["MissionPage"]
     stories = StreamField(
         [
-            ('story', blocks.StoryBlock()),
+            ("story", blocks.StoryBlock()),
         ],
         blank=True,
         null=True,
@@ -45,7 +45,7 @@ class CountryPage(HeroPage):
     )
     embeds = StreamField(
         [
-            ('youtube', blocks.YoutubeVideoBlock()),
+            ("youtube", blocks.YoutubeVideoBlock()),
         ],
         blank=True,
         null=True,
@@ -54,7 +54,7 @@ class CountryPage(HeroPage):
     )
     featured_stories = StreamField(
         [
-            ('featured_story', blocks.FeaturedStoryBlock()),
+            ("featured_story", blocks.FeaturedStoryBlock()),
         ],
         blank=True,
         null=True,
@@ -63,7 +63,7 @@ class CountryPage(HeroPage):
     )
     featured_embassies = StreamField(
         [
-            ('embassy_story', blocks.EmbassyStory()),
+            ("embassy_story", blocks.EmbassyStory()),
         ],
         blank=True,
         null=True,
@@ -79,7 +79,7 @@ class CountryPage(HeroPage):
     )
 
     content_panels = HeroPage.content_panels + [
-        SnippetChooserPanel('region'),
+        SnippetChooserPanel("region"),
         StreamFieldPanel("stories"),
         StreamFieldPanel("embeds"),
         StreamFieldPanel("featured_stories"),
@@ -127,7 +127,6 @@ class MissionSearchPage(BasePage):
     def get_context(self, request):
         context = super().get_context(request)
         # Add extra variables and return the updated context
-        context['regions'] = self.regions
-        context['countries'] = self.countries
+        context["regions"] = self.regions
+        context["countries"] = self.countries
         return context
-        
