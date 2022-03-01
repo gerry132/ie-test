@@ -1,4 +1,18 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 
-{% include "patterns/molecules/featured-block/featured_block.html" with featured_block=value %}
+
+{% if value.page %}
+    {% pageurl value.page as href %}
+    <a href="{{ href }}" class="featured-block">
+{% elif value.url %}
+    <a href="{{ value.url }}" class="featured-block">   
+{% endif %}
+        {% image value.image fill-768x768 as featured_image %}
+        <div class="featured-block__image" style="background-image:url({{ featured_image.url }});"></div>
+        <div class="featured-block__content-wrapper">
+            <div class="featured-block__content">
+                <h3 class="featured-block__title heading--3">{{ value.link_title }}</h3>
+            </div>
+        </div>
+    </a>

@@ -1,7 +1,51 @@
 .featured-blocks {
     position: relative;
-    display: grid;
     margin: 30px 0;
-    grid-gap: $grid;
-    grid-template-columns: repeat(auto-fit, minmax(calc(50% - 30px), 1fr));
+
+    @include media-query(medium) {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    
+    > .featured-blocks {
+        @include media-query(medium) {
+            margin: 0 $grid;
+            flex-basis: calc(50% - 30px);
+
+            &--three {
+                flex-basis: calc(33.33% - 30px);
+            }
+
+            &--four {
+                flex-basis: calc(25% - 30px);
+            }
+        }
+    }
+
+    @supports (display: grid) {
+        @include media-query(medium) {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(calc(50% - 30px), 1fr)
+            );
+            grid-gap: $grid;
+            grid-template-columns: 1fr;
+
+            &--three {
+                grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(calc(33.33% - 30px), 1fr)
+                );
+            }
+
+            &--four {
+                grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(calc(25% - 30px), 1fr)
+                );
+            }
+        }
+    }
 }

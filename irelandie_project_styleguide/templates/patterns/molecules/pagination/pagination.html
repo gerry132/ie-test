@@ -1,16 +1,28 @@
-{% load querystring_modify %}{% if paginator_page.paginator.num_pages > 1 %}
-<nav aria-label="Pagination">
-    <ul class="pagination">
+{% load querystring_modify static wagtailcore_tags wagtailsearchpromotions_tags i18n %}
+{% if paginator_page.paginator.num_pages > 1 %}
+
+<nav aria-label="Pagination" class="pagination">
+    <ul class="pagination__list">
         {% if paginator_page.has_previous %}
-            <li><a href="{% querystring_modify page=paginator_page.previous_page_number %}" class="previous">Previous <span class="u-sr-only">page</span></a></li>
+            <li>
+                <a href="{% querystring_modify page=paginator_page.previous_page_number %}" class="previous pagination__link"  rel="prev" aria-label="Goto previous page">
+                    {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="pagination__icon pagination__icon--prev" %}
+                </a>
+            </li>
         {% endif %}
 
         <li class="current" aria-current="page">
-            {{ paginator_page.number }}/{{ paginator_page.paginator.num_pages }}
+            <a href="{% querystring_modify page=page %}" class="pagination__link pagination__link--active" aria-label="Current Page, Page {{ paginator_page.number }} of {{ paginator_page.paginator.num_pages }} pages" aria-current="page">
+                {{ paginator_page.number }}
+            </a>
         </li>
 
         {% if paginator_page.has_next %}
-            <li><a href="{% querystring_modify page=paginator_page.next_page_number %}" class="next">Next <span class="u-sr-only">page</span></a></li>
+            <li>
+                <a href="{% querystring_modify page=paginator_page.next_page_number %}" class="next pagination__link" rel="next" aria-label="Goto next page">
+                    {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="pagination__icon pagination__icon--next" %}
+                </a>
+            </li>
         {% endif %}
     </ul>
 </nav>{% endif %}

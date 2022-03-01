@@ -1,0 +1,12 @@
+{% load wagtailcore_tags %}
+
+<div class="intro">
+    <h2 class="intro__title">{{ value.title }}</h2>
+    <div class="intro__description">{{ value.summary }}</div>
+</div>
+
+<div class="article-cards featured-blocks featured-blocks--four">
+    {% for article in value.articles %}
+        {% include_block article %}
+    {% endfor %}
+</div>

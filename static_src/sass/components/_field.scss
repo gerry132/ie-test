@@ -41,7 +41,7 @@
 
     &__label,
     &__label--multiple {
-        @include font-size(m);
+        @include font-size(s);
         display: block;
         margin-bottom: 5px;
         font-weight: $weight--bold;
@@ -57,7 +57,7 @@
     &__help {
         @include font-size(s);
         margin-top: 5px;
-        color: rgba($color--default, 0.6);
+        color: $color--accessible-grey;
     }
 
     &__fieldset {
@@ -70,8 +70,10 @@
     input:not([type='checkbox']):not([type='radio']):not([type='submit']),
     textarea,
     select {
+        border-radius: $border-radius;
+        border: 1px solid transparent;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
         width: 100%;
         padding: 10px;
-        border: 1px solid $color--default;
     }
 }
