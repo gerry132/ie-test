@@ -8,13 +8,12 @@
         margin: 0 $grid;
         flex-basis: calc(50% - 30px);
 
-            &--three {
-                flex-basis: calc(33.33% - 30px);
-            }
+        &--three {
+            flex-basis: calc(33.33% - 30px);
+        }
 
-            &--four {
-                flex-basis: calc(25% - 30px);
-            }
+        &--four {
+            flex-basis: calc(25% - 30px);
         }
     }
 
@@ -26,7 +25,6 @@
                 minmax(calc(50% - 30px), 1fr)
             );
             grid-gap: $grid;
-            grid-template-columns: 1fr;
 
             &--three {
                 grid-template-columns: repeat(

@@ -26,13 +26,15 @@
                 {% endcomment %}
                 </div>
 
-                <div class="story-links">
-                    <div class="story-links__container">
-                        {% for link in value.links %}
-                            {% include_block link %}
-                        {% endfor %}
+                {% if value.links %}
+                    <div class="story-links">
+                        <div class="story-links__container">
+                            {% for link in value.links %}
+                                {% include_block link %}
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
         </div>
     </div>
