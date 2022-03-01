@@ -1,13 +1,13 @@
-# -*- coding: utf-8 -*-
 from django.db import models
 from django.utils.functional import cached_property
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, MultiFieldPanel
+from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.core.fields import StreamField
 
 from irelandie_navigation.models import LinkBlock
 from irelandie_utils import blocks
 from irelandie_home.models import HomePage
-from irelandie_utils.models import HeroPage, BasePage
+from irelandie_utils.models import HeroPage, BasePage, CountryGroup
 
 
 class CountryGroupPageIndex(BasePage):
@@ -71,7 +71,15 @@ class CountryPage(HeroPage):
         max_num=1,
     )
 
+    region = models.ForeignKey(
+        CountryGroup,
+        on_delete=models.PROTECT,
+        related_name="+",
+        null=True,
+    )
+
     content_panels = HeroPage.content_panels + [
+        SnippetChooserPanel('region'),
         StreamFieldPanel("stories"),
         StreamFieldPanel("embeds"),
         StreamFieldPanel("featured_stories"),
@@ -109,18 +117,17 @@ class MissionSearchPage(BasePage):
     ]
 
     @cached_property
-    def mission_tags(self):
-        return MissionPage.objects.filter(locale=self.locale).live().public().values('title')
+    def regions(self):
+        return CountryGroup.objects.all()
 
     @cached_property
-    def country_tags(self):
-        return CountryPage.objects.filter(locale=self.locale).live().public().values('title')
+    def countries(self):
+        return CountryPage.objects.all()
 
     def get_context(self, request):
         context = super().get_context(request)
-
         # Add extra variables and return the updated context
-        context['mission_tags'] = self.mission_tags
-        context['country_tags'] = self.country_tags
+        context['regions'] = self.regions
+        context['countries'] = self.countries
         return context
         
