@@ -9,6 +9,13 @@ from wagtail.admin.edit_handlers import (
     FieldRowPanel,
     InlinePanel,
     MultiFieldPanel,
+    ObjectList,
+    TabbedInterface,
+)
+from wagtail.contrib.forms.models import (
+    FORM_FIELD_CHOICES,
+    AbstractFormField,
+    FormBuilder,
 )
 from wagtail.contrib.forms.models import (
     FORM_FIELD_CHOICES,
@@ -17,7 +24,8 @@ from wagtail.contrib.forms.models import (
 )
 from wagtail.core.fields import RichTextField
 from wagtail.search import index
-from wagtailcaptcha.models import WagtailCaptchaEmailForm
+
+from wagtail_honeypot.models import HoneypotMixin
 
 from irelandie_utils.models import BasePage
 
@@ -49,7 +57,7 @@ class CustomFormBuilder(FormBuilder):
 
 # Never cache form pages since they include CSRF tokens.
 @method_decorator(never_cache, name="serve")
-class FormPage(WagtailCaptchaEmailForm, BasePage):
+class FormPage(HoneypotMixin, BasePage):
     template = "patterns/pages/forms/form_page.html"
     landing_page_template = "patterns/pages/forms/form_page_landing.html"
 
@@ -86,3 +94,11 @@ class FormPage(WagtailCaptchaEmailForm, BasePage):
     ]
 
     form_builder = CustomFormBuilder
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels, heading="Content"),
+            ObjectList(HoneypotMixin.honeypot_panels, heading="Honeypot"),
+            ObjectList(BasePage.promote_panels, heading="Promote"),
+            ObjectList(BasePage.settings_panels, heading="Settings", classname="settings"),
+        ]
+    )
