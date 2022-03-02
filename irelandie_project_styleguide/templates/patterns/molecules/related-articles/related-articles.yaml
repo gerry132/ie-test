@@ -1,0 +1,5 @@
+context:
+  page:
+    related_articles:
+      - listing_title: lorem ipsum
+        listing_image: dummy

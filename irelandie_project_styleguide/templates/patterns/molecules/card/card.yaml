@@ -6,9 +6,9 @@ context:
 
 tags:
   image:
-    card.image width-500 class="card__image":
+    card.image width-500 class="card__image" alt="":
       raw: |
-        <img src="https://source.unsplash.com/500x400?ocean" width="500" height="400" alt="Some alt" class="card__image">
+        <img src="https://source.unsplash.com/500x400?ocean" width="500" height="400" alt="" class="card__image">
   pageurl:
     card.page as href:
       target_var: href

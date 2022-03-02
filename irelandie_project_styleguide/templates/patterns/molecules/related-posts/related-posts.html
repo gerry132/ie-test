@@ -1,8 +1,0 @@
-{% load wagtailcore_tags wagtailimages_tags static %}
-
-<div class="related-posts">
-    {% for article in page.related_articles %}
-        <h2>{{ article.listing_title }}</h2>
-        {% image article.listing_image width-768 %}
-    {% endfor %}
-</div>

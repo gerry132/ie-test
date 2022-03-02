@@ -1,0 +1,21 @@
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+
+<a href="{{ value.page.url }}" class="card">
+    <div class="card__image-container">
+        {% image value.image width-500 class="card__image" %}
+    </div>
+
+    <div class="card__content">
+        <h3 class="card__title">
+            {{ value.title }}
+        </h3>
+
+        <p class="card__summary">
+            {{ value.summary }}
+        </p>
+
+        <span class="card__link">
+            {% trans 'Read story' %}
+        </span>
+    </div>
+</a>

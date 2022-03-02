@@ -1,0 +1,22 @@
+.slido-embed {
+    position: relative;
+    padding-bottom: 30px;
+
+    @include media-query(medium) {
+        display: flex;
+        flex-direction: row;
+        padding-bottom: 80px;
+    }
+
+    &__video {
+        @include media-query(medium) {
+            flex: 0 0 70%;
+        }
+    }
+
+    &__slido {
+        @include media-query(medium) {
+            flex: 0 0 30%;
+        }
+    }
+}

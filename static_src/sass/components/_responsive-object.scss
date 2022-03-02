@@ -1,17 +1,9 @@
 .responsive-object {
     position: relative;
-    min-height: 500px;
-
-    &.streamfield {
-        max-height: 480px;
-    }
+    padding-bottom: 30px;
 
     @include media-query(medium) {
-        min-height: 768px;
-
-        &.streamfield {
-            max-height: 480px;
-        }
+        padding-bottom: 80px;
     }
 
     iframe,

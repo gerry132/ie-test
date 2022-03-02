@@ -18,20 +18,18 @@
 
 {% block content %}
 <div class="section section--padding section--grey">
-    <div class="wrapper wrapper--large">
+    <div class="wrapper wrapper--large wrapper--padding">
         <div class="intro">
             <div class="container">
-                <h1>{{ page.title }}</h1>
-                <p>{{ page.introduction }}</p>
+                <h1 class="intro__title">{{ page.title }}</h1>
+                <p class="intro__description">{{ page.introduction }}</p>
             </div>
         </div>
 
-        <div class="main-body">
-            <div class="container">
-                {% if page.form_fields.exists %}
-                    <form action="{% pageurl page %}" method="post" class="form">
-                        <div class="form__container">
-                            {% csrf_token %}
+        {% if page.form_fields.exists %}
+            <form action="{% pageurl page %}" method="post" class="form">
+                <div class="form__container">
+                    {% csrf_token %}
 
                             {% if form.errors %}
                                 <div class="form__errors">
@@ -47,10 +45,16 @@
 
                             <button class="form__submit button" type="submit">{% if page.action_text %}{{ page.action_text|safe }}{% else %}Submit{% endif %}</button>
                         </div>
-                    </form>
-                {% endif %}
-            </div>
-        </div>
+                    {% endif %}
+
+                    {% for field in form %}
+                        {% include "patterns/molecules/field/field.html" %}
+                    {% endfor %}
+
+                    <button class="form__submit button" type="submit">{% if page.action_text %}{{ page.action_text|safe }}{% else %}Submit{% endif %}</button>
+                </div>
+            </form>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
