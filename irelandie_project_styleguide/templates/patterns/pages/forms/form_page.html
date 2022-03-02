@@ -1,5 +1,5 @@
 {% extends "patterns/base_page.html" %}
-{% load wagtailcore_tags wagtailimages_tags util_tags static %}
+{% load wagtailcore_tags wagtailimages_tags util_tags static i18n %}
 
 {% load wagtailcore_tags honeypot_tags %}
 
@@ -13,6 +13,7 @@
         el.setAttribute("style", "position: absolute;top: 0;left: 0;margin-left: 100%;");
     });
   </script>
+  
 {% endblock extra_js %}
 
 
@@ -31,27 +32,18 @@
                 <div class="form__container">
                     {% csrf_token %}
 
-                            {% if form.errors %}
-                                <div class="form__errors">
-                                    There were some errors with your form. Please amend the fields highlighted below.
-                                </div>
-                            {% endif %}
-                            
-                            {% for field in form %}
-                            {% honeypot_fields %}
-                                {% include "patterns/molecules/field/field.html" %}
-                            {% endfor %}
-                            
-
-                            <button class="form__submit button" type="submit">{% if page.action_text %}{{ page.action_text|safe }}{% else %}Submit{% endif %}</button>
+                    {% if form.errors %}
+                        <div class="form__errors">
+                            {% trans 'There were some errors with your form. Please amend the fields highlighted below.' %}
                         </div>
                     {% endif %}
 
                     {% for field in form %}
+                        {% honeypot_fields %}
                         {% include "patterns/molecules/field/field.html" %}
                     {% endfor %}
 
-                    <button class="form__submit button" type="submit">{% if page.action_text %}{{ page.action_text|safe }}{% else %}Submit{% endif %}</button>
+                    <button class="form__submit button" type="submit">{% if page.action_text %}{{ page.action_text|safe }}{% else %}{% trans 'Submit' %}{% endif %}</button>
                 </div>
             </form>
         {% endif %}
