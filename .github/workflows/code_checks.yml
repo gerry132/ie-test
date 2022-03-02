@@ -2,9 +2,9 @@ name: Code Checks
 
 on:
   pull_request:
-    branches: [ develop, integration ]
+    branches: [ main, develop, integration ]
   push:
-    branches: [ develop, integration ]
+    branches: [ integration ]
 
 jobs:
   check-migrations:
