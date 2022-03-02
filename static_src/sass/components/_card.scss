@@ -19,7 +19,11 @@
     }
 
     .featured-blocks & {
-        margin-bottom: $grid;
+        margin-bottom: 30px;
+
+        @include media-query(medium) {
+            margin-bottom: 0;
+        }
     }
 
     &__image-container {

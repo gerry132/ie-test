@@ -11,7 +11,7 @@
     transition: box-shadow $transition;
     overflow: hidden;
 
-    @include media-query(medium) {
+    @include media-query(large) {
         padding: 80px;
     }
 
