@@ -1,3 +1,4 @@
+from cProfile import label
 import re
 
 from django.forms.utils import ErrorList
@@ -64,7 +65,7 @@ class StoryLinkBlock(blocks.StructBlock):
 class StoryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(required=False)
-    primary_title = blocks.CharBlock(required=False)
+    primary_title = blocks.CharBlock(required=False, label="Supporting title")
     title = blocks.CharBlock(required=False)
     summary = blocks.CharBlock(required=False)
     alignment = blocks.ChoiceBlock(
@@ -93,7 +94,7 @@ class StoryBlock(blocks.StructBlock):
 class FeaturedStoryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(required=False)
-    primary_title = blocks.CharBlock(required=False)
+    primary_title = blocks.CharBlock(required=False, label="Supporting title")
     title = blocks.CharBlock(required=False)
     url = blocks.URLBlock(
         label="URL",
@@ -138,7 +139,7 @@ class EmbassyStory(blocks.StructBlock):
         required=False,
         page_type="irelandie_missions.MissionPage",
     )
-    primary_title = blocks.CharBlock(required=False)
+    primary_title = blocks.CharBlock(required=False, label="Supporting title")
     title = blocks.CharBlock(required=False)
     url = blocks.URLBlock(
         label="URL",
