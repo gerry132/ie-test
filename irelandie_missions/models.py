@@ -118,10 +118,11 @@ class MissionSearchPage(BasePage):
     ]
 
     """
-    Using the descendant_of page filter to only return country pages 
+    Using the descendant_of page filter to only return country pages
     that have been created for a particular language home page.
     Mission page can only be created under the HomePage
     """
+
     @cached_property
     def regions(self):
         country_groups = CountryGroup.objects.all()
@@ -140,9 +141,7 @@ class MissionSearchPage(BasePage):
 
     @cached_property
     def countries(self):
-        return CountryPage.objects.descendant_of(
-            self.get_parent()
-        )
+        return CountryPage.objects.descendant_of(self.get_parent())
 
     def get_context(self, request):
         context = super().get_context(request)
