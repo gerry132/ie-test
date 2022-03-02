@@ -104,4 +104,19 @@
     &__cta {
         margin-top: $grid;
     }
+
+    &__twitter {
+        @include font-size(xs);
+        display: block;
+        margin: 10px 0 20px;
+        text-decoration: underline;
+    }
+
+    &__twitter-icon {
+        position: relative;
+        display: inline-block;
+        margin-left: 5px;
+        vertical-align: middle;
+        color: $color--black;
+    }
 }
