@@ -12,6 +12,7 @@
         <div class="featured-block__image" style="background-image:url({{ featured_image.url }});"></div>
         <div class="featured-block__content-wrapper">
             <div class="featured-block__content">
+                {% if value.primary_title %}<p>{{ value.primary_title }}</p>{% endif %}
                 <h3 class="featured-block__title heading--3">{{ value.link_title }}</h3>
             </div>
         </div>
