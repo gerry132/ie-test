@@ -36,5 +36,6 @@ class NewsPage(ArticlePage):
 
     parent_page_types = [
         "NewsPageIndex",
+        "irelandie_home.HomePage",
     ]
     subpage_types = []

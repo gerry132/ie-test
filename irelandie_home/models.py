@@ -56,6 +56,7 @@ class HomePage(HeroPage):
         "irelandie_home.CampaignPage",
         "irelandie_home.TopicPage",
         "irelandie_forms.FormPage",
+        "irelandie_news.NewsPage",
     ]
 
     content_panels = HeroPage.content_panels + [
