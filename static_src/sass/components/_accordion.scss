@@ -1,9 +1,10 @@
 .accordion {
     $root: &;
+    max-width: $wrapper--small;
 
     &.is-open {
         #{$root}__icon {
-            transform: rotate(90deg);
+            transform: rotate(180deg);
         }
 
         #{$root}__button {
@@ -16,24 +17,26 @@
     }
 
     &__button {
-        background: none;
+        background-color: transparent;
         border: 0;
-        border-bottom: 1px solid $color--border;
+        border-bottom: 1px solid darken($color--border, 10);
+        color: $color--default;
         display: flex;
         align-items: center;
-        padding: 10px 5px;
+        justify-content: space-between;
+        padding: 20px 0;
         transition: color 0.2s ease;
         text-decoration: none;
         width: 100%;
 
         &:hover {
             cursor: pointer;
-            color: $color--off-black;
         }
 
         /* stylelint-disable */
         &:focus {
             outline: 0; // focus style implemented directly on text instead
+            border-bottom: 1px solid $color--black;
         }
         /* stylelint-enable */
     }
@@ -44,21 +47,19 @@
     }
 
     &__title {
+        font-size: 30px;
+        line-height: 36px;
+        letter-spacing: -1.35px;
         margin: 0;
         padding: 0;
-
-        #{$root}__button:focus & {
-            background-color: $color--off-black;
-            color: $color--white;
-        }
     }
 
     &__icon {
-        width: 25px;
-        height: 25px;
+        width: 20px;
+        height: 10px;
         margin-right: 20px;
         transition: transform, fill, 0.2s ease;
-        fill: $color--primary;
+        fill: $color--default;
 
         @media screen and (-ms-high-contrast: active) {
             filter: brightness(400%);
@@ -67,7 +68,21 @@
 
     &__content {
         display: none;
-        margin-bottom: 10px;
+        padding: 0 0 20px 0;
         margin-top: 15px;
+
+        #{$root}.is-open & {
+            border-bottom: 1px solid darken($color--border, 10);
+        }
+    }
+
+    &__list-item {
+        padding: 10px 0;
+        border-bottom: 1px solid darken($color--border, 5);
+
+        &:last-of-type {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
     }
 }

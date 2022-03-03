@@ -1,7 +1,62 @@
+{% extends "patterns/base_page.html" %}
 {% load wagtailcore_tags %}
+
 {% wagtail_site as current_site %}
-<h1>{{ page.title }}</h1>
-<p>{{ page.description }}</p>
+
+{% block content %}
+    <div class="section section--padding section--grey">
+        <div class="wrapper wrapper--large wrapper--padding">
+            <div class="intro">
+                <div class="container">
+                    <h1 class="intro__title">{{ page.title }}</h1>
+                    {% if page.description %}
+                        <p class="intro__description">{{ page.description }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% for region in regions %}
+                <div class="accordion__container">
+                    <div class="accordion" data-accordion>
+                        <h2 class="accordion__header">
+                            <button
+                                id="region"
+                                class="accordion__button"
+                                data-accordion-question
+                                aria-controls="region-list"
+                                aria-expanded="false">
+                                <span class="accordion__title">
+                                    {{ region }}
+                                </span>
+                                {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="accordion__icon" %}
+                            </button>
+                        </h2>
+                        <div
+                            id="region-list"
+                            data-accordion-answer
+                            class="accordion__content"
+                            aria-labelledby="region"
+                            aria-hidden="true">
+                            <ul class="accordion__list">
+                                {% for country in countries %}
+                                    {% if country.region == region %}
+                                        <li class="accordion__list-item">
+                                            <a href="{{ country.url }}">{{ country }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% comment %}
+
+TODO: Phase 2 search & filtering
 
 <form>
     {% csrf_token %}
@@ -65,4 +120,4 @@ document.addEventListener('DOMContentLoaded', function(){
   xhttp.open("GET", "{{ current_site.full_url }}/api/v2/pages/?type=irelandie_missions.MissionPage&fields=title&locale={{ page.locale.language_code }}&mission=Mission page", true);
   xhttp.send();
 }, false);
-</script>
+</script> {% endcomment %}
