@@ -81,6 +81,7 @@ INSTALLED_APPS = [
     "wagtail.contrib.settings",
     "wagtail.contrib.search_promotions",
     "wagtail.contrib.table_block",
+    "wagtail_honeypot",
     "wagtail.embeds",
     "wagtail.sites",
     "wagtail.users",
