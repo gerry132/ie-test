@@ -1,7 +1,6 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 
-
 {% if value.page %}
     {% pageurl value.page as href %}
     <a href="{{ href }}" class="featured-block">
@@ -12,7 +11,12 @@
         <div class="featured-block__image" style="background-image:url({{ featured_image.url }});"></div>
         <div class="featured-block__content-wrapper">
             <div class="featured-block__content">
-                <h3 class="featured-block__title heading--3">{{ value.link_title }}</h3>
+                {% if value.primary_title %}
+                    <h3 class="featured-block__title heading--3">
+                        {{ value.primary_title }}
+                    </h3>
+                {% endif %}
+                <p>{{ value.link_title }}</p>
             </div>
         </div>
     </a>
