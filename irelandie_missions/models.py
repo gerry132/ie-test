@@ -33,7 +33,10 @@ class CountryPage(HeroPage):
     template = "patterns/pages/missions/country_page.html"
 
     # parent_page_types = ["CountryGroupPageIndex"]
-    subpage_types = ["MissionPage"]
+    subpage_types = [
+        "MissionPage",
+        "irelandie_news.NewsPage",
+    ]
     stories = StreamField(
         [
             ("story", blocks.StoryBlock()),
@@ -102,6 +105,7 @@ class MissionPage(BasePage):
         "irelandie_publications.PublicationPageIndex",
         "irelandie_site_information.SiteInformationPageIndex",
         "irelandie_speeches.SpeechPageIndex",
+        "irelandie_news.NewsPage",
     ]
 
 

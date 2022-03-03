@@ -118,7 +118,9 @@ class CampaignPage(HeroPage):
     template = "patterns/pages/home/campaign_page.html"
 
     parent_page_types = ["irelandie_home.HomePage"]
-    subpage_types = []
+    subpage_types = [
+        "irelandie_news.NewsPage",
+    ]
 
     content_panels = HeroPage.content_panels + [
         StreamFieldPanel("top_stories"),
@@ -132,7 +134,9 @@ class TopicPage(HeroPage):
     template = "patterns/pages/home/topic_page.html"
 
     parent_page_types = ["irelandie_home.HomePage"]
-    subpage_types = []
+    subpage_types = [
+        "irelandie_news.NewsPage",
+    ]
 
     body = StreamField(
         [
