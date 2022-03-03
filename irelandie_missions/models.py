@@ -117,23 +117,34 @@ class MissionSearchPage(BasePage):
         FieldPanel("description"),
     ]
 
+    """
+    Using the descendant_of page filter to only return country pages
+    that have been created for a particular language home page.
+    Mission page can only be created under the HomePage
+    """
+
     @cached_property
     def regions(self):
         country_groups = CountryGroup.objects.all()
         regions = []
+
         for group in country_groups:
-            countries_count = CountryPage.objects.filter(region=group).count()
+            countries_count = (
+                CountryPage.objects.descendant_of(self.get_parent())
+                .filter(region=group)
+                .count()
+            )
             if countries_count:
                 regions.append(group)
+
         return regions
 
     @cached_property
     def countries(self):
-        return CountryPage.objects.all()
+        return CountryPage.objects.descendant_of(self.get_parent())
 
     def get_context(self, request):
         context = super().get_context(request)
-        # Add extra variables and return the updated context
         context["regions"] = self.regions
         context["countries"] = self.countries
         return context
