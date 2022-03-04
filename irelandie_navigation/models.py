@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.conf import settings as dj_settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -127,4 +128,39 @@ class FooterNavigation(TranslatableMixin):
     class Meta:
         verbose_name = _("Footer Navigation")
         verbose_name_plural = _("Footer Navigation")
+        unique_together = ("translation_key", "locale")
+
+
+@register_snippet
+class SecondaryNavigation(TranslatableMixin):
+    # Snippets model is used so the navigation can be localised with TranslatableMixin.
+    lang = models.CharField(
+        max_length=255,
+        unique=True,
+        help_text="Internal name for this navigation, it's not displayed to a site user.",
+        verbose_name=_("Language"),
+    )
+    navigation = StreamField(
+        [("link", LinkBlock())],
+        blank=True,
+        help_text="Secondary site navigation",
+        verbose_name=_("Links"),
+    )
+
+    panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("lang"),
+                StreamFieldPanel("navigation"),
+            ],
+            heading=_("Secondary Navigation"),
+        )
+    ]
+
+    def __str__(self):
+        return self.lang
+
+    class Meta:
+        verbose_name = _("Secondary Navigation")
+        verbose_name_plural = _("Secondary Navigation")
         unique_together = ("translation_key", "locale")
