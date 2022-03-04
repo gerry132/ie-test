@@ -3,7 +3,7 @@ from functools import lru_cache
 from django import template
 from wagtail.core.models import Locale
 
-from irelandie_navigation.models import FooterNavigation, PrimaryNavigation
+from irelandie_navigation.models import FooterNavigation, PrimaryNavigation, SecondaryNavigation
 
 register = template.Library()
 
@@ -39,6 +39,35 @@ def primarynav(context):
 
     return {
         "primarynav": navigation,
+        "request": request,
+    }
+
+
+# SECONDARY NAVIGATION
+# ----------------------------------------------------------------------
+# The data for the secondary navigation is managed in the SecondaryNavigation
+# snippets model.
+@register.inclusion_tag(
+    "patterns/molecules/navigation/secondarynav.html", takes_context=True
+)
+def secondarynav(context):
+    request = context["request"]
+    locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
+
+    navigation = None
+
+    try:
+        navigation = SecondaryNavigation.objects.get(locale=locale).navigation
+    except SecondaryNavigation.DoesNotExist:
+        pass
+
+    try:
+        navigation = SecondaryNavigation.objects.get(locale=default_language()).navigation
+    except SecondaryNavigation.DoesNotExist:
+        pass
+
+    return {
+        "secondarynav": navigation,
         "request": request,
     }
 
@@ -107,17 +136,17 @@ def footerlinks(context):
 
 
 # Secondary nav snippets
-@register.inclusion_tag(
-    "patterns/molecules/navigation/secondarynav.html", takes_context=True
-)
-def secondarynav(context):
-    request = context["request"]
-    return {
-        "secondarynav": context["settings"]["irelandie_navigation"][
-            "NavigationSettings"
-        ].secondary_navigation,
-        "request": request,
-    }
+# @register.inclusion_tag(
+#     "patterns/molecules/navigation/secondarynav.html", takes_context=True
+# )
+# def secondarynav(context):
+#     request = context["request"]
+#     return {
+#         "secondarynav": context["settings"]["irelandie_navigation"][
+#             "NavigationSettings"
+#         ].secondary_navigation,
+#         "request": request,
+#     }
 
 
 # Footer nav snippets
