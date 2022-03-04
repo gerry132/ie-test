@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from functools import lru_cache
 from django import template
 from wagtail.core.models import Locale
@@ -30,10 +31,11 @@ def primarynav(context):
     except PrimaryNavigation.DoesNotExist:
         pass
 
-    try:
-        navigation = PrimaryNavigation.objects.get(locale=default_language()).navigation
-    except PrimaryNavigation.DoesNotExist:
-        pass
+    if not navigation:
+        try:
+            navigation = PrimaryNavigation.objects.get(locale=default_language()).navigation
+        except PrimaryNavigation.DoesNotExist:
+            pass
 
     return {
         "primarynav": navigation,
@@ -59,10 +61,11 @@ def footernav(context):
     except FooterNavigation.DoesNotExist:
         pass
 
-    try:
-        navigation = FooterNavigation.objects.get(locale=default_language()).navigation
-    except FooterNavigation.DoesNotExist:
-        pass
+    if not navigation:
+        try:
+            navigation = FooterNavigation.objects.get(locale=default_language()).navigation
+        except FooterNavigation.DoesNotExist:
+            pass
 
     return {
         "footernav": navigation,
@@ -88,10 +91,11 @@ def footerlinks(context):
     except FooterNavigation.DoesNotExist:
         pass
 
-    try:
-        navigation = FooterNavigation.objects.get(locale=default_language()).links
-    except FooterNavigation.DoesNotExist:
-        pass
+    if not navigation:
+        try:
+            navigation = FooterNavigation.objects.get(locale=default_language()).links
+        except FooterNavigation.DoesNotExist:
+            pass
 
     return {
         "footerlinks": navigation,
@@ -99,7 +103,7 @@ def footerlinks(context):
     }
 
 
-"""items below may be removed once confirmed they are not needed"""
+# items below may be removed once confirmed they are not needed
 
 
 # Secondary nav snippets
