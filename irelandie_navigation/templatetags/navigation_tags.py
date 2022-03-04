@@ -1,9 +1,15 @@
+from functools import lru_cache
 from django import template
 from wagtail.core.models import Locale
 
 from irelandie_navigation.models import FooterNavigation, PrimaryNavigation
 
 register = template.Library()
+
+
+@lru_cache(maxsize=None)
+def default_language():
+    return Locale.objects.get(language_code="en")
 
 
 # PRIMARY NAVIGATION
@@ -16,10 +22,18 @@ register = template.Library()
 def primarynav(context):
     request = context["request"]
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
+
+    navigation = None
+
     try:
         navigation = PrimaryNavigation.objects.get(locale=locale).navigation
     except PrimaryNavigation.DoesNotExist:
-        navigation = None
+        pass
+
+    try:
+        navigation = PrimaryNavigation.objects.get(locale=default_language()).navigation
+    except PrimaryNavigation.DoesNotExist:
+        pass
 
     return {
         "primarynav": navigation,
@@ -37,10 +51,18 @@ def primarynav(context):
 def footernav(context):
     request = context["request"]
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
+
+    navigation = None
+
     try:
         navigation = FooterNavigation.objects.get(locale=locale).navigation
     except FooterNavigation.DoesNotExist:
-        navigation = None
+        pass
+
+    try:
+        navigation = FooterNavigation.objects.get(locale=default_language()).navigation
+    except FooterNavigation.DoesNotExist:
+        pass
 
     return {
         "footernav": navigation,
@@ -58,12 +80,23 @@ def footernav(context):
 def footerlinks(context):
     request = context["request"]
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
+
+    navigation = None
+
     try:
         navigation = FooterNavigation.objects.get(locale=locale).links
     except FooterNavigation.DoesNotExist:
-        navigation = None
+        pass
 
-    return {"footerlinks": navigation, "request": request}
+    try:
+        navigation = FooterNavigation.objects.get(locale=default_language()).links
+    except FooterNavigation.DoesNotExist:
+        pass
+
+    return {
+        "footerlinks": navigation,
+        "request": request,
+    }
 
 
 """items below may be removed once confirmed they are not needed"""
