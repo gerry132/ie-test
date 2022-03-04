@@ -82,7 +82,6 @@
             </div>
         </div>
     </section>
-
     <header class="header">
         <div class="wrapper wrapper--large">
             <div class="header__container">
@@ -127,7 +126,7 @@
                         <svg class="header__search-icon" aria-hidden="true">
                             <use href="#magnifying-glass"></use>
                         </svg>
-        
+
                         <svg class="header__search-icon header__search-icon--close" aria-hidden="true">
                             <use xlink:href="#close"></use>
                         </svg>
@@ -137,9 +136,16 @@
                 <div class="header__menus header__menus--mobile" data-mobile-menu>
                     {% primarynav %}
                 </div>
+
+                {% comment %} SECONDARY NAV / BURGER NAV {% endcomment %}
+                <div style="position:absolute; top:100px;left:100px;z-index:1;background-color:darkgreen">
+                    {% comment %} {% secondarynav %} {% endcomment %}
+                </div>
+
             </div>
         </div>
     </header>
+
 {% endblock header %}
 
 {% block footer %}
