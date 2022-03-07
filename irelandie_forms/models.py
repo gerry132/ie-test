@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django import forms
 from django.db import models
 from django.utils.decorators import method_decorator
@@ -16,6 +17,7 @@ from wagtail.contrib.forms.models import (
     FORM_FIELD_CHOICES,
     AbstractFormField,
     FormBuilder,
+    AbstractFormSubmission,
 )
 from wagtail.core.fields import RichTextField
 from wagtail.search import index
@@ -47,6 +49,11 @@ class CustomFormBuilder(FormBuilder):
     def create_dateinputlocal_field(self, field, options):
         options["widget"] = forms.DateInput(attrs={"type": "datetime-local"})
         return forms.CharField(**options)
+
+
+class NeverSaveFormSubmission(AbstractFormSubmission):
+    def save(self, *args, **kwargs):
+        pass
 
 
 # Never cache form pages since they include CSRF tokens.
@@ -98,3 +105,6 @@ class FormPage(HoneypotMixin, BasePage):
             ),
         ]
     )
+
+    def get_submission_class(self):
+        return NeverSaveFormSubmission
