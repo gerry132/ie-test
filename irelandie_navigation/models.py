@@ -141,10 +141,10 @@ class SecondaryNavigation(TranslatableMixin):
         verbose_name=_("Language"),
     )
     navigation = StreamField(
-        [("link", LinkBlock())],
+        [("column", LinkColumnWithHeader())],
         blank=True,
-        help_text="Secondary site navigation",
-        verbose_name=_("Links"),
+        help_text="Multiple columns of footer links with optional header.",
+        verbose_name=_("Columns"),
     )
 
     panels = [
