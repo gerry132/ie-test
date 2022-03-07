@@ -136,5 +136,5 @@ Build and run using [Docker compose](https://docs.docker.com/compose/):
 docker compose up --build
 ```
 
-Then access the app on http://localhost:8000.
+Then access the app on http://localhost.
 
