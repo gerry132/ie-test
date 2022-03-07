@@ -1,7 +1,7 @@
 .sub-nav {
     $root: &;
     @include z-index(base);
-    background-color: $color--primary;
+    background-color: rgba($color--white, 0.1);
     display: flex;
     align-items: flex-start;
     flex-direction: column;
@@ -10,6 +10,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    margin-bottom: 20px;
     padding-top: 20px;
     // Background-matching border for high-contrast mode users.
     border: 1px solid $color--primary;
@@ -23,7 +24,8 @@
         opacity: 1;
         visibility: visible;
         // invisible to visible
-        transition: opacity 200ms ease-out 200ms, visibility 200ms ease-out 0ms;
+        transition: visibility 200ms ease-out 0ms, opacity 200ms ease-out 200ms;
+        position: relative;
     }
 
     @include media-query(large) {
@@ -69,6 +71,7 @@
         @include font-size(l);
         color: rgba($color--white, 0.8);
         display: flex;
+        line-height: 1.75;
         justify-content: flex-start;
         border-bottom: 1px solid transparent;
         padding: 10px 30px;
@@ -96,12 +99,12 @@
     &__icon {
         color: $color--white;
         display: inline-block;
-        margin-top: 5px;
-        width: 8px;
+        margin-top: 11px;
+        width: 23px;
         height: 16px;
 
         &--back {
-            transform: rotate(90deg);
+            transform: rotate(180deg);
             margin-right: 20px;
         }
 

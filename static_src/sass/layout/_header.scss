@@ -1,5 +1,10 @@
 .header {
+    $root: &;
     background-color: rgba($color--primary, 0.75);
+
+    &--condensed {
+        background-color: $color--dark-green;
+    }
 
     &__container {
         display: flex;
@@ -7,6 +12,17 @@
         align-items: center;
         justify-content: space-evenly;
         padding: $grid 30px;
+
+        #{$root}--condensed & {
+            padding: 10px 30px;
+            justify-content: space-between;
+        }
+    }
+
+    &__menu-items {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     &__menus {
@@ -20,22 +36,38 @@
             @include media-query(large) {
                 display: flex;
                 width: 100%;
+
+                #{$root}--condensed & {
+                    display: none;
+                }
+
+                #{$root}--override & {
+                    justify-content: flex-start;
+                }
             }
         }
 
         &--mobile {
             @include z-index(nav);
             position: fixed;
-            top: 78px;
+            top: 85px;
             left: 0;
             display: flex;
             width: 100%;
             height: 100%;
             padding-top: 40px;
-            border-top: 1px solid $color--border;
+            border-top: 1px solid rgba($color--border, 0.5);
             background: $color--primary;
             transform: translate3d(100%, 0%, 0);
             transition: transform 250ms cubic-bezier(0.24, 0.26, 0.2, 1) 0ms;
+
+            #{$root}--condensed & {
+                display: block;
+
+                @include media-query(small) {
+                    top: 45px;
+                }
+            }
 
             @include media-query(large) {
                 display: none;
@@ -43,11 +75,19 @@
 
             &.is-visible {
                 transform: translate3d(0%, 0%, 0);
+                overflow-y: auto;
             }
 
             nav {
                 height: 100%;
                 width: 100%;
+
+                #{$root}--condensed & {
+                    border-bottom: 1px solid rgba($color--border, 0.2);
+                    height: auto;
+                    margin-bottom: $grid;
+                    padding-bottom: $grid;
+                }
             }
         }
     }
@@ -55,6 +95,21 @@
     &__logo {
         height: 40px;
         width: 160px;
+
+        #{$root}--condensed & {
+            height: 20px;
+            width: 80px;
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    &__logo-wrapper {
+        @include media-query(large) {
+            #{$root}--condensed & {
+                margin: 0 auto;
+            }
+        }
     }
 
     &__menu-toggle {
@@ -70,6 +125,10 @@
 
         @include media-query(large) {
             display: none;
+
+            #{$root}--condensed & {
+                display: flex;
+            }
         }
     }
 
@@ -92,19 +151,21 @@
         }
 
         @include media-query(small) {
-            padding: $grid $grid;
-        }
-
-        @include media-query(medium) {
-            margin: 0 0 0 $grid;
-            padding: $grid;
+            #{$root}--condensed & {
+                padding: 0 $grid;
+            }
         }
     }
 
     &__search-icon {
         fill: $color--white;
-        height: 24px;
+        height: 26px;
         width: 24px;
+
+        #{$root}--condensed & {
+            height: 22px;
+            width: 20px;
+        }
 
         .is-active & {
             display: none;

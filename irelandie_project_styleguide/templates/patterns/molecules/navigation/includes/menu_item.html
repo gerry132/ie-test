@@ -5,7 +5,7 @@
     {{ title|default:page.title }} {% if overview_title %} {{ overview_title }}{% endif %}
     {% if has_children %}
         <span class="{{ nav_type }}__icon">
-            {% include "patterns/atoms/icons/icon.html" with name="arrow" %}
+            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="primary-nav__svg" %}
         </span>
     {% endif %}
 </a>

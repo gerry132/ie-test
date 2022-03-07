@@ -14,8 +14,8 @@ class Search {
         );
 
         // mobile menu selectors
-        this.mobileMenu = document.querySelector('[data-mobile-menu]');
-        this.mobileMenuToggle = document.querySelector(
+        this.mobileMenu = document.querySelectorAll('[data-mobile-menu]');
+        this.mobileMenuToggle = document.querySelectorAll(
             '[data-mobile-menu-toggle]',
         );
 
@@ -41,8 +41,17 @@ class Search {
 
     // hide the mobile menu
     hideMobileMenu() {
-        this.mobileMenu.classList.remove(this.activeClass);
-        this.mobileMenuToggle.classList.remove(this.activeClass);
+        this.mobileMenu.forEach((menu) => {
+            if (menu.classList.contains('is-visible')) {
+                menu.classList.remove('is-visible');
+            }
+        });
+
+        this.mobileMenuToggle.forEach((menuToggle) => {
+            if (menuToggle.classList.contains('is-open')) {
+                menuToggle.classList.remove('is-open');
+            }
+        });
     }
 
     hideDesktopMenu() {

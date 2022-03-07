@@ -1,25 +1,17 @@
 {% load i18n %}
 
-<div class="custom-nav">
-    <div class="wrapper wrapper--small">
-        <div class="custom-nav__wrapper">
-            <nav aria-label="Custom">
-                <ul class="custom-nav__links" data-primary-nav>
-                    {% for custom_link in customnav %}
-                    <li class="custom-nav__item">
-                        <a href="{{ custom_link.value.page.url }}" class="custom-nav__link">{{ custom_link.value.page.title }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </nav>
-            <div class="custom-menu-toggle">
-                <button class="button button-menu-toggle" data-custom-menu-toggle aria-haspopup="true" aria-label="{% trans 'Custom menu toggle' %}">
-                    <span class="button-menu-toggle__line"></span>
-                    <span class="button-menu-toggle__line"></span>
-                    <span class="button-menu-toggle__line"></span>
-                    <span class="button-menu-toggle__line"></span>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+<nav aria-label="Country specific navigation">
+     <ul class="primary-nav" data-primary-nav>
+        {% for custom_link in customnav %}
+            <li class="primary-nav__item">
+                <a class="primary-nav__link" href="{{ item_url }}">
+                    {% if custom_link.value.title %}
+                        {{ custom_link.value.title }}
+                    {% else %}
+                        {{ custom_link.value.page.title }}
+                    {% endif %}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</nav>
