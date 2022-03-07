@@ -149,7 +149,7 @@ def sidebar(context):
 @register.inclusion_tag(
     "patterns/molecules/navigation/custom_primary_navigation.html", takes_context=True
 )
-def custom_primary_navigtaion(context, current_page):
+def custom_primary_navigation(context, current_page):
     return {
         "customnav": current_page.custom_primary_navigation,
         "request": context["request"],
