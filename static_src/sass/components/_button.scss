@@ -23,6 +23,8 @@
 
 .button-menu-toggle {
     @include z-index(header);
+    $nav-top: 10px;
+    $condensed-nav-top: 7px;
     position: relative;
     display: block;
     width: 40px;
@@ -60,22 +62,22 @@
             top: 0;
 
             .is-open & {
-                top: 10px;
+                top: $nav-top;
                 left: 50%;
                 width: 0%;
 
                 .header--condensed & {
-                    top: 7px;
+                    top: $condensed-nav-top;
                 }
             }
         }
 
         &:nth-child(2),
         &:nth-child(3) {
-            top: 10px;
+            top: $nav-top;
 
             .header--condensed & {
-                top: 7px;
+                top: $condensed-nav-top;
             }
 
             .is-open & {
@@ -103,12 +105,12 @@
             }
 
             .is-open & {
-                top: 10px;
+                top: $nav-top;
                 left: 50%;
                 width: 0%;
 
                 .header--condensed & {
-                    top: 7px;
+                    top: $condensed-nav-top;
                 }
             }
         }

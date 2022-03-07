@@ -41,7 +41,7 @@
                     display: none;
                 }
 
-                #{$root}--secondary & {
+                #{$root}--override & {
                     justify-content: flex-start;
                 }
             }
