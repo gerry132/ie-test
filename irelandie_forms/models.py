@@ -17,14 +17,8 @@ from wagtail.contrib.forms.models import (
     AbstractFormField,
     FormBuilder,
 )
-from wagtail.contrib.forms.models import (
-    FORM_FIELD_CHOICES,
-    AbstractFormField,
-    FormBuilder,
-)
 from wagtail.core.fields import RichTextField
 from wagtail.search import index
-
 from wagtail_honeypot.models import HoneypotMixin
 
 from irelandie_utils.models import BasePage
@@ -99,6 +93,8 @@ class FormPage(HoneypotMixin, BasePage):
             ObjectList(content_panels, heading="Content"),
             ObjectList(HoneypotMixin.honeypot_panels, heading="Honeypot"),
             ObjectList(BasePage.promote_panels, heading="Promote"),
-            ObjectList(BasePage.settings_panels, heading="Settings", classname="settings"),
+            ObjectList(
+                BasePage.settings_panels, heading="Settings", classname="settings"
+            ),
         ]
     )
