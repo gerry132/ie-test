@@ -102,6 +102,7 @@ class StoryBlock(blocks.StructBlock):
 
 
 class FeaturedStoryBlock(blocks.StructBlock):
+    # image is used as background image
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(required=False)
     primary_title = blocks.CharBlock(required=False, label="Supporting title")
