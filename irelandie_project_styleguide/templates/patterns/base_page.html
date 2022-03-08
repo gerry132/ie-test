@@ -76,7 +76,7 @@
 {% block header %}
 {% include "patterns/molecules/skip-link/skip-link.html" %}
     <section aria-label="search">
-        <div class="header__search" data-search-dropdown>
+        <div class="header__search{% if page.override_primary_navigation %} header__search--condensed{% endif %}" data-search-dropdown>
             <div class="wrapper wrapper--large">
                 {% include "patterns/molecules/search/search.html" with classes="search--dropdown" %}
             </div>
@@ -103,16 +103,27 @@
                     </div>
 
                     <div class="header__menus header__menus--mobile" data-mobile-menu>
-                        {% primarynav %}
+                        <div class="wrapper wrapper--large wrapper--mobile-menu">
+                            <div class="header__menu header__menu--primary">
+                                {% primarynav %}
+                            </div>
+                            
+                            <div class="header__menu header__menu--extended">
+                                {% comment %} SECONDARY NAV /  BURGER NAV {% endcomment %}
+                                {% secondarynav %}
+                            </div>
+                            
+                            {% comment %} 
+                                Show override nav alongside primary nav in dropdown if available
 
-                        {% comment %} 
-                            Show override nav alongside primary nav in dropdown if available
-
-                            Note: This is only implemented on the CountyGroupPageIndex at the moment 
-                        {% endcomment %}
-                        {% if page.override_primary_navigation %}
-                            {% custom_primary_navigtaion page %}
-                        {% endif %}
+                                Note: This is only implemented on the CountyGroupPageIndex at the moment 
+                            {% endcomment %}
+                            {% if page.override_primary_navigation %}
+                            <div class="header__menu header__menu--override">
+                                {% custom_primary_navigtaion page %}
+                            </div>
+                            {% endif %}
+                        </div>
                     </div>
 
                     <div class="header__menu-items">
@@ -184,17 +195,9 @@
                         </div>
                     </div> 
                 </div>
-
-                {% comment %} SECONDARY NAV / BURGER NAV {% endcomment %}
-                <div style="position:absolute; top:100px;left:100px;z-index:1;background-color:darkgreen">
-                    {% comment %} {% secondarynav %} {% endcomment %}
-                </div>
-
             </div>
         {% endif %}
     </header>
-
-    
 {% endblock header %}
 
 {% block footer %}

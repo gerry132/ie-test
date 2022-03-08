@@ -1,0 +1,15 @@
+.main {
+    padding-top: $mobile-header-height;
+
+    @include media-query(large) {
+        padding-top: $desktop-header-height;
+    }
+
+    &--condensed {
+        padding-top: $mobile-header-height;
+
+        @include media-query(large) {
+            padding-top: $condensed-header-height;
+        }
+    }
+}

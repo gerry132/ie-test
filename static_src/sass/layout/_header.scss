@@ -1,17 +1,43 @@
 .header {
+    @include z-index(nav);
     $root: &;
     background-color: rgba($color--primary, 0.75);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: $mobile-header-height;
+
+    @include media-query(large) {
+        height: $desktop-header-height;
+    }
 
     &--condensed {
+        height: auto;
         background-color: $color--dark-green;
+    }
+
+    &--override {
+        display: none;
+
+        @include media-query(large) {
+            display: block;
+            height: auto;
+            top: 45px;
+        }
     }
 
     &__container {
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: space-evenly;
-        padding: $grid 30px;
+        justify-content: space-between;
+        padding: 10px 30px;
+
+        @include media-query(large) {
+            justify-content: space-evenly;
+            padding: 20px 30px;
+        }
 
         #{$root}--condensed & {
             padding: 10px 30px;
@@ -25,11 +51,35 @@
         justify-content: space-between;
     }
 
-    &__menus {
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
+    &__menu {
+        border-bottom: 1px solid rgba($color--border, 0.5);
+        margin-bottom: 30px;
+        padding-bottom: 10px;
 
+        &--extended {
+            display: block;
+            width: 100%;
+            position: relative;
+        }
+
+        &--primary {
+            @include media-query(large) {
+                display: none;
+
+                #{$root}--condensed & {
+                    display: block;
+                }
+            }
+        }
+
+        &--override {
+            @include media-query(large) {
+                display: none;
+            }
+        }
+    }
+
+    &__menus {
         &--desktop {
             display: none;
 
@@ -50,7 +100,7 @@
         &--mobile {
             @include z-index(nav);
             position: fixed;
-            top: 85px;
+            top: $mobile-header-height;
             left: 0;
             display: flex;
             width: 100%;
@@ -61,16 +111,19 @@
             transform: translate3d(100%, 0%, 0);
             transition: transform 250ms cubic-bezier(0.24, 0.26, 0.2, 1) 0ms;
 
+            @include media-query(large) {
+                display: block;
+                border-top: 0;
+                top: $desktop-header-height;
+                padding-top: 60px;
+            }
+
             #{$root}--condensed & {
                 display: block;
 
                 @include media-query(small) {
-                    top: 45px;
+                    top: $condensed-header-height;
                 }
-            }
-
-            @include media-query(large) {
-                display: none;
             }
 
             &.is-visible {
@@ -82,19 +135,21 @@
                 height: 100%;
                 width: 100%;
 
-                #{$root}--condensed & {
-                    border-bottom: 1px solid rgba($color--border, 0.2);
-                    height: auto;
-                    margin-bottom: $grid;
-                    padding-bottom: $grid;
+                @include media-query(large) {
+                    width: auto;
                 }
             }
         }
     }
 
     &__logo {
-        height: 40px;
-        width: 160px;
+        height: 30px;
+        width: 90px;
+
+        @include media-query(medium) {
+            height: 40px;
+            width: 160px;
+        }
 
         #{$root}--condensed & {
             height: 20px;
@@ -118,14 +173,11 @@
         display: flex;
         align-items: flex-end;
         flex-direction: column;
-        width: 100%;
         font-weight: $weight--bold;
         color: $color--secondary;
         text-transform: uppercase;
 
         @include media-query(large) {
-            display: none;
-
             #{$root}--condensed & {
                 display: flex;
             }
@@ -195,6 +247,7 @@
         }
 
         &.is-active {
+            @include z-index(nav);
             left: 0;
             right: 0;
             background: $color--primary;
@@ -202,10 +255,20 @@
             opacity: 1;
             pointer-events: all;
             visibility: visible;
-            position: relative;
+            position: absolute;
             width: 100%;
             height: auto;
             border-top: 0;
+            // offset for fixed header
+            top: $mobile-header-height;
+
+            @include media-query(large) {
+                top: $desktop-header-height;
+
+                &--condensed {
+                    top: $condensed-header-height;
+                }
+            }
         }
     }
 }
