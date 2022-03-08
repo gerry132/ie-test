@@ -13,6 +13,23 @@ def default_language():
     return Locale.objects.get(language_code="en")
 
 
+def get_nav_for_locale(cls, locale):
+    navigation = None
+
+    try:
+        navigation = cls.objects.get(locale=locale).navigation
+    except cls.DoesNotExist:
+        pass
+
+    if not navigation:
+        try:
+            navigation = cls.objects.get(locale=default_language()).navigation
+        except cls.DoesNotExist:
+            pass
+
+    return navigation
+
+
 # PRIMARY NAVIGATION
 # ----------------------------------------------------------------------
 # The data for the primary navigation is managed in the PrimaryNavigation
@@ -24,18 +41,7 @@ def primarynav(context):
     request = context["request"]
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
 
-    navigation = None
-
-    try:
-        navigation = PrimaryNavigation.objects.get(locale=locale).navigation
-    except PrimaryNavigation.DoesNotExist:
-        pass
-
-    if not navigation:
-        try:
-            navigation = PrimaryNavigation.objects.get(locale=default_language()).navigation
-        except PrimaryNavigation.DoesNotExist:
-            pass
+    navigation = get_nav_for_locale(PrimaryNavigation, locale)
 
     return {
         "primarynav": navigation,
@@ -54,17 +60,7 @@ def secondarynav(context):
     request = context["request"]
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
 
-    navigation = None
-
-    try:
-        navigation = SecondaryNavigation.objects.get(locale=locale).navigation
-    except SecondaryNavigation.DoesNotExist:
-        pass
-
-    try:
-        navigation = SecondaryNavigation.objects.get(locale=default_language()).navigation
-    except SecondaryNavigation.DoesNotExist:
-        pass
+    navigation = get_nav_for_locale(SecondaryNavigation, locale)
 
     return {
         "secondarynav": navigation,
@@ -83,18 +79,7 @@ def footernav(context):
     request = context["request"]
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
 
-    navigation = None
-
-    try:
-        navigation = FooterNavigation.objects.get(locale=locale).navigation
-    except FooterNavigation.DoesNotExist:
-        pass
-
-    if not navigation:
-        try:
-            navigation = FooterNavigation.objects.get(locale=default_language()).navigation
-        except FooterNavigation.DoesNotExist:
-            pass
+    navigation = get_nav_for_locale(FooterNavigation, locale)
 
     return {
         "footernav": navigation,
@@ -164,7 +149,7 @@ def sidebar(context):
 @register.inclusion_tag(
     "patterns/molecules/navigation/custom_primary_navigation.html", takes_context=True
 )
-def custom_primary_navigtaion(context, current_page):
+def custom_primary_navigation(context, current_page):
     return {
         "customnav": current_page.custom_primary_navigation,
         "request": context["request"],
