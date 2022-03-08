@@ -1,8 +1,17 @@
 {% load wagtailcore_tags %}
 <nav aria-label="Secondary">
-    <ul class="secondary-nav">
-        {% for link in secondarynav %}
-            <li class="secondary-nav__item">{% include_block link with nav_type="secondary-nav" %}</li>
-        {% endfor %}
-    </ul>
+    {% for column in secondarynav %}
+        <div class="secondary-nav__column">
+            {% if column.heading %}
+                <p class="heading--5">{{ value.heading }}</p>
+            {% endif %}
+            <ul class="secondary-nav">
+                {% for item in column.links %}
+                    <li class="secondary-nav__item">
+                        {% include_block item with nav_type="secondary-nav" %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
 </nav>
