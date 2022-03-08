@@ -34,6 +34,16 @@ class LinkColumnWithHeader(blocks.StructBlock):
         template = ("patterns/molecules/navigation/blocks/footer_column.html",)
 
 
+class SecondaryNavLinkColumnWithHeader(blocks.StructBlock):
+    heading = blocks.CharBlock(
+        required=False, help_text=_("Leave blank if no header required.")
+    )
+    links = blocks.ListBlock(LinkBlock())
+
+    class Meta:
+        template = ("patterns/molecules/navigation/blocks/secondary_nav_column.html",)
+
+
 @register_setting(icon="list-ul")
 class SiteSettings(BaseSetting, ClusterableModel):
     site_logo = models.ForeignKey(
@@ -141,9 +151,9 @@ class SecondaryNavigation(TranslatableMixin):
         verbose_name=_("Language"),
     )
     navigation = StreamField(
-        [("column", LinkColumnWithHeader())],
+        [("column", SecondaryNavLinkColumnWithHeader())],
         blank=True,
-        help_text="Multiple columns of footer links with optional header.",
+        help_text="Multiple columns of links with optional header.",
         verbose_name=_("Columns"),
     )
 
