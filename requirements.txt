@@ -18,5 +18,9 @@ wagtailmedia==0.8.0
 dj-database-url==0.5.0
 psycopg2-binary==2.9.3
 
+# S3 access
+boto3==1.17.49
+botocore==1.20.49
+
 # server
 gunicorn==20.1.0
