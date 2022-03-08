@@ -33,6 +33,7 @@
         @include media-query(large) {
             width: auto;
             margin: auto;
+            padding: 0 30px;
         }
     }
 }

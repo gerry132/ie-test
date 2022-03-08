@@ -4,6 +4,45 @@
     height: 100%;
     margin-right: 15px;
 
+    &__container {
+        @include media-query(large) {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+            .block-column {
+                flex: 1 0 33.33%;
+                max-width: 50%;
+            }
+        }
+    }
+
+    &__column {
+        display: block;
+        position: relative;
+        width: 100%;
+        padding-bottom: $grid;
+        margin-bottom: $grid;
+        border-bottom: 1px solid rgba($color--border, 0.5);
+
+        @include media-query(large) {
+            border-bottom: 0;
+        }
+    }
+
+    &__column-heading {
+        @include font-size(l);
+        color: rgba($color--white, 0.85);
+        font-family: $font--secondary;
+        font-weight: $weight--bold;
+        padding: 10px 30px;
+
+        @include media-query(large) {
+            margin-bottom: $grid;
+            padding: 0;
+        }
+    }
+
     &__item {
         width: 100%;
         text-align: left;
@@ -16,7 +55,7 @@
     }
 
     &__link {
-        @include font-size(l);
+        @include font-size(m);
         color: rgba($color--white, 0.85);
         display: inline-block;
         font-family: $font--secondary;
@@ -31,6 +70,7 @@
         }
 
         @include media-query(large) {
+            @include font-size(l);
             padding: 0;
         }
     }
