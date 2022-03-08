@@ -28,7 +28,10 @@
     }
 
     &__icon {
+        fill: transparent;
         margin-right: 15px;
+        height: 45px;
+        width: 48px;
     }
 
     &__content {
