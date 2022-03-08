@@ -1,0 +1,13 @@
+{% load wagtailcore_tags %}
+<div class="secondarynav__column">
+    {% if value.heading %}
+        <p class="heading--5">{{ value.heading }}</p>
+    {% endif %}
+    <ul class="secondarynavcolumn-nav">
+        {% for item in value.links %}
+            <li class="secondarynavcolumn-nav__item">
+                {% include_block item with nav_type="secondarynavcolumn-nav" %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
