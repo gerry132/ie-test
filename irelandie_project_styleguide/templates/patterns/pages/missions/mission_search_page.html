@@ -1,5 +1,5 @@
 {% extends "patterns/base_page.html" %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags i18n %}
 
 {% wagtail_site as current_site %}
 
@@ -60,7 +60,7 @@ TODO: Phase 2 search & filtering
 
 <form>
     {% csrf_token %}
-    <label for="query">Search</label>
+    <label for="query">{% trans 'Search' %}</label>
     <input type="text" id="query" list="country_mission_tags"/>
     <!-- You can also use the API to get the list of page titles-->
     <datalist id="country_mission_tags">
