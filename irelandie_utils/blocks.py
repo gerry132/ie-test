@@ -423,6 +423,16 @@ class ArticleStoryBlock(blocks.StreamBlock):
     youtube_video = YoutubeVideoBlock()
 
 
+class PinnedStoriesBlock(blocks.StructBlock):
+    pinned_story_hero = PinnedStoryHeroBlock()
+    pinned_stories = blocks.ListBlock(PinnedStoryBlock())
+
+    class Meta:
+        icon = "table"
+        label = "Pinned Stories"
+        template = "patterns/molecules/pinned-stories/pinned_stories.html"
+
+
 class FreeFormBlocks(blocks.StreamBlock):
     heading = HeadingBlock(group="Base")
     rich_text = RichTextBlock(
@@ -433,7 +443,7 @@ class FreeFormBlocks(blocks.StreamBlock):
     document = DocumentBlock(group="Base")
 
     top_stories = StoryBlock(group="Module")
-    pinned_stories = PinnedStoryBlock(group="Module")
+    pinned_stories = PinnedStoriesBlock(group="Module")
     youtube_video = YoutubeVideoBlock(group="Module")
     articles = ArticleCardsBlock(group="Module")
     logos = LogoCardsBlock(group="Module")
