@@ -103,13 +103,18 @@
                     </div>
 
                     <div class="header__menus header__menus--mobile" data-mobile-menu>
+                        {% comment %} 
+                        This is called mobile nav, but actually gets shown at all screen sizes.
+                        Only shows the extended primary nav on desktop, then combines all 3 navs (if available) on mobile
+                        {% endcomment %}
+
                         <div class="wrapper wrapper--large wrapper--mobile-menu">
                             <div class="header__menu header__menu--primary">
                                 {% primarynav %}
                             </div>
                             
                             <div class="header__menu header__menu--extended">
-                                {% comment %} SECONDARY NAV /  BURGER NAV {% endcomment %}
+                                {% comment %} Secondary nav/burger nav {% endcomment %}
                                 {% secondarynav %}
                             </div>
                             
@@ -128,7 +133,7 @@
 
                     <div class="header__menu-items">
                         
-                        <!-- Start of the locale selector for condensed nav -->
+                        <!-- Start of the locale selector -->
                             <form action="{% url 'set_language' %}" method="post">
                                 {% csrf_token %}
                                 <input name="next" type="hidden" value="{{ request.get_full_path }}">
