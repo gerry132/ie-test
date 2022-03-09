@@ -52,15 +52,15 @@ class HomePage(FreeFormPageBase):
 
     # Only allow creating HomePages at the root level
     parent_page_types = ["wagtailcore.Page"]
-    subpage_types = [
-        # "irelandie_missions.CountryPage",
-        # "irelandie_missions.MissionSearchPage",
-        # "irelandie_home.CampaignPage",
-        # "irelandie_home.TopicPage",
-        # "irelandie_forms.FormPage",
-        # "irelandie_news.NewsPage",
-        "irelandie_pages.FreeFormPage",
-    ]
+    # subpage_types = [
+    # "irelandie_missions.CountryPage",
+    # "irelandie_missions.MissionSearchPage",
+    # "irelandie_home.CampaignPage",
+    # "irelandie_home.TopicPage",
+    # "irelandie_forms.FormPage",
+    # "irelandie_news.NewsPage",
+    #     "irelandie_pages.FreeFormPage",
+    # ]
 
     # content_panels = HeroPage.content_panels + [
     #     StreamFieldPanel("top_stories"),
@@ -120,10 +120,10 @@ class CampaignPage(HeroPage):
 
     template = "patterns/pages/home/campaign_page.html"
 
-    parent_page_types = ["irelandie_home.HomePage"]
-    subpage_types = [
-        "irelandie_news.NewsPage",
-    ]
+    # parent_page_types = ["irelandie_home.HomePage"]
+    # subpage_types = [
+    #     "irelandie_news.NewsPage",
+    # ]
 
     content_panels = HeroPage.content_panels + [
         StreamFieldPanel("top_stories"),
@@ -136,10 +136,10 @@ class CampaignPage(HeroPage):
 class TopicPage(HeroPage):
     template = "patterns/pages/home/topic_page.html"
 
-    parent_page_types = ["irelandie_home.HomePage"]
-    subpage_types = [
-        "irelandie_news.NewsPage",
-    ]
+    # parent_page_types = ["irelandie_home.HomePage"]
+    # subpage_types = [
+    #     "irelandie_news.NewsPage",
+    # ]
 
     body = StreamField(
         [

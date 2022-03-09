@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django import forms
 from django.db import models
 from django.utils.decorators import method_decorator
@@ -55,7 +56,7 @@ class FormPage(HoneypotMixin, BasePage):
     template = "patterns/pages/forms/form_page.html"
     landing_page_template = "patterns/pages/forms/form_page_landing.html"
 
-    subpage_types = []
+    # subpage_types = []
 
     introduction = models.TextField(blank=True)
     thank_you_text = RichTextField(

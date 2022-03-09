@@ -10,7 +10,6 @@ class FreeFormPageBase(HeroPage):
     """
     A page model that is free form and has access to all stream blocks.
     """
-    template = "patterns/pages/irelandie_pages/free_form_page.html"
 
     body = StreamField(FreeFormBlocks(), blank=True)
 
@@ -25,4 +24,24 @@ class FreeFormPageBase(HeroPage):
 
 
 class FreeFormPage(FreeFormPageBase):
-    pass
+    template = "patterns/pages/irelandie_pages/free_form_page.html"
+
+    # subpage_types = [
+    #     "irelandie_home.CampaignPage",
+    #     "irelandie_home.TopicPage",
+
+    #     "irelandie_contact_details.ContactDetailPageIndex",
+    #     "irelandie_contact_details.ContactDetailPage",
+
+    #     "irelandie_missions.CountryGroupPageIndex",
+    #     "irelandie_missions.CountryPage",
+    #     "irelandie_missions.MissionPage",
+    #     "irelandie_missions.MissionSearchPage",
+
+    #     "irelandie_news.NewsPage",
+
+    #     "irelandie_pages.FreeFormPage",
+
+    #     "irelandie_forms.FormPage",
+    #     ""
+    # ]

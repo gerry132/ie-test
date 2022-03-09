@@ -4,7 +4,7 @@ from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page
 
-from irelandie_missions.models import MissionPage
+# from irelandie_missions.models import MissionPage
 from irelandie_news.blocks import NewsPageBlock
 from irelandie_utils.models import ArticlePage, BasePage
 
@@ -14,8 +14,8 @@ class NewsPageIndex(BasePage):
 
     description = models.TextField(blank=True)
 
-    parent_page_types = [MissionPage]
-    subpage_types = ["NewsPage"]
+    # parent_page_types = [MissionPage]
+    # subpage_types = ["NewsPage"]
     max_count_per_parent = 1
 
     content_panels = Page.content_panels + [
@@ -34,12 +34,12 @@ class NewsPage(ArticlePage):
         max_num=3
     )
 
-    parent_page_types = [
-        "NewsPageIndex",
-        "irelandie_home.HomePage",
-        "irelandie_missions.CountryPage",
-        "irelandie_missions.MissionPage",
-        "irelandie_home.CampaignPage",
-        "irelandie_home.TopicPage",
-    ]
-    subpage_types = []
+    # parent_page_types = [
+    #     "NewsPageIndex",
+    #     "irelandie_home.HomePage",
+    #     "irelandie_missions.CountryPage",
+    #     "irelandie_missions.MissionPage",
+    #     "irelandie_home.CampaignPage",
+    #     "irelandie_home.TopicPage",
+    # ]
+    # subpage_types = []
