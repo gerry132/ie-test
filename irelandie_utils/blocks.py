@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import re
 
 from django.forms.utils import ErrorList
@@ -420,3 +421,23 @@ class ArticleStoryBlock(blocks.StreamBlock):
     role = RoleBlock()
     video = CustomVideoChooserBlock()
     youtube_video = YoutubeVideoBlock()
+
+
+class FreeFormBlocks(blocks.StreamBlock):
+    heading = HeadingBlock(group="Base")
+    rich_text = RichTextBlock(
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul"],
+        group="Base",
+    )
+    image = ImageBlock(group="Base")
+    document = DocumentBlock(group="Base")
+
+    top_stories = StoryBlock(group="Module")
+    pinned_stories = PinnedStoryBlock(group="Module")
+    youtube_video = YoutubeVideoBlock(group="Module")
+    articles = ArticleCardsBlock(group="Module")
+    logos = LogoCardsBlock(group="Module")
+
+    table = TableBlock(group="HTML")
+    video = CustomVideoChooserBlock(group="HTML")
+    youtube_video = YoutubeVideoBlock(group="HTML")
