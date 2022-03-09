@@ -254,6 +254,7 @@ class JumpboxWithImageBlock(blocks.StructBlock):
         template = "TODO"
 
     image = ImageChooserBlock()
+    # TODO: add image_alt
     page = blocks.PageChooserBlock(required=False)
     description = blocks.CharBlock(required=False)
     text = blocks.CharBlock(required=False)
