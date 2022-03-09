@@ -24,6 +24,13 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
         {% block extra_css %}{% endblock %}
+                <!-- OneTrust Cookies Consent Notice start for ireland.ie -->
+        <script type="text/javascript" src="https://cdn.cookielaw.org/consent/587affe4-c69d-4222-b532-bf8caeaa4e67-test/OtAutoBlock.js" async></script>
+        <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="587affe4-c69d-4222-b532-bf8caeaa4e67-test" async></script>
+        <script type="text/javascript" async>
+            function OptanonWrapper() { }
+        </script>
+    <!-- OneTrust Cookies Consent Notice end for ireland.ie -->
     </head>
 
     <body class="{% block body_class %}template-{{ page.get_verbose_name|slugify }}{% endblock %}">
