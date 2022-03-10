@@ -33,34 +33,24 @@ class Search {
     bindEvents() {
         this.node.addEventListener('click', (e) => {
             e.preventDefault();
-            this.hideMobileMenu();
-            this.hideDesktopMenu();
             this.toggleSearch();
         });
-    }
 
-    // hide the mobile menu
-    hideMobileMenu() {
-        this.mobileMenu.forEach((menu) => {
-            if (menu.classList.contains('is-visible')) {
-                menu.classList.remove('is-visible');
-            }
+        // Hide the search dropdown if the mobile or desktop menus are opened
+        document.addEventListener('onMenuOpen', () => {
+            this.searchToggles.forEach((toggle) => {
+                toggle.classList.remove(this.activeClass);
+            });
+
+            // toggle search dropdown
+            this.searchDropdown.classList.remove(this.activeClass);
         });
-
-        this.mobileMenuToggle.forEach((menuToggle) => {
-            if (menuToggle.classList.contains('is-open')) {
-                menuToggle.classList.remove('is-open');
-            }
-        });
-    }
-
-    hideDesktopMenu() {
-        this.allDesktopMenuItems.forEach((item) =>
-            item.classList.remove(this.activeClass),
-        );
     }
 
     toggleSearch() {
+        const searchEvent = new Event('onSearchOpen');
+        document.dispatchEvent(searchEvent);
+
         // toggle both desktop and mobile icons
         this.searchToggles.forEach((toggle) => {
             toggle.classList.toggle(this.activeClass);
