@@ -30,7 +30,7 @@ stages:
 
   - job: Test
     steps:
-    - script: pip install -r .azure-pipelines/requirements_base.txt
+    - script: pip install -r requirements.txt
       displayName: Install Requirements
 
     - script: |
@@ -53,7 +53,7 @@ stages:
         npm run build:prod
       displayName: Build Static Files
 
-    - script: pip install -r .azure-pipelines/requirements_s3.txt
+    - script: pip install -r requirements.txt
       displayName: Install Requirements
 
     - script: |

@@ -76,10 +76,6 @@ locals {
       description = "Gerry Mcbride - OGCIO"
       cidr_blocks = ["52.49.120.79/32", "37.228.234.245/32"]
     },
-    maris_dev = {
-      description = "Maris Erts - OGCIO"
-      cidr_blocks = ["54.77.246.14/32"]
-    },
     kleverson_dev = {
       description = "Kleverson Morais - OGCIO"
       cidr_blocks = ["176.61.106.140/32"]

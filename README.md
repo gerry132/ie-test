@@ -127,3 +127,14 @@ Common environment has been set up to pull alpine3.11 from docker hub and create
 - ECR repo per environment
 - S3 for static files, file upload and logging
 - ECS, LB logging to S3
+
+## Running the app locally
+
+Build and run using [Docker compose](https://docs.docker.com/compose/):
+
+```bash
+docker compose up --build
+```
+
+Then access the app on http://localhost.
+
