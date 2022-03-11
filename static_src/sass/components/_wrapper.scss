@@ -25,4 +25,15 @@
     &--padding {
         padding: 0 $grid;
     }
+
+    &--mobile-menu {
+        margin: 0;
+        width: 100%;
+
+        @include media-query(large) {
+            width: auto;
+            margin: auto;
+            padding: 0 30px;
+        }
+    }
 }

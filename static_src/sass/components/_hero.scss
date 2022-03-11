@@ -5,6 +5,19 @@
     background-size: cover;
     height: 100vh;
     width: 100%;
+    // offset for fixed header
+    margin-top: -$mobile-header-height;
+    padding-top: $mobile-header-height;
+
+    @include media-query(large) {
+        margin-top: -$desktop-header-height;
+        padding-top: $desktop-header-height;
+    }
+
+    .main--condensed & {
+        margin-top: -$condensed-header-height;
+        padding-top: $condensed-header-height;
+    }
 
     &::before {
         content: '';

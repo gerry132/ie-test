@@ -1,0 +1,10 @@
+context:
+  customnav:
+    - dummy
+    - dummy
+    - dummy
+
+tags:
+  include_block:
+    'link with page=custom_link.value.page.url title=custom_link.value.page.title nav_type="primary-nav"':
+      template_name: 'patterns/molecules/navigation/blocks/menu_item.html'
