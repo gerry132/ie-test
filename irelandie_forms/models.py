@@ -62,7 +62,7 @@ class FormPage(HoneypotMixin, BasePage):
     template = "patterns/pages/forms/form_page.html"
     landing_page_template = "patterns/pages/forms/form_page_landing.html"
 
-    subpage_types = []
+    # subpage_types = []
 
     introduction = models.TextField(blank=True)
     thank_you_text = RichTextField(

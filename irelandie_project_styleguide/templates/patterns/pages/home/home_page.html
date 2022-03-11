@@ -2,9 +2,8 @@
 {% load wagtailcore_tags wagtailimages_tags static %}
 
 {% block main %}
-    {% include_block page.top_stories %}
-
-    {% include_block page.pinned_stories %}
-
-    {% include_block page.secondary_stories %}
+<div class="wrapper wrapper--large wrapper--padding">
+    {% comment %} pls don't question the below, thank you 😁 {% endcomment %}
+    {% include_block page.body %}
+</div>
 {% endblock %}
