@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from wagtail.admin.edit_handlers import StreamFieldPanel
+from wagtail.admin.edit_handlers import TabbedInterface, ObjectList, StreamFieldPanel
 from wagtail.core import blocks as wagtail_blocks
 from wagtail.core.fields import StreamField
 
@@ -67,6 +67,13 @@ class HomePage(FreeFormPageBase):
     #     StreamFieldPanel("pinned_stories"),
     #     StreamFieldPanel("secondary_stories"),
     # ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(FreeFormPageBase.content_panels, heading='Content'),
+        ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
+        ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
+        ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
+    ])
 
 
 class CampaignPage(HeroPage):
