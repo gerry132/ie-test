@@ -139,6 +139,13 @@ class CampaignPage(HeroPage):
         StreamFieldPanel("secondary_stories"),
     ]
 
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.hero_panel, heading='Hero'),
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
+    ])
+
 
 class TopicPage(HeroPage):
     template = "patterns/pages/home/topic_page.html"
@@ -194,3 +201,10 @@ class TopicPage(HeroPage):
         StreamFieldPanel("embeds"),
         StreamFieldPanel("logo_cards", heading="Logo Cards"),
     ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.hero_panel, heading='Hero'),
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
+    ])

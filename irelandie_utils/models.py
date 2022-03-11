@@ -11,7 +11,7 @@ from wagtail.admin.edit_handlers import (
     PageChooserPanel,
     StreamFieldPanel,
     FieldRowPanel,
-    HelpPanel,
+    HelpPanel, TabbedInterface, ObjectList,
 )
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core import blocks
@@ -408,6 +408,13 @@ class HeroPage(BasePage):
     content_panels = Page.content_panels + [
         FieldPanel("secondary_title"),
     ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(hero_panel, heading='Hero'),
+        ObjectList(BasePage.promote_panels, heading='Promote'),
+        ObjectList(BasePage.settings_panels, heading='Settings', classname="settings"),
+    ])
 
 
 class ArticlePage(BasePage):
