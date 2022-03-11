@@ -5,14 +5,16 @@
     {% comment %}
         Responsive hero images
     {% endcomment %}
-    {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
-    
-    {% include "patterns/molecules/hero/hero.html" with page=page %}
+    {% if page.hero_image or page.hero_video %}
+        {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
 
-    {% if page.secondary_title %}
-        <div class="wrapper wrapper--large wrapper--padding">
-            <h2 class="secondary-title">{{ page.secondary_title }}</h2>
-        </div>
+        {% include "patterns/molecules/hero/hero.html" with page=page %}
+
+        {% if page.secondary_title %}
+            <div class="wrapper wrapper--large wrapper--padding">
+                <h2 class="secondary-title">{{ page.secondary_title }}</h2>
+            </div>
+        {% endif %}
     {% endif %}
 
     {% block main %}
