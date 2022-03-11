@@ -88,6 +88,7 @@ class StoryBlock(blocks.StructBlock):
     )
 
     class Meta:
+        icon = "snippet"
         template = "patterns/molecules/streamfield/blocks/story_block.html"
 
 
@@ -103,6 +104,7 @@ class FeaturedStoryBlock(blocks.StructBlock):
     )
 
     class Meta:
+        icon = "doc-full-inverse"
         template = "patterns/molecules/streamfield/blocks/featured_story_block.html"
 
     def clean(self, value):
@@ -148,6 +150,7 @@ class EmbassyStory(blocks.StructBlock):
     )
 
     class Meta:
+        icon = "doc-full"
         value_class = AlternateLinkValue
         template = "patterns/molecules/streamfield/blocks/embassy_block.html"
 
@@ -311,6 +314,7 @@ class YoutubeLinkValue(blocks.StructValue):
 
 class YoutubeVideoBlock(blocks.StructBlock):
     class Meta:
+        icon = "media"
         label = "Youtube Video"
         value_class = YoutubeLinkValue
         template = "patterns/molecules/streamfield/blocks/youtube_block.html"
@@ -326,6 +330,7 @@ class YoutubeVideoBlock(blocks.StructBlock):
 
 class CustomVideoChooserBlock(VideoChooserBlock):
     class Meta:
+        icon = "media"
         label = "Custom Video Chooser"
         template = "patterns/molecules/streamfield/blocks/video_block.html"
 
@@ -355,7 +360,7 @@ class LogoCardsBlock(blocks.StructBlock):
     cards = blocks.StreamBlock([("card", LogoCardBlock())])
 
     class Meta:
-        icon = "table"
+        icon = "pick"
         label = "Logo Cards"
         template = "patterns/molecules/streamfield/blocks/logo_cards.html"
 
@@ -378,7 +383,7 @@ class ArticleCardsBlock(blocks.StructBlock):
     articles = blocks.StreamBlock([("article", ArticleCardBlock())])
 
     class Meta:
-        icon = "table"
+        icon = "list-ul"
         label = "Articles"
         template = "patterns/molecules/streamfield/blocks/article_cards.html"
 
@@ -402,7 +407,7 @@ class FeaturedArticlesBlock(blocks.StructBlock):
     )
 
     class Meta:
-        icon = "table"
+        icon = "list-ol"
         label = "Featured Articles"
         template = "patterns/molecules/streamfield/blocks/featured_articles.html"
 
@@ -428,7 +433,7 @@ class PinnedStoriesBlock(blocks.StructBlock):
     pinned_stories = blocks.ListBlock(PinnedStoryBlock())
 
     class Meta:
-        icon = "table"
+        icon = "thumbtack"
         label = "Pinned Stories"
         template = "patterns/molecules/pinned-stories/pinned_stories.html"
 
@@ -442,12 +447,15 @@ class FreeFormBlocks(blocks.StreamBlock):
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
 
-    top_stories = StoryBlock(group="Module")
-    pinned_stories = PinnedStoriesBlock(group="Module")
-    youtube_video = YoutubeVideoBlock(group="Module")
     articles = ArticleCardsBlock(group="Module")
+    embassy_story = EmbassyStory(group="Module")
+    featured_articles = FeaturedArticlesBlock(group="Module")
+    featured_story = FeaturedStoryBlock(group="Module")
     logos = LogoCardsBlock(group="Module")
+    pinned_stories = PinnedStoriesBlock(group="Module")
+    stories = StoryBlock(group="Module")
 
     table = TableBlock(group="HTML")
+    youtube_video = YoutubeVideoBlock(group="HTML")
     video = CustomVideoChooserBlock(group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
