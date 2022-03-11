@@ -7,15 +7,10 @@ from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, TranslatableMixin
 
-# from irelandie_missions.models import MissionPage
-
 from .blocks import PlacePageSectionBlock
 
 
 class PlacePageIndex(Page, TranslatableMixin):
-
-    # parent_page_types = [MissionPage]
-    # subpage_types = ["PlacePage"]
     max_count_per_parent = 1
 
 
@@ -57,11 +52,6 @@ class PlacePage(Page, TranslatableMixin):
     opening_hours_sunday_to = models.TimeField(blank=True, null=True)
 
     countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
-
-    # parent_page_types = [
-    #     "PlacePageIndex",
-    # ]
-    # subpage_types = []
 
     content_panels = Page.content_panels + [
         FieldPanel("first_published_at"),
