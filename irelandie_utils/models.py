@@ -10,6 +10,8 @@ from wagtail.admin.edit_handlers import (
     MultiFieldPanel,
     PageChooserPanel,
     StreamFieldPanel,
+    FieldRowPanel,
+    HelpPanel,
 )
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core import blocks
@@ -387,48 +389,23 @@ class HeroPage(BasePage):
     class Meta:
         abstract = True
 
-    def clean(self):
-        if not self.hero_image and not self.hero_video:
-            raise ValidationError(
-                {
-                    "hero_image": ValidationError(
-                        "You must specify hero image or hero video."
-                    ),
-                    "hero_video": ValidationError(
-                        "You must specify hero image or hero video."
-                    ),
-                }
-            )
-
-        if self.hero_image and self.hero_video:
-            raise ValidationError(
-                {
-                    "hero_image": ValidationError(
-                        "You must specify hero image or hero video. You can't use both."
-                    ),
-                    "hero_video": ValidationError(
-                        "You must specify hero image or hero video. You can't use both."
-                    ),
-                }
-            )
-
-    content_panels = Page.content_panels + [
+    hero_panel = [
+        HelpPanel("For the hero to display you must set the image or video field below."),
+        FieldRowPanel([
+            ImageChooserPanel("hero_image", classname="col6"),
+            MediaChooserPanel("hero_video", media_type="video", classname="col6"),
+        ], "Hero Media"),
+        FieldPanel("hero_title"),
+        FieldPanel("summary"),
         MultiFieldPanel(
             [
-                FieldPanel("hero_title"),
-                ImageChooserPanel("hero_image"),
-                MediaChooserPanel("hero_video", media_type="video"),
-                FieldPanel("summary"),
-                MultiFieldPanel(
-                    [
-                        PageChooserPanel("link_page"),
-                        FieldPanel("link_text"),
-                    ],
-                    "link",
-                ),
+                PageChooserPanel("link_page"),
+                FieldPanel("link_text"),
             ],
-            "hero",
-        ),
+            "Link",
+        )]
+
+    content_panels = Page.content_panels + [
         FieldPanel("secondary_title"),
     ]
 
