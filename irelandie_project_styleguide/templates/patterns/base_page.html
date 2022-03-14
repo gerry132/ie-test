@@ -83,10 +83,10 @@
         </div>
     </section>
 
-    {% comment %} 
+    {% comment %}
         Add header--condensed class if override menu exists on a page
 
-        Note: This is only implemented on the CountyGroupPageIndex at the moment 
+        Note: This is only implemented on the CountyGroupPageIndex at the moment
     {% endcomment %}
     <header>
         <div class="header{% if page.override_primary_navigation %} header--condensed{% endif %}">
@@ -103,7 +103,7 @@
                     </div>
 
                     <div class="header__menus header__menus--mobile" data-mobile-menu>
-                        {% comment %} 
+                        {% comment %}
                         This is called mobile nav, but actually gets shown at all screen sizes.
                         Only shows the extended primary nav on desktop, then combines all 3 navs (if available) on mobile
                         {% endcomment %}
@@ -113,17 +113,18 @@
                                 {% primarynav %}
                             </div>
 
-                            {% if secondarynav %}
-                                <div class="header__menu header__menu--extended">
-                                    {% comment %} Secondary nav/burger nav {% endcomment %}
-                                    {% secondarynav %}
-                                </div>
+                            {% has_secondary_nav as shownav %}
+                            {% if shownav %}
+                            <div class="header__menu header__menu--extended">
+                                {% comment %} Secondary nav/burger nav {% endcomment %}
+                                {% secondarynav %}
+                            </div>
                             {% endif %}
-                            
-                            {% comment %} 
+
+                            {% comment %}
                                 Show override nav alongside primary nav in dropdown if available
 
-                                Note: This is only implemented on the CountyGroupPageIndex at the moment 
+                                Note: This is only implemented on the CountyGroupPageIndex at the moment
                             {% endcomment %}
                             {% if page.override_primary_navigation %}
                             <div class="header__menu header__menu--override">
@@ -134,7 +135,7 @@
                     </div>
 
                     <div class="header__menu-items">
-                        
+
                         <!-- Start of the locale selector -->
                             <form action="{% url 'set_language' %}" method="post">
                                 {% csrf_token %}
@@ -159,29 +160,30 @@
                             <svg class="header__search-icon" aria-hidden="true">
                                 <use href="#magnifying-glass"></use>
                             </svg>
-            
+
                             <svg class="header__search-icon header__search-icon--close" aria-hidden="true">
                                 <use xlink:href="#close"></use>
                             </svg>
                         </button>
 
-                        <div class="header__menu-toggle{% if secondarynav %} header__menu-toggle--desktop{% endif %}">
-                            <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
-                                <span class="button-menu-toggle__line"></span>
-                                <span class="button-menu-toggle__line"></span>
-                                <span class="button-menu-toggle__line"></span>
-                                <span class="button-menu-toggle__line"></span>
-                            </button>
-                        </div>
+                    <div class="header__menu-toggle{% if shownav %} header__menu-toggle--desktop{% endif %}">
+                        <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
+                            <span class="button-menu-toggle__line"></span>
+                            <span class="button-menu-toggle__line"></span>
+                            <span class="button-menu-toggle__line"></span>
+                            <span class="button-menu-toggle__line"></span>
+                        </button>
+                    </div>
+
                     </div>
                 </div>
             </div>
         </div>
 
-        {% comment %} 
+        {% comment %}
             Only show this override nav if available on the page
-            
-            Note: This is only implemented on the CountyGroupPageIndex at the moment 
+
+            Note: This is only implemented on the CountyGroupPageIndex at the moment
         {% endcomment %}
         {% if page.override_primary_navigation %}
             <div class="header header--override">
@@ -200,7 +202,7 @@
                         <div class="header__menus header__menus--mobile" data-mobile-menu>
                             {% custom_primary_navigation page %}
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
         {% endif %}
