@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from wagtail.admin.edit_handlers import StreamFieldPanel
+from wagtail.admin.edit_handlers import TabbedInterface, ObjectList, StreamFieldPanel
 from wagtail.core import blocks as wagtail_blocks
 from wagtail.core.fields import StreamField
 
@@ -14,6 +14,13 @@ class HomePage(FreeFormPageBase):
 
     # Only allow creating HomePages at the root level
     parent_page_types = ["wagtailcore.Page"]
+
+    edit_handler = TabbedInterface([
+        ObjectList(FreeFormPageBase.content_panels, heading='Content'),
+        ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
+        ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
+        ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
+    ])
 
 
 class CampaignPage(HeroPage):
@@ -74,6 +81,13 @@ class CampaignPage(HeroPage):
         StreamFieldPanel("secondary_stories"),
     ]
 
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.hero_panel, heading='Hero'),
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
+    ])
+
 
 class TopicPage(HeroPage):
     template = "patterns/pages/home/topic_page.html"
@@ -124,3 +138,10 @@ class TopicPage(HeroPage):
         StreamFieldPanel("embeds"),
         StreamFieldPanel("logo_cards", heading="Logo Cards"),
     ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.hero_panel, heading='Hero'),
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
+    ])

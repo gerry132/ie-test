@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from wagtail.core.fields import StreamField
-from wagtail.admin.edit_handlers import StreamFieldPanel
+from wagtail.admin.edit_handlers import TabbedInterface, ObjectList, StreamFieldPanel
 
 from irelandie_utils.models import HeroPage
 from irelandie_utils.blocks import FreeFormBlocks
@@ -17,6 +17,8 @@ class FreeFormPageBase(HeroPage):
         StreamFieldPanel("body"),
     ]
 
+    hero_panel = HeroPage.hero_panel
+
     class Meta:
         abstract = True
         verbose_name = "Free Form Page"
@@ -25,3 +27,10 @@ class FreeFormPageBase(HeroPage):
 
 class FreeFormPage(FreeFormPageBase):
     template = "patterns/pages/irelandie_pages/free_form_page.html"
+
+    edit_handler = TabbedInterface([
+        ObjectList(FreeFormPageBase.content_panels, heading='Content'),
+        ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
+        ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
+        ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
+    ])
