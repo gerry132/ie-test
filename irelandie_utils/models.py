@@ -399,6 +399,15 @@ class HeroPage(BasePage):
                 }
             )
 
+        if self.link_page and not self.link_text:
+            raise ValidationError(
+                {
+                    "link_text": ValidationError(
+                        "You must provide some Link text if you choose a link page"
+                    )
+                }
+            )
+
     class Meta:
         abstract = True
 
@@ -412,10 +421,11 @@ class HeroPage(BasePage):
         FieldPanel("summary"),
         MultiFieldPanel(
             [
+                HelpPanel("For the Call To Action to display you must set the Link text if you choose a Link Page."),
                 PageChooserPanel("link_page"),
                 FieldPanel("link_text"),
             ],
-            "Link",
+            "Call To Action",
         )]
 
     content_panels = Page.content_panels + [
