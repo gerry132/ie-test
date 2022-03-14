@@ -386,6 +386,19 @@ class HeroPage(BasePage):
     link_text = models.CharField(blank=True, max_length=255)
     secondary_title = models.CharField(blank=True, max_length=255)
 
+    def clean(self):
+        if self.hero_image and self.hero_video:
+            raise ValidationError(
+                {
+                    "hero_image": ValidationError(
+                        "You can't choose both an image and a video for the hero media. Choose an image or a video"
+                    ),
+                    "hero_video": ValidationError(
+                        "You can't choose both an image and a video for the hero media. Choose an image or a video"
+                    ),
+                }
+            )
+
     class Meta:
         abstract = True
 
