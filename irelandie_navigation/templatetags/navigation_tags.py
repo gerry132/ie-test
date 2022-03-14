@@ -74,11 +74,7 @@ def secondarynav(context):
 def has_secondary_nav(context):
     request = context["request"]
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
-
-    navigation = get_nav_for_locale(SecondaryNavigation, locale)
-
-    if navigation:
-        return navigation.__dict__["_raw_data"]
+    return bool(get_nav_for_locale(SecondaryNavigation, locale))
 
 
 # FOOTER NAVIGATION
