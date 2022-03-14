@@ -112,11 +112,13 @@
                             <div class="header__menu header__menu--primary">
                                 {% primarynav %}
                             </div>
-                            
-                            <div class="header__menu header__menu--extended">
-                                {% comment %} Secondary nav/burger nav {% endcomment %}
-                                {% secondarynav %}
-                            </div>
+
+                            {% if secondarynav %}
+                                <div class="header__menu header__menu--extended">
+                                    {% comment %} Secondary nav/burger nav {% endcomment %}
+                                    {% secondarynav %}
+                                </div>
+                            {% endif %}
                             
                             {% comment %} 
                                 Show override nav alongside primary nav in dropdown if available
@@ -163,7 +165,7 @@
                             </svg>
                         </button>
 
-                        <div class="header__menu-toggle">
+                        <div class="header__menu-toggle{% if secondarynav %} header__menu-toggle--desktop{% endif %}">
                             <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
                                 <span class="button-menu-toggle__line"></span>
                                 <span class="button-menu-toggle__line"></span>
