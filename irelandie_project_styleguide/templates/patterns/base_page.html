@@ -113,10 +113,13 @@
                                 {% primarynav %}
                             </div>
 
+                            {% has_secondary_nav as shownav %}
+                            {% if shownav %}
                             <div class="header__menu header__menu--extended">
                                 {% comment %} Secondary nav/burger nav {% endcomment %}
                                 {% secondarynav %}
                             </div>
+                            {% endif %}
 
                             {% comment %}
                                 Show override nav alongside primary nav in dropdown if available
@@ -163,14 +166,15 @@
                             </svg>
                         </button>
 
-                        <div class="header__menu-toggle">
-                            <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
-                                <span class="button-menu-toggle__line"></span>
-                                <span class="button-menu-toggle__line"></span>
-                                <span class="button-menu-toggle__line"></span>
-                                <span class="button-menu-toggle__line"></span>
-                            </button>
-                        </div>
+                    <div class="header__menu-toggle{% if shownav %} header__menu-toggle--desktop{% endif %}">
+                        <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
+                            <span class="button-menu-toggle__line"></span>
+                            <span class="button-menu-toggle__line"></span>
+                            <span class="button-menu-toggle__line"></span>
+                            <span class="button-menu-toggle__line"></span>
+                        </button>
+                    </div>
+
                     </div>
                 </div>
             </div>

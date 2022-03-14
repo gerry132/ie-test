@@ -178,7 +178,13 @@
         text-transform: uppercase;
 
         @include media-query(large) {
+            display: none;
+
             #{$root}--condensed & {
+                display: flex;
+            }
+
+            &--desktop {
                 display: flex;
             }
         }

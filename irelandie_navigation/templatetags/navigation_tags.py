@@ -68,6 +68,15 @@ def secondarynav(context):
     }
 
 
+@register.simple_tag(
+    takes_context=True
+)
+def has_secondary_nav(context):
+    request = context["request"]
+    locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
+    return bool(get_nav_for_locale(SecondaryNavigation, locale))
+
+
 # FOOTER NAVIGATION
 # ----------------------------------------------------------------------
 # The data for the footer navigation is managed in the FooterNavigation
