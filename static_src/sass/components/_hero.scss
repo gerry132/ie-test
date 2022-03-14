@@ -1,9 +1,11 @@
 .hero {
     $root: &;
+    display: flex;
     position: relative;
     background-position: center;
     background-size: cover;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     width: 100%;
     // offset for fixed header
     margin-top: -$mobile-header-height;
@@ -36,12 +38,7 @@
     }
 
     &--article {
-        height: 75vh;
-        padding-bottom: 30px;
-
-        @include media-query(medium) {
-            padding-bottom: 100px;
-        }
+        min-height: 75vh;
 
         #{$root}__title {
             font-family: $font--secondary;
@@ -49,7 +46,31 @@
 
         #{$root}__content {
             font-family: $font--secondary;
-            align-items: flex-end;
+
+            @include media-query(large) {
+                align-items: flex-end;
+
+                #{$root}--background-video & {
+                    align-items: flex-end;
+                }
+            }
+        }
+
+        #{$root}__video-control-container {
+            align-self: flex-start;
+
+            @include media-query(medium) {
+                align-self: center;
+            }
+
+            @include media-query(large) {
+                align-self: flex-end;
+                align-items: center;
+            }
+        }
+
+        #{$root}__copy {
+            max-width: 100%;
         }
     }
 
@@ -74,7 +95,6 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        height: 100%;
         width: 100%;
     }
 
@@ -85,6 +105,7 @@
         height: 100%;
         position: relative;
         color: $color--white;
+        padding: 40px 0;
         z-index: 2;
 
         @include media-query(medium) {
@@ -113,6 +134,8 @@
     }
 
     &__video-control-container {
+        align-self: center;
+
         @include media-query(medium) {
             align-items: center;
         }
@@ -147,7 +170,8 @@
         }
 
         @include media-query(medium) {
-            margin-bottom: 0;
+            margin-bottom: $grid;
+            margin-top: 0;
             height: 80px;
             width: 80px;
         }

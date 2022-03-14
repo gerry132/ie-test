@@ -1,5 +1,4 @@
-{% load wagtailcore_tags %}
-
+{% load wagtailcore_tags i18n %}
 
 <section
     class="sidebar {{ classes }}"
@@ -10,7 +9,7 @@
             {% if sidebar_title %}
                 {{ sidebar_title }}
             {% else %}
-                Related content
+                {% trans 'Related content' %}
             {% endif %}
         </h2>
 

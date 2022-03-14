@@ -75,7 +75,7 @@
 
 {% block header %}
 {% include "patterns/molecules/skip-link/skip-link.html" %}
-    <section aria-label="search">
+    <section aria-label="{% trans 'Search' %}">
         <div class="header__search{% if page.override_primary_navigation %} header__search--condensed{% endif %}" data-search-dropdown>
             <div class="wrapper wrapper--large">
                 {% include "patterns/molecules/search/search.html" with classes="search--dropdown" %}
@@ -249,7 +249,7 @@
             </div>
 
             <div class="footer__credit">
-                <p>© Copyright {% now "Y" %} - Ireland.ie | All rights reserved</p>
+                <p>© {% trans 'Copyright' %} {% now "Y" %} - Ireland.ie | {% trans 'All rights reserved' %}</p>
             </div>
         </div>
     </footer>

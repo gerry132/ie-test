@@ -1,4 +1,4 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags i18n %}
 
 {% if page.get_ancestors|length > 2 %}
     <nav aria-label="breadcrumb">
@@ -14,7 +14,7 @@
                         <li class="nav__item nav__item--breadcrumb">
                             <a class="nav__link nav__link--breadcrumb" href="/">
                                 {% include "patterns/atoms/icons/icon.html" with name="home" %}
-                                Home
+                                {% trans 'Home' %}
                             </a>
                         </li>
                     {% endif %}

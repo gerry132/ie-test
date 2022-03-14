@@ -1,4 +1,4 @@
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags i18n %}
 
 {% if page.hero_image %}
     <div class="hero hero--background-image background-image{% if classes %} {{ classes }}{% endif %}">
@@ -10,7 +10,7 @@
         <figure class="hero__video-wrapper" aria-hidden="true">
             <video class="hero__video" autoplay loop muted data-video controls>
                 <source src="{{ page.hero_video.url }}" type="video/mp4">
-                Your browser does not support the video tag.
+                {% trans 'Your browser does not support the video tag.' %}
             </video>
         </figure>
     {% endif %}

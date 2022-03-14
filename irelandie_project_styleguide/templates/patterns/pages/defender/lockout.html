@@ -1,9 +1,11 @@
+{% load i18n %}
+
 <!DOCTYPE html>
 <html lang="en-GB">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Your account has been locked</title>
+    <title>{% trans 'Your account has been locked' %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
       html {
@@ -20,11 +22,11 @@
   </head>
   <body>
     <main>
-        <h1>Account locked: too many login attempts.</h1>
+        <h1>{% trans 'Account locked: too many login attempts.' %}</h1>
         {% if cooloff_time_minutes == 0 %}
-            <p>Contact an admin to unlock your account.</p>
+            <p>{% trans 'Contact an admin to unlock your account.' %}</p>
         {% else %}
-            <p>Please try again in {{ cooloff_time_minutes|floatformat }} minute{{ cooloff_time_minutes|pluralize }}.</p>
+            <p>{% blocktrans %}Please try again in '{{ cooloff_time_minutes|floatformat }}' minute'{{ cooloff_time_minutes|pluralize }}'.{% endblocktrans %}</p>
         {% endif %}
     </main>
   </body>

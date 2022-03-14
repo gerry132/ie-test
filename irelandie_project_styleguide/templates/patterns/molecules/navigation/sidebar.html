@@ -1,8 +1,9 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags i18n %}
+
 {% if children %}
     <div class="sidebar">
         <div class="sidebar__inner">
-            <h2>In this section</h2>
+            <h2>{% trans 'In this section' %}</h2>
             <ul>
                 {% for child in children %}
                 <li><a href="{% pageurl child %}">{{ child.title }}</a></li>

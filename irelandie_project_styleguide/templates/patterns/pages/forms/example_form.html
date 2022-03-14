@@ -1,12 +1,14 @@
 {% extends "patterns/base.html" %}
 
+{% load i18n %}
+
 {% block content %}
 <form method="post" class="form">
     {% csrf_token %}
     <div class="form__container">
         {% if form.errors %}
             <div class="form__errors">
-                There were some errors with your form. Please amend the fields highlighted below.
+                {% trans 'There were some errors with your form. Please amend the fields highlighted below.' %}
 
                 {% if form.non_field_errors %}
                     <ul>
@@ -26,7 +28,7 @@
             {% include "patterns/molecules/field/field.html" with field=field %}
         {% endfor %}
 
-        <button class="form__submit button" type="submit">Submit</button>
+        <button class="form__submit button" type="submit">{% trans 'Submit' %}</button>
     </div>
 </form>
 {% endblock %}

@@ -1,9 +1,11 @@
+{% load i18n %}
+
 <!DOCTYPE html>
 <html lang="en-GB">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Server error</title>
+    <title>{% trans 'Server error' %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
       html {
@@ -24,8 +26,8 @@
     </style>
   </head>
   <body>
-    <h1>Something went wrong</h1>
-    <p>We&rsquo;re sorry! Our server is acting up right now. Please try again soon.</p>
-    <p class="errorcode">Internal Server Error (500)</p>
+    <h1>{% trans 'Something went wrong' %}</h1>
+    <p>{% blocktrans %}'We&rsquo;re sorry! Our server is acting up right now. Please try again soon.' {% blocktans %}</p>
+    <p class="errorcode">{% trans 'Internal Server Error (500)' %}</p>
   </body>
 </html>
