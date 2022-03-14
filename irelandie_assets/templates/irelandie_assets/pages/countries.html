@@ -1,13 +1,6 @@
 {% extends "patterns/base_page.html" %}
 {% load wagtailcore_tags navigation_tags %}
 
-{% block sub_navigation %}
-    {% comment %} 
-    This is only implemented on the CountyGroupPageIndex at the moment 
-    {% endcomment %}
-    {% if page.override_primary_navigation %}{% custom_primary_navigtaion page %}{% endif %}
-{% endblock %}
-
 {% block content %}
 
     {% block main%}

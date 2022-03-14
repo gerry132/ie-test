@@ -8,13 +8,13 @@ from wagtail.core.blocks import RichTextBlock
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, TranslatableMixin
 
-from irelandie_missions.models import MissionPage
+# from irelandie_missions.models import MissionPage
 
 
 class ContactDetailPageIndex(Page, TranslatableMixin):
 
-    parent_page_types = [MissionPage]
-    subpage_types = ["ContactDetailPage"]
+    # parent_page_types = [MissionPage]
+    # subpage_types = ["ContactDetailPage"]
     max_count_per_parent = 1
 
 
@@ -49,4 +49,4 @@ class ContactDetailPage(Page, TranslatableMixin):
         FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
     ]
 
-    parent_page_types = [ContactDetailPageIndex]
+    # parent_page_types = [ContactDetailPageIndex]

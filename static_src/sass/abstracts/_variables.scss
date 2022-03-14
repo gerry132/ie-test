@@ -9,6 +9,7 @@ $color--off-black: #292929;
 $color--background-grey: #ebe9e1;
 $color--grey: #eaeced;
 $color--accessible-grey: #5d677a;
+$color--dark-green: #0a2f2b;
 
 $color--red: #f00;
 $color--border: $color--grey;
@@ -54,6 +55,10 @@ $breakpoints: (
     'medium' '(min-width: 599px)',
     'large' '(min-width: 1023px)'
 );
+
+$mobile-header-height: 80px;
+$desktop-header-height: 102px;
+$condensed-header-height: 45px + 80px; // primary & override nav heights
 
 // --------------------------------- Grid Dimensions --------------------------------------
 

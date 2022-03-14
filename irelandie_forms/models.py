@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django import forms
 from django.db import models
 from django.utils.decorators import method_decorator
@@ -16,6 +17,7 @@ from wagtail.contrib.forms.models import (
     FORM_FIELD_CHOICES,
     AbstractFormField,
     FormBuilder,
+    AbstractFormSubmission,
 )
 from wagtail.core.fields import RichTextField
 from wagtail.search import index
@@ -49,13 +51,18 @@ class CustomFormBuilder(FormBuilder):
         return forms.CharField(**options)
 
 
+class NeverSaveFormSubmission(AbstractFormSubmission):
+    def save(self, *args, **kwargs):
+        pass
+
+
 # Never cache form pages since they include CSRF tokens.
 @method_decorator(never_cache, name="serve")
 class FormPage(HoneypotMixin, BasePage):
     template = "patterns/pages/forms/form_page.html"
     landing_page_template = "patterns/pages/forms/form_page_landing.html"
 
-    subpage_types = []
+    # subpage_types = []
 
     introduction = models.TextField(blank=True)
     thank_you_text = RichTextField(
@@ -98,3 +105,6 @@ class FormPage(HoneypotMixin, BasePage):
             ),
         ]
     )
+
+    def get_submission_class(self):
+        return NeverSaveFormSubmission

@@ -3,7 +3,7 @@ from functools import lru_cache
 from django import template
 from wagtail.core.models import Locale
 
-from irelandie_navigation.models import FooterNavigation, PrimaryNavigation
+from irelandie_navigation.models import FooterNavigation, PrimaryNavigation, SecondaryNavigation
 
 register = template.Library()
 
@@ -11,6 +11,23 @@ register = template.Library()
 @lru_cache(maxsize=None)
 def default_language():
     return Locale.objects.get(language_code="en")
+
+
+def get_nav_for_locale(cls, locale):
+    navigation = None
+
+    try:
+        navigation = cls.objects.get(locale=locale).navigation
+    except cls.DoesNotExist:
+        pass
+
+    if not navigation:
+        try:
+            navigation = cls.objects.get(locale=default_language()).navigation
+        except cls.DoesNotExist:
+            pass
+
+    return navigation
 
 
 # PRIMARY NAVIGATION
@@ -24,21 +41,29 @@ def primarynav(context):
     request = context["request"]
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
 
-    navigation = None
-
-    try:
-        navigation = PrimaryNavigation.objects.get(locale=locale).navigation
-    except PrimaryNavigation.DoesNotExist:
-        pass
-
-    if not navigation:
-        try:
-            navigation = PrimaryNavigation.objects.get(locale=default_language()).navigation
-        except PrimaryNavigation.DoesNotExist:
-            pass
+    navigation = get_nav_for_locale(PrimaryNavigation, locale)
 
     return {
         "primarynav": navigation,
+        "request": request,
+    }
+
+
+# SECONDARY NAVIGATION
+# ----------------------------------------------------------------------
+# The data for the secondary navigation is managed in the SecondaryNavigation
+# snippets model.
+@register.inclusion_tag(
+    "patterns/molecules/navigation/secondarynav.html", takes_context=True
+)
+def secondarynav(context):
+    request = context["request"]
+    locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
+
+    navigation = get_nav_for_locale(SecondaryNavigation, locale)
+
+    return {
+        "secondarynav": navigation,
         "request": request,
     }
 
@@ -54,18 +79,7 @@ def footernav(context):
     request = context["request"]
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
 
-    navigation = None
-
-    try:
-        navigation = FooterNavigation.objects.get(locale=locale).navigation
-    except FooterNavigation.DoesNotExist:
-        pass
-
-    if not navigation:
-        try:
-            navigation = FooterNavigation.objects.get(locale=default_language()).navigation
-        except FooterNavigation.DoesNotExist:
-            pass
+    navigation = get_nav_for_locale(FooterNavigation, locale)
 
     return {
         "footernav": navigation,
@@ -107,17 +121,17 @@ def footerlinks(context):
 
 
 # Secondary nav snippets
-@register.inclusion_tag(
-    "patterns/molecules/navigation/secondarynav.html", takes_context=True
-)
-def secondarynav(context):
-    request = context["request"]
-    return {
-        "secondarynav": context["settings"]["irelandie_navigation"][
-            "NavigationSettings"
-        ].secondary_navigation,
-        "request": request,
-    }
+# @register.inclusion_tag(
+#     "patterns/molecules/navigation/secondarynav.html", takes_context=True
+# )
+# def secondarynav(context):
+#     request = context["request"]
+#     return {
+#         "secondarynav": context["settings"]["irelandie_navigation"][
+#             "NavigationSettings"
+#         ].secondary_navigation,
+#         "request": request,
+#     }
 
 
 # Footer nav snippets
@@ -135,7 +149,7 @@ def sidebar(context):
 @register.inclusion_tag(
     "patterns/molecules/navigation/custom_primary_navigation.html", takes_context=True
 )
-def custom_primary_navigtaion(context, current_page):
+def custom_primary_navigation(context, current_page):
     return {
         "customnav": current_page.custom_primary_navigation,
         "request": context["request"],
