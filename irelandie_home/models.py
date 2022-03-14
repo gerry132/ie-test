@@ -9,64 +9,11 @@ from irelandie_pages.models import FreeFormPageBase
 
 
 class HomePage(FreeFormPageBase):
-    # top_stories = StreamField(
-    #     [("story", blocks.StoryBlock())],
-    #     min_num=0,
-    #     max_num=1,
-    #     blank=True,
-    #     null=True,
-    # )
-
-    # pinned_stories = StreamField(
-    #     [
-    #         (
-    #             "pinned_story",
-    #             wagtail_blocks.StructBlock(
-    #                 [
-    #                     ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
-    #                     (
-    #                         "pinned_stories",
-    #                         wagtail_blocks.ListBlock(blocks.PinnedStoryBlock()),
-    #                     ),
-    #                 ],
-    #                 template="patterns/molecules/pinned-stories/pinned_stories.html",
-    #             ),
-    #         ),
-    #     ],
-    #     block_counts={
-    #         "pinned_story": {"max_num": 1},
-    #     },
-    #     blank=True,
-    #     null=True,
-    # )
-
-    # secondary_stories = StreamField(
-    #     [("story", blocks.StoryBlock())],
-    #     min_num=0,
-    #     blank=True,
-    #     null=True,
-    # )
-
     max_count = 1
     template = "patterns/pages/home/home_page.html"
 
     # Only allow creating HomePages at the root level
     parent_page_types = ["wagtailcore.Page"]
-    # subpage_types = [
-    # "irelandie_missions.CountryPage",
-    # "irelandie_missions.MissionSearchPage",
-    # "irelandie_home.CampaignPage",
-    # "irelandie_home.TopicPage",
-    # "irelandie_forms.FormPage",
-    # "irelandie_news.NewsPage",
-    #     "irelandie_pages.FreeFormPage",
-    # ]
-
-    # content_panels = HeroPage.content_panels + [
-    #     StreamFieldPanel("top_stories"),
-    #     StreamFieldPanel("pinned_stories"),
-    #     StreamFieldPanel("secondary_stories"),
-    # ]
 
 
 class CampaignPage(HeroPage):
@@ -120,11 +67,6 @@ class CampaignPage(HeroPage):
 
     template = "patterns/pages/home/campaign_page.html"
 
-    # parent_page_types = ["irelandie_home.HomePage"]
-    # subpage_types = [
-    #     "irelandie_news.NewsPage",
-    # ]
-
     content_panels = HeroPage.content_panels + [
         StreamFieldPanel("top_stories"),
         StreamFieldPanel("embeds"),
@@ -135,11 +77,6 @@ class CampaignPage(HeroPage):
 
 class TopicPage(HeroPage):
     template = "patterns/pages/home/topic_page.html"
-
-    # parent_page_types = ["irelandie_home.HomePage"]
-    # subpage_types = [
-    #     "irelandie_news.NewsPage",
-    # ]
 
     body = StreamField(
         [
