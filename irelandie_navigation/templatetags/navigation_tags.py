@@ -61,7 +61,6 @@ def secondarynav(context):
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
 
     navigation = get_nav_for_locale(SecondaryNavigation, locale)
-    print(navigation)
 
     return {
         "secondarynav": navigation,
