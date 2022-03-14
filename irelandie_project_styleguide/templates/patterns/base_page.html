@@ -89,7 +89,7 @@
         Note: This is only implemented on the CountyGroupPageIndex at the moment
     {% endcomment %}
     <header>
-        <div class="header{% if page.override_primary_navigation %} header--condensed{% endif %}">
+        <div class="header{% if page.override_primary_navigation %} header--condensed{% endif %}"{% if not page.hero_image and not page.hero_video %} style="background-color: rgba(0,77,70,1)"{% endif %}>
             <div class="wrapper wrapper--large">
                 <div class="header__container">
                     <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">

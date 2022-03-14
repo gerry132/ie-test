@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from wagtail.admin.edit_handlers import StreamFieldPanel
+from wagtail.admin.edit_handlers import TabbedInterface, ObjectList, StreamFieldPanel
 from wagtail.core import blocks as wagtail_blocks
 from wagtail.core.fields import StreamField
 
@@ -9,64 +9,18 @@ from irelandie_pages.models import FreeFormPageBase
 
 
 class HomePage(FreeFormPageBase):
-    # top_stories = StreamField(
-    #     [("story", blocks.StoryBlock())],
-    #     min_num=0,
-    #     max_num=1,
-    #     blank=True,
-    #     null=True,
-    # )
-
-    # pinned_stories = StreamField(
-    #     [
-    #         (
-    #             "pinned_story",
-    #             wagtail_blocks.StructBlock(
-    #                 [
-    #                     ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
-    #                     (
-    #                         "pinned_stories",
-    #                         wagtail_blocks.ListBlock(blocks.PinnedStoryBlock()),
-    #                     ),
-    #                 ],
-    #                 template="patterns/molecules/pinned-stories/pinned_stories.html",
-    #             ),
-    #         ),
-    #     ],
-    #     block_counts={
-    #         "pinned_story": {"max_num": 1},
-    #     },
-    #     blank=True,
-    #     null=True,
-    # )
-
-    # secondary_stories = StreamField(
-    #     [("story", blocks.StoryBlock())],
-    #     min_num=0,
-    #     blank=True,
-    #     null=True,
-    # )
-
     max_count = 1
     template = "patterns/pages/home/home_page.html"
 
     # Only allow creating HomePages at the root level
     parent_page_types = ["wagtailcore.Page"]
-    # subpage_types = [
-    # "irelandie_missions.CountryPage",
-    # "irelandie_missions.MissionSearchPage",
-    # "irelandie_home.CampaignPage",
-    # "irelandie_home.TopicPage",
-    # "irelandie_forms.FormPage",
-    # "irelandie_news.NewsPage",
-    #     "irelandie_pages.FreeFormPage",
-    # ]
 
-    # content_panels = HeroPage.content_panels + [
-    #     StreamFieldPanel("top_stories"),
-    #     StreamFieldPanel("pinned_stories"),
-    #     StreamFieldPanel("secondary_stories"),
-    # ]
+    edit_handler = TabbedInterface([
+        ObjectList(FreeFormPageBase.content_panels, heading='Content'),
+        ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
+        ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
+        ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
+    ])
 
 
 class CampaignPage(HeroPage):
@@ -120,11 +74,6 @@ class CampaignPage(HeroPage):
 
     template = "patterns/pages/home/campaign_page.html"
 
-    # parent_page_types = ["irelandie_home.HomePage"]
-    # subpage_types = [
-    #     "irelandie_news.NewsPage",
-    # ]
-
     content_panels = HeroPage.content_panels + [
         StreamFieldPanel("top_stories"),
         StreamFieldPanel("embeds"),
@@ -132,14 +81,16 @@ class CampaignPage(HeroPage):
         StreamFieldPanel("secondary_stories"),
     ]
 
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.hero_panel, heading='Hero'),
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
+    ])
+
 
 class TopicPage(HeroPage):
     template = "patterns/pages/home/topic_page.html"
-
-    # parent_page_types = ["irelandie_home.HomePage"]
-    # subpage_types = [
-    #     "irelandie_news.NewsPage",
-    # ]
 
     body = StreamField(
         [
@@ -187,3 +138,10 @@ class TopicPage(HeroPage):
         StreamFieldPanel("embeds"),
         StreamFieldPanel("logo_cards", heading="Logo Cards"),
     ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.hero_panel, heading='Hero'),
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
+    ])

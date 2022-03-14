@@ -8,15 +8,10 @@ from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, TranslatableMixin
 from wagtail.images.edit_handlers import ImageChooserPanel
 
-# from irelandie_missions.models import MissionPage
-
 from .blocks import PersonPageSectionBlock, RolePageSectionBlock
 
 
 class PersonPageIndex(Page, TranslatableMixin):
-
-    # parent_page_types = [MissionPage]
-    # subpage_types = ["PersonPage"]
     max_count_per_parent = 1
 
 
@@ -39,11 +34,6 @@ class PersonPage(Page, TranslatableMixin):
     )
     countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
 
-    # parent_page_types = [
-    #     "PersonPageIndex",
-    # ]
-    # subpage_types = []
-
     content_panels = Page.content_panels + [
         FieldPanel("first_published_at"),
         FieldPanel("description"),
@@ -54,9 +44,6 @@ class PersonPage(Page, TranslatableMixin):
 
 
 class RolePageIndex(Page, TranslatableMixin):
-
-    # parent_page_types = [MissionPage]
-    # subpage_types = ["RolePage"]
     max_count_per_parent = 1
 
 
@@ -80,11 +67,6 @@ class RolePage(Page, TranslatableMixin):
         related_name="+",
     )
     countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
-
-    # parent_page_types = [
-    #     "RolePageIndex",
-    # ]
-    # subpage_types = []
 
     content_panels = Page.content_panels + [
         FieldPanel("first_published_at"),

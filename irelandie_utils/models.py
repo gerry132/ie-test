@@ -10,6 +10,8 @@ from wagtail.admin.edit_handlers import (
     MultiFieldPanel,
     PageChooserPanel,
     StreamFieldPanel,
+    FieldRowPanel,
+    HelpPanel, TabbedInterface, ObjectList,
 )
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core import blocks
@@ -384,53 +386,58 @@ class HeroPage(BasePage):
     link_text = models.CharField(blank=True, max_length=255)
     secondary_title = models.CharField(blank=True, max_length=255)
 
-    class Meta:
-        abstract = True
-
     def clean(self):
-        if not self.hero_image and not self.hero_video:
-            raise ValidationError(
-                {
-                    "hero_image": ValidationError(
-                        "You must specify hero image or hero video."
-                    ),
-                    "hero_video": ValidationError(
-                        "You must specify hero image or hero video."
-                    ),
-                }
-            )
-
         if self.hero_image and self.hero_video:
             raise ValidationError(
                 {
                     "hero_image": ValidationError(
-                        "You must specify hero image or hero video. You can't use both."
+                        "You can't choose both an image and a video for the hero media. Choose an image or a video"
                     ),
                     "hero_video": ValidationError(
-                        "You must specify hero image or hero video. You can't use both."
+                        "You can't choose both an image and a video for the hero media. Choose an image or a video"
                     ),
                 }
             )
 
-    content_panels = Page.content_panels + [
+        if self.link_page and not self.link_text:
+            raise ValidationError(
+                {
+                    "link_text": ValidationError(
+                        "You must provide some Link text if you choose a link page"
+                    )
+                }
+            )
+
+    class Meta:
+        abstract = True
+
+    hero_panel = [
+        HelpPanel("For the hero to display you must set the image or video field below."),
+        FieldRowPanel([
+            ImageChooserPanel("hero_image", classname="col6"),
+            MediaChooserPanel("hero_video", media_type="video", classname="col6"),
+        ], "Hero Media"),
+        FieldPanel("hero_title"),
+        FieldPanel("summary"),
         MultiFieldPanel(
             [
-                FieldPanel("hero_title"),
-                ImageChooserPanel("hero_image"),
-                MediaChooserPanel("hero_video", media_type="video"),
-                FieldPanel("summary"),
-                MultiFieldPanel(
-                    [
-                        PageChooserPanel("link_page"),
-                        FieldPanel("link_text"),
-                    ],
-                    "link",
-                ),
+                HelpPanel("For the Call To Action to display you must set the Link text if you choose a Link Page."),
+                PageChooserPanel("link_page"),
+                FieldPanel("link_text"),
             ],
-            "hero",
-        ),
+            "Call To Action",
+        )]
+
+    content_panels = Page.content_panels + [
         FieldPanel("secondary_title"),
     ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(hero_panel, heading='Hero'),
+        ObjectList(BasePage.promote_panels, heading='Promote'),
+        ObjectList(BasePage.settings_panels, heading='Settings', classname="settings"),
+    ])
 
 
 class ArticlePage(BasePage):
