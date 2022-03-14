@@ -6,6 +6,10 @@ class MobileMenu {
     constructor(node, openCb = () => {}, closeCb = () => {}) {
         this.node = node;
 
+        // search selectors
+        this.searchToggles = document.querySelectorAll('[data-toggle-search]');
+        this.searchDropdown = document.querySelector('[data-search-dropdown]');
+
         // Any callbacks to be called on open or close.
         this.openCb = openCb;
         this.closeCb = closeCb;
@@ -21,6 +25,14 @@ class MobileMenu {
         this.node.addEventListener('click', () => {
             this.toggle();
         });
+
+        // Listen for when the search opens and close any open desktop menu dropdowns
+        document.addEventListener('onSearchOpen', () => {
+            this.node.classList.remove('is-open');
+            this.closeCb();
+
+            this.state.open = false;
+        });
     }
 
     toggle() {
@@ -28,10 +40,15 @@ class MobileMenu {
             this.close();
         } else {
             this.open();
+            this.closeSearch();
         }
     }
 
     open() {
+        // Fire a custom event so that any open search items can be closed
+        const menuOpenEvent = new Event('onMenuOpen');
+        document.dispatchEvent(menuOpenEvent);
+
         this.node.classList.add('is-open');
         this.openCb();
 

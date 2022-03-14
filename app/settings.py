@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "irelandie_events",
     "irelandie_missions",
     "irelandie_news",
+    "irelandie_pages",
     "irelandie_people",
     "irelandie_places",
     "irelandie_press_releases",
