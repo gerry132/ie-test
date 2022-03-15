@@ -190,6 +190,10 @@ class PinnedStoryHeroBlock(blocks.StructBlock):
 
 class PinnedStoryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+    )
     page = blocks.PageChooserBlock(required=False)
     title = blocks.CharBlock(required=False)
     summary = blocks.CharBlock(required=False)
