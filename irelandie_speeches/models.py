@@ -10,8 +10,7 @@ from irelandie_utils.models import BasePage, ArticlePage
 
 
 class SpeechPageIndex(BasePage):
-    template = "patterns/pages/irelandie_press_releases/speech_index.html"
-    max_count_per_parent = 1
+    template = "patterns/pages/irelandie_speeches/speech_index.html"
 
     description = models.TextField(blank=True)
 
@@ -21,7 +20,7 @@ class SpeechPageIndex(BasePage):
 
 
 class SpeechPage(ArticlePage):
-    template = "patterns/pages/irelandie_press_releases/speech_page.html"
+    template = "patterns/pages/irelandie_speeches/speech_page.html"
 
     override_related_articles = StreamField(
         [
