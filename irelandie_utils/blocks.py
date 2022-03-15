@@ -102,7 +102,7 @@ class StoryBlock(blocks.StructBlock):
 
 
 class FeaturedStoryBlock(blocks.StructBlock):
-    # image is used as background image
+    # image is decorative
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(required=False)
     primary_title = blocks.CharBlock(required=False, label="Supporting title")
@@ -146,6 +146,7 @@ class FeaturedStoryBlock(blocks.StructBlock):
 
 
 class EmbassyStory(blocks.StructBlock):
+    # image is decorative
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(
         required=False,
@@ -173,6 +174,10 @@ class AlernatePinnedStoryHeroLinkText(StructValue):
 
 class PinnedStoryHeroBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+    )
     title = blocks.CharBlock(required=False)
     summary = blocks.CharBlock(required=False)
     page = blocks.PageChooserBlock(required=False)
