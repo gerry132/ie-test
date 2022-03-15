@@ -472,6 +472,43 @@ class PinnedStoriesBlock(blocks.StructBlock):
         template = "patterns/molecules/pinned-stories/pinned_stories.html"
 
 
+class AccordionBlock(blocks.StructBlock):
+    title = blocks.CharBlock()
+    summary = blocks.RichTextBlock(
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul"]
+    )
+    accordions = blocks.StreamBlock(
+        [
+            (
+                "accordion",
+                blocks.StructBlock(
+                    [
+                        ("title", blocks.CharBlock()),
+                        (
+                            "content",
+                            blocks.RichTextBlock(
+                                features=[
+                                    "h3",
+                                    "blockquote",
+                                    "bold",
+                                    "link",
+                                    "document-link",
+                                    "ul",
+                                ]
+                            ),
+                        ),
+                    ]
+                ),
+            )
+        ]
+    )
+
+    class Meta:
+        icon = "collapse-down"
+        label = "Accordion"
+        template = "patterns/molecules/accordion/accordion.html"
+
+
 class FreeFormBlocks(blocks.StreamBlock):
     heading = HeadingBlock(group="Base")
     rich_text = RichTextBlock(
@@ -480,6 +517,7 @@ class FreeFormBlocks(blocks.StreamBlock):
     )
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
+    accordion = AccordionBlock(group="Base")
 
     articles = ArticleCardsBlock(group="Module")
     embassy_story = EmbassyStory(group="Module")
