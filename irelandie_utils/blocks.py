@@ -28,6 +28,11 @@ class AlternateLinkValue(StructValue):
 class StoryLinkBlock(blocks.StructBlock):
     page = blocks.PageChooserBlock(required=False)
     icon = ImageChooserBlock(required=False)
+    # TODO: Implement this yet as it's not used
+    # icon_alt = blocks.CharBlock(
+    #     required=False,
+    #     help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/")
+    # )
     title = blocks.CharBlock(
         help_text="Leave blank to use the page's own title", required=False
     )
@@ -64,6 +69,10 @@ class StoryLinkBlock(blocks.StructBlock):
 
 class StoryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+    )
     page = blocks.PageChooserBlock(required=False)
     primary_title = blocks.CharBlock(required=False, label="Supporting title")
     title = blocks.CharBlock(required=False)

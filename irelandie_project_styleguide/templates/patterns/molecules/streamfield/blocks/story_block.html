@@ -4,7 +4,8 @@
 <div class="story{% if value.background == 'dark' %} story--dark{% endif %}{% if value.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
     <div class="wrapper wrapper--large">
         <div class="story__container">
-            {% image value.image width-460 class="story__image" %}
+            {% image value.image width-460 as story_image %}
+            <img src="{{ story_image.url }}" alt="{{ value.image_alt }}" class="story__image" width="{{ story_image.width }}" height="{{ story_image.height }}">
 
             <div class="story__content">
                 <div class="story__copy">
@@ -17,13 +18,13 @@
                     {% else %}
                         <h3 class="story__heading heading--2">{{ value.title }}</h3>
                     {% endif %}
-                
+
                     <p>{{ value.summary }}</p>
-                
-                {% comment %} 
+
+                {% comment %}
                     TODO: BE - add in optional CTA field
 
-                    <a href="/" aria-label="{% trans 'Find out more about Ireland' %}">Join us in Ireland</a> 
+                    <a href="/" aria-label="{% trans 'Find out more about Ireland' %}">Join us in Ireland</a>
                 {% endcomment %}
                 </div>
 
