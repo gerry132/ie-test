@@ -3,8 +3,7 @@
 
 <div class="pinned-stories__featured">
     <div class="pinned-stories__featured-content">
-        {% image value.image width-400 as story_image %}
-        <img src="{{ story_image.url }}" alt="{{ value.image_alt }}" width="{{ story_image.width }}" height="{{ story_image.height }}">
+        {% image value.image width-400 alt=value.image_alt %}
         <h3 class="pinned-stories__featured-title heading--2">{{ value.title }}</h3>
         <p class="pinned-stories__featured-summary">{{ value.summary }}</p>
 
