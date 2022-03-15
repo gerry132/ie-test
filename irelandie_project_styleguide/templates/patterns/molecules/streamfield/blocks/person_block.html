@@ -1,41 +1,60 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 
-<div class="story{% if value.background == 'dark' %} story--dark{% endif %}{% if value.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
+<div class="story{% if value.person.background == 'dark' %} story--dark{% endif %}{% if value.person.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
     <div class="wrapper wrapper--large wrapper--padding">
+        {% image value.person.embassy_logo width-460 class="story__image" %}
         <div class="story__container">
-            {% image value.image width-460 class="story__image" %}
+            {% image value.person.image width-460 class="story__image" %}
 
             <div class="story__content">
                 <div class="story__copy">
-                    {% if value.secondary_title %}
-                        {{ value.secondary_title }}
+                    {% if value.person.title %}
+                        {{ value.person.title }}
                     {% endif %}
 
-                    <h3 class="story__heading heading--2">{{ value.title }}</h3>
+                    <h3 class="story__heading heading--2">{{ value.person.name }}</h3>
 
-                    {% if value.twitter_url %}
+                    {% if value.person.social_media_link %}
+                    <a href="{{ value.person.social_media_link }}">
                         <div class="story__twitter">
-                            {% if value.twitter_text %}
-                                {{ value.twitter_text }}
+                            {% if value.person.social_media_text %}
+                                {{ value.person.social_media_text }}
                             {% endif %}
                             {% include "patterns/atoms/icons/icon.html" with name="twitter" classname="story__twitter-icon" %}
                         </div>
+                    </a>
                     {% endif %}
-                
-                    {% if value.contact_details %}
-                        {{ value.contact_details|richtext }}
+
+                    {% if value.person.address %}
+                        {{ value.person.address|richtext }}
+                    {% endif %}
+
+                    {% if value.person.telephone %}
+                        {{ value.person.telephone }}
+                    {% endif %}
+
+                    {% if value.person.opening_hours %}
+                        {{ value.person.opening_hours|richtext }}
+                    {% endif %}
+
+                    {% if value.person.closure_dates %}
+                        {{ value.person.closure_dates|richtext }}
+                    {% endif %}
+
+                    {% if value.person.emergency_contact_details %}
+                        {{ value.person.emergency_contact_details|richtext }}
                     {% endif %}
                 </div>
 
                 <ul class="story__links" data-story-links-expander>
                     <div class="story__links-container">
-                        {% for link in value.links %}
+                        {% for link in value.person.links %}
                             {% include_block link %}
                         {% endfor %}
                     </div>
 
-                    {% if value.links|length > 2 %}
+                    {% if value.person.links|length > 2 %}
                         <button class="story__links-expander" aria-hidden="true" data-story-links-toggle>
                             {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="story__links-expander-icon" %}
                         </button>
