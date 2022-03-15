@@ -368,6 +368,10 @@ class BaseSectionBlock(blocks.StructBlock):
 
 class LogoCardBlock(blocks.StructBlock):
     image = ImageChooserBlock()
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+    )
     title = blocks.CharBlock()
     summary = blocks.TextBlock()
     url = blocks.URLBlock()

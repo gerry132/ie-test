@@ -2,7 +2,8 @@
 
 <a href="{{ value.url }}" class="logo-card">
     <div class="logo-card__logo-container">
-        {% image value.image width-250 class="logo-card__logo" %}
+        {% image value.image width-250 as logo_image %}
+        <img src="{{ logo_image.url }}" alt="{{ value.image_alt }}" class="logo-card__logo" width="{{ logo_image.width }}" height="{{ logo_image.height }}">
     </div>
     <div class="logo-card__content">
         <h3 class="logo-card__title">{{ value.title }}</h3>
