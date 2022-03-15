@@ -46,6 +46,8 @@ class SecondaryNavLinkColumnWithHeader(blocks.StructBlock):
 
 @register_setting(icon="list-ul")
 class SiteSettings(BaseSetting, ClusterableModel):
+    # The settings here are currently unused.
+    # We may be removing it in the future.
     site_logo = models.ForeignKey(
         IMAGE_MODEL,
         null=True,
@@ -53,9 +55,18 @@ class SiteSettings(BaseSetting, ClusterableModel):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    site_logo_alt = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name=_("Logo Alt text"),
+        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+    )
 
     panels = [
-        ImageChooserPanel("site_logo"),
+        MultiFieldPanel([
+            ImageChooserPanel("site_logo"),
+            FieldPanel("site_logo_alt"),
+        ], heading="Site Logo"),
     ]
 
 
