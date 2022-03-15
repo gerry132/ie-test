@@ -203,6 +203,12 @@ class CallToActionSnippet(models.Model):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    image_alt = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name=_("Image Alt text"),
+        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/")
+    )
 
     link = StreamField(
         blocks.StreamBlock(
@@ -233,7 +239,10 @@ class CallToActionSnippet(models.Model):
     panels = [
         FieldPanel("title"),
         FieldPanel("summary"),
-        ImageChooserPanel("image"),
+        MultiFieldPanel([
+            ImageChooserPanel("image"),
+            FieldPanel("image_alt"),
+        ], heading="Image"),
         StreamFieldPanel("link"),
     ]
 
