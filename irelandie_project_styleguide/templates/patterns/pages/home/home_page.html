@@ -2,31 +2,5 @@
 {% load wagtailcore_tags wagtailimages_tags static %}
 
 {% block main %}
-    {% for block in page.body %}
-        {% if block.block_type == 'heading' or block.block_type == 'rich_text' or block.block_type == 'image' or block.block_type == 'document' or block.block_type == 'table' %}
-            <div class="wrapper wrapper--small wrapper--padding">
-                {% if block.block_type == 'table' %}
-                        {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}
-                {% else %}
-                    {% include_block block %}
-                {% endif %}
-            </div>
-        {% elif block.block_type == 'pinned_stories' %}
-            {% include_block block %}
-        {% elif block.block_type == 'logos' %}
-            <div class="wrapper wrapper--large wrapper--padding">
-                <div class="section section--padding">
-                    {% include_block block %}
-                </div>
-            </div>
-        {% elif block.block_type == 'accordion' %}
-            <div class="section section--padding">
-                {% include_block block %}
-            </div>
-        {% else %}
-            <div class="wrapper wrapper--large wrapper--padding">
-                {% include_block block %}
-            </div>
-        {% endif %}
-    {% endfor %}
+    {% include "patterns/molecules/freeform-components/freeform_components.html" %}
 {% endblock %}
