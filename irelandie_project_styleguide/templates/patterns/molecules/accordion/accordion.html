@@ -1,6 +1,6 @@
 {% load wagtailcore_tags %}
 
-<div class="accordions">
+<div class="accordions{% if value.background == 'dark' %} story--dark{% endif %}">
     {% if value.title %}
         <h2 class="heading heading--2 accordions__title">
             {{ value.title }}
