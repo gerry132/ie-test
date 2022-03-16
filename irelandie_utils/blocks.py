@@ -170,6 +170,12 @@ class FeaturedStoryBlock(blocks.StructBlock):
         return context
 
 
+class AlernateEmbassyStoryLinkText(StructValue):
+    def link_text(self):
+        text = self.get("button_text") or self.get("page")
+        return text
+
+
 class EmbassyStory(blocks.StructBlock):
     # image is decorative
     image = ImageChooserBlock(required=True)
@@ -177,18 +183,43 @@ class EmbassyStory(blocks.StructBlock):
         required=False,
         page_type="irelandie_missions.MissionPage",
     )
-    primary_title = blocks.CharBlock(required=False, label="Supporting title")
-    title = blocks.CharBlock(required=False)
     url = blocks.URLBlock(
         label="URL",
         required=False,
         help_text="An external link.",
     )
+    primary_title = blocks.CharBlock(required=False, label="Supporting title")
+    title = blocks.CharBlock(required=False)
 
     class Meta:
         icon = "doc-full"
-        value_class = AlternateLinkValue
+        # value_class = AlternateLinkValue
         template = "patterns/molecules/streamfield/blocks/embassy_block.html"
+
+    def clean(self, value):
+        errors = {}
+        values = [value["page"], value["url"]]
+        # Set only a Page OR a URL
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a page or set a URL."
+
+            errors["page"] = ErrorList([message])
+            errors["url"] = ErrorList([message])
+
+        # A URL must have title
+        if value["url"] and not value["title"]:
+            errors["title"] = ErrorList(["Please set a title for the URL"])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context["link_url"] = value["url"] or value["page"].url
+        context["link_title"] = value["title"] or value["page"].title
+        return context
 
 
 class AlernatePinnedStoryHeroLinkText(StructValue):
@@ -206,11 +237,35 @@ class PinnedStoryHeroBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=False)
     summary = blocks.CharBlock(required=False)
     page = blocks.PageChooserBlock(required=False)
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
     button_text = blocks.CharBlock(required=False)
 
     class Meta:
         value_class = AlernatePinnedStoryHeroLinkText
         template = "patterns/molecules/streamfield/blocks/pinned_story_hero_block.html"
+
+    def clean(self, value):
+        errors = {}
+        values = [value["page"], value["url"]]
+        # Set only a Page OR a URL
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a page or set a URL."
+
+            errors["page"] = ErrorList([message])
+            errors["url"] = ErrorList([message])
+
+        # A URL must have title
+        if value["url"] and not value["title"]:
+            errors["title"] = ErrorList(["Please set a title for the URL"])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
 
 
 class PinnedStoryBlock(blocks.StructBlock):
@@ -220,11 +275,35 @@ class PinnedStoryBlock(blocks.StructBlock):
         help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
     )
     page = blocks.PageChooserBlock(required=False)
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
     title = blocks.CharBlock(required=False)
     summary = blocks.CharBlock(required=False)
 
     class Meta:
         template = "patterns/molecules/streamfield/blocks/pinned_story_block.html"
+
+    def clean(self, value):
+        errors = {}
+        values = [value["page"], value["url"]]
+        # Set only a Page OR a URL
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a page or set a URL."
+
+            errors["page"] = ErrorList([message])
+            errors["url"] = ErrorList([message])
+
+        # A URL must have title
+        if value["url"] and not value["title"]:
+            errors["title"] = ErrorList(["Please set a title for the URL"])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
 
 
 class ImageBlock(blocks.StructBlock):
