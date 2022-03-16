@@ -1,0 +1,17 @@
+.accordions {
+    position: relative;
+
+    &--dark {
+        background-color: $color--background-grey;
+
+        &::before {
+            background-image: url('../images/cssBackgrounds/background-circles-light.svg');
+            background-size: cover;
+        }
+    }
+
+    &__title,
+    &__summary {
+        max-width: $wrapper--small;
+    }
+}
