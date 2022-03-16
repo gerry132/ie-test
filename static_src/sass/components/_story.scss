@@ -67,8 +67,8 @@
 
         @include media-query(large) {
             max-width: 35%;
-            max-height: 500px;
-            min-height: 450px;
+            max-height: 450px;
+            min-height: 400px;
         }
     }
 
