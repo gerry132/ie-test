@@ -473,9 +473,10 @@ class PinnedStoriesBlock(blocks.StructBlock):
 
 
 class AccordionBlock(blocks.StructBlock):
-    title = blocks.CharBlock()
+    title = blocks.CharBlock(required=False)
     summary = blocks.RichTextBlock(
-        features=["h3", "blockquote", "bold", "link", "document-link", "ul"]
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul"],
+        required=False,
     )
     accordions = blocks.StreamBlock(
         [
@@ -501,6 +502,11 @@ class AccordionBlock(blocks.StructBlock):
                 ),
             )
         ]
+    )
+    background = blocks.ChoiceBlock(
+        required=True,
+        choices=StoryBackground.choices,
+        default=StoryBackground.LIGHT,
     )
 
     class Meta:
