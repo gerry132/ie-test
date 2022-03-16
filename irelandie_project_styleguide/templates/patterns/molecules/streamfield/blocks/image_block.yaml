@@ -4,6 +4,6 @@ context:
 
 tags:
   image:
-    value.image width-1000 class="image" alt=value.alt:
+    value.image width-1000 class="image" loading="lazy" alt=value.image_alt:
       raw: |
-        <img src="https://source.unsplash.com/1000x300?ocean" width="1000" height="300" alt="Some alt">
+        <img src="https://source.unsplash.com/1000x300?ocean" width="1000" height="300" class="image" loading="lazy" alt="Some alt">

@@ -28,7 +28,7 @@ context:
 
 tags:
   image:
-    value.image width-460 class="story__image":
+    value.image width-460 alt=value.image_alt class="story__image":
       raw: |
         <img src="https://source.unsplash.com/460x500?ocean" width="460" height="500" alt="Some alt" class="story__image">
   pageurl:

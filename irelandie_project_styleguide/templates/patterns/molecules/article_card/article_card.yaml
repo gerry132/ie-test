@@ -7,9 +7,9 @@ context:
 
 tags:
   image:
-    card.image width-250 class="card__logo":
+    value.image width-500 alt=value.image_alt class="card__image":
       raw: |
-        <img src="https://source.unsplash.com/250x150?ocean" width="250" height="150" alt="Some alt" class="logo-card__logo">
+        <img src="https://source.unsplash.com/250x150?ocean" width="500" height="300" alt="Some alt" class="card__image">
   pageurl:
     featured_story.page as href:
       target_var: href
