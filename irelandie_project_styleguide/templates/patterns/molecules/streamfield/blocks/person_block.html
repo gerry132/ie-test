@@ -3,12 +3,14 @@
 
 <div class="story{% if value.person.background == 'dark' %} story--dark{% endif %}{% if value.person.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
     <div class="wrapper wrapper--large wrapper--padding">
-        {% image value.person.embassy_logo width-460 class="story__image" %}
+        
         <div class="story__container">
             {% image value.person.image width-460 class="story__image" %}
 
             <div class="story__content">
                 <div class="story__copy">
+                    {% image value.person.embassy_logo width-460 class="story__logo" %}
+
                     {% if value.person.title %}
                         {{ value.person.title }}
                     {% endif %}
@@ -16,50 +18,48 @@
                     <h3 class="story__heading heading--2">{{ value.person.name }}</h3>
 
                     {% if value.person.social_media_link %}
-                    <a href="{{ value.person.social_media_link }}">
-                        <div class="story__twitter">
-                            {% if value.person.social_media_text %}
-                                {{ value.person.social_media_text }}
-                            {% endif %}
-                            {% include "patterns/atoms/icons/icon.html" with name="twitter" classname="story__twitter-icon" %}
-                        </div>
-                    </a>
+                        <a href="{{ value.person.social_media_link }}">
+                            <div class="story__twitter">
+                                {% if value.person.social_media_text %}
+                                    {{ value.person.social_media_text }}
+                                {% endif %}
+                                {% include "patterns/atoms/icons/icon.html" with name="twitter" classname="story__twitter-icon" %}
+                            </div>
+                        </a>
                     {% endif %}
+                    
+                    <div class="rich-text">
+                        {% if value.person.address %}
+                            {{ value.person.address|richtext }}
+                        {% endif %}
 
-                    {% if value.person.address %}
-                        {{ value.person.address|richtext }}
-                    {% endif %}
+                        {% if value.person.telephone %}
+                            {{ value.person.telephone }}
+                        {% endif %}
 
-                    {% if value.person.telephone %}
-                        {{ value.person.telephone }}
-                    {% endif %}
+                        {% if value.person.opening_hours %}
+                            {{ value.person.opening_hours|richtext }}
+                        {% endif %}
 
-                    {% if value.person.opening_hours %}
-                        {{ value.person.opening_hours|richtext }}
-                    {% endif %}
+                        {% if value.person.closure_dates %}
+                            {{ value.person.closure_dates|richtext }}
+                        {% endif %}
 
-                    {% if value.person.closure_dates %}
-                        {{ value.person.closure_dates|richtext }}
-                    {% endif %}
-
-                    {% if value.person.emergency_contact_details %}
-                        {{ value.person.emergency_contact_details|richtext }}
-                    {% endif %}
+                        {% if value.person.emergency_contact_details %}
+                            {{ value.person.emergency_contact_details|richtext }}
+                        {% endif %}
+                    </div>
                 </div>
 
-                <ul class="story__links" data-story-links-expander>
-                    <div class="story__links-container">
-                        {% for link in value.person.links %}
-                            {% include_block link %}
-                        {% endfor %}
+                {% if value.person.links %}
+                    <div class="story-links">
+                        <div class="story-links__container">
+                            {% for link in value.person.links %}
+                                {% include_block link %}
+                            {% endfor %}
+                        </div>
                     </div>
-
-                    {% if value.person.links|length > 2 %}
-                        <button class="story__links-expander" aria-hidden="true" data-story-links-toggle>
-                            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="story__links-expander-icon" %}
-                        </button>
-                    {% endif %}
-                </ul>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -13,15 +13,21 @@
     {% block main %}
         <!-- Body -->
         <div class="section section--padding">
-            <div class="wrapper wrapper--small wrapper--padding">
-                {% for block in page.body %}
-                    {% if block.block_type == 'table' %}
+            {% for block in page.body %}
+                {% if block.block_type == 'table' %}
+                    <div class="wrapper wrapper--small wrapper--padding">
                         {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}
-                    {% else %}
+                    </div>
+                {% elif block.block_type == 'person' %}
+                    <div class="wrapper wrapper--large wrapper--padding">
                         {% include_block block %}
-                    {% endif %}
-                {% endfor %}
-            </div>
+                    </div>
+                {% else %}
+                    <div class="wrapper wrapper--small wrapper--padding">
+                        {% include_block block %}
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
 
         <!-- related_articles -->
