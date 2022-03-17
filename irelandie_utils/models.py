@@ -321,12 +321,22 @@ class SystemMessagesSettings(BaseSetting):
 @method_decorator(get_default_cache_control_decorator(), name="serve")
 class BasePage(SocialFields, ListingFields, Page):
     show_in_menus_default = True
+    enable_chatbot = models.BooleanField(
+        default=False,
+        help_text="Enable chatbot on this page",
+    )
+
+    chat_bot_panel = [
+        MultiFieldPanel([
+            FieldPanel("enable_chatbot"),
+        ], "Chatbot")
+    ]
 
     class Meta:
         abstract = True
 
     promote_panels = (
-        Page.promote_panels + SocialFields.promote_panels + ListingFields.promote_panels
+        Page.promote_panels + SocialFields.promote_panels + ListingFields.promote_panels + chat_bot_panel
     )
     search_fields = Page.search_fields + [
         index.SearchField("listing_title"),
@@ -375,6 +385,34 @@ class Tracking(BaseSetting):
         max_length=255,
         blank="True",
         help_text="Your Google Tag Manager ID",
+    )
+
+
+@register_setting(icon="view")
+class ChatBot(BaseSetting):
+    webchat_url = models.URLField(
+        max_length=255,
+        help_text="Your chat bot URL",
+        null=True,
+    )
+    webchat_id = models.IntegerField(
+        help_text="Your chat bot ID",
+        null=True,
+    )
+    organization = models.CharField(
+        max_length=255,
+        help_text="Your chat bot organisation",
+        null=True,
+    )
+    google_api_key = models.CharField(
+        max_length=255,
+        help_text="Your Google API key",
+        null=True,
+    )
+    end_point = models.CharField(
+        max_length=255,
+        help_text="Your chat bot end point",
+        null=True,
     )
 
 
