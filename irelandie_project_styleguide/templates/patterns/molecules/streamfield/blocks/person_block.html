@@ -28,27 +28,29 @@
                         </a>
                     {% endif %}
                     
-                    <div class="rich-text">
-                        {% if value.person.address %}
-                            {{ value.person.address|richtext }}
-                        {% endif %}
+                    {% if value.person.address or value.person.telephone or value.person.opening_hours or value.person.closure_dates or value.person.emergency_contact_details %}
+                        <div class="rich-text">
+                            {% if value.person.address %}
+                                {{ value.person.address|richtext }}
+                            {% endif %}
 
-                        {% if value.person.telephone %}
-                            {{ value.person.telephone }}
-                        {% endif %}
+                            {% if value.person.telephone %}
+                                {{ value.person.telephone }}
+                            {% endif %}
 
-                        {% if value.person.opening_hours %}
-                            {{ value.person.opening_hours|richtext }}
-                        {% endif %}
+                            {% if value.person.opening_hours %}
+                                {{ value.person.opening_hours|richtext }}
+                            {% endif %}
 
-                        {% if value.person.closure_dates %}
-                            {{ value.person.closure_dates|richtext }}
-                        {% endif %}
+                            {% if value.person.closure_dates %}
+                                {{ value.person.closure_dates|richtext }}
+                            {% endif %}
 
-                        {% if value.person.emergency_contact_details %}
-                            {{ value.person.emergency_contact_details|richtext }}
-                        {% endif %}
-                    </div>
+                            {% if value.person.emergency_contact_details %}
+                                {{ value.person.emergency_contact_details|richtext }}
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 </div>
 
                 {% if value.person.links %}
