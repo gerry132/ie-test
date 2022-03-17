@@ -262,13 +262,10 @@
 {% endblock footer %}
 
 {% block extra_js %}
-    {% comment %} 
-        webchat url: https://cdn.edgetier.com/dfa.js 
-        id: 1
-    {% endcomment %}
+{% if page.enable_chatbot %}
     <script
-        src="{{ settings.webchat_url }}"
-        data-id="{{ settings.webchat_id }}"
+        src="{{ settings.utils.ChatBot.webchat_url }}"
+        data-id="{{ settings.utils.ChatBot.webchat_id }}"
         data-hidden="true"
         >
     </script>
@@ -279,25 +276,20 @@
     <script src="//lightning.production.helium.servismatrixcdn.com/v2/latest/servisbot-utils.js"></script>
     <script src="//lightning.production.helium.servismatrixcdn.com/v2/latest/bundle-messenger.js"></script>
 
-    {% comment %}
-        servisbot details
-        organization: dfasfo
-        googleApiKey: AIzaSyAhErElbOH29CzM52LNnf43o4a3l73QHjw
-        endpoint: dfasfo-FAQBOT
-    {% endcomment %}
     <script>
         ServisBot.init({
-          "organization": "{{ settings.organization }}",
+          "organization": "{{ settings.utils.ChatBot.organization }}",
           "debug": false,
           "context": {},
           "displayAvatar": false,
           "displayLightbox": false,
-          "googleApiKey": "{{ settings.googleApiKey }}",
-          "endpoint": "{{ settings.endpoint }}",
+          "googleApiKey": "{{ settings.utils.ChatBot.google_api_key }}",
+          "endpoint": "{{ settings.utils.ChatBot.end_point }}",
           "displayWidget": true,
           "displayHeader": true,
           "alwaysOpen": false,
           "sbRegion": "eu-1"
         });
     </script>
+{% endif %}
 {% endblock extra_js %}
