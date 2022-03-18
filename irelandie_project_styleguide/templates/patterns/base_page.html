@@ -256,10 +256,17 @@
             </div>
         </div>
 
-        <div class="webchat" id="chat-button"></div>
     </footer>
 
 {% endblock footer %}
+
+{% block web_chat_widget %}
+    {% if page.enable_chatbot %}
+    <div class="wrapper wrapper--large wrapper--padding">
+        <div class="webchat" id="chat-button" style="text-align:center;padding-top:20px;"></div>
+    </div>
+    {% endif %}
+{% endblock %}
 
 {% block extra_js %}
 {% if page.enable_chatbot %}
