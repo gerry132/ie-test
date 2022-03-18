@@ -394,26 +394,57 @@ class ChatBot(BaseSetting):
         max_length=255,
         help_text="Your chat bot URL",
         null=True,
+        blank=True,
     )
     webchat_id = models.IntegerField(
         help_text="Your chat bot ID",
         null=True,
+        blank=True,
     )
     organization = models.CharField(
         max_length=255,
         help_text="Your chat bot organisation",
         null=True,
+        blank=True,
     )
     google_api_key = models.CharField(
         max_length=255,
         help_text="Your Google API key",
         null=True,
+        blank=True,
     )
     end_point = models.CharField(
         max_length=255,
         help_text="Your chat bot end point",
         null=True,
+        blank=True,
     )
+
+    @property
+    def is_setup(self):
+        # All fields need to contain data for the service to work,
+        # only render the webchat if all of them are set.
+        return all([
+            self.webchat_url,
+            self.webchat_id,
+            self.organization,
+            self.google_api_key,
+            self.end_point,
+        ])
+
+    panels = [
+        HelpPanel(
+            """<strong>To enable the chatbot service all fields below must be completed.</strong> <br />
+            Each page has it's own 'enable chatbot' setting in the Promote tab which is not enabled by default.""",
+        ),
+        MultiFieldPanel([
+            FieldPanel("webchat_url"),
+            FieldPanel("webchat_id"),
+            FieldPanel("organization"),
+            FieldPanel("google_api_key"),
+            FieldPanel("end_point"),
+        ], "Chatbot")
+    ]
 
 
 class HeroPage(BasePage):
