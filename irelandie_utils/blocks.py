@@ -130,13 +130,13 @@ class FeaturedStoryBlock(blocks.StructBlock):
     # image is decorative
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(required=False)
-    primary_title = blocks.CharBlock(required=False, label="Supporting title")
-    title = blocks.CharBlock(required=False)
     url = blocks.URLBlock(
         label="URL",
         required=False,
         help_text="An external link.",
     )
+    primary_title = blocks.CharBlock(required=False, label="Supporting title")
+    title = blocks.CharBlock(required=False)
 
     class Meta:
         icon = "doc-full-inverse"
@@ -163,8 +163,6 @@ class FeaturedStoryBlock(blocks.StructBlock):
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        context["image"] = value["image"]
-        context["page"] = value["page"]
         context["link_url"] = value["url"] or value["page"].url
         context["link_title"] = value["title"] or value["page"].title
         return context
