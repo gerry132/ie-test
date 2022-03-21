@@ -261,7 +261,7 @@
 {% endblock footer %}
 
 {% block web_chat_widget %}
-    {% if page.enable_chatbot and settings.utils.ChatBot.is_setup %}
+    {% if page.enable_chatbot and settings.utils.ChatBot.chatbot_enabled %}
     <div class="wrapper wrapper--large wrapper--padding">
         <div class="webchat" id="chat-button" style="text-align:center;padding-top:20px;"></div>
     </div>
@@ -269,7 +269,7 @@
 {% endblock %}
 
 {% block extra_js %}
-{% if page.enable_chatbot and settings.utils.ChatBot.is_setup %}
+{% if page.enable_chatbot and settings.utils.ChatBot.chatbot_enabled %}
     <script
         src="{{ settings.utils.ChatBot.webchat_url }}"
         data-id="{{ settings.utils.ChatBot.webchat_id }}"
