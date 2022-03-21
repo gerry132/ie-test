@@ -399,6 +399,7 @@ class ChatBot(BaseSetting):
     webchat_id = models.IntegerField(
         help_text="Your chat bot ID",
         blank=True,
+        null=True,
     )
     organization = models.CharField(
         max_length=255,
