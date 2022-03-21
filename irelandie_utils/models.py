@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
+from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import (
     FieldPanel,
@@ -393,51 +394,49 @@ class ChatBot(BaseSetting):
     webchat_url = models.URLField(
         max_length=255,
         help_text="Your chat bot URL",
-        null=True,
         blank=True,
     )
     webchat_id = models.IntegerField(
         help_text="Your chat bot ID",
-        null=True,
         blank=True,
     )
     organization = models.CharField(
         max_length=255,
         help_text="Your chat bot organisation",
-        null=True,
         blank=True,
     )
     google_api_key = models.CharField(
         max_length=255,
         help_text="Your Google API key",
-        null=True,
         blank=True,
     )
     end_point = models.CharField(
         max_length=255,
         help_text="Your chat bot end point",
-        null=True,
         blank=True,
     )
+    chatbot_enabled = models.BooleanField(
+        default=False,
+        help_text="Check to enable the chatbot. Un-check to temporarily disable the chatbot on the site.",
+    )
 
-    @property
-    def is_setup(self):
-        # All fields need to contain data for the service to work,
-        # only render the webchat if all of them are set.
-        return all([
+    def clean(self):
+        if self.chatbot_enabled and not all([
             self.webchat_url,
             self.webchat_id,
             self.organization,
             self.google_api_key,
             self.end_point,
-        ])
+        ]):
+            raise ValidationError(
+                {
+                    "chatbot_enabled": _("All fields below should be completed for the chatbot to function."),
+                }
+            )
 
     panels = [
-        HelpPanel(
-            """<strong>To enable the chatbot service all fields below must be completed.</strong> <br />
-            Each page has it's own 'enable chatbot' setting in the Promote tab which is not enabled by default.""",
-        ),
         MultiFieldPanel([
+            FieldPanel("chatbot_enabled"),
             FieldPanel("webchat_url"),
             FieldPanel("webchat_id"),
             FieldPanel("organization"),
