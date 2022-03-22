@@ -1,24 +1,19 @@
-{% extends 'irelandie_assets/base.html' %}
-{% load irelandie_assets_tags %}
+{% extends "patterns/hero_page.html" %}
+{% load wagtailcore_tags %}
 
-{% block content %}
-
-    {% define page as PAGE %}
-
-    <div>
-        {% include 'irelandie_assets/components/headers/default.html' with IMAGE_URL='' IMAGE_ALT_TEXT='' HEADING='' SUMMARY='' LINK_TEXT='0' LINK_URL='#' %}
+{% block main %}
+    <div class="wrapper wrapper--large wrapper--padding">
+        {% include_block page.body %}
     </div>
 
-    <div>
-        <div style="width: 33.3333%;">
-            {% include 'irelandie_assets/components/cards/default.html' with IMAGE_URL='' IMAGE_ALT_TEXT='' HEADING='' SUMMARY='' LINK_TEXT='1' LINK_URL='#' %}
-        </div>
-        <div style="width: 33.3333%;">
-            {% include 'irelandie_assets/components/cards/default.html' with IMAGE_URL='' IMAGE_ALT_TEXT='' HEADING='' SUMMARY='' LINK_TEXT='2' LINK_URL='#' %}
-        </div>
-        <div style="width: 33.3333%;">
-            {% include 'irelandie_assets/components/cards/default.html' with IMAGE_URL='' IMAGE_ALT_TEXT='' HEADING='' SUMMARY='' LINK_TEXT='3' LINK_URL='#' %}
-        </div>
-    </div>
+    {% if page.twitter_feed %}
+        {% include "patterns/molecules/streamfield/blocks/twitter_embed.html" with value=page.twitter_feed %}
+    {% endif %}
 
+{% endblock %}
+
+{% block extra_js %}
+    {% if page.twitter_feed %}
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    {% endif %}
 {% endblock %}

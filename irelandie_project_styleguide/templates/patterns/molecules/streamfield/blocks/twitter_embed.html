@@ -1,15 +1,11 @@
 <div class="wrapper wrapper--large wrapping--padding">
-    <div class="twitter-embed"> 
-        <a class="twitter-timeline" {% if value.width %}data-width="{{ value.width }}"{% endif %} {% if value.height %}data-height="{{ value.height }}"{% endif %} href="https://twitter.com/{{ value.twitter_user }}?ref_src=twsrc%5Etfw">
+    <div class="twitter-embed">
+        <a class="twitter-timeline" {% if value.width %}data-width="{{ value.width }}"{% endif %} {% if value.height %}data-height="{{ value.height }}"{% endif %} href="https://twitter.com/{{ value.username }}?ref_src=twsrc%5Etfw">
             {% if value.title %}
                 {{ value.title }}
             {% else %}
-                Tweets by {{ value.twitter_user }}
+                Tweets by {{ value.username }}
             {% endif %}
         </a>
     </div>
 </div>
-
-{% block extra_js %}
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-{% endblock %}
