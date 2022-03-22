@@ -585,19 +585,23 @@ class FeaturedArticlesBlock(blocks.StructBlock):
 
 
 class ArticleStoryBlock(blocks.StreamBlock):
-    heading = HeadingBlock()
-    contact_detail = ContactDetailBlock()
-    image = ImageBlock()
+    heading = HeadingBlock(group="Base")
     rich_text = RichTextBlock(
-        features=["h3", "blockquote", "bold", "link", "document-link", "ul"]
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul"],
+        group="Base"
     )
-    person = PersonBlock()
-    place = PlaceBlock()
-    document = DocumentBlock()
-    table = TableBlock()
-    role = RoleBlock()
-    video = CustomVideoChooserBlock()
-    youtube_video = YoutubeVideoBlock()
+    image = ImageBlock(group="Base")
+    document = DocumentBlock(group="Base")
+
+    contact_detail = ContactDetailBlock(group="Module")
+    person = PersonBlock(group="Module")
+    place = PlaceBlock(group="Module")
+
+    html = blocks.RawHTMLBlock(group="HTML")
+    role = RoleBlock(group="HTML")
+    table = TableBlock(group="HTML")
+    video = CustomVideoChooserBlock(group="HTML")
+    youtube_video = YoutubeVideoBlock(group="HTML")
 
 
 class PinnedStoriesBlock(blocks.StructBlock):
