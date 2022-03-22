@@ -1,13 +1,20 @@
 # -*- coding: utf-8 -*-
+
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.core import blocks
+from irelandie_utils.blocks import BaseBlockLinkValidation, BaseBlockLinkContext
 
 
-class LinkBlock(blocks.StructBlock):
-    page = blocks.PageChooserBlock()
+class LinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
+    page = blocks.PageChooserBlock(required=False)
     title = blocks.CharBlock(
         help_text=_("Leave blank to use the page's own title"), required=False
+    )
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
     )
 
     class Meta:
