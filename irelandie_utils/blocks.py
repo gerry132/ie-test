@@ -28,16 +28,24 @@ class AlternateLinkValue(StructValue):
 
 class StoryLinkBlock(blocks.StructBlock):
     page = blocks.PageChooserBlock(required=False)
+    icon = blocks.ChoiceBlock(
+        choices=(
+            ("government-building", "Government Building"),
+            ("money", "Money"),
+            ("passport", "Passport"),
+            ("plane", "Plane"),
+            ("ticket", "Ticket"),
+        )
+    )
+    title = blocks.CharBlock(
+        help_text="Leave blank to use the page's own title", required=False
+    )
+    summary = blocks.CharBlock(required=False)
     url = blocks.URLBlock(
         label="URL",
         required=False,
         help_text="An external link.",
     )
-    icon = ImageChooserBlock(required=False)
-    title = blocks.CharBlock(
-        help_text="Leave blank to use the page's own title", required=False
-    )
-    summary = blocks.CharBlock(required=False)
 
     class Meta:
         value_class = AlternateLinkValue
