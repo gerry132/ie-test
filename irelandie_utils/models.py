@@ -321,14 +321,19 @@ class SystemMessagesSettings(BaseSetting):
 @method_decorator(get_default_cache_control_decorator(), name="serve")
 class BasePage(SocialFields, ListingFields, Page):
     show_in_menus_default = True
-    enable_chatbot = models.BooleanField(
-        default=False,
-        help_text="Enable chatbot on this page",
+
+    webchat_script = models.TextField(
+        blank=True,
     )
 
-    chat_bot_panel = [
+    web_bot_script = models.TextField(
+        blank=True,
+    )
+
+    webchat_panel = [
         MultiFieldPanel([
-            FieldPanel("enable_chatbot"),
+            FieldPanel("webchat_script"),
+            FieldPanel("web_bot_script"),
         ], "Chatbot")
     ]
 
@@ -336,7 +341,7 @@ class BasePage(SocialFields, ListingFields, Page):
         abstract = True
 
     promote_panels = (
-        Page.promote_panels + SocialFields.promote_panels + ListingFields.promote_panels + chat_bot_panel
+        Page.promote_panels + SocialFields.promote_panels + ListingFields.promote_panels + webchat_panel
     )
     search_fields = Page.search_fields + [
         index.SearchField("listing_title"),
@@ -386,64 +391,6 @@ class Tracking(BaseSetting):
         blank="True",
         help_text="Your Google Tag Manager ID",
     )
-
-
-@register_setting(icon="view")
-class ChatBot(BaseSetting):
-    webchat_url = models.URLField(
-        max_length=255,
-        help_text="Your chat bot URL",
-        blank=True,
-    )
-    webchat_id = models.IntegerField(
-        help_text="Your chat bot ID",
-        blank=True,
-        null=True,
-    )
-    organization = models.CharField(
-        max_length=255,
-        help_text="Your chat bot organisation",
-        blank=True,
-    )
-    google_api_key = models.CharField(
-        max_length=255,
-        help_text="Your Google API key",
-        blank=True,
-    )
-    end_point = models.CharField(
-        max_length=255,
-        help_text="Your chat bot end point",
-        blank=True,
-    )
-    chatbot_enabled = models.BooleanField(
-        default=False,
-        help_text="Check to enable the chatbot. Un-check to temporarily disable the chatbot on the site.",
-    )
-
-    def clean(self):
-        if self.chatbot_enabled and not all([
-            self.webchat_url,
-            self.webchat_id,
-            self.organization,
-            self.google_api_key,
-            self.end_point,
-        ]):
-            raise ValidationError(
-                {
-                    "chatbot_enabled": _("All fields below should be completed for the chatbot to function."),
-                }
-            )
-
-    panels = [
-        MultiFieldPanel([
-            FieldPanel("chatbot_enabled"),
-            FieldPanel("webchat_url"),
-            FieldPanel("webchat_id"),
-            FieldPanel("organization"),
-            FieldPanel("google_api_key"),
-            FieldPanel("end_point"),
-        ], "Chatbot")
-    ]
 
 
 class HeroPage(BasePage):

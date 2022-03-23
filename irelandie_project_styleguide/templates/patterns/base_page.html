@@ -261,7 +261,7 @@
 {% endblock footer %}
 
 {% block web_chat_widget %}
-    {% if page.enable_chatbot and settings.utils.ChatBot.chatbot_enabled %}
+    {% if page.webchat_script %}
     <div class="wrapper wrapper--large wrapper--padding">
         <div class="webchat" id="chat-button" style="text-align:center;padding-top:20px;"></div>
     </div>
@@ -269,34 +269,13 @@
 {% endblock %}
 
 {% block extra_js %}
-{% if page.enable_chatbot and settings.utils.ChatBot.chatbot_enabled %}
-    <script
-        src="{{ settings.utils.ChatBot.webchat_url }}"
-        data-id="{{ settings.utils.ChatBot.webchat_id }}"
-        data-hidden="true"
-        >
-    </script>
-    <script type="text/javascript">
-        function openChat(){EdgeTierChat.open()}function onKeyPress(e){13!==e.which&&13!==e.keyCode&&32!==e.which&&32!==e.keyCode||openChat()}function addImage(e,a,t){var i=document.createElement("img");i.alt=a,i.role="button",i.src=e,i.style.maxWidth="100%",t&&(i.tabIndex=0,i.addEventListener("click",openChat),i.addEventListener("touchstart",openChat),i.addEventListener("keypress",onKeyPress)),chatButton.appendChild(i)}var chatButton=document.getElementById("chat-button");"EdgeTierChat"in window&&chatButton&&EdgeTierChat.isAvailable(function(e,a){e?addImage("https://cdn.edgetier.com/dfa/chat-disabled.png","Live chat is unavailable",!1):a.chatAvailabilityTypeId===EdgeTierChat.chatAvailabiltyTypes.Enabled?addImage("https://cdn.edgetier.com/dfa/chat-available.png","Start a chat",!0):a.chatAvailabilityTypeId===EdgeTierChat.chatAvailabiltyTypes.QueueOverLimit?addImage("https://cdn.edgetier.com/dfa/chat-queue-over-limit.png","No live chat agents are available",!1):addImage("https://cdn.edgetier.com/dfa/chat-disabled.png","Live chat is unavailable",!1)});
-    </script>
 
-    <script src="//lightning.production.helium.servismatrixcdn.com/v2/latest/servisbot-utils.js"></script>
-    <script src="//lightning.production.helium.servismatrixcdn.com/v2/latest/bundle-messenger.js"></script>
+    {% if page.web_bot_script %}
+    {{ page.web_bot_script|safe }}
+    {% endif %}
 
-    <script>
-        ServisBot.init({
-          "organization": "{{ settings.utils.ChatBot.organization }}",
-          "debug": false,
-          "context": {},
-          "displayAvatar": false,
-          "displayLightbox": false,
-          "googleApiKey": "{{ settings.utils.ChatBot.google_api_key }}",
-          "endpoint": "{{ settings.utils.ChatBot.end_point }}",
-          "displayWidget": true,
-          "displayHeader": true,
-          "alwaysOpen": false,
-          "sbRegion": "eu-1"
-        });
-    </script>
-{% endif %}
+    {% if page.webchat_script %}
+    {{ page.webchat_script|safe }}
+    {% endif %}
+
 {% endblock extra_js %}
