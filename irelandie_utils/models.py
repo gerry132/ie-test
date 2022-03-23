@@ -581,7 +581,7 @@ class CountryGroup(models.Model):
 
 
 @register_snippet
-class TwitterEmbed(TranslatableMixin):
+class TwitterEmbed(TranslatableMixin, models.Model):
     title = models.CharField(
         max_length=255,
         blank=True,
