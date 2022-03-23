@@ -7,7 +7,7 @@ context:
 
 tags:
   image:
-    value.image width-400:
+    value.image width-400 alt=value.image_alt:
       raw: |
         <img src="https://source.unsplash.com/400x300?ocean" width="400" height="300" alt="Some alt">
   pageurl:

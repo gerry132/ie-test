@@ -2,6 +2,7 @@
 from django.conf import settings as dj_settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
 from modelcluster.fields import ParentalKey
@@ -155,6 +156,11 @@ class ListingFields(models.Model):
         related_name="+",
         help_text="Choose the image you wish to be displayed when this page appears in listings",
     )
+    listing_image_alt = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name=_("Listing Image Alt text")
+    )
     listing_title = models.CharField(
         max_length=255,
         blank=True,
@@ -174,6 +180,10 @@ class ListingFields(models.Model):
         MultiFieldPanel(
             [
                 ImageChooserPanel("listing_image"),
+                FieldPanel(
+                    "listing_image_alt",
+                    help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/")
+                ),
                 FieldPanel("listing_title"),
                 FieldPanel("listing_summary"),
             ],
@@ -192,6 +202,12 @@ class CallToActionSnippet(models.Model):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
+    )
+    image_alt = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name=_("Image Alt text"),
+        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/")
     )
 
     link = StreamField(
@@ -223,7 +239,10 @@ class CallToActionSnippet(models.Model):
     panels = [
         FieldPanel("title"),
         FieldPanel("summary"),
-        ImageChooserPanel("image"),
+        MultiFieldPanel([
+            ImageChooserPanel("image"),
+            FieldPanel("image_alt"),
+        ], heading="Image"),
         StreamFieldPanel("link"),
     ]
 

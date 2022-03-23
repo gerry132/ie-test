@@ -7,7 +7,7 @@ context:
 
 tags:
   image:
-    card.image width-250 class="card__logo":
+    value.image width-250 class="logo-card__logo" alt=value.image_alt:
       raw: |
         <img src="https://source.unsplash.com/250x150?ocean" width="250" height="150" alt="Some alt" class="logo-card__logo">
   pageurl:

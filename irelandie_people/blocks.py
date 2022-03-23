@@ -12,6 +12,8 @@ class PersonPageSectionBlock(blocks.BaseSectionBlock):
         template = "TODO"
 
     image = ImageChooserBlock()
+    # TODO not implementing this yet
+    # image_alt = wagtail_blocks.CharBlock(required=False)
     page = wagtail_blocks.PageChooserBlock(required=False)
 
     body = wagtail_blocks.StreamBlock(

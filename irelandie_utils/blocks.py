@@ -28,6 +28,11 @@ class AlternateLinkValue(StructValue):
 class StoryLinkBlock(blocks.StructBlock):
     page = blocks.PageChooserBlock(required=False)
     icon = ImageChooserBlock(required=False)
+    # TODO: Implement this yet as it's not used
+    # icon_alt = blocks.CharBlock(
+    #     required=False,
+    #     help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/")
+    # )
     title = blocks.CharBlock(
         help_text="Leave blank to use the page's own title", required=False
     )
@@ -64,6 +69,10 @@ class StoryLinkBlock(blocks.StructBlock):
 
 class StoryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+    )
     page = blocks.PageChooserBlock(required=False)
     primary_title = blocks.CharBlock(required=False, label="Supporting title")
     title = blocks.CharBlock(required=False)
@@ -93,6 +102,7 @@ class StoryBlock(blocks.StructBlock):
 
 
 class FeaturedStoryBlock(blocks.StructBlock):
+    # image is decorative
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(required=False)
     primary_title = blocks.CharBlock(required=False, label="Supporting title")
@@ -136,6 +146,7 @@ class FeaturedStoryBlock(blocks.StructBlock):
 
 
 class EmbassyStory(blocks.StructBlock):
+    # image is decorative
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(
         required=False,
@@ -163,6 +174,10 @@ class AlernatePinnedStoryHeroLinkText(StructValue):
 
 class PinnedStoryHeroBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+    )
     title = blocks.CharBlock(required=False)
     summary = blocks.CharBlock(required=False)
     page = blocks.PageChooserBlock(required=False)
@@ -175,6 +190,10 @@ class PinnedStoryHeroBlock(blocks.StructBlock):
 
 class PinnedStoryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+    )
     page = blocks.PageChooserBlock(required=False)
     title = blocks.CharBlock(required=False)
     summary = blocks.CharBlock(required=False)
@@ -185,6 +204,10 @@ class PinnedStoryBlock(blocks.StructBlock):
 
 class ImageBlock(blocks.StructBlock):
     image = ImageChooserBlock()
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+    )
     caption = blocks.CharBlock(required=False)
 
     class Meta:
@@ -231,6 +254,7 @@ class JumpboxWithImageBlock(blocks.StructBlock):
         template = "TODO"
 
     image = ImageChooserBlock()
+    # TODO: add image_alt
     page = blocks.PageChooserBlock(required=False)
     description = blocks.CharBlock(required=False)
     text = blocks.CharBlock(required=False)
@@ -344,6 +368,10 @@ class BaseSectionBlock(blocks.StructBlock):
 
 class LogoCardBlock(blocks.StructBlock):
     image = ImageChooserBlock()
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+    )
     title = blocks.CharBlock()
     summary = blocks.TextBlock()
     url = blocks.URLBlock()
@@ -367,6 +395,10 @@ class LogoCardsBlock(blocks.StructBlock):
 
 class ArticleCardBlock(blocks.StructBlock):
     image = ImageChooserBlock()
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+    )
     title = blocks.CharBlock()
     summary = blocks.TextBlock()
     page = blocks.PageChooserBlock()

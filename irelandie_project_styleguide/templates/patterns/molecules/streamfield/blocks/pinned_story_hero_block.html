@@ -3,7 +3,7 @@
 
 <div class="pinned-stories__featured">
     <div class="pinned-stories__featured-content">
-        {% image value.image width-400 %}
+        {% image value.image width-400 alt=value.image_alt %}
         <h3 class="pinned-stories__featured-title heading--2">{{ value.title }}</h3>
         <p class="pinned-stories__featured-summary">{{ value.summary }}</p>
 
@@ -13,6 +13,5 @@
                 {{ value.link_text }}
             </a>
         {% endif %}
-    </div> 
+    </div>
 </div>
- 
