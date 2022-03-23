@@ -1,0 +1,51 @@
+context:
+  value:
+    person:
+      alignment: left
+      background: light
+      image: true
+      embassy_logo: true
+      title: Irish Ambassador to France
+      name: Patricia O’Brien
+      social_media_link: /
+      social_media_text: Connect with our Ambassador on Twitter
+      address: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam magna justo, sollicitudin sit amet laoreet id, sodales vel metus. Etiam bibendum, augue in porta ultricies, elit sapien fringilla nisl, sit amet fermentum ligula augue nec sapien. Aliquam eu aliquet metus. Donec quis dolor at tellus viverra molestie.'
+      telephone: '01234567890'
+      opening_hours: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam magna justo, sollicitudin sit amet laoreet id, sodales vel metus.'
+      closure_dates: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam magna justo, sollicitudin sit amet laoreet id, sodales vel metus.'
+      emergency_contact_details: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam magna justo, sollicitudin sit amet laoreet id, sodales vel metus.'
+      links:
+        - title: Stub content
+          summary: Check out our awesome stub content
+          page: foobar
+        - title: Stub content
+          summary: Check out our awesome stub content
+          page: foobar
+        - title: Stub content
+          summary: Check out our awesome stub content
+          page: foobar
+        - title: Stub content
+          summary: Check out our awesome stub content
+          page: foobar
+        - title: Stub content
+          summary: Check out our awesome stub content
+          page: foobar
+        - title: Stub content
+          summary: Check out our awesome stub content
+          page: foobar
+
+tags:
+  image:
+    value.person.image width-460 class="story__image":
+      raw: |
+        <img src="https://source.unsplash.com/460x500?ocean" width="460" height="500" alt="Some alt" class="story__image">
+    value.person.embassy_logo width-460 class="story__logo":
+      raw: |
+        <img src="https://source.unsplash.com/460x500?ocean" width="460" height="500" alt="Some alt" class="story__image">
+  pageurl:
+    value.page as href:
+      target_var: href
+      raw: '#'
+  include_block:
+    'link':
+      template_name: 'patterns/molecules/streamfield/blocks/story_link_block.html'

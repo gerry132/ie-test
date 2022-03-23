@@ -9,6 +9,7 @@ from wagtail.core.blocks.struct_block import StructBlockValidationError, StructV
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import VideoChooserBlock
+from wagtail.snippets.blocks import SnippetChooserBlock
 
 from irelandie_utils.constants import StoryAlignment, StoryBackground
 
@@ -272,12 +273,13 @@ class JumpboxBlock(blocks.StructBlock):
     url = blocks.URLBlock(required=False)
 
 
-class PersonBlock(blocks.PageChooserBlock):
-    class Meta:
-        label = "PersonBlock"
-        template = "patterns/molecules/streamfield/blocks/person_block.html"
+class PersonBlock(blocks.StructBlock):
+    person = SnippetChooserBlock(target_model="irelandie_people.Person")
 
-    pass
+    class Meta:
+        icon = "user"
+        label = "Person"
+        template = "patterns/molecules/streamfield/blocks/person_block.html"
 
 
 class PlaceBlock(blocks.PageChooserBlock):
@@ -491,3 +493,5 @@ class FreeFormBlocks(blocks.StreamBlock):
     youtube_video = YoutubeVideoBlock(group="HTML")
     video = CustomVideoChooserBlock(group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
+
+    person = PersonBlock(group="Snippets")

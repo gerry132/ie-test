@@ -1,4 +1,68 @@
-{% comment %}
-This is a placeholder template.
-TODO: create FE or delete if no longer needed.
-{% endcomment %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+<div class="story{% if value.person.background == 'dark' %} story--dark{% endif %}{% if value.person.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
+    <div class="wrapper wrapper--large wrapper--padding">
+        
+        <div class="story__container">
+            {% image value.person.image width-460 class="story__image" %}
+
+            <div class="story__content">
+                <div class="story__copy">
+                    {% image value.person.embassy_logo width-460 class="story__logo" %}
+
+                    {% if value.person.title %}
+                        {{ value.person.title }}
+                    {% endif %}
+
+                    <h3 class="story__heading heading--2">{{ value.person.name }}</h3>
+
+                    {% if value.person.social_media_link %}
+                        <a href="{{ value.person.social_media_link }}">
+                            <div class="story__twitter">
+                                {% if value.person.social_media_text %}
+                                    {{ value.person.social_media_text }}
+                                {% endif %}
+                                {% include "patterns/atoms/icons/icon.html" with name="twitter" classname="story__twitter-icon" %}
+                            </div>
+                        </a>
+                    {% endif %}
+                    
+                    {% if value.person.address or value.person.telephone or value.person.opening_hours or value.person.closure_dates or value.person.emergency_contact_details %}
+                        <div class="rich-text">
+                            {% if value.person.address %}
+                                {{ value.person.address|richtext }}
+                            {% endif %}
+
+                            {% if value.person.telephone %}
+                                {{ value.person.telephone }}
+                            {% endif %}
+
+                            {% if value.person.opening_hours %}
+                                {{ value.person.opening_hours|richtext }}
+                            {% endif %}
+
+                            {% if value.person.closure_dates %}
+                                {{ value.person.closure_dates|richtext }}
+                            {% endif %}
+
+                            {% if value.person.emergency_contact_details %}
+                                {{ value.person.emergency_contact_details|richtext }}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if value.person.links %}
+                    <div class="story-links">
+                        <div class="story-links__container">
+                            {% for link in value.person.links %}
+                                {% include_block link %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
