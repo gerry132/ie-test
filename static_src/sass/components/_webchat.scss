@@ -1,0 +1,8 @@
+.webchat {
+    @include z-index(webchat);
+    position: fixed;
+    display: block;
+    left: 40px;
+    bottom: 0;
+    max-width: 350px;
+}
