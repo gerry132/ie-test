@@ -9,9 +9,8 @@
             <div class="story__content">
                 <div class="story__copy">
                     {% if value.primary_title %}<p>{{ value.primary_title }}</p>{% endif %}
-                    {% if value.page %}
-                        {% pageurl value.page as href %}
-                        <a href="{{ href }}">
+                    {% if link_url %}
+                        <a href="{{ link_url }}">
                             <h3 class="story__heading heading--2">{{ value.title }}</h3>
                         </a>
                     {% else %}
