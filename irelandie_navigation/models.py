@@ -11,7 +11,7 @@ from wagtail.core.models import TranslatableMixin
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 
-from .blocks import LinkBlock, LinkColumnWithHeader, SecondaryNavLinkColumnWithHeader
+from .blocks import LinkBlock, LinkBlockExtended, LinkColumnWithHeader, SecondaryNavLinkColumnWithHeader
 
 IMAGE_MODEL = str(dj_settings.WAGTAILIMAGES_IMAGE_MODEL)
 
@@ -93,7 +93,7 @@ class FooterNavigation(TranslatableMixin):
         verbose_name=_("Columns"),
     )
     links = StreamField(
-        [("link", LinkBlock())],
+        [("link", LinkBlockExtended())],
         blank=True,
         help_text=_("Single list of elements at the base of the page."),
     )

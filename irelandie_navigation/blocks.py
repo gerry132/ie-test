@@ -6,11 +6,19 @@ from wagtail.core import blocks
 from irelandie_utils.blocks import BaseBlockLinkValidation, BaseBlockLinkContext
 
 
-class LinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
+class LinkBlock(BaseBlockLinkContext):
     page = blocks.PageChooserBlock(required=False)
     title = blocks.CharBlock(
         help_text=_("Leave blank to use the page's own title"), required=False
     )
+
+    class Meta:
+        template = ("patterns/molecules/navigation/blocks/menu_item.html",)
+
+
+class LinkBlockExtended(LinkBlock, BaseBlockLinkContext, BaseBlockLinkValidation):
+    # This is a custom block that extends the LinkBlock and adds a url field.
+    # This is used in the FooterNavigation.
     url = blocks.URLBlock(
         label="URL",
         required=False,
@@ -25,7 +33,7 @@ class LinkColumnWithHeader(blocks.StructBlock):
     heading = blocks.CharBlock(
         required=False, help_text=_("Leave blank if no header required.")
     )
-    links = blocks.ListBlock(LinkBlock())
+    links = blocks.ListBlock(LinkBlockExtended())
 
     class Meta:
         template = ("patterns/molecules/navigation/blocks/footer_column.html",)

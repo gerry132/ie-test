@@ -39,7 +39,13 @@ class BaseBlockLinkValidation(blocks.StructBlock):
 class BaseBlockLinkContext(blocks.StructBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        context["link_url"] = value["url"] or value["page"].url
+
+        try:
+            # A struct block may not have a url field but always has a page field
+            context["link_url"] = value["url"] or value["page"].url
+        except KeyError:
+            context["link_url"] = value["page"].url
+
         context["link_title"] = value["title"] or value["page"].title
         return context
 
