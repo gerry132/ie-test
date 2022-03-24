@@ -1,0 +1,7 @@
+<div class="wrapper wrapper--large">
+    {% if link_url %}
+    <a href="{{ link_url }}">{{ value.message }}</a>
+    {% else %}
+    {{ value.message }}
+    {% endif %}
+</div>

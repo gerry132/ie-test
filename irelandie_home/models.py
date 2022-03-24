@@ -2,6 +2,7 @@
 from wagtail.admin.edit_handlers import TabbedInterface, ObjectList, StreamFieldPanel
 from wagtail.core import blocks as wagtail_blocks
 from wagtail.core.fields import StreamField
+from irelandie_home.blocks import SecondaryCallToAction
 
 from irelandie_utils import blocks
 from irelandie_utils.models import HeroPage
@@ -12,12 +13,24 @@ class HomePage(FreeFormPageBase):
     max_count = 1
     template = "patterns/pages/home/home_page.html"
 
+    secondary_call_to_action = StreamField(
+        [
+            ("call_to_action", SecondaryCallToAction()),
+        ],
+        blank=True,
+    )
+
+    cta_panel = [
+        StreamFieldPanel("secondary_call_to_action")
+
+    ]
     # Only allow creating HomePages at the root level
     parent_page_types = ["wagtailcore.Page"]
 
     edit_handler = TabbedInterface([
         ObjectList(FreeFormPageBase.content_panels, heading='Content'),
         ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
+        ObjectList(cta_panel, heading='Call To Action'),
         ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
         ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
     ])
