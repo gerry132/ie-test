@@ -591,13 +591,23 @@ class TwitterEmbed(TranslatableMixin, models.Model):
         help_text="Twitter username",
     )
     width = models.PositiveIntegerField(
-        default=500,
+        default=0,
         help_text="Width of the embedded tweet panel in pixels",
     )
     height = models.PositiveIntegerField(
-        default=500,
+        default=0,
         help_text="Height of the embedded tweet panel in pixels",
     )
+
+    panels = [
+        FieldPanel("title"),
+        FieldPanel("username"),
+        MultiFieldPanel([
+            FieldPanel("width"),
+            FieldPanel("height"),
+            HelpPanel("You can set these fields set to 0 to use the default embedded tweet panel dimensions"),
+        ], heading="Dimensions"),
+    ]
 
     def __str__(self):
         if not self.title:
