@@ -60,6 +60,10 @@ locals {
       description = "DFA main IP address"
       cidr_blocks = ["62.23.128.137/32"]
     },
+    dfa_wifi = {
+      description = "DFA WiFi IP address"
+      cidr_blocks = ["80.169.58.154/32"]
+    },
     rachel_dev = {
       description = "Rachel Mannion - OGCIO"
       cidr_blocks = ["139.162.182.140/32"]
