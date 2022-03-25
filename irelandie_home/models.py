@@ -20,7 +20,7 @@ class HomePage(FreeFormPageBase):
         blank=True,
     )
 
-    cta_panel = [
+    secondary_cta_panel = [
         StreamFieldPanel("secondary_call_to_action")
 
     ]
@@ -30,7 +30,7 @@ class HomePage(FreeFormPageBase):
     edit_handler = TabbedInterface([
         ObjectList(FreeFormPageBase.content_panels, heading='Content'),
         ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
-        ObjectList(cta_panel, heading='Call To Action'),
+        ObjectList(secondary_cta_panel, heading='Call To Action'),
         ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
         ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
     ])
