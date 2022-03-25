@@ -4,7 +4,7 @@
 {% wagtail_site as current_site %}
 
 {% block content %}
-    <div class="section section--padding section--grey">
+<div class="section section--padding section--grey">
         <div class="wrapper wrapper--large wrapper--padding">
             <div class="intro">
                 <div class="container">
@@ -50,6 +50,13 @@
                     </div>
                 </div>
             {% endfor %}
+        </div>
+        <div class="wrapper wrapper--large wrapper--padding">
+            <div style="padding-bottom: 56.25%;" class="responsive-object">
+                <div class="google-map">
+                    {{ settings.irelandie_navigation.SiteSettings.google_my_map|safe }}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

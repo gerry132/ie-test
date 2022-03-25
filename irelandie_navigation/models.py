@@ -34,10 +34,16 @@ class SiteSettings(BaseSetting, ClusterableModel):
         help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
     )
 
+    google_my_map = models.TextField(
+        blank=True,
+        help_text=_("Iframe code for Google My Maps."),
+    )
+
     panels = [
         MultiFieldPanel([
             ImageChooserPanel("site_logo"),
             FieldPanel("site_logo_alt"),
+            FieldPanel("google_my_map"),
         ], heading="Site Logo"),
     ]
 
