@@ -603,9 +603,9 @@ class TwitterEmbed(TranslatableMixin, models.Model):
         FieldPanel("title"),
         FieldPanel("username"),
         MultiFieldPanel([
+            HelpPanel("You can set these fields set to 0 to use the default embedded tweet panel dimensions"),
             FieldPanel("width"),
             FieldPanel("height"),
-            HelpPanel("You can set these fields set to 0 to use the default embedded tweet panel dimensions"),
         ], heading="Dimensions"),
     ]
 
