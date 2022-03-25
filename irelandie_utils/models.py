@@ -603,7 +603,7 @@ class TwitterEmbed(TranslatableMixin, models.Model):
         FieldPanel("title"),
         FieldPanel("username"),
         MultiFieldPanel([
-            HelpPanel("You can set these fields set to 0 to use the default embedded tweet panel dimensions"),
+            HelpPanel("A value of 0 will display the tweet panel as a full width component."),
             FieldPanel("width"),
             FieldPanel("height"),
         ], heading="Dimensions"),
