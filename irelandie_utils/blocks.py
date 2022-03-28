@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import re
 
 from django.forms.utils import ErrorList
@@ -14,19 +15,42 @@ from wagtail.snippets.blocks import SnippetChooserBlock
 from irelandie_utils.constants import StoryAlignment, StoryBackground
 
 
-class AlternateLinkValue(StructValue):
-    def link_url(self):
-        external_url = self.get("url")
-        page = self.get("page")
-        return external_url or page.url
+class BaseBlockLinkValidation(blocks.StructBlock):
+    def clean(self, value):
+        errors = {}
+        values = [value["page"], value["url"]]
+        # Set only a Page OR a URL
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a page or set a URL."
 
-    def link_title(self):
-        title = self.get("title")
-        page = self.get("page")
-        return title or page.title
+            errors["page"] = ErrorList([message])
+            errors["url"] = ErrorList([message])
+
+        # A URL must have title
+        if value["url"] and not value["title"]:
+            errors["title"] = ErrorList(["Please set a title for the URL"])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
 
 
-class StoryLinkBlock(blocks.StructBlock):
+class BaseBlockLinkContext(blocks.StructBlock):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+
+        try:
+            # A struct block may not have a url field but always has a page field
+            context["link_url"] = value["url"] or value["page"].url
+        except KeyError:
+            context["link_url"] = value["page"].url
+
+        context["link_title"] = value["title"] or value["page"].title
+        return context
+
+
+class StoryLinkBlock(BaseBlockLinkValidation):
     page = blocks.PageChooserBlock(required=False)
     icon = blocks.ChoiceBlock(
         choices=(
@@ -48,27 +72,7 @@ class StoryLinkBlock(blocks.StructBlock):
     )
 
     class Meta:
-        value_class = AlternateLinkValue
         template = "patterns/molecules/streamfield/blocks/story_link_block.html"
-
-    def clean(self, value):
-        errors = {}
-        values = [value["page"], value["url"]]
-        # Set only a Page OR a URL
-        if sum(value is not None and value != "" for value in values) != 1:
-            message = "Please choose only a page or set a URL."
-
-            errors["page"] = ErrorList([message])
-            errors["url"] = ErrorList([message])
-
-        # A URL must have title
-        if value["url"] and not value["title"]:
-            errors["title"] = ErrorList(["Please set a title for the URL"])
-
-        if errors:
-            raise StructBlockValidationError(errors)
-
-        return super().clean(value)
 
 
 class StoryBlock(blocks.StructBlock):
@@ -134,8 +138,7 @@ class StoryBlock(blocks.StructBlock):
         return context
 
 
-class FeaturedStoryBlock(blocks.StructBlock):
-    # image is decorative
+class FeaturedStoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -150,40 +153,8 @@ class FeaturedStoryBlock(blocks.StructBlock):
         icon = "doc-full-inverse"
         template = "patterns/molecules/streamfield/blocks/featured_story_block.html"
 
-    def clean(self, value):
-        errors = {}
-        values = [value["page"], value["url"]]
-        # Set only a Page OR a URL
-        if sum(value is not None and value != "" for value in values) != 1:
-            message = "Please choose only a page or set a URL."
 
-            errors["page"] = ErrorList([message])
-            errors["url"] = ErrorList([message])
-
-        # A URL must have title
-        if value["url"] and not value["title"]:
-            errors["title"] = ErrorList(["Please set a title for the URL"])
-
-        if errors:
-            raise StructBlockValidationError(errors)
-
-        return super().clean(value)
-
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context=parent_context)
-        context["link_url"] = value["url"] or value["page"].url
-        context["link_title"] = value["title"] or value["page"].title
-        return context
-
-
-class AlernateEmbassyStoryLinkText(StructValue):
-    def link_text(self):
-        text = self.get("button_text") or self.get("page")
-        return text
-
-
-class EmbassyStory(blocks.StructBlock):
-    # image is decorative
+class EmbassyStory(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(
         required=False,
@@ -199,7 +170,6 @@ class EmbassyStory(blocks.StructBlock):
 
     class Meta:
         icon = "doc-full"
-        # value_class = AlternateLinkValue
         template = "patterns/molecules/streamfield/blocks/embassy_block.html"
 
     def clean(self, value):
