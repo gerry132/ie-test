@@ -17,7 +17,7 @@ from wagtail.admin.edit_handlers import (
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Orderable, Page
+from wagtail.core.models import Orderable, Page, TranslatableMixin
 from wagtail.core.query import PageQuerySet
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
@@ -578,3 +578,38 @@ class CountryGroup(models.Model):
 
     def __str__(self):
         return self.region
+
+
+@register_snippet
+class TwitterEmbed(TranslatableMixin, models.Model):
+    title = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    username = models.CharField(
+        max_length=100,
+        help_text="Twitter username",
+    )
+    width = models.PositiveIntegerField(
+        default=0,
+        help_text="Width of the embedded tweet panel in pixels",
+    )
+    height = models.PositiveIntegerField(
+        default=0,
+        help_text="Height of the embedded tweet panel in pixels",
+    )
+
+    panels = [
+        FieldPanel("title"),
+        FieldPanel("username"),
+        MultiFieldPanel([
+            HelpPanel("A value of 0 will display the tweet panel as a full width component."),
+            FieldPanel("width"),
+            FieldPanel("height"),
+        ], heading="Dimensions"),
+    ]
+
+    def __str__(self):
+        if not self.title:
+            return f"{self.username} (username)"
+        return self.title

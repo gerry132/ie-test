@@ -1,0 +1,6 @@
+context:
+  value:
+    title: View tweets
+    twitter_user: dfatirl
+    width: 1200
+    height: 500

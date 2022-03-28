@@ -92,6 +92,18 @@ class CountryPage(HeroPage):
 class MissionPage(BasePage):
     template = "irelandie_assets/pages/mission.html"
 
+    twitter_feed = models.ForeignKey(
+        "utils.TwitterEmbed",
+        on_delete=models.SET_NULL,
+        related_name="+",
+        null=True,
+        blank=True,
+    )
+
+    content_panels = BasePage.content_panels + [
+        SnippetChooserPanel("twitter_feed"),
+    ]
+
 
 class MissionSearchPage(BasePage):
     template = "patterns/pages/missions/mission_search_page.html"
