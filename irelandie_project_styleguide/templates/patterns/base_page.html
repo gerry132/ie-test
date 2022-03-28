@@ -211,55 +211,7 @@
 {% endblock header %}
 
 {% block footer %}
-    <footer class="footer">
-        <div class="wrapper wrapper--large">
-            <div class="footer__header">
-                {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="footer__logo" %}
-
-                {% if settings.utils.SocialMediaSettings.twitter_handle or settings.utils.SocialMediaSettings.facebook_app_id %}
-                    <div class="footer__social-links">
-                        <p class="footer__heading">{% trans 'Follow us' %}</p>
-                        {% if settings.utils.SocialMediaSettings.youtube_handle %}
-                            <a href="https://twitter.com/{{ settings.utils.SocialMediaSettings.youtube_handle }}" class="footer__social-link">
-                                {% include "patterns/atoms/icons/icon.html" with name="youtube" classname="footer__social-icon" %}
-                            </a>
-                        {% endif %}
-                        {% if settings.utils.SocialMediaSettings.linkedin_handle %}
-                            <a href="https://twitter.com/{{ settings.utils.SocialMediaSettings.linkedin_handle }}" class="footer__social-link">
-                                {% include "patterns/atoms/icons/icon.html" with name="linkedin" classname="footer__social-icon" %}
-                            </a>
-                        {% endif %}
-                        {% if settings.utils.SocialMediaSettings.facebook_app_id %}
-                            <a href="https://www.facebook.com/{{ settings.utils.SocialMediaSettings.facebook_app_id }}" class="footer__social-link">
-                                {% include "patterns/atoms/icons/icon.html" with name="facebook" classname="footer__social-icon" %}
-                            </a>
-                        {% endif %}
-                        {% if settings.utils.SocialMediaSettings.twitter_handle %}
-                            <a href="https://twitter.com/{{ settings.utils.SocialMediaSettings.twitter_handle }}" class="footer__social-link">
-                                {% include "patterns/atoms/icons/icon.html" with name="twitter" classname="footer__social-icon" %}
-                            </a>
-                        {% endif %}
-                    </div>
-                {% endif %}
-            </div>
-
-            <div class="footer__nav-container">
-                <div>
-                    {% footernav %}
-                </div>
-
-                <div>
-                    {% footerlinks %}
-                </div>
-            </div>
-
-            <div class="footer__credit">
-                <p>© {% trans 'Copyright' %} {% now "Y" %} - Ireland.ie | {% trans 'All rights reserved' %}</p>
-            </div>
-        </div>
-
-    </footer>
-
+    {% include "patterns/organisms/footer/footer.html" %}
 {% endblock footer %}
 
 {% block web_chat_widget %}
