@@ -563,12 +563,9 @@ class ArticleStoryBlock(blocks.StreamBlock):
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
 
-    contact_detail = ContactDetailBlock(group="Module")
     person = PersonBlock(group="Module")
-    place = PlaceBlock(group="Module")
 
     html = blocks.RawHTMLBlock(group="HTML")
-    role = RoleBlock(group="HTML")
     table = TableBlock(group="HTML")
     video = CustomVideoChooserBlock(group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
