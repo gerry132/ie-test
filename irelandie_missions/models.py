@@ -5,7 +5,9 @@ from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, TabbedInte
 from wagtail.core.fields import StreamField
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
+from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_navigation.models import LinkBlock
+from irelandie_pages.models import FreeFormPageBase
 from irelandie_utils import blocks
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage
 
@@ -145,3 +147,30 @@ class MissionSearchPage(BasePage):
         context["regions"] = self.regions
         context["countries"] = self.countries
         return context
+
+
+class ConsulatePage(FreeFormPageBase):
+    template = "patterns/pages/missions/consulate_page.html"
+
+    secondary_call_to_action = StreamField(
+        [
+            ("call_to_action", SecondaryCallToAction()),
+        ],
+        blank=True,
+    )
+
+    secondary_cta_panel = [
+        StreamFieldPanel("secondary_call_to_action")
+
+    ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(FreeFormPageBase.content_panels, heading='Content'),
+        ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
+        ObjectList(secondary_cta_panel, heading='Call To Action'),
+        ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
+        ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
+    ])
+
+    class Meta:
+        verbose_name = "Consulate Page"

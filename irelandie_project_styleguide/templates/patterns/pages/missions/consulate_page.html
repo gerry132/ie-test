@@ -1,0 +1,7 @@
+{% extends "patterns/hero_page.html" %}
+{% load wagtailcore_tags wagtailimages_tags static %}
+
+{% block main %}
+    {{ page.secondary_call_to_action }}
+    {% include "patterns/molecules/freeform-components/freeform_components.html" %}
+{% endblock %}
