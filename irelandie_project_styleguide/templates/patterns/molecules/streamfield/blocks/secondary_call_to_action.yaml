@@ -1,5 +1,0 @@
-context:
-  value:
-    message: This is a seconday message
-    page: http://www.example1.com/
-    url: http://www.example2.com
