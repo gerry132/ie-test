@@ -12,7 +12,7 @@ import wagtail.snippets.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('irelandie_home', '0023_add_person_block_snippet'),
+        #('irelandie_home', '0023_add_person_block_snippet'),
     ]
 
     operations = [
