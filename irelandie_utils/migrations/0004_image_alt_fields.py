@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        #('utils', '0003_create_country_group'),
+        ('utils', '0003_create_country_group'),
     ]
 
     operations = [
