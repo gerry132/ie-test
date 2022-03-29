@@ -283,6 +283,12 @@ class SocialMediaSettings(BaseSetting):
     facebook_app_id = models.CharField(
         max_length=255, blank=True, help_text="Your Facebook app ID."
     )
+    youtube_user = models.CharField(
+        max_length=255, blank=True, help_text="Your YouTube username."
+    )
+    linkedin_profile = models.CharField(
+        max_length=255, blank=True, help_text="Your LinkedIn profile URL."
+    )
     default_sharing_text = models.CharField(
         max_length=255,
         blank=True,
@@ -294,11 +300,23 @@ class SocialMediaSettings(BaseSetting):
         default="Ireland.ie",
         help_text="Site name, used by Open Graph.",
     )
+    # TODO: This may no longer be used
     social_links = StreamField(
         [("profile", custom_blocks.SocialLinkBlock())],
         blank=True,
         help_text="List of links to social media profiles",
     )
+
+    @property
+    def show_social_links(self):
+        return any(
+            [
+                self.twitter_handle,
+                self.facebook_app_id,
+                self.youtube_user,
+                self.linkedin_profile,
+            ]
+        )
 
 
 @register_setting
