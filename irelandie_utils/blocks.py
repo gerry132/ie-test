@@ -52,7 +52,15 @@ class BaseBlockLinkContext(blocks.StructBlock):
 
 class StoryLinkBlock(BaseBlockLinkValidation):
     page = blocks.PageChooserBlock(required=False)
-    icon = ImageChooserBlock(required=False)
+    icon = blocks.ChoiceBlock(
+        choices=(
+            ("government-building", "Government Building"),
+            ("money", "Money"),
+            ("passport", "Passport"),
+            ("plane", "Plane"),
+            ("ticket", "Ticket"),
+        )
+    )
     title = blocks.CharBlock(
         help_text="Leave blank to use the page's own title", required=False
     )
