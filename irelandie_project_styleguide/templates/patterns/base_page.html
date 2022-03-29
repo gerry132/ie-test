@@ -95,9 +95,16 @@
         <div class="header{% if page.override_primary_navigation %} header--condensed{% endif %}"{% if not page.hero_image and not page.hero_video %} style="background-color: rgba(0,77,70,1)"{% endif %}>
             <div class="wrapper wrapper--large">
                 <div class="header__container">
-                    <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">
-                        {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo" %}
-                    </a>
+                    {% comment %} Check if global or page specific logo is set, otherwise show default {% endcomment %}
+                    {% if header.logo %}
+                        {% image header.logo width-200 class="header__logo" alt=header.logo.alt %}
+                    {% elif settings.utils.logo %}
+                        {% image settings.utils.logo width-200 class="header__logo" alt=header.logo.alt %}
+                    {% else %}
+                        <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">
+                            {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
+                        </a>
+                    {% endif %}
 
                     <div class="header__menus header__menus--desktop">
                         <div data-desktop-menu>
