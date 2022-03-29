@@ -19,25 +19,25 @@
 
                 {% comment %} Check if global or page specific social media is set, then show the most relevant {% endcomment %}
                 {% if settings.utils.SocialMediaSettings.youtube_user or footer.social_links.youtube_user %}
-                    <a href="https://youtube.com/user/{% firstof footer.social_links.youtube_user settings.utils.SocialMediaSettings.youtube_user %}" class="footer__social-link">
+                    <a href="https://youtube.com/user/{% firstof footer.social_links.youtube_user settings.utils.SocialMediaSettings.youtube_user %}" class="footer__social-link" aria-label="{% trans 'Find us on Youtube' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="youtube" classname="footer__social-icon" %}
                     </a>
                 {% endif %}
                     
                 {% if settings.utils.SocialMediaSettings.linkedin_profile or footer.social_links.linkedin_profile %}
-                    <a href="https://twitter.com/{% firstof footer.social_links.linkedin_profile settings.utils.SocialMediaSettings.linkedin_profile %}" class="footer__social-link">
+                    <a href="https://twitter.com/{% firstof footer.social_links.linkedin_profile settings.utils.SocialMediaSettings.linkedin_profile %}" class="footer__social-link" aria-label="{% trans 'Connect on Linkedin' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="linkedin" classname="footer__social-icon" %}
                     </a>
                 {% endif %}
             
                 {% if settings.utils.SocialMediaSettings.facebook_app_id or footer.social_links.facebook_app_id %}
-                    <a href="https://www.facebook.com/{% firstof footer.social_links.facebook_app_id settings.utils.SocialMediaSettings.facebook_app_id %}" class="footer__social-link">
+                    <a href="https://www.facebook.com/{% firstof footer.social_links.facebook_app_id settings.utils.SocialMediaSettings.facebook_app_id %}" class="footer__social-link" aria-label="{% trans 'Find us on Facebook' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="facebook" classname="footer__social-icon" %}
                     </a>
                 {% endif %}
             
                 {% if settings.utils.SocialMediaSettings.twitter_handle or footer.social_links.twitter_handle %}
-                    <a href="https://twitter.com/{% firstof footer.social_links.twitter_handle settings.utils.SocialMediaSettings.twitter_handle %}" class="footer__social-link">
+                    <a href="https://twitter.com/{% firstof footer.social_links.twitter_handle settings.utils.SocialMediaSettings.twitter_handle %}" class="footer__social-link" aria-label="{% trans 'Follow us on Twitter' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="twitter" classname="footer__social-icon" %}
                     </a>
                 {% endif %}
