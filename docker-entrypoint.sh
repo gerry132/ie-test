@@ -1,6 +1,11 @@
 #!/bin/bash
 
-python3 manage.py migrate --noinput
+if $( python3 manage.py migrate  --noinput > /dev/null ); then
+    echo "Migrations run successfully"
+else
+echo "Migrations failed. Please check logs."
+    exit 1
+fi
 
 init_username="system_admin"
 init_password="password1234!"
