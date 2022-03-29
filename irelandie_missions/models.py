@@ -151,6 +151,9 @@ class MissionSearchPage(BasePage):
 
 class ConsulatePage(FreeFormPageBase):
     template = "patterns/pages/missions/consulate_page.html"
+    parent_page_types = [
+        "irelandie_missions.CountryPage",
+    ]
 
     secondary_call_to_action = StreamField(
         [
@@ -159,13 +162,24 @@ class ConsulatePage(FreeFormPageBase):
         blank=True,
     )
 
+    twitter_feed = models.ForeignKey(
+        "utils.TwitterEmbed",
+        on_delete=models.SET_NULL,
+        related_name="+",
+        null=True,
+        blank=True,
+    )
+
+    content_panels = FreeFormPageBase.content_panels + [
+        SnippetChooserPanel("twitter_feed"),
+    ]
+
     secondary_cta_panel = [
         StreamFieldPanel("secondary_call_to_action")
-
     ]
 
     edit_handler = TabbedInterface([
-        ObjectList(FreeFormPageBase.content_panels, heading='Content'),
+        ObjectList(content_panels, heading='Content'),
         ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
         ObjectList(secondary_cta_panel, heading='Call To Action'),
         ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
