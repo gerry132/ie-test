@@ -50,6 +50,7 @@ class MobileMenu {
         document.dispatchEvent(menuOpenEvent);
 
         this.node.classList.add('is-open');
+        this.node.setAttribute('aria-expanded', 'true');
         this.openCb();
 
         this.state.open = true;
@@ -57,6 +58,7 @@ class MobileMenu {
 
     close() {
         this.node.classList.remove('is-open');
+        this.node.setAttribute('aria-expanded', 'false');
         this.closeCb();
 
         this.state.open = false;
