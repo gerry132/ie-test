@@ -11,7 +11,7 @@ resources:
     type: github
     endpoint: ogcio
     name: ogcio/azure-pipelines-templates
-    ref: refs/heads/dev
+    ref: refs/heads/develop
 
 stages:
 - stage: test
