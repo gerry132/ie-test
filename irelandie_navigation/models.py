@@ -163,3 +163,41 @@ class SecondaryNavigation(TranslatableMixin):
         verbose_name = _("Secondary Navigation")
         verbose_name_plural = _("Secondary Navigation")
         unique_together = ("translation_key", "locale")
+
+
+@register_snippet
+class CustomFooter(TranslatableMixin):
+    # Snippets model is used so the navigation can be localised with TranslatableMixin.
+    name = models.CharField(
+        max_length=255,
+        unique=True,
+        help_text="Internal name for this navigation, it's not displayed to a site user.",
+        verbose_name=_("Name"),
+    )
+    twitter_handle = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Your Twitter username without the @, e.g. katyperry",
+    )
+    facebook_app_id = models.CharField(
+        max_length=255, blank=True, help_text="Your Facebook app ID."
+    )
+    youtube_user = models.CharField(
+        max_length=255, blank=True, help_text="Your YouTube username."
+    )
+    linkedin_profile = models.CharField(
+        max_length=255, blank=True, help_text="Your LinkedIn profile URL."
+    )
+    links = StreamField(
+        [("link", LinkBlockExtended())],
+        blank=True,
+        help_text=_("Single list of elements at the base of the page."),
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _("Custom Footer")
+        verbose_name_plural = _("Custom Footer")
+        unique_together = ("translation_key", "locale")
