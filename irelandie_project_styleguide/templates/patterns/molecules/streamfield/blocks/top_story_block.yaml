@@ -1,0 +1,17 @@
+context:
+  value:
+    image: true
+    title: A country unlike anywhere else on Earth
+    summary: Isn't it time you joined us in Ireland?
+    page: foobar
+    alignment: left
+    background: light
+    link_text: Find out more
+  link_url: www.example.com
+
+
+tags:
+  image:
+    value.image width-460 alt=value.image_alt class="story__image":
+      raw: |
+        <img src="https://source.unsplash.com/460x500?ocean" width="460" height="500" alt="Some alt" class="story__image">

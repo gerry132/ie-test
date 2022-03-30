@@ -137,6 +137,38 @@ class StoryBlock(blocks.StructBlock):
         return context
 
 
+class TopStoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
+    image = ImageChooserBlock(required=True)
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+    )
+    page = blocks.PageChooserBlock(required=False)
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
+    primary_title = blocks.CharBlock(required=False, label="Supporting title")
+    title = blocks.CharBlock(required=False)
+    summary = blocks.CharBlock(required=False)
+    alignment = blocks.ChoiceBlock(
+        required=True,
+        choices=StoryAlignment.choices,
+        default=StoryAlignment.LEFT,
+    )
+    background = blocks.ChoiceBlock(
+        required=True,
+        choices=StoryBackground.choices,
+        default=StoryBackground.LIGHT,
+    )
+    link_text = blocks.CharBlock()
+
+    class Meta:
+        icon = "snippet"
+        template = "patterns/molecules/streamfield/blocks/top_story_block.html"
+
+
 class FeaturedStoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(required=False)
