@@ -355,11 +355,27 @@ class BasePage(SocialFields, ListingFields, Page):
         ], "Chatbot")
     ]
 
+    custom_footer = models.ForeignKey(
+        "irelandie_navigation.CustomFooter",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+
+    custom_footer_panel = [
+        SnippetChooserPanel("custom_footer")
+    ]
+
     class Meta:
         abstract = True
 
     promote_panels = (
-        Page.promote_panels + SocialFields.promote_panels + ListingFields.promote_panels + webchat_panel
+        Page.promote_panels +
+        SocialFields.promote_panels +
+        ListingFields.promote_panels +
+        webchat_panel +
+        custom_footer_panel
     )
     search_fields = Page.search_fields + [
         index.SearchField("listing_title"),

@@ -44,29 +44,13 @@
             {% endif %}
         </div>
 
-        {% comment %} Customisable Footer Columns {% endcomment %}
-        {% comment %}
-            This is for customised footer links on a specific page,
-            to appear as a separate row of columns above the global footer links
-        {% endcomment %}
+        {% if page.custom_footer %}
         <div class="footer__nav-container">
-            <nav class="grid grid--narrow" aria-label="{{ page_title }} Footer Navigation">
-                {% for column in customfooternav %}
-                    <div class="footer__column">
-                        {% if column.heading %}
-                            <p class="heading--5">{{ column.heading }}</p>
-                        {% endif %}
-                        <ul class="footercolumn-nav">
-                            {% for item in column.links %}
-                                <li class="footercolumn-nav__item">
-                                    {% include_block item with nav_type="footercolumn-nav" %}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                {% endfor %}
-            </nav>
+        <nav class="grid grid--narrow" aria-label="{{ page_title }} Footer Navigation">
+            {{ page.specific.custom_footer.links }}
+        </nav>
         </div>
+        {% endif %}
 
         {% comment %} Global Footer {% endcomment %}
         <div class="footer__nav-container">
