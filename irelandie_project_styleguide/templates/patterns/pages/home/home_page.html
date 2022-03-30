@@ -2,7 +2,7 @@
 {% load wagtailcore_tags wagtailimages_tags static %}
 
 {% block main %}
-    {{ page.secondary_call_to_action }}
+    {% include_block page.secondary_call_to_action %}
     {% include_block page.top_story %}
     {% include "patterns/molecules/freeform-components/freeform_components.html" %}
 {% endblock %}
