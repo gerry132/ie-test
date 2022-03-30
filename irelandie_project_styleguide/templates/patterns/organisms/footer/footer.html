@@ -47,7 +47,7 @@
         {% if page.custom_footer %}
         <div class="footer__nav-container">
         <nav class="grid grid--narrow" aria-label="{{ page_title }} Footer Navigation">
-            {{ page.specific.custom_footer.links }}
+            {% include_block page.specific.custom_footer.links %}
         </nav>
         </div>
         {% endif %}
