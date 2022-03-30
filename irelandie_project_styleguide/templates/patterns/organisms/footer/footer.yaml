@@ -2,10 +2,10 @@ context:
   footer:
     logo: true
     social_links:
-      youtube_user: https://www.youtube.com/
-      linkedin_profile: linkedin_profile
-      footer_app_id: 1234
-      twitter_handle: twitter_handle
+      youtube_user: some-profile
+      linkedin_profile: some-profile
+      facebook_app_id: some-profile
+      twitter_handle: some-profile
 
 
 tags:
