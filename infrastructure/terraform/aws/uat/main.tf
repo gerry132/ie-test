@@ -32,6 +32,7 @@ locals {
   region                        = "eu-west-1"
   # DB
   db_instance_class             = "db.m6g.large"
+  db_engine_version             = "12.8"
   # CACHE
   cache_instance_class          = "cache.t3.medium"
   # ECS
@@ -623,6 +624,7 @@ resource "aws_lb_listener" "project_443" {
   load_balancer_arn     = aws_lb.default.arn
   port                  = 443
   protocol              = "HTTPS"
+  ssl_policy            = "ELBSecurityPolicy-TLS-1-2-2017-01"
   certificate_arn       = aws_acm_certificate.project.arn
 
   default_action {
@@ -654,6 +656,7 @@ resource "aws_lb_listener" "public_sites_443" {
   load_balancer_arn     = aws_lb.public_sites.arn
   port                  = 443
   protocol              = "HTTPS"
+  ssl_policy            = "ELBSecurityPolicy-TLS-1-2-2017-01"
   certificate_arn       = aws_acm_certificate.project.arn
 
   default_action {
@@ -799,6 +802,7 @@ module "database" {
   db_username           = "${local.environment_name}_ireland_ie_username"
   db_password           = data.aws_ssm_parameter.random_db_password.value
   db_instance_class     = local.db_instance_class
+  db_engine_version     = local.db_engine_version 
   name                  = "${local.environment_name}-db"
   subnets               = module.network.public_subnet_ids
   security_group_ids    = [aws_security_group.db.id]
