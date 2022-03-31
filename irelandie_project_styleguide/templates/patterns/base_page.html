@@ -74,7 +74,7 @@
 
 
 {% block header %}
-    <section aria-label="Skip to main content">
+    <section aria-label="{% trans 'Skip to main content' %}">
         {% include "patterns/molecules/skip-link/skip-link.html" %}
     </section>
     
@@ -158,7 +158,7 @@
                             </form>
                         <!-- End of the locale selector -->
 
-                        <button class="header__search-toggle" aria-label="search" data-toggle-search>
+                        <button class="header__search-toggle" aria-label="{% trans 'Search' %}" data-toggle-search>
                             <svg class="header__search-icon" aria-hidden="true">
                                 <use href="#magnifying-glass"></use>
                             </svg>

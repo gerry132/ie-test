@@ -1,5 +1,5 @@
 {% load wagtailcore_tags i18n %}
-<nav aria-label="Primary">
+<nav aria-label="{% trans 'Primary navigation' %}">
      <ul class="primary-nav" data-primary-nav>
         {% for link in primarynav %}
             {% with children=link.value.page.get_children.live.public.in_menu %}

@@ -37,7 +37,7 @@
             </div>
             {% if page.hero_video %}
                 <div class="hero__video-control-container">
-                    <button class="hero__video-control-toggle" aria-label="Toggle video playback" data-video-toggle>
+                    <button class="hero__video-control-toggle" aria-label="{% trans 'Toggle video playback' %}" data-video-toggle>
                         {% include "patterns/atoms/icons/icon.html" with name="play" classname="hero__video-control-icon hero__video-control-icon--play" %}
                         {% include "patterns/atoms/icons/icon.html" with name="pause" classname="hero__video-control-icon hero__video-control-icon--pause" %}
                     </button>
