@@ -9,7 +9,8 @@ from irelandie_navigation.models import (
     FooterNavigation,
     PrimaryNavigation,
     SecondaryNavigation,
-    SiteSettings
+    SiteSettings,
+    CustomHeader,
 )
 from irelandie_utils.models import SocialMediaSettings
 
@@ -239,5 +240,44 @@ def custom_footer_settings(context, page):
         "youtube_user": youtube_user,
         "linkedin_profile": linkedin_profile,
         "show_social_media": show_social_media,
+        "links": links,
+    }
+
+
+# CUSTOM HEADER SETTINGS
+# ----------------------------------------------------------------------
+# The data for the custom header navigation is managed in the CustomHeader
+# snippets model. It's an optional field on pages via a snippet chooser in the
+# promote tab.
+# The purpose of this template tag is to reduce the amount of if: elif: else: conditionals
+# needed in the footer.html template.
+
+@register.simple_tag(takes_context=True)
+def custom_header_settings(context, page):
+    request = context["request"]
+
+    site_settings = SiteSettings.for_request(request)
+
+    try:
+        custom_header = CustomHeader.objects.get(id=page.custom_header.id)
+    except AttributeError:
+        custom_header = None
+
+    if custom_header:
+        # if custom header is set for the page, use the values from it if they are set
+        # otherwise use the site settings values
+        logo = custom_header.logo or site_settings.site_logo
+        logo_alt = custom_header.logo_alt or site_settings.site_logo_alt
+        links = custom_header.links
+    else:
+        # no custom header is set for the page, use the site settings
+        # if the site settings has values for the fields
+        logo = site_settings.site_logo
+        logo_alt = site_settings.site_logo_alt
+        links = None
+
+    return {
+        "logo": logo,
+        "logo_alt": logo_alt,
         "links": links,
     }
