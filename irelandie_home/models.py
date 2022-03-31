@@ -18,6 +18,9 @@ class HomePage(FreeFormPageBase):
             ("story", blocks.TopStoryBlock()),
         ],
         blank=True,
+        block_counts={
+            "story": {"max_num": 1},
+        }
     )
 
     promote_panels = FreeFormPageBase.promote_panels + [
