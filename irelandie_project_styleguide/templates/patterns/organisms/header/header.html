@@ -1,4 +1,4 @@
-{% load static wagtailcore_tags wagtailimages_tags navigation_tags util_tags i18n  %}
+{% load static wagtailcore_tags wagtailimages_tags navigation_tags i18n  %}
 
 {% comment %}
     Add header--condensed class if override menu exists on a page
@@ -6,14 +6,12 @@
     Note: This is only implemented on the CountyGroupPageIndex at the moment
 {% endcomment %}
 <header>
-    <div class="header{% if page.override_primary_navigation %} header--condensed{% endif %}"{% if not page.hero_image and not page.hero_video %} style="background-color: rgba(0,77,70,1)"{% endif %}>
+    <div class="header {% if custom_header.links %}header--condensed{% endif %}" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
         <div class="wrapper wrapper--large">
             <div class="header__container">
                 {% comment %} Check if global or page specific logo is set, otherwise show default {% endcomment %}
-                {% if header.logo %}
-                    {% image header.logo width-200 class="header__logo" alt=header.logo.alt %}
-                {% elif settings.utils.logo %}
-                    {% image settings.utils.logo width-200 class="header__logo" alt=header.logo.alt %}
+                {% if custom_header.logo %}
+                    {% image custom_header.logo width-200 class="header__logo" alt=custom_header.logo.alt %}
                 {% else %}
                     <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">
                         {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
@@ -110,25 +108,59 @@
 
         Note: This is only implemented on the CountyGroupPageIndex at the moment
     {% endcomment %}
-    {% if page.override_primary_navigation %}
-        <div class="header header--override">
+    {% if custom_header.links %}
+        <div class="header header--override" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
             <div class="wrapper wrapper--large">
                 <div class="header__container">
-                    <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">
-                        {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo" %}
-                    </a>
+                    {% if custom_header.logo %}
+                        {% image custom_header.logo width-200 class="header__logo" alt=custom_header.logo.alt %}
+                    {% else %}
+                        <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">
+                            {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
+                        </a>
+                    {% endif %}
 
                     <div class="header__menus header__menus--desktop">
                         <div data-desktop-menu>
-                            {% custom_primary_navigation page %}
+                        <nav>
+                            <ul class="custom-header-nav">
+                                {% for link in custom_header.links %}
+                                <li class="custom-header-nav__item">
+                                    {{ link }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </nav>
                         </div>
                     </div>
 
                     <div class="header__menus header__menus--mobile" data-mobile-menu>
-                        {% custom_primary_navigation page %}
+                        <nav>
+                        <ul class="custom-header-nav--mobile">
+                            {% for link in custom_header.links %}
+                            <li class="custom-header-nav__item">
+                                {{ link }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
         </div>
     {% endif %}
 </header>
+
+{% comment %} temporary styles {% endcomment %}
+<style>
+    .custom-header-nav {
+        display: flex;
+        width: 100%;
+    }
+    .custom-header-nav__item {
+        padding-left: 20px;
+    }
+    .custom-header-nav__item a {
+        color: #fff;
+    }
+</style>
