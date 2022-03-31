@@ -25,7 +25,6 @@ from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
-from irelandie_utils import blocks as custom_blocks
 from irelandie_utils.blocks import ArticleStoryBlock
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
@@ -299,12 +298,6 @@ class SocialMediaSettings(BaseSetting):
         blank=True,
         default="Ireland.ie",
         help_text="Site name, used by Open Graph.",
-    )
-    # TODO: This may no longer be used
-    social_links = StreamField(
-        [("profile", custom_blocks.SocialLinkBlock())],
-        blank=True,
-        help_text="List of links to social media profiles",
     )
 
     @property
