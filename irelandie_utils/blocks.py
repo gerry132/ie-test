@@ -565,7 +565,11 @@ class ArticleStoryBlock(blocks.StreamBlock):
 
     person = PersonBlock(group="Module")
 
-    html = blocks.RawHTMLBlock(group="HTML")
+    html = blocks.RawHTMLBlock(
+        group="HTML",
+        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
+    )
+    role = RoleBlock(group="HTML")
     table = TableBlock(group="HTML")
     video = CustomVideoChooserBlock(group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
