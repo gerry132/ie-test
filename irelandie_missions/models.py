@@ -149,8 +149,9 @@ class MissionSearchPage(BasePage):
         return context
 
 
-class ConsulatePage(FreeFormPageBase):
-    template = "patterns/pages/missions/consulate_page.html"
+class EmbassyPage(FreeFormPageBase):
+    template = "patterns/pages/missions/embassy_page.html"
+
     parent_page_types = [
         "irelandie_missions.CountryPage",
     ]
@@ -187,4 +188,4 @@ class ConsulatePage(FreeFormPageBase):
     ])
 
     class Meta:
-        verbose_name = "Consulate Page"
+        verbose_name = "Embassy Page"
