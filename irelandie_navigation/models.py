@@ -13,6 +13,8 @@ from wagtail.snippets.models import register_snippet
 
 from .blocks import LinkBlock, LinkBlockExtended, LinkColumnWithHeader, SecondaryNavLinkColumnWithHeader
 
+from irelandie_navigation.mixins import SocialMediaFieldsMixin
+
 IMAGE_MODEL = str(dj_settings.WAGTAILIMAGES_IMAGE_MODEL)
 
 
@@ -166,7 +168,7 @@ class SecondaryNavigation(TranslatableMixin):
 
 
 @register_snippet
-class CustomFooter(TranslatableMixin):
+class CustomFooter(SocialMediaFieldsMixin, TranslatableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
     name = models.CharField(
         max_length=255,
@@ -174,20 +176,7 @@ class CustomFooter(TranslatableMixin):
         help_text="Internal name for this navigation, it's not displayed to a site user.",
         verbose_name=_("Name"),
     )
-    twitter_handle = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text="Your Twitter username without the @, e.g. katyperry",
-    )
-    facebook_app_id = models.CharField(
-        max_length=255, blank=True, help_text="Your Facebook app ID."
-    )
-    youtube_user = models.CharField(
-        max_length=255, blank=True, help_text="Your YouTube username."
-    )
-    linkedin_profile = models.CharField(
-        max_length=255, blank=True, help_text="Your LinkedIn profile URL."
-    )
+    # social media fields come from the SocialMediaFieldsMixin
     links = StreamField(
         [("link", LinkBlockExtended())],
         blank=True,

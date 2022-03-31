@@ -25,6 +25,7 @@ from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
+from irelandie_navigation.mixins import SocialMediaFieldsMixin
 from irelandie_utils.blocks import ArticleStoryBlock
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
@@ -273,21 +274,8 @@ class CallToActionSnippet(models.Model):
 
 
 @register_setting
-class SocialMediaSettings(BaseSetting):
-    twitter_handle = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text="Your Twitter username without the @, e.g. katyperry",
-    )
-    facebook_app_id = models.CharField(
-        max_length=255, blank=True, help_text="Your Facebook app ID."
-    )
-    youtube_user = models.CharField(
-        max_length=255, blank=True, help_text="Your YouTube username."
-    )
-    linkedin_profile = models.CharField(
-        max_length=255, blank=True, help_text="Your LinkedIn profile URL."
-    )
+class SocialMediaSettings(SocialMediaFieldsMixin, BaseSetting):
+    # social media fields come from the SocialMediaFieldsMixin
     default_sharing_text = models.CharField(
         max_length=255,
         blank=True,
