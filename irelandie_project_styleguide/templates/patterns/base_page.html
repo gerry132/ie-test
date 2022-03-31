@@ -145,8 +145,8 @@
                                 <div class="header__language-switcher">
                                     <label for="language-switcher" class="u-sr-only">{% trans 'Select default language' %}</label>
                                     <select name="language" id="language-switcher"
-                                            onchange="this.form.submit()"
-                                            class="language-switcher">
+                                        onchange="this.form.submit()"
+                                        class="language-switcher">
                                         {% get_current_language as language_code %}
                                         {% for code, name in local_languages %}
                                             <option value="{{ code }}"{% if code == language_code %} selected{% endif %}>
