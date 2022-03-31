@@ -193,11 +193,48 @@ class CustomFooter(TranslatableMixin):
         blank=True,
         help_text=_("Single list of elements at the base of the page."),
     )
+    logo = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    logo_alt = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name=_("Logo Alt text"),
+        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+    )
+
+    panels = [
+        MultiFieldPanel([
+            ImageChooserPanel("logo"),
+            FieldPanel("logo_alt"),
+        ], heading="Logo"),
+        FieldPanel("name"),
+        FieldPanel("twitter_handle"),
+        FieldPanel("facebook_app_id"),
+        FieldPanel("youtube_user"),
+        FieldPanel("linkedin_profile"),
+        StreamFieldPanel("links"),
+    ]
 
     def __str__(self):
         return self.name
 
     class Meta:
         verbose_name = _("Custom Footer")
-        verbose_name_plural = _("Custom Footer")
+        verbose_name_plural = _("Custom Footers")
         unique_together = ("translation_key", "locale")
+
+    @property
+    def show_custom_social_links(self):
+        return any(
+            [
+                self.twitter_handle,
+                self.facebook_app_id,
+                self.youtube_user,
+                self.linkedin_profile,
+            ]
+        )

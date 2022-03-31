@@ -3,40 +3,38 @@
 <footer class="footer">
     <div class="wrapper wrapper--large">
         <div class="footer__header">
-            {% comment %} Check if global or page specific logo is set, otherwise show default {% endcomment %}
-            {% if footer.logo %}
-                {% image footer.logo width-200 class="footer__logo" alt=footer.logo.alt %}
-            {% elif settings.utils.logo %}
-                {% image settings.utils.logo width-200 class="footer__logo" alt=footer.logo.alt %}
+
+            {% if custom_footer.logo %}
+                {% image custom_footer.logo width-200 class="footer__logo" alt=custom_footer.logo_alt %}
             {% else %}
                 {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="footer__logo footer__logo--svg" %}
             {% endif %}
 
-            {% if settings.utils.SocialMediaSettings.show_social_links %}
+            {% if custom_footer.show_social_media %}
             <div class="footer__social-links">
                 <p class="footer__heading">{% trans 'Follow us' %}</p>
 
                 {% comment %} Check if global or page specific social media is set, then show the most relevant {% endcomment %}
-                {% if settings.utils.SocialMediaSettings.youtube_user or footer.social_links.youtube_user %}
-                    <a href="https://youtube.com/user/{% firstof footer.social_links.youtube_user settings.utils.SocialMediaSettings.youtube_user %}" class="footer__social-link" aria-label="{% trans 'Find us on Youtube' %}">
+                {% if custom_footer.youtube_user %}
+                    <a href="https://youtube.com/user/{{ custom_footer.youtube_user }}" class="footer__social-link" aria-label="{% trans 'Find us on Youtube' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="youtube" classname="footer__social-icon" %}
                     </a>
                 {% endif %}
 
-                {% if settings.utils.SocialMediaSettings.linkedin_profile or footer.social_links.linkedin_profile %}
-                    <a href="https://twitter.com/{% firstof footer.social_links.linkedin_profile settings.utils.SocialMediaSettings.linkedin_profile %}" class="footer__social-link" aria-label="{% trans 'Connect on Linkedin' %}">
+                {% if custom_footer.linkedin_profile %}
+                    <a href="https://twitter.com/{{ custom_footer.linkedin_profile }}" class="footer__social-link" aria-label="{% trans 'Connect on Linkedin' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="linkedin" classname="footer__social-icon" %}
                     </a>
                 {% endif %}
 
-                {% if settings.utils.SocialMediaSettings.facebook_app_id or footer.social_links.facebook_app_id %}
-                    <a href="https://www.facebook.com/{% firstof footer.social_links.facebook_app_id settings.utils.SocialMediaSettings.facebook_app_id %}" class="footer__social-link" aria-label="{% trans 'Find us on Facebook' %}">
+                {% if custom_footer.facebook_app_id %}
+                    <a href="https://www.facebook.com/{{ custom_footer.facebook_app_id }}" class="footer__social-link" aria-label="{% trans 'Find us on Facebook' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="facebook" classname="footer__social-icon" %}
                     </a>
                 {% endif %}
 
-                {% if settings.utils.SocialMediaSettings.twitter_handle or footer.social_links.twitter_handle %}
-                    <a href="https://twitter.com/{% firstof footer.social_links.twitter_handle settings.utils.SocialMediaSettings.twitter_handle %}" class="footer__social-link" aria-label="{% trans 'Follow us on Twitter' %}">
+                {% if custom_footer.twitter_handle %}
+                    <a href="https://twitter.com/{{ custom_footer.twitter_handle }}" class="footer__social-link" aria-label="{% trans 'Follow us on Twitter' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="twitter" classname="footer__social-icon" %}
                     </a>
                 {% endif %}
@@ -44,11 +42,11 @@
             {% endif %}
         </div>
 
-        {% if page.custom_footer %}
+        {% if custom_footer.links %}
         <div class="footer__nav-container">
-        <nav class="grid grid--narrow" aria-label="{{ page_title }} Footer Navigation">
-            {% include_block page.specific.custom_footer.links %}
-        </nav>
+            <nav class="grid grid--narrow" aria-label="{{ page_title }} Footer Navigation">
+                {% include_block page.specific.custom_footer.links %}
+            </nav>
         </div>
         {% endif %}
 

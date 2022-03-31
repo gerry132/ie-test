@@ -1,9 +1,17 @@
 # -*- coding: utf-8 -*-
+
 from functools import lru_cache
 from django import template
 from wagtail.core.models import Locale
 
-from irelandie_navigation.models import FooterNavigation, PrimaryNavigation, SecondaryNavigation
+from irelandie_navigation.models import (
+    CustomFooter,
+    FooterNavigation,
+    PrimaryNavigation,
+    SecondaryNavigation,
+    SiteSettings
+)
+from irelandie_utils.models import SocialMediaSettings
 
 register = template.Library()
 
@@ -162,4 +170,74 @@ def custom_primary_navigation(context, current_page):
     return {
         "customnav": current_page.custom_primary_navigation,
         "request": context["request"],
+    }
+
+
+# CUSTOM FOOTER SETTINGS
+# ----------------------------------------------------------------------
+# The data for the custom footer navigation is managed in the CustomFooter
+# snippets model. It's an optional field on pages via a snippet chooser in the
+# promote tab.
+# The purpose of this template tag is to reduce the amount of if: elif: else: conditionals
+# needed in the footer.html template.
+
+@register.simple_tag(takes_context=True)
+def custom_footer_settings(context, page):
+    request = context["request"]
+
+    site_settings = SiteSettings.for_request(request)
+    footer_social_media = SocialMediaSettings.for_request(request)
+
+    try:
+        custom_footer = CustomFooter.objects.get(id=page.custom_footer.id)
+    except AttributeError:
+        custom_footer = None
+
+    if custom_footer:
+        # if custom footer is set for the page, use the values from it if they are set
+        # otherwise use the site settings values
+        logo = custom_footer.logo or site_settings.site_logo
+        logo_alt = custom_footer.logo_alt or site_settings.site_logo_alt
+        twitter_handle = custom_footer.twitter_handle or footer_social_media.twitter_handle
+        facebook_app_id = custom_footer.facebook_app_id or footer_social_media.facebook_app_id
+        youtube_user = custom_footer.youtube_user or footer_social_media.youtube_user
+        linkedin_profile = custom_footer.linkedin_profile or footer_social_media.linkedin_profile
+        show_social_media = any(
+            [
+                twitter_handle,
+                facebook_app_id,
+                youtube_user,
+                linkedin_profile,
+            ]
+        )
+        links = custom_footer.links
+
+    else:
+        # no custom footer is set for the page, use the site settings
+        # if thr site settings has values for the fields
+        logo = site_settings.site_logo
+        logo_alt = site_settings.site_logo_alt
+        twitter_handle = footer_social_media.twitter_handle
+        facebook_app_id = footer_social_media.facebook_app_id
+        youtube_user = footer_social_media.youtube_user
+        linkedin_profile = footer_social_media.linkedin_profile
+        show_social_media = any(
+            [
+                twitter_handle,
+                facebook_app_id,
+                youtube_user,
+                linkedin_profile,
+            ]
+        )
+        links = None
+
+    return {
+        "logo": logo,
+        "logo_alt": logo_alt,
+        "twitter_handle": twitter_handle,
+        "facebook_app_id": facebook_app_id,
+        "youtube_user": youtube_user,
+        "linkedin_profile": linkedin_profile,
+        "show_social_media": show_social_media,
+        "links": links,
     }

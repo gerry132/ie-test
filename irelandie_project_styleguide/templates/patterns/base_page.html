@@ -211,7 +211,8 @@
 {% endblock header %}
 
 {% block footer %}
-    {% include "patterns/organisms/footer/footer.html" %}
+    {% custom_footer_settings page as custom_footer_settings %}
+    {% include "patterns/organisms/footer/footer.html" with custom_footer=custom_footer_settings %}
 {% endblock footer %}
 
 {% block web_chat_widget %}
