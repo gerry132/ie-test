@@ -23,7 +23,7 @@ class SiteSettings(BaseSetting, ClusterableModel):
     site_logo = models.ForeignKey(
         IMAGE_MODEL,
         null=True,
-        blank=False,
+        blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
     )
