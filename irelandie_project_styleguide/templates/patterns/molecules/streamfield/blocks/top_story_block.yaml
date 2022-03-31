@@ -7,7 +7,7 @@ context:
     alignment: left
     background: light
     link_text: Find out more
-  link_url: www.example.com
+    link_url: www.example.com
 
 
 tags:
