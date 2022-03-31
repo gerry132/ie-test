@@ -337,6 +337,18 @@ class BasePage(SocialFields, ListingFields, Page):
         SnippetChooserPanel("custom_footer")
     ]
 
+    custom_header = models.ForeignKey(
+        "irelandie_navigation.CustomHeader",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+
+    custom_header_panel = [
+        SnippetChooserPanel("custom_header")
+    ]
+
     class Meta:
         abstract = True
 
@@ -345,8 +357,10 @@ class BasePage(SocialFields, ListingFields, Page):
         SocialFields.promote_panels +
         ListingFields.promote_panels +
         webchat_panel +
-        custom_footer_panel
+        custom_footer_panel +
+        custom_header_panel
     )
+
     search_fields = Page.search_fields + [
         index.SearchField("listing_title"),
         index.SearchField("listing_summary"),
