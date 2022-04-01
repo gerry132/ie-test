@@ -13,7 +13,7 @@
         el.setAttribute("style", "position: absolute;top: 0;left: 0;margin-left: 100%;");
     });
   </script>
-  
+
 {% endblock extra_js %}
 
 
@@ -23,7 +23,7 @@
         <div class="intro">
             <div class="container">
                 <h1 class="intro__title">{{ page.title }}</h1>
-                <p class="intro__description">{{ page.introduction }}</p>
+                <p class="intro__description">{{ page.introduction|richtext }}</p>
             </div>
         </div>
 
