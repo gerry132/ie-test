@@ -160,6 +160,9 @@ class MissionSearchPage(BasePage):
 
 class ConsulatePage(FreeFormPageBase):
     template = "patterns/pages/missions/consulate_page.html"
+
+    body = StreamField(blocks.FreeFormBlocksBase(), blank=True)
+
     parent_page_types = [
         "irelandie_missions.CountryPage",
     ]
@@ -201,6 +204,8 @@ class ConsulatePage(FreeFormPageBase):
 
 class EmbassyPage(FreeFormPageBase):
     template = "patterns/pages/missions/embassy_page.html"
+
+    body = StreamField(blocks.FreeFormBlocksBase(), blank=True)
 
     parent_page_types = [
         "irelandie_missions.CountryPage",

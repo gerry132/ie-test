@@ -659,7 +659,18 @@ class AccordionBlock(blocks.StructBlock):
         template = "patterns/molecules/accordion/accordion.html"
 
 
-class FreeFormBlocks(blocks.StreamBlock):
+class FreeFormBlocksBase(blocks.StreamBlock):
+    pinned_stories = PinnedStoriesBlock(group="Module")
+    stories = StoryBlock(group="Module")
+
+    youtube_video = YoutubeVideoBlock(group="HTML")
+    video = CustomVideoChooserBlock(group="HTML")
+    youtube_video = YoutubeVideoBlock(group="HTML")
+
+    person = PersonBlock(group="Snippets")
+
+
+class FreeFormBlocks(FreeFormBlocksBase):
     heading = HeadingBlock(group="Base")
     rich_text = RichTextBlock(
         features=["h3", "blockquote", "bold", "link", "document-link", "ul"],
@@ -674,12 +685,5 @@ class FreeFormBlocks(blocks.StreamBlock):
     featured_articles = FeaturedArticlesBlock(group="Module")
     featured_story = FeaturedStoryBlock(group="Module")
     logos = LogoCardsBlock(group="Module")
-    pinned_stories = PinnedStoriesBlock(group="Module")
-    stories = StoryBlock(group="Module")
 
     table = TableBlock(group="HTML")
-    youtube_video = YoutubeVideoBlock(group="HTML")
-    video = CustomVideoChooserBlock(group="HTML")
-    youtube_video = YoutubeVideoBlock(group="HTML")
-
-    person = PersonBlock(group="Snippets")
