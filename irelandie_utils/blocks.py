@@ -19,8 +19,8 @@ class BaseBlockLinkValidation(blocks.StructBlock):
     def clean(self, value):
         errors = {}
         values = [value["page"], value["url"]]
-        # Set only a Page OR a URL
-        if sum(value is not None and value != "" for value in values) != 1:
+        # Set only a Page OR a URL or both can be blank
+        if all(values):
             message = "Please choose only a page or set a URL."
 
             errors["page"] = ErrorList([message])
@@ -40,10 +40,14 @@ class BaseBlockLinkContext(blocks.StructBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
         try:
-            # A struct block may not have a url field but always has a page field
-            context["link_url"] = value["url"] or value["page"].url
+            # A block may not have a page or url field
+            if value["url"]:
+                context["link_url"] = value["url"]
+            elif value["page"]:
+                context["link_url"] = value["page"].url
+
         except KeyError:
-            context["link_url"] = value["page"].url
+            context["link_url"] = None
 
         context["link_title"] = value["title"] or value["page"].title
         return context
@@ -76,7 +80,7 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         template = "patterns/molecules/streamfield/blocks/story_link_block.html"
 
 
-class StoryBlock(blocks.StructBlock):
+class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
         required=False,
@@ -113,30 +117,6 @@ class StoryBlock(blocks.StructBlock):
     class Meta:
         icon = "snippet"
         template = "patterns/molecules/streamfield/blocks/story_block.html"
-
-    def clean(self, value):
-        errors = {}
-        values = [value["page"], value["url"]]
-        # Set only a Page OR a URL
-        if sum(value is not None and value != "" for value in values) != 1:
-            message = "Please choose only a page or set a URL."
-
-            errors["page"] = ErrorList([message])
-            errors["url"] = ErrorList([message])
-
-        # A URL must have title
-        if value["url"] and not value["title"]:
-            errors["title"] = ErrorList(["Please set a title for the URL"])
-
-        if errors:
-            raise StructBlockValidationError(errors)
-
-        return super().clean(value)
-
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context=parent_context)
-        context["link_url"] = value["url"] or value["page"].url
-        return context
 
 
 class TopStoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
