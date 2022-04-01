@@ -13,4 +13,14 @@
             </div>
         </div>
     </div>
+
+    {% if page.twitter_feed %}
+        {% include "patterns/molecules/streamfield/blocks/twitter_embed.html" with value=page.twitter_feed %}
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    {% if page.twitter_feed %}
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    {% endif %}
 {% endblock %}

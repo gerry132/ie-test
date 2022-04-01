@@ -75,12 +75,21 @@ class CountryPage(HeroPage):
         null=True,
     )
 
+    twitter_feed = models.ForeignKey(
+        "utils.TwitterEmbed",
+        on_delete=models.SET_NULL,
+        related_name="+",
+        null=True,
+        blank=True,
+    )
+
     content_panels = HeroPage.content_panels + [
         SnippetChooserPanel("region"),
         StreamFieldPanel("stories"),
         StreamFieldPanel("embeds"),
         StreamFieldPanel("featured_stories"),
         StreamFieldPanel("featured_embassies"),
+        SnippetChooserPanel("twitter_feed"),
     ]
 
     edit_handler = TabbedInterface([
