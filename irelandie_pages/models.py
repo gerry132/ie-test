@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+from django.db import models
+
 from wagtail.core.fields import StreamField
 from wagtail.admin.edit_handlers import TabbedInterface, ObjectList, StreamFieldPanel
+from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
 from irelandie_utils.models import HeroPage
 from irelandie_utils.blocks import FreeFormBlocks
@@ -28,8 +31,20 @@ class FreeFormPageBase(HeroPage):
 class FreeFormPage(FreeFormPageBase):
     template = "patterns/pages/irelandie_pages/free_form_page.html"
 
+    twitter_feed = models.ForeignKey(
+        "utils.TwitterEmbed",
+        on_delete=models.SET_NULL,
+        related_name="+",
+        null=True,
+        blank=True,
+    )
+
+    content_panels = FreeFormPageBase.content_panels + [
+        SnippetChooserPanel("twitter_feed"),
+    ]
+
     edit_handler = TabbedInterface([
-        ObjectList(FreeFormPageBase.content_panels, heading='Content'),
+        ObjectList(content_panels, heading='Content'),
         ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
         ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
         ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
