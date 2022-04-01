@@ -61,3 +61,14 @@
         margin-bottom: 0;
     }
 }
+
+// There are two types of featured blocks:
+// one is an anchor link, and the other is a div.
+// Avoid the hover effect on a div.
+div.featured-block {
+    &:hover {
+        .featured-block__content {
+            background-color: rgba($color--primary, 0.65);
+        }
+    }
+}
