@@ -77,7 +77,7 @@
     <section aria-label="{% trans 'Skip to main content' %}">
         {% include "patterns/molecules/skip-link/skip-link.html" %}
     </section>
-    
+
     <section aria-label="{% trans 'Search' %}">
         <div class="header__search{% if page.override_primary_navigation %} header__search--condensed{% endif %}" data-search-dropdown>
             <div class="wrapper wrapper--large">
@@ -86,135 +86,7 @@
         </div>
     </section>
 
-    {% comment %}
-        Add header--condensed class if override menu exists on a page
-
-        Note: This is only implemented on the CountyGroupPageIndex at the moment
-    {% endcomment %}
-    <header>
-        <div class="header{% if page.override_primary_navigation %} header--condensed{% endif %}"{% if not page.hero_image and not page.hero_video %} style="background-color: rgba(0,77,70,1)"{% endif %}>
-            <div class="wrapper wrapper--large">
-                <div class="header__container">
-                    {% comment %} Check if global or page specific logo is set, otherwise show default {% endcomment %}
-                    {% if header.logo %}
-                        {% image header.logo width-200 class="header__logo" alt=header.logo.alt %}
-                    {% elif settings.utils.logo %}
-                        {% image settings.utils.logo width-200 class="header__logo" alt=header.logo.alt %}
-                    {% else %}
-                        <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">
-                            {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
-                        </a>
-                    {% endif %}
-
-                    <div class="header__menus header__menus--desktop">
-                        <div data-desktop-menu>
-                            {% primarynav %}
-                        </div>
-                    </div>
-
-                    <div class="header__menus header__menus--mobile" data-mobile-menu>
-                        {% comment %}
-                        This is called mobile nav, but actually gets shown at all screen sizes.
-                        Only shows the extended primary nav on desktop, then combines all 3 navs (if available) on mobile
-                        {% endcomment %}
-
-                        <div class="wrapper wrapper--large wrapper--mobile-menu">
-                            <div class="header__menu header__menu--primary">
-                                {% primarynav %}
-                            </div>
-
-                            {% has_secondary_nav as shownav %}
-                            {% if shownav %}
-                            <div class="header__menu header__menu--extended">
-                                {% comment %} Secondary nav/burger nav {% endcomment %}
-                                {% secondarynav %}
-                            </div>
-                            {% endif %}
-
-                            {% comment %}
-                                Show override nav alongside primary nav in dropdown if available
-
-                                Note: This is only implemented on the CountyGroupPageIndex at the moment
-                            {% endcomment %}
-                            {% if page.override_primary_navigation %}
-                            <div class="header__menu header__menu--override">
-                                {% custom_primary_navigation page %}
-                            </div>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="header__menu-items">
-                        <!-- Start of the locale selector -->
-                            <form action="{% url 'set_language' %}" method="post">
-                                {% csrf_token %}
-                                <input name="next" type="hidden" value="{{ request.get_full_path }}">
-                                <div class="header__language-switcher">
-                                    <label for="language-switcher" class="u-sr-only">{% trans 'Select default language' %}</label>
-                                    <select name="language" id="language-switcher"
-                                        onchange="this.form.submit()"
-                                        class="language-switcher">
-                                        {% get_current_language as language_code %}
-                                        {% for code, name in local_languages %}
-                                            <option value="{{ code }}"{% if code == language_code %} selected{% endif %}>
-                                                {{ name }}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </form>
-                        <!-- End of the locale selector -->
-
-                        <button class="header__search-toggle" aria-label="{% trans 'Search' %}" data-toggle-search>
-                            <svg class="header__search-icon" aria-hidden="true">
-                                <use href="#magnifying-glass"></use>
-                            </svg>
-
-                            <svg class="header__search-icon header__search-icon--close" aria-hidden="true">
-                                <use xlink:href="#close"></use>
-                            </svg>
-                        </button>
-
-                        <div class="header__menu-toggle{% if shownav %} header__menu-toggle--desktop{% endif %}">
-                            <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-expanded="false" aria-label="{% trans 'Mobile menu toggle' %}">
-                                <span class="button-menu-toggle__line"></span>
-                                <span class="button-menu-toggle__line"></span>
-                                <span class="button-menu-toggle__line"></span>
-                                <span class="button-menu-toggle__line"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {% comment %}
-            Only show this override nav if available on the page
-
-            Note: This is only implemented on the CountyGroupPageIndex at the moment
-        {% endcomment %}
-        {% if page.override_primary_navigation %}
-            <div class="header header--override">
-                <div class="wrapper wrapper--large">
-                    <div class="header__container">
-                        <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">
-                            {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo" %}
-                        </a>
-
-                        <div class="header__menus header__menus--desktop">
-                            <div data-desktop-menu>
-                                {% custom_primary_navigation page %}
-                            </div>
-                        </div>
-
-                        <div class="header__menus header__menus--mobile" data-mobile-menu>
-                            {% custom_primary_navigation page %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-    </header>
+    {% include "patterns/organisms/header/header.html" %}
 {% endblock header %}
 
 {% block footer %}
