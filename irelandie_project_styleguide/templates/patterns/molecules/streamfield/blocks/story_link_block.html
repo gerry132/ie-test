@@ -1,7 +1,9 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
 <a href="{{ link_url }}" class="story-link">
+    {% if value.icon %}
     {% include "patterns/atoms/icons/icon.html" with name=value.icon classname="story-link__icon" %}
+    {% endif %}
     <span class="story-link__content">
         <span class="story-link__title">{{ link_title }}</span>
         <span class="story-link__summary">{{ value.summary }}</span>

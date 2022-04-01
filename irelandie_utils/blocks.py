@@ -53,12 +53,14 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     page = blocks.PageChooserBlock(required=False)
     icon = blocks.ChoiceBlock(
         choices=(
+            ("", "Choose and icon (optional)"),
             ("government-building", "Government Building"),
             ("money", "Money"),
             ("passport", "Passport"),
             ("plane", "Plane"),
             ("ticket", "Ticket"),
-        )
+        ),
+        required=False,
     )
     title = blocks.CharBlock(
         help_text="Leave blank to use the page's own title", required=False
