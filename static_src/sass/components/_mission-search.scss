@@ -19,6 +19,7 @@
     &__map {
         @include media-query(large){
             padding-left: 30px;
+            margin-top: -60px;
         }
     }
 }
