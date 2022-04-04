@@ -58,7 +58,6 @@ class BaseBlockLinkContext(blocks.StructBlock):
         except KeyError:
             context["link_title"] = None
 
-        # context["link_title"] = value["title"] or value["page"].title
         return context
 
 
