@@ -216,3 +216,50 @@ class CustomFooter(SocialMediaFieldsMixin, TranslatableMixin):
         verbose_name = _("Custom Footer")
         verbose_name_plural = _("Custom Footers")
         unique_together = ("translation_key", "locale")
+
+
+@register_snippet
+class CustomHeader(TranslatableMixin):
+    # Snippets model is used so the navigation can be localised with TranslatableMixin.
+    name = models.CharField(
+        max_length=255,
+        unique=True,
+        help_text="Internal name for this navigation, it's not displayed to a site user.",
+        verbose_name=_("Name"),
+    )
+    links = StreamField(
+        [("link", LinkBlock())],
+        blank=True,
+        help_text="Custom main site navigation",
+        verbose_name=_("Links"),
+    )
+    logo = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    logo_alt = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name=_("Logo Alt text"),
+        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+    )
+
+    panels = [
+        MultiFieldPanel([
+            ImageChooserPanel("logo"),
+            FieldPanel("logo_alt"),
+        ], heading="Logo"),
+        FieldPanel("name"),
+        StreamFieldPanel("links"),
+    ]
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _("Custom Header")
+        verbose_name_plural = _("Custom Headers")
+        unique_together = ("translation_key", "locale")
