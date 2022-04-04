@@ -69,6 +69,8 @@ class CampaignPage(HeroPage):
         max_num=1,
     )
 
+    # TODO: would benefit from it's own PinnedStoriesBlock to simplify the template.
+    # issue https://github.com/ogcio/ireland-ie-wagtail/issues/293
     pinned_stories = StreamField(
         [
             (
