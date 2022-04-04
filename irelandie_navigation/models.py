@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from django.conf import settings as dj_settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from modelcluster.models import ClusterableModel
@@ -9,13 +8,14 @@ from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core.fields import StreamField
 from wagtail.core.models import TranslatableMixin
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
 
 from .blocks import LinkBlock, LinkBlockExtended, LinkColumnWithHeader, SecondaryNavLinkColumnWithHeader
 
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
 
-IMAGE_MODEL = str(dj_settings.WAGTAILIMAGES_IMAGE_MODEL)
+IMAGE_MODEL = get_image_model_string()
 
 
 @register_setting(icon="list-ul")

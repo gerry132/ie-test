@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.conf import settings as dj_settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -20,6 +19,7 @@ from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Orderable, Page, TranslatableMixin
 from wagtail.core.query import PageQuerySet
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.images import get_image_model_string
 from wagtail.search import index
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
@@ -32,7 +32,7 @@ from irelandie_utils.query import order_by_pk_position
 
 SEARCH_DESCRIPTION_LABEL = "Meta description"  # NOTE changing this requires migrations
 
-IMAGE_MODEL = str(dj_settings.WAGTAILIMAGES_IMAGE_MODEL)
+IMAGE_MODEL = get_image_model_string()
 
 
 class LinkFields(models.Model):

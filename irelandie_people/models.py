@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.conf import settings as dj_settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalManyToManyField
@@ -13,13 +12,14 @@ from wagtail.admin.edit_handlers import (
 from wagtail.core.fields import StreamField, RichTextField
 from wagtail.core.models import Page, TranslatableMixin
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
 
 from irelandie_utils import blocks
 
 from .blocks import PersonPageSectionBlock, RolePageSectionBlock
 
-IMAGE_MODEL = str(dj_settings.WAGTAILIMAGES_IMAGE_MODEL)
+IMAGE_MODEL = get_image_model_string()
 
 
 class PersonPageIndex(Page, TranslatableMixin):
