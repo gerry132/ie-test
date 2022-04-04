@@ -14,7 +14,6 @@
             <div class="footer__social-links">
                 <p class="footer__heading">{% trans 'Follow us' %}</p>
 
-                {% comment %} Check if global or page specific social media is set, then show the most relevant {% endcomment %}
                 {% if custom_footer.youtube_user %}
                     <a href="https://youtube.com/user/{{ custom_footer.youtube_user }}" class="footer__social-link" aria-label="{% trans 'Find us on Youtube' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="youtube" classname="footer__social-icon" %}
