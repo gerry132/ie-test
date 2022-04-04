@@ -13,6 +13,20 @@ class HomePage(FreeFormPageBase):
     max_count = 1
     template = "patterns/pages/home/home_page.html"
 
+    top_story = StreamField(
+        [
+            ("story", blocks.TopStoryBlock()),
+        ],
+        blank=True,
+        block_counts={
+            "story": {"max_num": 1},
+        }
+    )
+
+    promote_panels = FreeFormPageBase.promote_panels + [
+        StreamFieldPanel("top_story"),
+    ]
+
     secondary_call_to_action = StreamField(
         [
             ("call_to_action", SecondaryCallToAction()),
@@ -31,7 +45,7 @@ class HomePage(FreeFormPageBase):
         ObjectList(FreeFormPageBase.content_panels, heading='Content'),
         ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
         ObjectList(secondary_cta_panel, heading='Call To Action'),
-        ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
+        ObjectList(promote_panels, heading='Promote'),
         ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
     ])
 
