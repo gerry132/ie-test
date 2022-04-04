@@ -1,33 +1,45 @@
 {% load wagtailimages_tags %}
 
 {% if link_url %}
-<a href="{% if link_url %}{{ link_url }}{% else %}#{% endif %}" class="featured-block">
-    {% image value.image width-1240 as featured_image %}
+<a href="{{ link_url }}" class="featured-block">
+    {% image featured_block.image width-1240 as featured_image %}
     <div class="featured-block__image" style="background-image:url({{ featured_image.url }}); {{ featured_image.background_position_style }}"></div>
+    {% if featured_block.primary_title or featured_block.title or link_url %}
     <div class="featured-block__content-wrapper">
         <div class="featured-block__content">
-            {% if value.primary_title %}
+            {% if featured_block.primary_title %}
                 <h3 class="featured-block__title heading--3">
-                    {{ value.primary_title }}
+                    {{ featured_block.primary_title }}
                 </h3>
             {% endif %}
-            <p>{{ link_title }}</p>
+            {% if featured_block.page and not featured_block.title %}
+                <p>{{ featured_block.page.title }}</p>
+            {% elif featured_block.page and featured_block.title %}
+                <p>{{ featured_block.title }}</p>
+            {% else %}
+                <p>{{ featured_block.title }}</p>
+            {% endif %}
         </div>
     </div>
+    {% endif %}
 </a>
 {% else %}
 <div class="featured-block">
-    {% image value.image width-1240 as featured_image %}
+    {% image featured_block.image width-1240 as featured_image %}
     <div class="featured-block__image" style="background-image:url({{ featured_image.url }}); {{ featured_image.background_position_style }}"></div>
+    {% if featured_block.primary_title or featured_block.title %}
     <div class="featured-block__content-wrapper">
         <div class="featured-block__content">
-            {% if value.primary_title %}
+            {% if featured_block.primary_title %}
                 <h3 class="featured-block__title heading--3">
-                    {{ value.primary_title }}
+                    {{ featured_block.primary_title }}
                 </h3>
             {% endif %}
-            <p>{{ link_title }}</p>
+            {% if featured_block.title %}
+                <p>{{ featured_block.title }}</p>
+            {% endif %}
         </div>
     </div>
+    {% endif %}
 </div>
 {% endif %}
