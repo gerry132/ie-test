@@ -65,7 +65,7 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     page = blocks.PageChooserBlock(required=False)
     icon = blocks.ChoiceBlock(
         choices=(
-            ("", "Choose and icon (optional)"),
+            ("", "Choose an icon (optional)"),
             ("government-building", "Government Building"),
             ("money", "Money"),
             ("passport", "Passport"),
