@@ -2,8 +2,6 @@
 
 {% comment %}
     Add header--condensed class if override menu exists on a page
-
-    Note: This is only implemented on the CountyGroupPageIndex at the moment
 {% endcomment %}
 <header>
     <div class="header {% if custom_header.links %}header--condensed{% endif %}" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
@@ -45,11 +43,8 @@
 
                         {% comment %}
                             Show override nav alongside primary nav in dropdown if available
-
-                            Note: This is only implemented on the CountyGroupPageIndex at the moment
                         {% endcomment %}
 
-                        {% comment %} TODO: Allow for custom logo here too {% endcomment %}
                         {% if page.override_primary_navigation %}
                         <div class="header__menu header__menu--override">
                             {% custom_primary_navigation page %}
@@ -105,8 +100,6 @@
 
     {% comment %}
         Only show this override nav if available on the page
-
-        Note: This is only implemented on the CountyGroupPageIndex at the moment
     {% endcomment %}
     {% if custom_header.links %}
         <div class="header header--override" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
@@ -121,7 +114,6 @@
                     {% endif %}
 
                     <div class="header__menus header__menus--desktop">
-                        {% comment %} <div data-desktop-menu> {% endcomment %}
                         <nav class="custom-nav">
                             <ul class="custom-nav__links">
                                 {% for link in custom_header.links %}
@@ -131,7 +123,6 @@
                                 {% endfor %}
                             </ul>
                         </nav>
-                        {% comment %} </div> {% endcomment %}
                     </div>
 
                     <div class="header__menus header__menus--mobile" data-mobile-menu>
