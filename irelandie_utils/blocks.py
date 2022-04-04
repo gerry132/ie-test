@@ -663,7 +663,6 @@ class FreeFormBlocksBase(blocks.StreamBlock):
     pinned_stories = PinnedStoriesBlock(group="Module")
     stories = StoryBlock(group="Module")
 
-    youtube_video = YoutubeVideoBlock(group="HTML")
     video = CustomVideoChooserBlock(group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
 
