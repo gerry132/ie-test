@@ -288,17 +288,6 @@ class SocialMediaSettings(SocialMediaFieldsMixin, BaseSetting):
         help_text="Site name, used by Open Graph.",
     )
 
-    @property
-    def show_social_links(self):
-        return any(
-            [
-                self.twitter_handle,
-                self.facebook_app_id,
-                self.youtube_user,
-                self.linkedin_profile,
-            ]
-        )
-
 
 @register_setting
 class SystemMessagesSettings(BaseSetting):
