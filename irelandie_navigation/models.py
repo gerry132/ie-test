@@ -216,14 +216,3 @@ class CustomFooter(SocialMediaFieldsMixin, TranslatableMixin):
         verbose_name = _("Custom Footer")
         verbose_name_plural = _("Custom Footers")
         unique_together = ("translation_key", "locale")
-
-    @property
-    def show_custom_social_links(self):
-        return any(
-            [
-                self.twitter_handle,
-                self.facebook_app_id,
-                self.youtube_user,
-                self.linkedin_profile,
-            ]
-        )
