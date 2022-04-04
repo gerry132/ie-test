@@ -1,0 +1,10 @@
+{% load wagtailimages_tags %}
+{% comment %} {% custom_footer_logo %} {% endcomment %}
+{% comment %} Check if global or page specific logo is set, otherwise show default {% endcomment %}
+{% comment %} {{ items }} {% endcomment %}
+
+{% if items.logo %}
+    {% image items.logo width-200 class="footer__logo" alt=items.logo.alt %}
+{% else %}
+    {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="footer__logo footer__logo--svg" %}
+{% endif %}

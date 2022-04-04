@@ -26,7 +26,7 @@ class LinkBlockExtended(LinkBlock, BaseBlockLinkContext, BaseBlockLinkValidation
     )
 
     class Meta:
-        template = ("patterns/molecules/navigation/blocks/menu_item.html",)
+        template = ("patterns/molecules/navigation/blocks/menu_item_extended.html",)
 
 
 class LinkColumnWithHeader(blocks.StructBlock):
