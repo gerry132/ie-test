@@ -11,7 +11,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
 
-from .blocks import LinkBlock, LinkBlockExtended, LinkColumnWithHeader, SecondaryNavLinkColumnWithHeader
+from .blocks import LinkBlockExtended, LinkColumnWithHeader, SecondaryNavLinkColumnWithHeader
 
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
 
@@ -60,7 +60,7 @@ class PrimaryNavigation(TranslatableMixin):
         verbose_name=_("Language"),
     )
     navigation = StreamField(
-        [("link", LinkBlock())],
+        [("link", LinkBlockExtended())],
         blank=True,
         help_text="Main site navigation",
         verbose_name=_("Links"),
@@ -228,7 +228,7 @@ class CustomHeader(TranslatableMixin):
         verbose_name=_("Name"),
     )
     links = StreamField(
-        [("link", LinkBlock())],
+        [("link", LinkBlockExtended())],
         blank=True,
         help_text="Custom main site navigation",
         verbose_name=_("Links"),
