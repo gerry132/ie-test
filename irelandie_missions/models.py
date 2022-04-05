@@ -6,7 +6,7 @@ from wagtail.core.fields import StreamField
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
 from irelandie_home.blocks import SecondaryCallToAction
-from irelandie_navigation.models import LinkBlock
+from irelandie_navigation.blocks import LinkBlock
 from irelandie_pages.models import FreeFormPageBase
 from irelandie_utils import blocks
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage
