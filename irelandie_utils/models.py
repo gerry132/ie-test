@@ -543,26 +543,14 @@ class ArticlePage(BasePage):
     ]
 
     def clean(self):
-        if not self.hero_image and not self.hero_video:
-            raise ValidationError(
-                {
-                    "hero_image": ValidationError(
-                        "You must specify hero image or hero video."
-                    ),
-                    "hero_video": ValidationError(
-                        "You must specify hero image or hero video."
-                    ),
-                }
-            )
-
         if self.hero_image and self.hero_video:
             raise ValidationError(
                 {
                     "hero_image": ValidationError(
-                        "You must specify hero image or hero video. You can't use both."
+                        "You can't choose both an image and a video for the hero media. Choose an image or a video"
                     ),
                     "hero_video": ValidationError(
-                        "You must specify hero image or hero video. You can't use both."
+                        "You can't choose both an image and a video for the hero media. Choose an image or a video"
                     ),
                 }
             )
