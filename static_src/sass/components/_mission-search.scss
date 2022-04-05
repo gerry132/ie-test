@@ -13,6 +13,9 @@
     &__map {
         @include media-query(large){
             flex: 1 0 50%;
+            &--map-visible {
+                margin-top: 60px;
+            }
         }
     }
 

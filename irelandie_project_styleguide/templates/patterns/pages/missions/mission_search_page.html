@@ -17,7 +17,7 @@
 
             <div class="mission-search__container">
                 {% if regions %}
-                    <div class="mission-search__accordions">
+                    <div class="mission-search__accordions {% if settings.irelandie_navigation.SiteSettings.google_my_map %}mission-search__accordions--map-visible{% endif %}">
                         {% for region in regions %}
                             <div class="accordion__container">
                                 <div class="accordion" data-accordion>
@@ -55,7 +55,7 @@
                         {% endfor %}
                     </div>
                 {% endif %}
-            
+
                 {% if settings.irelandie_navigation.SiteSettings.google_my_map %}
                     <div class="mission-search__map" id="mission-map">
                         <div style="padding-bottom: 56.25%;" class="responsive-object">
