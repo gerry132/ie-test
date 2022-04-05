@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.utils.functional import cached_property
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, TabbedInterface, ObjectList
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
 from wagtail.core.fields import StreamField
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
@@ -75,6 +75,8 @@ class CountryPage(HeroPage):
         null=True,
     )
 
+    twitter_title = models.CharField(max_length=50, blank=True)
+
     twitter_feed = models.ForeignKey(
         "utils.TwitterEmbed",
         on_delete=models.SET_NULL,
@@ -89,7 +91,10 @@ class CountryPage(HeroPage):
         StreamFieldPanel("embeds"),
         StreamFieldPanel("featured_stories"),
         StreamFieldPanel("featured_embassies"),
-        SnippetChooserPanel("twitter_feed"),
+        MultiFieldPanel([
+            FieldPanel("twitter_title"),
+            SnippetChooserPanel("twitter_feed"),
+        ], heading="Twitter feed"),
     ]
 
     edit_handler = TabbedInterface([
@@ -103,6 +108,8 @@ class CountryPage(HeroPage):
 class MissionPage(BasePage):
     template = "irelandie_assets/pages/mission.html"
 
+    twitter_title = models.CharField(max_length=50, blank=True)
+
     twitter_feed = models.ForeignKey(
         "utils.TwitterEmbed",
         on_delete=models.SET_NULL,
@@ -112,7 +119,10 @@ class MissionPage(BasePage):
     )
 
     content_panels = BasePage.content_panels + [
-        SnippetChooserPanel("twitter_feed"),
+        MultiFieldPanel([
+            FieldPanel("twitter_title"),
+            SnippetChooserPanel("twitter_feed"),
+        ], heading="Twitter feed"),
     ]
 
 
@@ -174,6 +184,8 @@ class ConsulatePage(FreeFormPageBase):
         blank=True,
     )
 
+    twitter_title = models.CharField(max_length=50, blank=True)
+
     twitter_feed = models.ForeignKey(
         "utils.TwitterEmbed",
         on_delete=models.SET_NULL,
@@ -183,7 +195,10 @@ class ConsulatePage(FreeFormPageBase):
     )
 
     content_panels = FreeFormPageBase.content_panels + [
-        SnippetChooserPanel("twitter_feed"),
+        MultiFieldPanel([
+            FieldPanel("twitter_title"),
+            SnippetChooserPanel("twitter_feed"),
+        ], heading="Twitter feed"),
     ]
 
     secondary_cta_panel = [
@@ -218,6 +233,8 @@ class EmbassyPage(FreeFormPageBase):
         blank=True,
     )
 
+    twitter_title = models.CharField(max_length=50, blank=True)
+
     twitter_feed = models.ForeignKey(
         "utils.TwitterEmbed",
         on_delete=models.SET_NULL,
@@ -227,7 +244,10 @@ class EmbassyPage(FreeFormPageBase):
     )
 
     content_panels = FreeFormPageBase.content_panels + [
-        SnippetChooserPanel("twitter_feed"),
+        MultiFieldPanel([
+            FieldPanel("twitter_title"),
+            SnippetChooserPanel("twitter_feed"),
+        ], heading="Twitter feed"),
     ]
 
     secondary_cta_panel = [
