@@ -7,7 +7,7 @@
     </div>
 
     {% if page.twitter_feed %}
-        {% include "patterns/molecules/streamfield/blocks/twitter_embed.html" with value=page.twitter_feed %}
+        {% include "patterns/molecules/streamfield/blocks/twitter_embed.html" with value=page.twitter_feed title=page.twitter_title %}
     {% endif %}
 
 {% endblock %}
