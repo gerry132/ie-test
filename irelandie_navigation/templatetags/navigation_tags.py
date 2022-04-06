@@ -105,6 +105,18 @@ def footernav(context):
     }
 
 
+@register.inclusion_tag(
+    "patterns/molecules/navigation/footernav.html", takes_context=True
+)
+def customfooternav(context, custom_footer):
+    request = context["request"]
+
+    return {
+        "request": request,
+        "footernav": custom_footer,
+    }
+
+
 # FOOTER LINKS
 # ----------------------------------------------------------------------
 # The data for the footer links is managed in the FooterNavigation
@@ -186,8 +198,21 @@ def custom_primary_navigation(context, current_page):
 def custom_footer_settings(context, page):
     request = context["request"]
 
+    locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
     site_settings = SiteSettings.for_request(request)
     footer_social_media = SocialMediaSettings.for_request(request)
+    footer_navigation = None
+
+    try:
+        footer_navigation = FooterNavigation.objects.get(locale=locale)
+    except FooterNavigation.DoesNotExist:
+        pass
+
+    if not footer_navigation:
+        try:
+            footer_navigation = FooterNavigation.objects.get(locale=default_language())
+        except FooterNavigation.DoesNotExist:
+            pass
 
     try:
         custom_footer = CustomFooter.objects.get(id=page.custom_footer.id)
@@ -211,6 +236,7 @@ def custom_footer_settings(context, page):
                 linkedin_profile,
             ]
         )
+        navigation = custom_footer.navigation
         links = custom_footer.links
 
     else:
@@ -230,7 +256,12 @@ def custom_footer_settings(context, page):
                 linkedin_profile,
             ]
         )
-        links = None
+        if footer_navigation:
+            navigation = footer_navigation.navigation
+            links = footer_navigation.links
+        else:
+            navigation = None
+            links = None
 
     return {
         "logo": logo,
@@ -240,6 +271,7 @@ def custom_footer_settings(context, page):
         "youtube_user": youtube_user,
         "linkedin_profile": linkedin_profile,
         "show_social_media": show_social_media,
+        "navigation": navigation,
         "links": links,
     }
 

@@ -176,7 +176,12 @@ class CustomFooter(SocialMediaFieldsMixin, TranslatableMixin):
         help_text="Internal name for this navigation, it's not displayed to a site user.",
         verbose_name=_("Name"),
     )
-    # social media fields come from the SocialMediaFieldsMixin
+    navigation = StreamField(
+        [("column", LinkColumnWithHeader())],
+        blank=True,
+        help_text="Multiple columns of footer links with optional header.",
+        verbose_name=_("Columns"),
+    )
     links = StreamField(
         [("link", LinkBlockExtended())],
         blank=True,
@@ -206,6 +211,7 @@ class CustomFooter(SocialMediaFieldsMixin, TranslatableMixin):
         FieldPanel("facebook_app_id"),
         FieldPanel("youtube_user"),
         FieldPanel("linkedin_profile"),
+        StreamFieldPanel("navigation"),
         StreamFieldPanel("links"),
     ]
 
