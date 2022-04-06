@@ -35,38 +35,35 @@ npm run build
 
 ## Contributing to the project
 
-Currently the default branch is set to develop. When starting a new piece of work make sure to create your working branch based off the main branch. `git checkout main`
+The default branch is set to `main`. **This branch should not have pull requests for individual pieces of work.**
+
+When starting a new piece of work, make sure to create your working branch based off the `develop` branch.
 
 To start a new feature first create the new branch you'll be working on.
 
 ```bash
+git checkout develop
 git checkout -b [my-branch]
 ```
 
-While building the new feature it's recommended to `rebase` your branch on the main branch regularly to pick any changes merged to main by other developers and fix any conflicts.
+While building the new feature it's recommended to `rebase` your branch on the `develop` branch regularly to pick any changes merged by other developers and fix any conflicts.
 
 ```bash
-git rebase main
+git rebase origin develop
 ```
 
 When your work is complete you should push your changes to the github repository.
 
-- Go to GITHUB and make a new pull request for your work/branch. Ensure the target branch is set to `main`
+- Go to GITHUB and make a new pull request for your work/branch. Ensure the target branch is set to `develop`
 - **Include a link to the ticket you are working on** and add any other information that will assist a developer with the code review.
-- Add a label `Main merge` to the pull request.
+- Add a label `Develop merge` to the pull request.
 - Create the pull request and ask someone to review it.
-
-### Code Review
 
 #### Develop Pull Request
 
-When your work has been code reviewed and is ready for acceptance testing you should create a second pull request but this time the target branch should be set to `develop`. Make sure not to make any changes to this pull request, it should be at the same commit position as the previous pull request you targeted at `main`.
+When your work has been code reviewed and is ready for acceptance testing you can merge it.
 
-Add a label `Develop merge` to the pull request.
-
-#### Get approval to merge this pull request to develop
-
-You will need to get approval to merge the `develop` pull request. There should be no need for any feedback here but the reviewer should check that no changes have been made when comparing with the `main` pull request.
+This will trigger AzurePipelines to start a deployment to staging. When the deployment completes you will receive an email to confirm the deployment.
 
 #### Github Actions
 
@@ -137,4 +134,3 @@ docker compose up --build
 ```
 
 Then access the app on http://localhost.
-

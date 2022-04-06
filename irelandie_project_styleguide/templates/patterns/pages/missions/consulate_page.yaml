@@ -1,0 +1,20 @@
+context:
+  page:
+    title: consulate page
+    hero_title: consulate title
+    hero_image: foobar
+    hero_video: foobar
+    summary: a block of summary text
+    link_page: foobar
+    link_text: read more
+    secondary_title: secondary title
+    body:
+    secondary_call_to_action: <a href="#">CTA</a>
+    twitter_feed:
+
+tags:
+  include_block:
+    page.body:
+      template_name: 'patterns/molecules/freeform-components/freeform_components.html'
+    page.twitter_feed:
+      template_name: 'patterns/molecules/streamfield/blocks/twitter_embed.html'

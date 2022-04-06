@@ -23,8 +23,13 @@
     }
 
     &__logo {
-        height: 40px;
-        width: 160px;
+        height: auto;
+        max-width: 200px;
+
+        &--svg {
+            height: 40px;
+            width: 160px;
+        }
     }
 
     &__nav-container {

@@ -1,0 +1,21 @@
+.table {
+    margin-top: 30px;
+    
+    table {
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+    caption {
+        @include font-size(xxs);
+        background-color: $color--background-grey;
+        padding: 10px;
+        text-align: left;
+    }
+
+    td,
+    th {
+        border: 1px solid $color--accessible-grey;
+        padding: 5px;
+    }
+}

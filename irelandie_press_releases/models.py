@@ -21,7 +21,7 @@ class PressReleasePageIndex(BasePage):
 
 
 class PressReleasePage(ArticlePage):
-    template = "patterns/pages/irelandie_press_releases/press_release.html"
+    template = "patterns/pages/irelandie_press_releases/press_release_page.html"
 
     override_related_articles = StreamField(
         [

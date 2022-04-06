@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.utils.functional import cached_property
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, TabbedInterface, ObjectList
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
 from wagtail.core.fields import StreamField
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
-from irelandie_navigation.models import LinkBlock
+from irelandie_home.blocks import SecondaryCallToAction
+from irelandie_navigation.blocks import LinkBlock
+from irelandie_pages.models import FreeFormPageBase
 from irelandie_utils import blocks
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage
 
@@ -73,12 +75,26 @@ class CountryPage(HeroPage):
         null=True,
     )
 
+    twitter_title = models.CharField(max_length=50, blank=True)
+
+    twitter_feed = models.ForeignKey(
+        "utils.TwitterEmbed",
+        on_delete=models.SET_NULL,
+        related_name="+",
+        null=True,
+        blank=True,
+    )
+
     content_panels = HeroPage.content_panels + [
         SnippetChooserPanel("region"),
         StreamFieldPanel("stories"),
         StreamFieldPanel("embeds"),
         StreamFieldPanel("featured_stories"),
         StreamFieldPanel("featured_embassies"),
+        MultiFieldPanel([
+            FieldPanel("twitter_title"),
+            SnippetChooserPanel("twitter_feed"),
+        ], heading="Twitter feed"),
     ]
 
     edit_handler = TabbedInterface([
@@ -92,6 +108,8 @@ class CountryPage(HeroPage):
 class MissionPage(BasePage):
     template = "irelandie_assets/pages/mission.html"
 
+    twitter_title = models.CharField(max_length=50, blank=True)
+
     twitter_feed = models.ForeignKey(
         "utils.TwitterEmbed",
         on_delete=models.SET_NULL,
@@ -101,7 +119,10 @@ class MissionPage(BasePage):
     )
 
     content_panels = BasePage.content_panels + [
-        SnippetChooserPanel("twitter_feed"),
+        MultiFieldPanel([
+            FieldPanel("twitter_title"),
+            SnippetChooserPanel("twitter_feed"),
+        ], heading="Twitter feed"),
     ]
 
 
@@ -145,3 +166,101 @@ class MissionSearchPage(BasePage):
         context["regions"] = self.regions
         context["countries"] = self.countries
         return context
+
+
+class ConsulatePage(FreeFormPageBase):
+    template = "patterns/pages/missions/consulate_page.html"
+
+    body = StreamField(blocks.FreeFormBlocksBase(), blank=True)
+
+    parent_page_types = [
+        "irelandie_missions.CountryPage",
+    ]
+
+    secondary_call_to_action = StreamField(
+        [
+            ("call_to_action", SecondaryCallToAction()),
+        ],
+        blank=True,
+    )
+
+    twitter_title = models.CharField(max_length=50, blank=True)
+
+    twitter_feed = models.ForeignKey(
+        "utils.TwitterEmbed",
+        on_delete=models.SET_NULL,
+        related_name="+",
+        null=True,
+        blank=True,
+    )
+
+    content_panels = FreeFormPageBase.content_panels + [
+        MultiFieldPanel([
+            FieldPanel("twitter_title"),
+            SnippetChooserPanel("twitter_feed"),
+        ], heading="Twitter feed"),
+    ]
+
+    secondary_cta_panel = [
+        StreamFieldPanel("secondary_call_to_action")
+    ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
+        ObjectList(secondary_cta_panel, heading='Call To Action'),
+        ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
+        ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
+    ])
+
+    class Meta:
+        verbose_name = "Consulate Page"
+
+
+class EmbassyPage(FreeFormPageBase):
+    template = "patterns/pages/missions/embassy_page.html"
+
+    body = StreamField(blocks.FreeFormBlocksBase(), blank=True)
+
+    parent_page_types = [
+        "irelandie_missions.CountryPage",
+    ]
+
+    secondary_call_to_action = StreamField(
+        [
+            ("call_to_action", SecondaryCallToAction()),
+        ],
+        blank=True,
+    )
+
+    twitter_title = models.CharField(max_length=50, blank=True)
+
+    twitter_feed = models.ForeignKey(
+        "utils.TwitterEmbed",
+        on_delete=models.SET_NULL,
+        related_name="+",
+        null=True,
+        blank=True,
+    )
+
+    content_panels = FreeFormPageBase.content_panels + [
+        MultiFieldPanel([
+            FieldPanel("twitter_title"),
+            SnippetChooserPanel("twitter_feed"),
+        ], heading="Twitter feed"),
+    ]
+
+    secondary_cta_panel = [
+        StreamFieldPanel("secondary_call_to_action")
+    ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
+        ObjectList(secondary_cta_panel, heading='Call To Action'),
+        ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
+        ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
+    ])
+
+    class Meta:
+        verbose_name = "Embassy Page"

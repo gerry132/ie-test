@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.conf import settings as dj_settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -20,19 +19,20 @@ from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Orderable, Page, TranslatableMixin
 from wagtail.core.query import PageQuerySet
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.images import get_image_model_string
 from wagtail.search import index
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.snippets.models import register_snippet
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
-from irelandie_utils import blocks as custom_blocks
+from irelandie_navigation.mixins import SocialMediaFieldsMixin
 from irelandie_utils.blocks import ArticleStoryBlock
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
 
 SEARCH_DESCRIPTION_LABEL = "Meta description"  # NOTE changing this requires migrations
 
-IMAGE_MODEL = str(dj_settings.WAGTAILIMAGES_IMAGE_MODEL)
+IMAGE_MODEL = get_image_model_string()
 
 
 class LinkFields(models.Model):
@@ -274,15 +274,8 @@ class CallToActionSnippet(models.Model):
 
 
 @register_setting
-class SocialMediaSettings(BaseSetting):
-    twitter_handle = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text="Your Twitter username without the @, e.g. katyperry",
-    )
-    facebook_app_id = models.CharField(
-        max_length=255, blank=True, help_text="Your Facebook app ID."
-    )
+class SocialMediaSettings(SocialMediaFieldsMixin, BaseSetting):
+    # social media fields come from the SocialMediaFieldsMixin
     default_sharing_text = models.CharField(
         max_length=255,
         blank=True,
@@ -293,11 +286,6 @@ class SocialMediaSettings(BaseSetting):
         blank=True,
         default="Ireland.ie",
         help_text="Site name, used by Open Graph.",
-    )
-    social_links = StreamField(
-        [("profile", custom_blocks.SocialLinkBlock())],
-        blank=True,
-        help_text="List of links to social media profiles",
     )
 
 
@@ -337,12 +325,42 @@ class BasePage(SocialFields, ListingFields, Page):
         ], "Chatbot")
     ]
 
+    custom_footer = models.ForeignKey(
+        "irelandie_navigation.CustomFooter",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+
+    custom_footer_panel = [
+        SnippetChooserPanel("custom_footer")
+    ]
+
+    custom_header = models.ForeignKey(
+        "irelandie_navigation.CustomHeader",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+
+    custom_header_panel = [
+        SnippetChooserPanel("custom_header")
+    ]
+
     class Meta:
         abstract = True
 
     promote_panels = (
-        Page.promote_panels + SocialFields.promote_panels + ListingFields.promote_panels + webchat_panel
+        Page.promote_panels +
+        SocialFields.promote_panels +
+        ListingFields.promote_panels +
+        webchat_panel +
+        custom_footer_panel +
+        custom_header_panel
     )
+
     search_fields = Page.search_fields + [
         index.SearchField("listing_title"),
         index.SearchField("listing_summary"),
@@ -525,26 +543,14 @@ class ArticlePage(BasePage):
     ]
 
     def clean(self):
-        if not self.hero_image and not self.hero_video:
-            raise ValidationError(
-                {
-                    "hero_image": ValidationError(
-                        "You must specify hero image or hero video."
-                    ),
-                    "hero_video": ValidationError(
-                        "You must specify hero image or hero video."
-                    ),
-                }
-            )
-
         if self.hero_image and self.hero_video:
             raise ValidationError(
                 {
                     "hero_image": ValidationError(
-                        "You must specify hero image or hero video. You can't use both."
+                        "You can't choose both an image and a video for the hero media. Choose an image or a video"
                     ),
                     "hero_video": ValidationError(
-                        "You must specify hero image or hero video. You can't use both."
+                        "You can't choose both an image and a video for the hero media. Choose an image or a video"
                     ),
                 }
             )

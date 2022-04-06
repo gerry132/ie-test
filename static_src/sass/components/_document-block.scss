@@ -14,9 +14,10 @@
 
     &__icon {
         position: relative;
-        fill: $color--off-black;
-        height: 25px;
+        color: $color--off-black;
         width: 25px;
+        height: 25px;
+        margin-top: 5px;
         margin-right: 10px;
     }
 
@@ -27,6 +28,8 @@
 
     &__copy {
         text-decoration: underline;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
     }
 
     &__meta {

@@ -122,6 +122,10 @@
                 display: block;
 
                 @include media-query(small) {
+                    top: $mobile-header-height;
+                }
+
+                @include media-query(large) {
                     top: $condensed-header-height;
                 }
             }
@@ -208,7 +212,7 @@
             cursor: pointer;
         }
 
-        @include media-query(small) {
+        @include media-query(large) {
             #{$root}--condensed & {
                 padding: 0 $grid;
             }

@@ -6,7 +6,14 @@
     <ul class="footercolumn-nav">
         {% for item in value.links %}
             <li class="footercolumn-nav__item">
-                {% include_block item with nav_type="footercolumn-nav" %}
+                <a class="footercolumn-nav__link" {% if has_children %}data-open-subnav{% endif %} href="{% firstof item.url item.page.url %}" {% if has_children %}aria-haspopup="true" aria-expanded="false"{% endif %}>
+                    {% firstof item.title item.page.title %}
+                    {% if has_children %}
+                        <span class="footercolumn-nav__icon">
+                            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="primary-nav__svg" %}
+                        </span>
+                    {% endif %}
+                </a>
             </li>
         {% endfor %}
     </ul>

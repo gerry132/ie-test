@@ -1,0 +1,27 @@
+.mission-search {
+    &__container {
+        position: relative;
+
+        @include media-query(large){
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+    }
+
+    &__accordions,
+    &__map {
+        @include media-query(large){
+            flex: 1 0 50%;
+            &--map-visible {
+                margin-top: 60px;
+            }
+        }
+    }
+
+    &__map {
+        @include media-query(large){
+            padding-left: 30px;
+        }
+    }
+}

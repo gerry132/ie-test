@@ -2,5 +2,14 @@
 {% load wagtailcore_tags wagtailimages_tags static %}
 
 {% block main %}
-    {% include "patterns/molecules/freeform-components/freeform_components.html" %} 
+    {% include "patterns/molecules/freeform-components/freeform_components.html" %}
+    {% if page.twitter_feed %}
+        {% include "patterns/molecules/streamfield/blocks/twitter_embed.html" with value=page.twitter_feed title=page.twitter_title %}
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    {% if page.twitter_feed %}
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    {% endif %}
 {% endblock %}
