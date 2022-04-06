@@ -1,0 +1,24 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+<div class="story{% if value.background == 'dark' %} story--dark{% endif %}{% if value.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
+    <div class="wrapper wrapper--large">
+        <div class="story__container">
+            {% image value.image width-460 alt=value.image_alt class="story__image" %}
+
+            <div class="story__content">
+                <div class="story__copy">
+                    {% if value.primary_title %}<p>{{ value.primary_title }}</p>{% endif %}
+
+                    {% if value.title %}<h3 class="story__heading heading--2">{{ value.title }}</h3>{% endif %}
+
+                    {% if value.summary %}<p>{{ value.summary }}</p>{% endif %}
+
+                    {% if link_url and value.link_text %}
+                    <a  href="{{ link_url }}" aria-label="{{ value.link_text }}">{{ value.link_text }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

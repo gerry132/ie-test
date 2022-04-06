@@ -1,0 +1,143 @@
+{% load static wagtailcore_tags wagtailimages_tags navigation_tags i18n  %}
+
+{% comment %}
+    Add header--condensed class if override menu exists on a page
+{% endcomment %}
+<header>
+    <div class="header {% if custom_header.links %}header--condensed{% endif %}" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
+        <div class="wrapper wrapper--large">
+            <div class="header__container">
+                {% comment %} Check if global or page specific logo is set, otherwise show default {% endcomment %}
+                {% if custom_header.logo %}
+                    {% image custom_header.logo width-200 class="header__logo" alt=custom_header.logo.alt %}
+                {% else %}
+                    <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">
+                        {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
+                    </a>
+                {% endif %}
+
+                <div class="header__menus header__menus--desktop">
+                    <div data-desktop-menu>
+                        {% primarynav %}
+                    </div>
+                </div>
+
+                <div class="header__menus header__menus--mobile" data-mobile-menu>
+                    {% comment %}
+                    This is called mobile nav, but actually gets shown at all screen sizes.
+                    Only shows the extended primary nav on desktop, then combines all 3 navs (if available) on mobile
+                    {% endcomment %}
+
+                    <div class="wrapper wrapper--large wrapper--mobile-menu">
+                        <div class="header__menu header__menu--primary">
+                            {% primarynav %}
+                        </div>
+
+                        {% has_secondary_nav as shownav %}
+                        {% if shownav %}
+                        <div class="header__menu header__menu--extended">
+                            {% comment %} Secondary nav/burger nav {% endcomment %}
+                            {% secondarynav %}
+                        </div>
+                        {% endif %}
+
+                        {% comment %}
+                            Show override nav alongside primary nav in dropdown if available
+                        {% endcomment %}
+
+                        {% if page.override_primary_navigation %}
+                        <div class="header__menu header__menu--override">
+                            {% custom_primary_navigation page %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="header__menu-items">
+                    <!-- Start of the locale selector -->
+                        <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                            <div class="header__language-switcher">
+                                <label for="language-switcher" class="u-sr-only">{% trans 'Select default language' %}</label>
+                                <select name="language" id="language-switcher"
+                                        onchange="this.form.submit()"
+                                        class="language-switcher">
+                                    {% get_current_language as language_code %}
+                                    {% for code, name in local_languages %}
+                                        <option value="{{ code }}"{% if code == language_code %} selected{% endif %}>
+                                            {{ name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </form>
+                    <!-- End of the locale selector -->
+
+                    <button class="header__search-toggle" aria-label="{% trans 'Search' %}" data-toggle-search>
+                        <svg class="header__search-icon" aria-hidden="true">
+                            <use href="#magnifying-glass"></use>
+                        </svg>
+
+                        <svg class="header__search-icon header__search-icon--close" aria-hidden="true">
+                            <use xlink:href="#close"></use>
+                        </svg>
+                    </button>
+
+                <div class="header__menu-toggle{% if shownav %} header__menu-toggle--desktop{% endif %}">
+                    <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
+                        <span class="button-menu-toggle__line"></span>
+                        <span class="button-menu-toggle__line"></span>
+                        <span class="button-menu-toggle__line"></span>
+                        <span class="button-menu-toggle__line"></span>
+                    </button>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% comment %}
+        Only show this override nav if available on the page
+    {% endcomment %}
+    {% if custom_header.links %}
+        <div class="header header--override" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
+            <div class="wrapper wrapper--large">
+                <div class="header__container">
+                    {% if custom_header.logo %}
+                        {% image custom_header.logo width-200 class="header__logo" alt=custom_header.logo.alt %}
+                    {% else %}
+                        <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">
+                            {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
+                        </a>
+                    {% endif %}
+
+                    <div class="header__menus header__menus--desktop">
+                        <nav class="custom-nav">
+                            <ul class="custom-nav__links">
+                                {% for link in custom_header.links %}
+                                <li class="custom-nav__item">
+                                    {% include_block link with nav_type="custom-nav" %}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <div class="header__menus header__menus--mobile" data-mobile-menu>
+                        <nav class="custom-nav">
+                            <ul class="custom-nav__links">
+                                {% for link in custom_header.links %}
+                                <li class="custom-nav__item">
+                                    {% include_block link with nav_type="custom-nav" %}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</header>

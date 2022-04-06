@@ -56,7 +56,7 @@ $breakpoints: (
     'large' '(min-width: 1023px)'
 );
 
-$mobile-header-height: 80px;
+$mobile-header-height: 85px;
 $desktop-header-height: 102px;
 $condensed-header-height: 45px + 80px; // primary & override nav heights
 
@@ -89,4 +89,5 @@ $z-index: (
     modal: 110,
     modal-controls: 120,
     webchat: 125,
+    skip-link: 150
 );

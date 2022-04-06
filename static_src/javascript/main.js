@@ -19,9 +19,6 @@ import ProgressBar from './components/progress-bar';
 /* feature:use_frontend_component_video_modal */
 import VideoModal from './components/video-modal';
 /* endfeature */
-/* feature:use_frontend_component_tabs */
-import Tabs from './components/tabs';
-/* endfeature */
 
 // IE11 polyfills
 import foreachPolyfill from './polyfills/foreach-polyfill';
@@ -87,12 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
     /* feature:use_frontend_component_video_modal */
     for (const videomodal of document.querySelectorAll(VideoModal.selector())) {
         new VideoModal(videomodal);
-    }
-    /* endfeature */
-
-    /* feature:use_frontend_component_tabs */
-    for (const tabs of document.querySelectorAll(Tabs.selector())) {
-        new Tabs(tabs);
     }
     /* endfeature */
 

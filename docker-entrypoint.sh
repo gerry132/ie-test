@@ -1,9 +1,10 @@
 #!/bin/bash
 
+
 if $( python3 manage.py migrate  --noinput > /dev/null ); then
     echo "Migrations run successfully"
 else
-echo "Migrations failed. Please check logs."
+    echo "Migrations not successful."
     exit 1
 fi
 

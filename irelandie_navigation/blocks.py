@@ -18,7 +18,7 @@ class LinkBlock(BaseBlockLinkContext):
 
 class LinkBlockExtended(LinkBlock, BaseBlockLinkContext, BaseBlockLinkValidation):
     # This is a custom block that extends the LinkBlock and adds a url field.
-    # This is used in the FooterNavigation.
+    # This is used in PrimaryNavigation() & FooterNavigation()
     url = blocks.URLBlock(
         label="URL",
         required=False,
@@ -26,7 +26,7 @@ class LinkBlockExtended(LinkBlock, BaseBlockLinkContext, BaseBlockLinkValidation
     )
 
     class Meta:
-        template = ("patterns/molecules/navigation/blocks/menu_item.html",)
+        template = ("patterns/molecules/navigation/blocks/menu_item_extended.html",)
 
 
 class LinkColumnWithHeader(blocks.StructBlock):

@@ -1,0 +1,73 @@
+{% load static wagtailcore_tags wagtailimages_tags navigation_tags util_tags i18n %}
+
+<footer class="footer">
+    <div class="wrapper wrapper--large">
+        <div class="footer__header">
+
+            {% if custom_footer.logo %}
+                {% image custom_footer.logo width-200 class="footer__logo" alt=custom_footer.logo_alt %}
+            {% else %}
+                {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="footer__logo footer__logo--svg" %}
+            {% endif %}
+
+            {% if custom_footer.show_social_media %}
+            <div class="footer__social-links">
+                <p class="footer__heading">{% trans 'Follow us' %}</p>
+
+                {% if custom_footer.youtube_user %}
+                    <a href="https://youtube.com/user/{{ custom_footer.youtube_user }}" class="footer__social-link" aria-label="{% trans 'Find us on Youtube' %}">
+                        {% include "patterns/atoms/icons/icon.html" with name="youtube" classname="footer__social-icon" %}
+                    </a>
+                {% endif %}
+
+                {% if custom_footer.linkedin_profile %}
+                    <a href="https://twitter.com/{{ custom_footer.linkedin_profile }}" class="footer__social-link" aria-label="{% trans 'Connect on Linkedin' %}">
+                        {% include "patterns/atoms/icons/icon.html" with name="linkedin" classname="footer__social-icon" %}
+                    </a>
+                {% endif %}
+
+                {% if custom_footer.facebook_app_id %}
+                    <a href="https://www.facebook.com/{{ custom_footer.facebook_app_id }}" class="footer__social-link" aria-label="{% trans 'Find us on Facebook' %}">
+                        {% include "patterns/atoms/icons/icon.html" with name="facebook" classname="footer__social-icon" %}
+                    </a>
+                {% endif %}
+
+                {% if custom_footer.twitter_handle %}
+                    <a href="https://twitter.com/{{ custom_footer.twitter_handle }}" class="footer__social-link" aria-label="{% trans 'Follow us on Twitter' %}">
+                        {% include "patterns/atoms/icons/icon.html" with name="twitter" classname="footer__social-icon" %}
+                    </a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+        {% if custom_footer.links %}
+        <div class="footer__nav-container">
+            <nav class="grid grid--narrow" aria-label="{{ page_title }} Footer Navigation">
+                {% include_block custom_footer.links with nav_type='footerlinks-nav' %}
+            </nav>
+        </div>
+        {% endif %}
+
+        {% comment %} Global Footer {% endcomment %}
+        <div class="footer__nav-container">
+            <div>
+            {% comment %} shows as columns {% endcomment %}
+                {% footernav %}
+            </div>
+            {% comment %}
+                TODO: BE - I think we can remove these extra links. They were never part of the design & I don't think are being used
+                Nick's comment: This is setup in the navigation models so if not required we need to remove it as another piece of work.
+            {% endcomment %}
+            <div>
+            {% comment %} shows as horizontal links {% endcomment %}
+                {% footerlinks %}
+            </div>
+
+        </div>
+
+        <div class="footer__credit">
+            <p>© {% trans 'Copyright' %} {% now "Y" %} - Ireland.ie | {% trans 'All rights reserved' %}</p>
+        </div>
+    </div>
+</footer>

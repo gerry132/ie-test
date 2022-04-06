@@ -1,5 +1,6 @@
-{% load wagtailcore_tags %}
-<nav aria-label="Quaternary">
+{% load wagtailcore_tags i18n %}
+
+<nav aria-label="{% trans 'Footer links' %}">
     <ul class="footerlinks-nav">
         {% for link in footerlinks %}
             <li class="footerlinks-nav__item">

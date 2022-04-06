@@ -2,13 +2,15 @@
 {% load wagtailcore_tags wagtailimages_tags static i18n %}
 
 {% block content %}
-        
+
     {% comment %}
         Responsive hero images
     {% endcomment %}
+    {% if page.hero_image or page.hero_video %}
     {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
 
     {% include "patterns/molecules/hero/hero.html" with page=page classes="hero--article" %}
+    {% endif %}
 
     {% block main %}
         <!-- Body -->
@@ -32,6 +34,6 @@
 
         <!-- related_articles -->
         {% include "patterns/molecules/related-articles/related-articles.html" with articles=page.related_articles %}
-        
+
     {% endblock %}
 {% endblock %}

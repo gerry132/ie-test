@@ -4,7 +4,7 @@
 {% wagtail_site as current_site %}
 
 {% block content %}
-    <div class="section section--padding section--grey">
+<div class="section section--padding section--grey">
         <div class="wrapper wrapper--large wrapper--padding">
             <div class="intro">
                 <div class="container">
@@ -15,41 +15,57 @@
                 </div>
             </div>
 
-            {% for region in regions %}
-                <div class="accordion__container">
-                    <div class="accordion" data-accordion>
-                        <h2 class="accordion__header">
-                            <button
-                                id="region"
-                                class="accordion__button"
-                                data-accordion-question
-                                aria-controls="region-list"
-                                aria-expanded="false">
-                                <span class="accordion__title">
-                                    {{ region }}
-                                </span>
-                                {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="accordion__icon" %}
-                            </button>
-                        </h2>
-                        <div
-                            id="region-list"
-                            data-accordion-answer
-                            class="accordion__content"
-                            aria-labelledby="region"
-                            aria-hidden="true">
-                            <ul class="accordion__list">
-                                {% for country in countries %}
-                                    {% if country.region == region %}
-                                        <li class="accordion__list-item">
-                                            <a href="{{ country.url }}">{{ country }}</a>
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
+            <div class="mission-search__container">
+                {% if regions %}
+                    <div class="mission-search__accordions {% if settings.irelandie_navigation.SiteSettings.google_my_map %}mission-search__accordions--map-visible{% endif %}">
+                        {% for region in regions %}
+                            <div class="accordion__container">
+                                <div class="accordion" data-accordion>
+                                    <h2 class="accordion__header">
+                                        <button
+                                            id="region-{{ forloop.counter }}"
+                                            class="accordion__button"
+                                            data-accordion-question
+                                            aria-controls="region-list-{{ forloop.counter }}"
+                                            aria-expanded="false">
+                                            <span class="accordion__title">
+                                                {{ region }}
+                                            </span>
+                                            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="accordion__icon" %}
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="region-list-{{ forloop.counter }}"
+                                        data-accordion-answer
+                                        class="accordion__content"
+                                        aria-labelledby="region-{{ forloop.counter }}"
+                                        aria-hidden="true">
+                                        <ul class="accordion__list">
+                                            {% for country in countries %}
+                                                {% if country.region == region %}
+                                                    <li class="accordion__list-item">
+                                                        <a href="{{ country.url }}">{{ country }}</a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if settings.irelandie_navigation.SiteSettings.google_my_map %}
+                    <div class="mission-search__map" id="mission-map">
+                        <div style="padding-bottom: 56.25%;" class="responsive-object">
+                            <div class="google-map">
+                                {{ settings.irelandie_navigation.SiteSettings.google_my_map|safe }}
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -1,6 +1,7 @@
 .language-switcher {
     font-family: $font--secondary;
     background-image: url('../images/cssBackgrounds/arrow.svg');
+    background-color: transparent;
     background-repeat: no-repeat;
     background-size: 16px 8px;
     background-position: right 8px;
@@ -8,10 +9,13 @@
     position: relative;
     display: block;
     appearance: none;
-    background-color: transparent;
     vertical-align: middle;
     border: 0;
     padding-right: 26px;
+
+    option {
+        color: $color--default;
+    }
 
     .header--condensed & {
         @include font-size(xs);
