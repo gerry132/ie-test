@@ -175,6 +175,7 @@ class ConsulatePage(FreeFormPageBase):
 
     parent_page_types = [
         "irelandie_missions.CountryPage",
+        "irelandie_pages.FreeFormPage",
     ]
 
     secondary_call_to_action = StreamField(
@@ -224,6 +225,7 @@ class EmbassyPage(FreeFormPageBase):
 
     parent_page_types = [
         "irelandie_missions.CountryPage",
+        "irelandie_pages.FreeFormPage",
     ]
 
     secondary_call_to_action = StreamField(
