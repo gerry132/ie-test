@@ -13,7 +13,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 from wagtail.api.v2.router import WagtailAPIRouter
 
-from irelandie_utils.views import PagesAPIEndpoint
+from irelandie_utils.views import PagesAPIEndpoint, set_language_wagtail
 from irelandie_search import views as search_views
 
 
@@ -60,6 +60,7 @@ urlpatterns += i18n_patterns(
     # set up set language redirect view
     path('i18n/', include('django.conf.urls.i18n')),
     path('', include(wagtail_urls)),
+    path('i18n/set_language_wagtail', set_language_wagtail, name="set_language_wagtail"),
     prefix_default_language=PREFIX_DEFAULT_LANGUAGE,
 )
 

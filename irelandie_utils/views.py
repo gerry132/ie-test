@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
+from django.http import HttpResponseRedirect
+from django.utils.translation import check_for_language
 from django.views import defaults
+from django.views.decorators.http import require_http_methods
 from wagtail.api.v2.serializers import PageSerializer
 from wagtail.api.v2.views import PagesAPIViewSet
+from wagtail.core.models import Page
 
 from irelandie_missions.filters import MissionPageFieldFilter
 from irelandie_utils.utils import get_locale_from_language_code_or_default
@@ -38,3 +43,32 @@ class PagesAPIEndpoint(PagesAPIViewSet):
             context.update({"locale": locale})
 
         return context
+
+
+@require_http_methods(["POST"])
+def set_language_wagtail(request):
+    page_id = request.POST.get("page_id")
+    lang_code = request.POST.get("language")
+    next_url = "/"
+    if page_id and lang_code and check_for_language(lang_code):
+        try:
+            next_url = (
+                Page.objects.get(pk=page_id)
+                .get_translations()
+                .get(locale__language_code=lang_code)
+                .url
+            )
+        except (Page.DoesNotExist, Page.MultipleObjectsReturned):
+            pass
+    response = HttpResponseRedirect(next_url)
+    response.set_cookie(
+        settings.LANGUAGE_COOKIE_NAME,
+        lang_code,
+        max_age=settings.LANGUAGE_COOKIE_AGE,
+        path=settings.LANGUAGE_COOKIE_PATH,
+        domain=settings.LANGUAGE_COOKIE_DOMAIN,
+        secure=settings.LANGUAGE_COOKIE_SECURE,
+        httponly=settings.LANGUAGE_COOKIE_HTTPONLY,
+        samesite=settings.LANGUAGE_COOKIE_SAMESITE,
+    )
+    return response

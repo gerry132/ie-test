@@ -50,9 +50,9 @@
 
                 <div class="header__menu-items">
                     <!-- Start of the locale selector -->
-                        <form action="{% url 'set_language' %}" method="post">
+                        <form action="{% url 'set_language_wagtail' %}" method="post">
                             {% csrf_token %}
-                            <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                            <input name="page_id" type="hidden" value="{{ page.id }}">
                             <div class="header__language-switcher">
                                 <label for="language-switcher" class="u-sr-only">{% trans 'Select default language' %}</label>
                                 <select name="language" id="language-switcher"
