@@ -60,6 +60,8 @@ You will only need to run the `migrate` and `createsuperuser` commands on initia
 
 Upon first starting the container, the static files may not exist, or may be out of date. See [frontend tooling](#frontend-tooling) for set-up instructions and to resolve this, simply run `npm run build`.
 
+If you `git pull` any new changes also run `npm run build` to update your local compiled static files so you will see any changes reflected with styling etc.
+
 ## Frontend tooling
 
 Here are the common commands: The commands should be run from a terminal on your local machine

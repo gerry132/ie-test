@@ -33,8 +33,21 @@ At the end of the file are the main StreamBlocks that are included in page model
 
 [irelandie_navigation/blocks.py](../irelandie_navigation/blocks.py)
 
-These blocks are used within Snippet models for the Primary, Secondary and Custom navigation
-Snippets
+These blocks are used within Snippet models for the Primary, Secondary and Custom navigation Snippets
+
+All site navigation uses snippet models because they are can be translated, including:
+
+- Primary navigation (header)
+- Custom header navigation
+- Footer navigation
+- Custom footer navigation
+- Secondary navigation
+
+Each of the above snippets can be specific to a locale (language). If a snippet is not set for a local then the default locale snippet is used (English)
+
+[Translatable Snippets Documentation](https://docs.wagtail.org/en/stable/advanced_topics/i18n.html#translatable-snippets)
+
+*Note: At the moment Site Settings cannot be used for the navigation because the Translatable requirement is not available in Wagtail.*
 
 ## Snippets
 
@@ -44,7 +57,7 @@ They are available in the admin in the snippets management section.
 
 A snippet model can use all valid django model fields as well as Wagtail model fields, including StreamField.
 
-Most snippets are app specific so Navigation snippets are found in the `irelaneir_navigation` app in the models.py file and so on.
+Most snippets are app specific so Navigation snippets are found in the `irelandie_navigation` app in the models.py file and so on.
 
 Snippets that are aren't app specific are in the `irelandie_utils` app
 
