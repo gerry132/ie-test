@@ -671,8 +671,7 @@ resource "aws_lb_listener" "project_net" {
   load_balancer_arn   = aws_lb.net_lb.arn
   port                = 443
   protocol            = "TCP"
-  #ssl_policy            = "ELBSecurityPolicy-TLS-1-2-2017-01"
-  certificate_arn       = aws_acm_certificate.project.arn
+
 
   default_action {
     type             = "forward"
