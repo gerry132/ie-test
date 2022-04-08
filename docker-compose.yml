@@ -7,13 +7,14 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - .:/app
-      - static_volume:/app/static
     ports:
       - 8000:8000
     env_file:
       - ./docker/.env.local
     depends_on:
       - db
+      - cache
+    entrypoint: tail -f /dev/null
 
   db:
     image: postgres:13-alpine
