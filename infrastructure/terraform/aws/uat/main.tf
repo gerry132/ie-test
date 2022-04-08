@@ -475,6 +475,40 @@ resource "aws_s3_bucket_policy" "private_lb_logs" {
 # Loadbalancers
 # -----------------------------------------------------------------------------
 
+resource "aws_subnet" "front_lb" {
+  vpc_id     = module.network.vpc_id
+  cidr_block = "10.0.16.0/24"
+
+  tags = {
+    Name = "front_lb"
+  }
+}
+
+resource "aws_eip" "nlb" {
+  vpc = true
+
+  tags = {
+    Name = "front_lb"
+  }
+}
+
+resource "aws_lb" "net_lb" {
+  name               = "net-lb"
+  internal           = false
+  load_balancer_type = "network"
+  enable_deletion_protection = false
+
+  subnet_mapping {
+    subnet_id        = aws_subnet.front_lb.id
+    allocation_id    = aws_eip.nlb.id
+  }
+
+  tags = {
+    Environment = "uat"
+  }
+}
+
+
 resource "aws_lb" "default" {
   name                = "${local.environment_name}-${local.project_name}"
   subnets             = module.network.public_subnet_ids
@@ -517,6 +551,19 @@ resource "aws_lb" "public_sites" {
 # -----------------------------------------------------------------------------
 
 # All sites points to this
+resource "aws_lb_target_group" "front_lb" {
+  name            = "${local.environment_name}-${local.project_name}-front-network-lb"
+  port            = 443
+  protocol        = "TCP"
+  target_type     = "alb"
+  vpc_id          = module.network.vpc_id
+}
+
+resource "aws_lb_target_group_attachment" "flb" {
+  target_group_arn = aws_lb_target_group.front_lb.arn
+  target_id        = aws_lb.public_sites.arn
+  port             = 443
+}
 
 resource "aws_lb_target_group" "default" {
   name            = "${local.environment_name}-${local.project_name}"
@@ -620,6 +667,20 @@ resource "aws_lb_listener" "project_80" {
   }
 }
 
+resource "aws_lb_listener" "project_net" {
+  load_balancer_arn   = aws_lb.net_lb.arn
+  port                = 443
+  protocol            = "TCP"
+  #ssl_policy            = "ELBSecurityPolicy-TLS-1-2-2017-01"
+  certificate_arn       = aws_acm_certificate.project.arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.front_lb.arn
+  }
+}
+
+
 resource "aws_lb_listener" "project_443" {
   load_balancer_arn     = aws_lb.default.arn
   port                  = 443
@@ -663,7 +724,7 @@ resource "aws_lb_listener" "public_sites_443" {
     type = "fixed-response"
     fixed_response {
       content_type = "text/plain"
-      status_code  = 503
+      status_code  = 400
     }
   }
 }
