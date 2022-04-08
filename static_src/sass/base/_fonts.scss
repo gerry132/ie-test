@@ -135,22 +135,23 @@
         url('../fonts/Inter-ExtraBoldItalic.woff?v=3.19') format('woff');
 }
 
-@font-face {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 900;
-    font-display: swap;
-    src: url('../fonts/Inter-Black.woff2?v=3.19') format('woff2'),
-        url('../fonts/Inter-Black.woff?v=3.19') format('woff');
-}
-@font-face {
-    font-family: 'Inter';
-    font-style: italic;
-    font-weight: 900;
-    font-display: swap;
-    src: url('../fonts/Inter-BlackItalic.woff2?v=3.19') format('woff2'),
-        url('../fonts/Inter-BlackItalic.woff?v=3.19') format('woff');
-}
+// Not currently used, commented out for now to avoid loading the font
+// @font-face {
+//     font-family: 'Inter';
+//     font-style: normal;
+//     font-weight: 900;
+//     font-display: swap;
+//     src: url('../fonts/Inter-Black.woff2?v=3.19') format('woff2'),
+//         url('../fonts/Inter-Black.woff?v=3.19') format('woff');
+// }
+// @font-face {
+//     font-family: 'Inter';
+//     font-style: italic;
+//     font-weight: 900;
+//     font-display: swap;
+//     src: url('../fonts/Inter-BlackItalic.woff2?v=3.19') format('woff2'),
+//         url('../fonts/Inter-BlackItalic.woff?v=3.19') format('woff');
+// }
 
 @font-face {
     font-family: 'Sofia Pro';
@@ -180,16 +181,17 @@
     src: url('../fonts/Sofia-Pro-Bold-Italic-Az.woff') format('woff');
 }
 
-@font-face {
-    font-family: 'Sofia Pro';
-    font-style: normal;
-    font-weight: 900;
-    src: url('../fonts/Sofia-Pro-Black-Az.woff') format('woff');
-}
+// Not currently used, commented out for now to avoid loading the font
+// @font-face {
+//     font-family: 'Sofia Pro';
+//     font-style: normal;
+//     font-weight: 900;
+//     src: url('../fonts/Sofia-Pro-Black-Az.woff') format('woff');
+// }
 
-@font-face {
-    font-family: 'Sofia Pro';
-    font-style: italic;
-    font-weight: 900;
-    src: url('../fonts/Sofia-Pro-Black-Italic-Az.woff') format('woff');
-}
+// @font-face {
+//     font-family: 'Sofia Pro';
+//     font-style: italic;
+//     font-weight: 900;
+//     src: url('../fonts/Sofia-Pro-Black-Italic-Az.woff') format('woff');
+// }
