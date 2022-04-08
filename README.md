@@ -1,16 +1,88 @@
 # Ireland.ie Wagtail CMS
 
-## Setup for local development
+## Initial setup
 
-Clone this repo: be sure to use the main branch. *At this time the default branch is develop, that may change soon.*
+Clone this repo: be sure to switch to the `develop` branch.
 
 ```bash
 git clone git@github.com:ogcio/ireland-ie-wagtail.git
 cd ireland-ie-wagtail
-git checkout main
+git checkout develop
 ```
 
-### Python and Wagtail
+## Setting up a local build
+
+This repository includes `docker-compose` configuration for running the project in local Docker containers.
+
+## Docker and docker-compose (recommended)
+
+### Dependencies
+
+The following are required to run the local environment. The minimum versions specified are confirmed to be working:
+if you have older versions already installed they _may_ work, but are not guaranteed to do so.
+
+- [Docker](https://www.docker.com/), version 19.0.0 or up
+  - [Docker Desktop for Mac](https://hub.docker.com/editions/community/docker-ce-desktop-mac) installer
+  - [Docker Engine for Linux](https://hub.docker.com/search?q=&type=edition&offering=community&sort=updated_at&order=desc&operating_system=linux) installers
+- [Docker Compose](https://docs.docker.com/compose/), version 1.24.0 or up
+  - [Install instructions](https://docs.docker.com/compose/install/) (Linux-only: Compose is already installed for Mac users as part of Docker Desktop.)
+
+## Running the local build for the first time
+
+If you are using Docker Desktop, ensure the Resources:File Sharing settings allow the cloned directory to be mounted in the web container (avoiding `mounting` OCI runtime failures at the end of the build step).
+
+Starting a local build can be done by running:
+
+```bash
+docker-compose build
+docker-compose up -d web
+```
+
+This will start the containers in the background, but not Django. To do this, connect to the web container with:
+
+```bash
+docker-compose exec web bash
+```
+
+To run all Django commands always access the running container first and run the commands from the container command line.
+
+The to start Django run:
+
+```bash
+python3 manage.py migrate
+python3 manage.py createsuperuser
+python3 manage.py runserver 0.0.0.0:8000
+```
+
+The site will be available on the host machine at: http://127.0.0.1:8000/
+
+You will only need to run the `migrate` and `createsuperuser` commands on initial setup when a new development database has been created.
+
+Upon first starting the container, the static files may not exist, or may be out of date. See [frontend tooling](#frontend-tooling) for set-up instructions and to resolve this, simply run `npm run build`.
+
+If you `git pull` any new changes also run `npm run build` to update your local compiled static files so you will see any changes reflected with styling etc.
+
+## Frontend tooling
+
+Here are the common commands: The commands should be run from a terminal on your local machine
+
+```bash
+# Install front-end dependencies.
+npm install
+# Start the Webpack build in watch mode, without live-reload.
+npm run start
+# Do a one-off Webpack development build.
+npm run build
+# Do a one-off Webpack production build.
+npm run build:prod
+```
+
+Node v14 is the correct version to use for building the frontend. There is a `.nvmrc` file you can use to switch to the correct node version: run `nvm use` in your terminal before the commands above.
+
+- All static source files are located at [static_src](/static_src/) 
+- When npm commands are run, generated static assets are saved to [static_compiled](/static_compiled/)
+
+### Python and virtualenv (legacy)
 
 - create virtual environment `python3 -m venv .venv`
 - activate virtual environment `source .venv/bin/activate`
@@ -21,116 +93,9 @@ git checkout main
 
 The site will be available at `http://localhost:8000`
 
-### Frontend, Node and NPM
+## Other Documentation
 
-To build the frontend assets run the following commands:
-
-NVM is available to set up the node version correctly.
-
-```bash
-nvm use
-npm install
-npm run build
-```
-
-## Contributing to the project
-
-The default branch is set to `main`. **This branch should not have pull requests for individual pieces of work.**
-
-When starting a new piece of work, make sure to create your working branch based off the `develop` branch.
-
-To start a new feature first create the new branch you'll be working on.
-
-```bash
-git checkout develop
-git checkout -b [my-branch]
-```
-
-While building the new feature it's recommended to `rebase` your branch on the `develop` branch regularly to pick any changes merged by other developers and fix any conflicts.
-
-```bash
-git rebase origin develop
-```
-
-When your work is complete you should push your changes to the github repository.
-
-- Go to GITHUB and make a new pull request for your work/branch. Ensure the target branch is set to `develop`
-- **Include a link to the ticket you are working on** and add any other information that will assist a developer with the code review.
-- Add a label `Develop merge` to the pull request.
-- Create the pull request and ask someone to review it.
-
-#### Develop Pull Request
-
-When your work has been code reviewed and is ready for acceptance testing you can merge it.
-
-This will trigger AzurePipelines to start a deployment to staging. When the deployment completes you will receive an email to confirm the deployment.
-
-#### Github Actions
-
-There are tests to check any pushes to the `develop` or `main` branches. If the test fail you won't be able to merge the pull request.
-
-- *The tests check for code formatting and any missing migrations.*
-
-## Environment variables
-
-### APP
-
-- ALLOWED_HOSTS - Allowed hosts list as json string , defaults to `["\*"]`, required value
-- DEBUG - debug value, defaults to `True`, required value
-- DEBUG_TOOLBAR - enable debug toolbar
-- SECRET_KEY - secret key, required value
-
-### Database
-
-DATABASE_URL - database url e.g. postgres:// defaults to `''` and uses sqlite3
-
-### S3 Support
-
-- USE_S3 - Set to True if planning to use s3 bucket for static files, defaults to `False`
-- AWS_ACCESS_KEY_ID - AWS access key id if planning to use s3 bucket for static files
-- AWS_SECRET_ACCESS_KEY - AWS secret access key if planning to use s3 bucket for static files
-- AWS_STATIC_BUCKET_NAME - AWS bucket name if planning to use s3 bucket for static files
-
-### Wagtail
-
-- BASE_URL - Base URL for wagtail to use, defaults to `http://localhost:8000`
-
-### Caching
-
-- USE_CACHE - Set to True if planning to use cache, defaults to `False`
-- CACHE_ADDRESS - Base URL for cache backend, defaults to blank
-
-## Running terraform
-
-Common environment has been set up to pull alpine3.11 from docker hub and create local image of it (this will avoid docker hub terminating connections on frequent builds)
-
-- go to `infrastructure/terraform/<env>/`
-- in `.aws` create `.conf` and `.credentials` from coresponding `*.example` files
-- create `ireland-ie-infrastructure` bucket in S3
-- run `terraform init`
-- run `terraform-apply`
-- go to aws console and update SSM parameters for `AWS_SECRET_ACCESS_KEY` , `AWS_ACCESS_KEY_ID` , `DOCKER_IMAGE_URL` with your environment values
-- run your build procedures and deploy images to ecs from here
-
-## AWS infrastructure
-
-- Public subnets for website and admin panel
-- Private subnet for db, redis, ecs
-- 2 ELBs for filtered admin site traffic and unfiltered traffic for public website
-- ELB rules set to serve system on 2 domains e.g. content.ireland.ie and ireland.ie
-- Elastic Cache with Redis
-- RDS with Postgres DB
-- ECS with cluster per environment
-- ECR repo per environment
-- S3 for static files, file upload and logging
-- ECS, LB logging to S3
-
-## Running the app locally
-
-Build and run using [Docker compose](https://docs.docker.com/compose/):
-
-```bash
-docker compose up --build
-```
-
-Then access the app on http://localhost.
+- [Continuous Integration](/docs/continuous-integration.md)
+- [Contributing To The Project](/docs/contributing.md)
+- [Infrastructure](/docs/infrastructure.md)
+- [Project Conventions](/docs/project-conventions.md)
