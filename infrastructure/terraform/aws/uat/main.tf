@@ -475,13 +475,32 @@ resource "aws_s3_bucket_policy" "private_lb_logs" {
 # Loadbalancers
 # -----------------------------------------------------------------------------
 
+
 resource "aws_subnet" "front_lb" {
   vpc_id     = module.network.vpc_id
   cidr_block = "10.0.16.0/24"
+  tags = {
+    Name = "NLB"
+  }
+}
+
+
+resource "aws_route_table" "nlb_route_table" {
+  vpc_id = module.network.vpc_id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = module.network.internet_gateway
+  }
 
   tags = {
-    Name = "front_lb"
+    Name = "nlb-internet-route"
   }
+}
+
+resource "aws_route_table_association" "nlb" {
+  subnet_id      = aws_subnet.front_lb.id
+  route_table_id = aws_route_table.nlb_route_table.id
 }
 
 resource "aws_eip" "nlb" {
@@ -751,7 +770,7 @@ resource "aws_lb_listener" "public_sites_443" {
     type = "fixed-response"
     fixed_response {
       content_type = "text/plain"
-      status_code  = 400
+      status_code  = 503
     }
   }
 }
