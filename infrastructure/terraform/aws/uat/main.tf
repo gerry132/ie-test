@@ -551,6 +551,20 @@ resource "aws_lb" "public_sites" {
 # -----------------------------------------------------------------------------
 
 # All sites points to this
+resource "aws_lb_target_group" "front_lb_http" {
+  name            = "${local.environment_name}-${local.project_name}-front-network-lb-http"
+  port            = 80
+  protocol        = "TCP"
+  target_type     = "alb"
+  vpc_id          = module.network.vpc_id
+}
+
+resource "aws_lb_target_group_attachment" "flb_http" {
+  target_group_arn = aws_lb_target_group.front_lb_http.arn
+  target_id        = aws_lb.default.arn
+  port             = 80
+}
+
 resource "aws_lb_target_group" "front_lb" {
   name            = "${local.environment_name}-${local.project_name}-front-network-lb"
   port            = 443
@@ -564,6 +578,7 @@ resource "aws_lb_target_group_attachment" "flb" {
   target_id        = aws_lb.public_sites.arn
   port             = 443
 }
+
 
 resource "aws_lb_target_group" "default" {
   name            = "${local.environment_name}-${local.project_name}"
@@ -666,6 +681,19 @@ resource "aws_lb_listener" "project_80" {
     }
   }
 }
+
+resource "aws_lb_listener" "project_net_http" {
+  load_balancer_arn   = aws_lb.net_lb.arn
+  port                = 80
+  protocol            = "TCP"
+
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.front_lb_http.arn
+  }
+}
+
 
 resource "aws_lb_listener" "project_net" {
   load_balancer_arn   = aws_lb.net_lb.arn
