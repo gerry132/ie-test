@@ -487,6 +487,25 @@ resource "aws_subnet" "front_lb" {
 }
 
 
+resource "aws_route_table" "nlb_route_table" {
+  vpc_id = module.network.vpc_id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = module.network.internet_gateway
+  }
+
+  tags = {
+    Name = "nlb-internet-route"
+  }
+}
+
+resource "aws_route_table_association" "nlb" {
+  subnet_id      = aws_subnet.front_lb.id
+  route_table_id = aws_route_table.nlb_route_table.id
+}
+
+
 resource "aws_eip" "nlb" {
   vpc = true
 
