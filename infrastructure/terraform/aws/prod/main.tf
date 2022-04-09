@@ -554,7 +554,7 @@ resource "aws_lb" "public_sites" {
 
 # All sites points to this
 resource "aws_lb_target_group" "front_lb_http" {
-  name            = "${local.environment_name}-${local.project_name}-front-network-lb-http"
+  name            = "${local.environment_name}-${local.project_name}-nlb-http"
   port            = 80
   protocol        = "TCP"
   target_type     = "alb"
@@ -568,7 +568,7 @@ resource "aws_lb_target_group_attachment" "flb_http" {
 }
 
 resource "aws_lb_target_group" "front_lb" {
-  name            = "${local.environment_name}-${local.project_name}-front-network-lb"
+  name            = "${local.environment_name}-${local.project_name}-nlb"
   port            = 443
   protocol        = "TCP"
   target_type     = "alb"
