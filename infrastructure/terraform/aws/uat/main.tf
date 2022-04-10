@@ -670,15 +670,15 @@ resource "aws_lb_target_group" "default_admin" {
 #  }
 #}
 
-resource "aws_acm_certificate" "ireland_ie_ssl" {
-  domain_name                 = "ireland.testing.gov.ie"
-  subject_alternative_names   = ["www.ireland.testing.gov.ie"]
-  validation_method           = "DNS"
+#resource "aws_acm_certificate" "ireland_ie_ssl" {
+#  domain_name                 = "ireland.testing.gov.ie"
+#  subject_alternative_names   = ["www.ireland.testing.gov.ie"]
+#  validation_method           = "DNS"
 
-  lifecycle {
-    create_before_destroy   = true
-  }
-}
+ # lifecycle {
+  #  create_before_destroy   = true
+  #}
+#}
 
 
 resource "aws_acm_certificate" "ireland_ie_content" {
