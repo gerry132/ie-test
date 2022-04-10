@@ -486,7 +486,6 @@ resource "aws_subnet" "front_lb" {
   }
 }
 
-
 resource "aws_route_table" "nlb_route_table" {
   vpc_id = module.network.vpc_id
 
@@ -596,7 +595,7 @@ resource "aws_lb_target_group" "front_lb" {
 
 resource "aws_lb_target_group_attachment" "flb" {
   target_group_arn = aws_lb_target_group.front_lb.arn
-  target_id        = aws_lb.public_sites.arn
+  target_id        = aws_lb.default.arn
   port             = 443
 }
 
@@ -661,6 +660,20 @@ resource "aws_lb_target_group" "default_admin" {
 # -----------------------------------------------------------------------------
 # SSL Certificates
 # -----------------------------------------------------------------------------
+
+data "aws_acm_certificate" "ireland_ie_import" {
+    domain = "www.ireland.ie"
+    #arn = "arn:aws:acm:eu-west-1:493301424337:certificate/569052ad-16d9-4c8c-8f6b-9ba0d06626eb"
+}
+
+resource "aws_acm_certificate" "ireland_ie" {
+  domain_name                 = "content.ireland.ie"
+  validation_method           = "DNS"
+
+  lifecycle {
+    create_before_destroy   = true
+  }
+}
 
 resource "aws_acm_certificate" "project" {
   domain_name                 = local.project_domain
