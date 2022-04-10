@@ -681,6 +681,16 @@ resource "aws_acm_certificate" "ireland_ie_ssl" {
 }
 
 
+resource "aws_acm_certificate" "ireland_ie_content" {
+  domain_name                 = "uat.ireland.ie"
+  subject_alternative_names   = ["www.${local.domain_ireland_ie}"]
+  validation_method           = "DNS"
+
+  lifecycle {
+    create_before_destroy   = true
+  }
+}
+
 # -----------------------------------------------------------------------------
 # Loadbalancer listeners and rules
 # -----------------------------------------------------------------------------
@@ -732,7 +742,7 @@ resource "aws_lb_listener" "project_443" {
   port                  = 443
   protocol              = "HTTPS"
   ssl_policy            = "ELBSecurityPolicy-TLS-1-2-2017-01"
-  certificate_arn       = aws_acm_certificate.project.arn
+  certificate_arn       = aws_acm_certificate.ireland_ie_content.arn
 
   default_action {
     type = "fixed-response"
@@ -764,7 +774,7 @@ resource "aws_lb_listener" "public_sites_443" {
   port                  = 443
   protocol              = "HTTPS"
   ssl_policy            = "ELBSecurityPolicy-TLS-1-2-2017-01"
-  certificate_arn       = aws_acm_certificate.project.arn
+  certificate_arn       = aws_acm_certificate.ireland_ie_content.arn
 
   default_action {
     type = "fixed-response"
@@ -861,12 +871,12 @@ resource "aws_lb_listener_rule" "ireland_ie_443" {
 
 resource "aws_lb_listener_certificate" "ireland_ie_certificate" {
   listener_arn    = aws_lb_listener.public_sites_443.arn
-  certificate_arn = aws_acm_certificate.ireland_ie_ssl.arn
+  certificate_arn = aws_acm_certificate.ireland_ie_content.arn
 }
 
 resource "aws_lb_listener_certificate" "admin_ireland_ie_certificate" {
   listener_arn    = aws_lb_listener.project_443.arn
-  certificate_arn = aws_acm_certificate.project.arn
+  certificate_arn = aws_acm_certificate.ireland_ie_content.arn
 }
 
 
