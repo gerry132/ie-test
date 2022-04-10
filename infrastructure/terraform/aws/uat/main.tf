@@ -26,8 +26,8 @@ locals {
   elb_account_arn               = data.aws_elb_service_account.elb.arn
   environment_name              = "uat"
   app_aws_username              = "UAT_APP_USER"
-  project_domain                = "content.ireland.testing.gov.ie"
-  domain_ireland_ie             = "ireland.testing.gov.ie"
+  project_domain                = "content.uat.ireland.ie"
+  domain_ireland_ie             = "uat.ireland.ie"
   project_name                  = "g2g"
   region                        = "eu-west-1"
   # DB
@@ -660,19 +660,19 @@ resource "aws_lb_target_group" "default_admin" {
 # SSL Certificates
 # -----------------------------------------------------------------------------
 
-resource "aws_acm_certificate" "project" {
-  domain_name                 = local.project_domain
-  subject_alternative_names   = ["www.${local.project_domain}"]
-  validation_method           = "DNS"
+#resource "aws_acm_certificate" "project" {
+#  domain_name                 = local.project_domain
+#  subject_alternative_names   = ["www.${local.project_domain}"]
+#  validation_method           = "DNS"
 
-  lifecycle {
-    create_before_destroy   = true
-  }
-}
+#  lifecycle {
+#    create_before_destroy   = true
+#  }
+#}
 
 resource "aws_acm_certificate" "ireland_ie_ssl" {
-  domain_name                 = local.domain_ireland_ie
-  subject_alternative_names   = ["www.${local.domain_ireland_ie}"]
+  domain_name                 = "ireland.testing.gov.ie"
+  subject_alternative_names   = ["www.ireland.testing.gov.ie"]
   validation_method           = "DNS"
 
   lifecycle {
@@ -683,7 +683,15 @@ resource "aws_acm_certificate" "ireland_ie_ssl" {
 
 resource "aws_acm_certificate" "ireland_ie_content" {
   domain_name                 = "uat.ireland.ie"
-  subject_alternative_names   = ["www.${local.domain_ireland_ie}"]
+  validation_method           = "DNS"
+
+  lifecycle {
+    create_before_destroy   = true
+  }
+}
+
+resource "aws_acm_certificate" "ireland_ie_content_admin" {
+  domain_name                 = "content.uat.ireland.ie"
   validation_method           = "DNS"
 
   lifecycle {
@@ -876,7 +884,7 @@ resource "aws_lb_listener_certificate" "ireland_ie_certificate" {
 
 resource "aws_lb_listener_certificate" "admin_ireland_ie_certificate" {
   listener_arn    = aws_lb_listener.project_443.arn
-  certificate_arn = aws_acm_certificate.ireland_ie_content.arn
+  certificate_arn = aws_acm_certificate.ireland_ie_content_admin.arn
 }
 
 
