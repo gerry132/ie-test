@@ -880,7 +880,7 @@ resource "aws_lb_listener_certificate" "ireland_ie_certificate" {
 
 resource "aws_lb_listener_certificate" "admin_ireland_ie_certificate" {
   listener_arn    = aws_lb_listener.project_443.arn
-  certificate_arn = aws_acm_certificate.project.arn
+  certificate_arn = aws_acm_certificate.ireland_ie.arn
 }
 
 
