@@ -758,7 +758,7 @@ resource "aws_lb_listener" "public_sites_443" {
   load_balancer_arn     = aws_lb.public_sites.arn
   port                  = 443
   protocol              = "HTTPS"
-  certificate_arn       = aws_acm_certificate.project.arn
+  certificate_arn       = data.aws_acm_certificate.ireland_ie_import.arn
 
   default_action {
     type = "fixed-response"
