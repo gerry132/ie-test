@@ -43,7 +43,7 @@ class SecondaryNavLinkColumnWithHeader(blocks.StructBlock):
     heading = blocks.CharBlock(
         required=False, help_text=_("Leave blank if no header required.")
     )
-    links = blocks.ListBlock(LinkBlock())
+    links = blocks.ListBlock(LinkBlockExtended())
 
     class Meta:
         template = ("patterns/molecules/navigation/blocks/secondary_nav_column.html",)
