@@ -26,8 +26,8 @@ locals {
   elb_account_arn               = data.aws_elb_service_account.elb.arn
   environment_name              = "uat"
   app_aws_username              = "UAT_APP_USER"
-  project_domain                = "content.ireland.testing.gov.ie"
-  domain_ireland_ie             = "ireland.testing.gov.ie"
+  project_domain                = "content.uat.ireland.ie"
+  domain_ireland_ie             = "uat.ireland.ie"
   project_name                  = "g2g"
   region                        = "eu-west-1"
   # DB
@@ -475,6 +475,59 @@ resource "aws_s3_bucket_policy" "private_lb_logs" {
 # Loadbalancers
 # -----------------------------------------------------------------------------
 
+
+resource "aws_subnet" "front_lb" {
+  vpc_id     = module.network.vpc_id
+  cidr_block = "10.0.16.0/24"
+  tags = {
+    Name = "NLB"
+  }
+}
+
+
+resource "aws_route_table" "nlb_route_table" {
+  vpc_id = module.network.vpc_id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = module.network.internet_gateway
+  }
+
+  tags = {
+    Name = "nlb-internet-route"
+  }
+}
+
+resource "aws_route_table_association" "nlb" {
+  subnet_id      = aws_subnet.front_lb.id
+  route_table_id = aws_route_table.nlb_route_table.id
+}
+
+resource "aws_eip" "nlb" {
+  vpc = true
+
+  tags = {
+    Name = "front_lb"
+  }
+}
+
+resource "aws_lb" "net_lb" {
+  name               = "net-lb"
+  internal           = false
+  load_balancer_type = "network"
+  enable_deletion_protection = false
+
+  subnet_mapping {
+    subnet_id        = aws_subnet.front_lb.id
+    allocation_id    = aws_eip.nlb.id
+  }
+
+  tags = {
+    Environment = "uat"
+  }
+}
+
+
 resource "aws_lb" "default" {
   name                = "${local.environment_name}-${local.project_name}"
   subnets             = module.network.public_subnet_ids
@@ -517,6 +570,34 @@ resource "aws_lb" "public_sites" {
 # -----------------------------------------------------------------------------
 
 # All sites points to this
+resource "aws_lb_target_group" "front_lb_http" {
+  name            = "${local.environment_name}-${local.project_name}-front-network-lb-http"
+  port            = 80
+  protocol        = "TCP"
+  target_type     = "alb"
+  vpc_id          = module.network.vpc_id
+}
+
+resource "aws_lb_target_group_attachment" "flb_http" {
+  target_group_arn = aws_lb_target_group.front_lb_http.arn
+  target_id        = aws_lb.default.arn
+  port             = 80
+}
+
+resource "aws_lb_target_group" "front_lb" {
+  name            = "${local.environment_name}-${local.project_name}-front-network-lb"
+  port            = 443
+  protocol        = "TCP"
+  target_type     = "alb"
+  vpc_id          = module.network.vpc_id
+}
+
+resource "aws_lb_target_group_attachment" "flb" {
+  target_group_arn = aws_lb_target_group.front_lb.arn
+  target_id        = aws_lb.public_sites.arn
+  port             = 443
+}
+
 
 resource "aws_lb_target_group" "default" {
   name            = "${local.environment_name}-${local.project_name}"
@@ -579,9 +660,29 @@ resource "aws_lb_target_group" "default_admin" {
 # SSL Certificates
 # -----------------------------------------------------------------------------
 
-resource "aws_acm_certificate" "project" {
-  domain_name                 = local.project_domain
-  subject_alternative_names   = ["www.${local.project_domain}"]
+#resource "aws_acm_certificate" "project" {
+#  domain_name                 = local.project_domain
+#  subject_alternative_names   = ["www.${local.project_domain}"]
+#  validation_method           = "DNS"
+
+#  lifecycle {
+#    create_before_destroy   = true
+#  }
+#}
+
+#resource "aws_acm_certificate" "ireland_ie_ssl" {
+#  domain_name                 = "ireland.testing.gov.ie"
+#  subject_alternative_names   = ["www.ireland.testing.gov.ie"]
+#  validation_method           = "DNS"
+
+ # lifecycle {
+  #  create_before_destroy   = true
+  #}
+#}
+
+
+resource "aws_acm_certificate" "ireland_ie_content" {
+  domain_name                 = "uat.ireland.ie"
   validation_method           = "DNS"
 
   lifecycle {
@@ -589,16 +690,14 @@ resource "aws_acm_certificate" "project" {
   }
 }
 
-resource "aws_acm_certificate" "ireland_ie_ssl" {
-  domain_name                 = local.domain_ireland_ie
-  subject_alternative_names   = ["www.${local.domain_ireland_ie}"]
+resource "aws_acm_certificate" "ireland_ie_content_admin" {
+  domain_name                 = "content.uat.ireland.ie"
   validation_method           = "DNS"
 
   lifecycle {
     create_before_destroy   = true
   }
 }
-
 
 # -----------------------------------------------------------------------------
 # Loadbalancer listeners and rules
@@ -620,12 +719,38 @@ resource "aws_lb_listener" "project_80" {
   }
 }
 
+resource "aws_lb_listener" "project_net_http" {
+  load_balancer_arn   = aws_lb.net_lb.arn
+  port                = 80
+  protocol            = "TCP"
+
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.front_lb_http.arn
+  }
+}
+
+
+resource "aws_lb_listener" "project_net" {
+  load_balancer_arn   = aws_lb.net_lb.arn
+  port                = 443
+  protocol            = "TCP"
+
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.front_lb.arn
+  }
+}
+
+
 resource "aws_lb_listener" "project_443" {
   load_balancer_arn     = aws_lb.default.arn
   port                  = 443
   protocol              = "HTTPS"
   ssl_policy            = "ELBSecurityPolicy-TLS-1-2-2017-01"
-  certificate_arn       = aws_acm_certificate.project.arn
+  certificate_arn       = aws_acm_certificate.ireland_ie_content.arn
 
   default_action {
     type = "fixed-response"
@@ -657,7 +782,7 @@ resource "aws_lb_listener" "public_sites_443" {
   port                  = 443
   protocol              = "HTTPS"
   ssl_policy            = "ELBSecurityPolicy-TLS-1-2-2017-01"
-  certificate_arn       = aws_acm_certificate.project.arn
+  certificate_arn       = aws_acm_certificate.ireland_ie_content.arn
 
   default_action {
     type = "fixed-response"
@@ -754,12 +879,12 @@ resource "aws_lb_listener_rule" "ireland_ie_443" {
 
 resource "aws_lb_listener_certificate" "ireland_ie_certificate" {
   listener_arn    = aws_lb_listener.public_sites_443.arn
-  certificate_arn = aws_acm_certificate.ireland_ie_ssl.arn
+  certificate_arn = aws_acm_certificate.ireland_ie_content.arn
 }
 
 resource "aws_lb_listener_certificate" "admin_ireland_ie_certificate" {
   listener_arn    = aws_lb_listener.project_443.arn
-  certificate_arn = aws_acm_certificate.project.arn
+  certificate_arn = aws_acm_certificate.ireland_ie_content_admin.arn
 }
 
 
