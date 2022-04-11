@@ -665,35 +665,15 @@ data "aws_acm_certificate" "ireland_ie_import" {
     domain = "www.ireland.ie"
 }
 
-resource "aws_acm_certificate" "ireland_ie" {
-  domain_name                 = "content.ireland.ie"
-  validation_method           = "DNS"
-
-  lifecycle {
-    create_before_destroy   = true
-  }
-}
 
 resource "aws_acm_certificate" "project" {
   domain_name                 = local.project_domain
-  subject_alternative_names   = ["www.${local.project_domain}"]
   validation_method           = "DNS"
 
   lifecycle {
     create_before_destroy   = true
   }
 }
-
-resource "aws_acm_certificate" "ireland_ie_ssl" {
-  domain_name                 = local.domain_ireland_ie
-  subject_alternative_names   = ["www.${local.domain_ireland_ie}"]
-  validation_method           = "DNS"
-
-  lifecycle {
-    create_before_destroy   = true
-  }
-}
-
 
 # -----------------------------------------------------------------------------
 # Loadbalancer listeners and rules
@@ -875,12 +855,12 @@ resource "aws_lb_listener_rule" "ireland_ie_443" {
 
 resource "aws_lb_listener_certificate" "ireland_ie_certificate" {
   listener_arn    = aws_lb_listener.public_sites_443.arn
-  certificate_arn = aws_acm_certificate.ireland_ie_ssl.arn
+  certificate_arn = data.aws_acm_certificate.ireland_ie_import.arn
 }
 
 resource "aws_lb_listener_certificate" "admin_ireland_ie_certificate" {
   listener_arn    = aws_lb_listener.project_443.arn
-  certificate_arn = aws_acm_certificate.ireland_ie.arn
+  certificate_arn = aws_acm_certificate.project.arn
 }
 
 
