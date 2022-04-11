@@ -312,4 +312,5 @@ def custom_header_settings(context, page):
         "logo": logo,
         "logo_alt": logo_alt,
         "links": links,
+        "site_settings": site_settings,
     }
