@@ -26,8 +26,8 @@ locals {
   elb_account_arn               = data.aws_elb_service_account.elb.arn
   environment_name              = "prod"
   app_aws_username              = "PROD_APP_USER"
-  project_domain                = "preprod.content.ireland.testing.gov.ie"
-  domain_ireland_ie             = "preprod.ireland.testing.gov.ie"
+  project_domain                = "content.ireland.ie"
+  domain_ireland_ie             = "ireland.ie"
   project_name                  = "ireland-ie"
   region                        = "eu-west-1"
   # DB
