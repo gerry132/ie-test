@@ -7,9 +7,12 @@
     <div class="header {% if custom_header.links %}header--condensed{% endif %}" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
         <div class="wrapper wrapper--large">
             <div class="header__container">
-                {% comment %} Check if global or page specific logo is set, otherwise show default {% endcomment %}
-                {% if custom_header.logo %}
-                    {% image custom_header.logo width-200 class="header__logo" alt=custom_header.logo.alt %}
+                {% comment %} 
+                The main site logo should not be overriden by any custom navs.
+                The default is the app provided SVG 
+                {% endcomment %}
+                {% if custom_header_settings.site_settings.site_logo %}
+                    {% image custom_header_settings.site_settings.site_logo width-200 class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
                 {% else %}
                     <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">
                         {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
@@ -105,8 +108,10 @@
         <div class="header header--override" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
             <div class="wrapper wrapper--large">
                 <div class="header__container">
-                    {% if custom_header.logo %}
-                        {% image custom_header.logo width-200 class="header__logo" alt=custom_header.logo.alt %}
+                    {% if custom_header_settings.site_settings.site_logo and not custom_header.logo %}
+                        {% image custom_header_settings.site_settings.site_logo width-200 class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
+                    {% elif custom_header.logo %}
+                        {% image custom_header.logo width-200 class="header__logo" alt=custom_header.logo_alt %}
                     {% else %}
                         <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">
                             {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
