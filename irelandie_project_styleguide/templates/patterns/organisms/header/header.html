@@ -3,6 +3,9 @@
 {% comment %}
     Add header--condensed class if override menu exists on a page
 {% endcomment %}
+
+{% get_current_language as language_code %}
+
 <header>
     <div class="header {% if custom_header.links %}header--condensed{% endif %}" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
         <div class="wrapper wrapper--large">
@@ -11,13 +14,14 @@
                 The main site logo should not be overriden by any custom navs.
                 The default is the app provided SVG 
                 {% endcomment %}
+
+                <a href="/{{ language_code }}/" aria-label="Ireland.ie" class="header__logo-wrapper">
                 {% if custom_header_settings.site_settings.site_logo %}
                     {% image custom_header_settings.site_settings.site_logo width-200 class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
                 {% else %}
-                    <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">
-                        {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
-                    </a>
+                    {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
                 {% endif %}
+                </a>
 
                 <div class="header__menus header__menus--desktop">
                     <div data-desktop-menu>
@@ -66,7 +70,6 @@
                                 <select name="language" id="language-switcher"
                                         onchange="this.form.submit()"
                                         class="language-switcher">
-                                    {% get_current_language as language_code %}
                                     {% for code, name in local_languages %}
                                         <option value="{{ code }}"{% if code == language_code %} selected{% endif %}>
                                             {{ name }}
@@ -108,15 +111,15 @@
         <div class="header header--override" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
             <div class="wrapper wrapper--large">
                 <div class="header__container">
+                    <a href="/{{ language_code }}/" aria-label="Ireland.ie" class="header__logo-wrapper">
                     {% if custom_header_settings.site_settings.site_logo and not custom_header.logo %}
                         {% image custom_header_settings.site_settings.site_logo width-200 class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
                     {% elif custom_header.logo %}
                         {% image custom_header.logo width-200 class="header__logo" alt=custom_header.logo_alt %}
                     {% else %}
-                        <a href="/" aria-label="Ireland.ie" class="header__logo-wrapper">
                             {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
-                        </a>
                     {% endif %}
+                    </a>
 
                     <div class="header__menus header__menus--desktop">
                         <nav class="custom-nav">

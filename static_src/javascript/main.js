@@ -1,7 +1,9 @@
 import '@babel/polyfill';
 import MobileMenu from './components/mobile-menu';
 import MobileSubMenu from './components/mobile-sub-menu';
-import DesktopSubMenu from './components/desktop-sub-menu';
+// DROPDOWN menus are disabled on desktop as it blocks the top level link.
+// This may be required in the future.
+// import DesktopSubMenu from './components/desktop-sub-menu';
 import DesktopCloseMenus from './components/desktop-close-menus';
 import SkipLink from './components/skip-link';
 import Search from './components/search';
@@ -65,11 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
         new MobileSubMenu(mobilesubmenu);
     }
 
-    for (const desktopsubmenu of document.querySelectorAll(
-        DesktopSubMenu.selector(),
-    )) {
-        new DesktopSubMenu(desktopsubmenu);
-    }
+    // DROPDOWN menus are disabled on desktop as it blocks the top level link.
+    // This may be required in the future.
+    // for (const desktopsubmenu of document.querySelectorAll(
+    //     DesktopSubMenu.selector(),
+    // )) {
+    //     new DesktopSubMenu(desktopsubmenu);
+    // }
 
     new DesktopCloseMenus();
 
