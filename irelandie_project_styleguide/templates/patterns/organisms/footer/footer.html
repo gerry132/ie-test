@@ -1,13 +1,17 @@
 {% load static wagtailcore_tags wagtailimages_tags navigation_tags util_tags i18n %}
 
+{% get_current_language as language_code %}
+
 <footer class="footer">
     <div class="wrapper wrapper--large">
         <div class="footer__header">
+            <a href="/{{ language_code }}/" aria-label="Ireland.ie">
             {% if custom_footer.logo %}
                 {% image custom_footer.logo width-200 class="footer__logo" alt=custom_footer.logo_alt %}
             {% else %}
                 {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="footer__logo footer__logo--svg" %}
             {% endif %}
+            </a>
 
             {% if custom_footer.show_social_media %}
             <div class="footer__social-links">
