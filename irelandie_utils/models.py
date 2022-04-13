@@ -575,6 +575,7 @@ class ArticlePage(BasePage):
             .public()  # type:ignore
             .live()
             .order_by("-first_published_at")[:3]
+            .specific()
         )
 
 
