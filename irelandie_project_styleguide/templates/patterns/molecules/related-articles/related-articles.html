@@ -11,11 +11,20 @@
                 {% for article in articles %}
                     {% pageurl article as href %}
                     <a href="{{ href }}" class="card{% if large %} card--large{% endif %}{% if classes %} {{ classes }}{% endif %}">
+                        {% comment %} 
+                            It's possible that neither images are set in the admin.
+                            It will fail silently, here and simply not render an image tag.
+                            To prevent the panel from collapsing still render the container div
+                        {% endcomment %}
                         <div class="card__image-container">
-                            {% image article.listing_image width-768 class="card__image" %}
+                            {% if article.listing_image %}
+                                {% image article.listing_image width-768 class="card__image" %}
+                            {% elif article.hero_image %}
+                                {% image article.hero_image width-768 class="card__image" %}
+                            {% endif %}
                         </div>
                         <div class="card__content">
-                            <h3 class="card__title">{{ article.listing_title }}</h3>
+                            <h3 class="card__title">{% if article.listing_title %}{{ article.listing_title }}{% else %}{{ article.title }}{% endif %}</h3>
 
                             {% if article.listing_summary %}
                                 <p class="card__summary">{{ article.listing_summary }}</p>
