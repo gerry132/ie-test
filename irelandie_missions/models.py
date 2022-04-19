@@ -84,7 +84,7 @@ class CountryPage(HeroPage):
         null=True,
         blank=True,
     )
-    
+
     logo_cards = StreamField(
         [("logo_cards", blocks.LogoCardsBlock())],
         blank=True,
