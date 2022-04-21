@@ -16,6 +16,14 @@
     {% if page.twitter_feed %}
         {% include "patterns/molecules/streamfield/blocks/twitter_embed.html" with value=page.twitter_feed title=page.twitter_title %}
     {% endif %}
+    
+    {% if page.logo_cards %}
+        <div class="section section--padding section--grey">
+            <div class="wrapper wrapper--large wrapper--padding">
+                {% include_block page.logo_cards %}
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block extra_js %}

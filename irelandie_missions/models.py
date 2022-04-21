@@ -85,12 +85,19 @@ class CountryPage(HeroPage):
         blank=True,
     )
 
+    logo_cards = StreamField(
+        [("logo_cards", blocks.LogoCardsBlock())],
+        blank=True,
+        max_num=1,
+    )
+
     content_panels = HeroPage.content_panels + [
         SnippetChooserPanel("region"),
         StreamFieldPanel("stories"),
         StreamFieldPanel("embeds"),
         StreamFieldPanel("featured_stories"),
         StreamFieldPanel("featured_embassies"),
+        StreamFieldPanel("logo_cards", heading="Logo Cards"),
         MultiFieldPanel([
             FieldPanel("twitter_title"),
             SnippetChooserPanel("twitter_feed"),
