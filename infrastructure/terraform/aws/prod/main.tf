@@ -581,7 +581,7 @@ resource "aws_lb_target_group" "front_lb_http" {
 
 resource "aws_lb_target_group_attachment" "flb_http" {
   target_group_arn = aws_lb_target_group.front_lb_http.arn
-  target_id        = aws_lb.default.arn
+  target_id        = aws_lb.public_sites.arn
   port             = 80
 }
 
