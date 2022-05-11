@@ -580,7 +580,7 @@ resource "aws_lb_target_group" "front_lb_http" {
 
 resource "aws_lb_target_group_attachment" "flb_http" {
   target_group_arn = aws_lb_target_group.front_lb_http.arn
-  target_id        = aws_lb.default.arn
+  target_id        = aws_lb.public_sites.arn
   port             = 80
 }
 
@@ -761,21 +761,21 @@ resource "aws_lb_listener" "project_443" {
   }
 }
 
-# resource "aws_lb_listener" "public_sites_80" {
-#   load_balancer_arn   = aws_lb.public_sites.arn
-#   port                = 80
-#   protocol            = "HTTP"
-#
-#   default_action {
-#     type = "redirect"
-#
-#     redirect {
-#       port        = "443"
-#       protocol    = "HTTPS"
-#       status_code = "HTTP_301"
-#     }
-#   }
-# }
+resource "aws_lb_listener" "public_sites_80" {
+   load_balancer_arn   = aws_lb.public_sites.arn
+   port                = 80
+   protocol            = "HTTP"
+
+   default_action {
+     type = "redirect"
+
+     redirect {
+       port        = "443"
+       protocol    = "HTTPS"
+       status_code = "HTTP_301"
+     }
+   }
+}
 
 resource "aws_lb_listener" "public_sites_443" {
   load_balancer_arn     = aws_lb.public_sites.arn
