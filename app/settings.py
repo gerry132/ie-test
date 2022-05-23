@@ -332,8 +332,8 @@ if ALLOW_MAIL is True:
     EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
     EMAIL_USE_TLS = True
     EMAIL_SUBJECT_PREFIX = os.environ["EMAIL_SUBJECT_PREFIX"]
-    SERVER_EMAIL = DEFAULT_FROM_EMAIL = 'gerard.mcbride@per.gov.ie'
-
+    SERVER_EMAIL = DEFAULT_FROM_EMAIL = os.environ["SERVER_EMAIL"]
+SERVER_EMAIL = DEFAULT_FROM_EMAIL = os.environ["SERVER_EMAIL"]
 
 # Wagtail settings
 
