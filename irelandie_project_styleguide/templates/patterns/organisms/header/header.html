@@ -17,7 +17,11 @@
 
                 <a href="/{{ language_code }}/" aria-label="Ireland.ie" class="header__logo-wrapper">
                 {% if custom_header_settings.site_settings.site_logo %}
-                    {% image custom_header_settings.site_settings.site_logo width-200 class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
+                    {% if custom_header_settings.site_settings.site_logo_alt %}
+                        {% image custom_header_settings.site_settings.site_logo width-200 class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
+                    {% else %}
+                        {% image custom_header_settings.site_settings.site_logo width-200 class="header__logo" alt=custom_header_settings.site_settings.site_logo.alt_default %}
+                    {% endif %}
                 {% else %}
                     {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
                 {% endif %}
@@ -115,7 +119,11 @@
                     {% if custom_header_settings.site_settings.site_logo and not custom_header.logo %}
                         {% image custom_header_settings.site_settings.site_logo width-200 class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
                     {% elif custom_header.logo %}
-                        {% image custom_header.logo width-200 class="header__logo" alt=custom_header.logo_alt %}
+                        {% if custom_header.logo.logo_alt %}
+                            {% image custom_header.logo width-200 class="header__logo" alt=custom_header.logo_alt %}
+                        {% else %}
+                            {% image custom_header.logo width-200 class="header__logo" alt=custom_header.logo.alt_default %}
+                        {% endif %}
                     {% else %}
                             {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
                     {% endif %}

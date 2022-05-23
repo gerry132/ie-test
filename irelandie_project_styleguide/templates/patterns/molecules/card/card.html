@@ -16,7 +16,11 @@ Example:
     <div class="card{% if not card.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
 {% endif %}
         <div class="card__image-container">
+        {% if card.image_alt %}
             {% image card.image width-500 class="card__image"  alt=card.image_alt %}
+        {% else %}
+            {% image card.image width-500 alt=card.image.alt_default class="card__image" %}
+        {% endif %}
         </div>
         <div class="card__content">
             <h3 class="card__title">{{ card.title }}</h3>
