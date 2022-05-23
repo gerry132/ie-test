@@ -38,6 +38,7 @@ locals {
   # ECS
   ecr_repository_name           = "${local.environment_name}-${local.project_name}"
   autoscaling_max_capacity      = 2
+  DEFAULT_FROM_EMAIL            = 'gerard.mcbride@per.gov.ie'
   autoscaling_min_capacity      = 1
   autoscaling_target_value      = 60
   service_contrainer_port       = 8000
@@ -1213,6 +1214,7 @@ data "template_file" "task_definition" {
     SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
     SETTINGS_CORS_ALLOW_ALL_ORIGINS     = local.SETTINGS_CORS_ALLOW_ALL_ORIGINS
     SETTINGS_EMAIL_HOST                 = local.SETTINGS_EMAIL_HOST
+    SETTINGS_DEFAULT_FROM_EMAIL         = local.SETTINGS_DEFAULT_FROM_EMAIL
   }
 }
 
