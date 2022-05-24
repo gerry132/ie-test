@@ -613,3 +613,7 @@ class FreeFormBlocks(FreeFormBlocksBase):
     logos = LogoCardsBlock(group="Module")
 
     table = TableBlock(group="HTML")
+    html = blocks.RawHTMLBlock(
+        group="HTML",
+        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
+    )
