@@ -337,8 +337,6 @@ if ALLOW_MAIL is True:
 if "DEFAULT_FROM_EMAIL" in os.environ:
     DEFAULT_FROM_EMAIL = os.environ["DEFAULT_FROM_EMAIL"]
 
-
-
 # Wagtail settings
 
 WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
