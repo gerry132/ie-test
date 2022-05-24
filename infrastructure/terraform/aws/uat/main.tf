@@ -38,7 +38,6 @@ locals {
   # ECS
   ecr_repository_name           = "${local.environment_name}-${local.project_name}"
   autoscaling_max_capacity      = 2
-  SETTINGS_DEFAULT_FROM_EMAIL   = "Gerard.McBride@per.gov.ie"
   autoscaling_min_capacity      = 1
   autoscaling_target_value      = 60
   service_contrainer_port       = 8000
@@ -1198,6 +1197,7 @@ locals {
   SETTINGS_CORS_ALLOWED_ORIGINS     = local.SETTINGS_BASE_URL
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
   SETTINGS_EMAIL_HOST               = "email.${local.region}.amazonaws.com"
+  SETTINGS_DEFAULT_FROM_EMAIL       = aws_ssm_parameter.DEFAULT_FROM_EMAIL.value
 }
 
 data "template_file" "task_definition" {
