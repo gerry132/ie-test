@@ -131,6 +131,19 @@ resource "aws_ssm_parameter" "AWS_SECRET_ACCESS_KEY" {
   }
 }
 
+resource "aws_ssm_parameter" "DEFAULT_FROM_EMAIL" {
+  name        = "${local.environment_name}_DEFAULT_FROM_EMAIL"
+  description = "For use in Codebuild buildspec - ${local.environment_name}"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
+
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
+
 resource "aws_ssm_parameter" "AWS_ACCESS_KEY_ID" {
   name        = "${local.environment_name}_AWS_ACCESS_KEY_ID"
   description = "For use in Codebuild buildspec - ${local.environment_name}"
