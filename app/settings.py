@@ -334,6 +334,8 @@ if ALLOW_MAIL is True:
     EMAIL_SUBJECT_PREFIX = os.environ["EMAIL_SUBJECT_PREFIX"]
     SERVER_EMAIL = DEFAULT_FROM_EMAIL = os.environ["SERVER_EMAIL"]
 
+if "DEFAULT_FROM_EMAIL" in os.environ:
+    DEFAULT_FROM_EMAIL = os.environ["DEFAULT_FROM_EMAIL"]
 
 # Wagtail settings
 
