@@ -6,6 +6,26 @@
     <div class="hero{% if page.hero_video %} hero--background-video{% endif %}{% if classes %} {{ classes }}{% endif %}" data-video-container>
 {% endif %}
 
+{% if page.hexcolor or page.transparency %} 
+<style>
+    .hero::before {
+    content: '';
+    background: linear-gradient(0deg, 
+                            {% if page.hexcolor %} {{page.hexcolor}} {% else %} black {% endif %} 0%, 
+                            rgba(0, 0, 0, 0) 
+                            
+                            {% if page.transparency %} {{page.transparency}}% {% else %}100% {% endif %});
+    display: block;
+    left: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+}
+</style>
+{% endif %}
+
     {% if page.hero_video %}
         <figure class="hero__video-wrapper" role="presentation">
             <video class="hero__video" autoplay loop muted data-video controls>

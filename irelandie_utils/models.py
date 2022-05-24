@@ -437,6 +437,8 @@ class HeroPage(BasePage):
     )
     link_text = models.CharField(blank=True, max_length=255)
     secondary_title = models.CharField(blank=True, max_length=255)
+    hexcolor = models.CharField(max_length=7, blank=True)
+    transparency = models.PositiveIntegerField(null=True, blank=True)
 
     def clean(self):
         if self.hero_image and self.hero_video:
@@ -460,6 +462,15 @@ class HeroPage(BasePage):
                 }
             )
 
+        if self.transparency and self.transparency > 100:
+            raise ValidationError(
+                {
+                    "transparency": ValidationError(
+                        "Value must be less than or equal to 100"
+                    )
+                }
+            )
+
     class Meta:
         abstract = True
 
@@ -471,6 +482,8 @@ class HeroPage(BasePage):
         ], "Hero Media"),
         FieldPanel("hero_title"),
         FieldPanel("summary"),
+        FieldPanel("transparency"),
+        FieldPanel("hexcolor"),
         MultiFieldPanel(
             [
                 HelpPanel("For the Call To Action to display you must set the Link text if you choose a Link Page."),
