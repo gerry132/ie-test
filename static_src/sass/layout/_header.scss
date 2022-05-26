@@ -100,19 +100,6 @@
                     justify-content: flex-start;
                 }
             }
-            
-            @include media-query(v-small) {
-                display: flex;
-                width: 100%;
-
-                #{$root}--condensed & {
-                    display: none;
-                }
-
-                #{$root}--override & {
-                    justify-content: flex-start;
-                }
-            }
         }
 
         &--mobile {
