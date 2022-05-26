@@ -51,6 +51,7 @@ $border-radius: 16px;
 
 // --------------------------------- Breakpoints --------------------------------------
 $breakpoints: (
+    'v-small' '(min-width: 200px) and (max-width: 1023px)',
     'small' '(min-width: 480px)',
     'medium' '(min-width: 599px)',
     'large' '(min-width: 1023px)'
