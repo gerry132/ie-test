@@ -107,7 +107,7 @@
             display: none;
 
             @include media-query(v-small) {
-                //position: fixed;
+                position: fixed;
                 top: $mobile-header-height;
                 left: 0;
                 display: flex;
@@ -116,7 +116,7 @@
                 padding-top: 40px;
                 border-top: 1px solid rgba($color--border, 0.5);
                 background: $color--primary;
-                //transform: translate3d(100%, 0%, 0);
+                transform: translate3d(100%, 0%, 0);
                 transition: transform 250ms cubic-bezier(0.24, 0.26, 0.2, 1) 0ms;
                 #{$root}--condensed & {
                     display: none;
