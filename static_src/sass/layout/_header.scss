@@ -20,15 +20,10 @@
     &--override {
         display: none;
 
-        @include media-query(small) {
+        @include media-query(large) {
             display: block;
             height: auto;
             top: 45px;
-        }
-        @include media-query(v-small) {
-            display: block;
-            height: auto;
-            top: 60px;
         }
     }
 
