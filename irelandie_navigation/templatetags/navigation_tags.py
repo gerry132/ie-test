@@ -51,7 +51,7 @@ def primarynav(context, page):
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
 
     navigation = get_nav_for_locale(PrimaryNavigation, locale)
-    
+
     try:
         custom_header = CustomHeader.objects.get(id=page.custom_header.id)
     except AttributeError:
