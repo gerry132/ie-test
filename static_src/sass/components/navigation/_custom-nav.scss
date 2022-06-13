@@ -42,6 +42,14 @@
             border-bottom: 0;
             margin: 0 10px;
         }
+
+        @include media-query(v-small) {
+            width: auto;
+            font-weight: $weight--normal;
+            text-align: left;
+            border-bottom: 0;
+            margin: 0 10px;
+        }
     }
 
     &__link {

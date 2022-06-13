@@ -46,14 +46,20 @@ def get_nav_for_locale(cls, locale):
 @register.inclusion_tag(
     "patterns/molecules/navigation/primarynav.html", takes_context=True
 )
-def primarynav(context):
+def primarynav(context, page):
     request = context["request"]
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
 
     navigation = get_nav_for_locale(PrimaryNavigation, locale)
+    
+    try:
+        custom_header = CustomHeader.objects.get(id=page.custom_header.id)
+    except AttributeError:
+        custom_header = None
 
     return {
         "primarynav": navigation,
+        "customnav": custom_header,
         "request": request,
     }
 

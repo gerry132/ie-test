@@ -5,28 +5,14 @@
 {% endcomment %}
 
 {% get_current_language as language_code %}
-{% if custom_header.links %}
 <style>
-    body { overflow-x:hidden; }
-    @media only screen and (min-width: 200px) and (max-width: 1023px) {
-        .header--override .header__menus--desktop {
-            justify-content: flex-start;
-            display: flex;
-            width: 100%;
-        }
-
-        .header--override {
-            top: 85px;
+    @media only screen and (min-width: 1023px) {
+        .custom-nav-mob {
+            display: none;
         }
     }
 
-    .custom-nav__link {
-        padding: 10px 28px;
-    }
-
-    
 </style>
-{% endif %}
 <header>
     <div class="header {% if custom_header.links %}header--condensed{% endif %}" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
         <div class="wrapper wrapper--large">
@@ -50,7 +36,7 @@
 
                 <div class="header__menus header__menus--desktop">
                     <div data-desktop-menu>
-                        {% primarynav %}
+                        {% primarynav page %}
                     </div>
                 </div>
 
@@ -62,7 +48,7 @@
 
                     <div class="wrapper wrapper--large wrapper--mobile-menu">
                         <div class="header__menu header__menu--primary">
-                            {% primarynav %}
+                            {% primarynav page %}
                         </div>
 
                         {% has_secondary_nav as shownav %}
