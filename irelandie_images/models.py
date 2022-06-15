@@ -5,10 +5,10 @@ from wagtail.images.models import AbstractImage, AbstractRendition, Image
 
 class CustomImage(AbstractImage):
     admin_form_fields = Image.admin_form_fields
-    alt_default = models.CharField(max_length=255, blank=True)
+    alt_text_default = models.CharField(max_length=255, blank=True)
 
     admin_form_fields = Image.admin_form_fields + (
-        'alt_default',
+        'alt_text_default',
     )
 
 
