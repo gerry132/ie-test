@@ -1,6 +1,6 @@
 {% load wagtailcore_tags i18n %}
 <nav aria-label="{% trans 'Primary navigation' %}">
-    <ul class="custom-nav-mob">
+    <ul class="custom-nav-mob" style="border-bottom: 1px solid rgba(234,236,237,.5);">
         {% for link in customnav.links %}
             {% with children=link.value.page.get_children.live.public.in_menu %}
                 <li
