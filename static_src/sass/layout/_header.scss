@@ -25,11 +25,6 @@
             height: auto;
             top: 45px;
         }
-        @include media-query(v-small) {
-            display: block;
-            height: auto;
-            top: 85px;
-        }
     }
 
     &__container {
