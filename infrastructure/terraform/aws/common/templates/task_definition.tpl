@@ -83,6 +83,10 @@
             {
                 "name": "EMAIL_HOST",
                 "value": "${SETTINGS_EMAIL_HOST}"
+            },
+            {
+                "name": "DEFAULT_FROM_EMAIL",
+                "value": "${SETTINGS_DEFAULT_FROM_EMAIL}"
             }
         ],
         "secrets": []

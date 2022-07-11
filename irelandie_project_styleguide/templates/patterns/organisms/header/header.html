@@ -5,7 +5,14 @@
 {% endcomment %}
 
 {% get_current_language as language_code %}
+<style>
+    @media only screen and (min-width: 1023px) {
+        .custom-nav-mob {
+            display: none;
+        }
+    }
 
+</style>
 <header>
     <div class="header {% if custom_header.links %}header--condensed{% endif %}" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
         <div class="wrapper wrapper--large">
@@ -17,7 +24,11 @@
 
                 <a href="/{{ language_code }}/" aria-label="Ireland.ie" class="header__logo-wrapper">
                 {% if custom_header_settings.site_settings.site_logo %}
-                    {% image custom_header_settings.site_settings.site_logo width-200 class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
+                    {% if custom_header_settings.site_settings.site_logo_alt %}
+                        {% image custom_header_settings.site_settings.site_logo width-200 class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
+                    {% else %}
+                        {% image custom_header_settings.site_settings.site_logo width-200 class="header__logo" alt=custom_header_settings.site_settings.site_logo.alt_default %}
+                    {% endif %}
                 {% else %}
                     {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
                 {% endif %}
@@ -25,7 +36,7 @@
 
                 <div class="header__menus header__menus--desktop">
                     <div data-desktop-menu>
-                        {% primarynav %}
+                        {% primarynav page %}
                     </div>
                 </div>
 
@@ -37,7 +48,7 @@
 
                     <div class="wrapper wrapper--large wrapper--mobile-menu">
                         <div class="header__menu header__menu--primary">
-                            {% primarynav %}
+                            {% primarynav page %}
                         </div>
 
                         {% has_secondary_nav as shownav %}
@@ -62,6 +73,7 @@
 
                 <div class="header__menu-items">
                     <!-- Start of the locale selector -->
+                        {% if page.get_translations.live %}
                         <form action="{% url 'set_language_wagtail' %}" method="post">
                             {% csrf_token %}
                             <input name="page_id" type="hidden" value="{{ page.id }}">
@@ -79,7 +91,7 @@
                             </div>
                         </form>
                     <!-- End of the locale selector -->
-
+                    {% endif %}
                     <button class="header__search-toggle" aria-label="{% trans 'Search' %}" data-toggle-search>
                         <svg class="header__search-icon" aria-hidden="true">
                             <use href="#magnifying-glass"></use>
@@ -108,14 +120,18 @@
         Only show this override nav if available on the page
     {% endcomment %}
     {% if custom_header.links %}
-        <div class="header header--override" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
+        <div class="header header--override header-large" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
             <div class="wrapper wrapper--large">
                 <div class="header__container">
                     <a href="/{{ language_code }}/" aria-label="Ireland.ie" class="header__logo-wrapper">
                     {% if custom_header_settings.site_settings.site_logo and not custom_header.logo %}
                         {% image custom_header_settings.site_settings.site_logo width-200 class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
                     {% elif custom_header.logo %}
-                        {% image custom_header.logo width-200 class="header__logo" alt=custom_header.logo_alt %}
+                        {% if custom_header.logo.logo_alt %}
+                            {% image custom_header.logo width-200 class="header__logo" alt=custom_header.logo_alt %}
+                        {% else %}
+                            {% image custom_header.logo width-200 class="header__logo" alt=custom_header.logo.alt_default %}
+                        {% endif %}
                     {% else %}
                             {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
                     {% endif %}

@@ -120,6 +120,19 @@ resource "aws_ssm_parameter" "DOCKER_IMAGE_URL" {
   }
 }
 
+resource "aws_ssm_parameter" "DEFAULT_FROM_EMAIL" {
+  name        = "${local.environment_name}_DEFAULT_FROM_EMAIL"
+  description = "For use in Codebuild buildspec - ${local.environment_name}"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
+
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
+
 resource "aws_ssm_parameter" "AWS_SECRET_ACCESS_KEY" {
   name        = "${local.environment_name}_AWS_SECRET_ACCESS_KEY"
   description = "For use in Codebuild buildspec - ${local.environment_name}"
@@ -581,7 +594,7 @@ resource "aws_lb_target_group" "front_lb_http" {
 
 resource "aws_lb_target_group_attachment" "flb_http" {
   target_group_arn = aws_lb_target_group.front_lb_http.arn
-  target_id        = aws_lb.default.arn
+  target_id        = aws_lb.public_sites.arn
   port             = 80
 }
 
@@ -1159,6 +1172,7 @@ locals {
   SETTINGS_CORS_ALLOWED_ORIGINS     = "${local.SETTINGS_BASE_URL},https://www.${local.project_domain}"
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
   SETTINGS_EMAIL_HOST               = "email.${local.region}.amazonaws.com"
+  SETTINGS_DEFAULT_FROM_EMAIL       = aws_ssm_parameter.DEFAULT_FROM_EMAIL.value
 }
 
 data "template_file" "task_definition" {
@@ -1188,6 +1202,7 @@ data "template_file" "task_definition" {
     SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
     SETTINGS_CORS_ALLOW_ALL_ORIGINS     = local.SETTINGS_CORS_ALLOW_ALL_ORIGINS
     SETTINGS_EMAIL_HOST                 = local.SETTINGS_EMAIL_HOST
+    SETTINGS_DEFAULT_FROM_EMAIL         = local.SETTINGS_DEFAULT_FROM_EMAIL
   }
 }
 

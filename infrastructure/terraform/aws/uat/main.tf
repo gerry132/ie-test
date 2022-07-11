@@ -130,6 +130,19 @@ resource "aws_ssm_parameter" "AWS_SECRET_ACCESS_KEY" {
   }
 }
 
+resource "aws_ssm_parameter" "DEFAULT_FROM_EMAIL" {
+  name        = "${local.environment_name}_DEFAULT_FROM_EMAIL"
+  description = "For use in Codebuild buildspec - ${local.environment_name}"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
+
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
+
 resource "aws_ssm_parameter" "AWS_ACCESS_KEY_ID" {
   name        = "${local.environment_name}_AWS_ACCESS_KEY_ID"
   description = "For use in Codebuild buildspec - ${local.environment_name}"
@@ -580,7 +593,7 @@ resource "aws_lb_target_group" "front_lb_http" {
 
 resource "aws_lb_target_group_attachment" "flb_http" {
   target_group_arn = aws_lb_target_group.front_lb_http.arn
-  target_id        = aws_lb.default.arn
+  target_id        = aws_lb.public_sites.arn
   port             = 80
 }
 
@@ -761,21 +774,21 @@ resource "aws_lb_listener" "project_443" {
   }
 }
 
-# resource "aws_lb_listener" "public_sites_80" {
-#   load_balancer_arn   = aws_lb.public_sites.arn
-#   port                = 80
-#   protocol            = "HTTP"
-#
-#   default_action {
-#     type = "redirect"
-#
-#     redirect {
-#       port        = "443"
-#       protocol    = "HTTPS"
-#       status_code = "HTTP_301"
-#     }
-#   }
-# }
+resource "aws_lb_listener" "public_sites_80" {
+   load_balancer_arn   = aws_lb.public_sites.arn
+   port                = 80
+   protocol            = "HTTP"
+
+   default_action {
+     type = "redirect"
+
+     redirect {
+       port        = "443"
+       protocol    = "HTTPS"
+       status_code = "HTTP_301"
+     }
+   }
+}
 
 resource "aws_lb_listener" "public_sites_443" {
   load_balancer_arn     = aws_lb.public_sites.arn
@@ -1184,6 +1197,7 @@ locals {
   SETTINGS_CORS_ALLOWED_ORIGINS     = local.SETTINGS_BASE_URL
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
   SETTINGS_EMAIL_HOST               = "email.${local.region}.amazonaws.com"
+  SETTINGS_DEFAULT_FROM_EMAIL       = aws_ssm_parameter.DEFAULT_FROM_EMAIL.value
 }
 
 data "template_file" "task_definition" {
@@ -1213,6 +1227,7 @@ data "template_file" "task_definition" {
     SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
     SETTINGS_CORS_ALLOW_ALL_ORIGINS     = local.SETTINGS_CORS_ALLOW_ALL_ORIGINS
     SETTINGS_EMAIL_HOST                 = local.SETTINGS_EMAIL_HOST
+    SETTINGS_DEFAULT_FROM_EMAIL         = local.SETTINGS_DEFAULT_FROM_EMAIL
   }
 }
 
