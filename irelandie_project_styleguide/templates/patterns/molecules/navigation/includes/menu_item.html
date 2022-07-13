@@ -1,7 +1,7 @@
 {% load wagtailcore_tags %}
 
-<a class="{{ nav_type }}__link" {% if has_children %}data-open-subnav{% endif %} href="{{ link_url }}" {% if has_children %}aria-haspopup="true" aria-expanded="false"{% endif %}>
-    {{ link_title }}
+<a class="{{ nav_type }}__link" {% if has_children %}data-open-subnav{% endif %} href="{{ page.url }}" {% if has_children %}aria-haspopup="true" aria-expanded="false"{% endif %}>
+    {{ page }}
     {% if has_children %}
         <span class="{{ nav_type }}__icon">
             {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="primary-nav__svg" %}
