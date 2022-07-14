@@ -233,6 +233,12 @@ class CustomHeader(TranslatableMixin):
         help_text="Internal name for this navigation, it's not displayed to a site user.",
         verbose_name=_("Name"),
     )
+    url = models.CharField(
+        max_length=255,
+        null=True,
+        help_text="URL for logo click.",
+        verbose_name=_("URL"),
+    )
     links = StreamField(
         [("link", LinkBlockExtended())],
         blank=True,
@@ -257,6 +263,7 @@ class CustomHeader(TranslatableMixin):
         MultiFieldPanel([
             ImageChooserPanel("logo"),
             FieldPanel("logo_alt"),
+            FieldPanel("url")
         ], heading="Logo"),
         FieldPanel("name"),
         StreamFieldPanel("links"),
