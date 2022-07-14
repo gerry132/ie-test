@@ -246,7 +246,7 @@
             height: auto;
             border-top: 0;
             // offset for fixed header
-            top: 128px;
+            top: $mobile-header-height;
 
             @include media-query(large) {
                 top: $desktop-header-height;
