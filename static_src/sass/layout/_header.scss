@@ -18,13 +18,9 @@
     }
 
     &--override {
-        display: none;
-
-        @include media-query(large) {
             display: block;
             height: auto;
             top: 45px;
-        }
     }
 
     &__container {
@@ -144,7 +140,7 @@
     }
 
     &__logo-wrapper {
-        @include media-query(large) {
+        @include media-query(small) {
             #{$root}--condensed & {
                 margin: 0 auto;
             }
@@ -192,7 +188,7 @@
             cursor: pointer;
         }
 
-        @include media-query(large) {
+        @include media-query(small) {
             #{$root}--condensed & {
                 padding: 0 $grid;
             }
