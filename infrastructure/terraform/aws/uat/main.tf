@@ -80,11 +80,11 @@ locals {
     ayoola_dev = {
       description = "Ayoola - Sidero"
       cidr_block  = ["109.76.23.230/32"]
-    }
+    },
     deekshana_dev = {
       description = "Deekshana - Sidero"
       cidr_block  = ["192.168.8.116/32"]
-    }
+    },
     kleverson_dev = {
       description = "Kleverson Morais - OGCIO"
       cidr_blocks = ["176.61.106.140/32"]
