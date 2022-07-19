@@ -234,6 +234,7 @@ class CustomHeader(TranslatableMixin):
         verbose_name=_("Name"),
     )
     url = models.URLField(
+        blank=True,
         max_length=255,
         null=True,
         help_text="URL for logo click.",
