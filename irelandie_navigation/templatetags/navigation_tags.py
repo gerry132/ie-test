@@ -314,6 +314,7 @@ def custom_header_settings(context, page):
         logo = site_settings.site_logo
         logo_alt = site_settings.site_logo_alt
         links = None
+        url = None
 
     return {
         "url": url,
