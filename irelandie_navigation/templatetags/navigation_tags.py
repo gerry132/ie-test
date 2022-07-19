@@ -307,6 +307,7 @@ def custom_header_settings(context, page):
         logo = custom_header.logo or site_settings.site_logo
         logo_alt = custom_header.logo_alt or site_settings.site_logo_alt
         links = custom_header.links
+        url = custom_header.url 
     else:
         # no custom header is set for the page, use the site settings
         # if the site settings has values for the fields
@@ -315,6 +316,7 @@ def custom_header_settings(context, page):
         links = None
 
     return {
+        "url": url,
         "logo": logo,
         "logo_alt": logo_alt,
         "links": links,

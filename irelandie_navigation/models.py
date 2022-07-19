@@ -233,7 +233,7 @@ class CustomHeader(TranslatableMixin):
         help_text="Internal name for this navigation, it's not displayed to a site user.",
         verbose_name=_("Name"),
     )
-    url = models.CharField(
+    url = models.URLField(
         max_length=255,
         null=True,
         help_text="URL for logo click.",
