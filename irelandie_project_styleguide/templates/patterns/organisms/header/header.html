@@ -40,7 +40,7 @@
                 The default is the app provided SVG 
                 {% endcomment %}
 
-                <a href="/{{ language_code }}/" aria-label="Ireland.ie" class="header__logo-wrapper" id="">
+                <a href="/{{ language_code }}/" aria-label="Ireland.ie" class="header__logo-wrapper">
                 {% if custom_header_settings.site_settings.site_logo %}
                     {% if custom_header_settings.site_settings.site_logo_alt %}
                         {% image custom_header_settings.site_settings.site_logo width-200 class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
@@ -143,8 +143,6 @@
                 <div class="header__container">
                     {% if custom_header.url %}
                         <a href="{{ custom_header.url }}/" aria-label="Ireland.ie" class="header__logo-wrapper">
-                    {% else %}
-                        <!--a href="/{{ language_code }}/" aria-label="Ireland.ie" class="header__logo-wrapper"-->
                     {% endif %}
                     {% if custom_header_settings.site_settings.site_logo and not custom_header.logo %}
                         {% image custom_header_settings.site_settings.site_logo width-200 class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
