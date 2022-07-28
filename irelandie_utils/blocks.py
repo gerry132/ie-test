@@ -585,7 +585,7 @@ class AccordionBlock(blocks.StructBlock):
                             ("table", TableBlock(group="table")),
                             ("document", DocumentBlock(required=False)),
                             ("youtube", YoutubeVideoBlock(group="HTML")),
-                        ])
+                        ], required=False)
                         ),
                     ]
                 ),
