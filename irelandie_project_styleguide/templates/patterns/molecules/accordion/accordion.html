@@ -44,7 +44,7 @@
                                     {% if additional.value.width %}
                                         {% new_width additional.value.iframe additional.value.width as IFRAME %}
                                         {{IFRAME|safe}}
-                                    {% else %}
+                                    {% elif additional.block_type == 'table' %}
                                         {{additional}}
                                     {% endif %}
                                 {% else %}
