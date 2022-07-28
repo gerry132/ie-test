@@ -26,12 +26,5 @@ def widget_type(bound_field):
 
 @register.simple_tag
 def new_width(iframe, width):
-    print(1243)
-    print(1243)
-    print(1243)
-    print(1243)
-    print(1243)
-    print(width)
     res = re.sub(r'width="\d{1,3}"', 'width="'+str(width)+'%"', iframe)
-    print(res)
     return res
