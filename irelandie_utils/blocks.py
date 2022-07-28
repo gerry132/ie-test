@@ -584,7 +584,7 @@ class AccordionBlock(blocks.StructBlock):
                             ("map", MapBlock()),
                             ("table", TableBlock(group="table")),
                             ("document", DocumentBlock(required=False)),
-                        ]) 
+                        ])
                         ),
                     ]
                 ),
