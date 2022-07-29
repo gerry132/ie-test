@@ -543,6 +543,11 @@ class PinnedStoriesBlock(blocks.StructBlock):
         template = "patterns/molecules/pinned-stories/pinned_stories.html"
 
 
+class MapBlock(blocks.StructBlock):
+    iframe = blocks.RawHTMLBlock(required=False)
+    width = blocks.IntegerBlock(max_num=100, required=False)
+
+
 class AccordionBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=False)
     summary = blocks.RichTextBlock(
@@ -571,10 +576,16 @@ class AccordionBlock(blocks.StructBlock):
                                     "link",
                                     "document-link",
                                     "ul",
-                                    "embed",
                                     "image",
                                 ]
                             ),
+                        ),
+                        ("additional", blocks.StreamBlock([
+                            ("map", MapBlock()),
+                            ("table", TableBlock(group="table")),
+                            ("document", DocumentBlock(required=False)),
+                            ("youtube", YoutubeVideoBlock(group="HTML")),
+                        ], required=False)
                         ),
                     ]
                 ),
