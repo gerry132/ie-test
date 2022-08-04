@@ -412,7 +412,7 @@ class Tracking(BaseSetting):
 
 
 class HeroPage(BasePage):
-    hero_title = models.CharField(blank=True, max_length=255)
+    hero_title = models.CharField(blank=True, max_length=120)
     hero_image = models.ForeignKey(
         IMAGE_MODEL,
         null=True,

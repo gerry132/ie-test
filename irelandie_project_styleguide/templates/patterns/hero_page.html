@@ -15,7 +15,9 @@
                 <h2 class="secondary-title">{{ page.secondary_title }}</h2>
             </div>
         {% endif %}
+        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
     {% else %}
+    {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
         <div class="section section--padding section--grey">
             <div class="wrapper wrapper--large wrapper--padding">
                 <div class="intro">
