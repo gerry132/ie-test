@@ -74,6 +74,7 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         ),
         required=False,
     )
+    image = ImageChooserBlock(required=False)
     title = blocks.CharBlock(
         help_text="Leave blank to use the page's own title", required=False
     )

@@ -24,6 +24,18 @@ def widget_type(bound_field):
     return slugify(camel_case_to_spaces(bound_field.field.widget.__class__.__name__))
 
 
+@register.filter
+def next(list_val, current_index):
+    """
+    Returns the next element of the list using the current index if it exists.
+    Otherwise returns an empty string.
+    """
+    try:
+        return list_val[int(current_index) + 1]
+    except Exception:
+        return None
+
+
 @register.simple_tag
 def new_width(iframe, width):
     res = re.sub(r'width="\d{1,3}"', 'width="'+str(width)+'%"', iframe)
