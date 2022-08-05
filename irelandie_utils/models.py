@@ -532,7 +532,7 @@ class ArticlePage(BasePage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
-
+    related_articles_active = models.BooleanField(default=True)
     class Meta:
         abstract = True
 
@@ -547,6 +547,7 @@ class ArticlePage(BasePage):
         ),
         SnippetChooserPanel("call_to_action"),
         StreamFieldPanel("body"),
+        FieldPanel("related_articles_active"),
         StreamFieldPanel("override_related_articles"),
     ]
 
@@ -581,11 +582,14 @@ class ArticlePage(BasePage):
                 if article.value.live
             ]
 
+        p = self.get_parent()
+
         return (
             Page.objects.exact_type(type(self))
+            .child_of(self.get_parent())
             .filter(locale=self.locale)
             .exclude(pk=self.pk)
-            .public()  # type:ignore
+            .public()
             .live()
             .order_by("-first_published_at")[:3]
             .specific()
