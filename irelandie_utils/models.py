@@ -533,7 +533,7 @@ class ArticlePage(BasePage):
         related_name="+",
     )
     related_articles_active = models.BooleanField(default=True)
-    
+
     class Meta:
         abstract = True
 
@@ -582,7 +582,6 @@ class ArticlePage(BasePage):
                 for article in self.override_related_articles
                 if article.value.live
             ]
-
 
         return (
             Page.objects.exact_type(type(self))
