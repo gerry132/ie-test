@@ -103,7 +103,10 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     )
     primary_title = blocks.CharBlock(required=False, label="Supporting title")
     title = blocks.CharBlock(required=False)
-    summary = blocks.CharBlock(required=False)
+    summary = blocks.RichTextBlock(
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul"],
+        required=False,
+    )
     alignment = blocks.ChoiceBlock(
         required=True,
         choices=StoryAlignment.choices,
