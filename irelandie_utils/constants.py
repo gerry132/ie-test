@@ -9,3 +9,8 @@ class StoryAlignment(models.TextChoices):
 class StoryBackground(models.TextChoices):
     LIGHT = 'light', 'Light'
     DARK = 'dark', 'Dark'
+
+
+class ParagraphAlignment(models.TextChoices):
+    WIDE = 'wide', 'Wide'
+    NARROW = 'narrow', 'Narrow'

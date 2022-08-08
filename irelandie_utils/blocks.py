@@ -12,7 +12,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import VideoChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 
-from irelandie_utils.constants import StoryAlignment, StoryBackground
+from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment
 
 
 class BaseBlockLinkValidation(blocks.StructBlock):
@@ -279,14 +279,6 @@ class ContactDetailBlock(blocks.PageChooserBlock):
     pass
 
 
-class HeadingBlock(blocks.StructBlock):
-    text = blocks.CharBlock()
-
-    class Meta:
-        icon = "title"
-        template = "patterns/molecules/streamfield/blocks/heading_block.html"
-
-
 class JumpboxWithImageBlock(blocks.StructBlock):
     class Meta:
         label = "JumpboxWithImageBlock"
@@ -328,12 +320,20 @@ class PlaceBlock(blocks.PageChooserBlock):
     pass
 
 
-class RichTextBlock(blocks.RichTextBlock):
+class RichTextBlock(blocks.StructBlock):
+    paragraph_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=ParagraphAlignment.choices,
+        default=ParagraphAlignment.WIDE,
+    )
+    heading = blocks.CharBlock(required=False)
+    rich_text = blocks.RichTextBlock(
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul"], required=False,
+    )
+
     class Meta:
         label = "RichTextBlock"
         template = "patterns/molecules/streamfield/blocks/paragraph_block.html"
-
-    pass
 
 
 class RoleBlock(blocks.PageChooserBlock):
@@ -514,11 +514,7 @@ class FeaturedArticlesBlock(blocks.StructBlock):
 
 
 class ArticleStoryBlock(blocks.StreamBlock):
-    heading = HeadingBlock(group="Base")
-    rich_text = RichTextBlock(
-        features=["h3", "blockquote", "bold", "link", "document-link", "ul"],
-        group="Base"
-    )
+    rich_text = RichTextBlock(group="Base")
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
 
@@ -587,7 +583,7 @@ class AccordionBlock(blocks.StructBlock):
                             ("document", DocumentBlock(required=False)),
                             ("youtube", YoutubeVideoBlock(group="HTML")),
                         ], required=False)
-                        ),
+                         ),
                     ]
                 ),
             )
@@ -616,11 +612,7 @@ class FreeFormBlocksBase(blocks.StreamBlock):
 
 
 class FreeFormBlocks(FreeFormBlocksBase):
-    heading = HeadingBlock(group="Base")
-    rich_text = RichTextBlock(
-        features=["h3", "blockquote", "bold", "link", "document-link", "ul"],
-        group="Base",
-    )
+    rich_text = RichTextBlock(group="Base")
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
     accordion = AccordionBlock(group="Base")
