@@ -25,6 +25,10 @@
                     <div class="wrapper wrapper--large wrapper--padding">
                         {% include_block block %}
                     </div>
+                {% elif block.block_type == 'heading' or block.block_type == 'rich_text' %}
+                    <div class="wrapper wrapper--large wrapper--padding">
+                        {% include_block block %}
+                    </div>
                 {% else %}
                     <div class="wrapper wrapper--small wrapper--padding">
                         {% include_block block %}
@@ -34,8 +38,7 @@
         </div>
 
         <!-- related_articles -->
-        {% if page.related_articles_active %}
-            {% include "patterns/molecules/related-articles/related-articles.html" with articles=page.related_articles %}
-        {% endif %}
+        {% include "patterns/molecules/related-articles/related-articles.html" with articles=page.related_articles %}
+
     {% endblock %}
 {% endblock %}
