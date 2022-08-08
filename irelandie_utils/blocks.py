@@ -50,10 +50,13 @@ class BaseBlockLinkContext(blocks.StructBlock):
             context["link_url"] = None
 
         try:
-            if value["page"]:
-                context["link_title"] = value["page"].title
-            elif value["url"]:
+            if value["title"]:
                 context["link_title"] = value["title"]
+            else:
+                if value["page"]:
+                    context["link_title"] = value["page"].title
+                elif value["url"]:
+                    context["link_title"] = value["title"]
 
         except KeyError:
             context["link_title"] = None
