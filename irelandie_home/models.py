@@ -125,7 +125,9 @@ class TopicPage(HeroPage):
         [
             (
                 "rich_text",
-                blocks.RichTextBlock(),
+                wagtail_blocks.RichTextBlock(
+                    features=["h3", "blockquote", "bold", "link", "document-link", "ul"]
+                ),
             ),
         ],
         blank=True,
