@@ -16,9 +16,13 @@ from irelandie_utils.constants import StoryAlignment, StoryBackground, Paragraph
 
 
 ALT_HELP_TEXT = """A short one-sentence literal description
-                    of the image/video (delete as necessary) is
+                    of the %s is
                     required to make the page accessible to the
                     visually impaired. Details: https://axesslab.com/alt-texts/"""
+
+
+ALT_VID = ALT_HELP_TEXT % 'video'
+ALT_IMAGE = ALT_HELP_TEXT % 'image'
 
 
 class BaseBlockLinkValidation(blocks.StructBlock):
@@ -102,7 +106,7 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
         required=True,
-        help_text=_(ALT_HELP_TEXT),
+        help_text=_(ALT_IMAGE),
     )
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -144,7 +148,7 @@ class TopStoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
         required=True,
-        help_text=_(ALT_HELP_TEXT),
+        help_text=_(ALT_IMAGE),
     )
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -217,7 +221,7 @@ class PinnedStoryHeroBlock(BaseBlockLinkValidation):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
         required=True,
-        help_text=_(ALT_HELP_TEXT),
+        help_text=_(ALT_IMAGE),
     )
     title = blocks.CharBlock(required=False)
     summary = blocks.CharBlock(required=False)
@@ -238,7 +242,7 @@ class PinnedStoryBlock(BaseBlockLinkValidation):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
         required=True,
-        help_text=_(ALT_HELP_TEXT),
+        help_text=_(ALT_IMAGE),
     )
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -257,7 +261,7 @@ class ImageBlock(blocks.StructBlock):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
         required=True,
-        help_text=_(ALT_HELP_TEXT),
+        help_text=_(ALT_IMAGE),
     )
     caption = blocks.CharBlock(required=False)
 
@@ -407,7 +411,7 @@ class YoutubeVideoBlock(blocks.StructBlock):
 class CustomVideoChooserBlock(VideoChooserBlock):
     video_alt = blocks.CharBlock(
         required=True,
-        help_text=_(ALT_HELP_TEXT),
+        help_text=_(ALT_VID),
     )
 
     class Meta:
@@ -420,7 +424,7 @@ class CustomVideoChooserBlockAlt(blocks.StructBlock):
     video = CustomVideoChooserBlock()
     video_alt = blocks.CharBlock(
         required=True,
-        help_text=_(ALT_HELP_TEXT),
+        help_text=_(ALT_VID),
     )
 
     class Meta:
@@ -438,7 +442,7 @@ class LogoCardBlock(blocks.StructBlock):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
         required=True,
-        help_text=_(ALT_HELP_TEXT),
+        help_text=_(ALT_IMAGE),
     )
     title = blocks.CharBlock()
     summary = blocks.TextBlock()
@@ -465,7 +469,7 @@ class ArticleCardBlock(blocks.StructBlock):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
         required=True,
-        help_text=_(ALT_HELP_TEXT),
+        help_text=_(ALT_IMAGE),
     )
     title = blocks.CharBlock()
     summary = blocks.TextBlock()

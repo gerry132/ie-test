@@ -35,6 +35,12 @@ SEARCH_DESCRIPTION_LABEL = "Meta description"  # NOTE changing this requires mig
 IMAGE_MODEL = get_image_model_string()
 
 
+ALT_HELP_TEXT = """A short one-sentence literal description
+                    of the video/image is
+                    required to make the page accessible to the
+                    visually impaired. Details: https://axesslab.com/alt-texts/"""
+
+
 class LinkFields(models.Model):
     """
     Adds fields for internal and external links with some methods to simplify the rendering:
@@ -427,6 +433,10 @@ class HeroPage(BasePage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    alt_text = models.CharField(blank=False,
+                                null=True,
+                                max_length=255,
+                                help_text=ALT_HELP_TEXT)
     summary = models.CharField(blank=True, max_length=255)
     link_page = models.ForeignKey(
         Page,
@@ -481,6 +491,7 @@ class HeroPage(BasePage):
             MediaChooserPanel("hero_video", media_type="video", classname="col6"),
         ], "Hero Media"),
         FieldPanel("hero_title"),
+        FieldPanel("alt_text"),
         FieldPanel("summary"),
         FieldPanel("transparency"),
         FieldPanel("hexcolor"),
