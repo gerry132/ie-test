@@ -1,24 +1,27 @@
 {% load wagtailcore_tags i18n %}
+{% load util_tags %}
 
 {% if page.get_ancestors|length > 2 %}
     <nav aria-label="breadcrumb">
         <ul class="breadcrumbs-nav">
-            {% for ancestor_page in page.get_ancestors %}
+            {% get_starting_index page.get_ancestors as INDEX %}
+            {% for ancestor_page in INDEX %}
                 {% if not ancestor_page.is_root %}
                     {% if ancestor_page.depth > 2 %}
                         <li class="breadcrumbs-nav__item">
                             <a class="breadcrumbs-nav__link" href="{% pageurl ancestor_page %}">{{ ancestor_page.title }}</a>
-                            >
+                            <div class="arrow-next"></div>
                         </li>
                     {% else %}
-                        <li class="nav__item nav__item--breadcrumb">
-                            <a class="nav__link nav__link--breadcrumb" href="/">
+                        <li class="breadcrumbs-nav__item">
+                            <a class="nav__link nav__link--breadcrumb" style="padding-right: 5px;" href="/">
                                 {% trans 'Home' %}
                             </a>
-                            >
+                            <div class="arrow-next"></div>
                         </li>
                     {% endif %}
                 {% endif %}
+                
             {% endfor %}
             <li class="breadcrumbs-nav__item">{{ page.title }}</li>
         </ul>
