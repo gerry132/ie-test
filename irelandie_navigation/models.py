@@ -18,6 +18,16 @@ from irelandie_navigation.mixins import SocialMediaFieldsMixin
 IMAGE_MODEL = get_image_model_string()
 
 
+ALT_HELP_TEXT = """A short one-sentence literal description
+                    of the %s is
+                    required to make the page accessible to the
+                    visually impaired. Details: https://axesslab.com/alt-texts/"""
+
+
+ALT_VID = ALT_HELP_TEXT % 'video'
+ALT_IMAGE = ALT_HELP_TEXT % 'image'
+
+
 @register_setting(icon="list-ul")
 class SiteSettings(BaseSetting, ClusterableModel):
     # The settings here are currently unused.
@@ -31,9 +41,9 @@ class SiteSettings(BaseSetting, ClusterableModel):
     )
     site_logo_alt = models.CharField(
         max_length=255,
-        blank=True,
+        blank=False,
         verbose_name=_("Logo Alt text"),
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        help_text=_(ALT_IMAGE),
     )
 
     google_my_map = models.TextField(
@@ -196,9 +206,9 @@ class CustomFooter(SocialMediaFieldsMixin, TranslatableMixin):
     )
     logo_alt = models.CharField(
         max_length=255,
-        blank=True,
+        blank=False,
         verbose_name=_("Logo Alt text"),
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        help_text=_(ALT_IMAGE),
     )
 
     panels = [
@@ -255,9 +265,9 @@ class CustomHeader(TranslatableMixin):
     )
     logo_alt = models.CharField(
         max_length=255,
-        blank=True,
+        blank=False,
         verbose_name=_("Logo Alt text"),
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        help_text=_(ALT_IMAGE),
     )
 
     panels = [
