@@ -1,9 +1,9 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 
 {% if page.hero_image %}
-    <div class="hero hero--background-image background-image{% if classes %} {{ classes }}{% endif %}">
+    <div alt="{{page.alt_text}}" class="hero hero--background-image background-image{% if classes %} {{ classes }}{% endif %}">
 {% else %}
-    <div class="hero{% if page.hero_video %} hero--background-video{% endif %}{% if classes %} {{ classes }}{% endif %}" data-video-container>
+    <div alt="{{page.alt_text}}" class="hero{% if page.hero_video %} hero--background-video{% endif %}{% if classes %} {{ classes }}{% endif %}" data-video-container>
 {% endif %}
 
 {% if page.hexcolor or page.transparency %} 
