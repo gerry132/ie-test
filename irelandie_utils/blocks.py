@@ -15,6 +15,12 @@ from wagtail.snippets.blocks import SnippetChooserBlock
 from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment
 
 
+ALT_HELP_TEXT = """A short one-sentence literal description
+                    of the image/video (delete as necessary) is
+                    required to make the page accessible to the
+                    visually impaired. Details: https://axesslab.com/alt-texts/"""
+
+
 class BaseBlockLinkValidation(blocks.StructBlock):
     def clean(self, value):
         errors = {}
@@ -95,8 +101,8 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        required=True,
+        help_text=_(ALT_HELP_TEXT),
     )
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -137,8 +143,8 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 class TopStoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        required=True,
+        help_text=_(ALT_HELP_TEXT),
     )
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -210,8 +216,8 @@ class AlernatePinnedStoryHeroLinkText(StructValue):
 class PinnedStoryHeroBlock(BaseBlockLinkValidation):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        required=True,
+        help_text=_(ALT_HELP_TEXT),
     )
     title = blocks.CharBlock(required=False)
     summary = blocks.CharBlock(required=False)
@@ -231,8 +237,8 @@ class PinnedStoryHeroBlock(BaseBlockLinkValidation):
 class PinnedStoryBlock(BaseBlockLinkValidation):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        required=True,
+        help_text=_(ALT_HELP_TEXT),
     )
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -250,8 +256,8 @@ class PinnedStoryBlock(BaseBlockLinkValidation):
 class ImageBlock(blocks.StructBlock):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        required=True,
+        help_text=_(ALT_HELP_TEXT),
     )
     caption = blocks.CharBlock(required=False)
 
@@ -399,12 +405,28 @@ class YoutubeVideoBlock(blocks.StructBlock):
 
 
 class CustomVideoChooserBlock(VideoChooserBlock):
+    video_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_HELP_TEXT),
+    )
+
+    class Meta:
+        icon = "media"
+        label = "Custom Video Chooser"
+        template = "patterns/molecules/streamfield/blocks/video_block_alt.html"
+
+
+class CustomVideoChooserBlockAlt(blocks.StructBlock):
+    video = CustomVideoChooserBlock()
+    video_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_HELP_TEXT),
+    )
+
     class Meta:
         icon = "media"
         label = "Custom Video Chooser"
         template = "patterns/molecules/streamfield/blocks/video_block.html"
-
-    pass
 
 
 class BaseSectionBlock(blocks.StructBlock):
@@ -415,8 +437,8 @@ class BaseSectionBlock(blocks.StructBlock):
 class LogoCardBlock(blocks.StructBlock):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        required=True,
+        help_text=_(ALT_HELP_TEXT),
     )
     title = blocks.CharBlock()
     summary = blocks.TextBlock()
@@ -442,8 +464,8 @@ class LogoCardsBlock(blocks.StructBlock):
 class ArticleCardBlock(blocks.StructBlock):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        required=True,
+        help_text=_(ALT_HELP_TEXT),
     )
     title = blocks.CharBlock()
     summary = blocks.TextBlock()
@@ -532,7 +554,7 @@ class ArticleStoryBlock(blocks.StreamBlock):
     )
     role = RoleBlock(group="HTML")
     table = TableBlock(group="HTML")
-    video = CustomVideoChooserBlock(group="HTML")
+    video = CustomVideoChooserBlockAlt(group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
 
 
@@ -611,7 +633,7 @@ class FreeFormBlocksBase(blocks.StreamBlock):
     pinned_stories = PinnedStoriesBlock(group="Module")
     stories = StoryBlock(group="Module")
 
-    video = CustomVideoChooserBlock(group="HTML")
+    video = CustomVideoChooserBlockAlt(group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
 
     person = PersonBlock(group="Snippets")
