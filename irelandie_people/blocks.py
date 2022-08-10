@@ -6,7 +6,6 @@ from irelandie_utils import blocks
 from irelandie_utils.blocks import StoryLinkBlock
 
 
-
 ALT_HELP_TEXT = """A short one-sentence literal description
                     of the %s is
                     required to make the page accessible to the
