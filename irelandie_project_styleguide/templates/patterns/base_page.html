@@ -14,7 +14,7 @@
   gtag('js', new Date());
   gtag('config', 'G-8SKCHMSHZP');
 </script>
-    
+
     <!-- End Google Tag Manager -->
     {% if GOOGLE_TAG_MANAGER_ID %}
         {# To enable GTM code you need to specify GOOGLE_TAG_MANAGER_ID in Django settings #}
@@ -104,6 +104,8 @@
 
     {% custom_header_settings page as custom_header_settings %}
     {% include "patterns/organisms/header/header.html" with custom_header=custom_header_settings %}
+    {% block notice_bar %}
+    {% endblock %}
 {% endblock header %}
 
 {% block footer %}

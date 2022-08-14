@@ -14,6 +14,7 @@ class AlertPageIndex(Page, TranslatableMixin):
 
 
 class AlertPage(Page, TranslatableMixin):
+    template = "patterns/molecules/streamfield/blocks/alert_block.html"
 
     DEFAULT_ALERT_TYPE_CHOICE = ("info", "Info")
     ALERT_TYPE_CHOICES = [
