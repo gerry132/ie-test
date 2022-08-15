@@ -10,7 +10,7 @@
     padding: 10px 20px;
     transition: background-color $transition, color $transition;
 
-    @include media-query(medium) {
+    @include media-query(small) {
         flex: 0 0 50%;
         max-width: 50%;
         padding: 15px 30px;
@@ -28,6 +28,12 @@
     }
 
     &__icon {
+        margin-right: 15px;
+        height: 45px;
+        width: 48px;
+    }
+
+    &__img {
         margin-right: 15px;
         height: 45px;
         width: 48px;
@@ -60,3 +66,75 @@
         }
     }
 }
+
+
+
+@media only screen and (max-width: 400px) {
+    .slider-desktop {
+        display: none;
+    }
+
+    .slider-mobile {
+        display: inline;
+    }
+}
+
+@media only screen and (min-width: 401px) {
+    .slider-mobile {
+        display: none;
+    }
+
+    .slider-desktop {
+        display: inline;
+    }
+}
+
+
+.slider-desktop, .slider-mobile {
+    width: 100%;
+    max-width: 100%;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .slide, .slide-mobile {
+    width: 100%;
+    max-width: 100%;
+    height: 350px;
+    position: absolute;
+    transition: all 0.5s;
+  }
+  
+  .slide img {
+    object-fit: cover;
+  }
+  
+  .btn {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    border: none;
+    border-radius: 30%;
+    cursor: pointer;
+    background-color: #fff;
+    font-size: 18px;
+  }
+  
+  .btn:active {
+    transform: scale(1.1);
+  }
+  
+  .btn-prev {
+      
+    top: 50%;
+    left: -3%;
+    background-image: url('../images/cssBackgrounds/navigation_left.png');
+  }
+  
+  .btn-next {
+    top: 50%;
+    right: -3%;
+    background-image: url('../images/cssBackgrounds/navigation_right.png');
+  }

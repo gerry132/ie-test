@@ -1,49 +1,8 @@
 .story {
     $root: &;
-    background-image: url('../images/cssBackgrounds/ireland-outline-bg.svg');
-    background-repeat: no-repeat;
-    background-size: 600px 700px;
-    background-position: 100% 100%;
-    position: relative;
-    overflow: hidden;
-    z-index: 2;
-
-    &::before {
-        content: '';
-        background-image: url('../images/cssBackgrounds/background-circles-dark.svg');
-        height: 100%;
-        width: 100%;
-        display: block;
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        position: absolute;
-        right: 0;
-        top: 0;
-        z-index: 0;
-    }
-
-    &::after {
-        content: '';
-        background-image: url('../images/cssBackgrounds/background-dots.svg');
-        height: 84px;
-        width: 242px;
-        display: block;
-        background-size: 100%;
-        background-position: center;
-        position: absolute;
-        right: 0;
-        top: 0;
-        z-index: 0;
-    }
 
     &--dark {
         background-color: $color--background-grey;
-
-        &::before {
-            background-image: url('../images/cssBackgrounds/background-circles-light.svg');
-            background-size: cover;
-        }
     }
 
     &__container {

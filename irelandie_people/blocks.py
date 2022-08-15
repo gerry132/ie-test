@@ -6,14 +6,23 @@ from irelandie_utils import blocks
 from irelandie_utils.blocks import StoryLinkBlock
 
 
+ALT_HELP_TEXT = """A short one-sentence literal description
+                    of the %s is
+                    required to make the page accessible to the
+                    visually impaired. Details: https://axesslab.com/alt-texts/"""
+
+
+ALT_VID = ALT_HELP_TEXT % 'video'
+ALT_IMAGE = ALT_HELP_TEXT % 'image'
+
+
 class PersonPageSectionBlock(blocks.BaseSectionBlock):
     class Meta:
         label = "SectionBlock"
         template = "TODO"
 
     image = ImageChooserBlock()
-    # TODO not implementing this yet
-    # image_alt = wagtail_blocks.CharBlock(required=False)
+    image_alt = wagtail_blocks.CharBlock(required=True, help_text=ALT_IMAGE)
     page = wagtail_blocks.PageChooserBlock(required=False)
 
     body = wagtail_blocks.StreamBlock(
