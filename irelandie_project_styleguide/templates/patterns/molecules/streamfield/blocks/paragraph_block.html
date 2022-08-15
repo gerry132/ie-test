@@ -1,12 +1,4 @@
 {% load wagtailcore_tags %}
 <div class="rich-text">
-    {% if value.paragraph_alignment == 'narrow' %}
-        <div class="rich-text rich-text__narrow">
-            <h2 class="heading-block heading heading--2">{{ value.heading }}</h2>
-            {{ value }}
-        </div>
-    {% else %}
-        <h2 class="heading-block heading heading--2">{{ value.heading }}</h2>
-        {{ value.rich_text }}
-    {% endif %}
+    {{ value }}
 </div>
