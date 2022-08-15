@@ -12,7 +12,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import VideoChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 
-from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment
+from irelandie_utils.constants import StoryAlignment, StoryBackground
 
 
 ALT_HELP_TEXT = """A short one-sentence literal description
@@ -336,16 +336,7 @@ class PlaceBlock(blocks.PageChooserBlock):
     pass
 
 
-class RichTextBlock(blocks.StructBlock):
-    paragraph_alignment = blocks.ChoiceBlock(
-        required=False,
-        choices=ParagraphAlignment.choices,
-        default=ParagraphAlignment.WIDE,
-    )
-    heading = blocks.CharBlock(required=False)
-    rich_text = blocks.RichTextBlock(
-        features=["h3", "blockquote", "bold", "link", "document-link", "ul"], required=False,
-    )
+class RichTextBlock(blocks.RichTextBlock):
 
     class Meta:
         label = "RichTextBlock"
