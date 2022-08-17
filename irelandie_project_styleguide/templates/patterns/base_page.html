@@ -104,9 +104,11 @@
 
     {% custom_header_settings page as custom_header_settings %}
     {% include "patterns/organisms/header/header.html" with custom_header=custom_header_settings %}
-    {% block notice_bar %}
-    {% endblock %}
 {% endblock header %}
+
+{% block notice_bar %}
+
+{% endblock %}
 
 {% block footer %}
     {% custom_footer_settings page as custom_footer_settings %}
