@@ -177,6 +177,35 @@ def has_root_override(context, page):
 
     return False
 
+
+# NOTICE BAR
+# ----------------------------------------------------------------------
+# The message for the notice bar is managed in the NoticeBar
+# snippets model.
+@register.inclusion_tag(
+    "patterns/molecules/notice-bar/noticebar.html", takes_context=True
+)
+def noticebar(context):
+    request = context["request"]
+    locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
+
+    noticebar = get_notice_bar_for_locale(NoticeBar, locale)
+
+    return {
+        "noticebar": noticebar,
+        "request": request,
+    }
+
+
+@register.simple_tag(
+    takes_context=True
+)
+def has_notice_bar(context):
+    request = context["request"]
+    locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
+    return bool(get_notice_bar_for_locale(NoticeBar, locale))
+
+
 # FOOTER NAVIGATION
 # ----------------------------------------------------------------------
 # The data for the footer navigation is managed in the FooterNavigation
