@@ -10,15 +10,17 @@
                     {% if ancestor_page.depth > 2 %}
                         <li class="breadcrumbs-nav__item">
                             <a class="breadcrumbs-nav__link" href="{% pageurl ancestor_page %}">{{ ancestor_page.title }}</a>
-                            <div class="arrow-next"></div>
+                            
                         </li>
+                        <a href="{% pageurl ancestor_page %}" class="arrow-next"></a>
                     {% else %}
                         <li class="breadcrumbs-nav__item">
                             <a class="nav__link nav__link--breadcrumb" style="padding-right: 5px;" href="/">
                                 {% trans 'Home' %}
                             </a>
-                            <div class="arrow-next"></div>
+                            
                         </li>
+                        <a href="/" class="arrow-next"></a>
                     {% endif %}
                 {% endif %}
                 
