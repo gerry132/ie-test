@@ -176,6 +176,7 @@ def has_root_override(context, page):
                 return m.root_navigation
 
     return False
+
 # FOOTER NAVIGATION
 # ----------------------------------------------------------------------
 # The data for the footer navigation is managed in the FooterNavigation
