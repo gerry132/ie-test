@@ -15,6 +15,16 @@ from wagtail.snippets.blocks import SnippetChooserBlock
 from irelandie_utils.constants import StoryAlignment, StoryBackground
 
 
+ALT_HELP_TEXT = """A short one-sentence literal description
+                    of the %s is
+                    required to make the page accessible to the
+                    visually impaired. Details: https://axesslab.com/alt-texts/"""
+
+
+ALT_VID = ALT_HELP_TEXT % 'video'
+ALT_IMAGE = ALT_HELP_TEXT % 'image'
+
+
 class BaseBlockLinkValidation(blocks.StructBlock):
     def clean(self, value):
         errors = {}
@@ -50,10 +60,13 @@ class BaseBlockLinkContext(blocks.StructBlock):
             context["link_url"] = None
 
         try:
-            if value["page"]:
-                context["link_title"] = value["page"].title
-            elif value["url"]:
+            if value["title"]:
                 context["link_title"] = value["title"]
+            else:
+                if value["page"]:
+                    context["link_title"] = value["page"].title
+                elif value["url"]:
+                    context["link_title"] = value["title"]
 
         except KeyError:
             context["link_title"] = None
@@ -92,8 +105,8 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        required=True,
+        help_text=_(ALT_IMAGE),
     )
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -103,7 +116,10 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     )
     primary_title = blocks.CharBlock(required=False, label="Supporting title")
     title = blocks.CharBlock(required=False)
-    summary = blocks.CharBlock(required=False)
+    summary = blocks.RichTextBlock(
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul"],
+        required=False,
+    )
     alignment = blocks.ChoiceBlock(
         required=True,
         choices=StoryAlignment.choices,
@@ -131,8 +147,8 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 class TopStoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        required=True,
+        help_text=_(ALT_IMAGE),
     )
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -204,8 +220,8 @@ class AlernatePinnedStoryHeroLinkText(StructValue):
 class PinnedStoryHeroBlock(BaseBlockLinkValidation):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        required=True,
+        help_text=_(ALT_IMAGE),
     )
     title = blocks.CharBlock(required=False)
     summary = blocks.CharBlock(required=False)
@@ -225,8 +241,8 @@ class PinnedStoryHeroBlock(BaseBlockLinkValidation):
 class PinnedStoryBlock(BaseBlockLinkValidation):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        required=True,
+        help_text=_(ALT_IMAGE),
     )
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -244,8 +260,8 @@ class PinnedStoryBlock(BaseBlockLinkValidation):
 class ImageBlock(blocks.StructBlock):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        required=True,
+        help_text=_(ALT_IMAGE),
     )
     caption = blocks.CharBlock(required=False)
 
@@ -277,14 +293,6 @@ class ContactDetailBlock(blocks.PageChooserBlock):
         template = "patterns/molecules/streamfield/blocks/contact_block.html"
 
     pass
-
-
-class HeadingBlock(blocks.StructBlock):
-    text = blocks.CharBlock()
-
-    class Meta:
-        icon = "title"
-        template = "patterns/molecules/streamfield/blocks/heading_block.html"
 
 
 class JumpboxWithImageBlock(blocks.StructBlock):
@@ -329,11 +337,10 @@ class PlaceBlock(blocks.PageChooserBlock):
 
 
 class RichTextBlock(blocks.RichTextBlock):
+
     class Meta:
         label = "RichTextBlock"
         template = "patterns/molecules/streamfield/blocks/paragraph_block.html"
-
-    pass
 
 
 class RoleBlock(blocks.PageChooserBlock):
@@ -393,12 +400,28 @@ class YoutubeVideoBlock(blocks.StructBlock):
 
 
 class CustomVideoChooserBlock(VideoChooserBlock):
+    video_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_VID),
+    )
+
+    class Meta:
+        icon = "media"
+        label = "Custom Video Chooser"
+        template = "patterns/molecules/streamfield/blocks/video_block_alt.html"
+
+
+class CustomVideoChooserBlockAlt(blocks.StructBlock):
+    video = CustomVideoChooserBlock()
+    video_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_VID),
+    )
+
     class Meta:
         icon = "media"
         label = "Custom Video Chooser"
         template = "patterns/molecules/streamfield/blocks/video_block.html"
-
-    pass
 
 
 class BaseSectionBlock(blocks.StructBlock):
@@ -409,8 +432,8 @@ class BaseSectionBlock(blocks.StructBlock):
 class LogoCardBlock(blocks.StructBlock):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        required=True,
+        help_text=_(ALT_IMAGE),
     )
     title = blocks.CharBlock()
     summary = blocks.TextBlock()
@@ -436,8 +459,8 @@ class LogoCardsBlock(blocks.StructBlock):
 class ArticleCardBlock(blocks.StructBlock):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+        required=True,
+        help_text=_(ALT_IMAGE),
     )
     title = blocks.CharBlock()
     summary = blocks.TextBlock()
@@ -514,11 +537,7 @@ class FeaturedArticlesBlock(blocks.StructBlock):
 
 
 class ArticleStoryBlock(blocks.StreamBlock):
-    heading = HeadingBlock(group="Base")
-    rich_text = RichTextBlock(
-        features=["h3", "blockquote", "bold", "link", "document-link", "ul"],
-        group="Base"
-    )
+    rich_text = RichTextBlock(group="Base")
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
 
@@ -530,7 +549,7 @@ class ArticleStoryBlock(blocks.StreamBlock):
     )
     role = RoleBlock(group="HTML")
     table = TableBlock(group="HTML")
-    video = CustomVideoChooserBlock(group="HTML")
+    video = CustomVideoChooserBlockAlt(group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
 
 
@@ -587,7 +606,7 @@ class AccordionBlock(blocks.StructBlock):
                             ("document", DocumentBlock(required=False)),
                             ("youtube", YoutubeVideoBlock(group="HTML")),
                         ], required=False)
-                        ),
+                         ),
                     ]
                 ),
             )
@@ -609,18 +628,14 @@ class FreeFormBlocksBase(blocks.StreamBlock):
     pinned_stories = PinnedStoriesBlock(group="Module")
     stories = StoryBlock(group="Module")
 
-    video = CustomVideoChooserBlock(group="HTML")
+    video = CustomVideoChooserBlockAlt(group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
 
     person = PersonBlock(group="Snippets")
 
 
 class FreeFormBlocks(FreeFormBlocksBase):
-    heading = HeadingBlock(group="Base")
-    rich_text = RichTextBlock(
-        features=["h3", "blockquote", "bold", "link", "document-link", "ul"],
-        group="Base",
-    )
+    rich_text = RichTextBlock(group="Base")
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
     accordion = AccordionBlock(group="Base")

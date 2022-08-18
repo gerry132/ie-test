@@ -1,0 +1,10 @@
+{% load i18n %}
+
+<div class="streamfield">
+    <figure class="video-block">
+        <video alt="value.video_alt" class="video-block__video" aria-label="{{ value.video.title }}" title="{{ value.video.title }}" autoplay loop muted data-video controls>
+            <source src="{{ value.video.url }}" type="video/mp4">
+            {% trans 'Your browser does not support the video tag.' %}
+        </video>
+    </figure>
+</div>

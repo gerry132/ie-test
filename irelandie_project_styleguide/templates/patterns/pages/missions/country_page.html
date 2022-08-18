@@ -4,19 +4,21 @@
 {% block main %}
     {% include_block page.stories %}
     {% include_block page.embeds %}
-
-    <div class="section section--padding section--grey">
-        <div class="wrapper wrapper--large">
-            <div class="featured-blocks">
-                {% include_block page.featured_stories %}
-                {% include_block page.featured_embassies %}
+    {% if page.featured_stories or page.featured_embassies %}
+        <div class="section section--padding section--grey">
+            <div class="wrapper wrapper--large">
+                <div class="featured-blocks">
+                    {% include_block page.featured_stories %}
+                    {% include_block page.featured_embassies %}
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
+
     {% if page.twitter_feed %}
         {% include "patterns/molecules/streamfield/blocks/twitter_embed.html" with value=page.twitter_feed title=page.twitter_title %}
     {% endif %}
-    
+
     {% if page.logo_cards %}
         <div class="section section--padding section--grey">
             <div class="wrapper wrapper--large wrapper--padding">
