@@ -133,8 +133,6 @@ class MissionPage(BasePage):
     ]
 
 
-
-
 class MissionHome(BasePage):
     template = "irelandie_assets/pages/mission.html"
 
@@ -152,7 +150,7 @@ class MissionHome(BasePage):
     )
 
     root_page = models.BooleanField(null=True)
-    
+
     content_panels = BasePage.content_panels + [
         FieldPanel("root_page"),
         MultiFieldPanel([
@@ -163,7 +161,6 @@ class MissionHome(BasePage):
     settings_panels = BasePage.settings_panels + [
         StreamFieldPanel("root_navigation")
     ]
-
 
 
 class MissionSearchPage(BasePage):
