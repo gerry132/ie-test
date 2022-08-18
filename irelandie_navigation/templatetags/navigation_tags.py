@@ -75,7 +75,6 @@ def primarynav(context, page, override=None):
     except AttributeError:
         navigation = get_nav_for_locale(PrimaryNavigation, locale)
 
-
     try:
         custom_header = CustomHeader.objects.get(id=page.custom_header.id)
     except AttributeError:
@@ -159,6 +158,7 @@ def has_root_override(context, page):
                 return m.root_navigation
 
     return False
+
 # FOOTER NAVIGATION
 # ----------------------------------------------------------------------
 # The data for the footer navigation is managed in the FooterNavigation
