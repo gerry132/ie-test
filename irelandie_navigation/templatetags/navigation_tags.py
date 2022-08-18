@@ -117,6 +117,7 @@ def has_root_override(context, page):
 # ----------------------------------------------------------------------
 # The data for the footer navigation is managed in the FooterNavigation
 # snippets model.
+
 @register.inclusion_tag(
     "patterns/molecules/navigation/footernav.html", takes_context=True
 )
