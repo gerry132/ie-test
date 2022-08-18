@@ -9,13 +9,12 @@
         {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
 
         {% include "patterns/molecules/hero/hero.html" with page=page %}
-
+        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
         {% if page.secondary_title %}
             <div class="wrapper wrapper--large wrapper--padding">
                 <h2 class="secondary-title">{{ page.secondary_title }}</h2>
             </div>
         {% endif %}
-        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
     {% else %}
     {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
         <div class="section section--padding section--grey">
