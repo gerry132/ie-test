@@ -163,6 +163,19 @@ def has_notice_bar(context):
     return bool(get_notice_bar_for_locale(NoticeBar, locale))
 
 
+@register.simple_tag(
+    takes_context=True
+)
+def has_root_override(context, page):
+    pages = page.get_ancestors()
+
+    for p in pages:
+        if p.content_type.name == 'mission home':
+            m = MissionHome.objects.get(title=p.title)
+            if m.root_page:
+                return m.root_navigation
+
+    return False
 # FOOTER NAVIGATION
 # ----------------------------------------------------------------------
 # The data for the footer navigation is managed in the FooterNavigation
