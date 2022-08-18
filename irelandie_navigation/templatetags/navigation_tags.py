@@ -12,6 +12,8 @@ from irelandie_navigation.models import (
     SiteSettings,
     CustomHeader,
 )
+
+from irelandie_missions.models import MissionHome
 from irelandie_utils.models import SocialMediaSettings
 
 register = template.Library()
@@ -46,17 +48,22 @@ def get_nav_for_locale(cls, locale):
 @register.inclusion_tag(
     "patterns/molecules/navigation/primarynav.html", takes_context=True
 )
-def primarynav(context, page):
+def primarynav(context, page, override=None):
     request = context["request"]
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
 
-    navigation = get_nav_for_locale(PrimaryNavigation, locale)
+    try:
+        navigation = page.root_navigation
+    except AttributeError:
+        navigation = get_nav_for_locale(PrimaryNavigation, locale)
 
     try:
         custom_header = CustomHeader.objects.get(id=page.custom_header.id)
     except AttributeError:
         custom_header = None
 
+    if override:
+        navigation = override
     return {
         "primarynav": navigation,
         "customnav": custom_header,
@@ -92,10 +99,26 @@ def has_secondary_nav(context):
     return bool(get_nav_for_locale(SecondaryNavigation, locale))
 
 
+@register.simple_tag(
+    takes_context=True
+)
+def has_root_override(context, page):
+    pages = page.get_ancestors()
+
+    for p in pages:
+        if p.content_type.name == 'mission home':
+            m = MissionHome.objects.get(title=p.title)
+            if m.root_page:
+                return m.root_navigation
+
+    return False
+
 # FOOTER NAVIGATION
 # ----------------------------------------------------------------------
 # The data for the footer navigation is managed in the FooterNavigation
 # snippets model.
+
+
 @register.inclusion_tag(
     "patterns/molecules/navigation/footernav.html", takes_context=True
 )

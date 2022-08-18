@@ -54,7 +54,8 @@
 
                 <div class="header__menus header__menus--desktop">
                     <div data-desktop-menu>
-                        {% primarynav page %}
+                        {% has_root_override page as override %}
+                        {% primarynav page override=override %}
                     </div>
                 </div>
 
@@ -63,12 +64,11 @@
                     This is called mobile nav, but actually gets shown at all screen sizes.
                     Only shows the extended primary nav on desktop, then combines all 3 navs (if available) on mobile
                     {% endcomment %}
-
                     <div class="wrapper wrapper--large wrapper--mobile-menu">
                         <div class="header__menu header__menu--primary">
-                            {% primarynav page %}
+                            {% has_root_override page as override %}
+                            {% primarynav page override=override %}
                         </div>
-
                         {% has_secondary_nav as shownav %}
                         {% if shownav %}
                         <div class="header__menu header__menu--extended">
