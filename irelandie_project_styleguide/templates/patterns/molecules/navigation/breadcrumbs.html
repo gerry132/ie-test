@@ -1,22 +1,29 @@
 {% load wagtailcore_tags i18n %}
+{% load util_tags %}
 
 {% if page.get_ancestors|length > 2 %}
-    <nav aria-label="breadcrumb" class="breadcrumbs">
+    <nav aria-label="breadcrumb">
         <ul class="breadcrumbs-nav">
-            {% for ancestor_page in page.get_ancestors %}
+            {% get_starting_index page.get_ancestors as INDEX %}
+            {% for ancestor_page in INDEX %}
                 {% if not ancestor_page.is_root %}
                     {% if ancestor_page.depth > 2 %}
-                        <li class="nav__item nav__item--breadcrumb">
-                            <a class="breadcrumbs-nav__link" style="text-decoration: underline; text-underline-offset: 2px;" href="{% pageurl ancestor_page %}">{{ ancestor_page.title }} </a>
-                            > 
+                        <li class="breadcrumbs-nav__item">
+                            <a class="breadcrumbs-nav__link" href="{% pageurl ancestor_page %}">{{ ancestor_page.title }}</a>
+                            
                         </li>
+                        <a href="{% pageurl ancestor_page %}" class="arrow-next"></a>
                     {% else %}
-                    <li class="nav__item nav__item--breadcrumb">
-                        <a class="breadcrumbs-nav__link" href="/" style="text-decoration: underline; text-underline-offset: 2px;">{% trans 'Home' %}  </a>
-                        > 
-                    </li>
+                        <li class="breadcrumbs-nav__item">
+                            <a class="nav__link nav__link--breadcrumb" style="padding-right: 5px;" href="/">
+                                {% trans 'Home' %}
+                            </a>
+                            
+                        </li>
+                        <a href="/" class="arrow-next"></a>
                     {% endif %}
                 {% endif %}
+                
             {% endfor %}
             <li class="breadcrumbs-nav__item">{{ page.title }}</li>
         </ul>

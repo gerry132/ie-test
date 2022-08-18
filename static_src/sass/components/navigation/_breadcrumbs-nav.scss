@@ -2,6 +2,15 @@
     height: 60px;
 }
 
+.arrow-next {
+    display: inline-block;
+    background-size: cover;
+    background-image: url('../images/cssBackgrounds/next_arrow.png');
+    height: 12px;
+    width: 6px;
+}
+
+
 .breadcrumbs-nav {
     display: flex;
     background-color: #f4f4f4;
@@ -9,17 +18,18 @@
     flex-direction: row;
     width: 100%;
     height: 100%;
-    margin-bottom: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
     padding-left: 10px;
 
     &__item {
         width: auto;
         padding: 0;
         margin: 0 5px 0 0;
-        font-size: 12px;
-        font-weight: $weight--normal;
-        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: 500;
         border-bottom: 0;
+        padding-left: 5px;
 
         &:first-child {
             a {
@@ -29,6 +39,7 @@
 
         &:last-child {
             margin-left: 10px;
+            border-bottom: 1px solid;
         }
 
         @include media-query(medium) {
