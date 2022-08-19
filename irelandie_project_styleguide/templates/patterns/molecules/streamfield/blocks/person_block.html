@@ -98,9 +98,13 @@ function readySlides(mobile) {
   console.log(mobile);
   let slides;
   let transNum;
-
+  if(mobile) {
     slides = document.querySelectorAll(".slide-mobile");
     transNum = 100;
+  } else {
+    slides = document.querySelectorAll(".slide");
+    transNum = 100;
+  }
 
   slides.forEach((slide, indx) => {
     slide.style.transform = `translateX(${indx * transNum}%)`;
@@ -148,5 +152,4 @@ function readySlides(mobile) {
 
 readySlides(false);
 readySlides(true);
-
 </script>
