@@ -16,7 +16,6 @@ from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
 from irelandie_utils.blocks import PersonLinkBlock, CustomVideoChooserBlockAlt
 
-from irelandie_utils import blocks
 
 from .blocks import PersonPageSectionBlock, RolePageSectionBlock
 
