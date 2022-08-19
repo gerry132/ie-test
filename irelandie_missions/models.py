@@ -167,7 +167,6 @@ class MissionPage(BasePage):
     ]
 
 
-
 class MissionHome(HeroPage):
     template = "irelandie_assets/pages/mission.html"
 
@@ -198,10 +197,9 @@ class MissionHome(HeroPage):
     ]
 
 
-
 class Magazine(HeroPage):
     template = "irelandie_assets/pages/magazine.html"
-    
+
     body = StreamField(
             [
                 ("rich_text", blocks.AdvancedRichTextBlock()),
@@ -219,7 +217,6 @@ class Magazine(HeroPage):
         ObjectList(HeroPage.promote_panels, heading='Promote'),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
-
 
 
 class MissionSearchPage(BasePage):
