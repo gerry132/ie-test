@@ -5,6 +5,13 @@
     position: relative;
     max-width: 100%;
 
+    &__width{
+    @include media-query(small){
+        width: 241px;
+    }
+
+    }
+
     &__container {
         background-color: $color--white;
         border-radius: $border-radius;
