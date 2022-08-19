@@ -2,7 +2,7 @@
 from django.db import models
 from django.utils.functional import cached_property
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
-from wagtail.core.fields import StreamField
+from wagtail.core.fields import StreamField, RichTextField
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.images import get_image_model_string
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -11,6 +11,7 @@ from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_navigation.blocks import LinkBlock
 from irelandie_pages.models import FreeFormPageBase
 from irelandie_utils import blocks
+from irelandie_utils.blocks import PersonLinkBlock, CustomVideoChooserBlockAlt
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage
 
 
@@ -118,27 +119,62 @@ IMAGE_MODEL = get_image_model_string()
 
 
 class MissionPage(BasePage):
-    template = "irelandie_assets/pages/mission.html"
+    template = "patterns/pages/irelandie_missions/mission.html"
 
-    persons = StreamField(
+    name = models.CharField(max_length=255, blank=True)
+    person_title = models.CharField(max_length=255, blank=True)
+    image = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    video = StreamField(
         [
-            ("persons", blocks.PersonBlock()),
+            ("video", CustomVideoChooserBlockAlt()),
         ],
         blank=True,
+    )
+    embassy_logo = models.ForeignKey(
+        IMAGE_MODEL,
         null=True,
-        min_num=0,
-        max_num=1,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    social_media_link = models.URLField(blank=True)
+    social_media_text = models.CharField(
+        max_length=255, blank=True, default="Connect with person on this social media"
+    )
+    address = RichTextField(blank=True)
+    telephone = models.CharField(max_length=255, blank=True)
+    opening_hours = RichTextField(blank=True)
+    closure_dates = RichTextField(blank=True)
+    emergency_contact_details = RichTextField(blank=True)
+    our_services_url = models.URLField(blank=True)
+    our_role_url = models.URLField(blank=True)
+
+    alignment = models.CharField(
+        choices=(("left", "Left"), ("right", "Right")), max_length=255, default="left"
+    )
+    background = models.CharField(
+        choices=(("light", "Light"), ("dark", "Dark")), max_length=255, default="light"
+    )
+    links = StreamField(
+        [
+            ("link", PersonLinkBlock(min_num=0, max_num=6)),
+        ],
+        blank=True,
     )
 
     twitter_title = models.CharField(max_length=50, blank=True)
-
-    twitter_feed = models.ForeignKey(
-        "utils.TwitterEmbed",
-        on_delete=models.SET_NULL,
-        related_name="+",
-        null=True,
+    twitter_username = models.CharField(
+        max_length=100,
         blank=True,
+        help_text="Twitter username",
     )
+
     social_url = models.URLField(
         blank=True,
         max_length=255,
@@ -155,10 +191,27 @@ class MissionPage(BasePage):
     )
 
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("persons"),
+        MultiFieldPanel([
+            FieldPanel("name", classname="full title"),
+            FieldPanel("person_title"),
+            FieldPanel("alignment"),
+            ImageChooserPanel("image"),
+            StreamFieldPanel("video"),
+            ImageChooserPanel("embassy_logo"),
+            FieldPanel("background"),
+            FieldPanel("social_media_link"),
+            FieldPanel("social_media_text"),
+            FieldPanel("address"),
+            FieldPanel("telephone"),
+            FieldPanel("opening_hours"),
+            FieldPanel("closure_dates"),
+            FieldPanel("emergency_contact_details"),
+            StreamFieldPanel("links"),
+        ], heading="Person"),
+
         MultiFieldPanel([
             FieldPanel("twitter_title"),
-            SnippetChooserPanel("twitter_feed"),
+            FieldPanel("twitter_username"),
         ], heading="Twitter feed"),
         MultiFieldPanel(
             [ImageChooserPanel("social_logo"), FieldPanel("social_url"), FieldPanel("social_link_text")],
