@@ -97,7 +97,7 @@
     position: relative;
     overflow: hidden;
   }
-  
+
   .slide, .slide-mobile {
     width: 100%;
     max-width: 100%;
@@ -105,11 +105,11 @@
     position: absolute;
     transition: all 0.5s;
   }
-  
+
   .slide img {
     object-fit: cover;
   }
-  
+
   .btn {
     position: absolute;
     width: 40px;
@@ -121,20 +121,47 @@
     background-color: #fff;
     font-size: 18px;
   }
-  
+
   .btn:active {
     transform: scale(1.1);
   }
-  
+
   .btn-prev {
-      
+
     top: 50%;
     left: -3%;
     background-image: url('../images/cssBackgrounds/navigation_left.png');
   }
-  
+
   .btn-next {
     top: 50%;
     right: -3%;
+    background-image: url('../images/cssBackgrounds/navigation_right.png');
+  }
+
+  .btn-prev1 {
+   @media only screen and (max-width: 768px){
+            top: 48%;
+            left: -5%;
+    }
+
+    @media only screen and (min-width: 430px) {
+            top: 82%;
+           left: 1%;
+     }
+    background-image: url('../images/cssBackgrounds/navigation_left.png');
+  }
+
+  .btn-next1 {
+  @media only screen and (max-width: 768px){
+            top: 48%;
+            left: 86%;
+     }
+
+  @media only screen and (min-width: 430px) {
+           top: 82%;
+           right: 76%;
+    }
+
     background-image: url('../images/cssBackgrounds/navigation_right.png');
   }

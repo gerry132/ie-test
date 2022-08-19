@@ -1,14 +1,41 @@
 {% extends "patterns/hero_page.html" %}
 {% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load static %}
 
 {% block main %}
     <div class="wrapper wrapper--large wrapper--padding">
         {% include_block page.body %}
     </div>
+<div class="person section section--padding">
+        <div class="person__container person--dark">
+            <div class="person__width_left">
+                <svg class="person__logoimage" ></svg>
+                {% include_block page.persons %}
+            </div>
 
-    {% if page.twitter_feed %}
-        {% include "patterns/molecules/streamfield/blocks/twitter_embed.html" with value=page.twitter_feed title=page.twitter_title %}
-    {% endif %}
+            <div class="person__width_right ">
+                {% if page.twitter_feed %}
+                    {% include "patterns/molecules/streamfield/blocks/twitter_embed.html" with value=page.twitter_feed title=page.twitter_title %}
+                {% endif %}
+
+                {% if page.social_logo or page.social_url %}
+                <div class='person__container2'>
+                    {% image page.social_logo width-120 class="person__iconDetails" %}
+
+                    <div class="person__text">
+                        <a  href="{{ link_url }}" aria-label="{{ page.social_link_text }}">{{ page.social_link_text }}</a>
+                    </div>
+                </div>
+
+
+                {% endif %}
+            </div>
+
+
+        </div>
+</div>
+
 
 {% endblock %}
 

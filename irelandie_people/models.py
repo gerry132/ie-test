@@ -14,8 +14,8 @@ from wagtail.core.models import Page, TranslatableMixin
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
+from irelandie_utils.blocks import PersonLinkBlock, CustomVideoChooserBlockAlt
 
-from irelandie_utils import blocks
 
 from .blocks import PersonPageSectionBlock, RolePageSectionBlock
 
@@ -108,6 +108,12 @@ class Person(models.Model):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    video = StreamField(
+        [
+            ("video", CustomVideoChooserBlockAlt()),
+        ],
+        blank=True,
+    )
     embassy_logo = models.ForeignKey(
         IMAGE_MODEL,
         null=True,
@@ -135,7 +141,7 @@ class Person(models.Model):
     )
     links = StreamField(
         [
-            ("link", blocks.StoryLinkBlock(min_num=0, max_num=6)),
+            ("link", PersonLinkBlock(min_num=0, max_num=6)),
         ],
         blank=True,
     )
@@ -154,6 +160,7 @@ class Person(models.Model):
             [
                 FieldPanel("alignment"),
                 ImageChooserPanel("image"),
+                StreamFieldPanel("video"),
             ],
             heading="Photo",
         ),
