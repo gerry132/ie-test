@@ -253,9 +253,19 @@ class MissionHome(HeroPage):
 
 
 class Magazine(HeroPage):
-    template = "irelandie_assets/pages/mission.html"
+    template = "irelandie_assets/pages/magazine.html"
+    
+    body = StreamField(
+            [
+                ("rich_text", blocks.AdvancedRichTextBlock()),
+                ("link_card", blocks.LinkCardsBlock())
+            ],
+            blank=True,
+        )
 
-    content_panels = HeroPage.content_panels
+    content_panels = HeroPage.content_panels + [
+        StreamFieldPanel("body")
+    ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(HeroPage.hero_panel, heading='Hero'),

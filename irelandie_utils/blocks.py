@@ -12,7 +12,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import VideoChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 
-from irelandie_utils.constants import StoryAlignment, StoryBackground
+from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment
 
 
 ALT_HELP_TEXT = """A short one-sentence literal description
@@ -359,6 +359,18 @@ class RichTextBlock(blocks.RichTextBlock):
         template = "patterns/molecules/streamfield/blocks/paragraph_block.html"
 
 
+class AdvancedRichTextBlock(blocks.StructBlock):
+    paragraph_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=ParagraphAlignment.choices,
+        default=ParagraphAlignment.WIDE,
+    )
+    heading = blocks.CharBlock(required=False)
+    rich_text = blocks.RichTextBlock(
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul"], required=False,
+    )
+
+
 class RoleBlock(blocks.PageChooserBlock):
     class Meta:
         label = "RoleBlock"
@@ -526,6 +538,60 @@ class ArticleCardsBlock(blocks.StructBlock):
         icon = "list-ul"
         label = "Articles"
         template = "patterns/molecules/streamfield/blocks/article_cards.html"
+
+
+class LinkCardBlock(blocks.StructBlock):
+    image = ImageChooserBlock()
+    image_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_IMAGE),
+    )
+    title = blocks.CharBlock()
+    summary = blocks.TextBlock()
+    page = blocks.PageChooserBlock(required=False)
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
+
+    class Meta:
+        icon = "image"
+        label = "Link Card"
+        template = "patterns/molecules/link_card/link_card.html"
+
+    def clean(self, value):
+        errors = {}
+        values = [value["page"], value["url"]]
+        # Set only a Page OR a URL
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a page or set a URL."
+
+            errors["page"] = ErrorList([message])
+            errors["url"] = ErrorList([message])
+
+        # A URL must have title
+        if value["url"] and not value["title"]:
+            errors["title"] = ErrorList(["Please set a title for the URL"])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context["link_url"] = value["url"] or value["page"].url
+        return context
+
+
+class LinkCardsBlock(blocks.StructBlock):
+    link_cards = blocks.StreamBlock([("link_card", LinkCardBlock())])
+
+    class Meta:
+        icon = "list-ul"
+        label = "Link Cards"
+        template = "patterns/molecules/streamfield/blocks/link_cards.html"
 
 
 class FeaturedArticlesBlock(blocks.StructBlock):
