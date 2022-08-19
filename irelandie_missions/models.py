@@ -220,7 +220,7 @@ class MissionPage(BasePage):
     ]
 
 
-class MissionHome(BasePage):
+class MissionHome(HeroPage):
     template = "irelandie_assets/pages/mission.html"
 
     twitter_title = models.CharField(max_length=50, blank=True)
@@ -248,6 +248,28 @@ class MissionHome(BasePage):
     settings_panels = BasePage.settings_panels + [
         StreamFieldPanel("root_navigation")
     ]
+
+
+class Magazine(HeroPage):
+    template = "irelandie_assets/pages/magazine.html"
+
+    body = StreamField(
+            [
+                ("rich_text", blocks.AdvancedRichTextBlock()),
+                ("link_card", blocks.LinkCardsBlock())
+            ],
+            blank=True,
+        )
+
+    content_panels = HeroPage.content_panels + [
+        StreamFieldPanel("body")
+    ]
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.hero_panel, heading='Hero'),
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
+    ])
 
 
 class MissionSearchPage(BasePage):
