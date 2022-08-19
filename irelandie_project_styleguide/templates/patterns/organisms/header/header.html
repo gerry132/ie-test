@@ -24,7 +24,7 @@
         }
     }
 
-    @media only screen and (max-width: 1023px) {    
+    @media only screen and (max-width: 1023px) {
         .header__search.is-active {
                 top: 125px;
             }
@@ -35,9 +35,9 @@
     <div class="header {% if custom_header.links %}header--condensed{% endif %}" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
         <div class="wrapper wrapper--large">
             <div class="header__container">
-                {% comment %} 
+                {% comment %}
                 The main site logo should not be overriden by any custom navs.
-                The default is the app provided SVG 
+                The default is the app provided SVG
                 {% endcomment %}
 
                 <a href="/{{ language_code }}/" aria-label="Ireland.ie" class="header__logo-wrapper">
@@ -132,6 +132,13 @@
                 </div>
             </div>
         </div>
+        {% has_notice_bar as noticebar %}
+        {% if noticebar %}
+        <div class="notice-bar--extended">
+            {% comment %} Notice bar for alert message {% endcomment %}
+            <a class="alert-message">Get the latest on our COVID-19 response</a>
+        </div>
+        {% endif %}
     </div>
 
     {% comment %}
@@ -205,12 +212,12 @@
                             <svg class="header__search-icon" aria-hidden="true">
                                 <use href="#magnifying-glass"></use>
                             </svg>
-    
+
                             <svg class="header__search-icon header__search-icon--close" aria-hidden="true">
                                 <use xlink:href="#close"></use>
                             </svg>
                         </button>
-    
+
                     <div class="header__menu-toggle header__menu-toggle--desktop">
                         <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
                             <span class="button-menu-toggle__line"></span>
@@ -219,7 +226,7 @@
                             <span class="button-menu-toggle__line"></span>
                         </button>
                     </div>
-    
+
                     </div>
                 </div>
             </div>

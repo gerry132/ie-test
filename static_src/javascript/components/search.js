@@ -54,6 +54,9 @@ class Search {
         // toggle both desktop and mobile icons
         this.searchToggles.forEach((toggle) => {
             toggle.classList.toggle(this.activeClass);
+//            let noticeBar = document.querySelector('.notice-bar--extended');
+//            noticeBar.style.display = 'none';
+
         });
 
         // toggle search dropdown
