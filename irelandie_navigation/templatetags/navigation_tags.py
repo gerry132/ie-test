@@ -113,6 +113,27 @@ def has_root_override(context, page):
 
     return False
 
+
+
+
+@register.simple_tag(
+    takes_context=True
+)
+def has_root_override(context, page, header=True):
+    pages = page.get_ancestors()
+
+    for p in pages:
+        if p.content_type.name == 'mission home':
+            m = MissionHome.objects.get(title=p.title)
+            if m.root_page:
+                if header:
+                    return m.root_navigation
+                else:
+                    return m.custom_footer
+
+    return False
+
+
 # FOOTER NAVIGATION
 # ----------------------------------------------------------------------
 # The data for the footer navigation is managed in the FooterNavigation

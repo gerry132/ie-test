@@ -107,8 +107,13 @@
 {% endblock header %}
 
 {% block footer %}
-    {% custom_footer_settings page as custom_footer_settings %}
-    {% include "patterns/organisms/footer/footer.html" with custom_footer=custom_footer_settings %}
+    {% has_root_override page header=false as override %}
+    {% if override %}
+        {% include "patterns/organisms/footer/footer.html" with custom_footer=override %}
+    {% else %}
+        {% custom_footer_settings page as custom_footer_settings %}
+        {% include "patterns/organisms/footer/footer.html" with custom_footer=custom_footer_settings %}
+    {% endif %}
 {% endblock footer %}
 
 {% block web_chat_widget %}
