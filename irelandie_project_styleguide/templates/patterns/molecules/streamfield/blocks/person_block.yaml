@@ -48,4 +48,4 @@ tags:
       raw: '#'
   include_block:
     'link':
-      template_name: 'patterns/molecules/streamfield/blocks/story_link_block.html'
+      template_name: 'patterns/molecules/streamfield/blocks/person_link_block.html'

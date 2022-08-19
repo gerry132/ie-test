@@ -4,6 +4,8 @@ from django.utils.functional import cached_property
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
 from wagtail.core.fields import StreamField
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
+from wagtail.images import get_image_model_string
+from wagtail.images.edit_handlers import ImageChooserPanel
 
 from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_navigation.blocks import LinkBlock
@@ -112,8 +114,21 @@ class CountryPage(HeroPage):
     ])
 
 
+IMAGE_MODEL = get_image_model_string()
+
+
 class MissionPage(BasePage):
     template = "irelandie_assets/pages/mission.html"
+
+    persons = StreamField(
+        [
+            ("persons", blocks.PersonBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
 
     twitter_title = models.CharField(max_length=50, blank=True)
 
@@ -124,12 +139,31 @@ class MissionPage(BasePage):
         null=True,
         blank=True,
     )
+    social_url = models.URLField(
+        blank=True,
+        max_length=255,
+        null=True,
+        help_text="URL for logo click."
+    )
+    social_link_text = models.CharField(max_length=50, blank=True)
+    social_logo = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
 
     content_panels = BasePage.content_panels + [
+        StreamFieldPanel("persons"),
         MultiFieldPanel([
             FieldPanel("twitter_title"),
             SnippetChooserPanel("twitter_feed"),
         ], heading="Twitter feed"),
+        MultiFieldPanel(
+            [ImageChooserPanel("social_logo"), FieldPanel("social_url"), FieldPanel("social_link_text")],
+            "Additional Social feed",
+        ),
     ]
 
 

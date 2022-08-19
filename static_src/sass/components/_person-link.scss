@@ -1,0 +1,135 @@
+.person-link {
+    $root: &;
+    border-bottom: 1px solid $color--border;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 10px 20px;
+    transition: background-color $transition, color $transition;
+
+    &:hover {
+        background-color: $color--primary;
+        color: $color--white;
+    }
+
+    &:nth-child(odd) {
+        @include media-query(medium) {
+            border-right: 1px solid $color--border;
+        }
+    }
+
+    &__icon {
+        margin-right: 15px;
+        height: 45px;
+        width: 48px;
+    }
+
+    &__img {
+        margin-right: 15px;
+        height: 45px;
+        width: 48px;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 20px;
+    }
+
+    &__title {
+        @include font-size(xs);
+        color: $color--primary;
+        font-weight: $weight--bold;
+        transition: color $transition;
+
+        #{$root}:hover & {
+            color: $color--white;
+        }
+    }
+
+    &__summary {
+        @include font-size(xxs);
+        color: $color--accessible-grey;
+        transition: color $transition;
+
+        #{$root}:hover & {
+            color: $color--white;
+        }
+    }
+}
+
+
+
+@media only screen and (max-width: 400px) {
+    .slider-desktop {
+        display: none;
+    }
+
+    .slider-mobile {
+        display: inline;
+    }
+}
+
+@media only screen and (min-width: 401px) {
+    .slider-mobile {
+        display: none;
+    }
+
+    .slider-desktop {
+        display: inline;
+    }
+}
+
+
+.slider-desktop, .slider-mobile {
+    width: 100%;
+    max-width: 100%;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide, .slide-mobile {
+    width: 100%;
+    max-width: 100%;
+    height: 350px;
+    position: absolute;
+    transition: all 0.5s;
+  }
+
+  .slide img {
+    object-fit: cover;
+  }
+
+  .btn {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    border: none;
+    border-radius: 30%;
+    cursor: pointer;
+    background-color: #fff;
+    font-size: 18px;
+  }
+
+  .btn:active {
+    transform: scale(1.1);
+  }
+
+  .btn-prev {
+
+    top: 81%;
+    left: 1%;
+    background-image: url('../images/cssBackgrounds/navigation_left.png');
+  }
+
+  .btn-next {
+    top: 81%;
+    right: 67%;
+    background-image: url('../images/cssBackgrounds/navigation_right.png');
+  }
