@@ -12,6 +12,7 @@ class Search {
         this.searchInput = this.searchDropdown.querySelector(
             '[data-search-input]',
         );
+        this.noticeBarOnClose = document.querySelector('.on-close');
 
         // mobile menu selectors
         this.mobileMenu = document.querySelectorAll('[data-mobile-menu]');
@@ -26,6 +27,7 @@ class Search {
 
         // classes
         this.activeClass = 'is-active';
+        this.hideClass = 'is-hide'
 
         this.bindEvents();
     }
@@ -54,10 +56,8 @@ class Search {
         // toggle both desktop and mobile icons
         this.searchToggles.forEach((toggle) => {
             toggle.classList.toggle(this.activeClass);
-//            let noticeBar = document.querySelector('.notice-bar--extended');
-//            noticeBar.style.display = 'none';
-
         });
+        this.noticeBarOnClose.classList.toggle(this.hideClass)
 
         // toggle search dropdown
         this.searchDropdown.classList.toggle(this.activeClass);

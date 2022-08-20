@@ -132,6 +132,13 @@
                 </div>
             </div>
         </div>
+        {% has_notice_bar as noticebar %}
+        {% if noticebar %}
+        <div class="on-close notice-bar--extended">
+            {% comment %} Notice bar for alert message {% endcomment %}
+            <a class="alert-message">Get the latest on our COVID-19 response</a>
+        </div>
+        {% endif %}
     </div>
 
     {% comment %}
@@ -219,17 +226,9 @@
                             <span class="button-menu-toggle__line"></span>
                         </button>
                     </div>
-
                     </div>
                 </div>
             </div>
         </div>
-    {% endif %}
-    {% has_notice_bar as noticebar %}
-    {% if noticebar %}
-    <div class="notice-bar--extended">
-        {% comment %} Notice bar for alert message {% endcomment %}
-        <a class="alert-message">Get the latest on our COVID-19 response</a>
-    </div>
     {% endif %}
 </header>
