@@ -111,6 +111,7 @@
 {% endblock header %}
 
 {% block footer %}
+    {% has_root_override page header=false as override %}
     {% if override %}
         {% include "patterns/organisms/footer/footer.html" with custom_footer=override %}
     {% else %}

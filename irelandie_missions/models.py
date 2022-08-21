@@ -272,39 +272,6 @@ class Magazine(HeroPage):
     ])
 
 
-
-
-class MissionHome(BasePage):
-    template = "irelandie_assets/pages/mission.html"
-
-    twitter_title = models.CharField(max_length=50, blank=True)
-    root_navigation = StreamField(
-        [("link", LinkBlock())], blank=True, help_text="Override the site navigation"
-    )
-
-    twitter_feed = models.ForeignKey(
-        "utils.TwitterEmbed",
-        on_delete=models.SET_NULL,
-        related_name="+",
-        null=True,
-        blank=True,
-    )
-
-    root_page = models.BooleanField(null=True)
-    
-    content_panels = BasePage.content_panels + [
-        FieldPanel("root_page"),
-        MultiFieldPanel([
-            FieldPanel("twitter_title"),
-            SnippetChooserPanel("twitter_feed"),
-        ], heading="Twitter feed"),
-    ]
-    settings_panels = BasePage.settings_panels + [
-        StreamFieldPanel("root_navigation")
-    ]
-
-
-
 class MissionSearchPage(BasePage):
     template = "patterns/pages/missions/mission_search_page.html"
 
