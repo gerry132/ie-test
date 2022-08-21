@@ -199,11 +199,14 @@ class NoticeBar(TranslatableMixin):
         verbose_name=_("Notice Bar Message"),
     )
 
+    enable = models.BooleanField(default=False)
+
     panels = [
         MultiFieldPanel(
             [
                 FieldPanel("name"),
                 StreamFieldPanel("notice_bar"),
+                FieldPanel("enable"),
             ],
             heading=_("Notice Bar Alert"),
         )

@@ -132,12 +132,9 @@
                 </div>
             </div>
         </div>
-        {% has_notice_bar as noticebar %}
-        {% if noticebar %}
-        <div class="on-close notice-bar--extended">
-            {% comment %} Notice bar for alert message {% endcomment %}
-            <a class="alert-message">Get the latest on our COVID-19 response</a>
-        </div>
+        {% has_notice_bar as shownotice %}
+        {% if shownotice %}
+            {% noticebar state='on-close' %}
         {% endif %}
     </div>
 

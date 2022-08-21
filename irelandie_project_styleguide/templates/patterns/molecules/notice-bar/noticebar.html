@@ -1,2 +1,6 @@
 {% load wagtailcore_tags i18n %}
-{{ noticebar }}
+<div class="{{ state }}">
+    {% if enable %}
+    {{ noticebar }}
+    {% endif %}
+</div>

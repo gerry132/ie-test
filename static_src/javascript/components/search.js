@@ -46,6 +46,7 @@ class Search {
 
             // toggle search dropdown
             this.searchDropdown.classList.remove(this.activeClass);
+            this.noticeBarOnClose.classList.remove(this.hideClass)
         });
     }
 

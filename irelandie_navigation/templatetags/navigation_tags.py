@@ -142,58 +142,19 @@ def has_root_override(context, page, header=True):
 @register.inclusion_tag(
     "patterns/molecules/notice-bar/noticebar.html", takes_context=True
 )
-def noticebar(context):
+def noticebar(context, state):
     request = context["request"]
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
 
     noticebar = get_notice_bar_for_locale(NoticeBar, locale)
 
-    return {
-        "noticebar": noticebar,
-        "request": request,
-    }
-
-
-@register.simple_tag(
-    takes_context=True
-)
-def has_notice_bar(context):
-    request = context["request"]
-    locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
-    return bool(get_notice_bar_for_locale(NoticeBar, locale))
-
-
-@register.simple_tag(
-    takes_context=True
-)
-def has_root_override(context, page):
-    pages = page.get_ancestors()
-
-    for p in pages:
-        if p.content_type.name == 'mission home':
-            m = MissionHome.objects.get(title=p.title)
-            if m.root_page:
-                return m.root_navigation
-
-    return False
-
-
-# NOTICE BAR
-# ----------------------------------------------------------------------
-# The message for the notice bar is managed in the NoticeBar
-# snippets model.
-@register.inclusion_tag(
-    "patterns/molecules/notice-bar/noticebar.html", takes_context=True
-)
-def noticebar(context):
-    request = context["request"]
-    locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
-
-    noticebar = get_notice_bar_for_locale(NoticeBar, locale)
+    enable = NoticeBar.objects.get().enable
 
     return {
         "noticebar": noticebar,
         "request": request,
+        "state": state,
+        "enable": enable,
     }
 
 
