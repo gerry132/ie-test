@@ -19,7 +19,7 @@ def search(request):
     origin = request.GET.get("query_type")
     # Search
     if origin:
-        root_page = MissionPage.objects.get(title=origin)
+        root_page = MissionPage.objects.live().get(title=origin)
 
     if search_query:
         search_results = (
