@@ -81,7 +81,9 @@
     }
 
     &__image_margin{
+    @include media-query(large) {
         margin-top: 140px;
+        }
     }
 
     &__content {
