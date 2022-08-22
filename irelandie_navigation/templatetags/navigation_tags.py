@@ -14,7 +14,7 @@ from irelandie_navigation.models import (
     NoticeBar
 )
 
-from irelandie_missions.models import MissionHome
+from irelandie_missions.models import MissionPage
 from irelandie_utils.models import SocialMediaSettings
 
 register = template.Library()
@@ -72,6 +72,8 @@ def primarynav(context, page, override=None):
 
     try:
         navigation = page.root_navigation
+        if not page.root_navigation:
+            navigation = get_nav_for_locale(PrimaryNavigation, locale)
     except AttributeError:
         navigation = get_nav_for_locale(PrimaryNavigation, locale)
 
@@ -121,11 +123,15 @@ def has_secondary_nav(context):
     takes_context=True
 )
 def has_root_override(context, page, header=True):
+    if isinstance(page, int) or isinstance(page, str):
+        # accounts for search
+        return False
+
     pages = page.get_ancestors()
 
     for p in pages:
-        if p.content_type.name == 'mission home':
-            m = MissionHome.objects.get(title=p.title)
+        if p.content_type.name == 'mission page':
+            m = MissionPage.objects.get(title=p.title)
             if m.root_page:
                 if header:
                     return m.root_navigation
