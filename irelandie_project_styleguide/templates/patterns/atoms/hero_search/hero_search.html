@@ -2,7 +2,7 @@
         <div class="wrapper">
             <form action="{% url 'search' %}">
                 <div class="searchBar">
-                    <input value="{{page}}" name="query_type" style="display: none;">
+                    <input value="{{page.id}}" name="query_type" style="display: none;">
                     <input id="searchQueryInput" type="search" placeholder="Search&hellip;" name="query" {% if search_query %} value="{{ search_query }}"{% endif %} data-search-input>
                         <div class="select-contain">
                             {% if page.popular_pages %}
