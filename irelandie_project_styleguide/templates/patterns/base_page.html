@@ -14,7 +14,7 @@
   gtag('js', new Date());
   gtag('config', 'G-8SKCHMSHZP');
 </script>
-    
+
     <!-- End Google Tag Manager -->
     {% if GOOGLE_TAG_MANAGER_ID %}
         {# To enable GTM code you need to specify GOOGLE_TAG_MANAGER_ID in Django settings #}
@@ -99,6 +99,10 @@
             <div class="wrapper wrapper--large">
                 {% include "patterns/molecules/search/search.html" with classes="search--dropdown" %}
             </div>
+            {% has_notice_bar as shownotice %}
+            {% if shownotice %}
+                {% noticebar state='on-open' %}
+            {% endif %}
         </div>
     </section>
 

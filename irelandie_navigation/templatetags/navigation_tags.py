@@ -11,6 +11,7 @@ from irelandie_navigation.models import (
     SecondaryNavigation,
     SiteSettings,
     CustomHeader,
+    NoticeBar
 )
 
 from irelandie_missions.models import MissionHome
@@ -39,6 +40,23 @@ def get_nav_for_locale(cls, locale):
             pass
 
     return navigation
+
+
+def get_notice_bar_for_locale(cls, locale):
+    notice_bar = None
+
+    try:
+        notice_bar = cls.objects.get(locale=locale).notice_bar
+    except cls.DoesNotExist:
+        pass
+
+    if not notice_bar:
+        try:
+            notice_bar = cls.objects.get(locale=default_language()).notice_bar
+        except cls.DoesNotExist:
+            pass
+
+    return notice_bar
 
 
 # PRIMARY NAVIGATION
@@ -115,6 +133,38 @@ def has_root_override(context, page, header=True):
                     return m.custom_footer
 
     return False
+
+
+# NOTICE BAR
+# ----------------------------------------------------------------------
+# The message for the notice bar is managed in the NoticeBar
+# snippets model.
+@register.inclusion_tag(
+    "patterns/molecules/notice-bar/noticebar.html", takes_context=True
+)
+def noticebar(context, state):
+    request = context["request"]
+    locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
+
+    noticebar = get_notice_bar_for_locale(NoticeBar, locale)
+
+    enable = NoticeBar.objects.get().enable
+
+    return {
+        "noticebar": noticebar,
+        "request": request,
+        "state": state,
+        "enable": enable,
+    }
+
+
+@register.simple_tag(
+    takes_context=True
+)
+def has_notice_bar(context):
+    request = context["request"]
+    locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
+    return bool(get_notice_bar_for_locale(NoticeBar, locale))
 
 
 # FOOTER NAVIGATION

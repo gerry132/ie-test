@@ -41,7 +41,8 @@
 
         {% wagtailuserbar %}
 
-        {% block header %}{% endblock %}
+        {% block header %}
+        {% endblock %}
 
         <main class="wrapper wrapper--main main{% if page.override_primary_navigation %} main--condensed{% endif %}" id="main-content">
             {% block content %}
