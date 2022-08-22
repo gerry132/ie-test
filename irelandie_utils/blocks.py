@@ -102,22 +102,6 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         template = "patterns/molecules/streamfield/blocks/story_link_block.html"
 
 
-class PersonLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
-    page = blocks.PageChooserBlock(required=False)
-    title = blocks.CharBlock(
-        help_text="Leave blank to use the page's own title", required=False
-    )
-    summary = blocks.CharBlock(required=False)
-    url = blocks.URLBlock(
-        label="URL",
-        required=False,
-        help_text="An external link.",
-    )
-
-    class Meta:
-        template = "patterns/molecules/streamfield/blocks/person_link_block.html"
-
-
 class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
@@ -157,6 +141,7 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 
     class Meta:
         icon = "snippet"
+        label = "Two Column Feature"
         template = "patterns/molecules/streamfield/blocks/story_block.html"
 
 

@@ -11,7 +11,7 @@ from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_navigation.blocks import LinkBlock
 from irelandie_pages.models import FreeFormPageBase
 from irelandie_utils import blocks
-from irelandie_utils.blocks import PersonLinkBlock, CustomVideoChooserBlockAlt
+from irelandie_utils.blocks import StoryLinkBlock
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage
 
 
@@ -96,7 +96,7 @@ class CountryPage(HeroPage):
 
     content_panels = HeroPage.content_panels + [
         SnippetChooserPanel("region"),
-        StreamFieldPanel("stories"),
+        StreamFieldPanel("stories", heading="Two Column Feature"),
         StreamFieldPanel("embeds"),
         StreamFieldPanel("featured_stories"),
         StreamFieldPanel("featured_embassies"),
@@ -120,6 +120,15 @@ IMAGE_MODEL = get_image_model_string()
 
 class MissionPage(BasePage):
     template = "patterns/pages/irelandie_missions/mission.html"
+    stories = StreamField(
+        [
+            ("story", blocks.StoryBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
 
     name = models.CharField(max_length=255, blank=True)
     person_title = models.CharField(max_length=255, blank=True)
@@ -130,12 +139,7 @@ class MissionPage(BasePage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
-    video = StreamField(
-        [
-            ("video", CustomVideoChooserBlockAlt()),
-        ],
-        blank=True,
-    )
+    video_upload = models.FileField(upload_to='videos_uploaded', null=True, blank=True)
     embassy_logo = models.ForeignKey(
         IMAGE_MODEL,
         null=True,
@@ -163,7 +167,7 @@ class MissionPage(BasePage):
     )
     links = StreamField(
         [
-            ("link", PersonLinkBlock(min_num=0, max_num=6)),
+            ("link", StoryLinkBlock(min_num=0, max_num=6)),
         ],
         blank=True,
     )
@@ -191,12 +195,13 @@ class MissionPage(BasePage):
     )
 
     content_panels = BasePage.content_panels + [
+        StreamFieldPanel("stories", heading="Two Column Feature"),
         MultiFieldPanel([
             FieldPanel("name", classname="full title"),
             FieldPanel("person_title"),
             FieldPanel("alignment"),
             ImageChooserPanel("image"),
-            StreamFieldPanel("video"),
+            FieldPanel("video_upload"),
             ImageChooserPanel("embassy_logo"),
             FieldPanel("background"),
             FieldPanel("social_media_link"),
