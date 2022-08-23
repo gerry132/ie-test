@@ -11,6 +11,8 @@ from irelandie_navigation.blocks import LinkBlock, NoticeBarWithMessageLink
 from irelandie_pages.models import FreeFormPageBase
 from irelandie_utils import blocks
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtailmedia.edit_handlers import MediaChooserPanel
 
 
 class CountryGroupPageIndex(BasePage):
@@ -347,3 +349,42 @@ class EmbassyPage(FreeFormPageBase):
 
     class Meta:
         verbose_name = "Embassy Page"
+
+
+class GeneralContentPage(BasePage):
+    template = "patterns/pages/missions/general_content_page.html"
+
+    introduction = models.TextField(blank=True)
+
+    hero_image = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    hero_video = models.ForeignKey(
+        "wagtailmedia.Media",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    body = StreamField(blocks.GeneralContentBlocks(), blank=True)
+
+    content_panels = BasePage.content_panels + [
+        FieldPanel("introduction"),
+        MultiFieldPanel(
+            [
+                ImageChooserPanel("hero_image"),
+                MediaChooserPanel("hero_video", media_type="video"),
+            ],
+            "hero",
+        ),
+        StreamFieldPanel("body"),
+    ]
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
+    ])
