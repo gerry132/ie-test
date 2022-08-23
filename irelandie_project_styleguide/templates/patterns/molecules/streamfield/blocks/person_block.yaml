@@ -1,0 +1,12 @@
+tags:
+  image:
+    value.image width-460 class="story__image":
+      raw: |
+        <img src="https://source.unsplash.com/460x500?ocean" width="460" height="500" alt="Some alt" class="story__image">
+    value.embassy_logo width-460 class="story__logo":
+      raw: |
+        <img src="https://source.unsplash.com/460x500?ocean" width="460" height="500" alt="Some alt" class="story__image">
+  pageurl:
+    value.page as href:
+      target_var: href
+      raw: '#'

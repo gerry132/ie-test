@@ -14,12 +14,10 @@ from wagtail.snippets.blocks import SnippetChooserBlock
 
 from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment
 
-
 ALT_HELP_TEXT = """A short one-sentence literal description
                     of the %s is
                     required to make the page accessible to the
                     visually impaired. Details: https://axesslab.com/alt-texts/"""
-
 
 ALT_VID = ALT_HELP_TEXT % 'video'
 ALT_IMAGE = ALT_HELP_TEXT % 'image'
@@ -338,7 +336,6 @@ class PlaceBlock(blocks.PageChooserBlock):
 
 
 class RichTextBlock(blocks.RichTextBlock):
-
     class Meta:
         label = "RichTextBlock"
         template = "patterns/molecules/streamfield/blocks/paragraph_block.html"
@@ -718,3 +715,79 @@ class FreeFormBlocks(FreeFormBlocksBase):
         group="HTML",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
+
+
+class AdditionalSocialBlock(blocks.StructBlock):
+    social_logo = ImageChooserBlock(required=False)
+    social_url = blocks.URLBlock(
+        label="Social_URL",
+        required=False,
+        help_text="URL for logo click",
+    )
+    social_link_text = blocks.CharBlock(required=False)
+
+    class Meta:
+        label = "Person + Social Feed"
+        template = "patterns/molecules/streamfield/blocks/additional_social_block.html"
+
+
+class SocialFieldBlock(blocks.StructBlock):
+    twitter_title = blocks.CharBlock(required=False)
+    twitter_username = blocks.CharBlock(max_length=100, required=False, help_text="Twitter username")
+    additional_social_block = blocks.StreamBlock(
+        [
+            ("additional_social_block", AdditionalSocialBlock())
+        ],
+        max_num=1,
+        min_num=0,
+        required=False,
+    )
+
+
+class PersonSocialBlock(blocks.StructBlock):
+    name = blocks.CharBlock(required=False)
+    person_title = blocks.CharBlock(required=False)
+    image = ImageChooserBlock(required=False)
+    video = VideoChooserBlock(required=False)
+    embassy_logo = ImageChooserBlock(required=False)
+    social_media_link = blocks.URLBlock(required=False)
+    social_media_text = blocks.CharBlock(
+        max_length=255, required=False, default="Connect with person on this social media"
+    )
+    address = blocks.RichTextBlock(required=False)
+    telephone = blocks.CharBlock(required=False)
+    opening_hours = blocks.RichTextBlock(required=False)
+    closure_dates = blocks.RichTextBlock(required=False)
+    emergency_contact_details = blocks.RichTextBlock(required=False)
+
+    alignment = blocks.ChoiceBlock(
+        required=True,
+        choices=StoryAlignment.choices,
+        default=StoryAlignment.LEFT,
+    )
+    background = blocks.ChoiceBlock(
+        required=True,
+        choices=StoryBackground.choices,
+        default=StoryBackground.LIGHT,
+    )
+
+    links = blocks.StreamBlock(
+        [
+            ("link", StoryLinkBlock()),
+        ],
+        max_num=6,
+        min_num=0,
+        required=False,
+    )
+    social_feed = blocks.StreamBlock(
+        [
+            ("social_feed", SocialFieldBlock()),
+        ],
+        max_num=1,
+        min_num=0,
+        required=False,
+    )
+
+    class Meta:
+        label = "Person + Social Feed"
+        template = "patterns/molecules/streamfield/blocks/person_block.html"

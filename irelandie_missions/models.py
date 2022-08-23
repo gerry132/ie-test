@@ -120,6 +120,14 @@ IMAGE_MODEL = get_image_model_string()
 
 class MissionPage(HeroPage):
     template = "patterns/pages/irelandie_missions/mission.html"
+    search_bar = models.BooleanField(default=False)
+    popular_pages = StreamField(
+        [("link", LinkBlock())], blank=True, help_text="Add pages to hero search."
+    )
+    root_page = models.BooleanField(null=True)
+    root_navigation = StreamField(
+        [("link", LinkBlock())], blank=True, help_text="Override the site navigation"
+    )
     stories = StreamField(
         [
             ("story", blocks.StoryBlock()),
@@ -130,76 +138,14 @@ class MissionPage(HeroPage):
         max_num=1,
     )
 
-    name = models.CharField(max_length=255, blank=True)
-    person_title = models.CharField(max_length=255, blank=True)
-    search_bar = models.BooleanField(default=False)
-    popular_pages = StreamField(
-        [("link", LinkBlock())], blank=True, help_text="Add pages to hero search."
-    )
-    root_page = models.BooleanField(null=True)
-    root_navigation = StreamField(
-        [("link", LinkBlock())], blank=True, help_text="Override the site navigation"
-    )
-    image = models.ForeignKey(
-        IMAGE_MODEL,
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
-    video_upload = models.FileField(upload_to='videos_uploaded', null=True, blank=True)
-    embassy_logo = models.ForeignKey(
-        IMAGE_MODEL,
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
-    social_media_link = models.URLField(blank=True)
-    social_media_text = models.CharField(
-        max_length=255, blank=True, default="Connect with person on this social media"
-    )
-    address = RichTextField(blank=True)
-    telephone = models.CharField(max_length=255, blank=True)
-    opening_hours = RichTextField(blank=True)
-    closure_dates = RichTextField(blank=True)
-    emergency_contact_details = RichTextField(blank=True)
-    our_services_url = models.URLField(blank=True)
-    our_role_url = models.URLField(blank=True)
-
-    alignment = models.CharField(
-        choices=(("left", "Left"), ("right", "Right")), max_length=255, default="left"
-    )
-    background = models.CharField(
-        choices=(("light", "Light"), ("dark", "Dark")), max_length=255, default="light"
-    )
-    links = StreamField(
+    person = StreamField(
         [
-            ("link", StoryLinkBlock(min_num=0, max_num=6)),
+            ("person", blocks.PersonSocialBlock()),
         ],
         blank=True,
-    )
-
-    twitter_title = models.CharField(max_length=50, blank=True)
-    twitter_username = models.CharField(
-        max_length=100,
-        blank=True,
-        help_text="Twitter username",
-    )
-
-    social_url = models.URLField(
-        blank=True,
-        max_length=255,
         null=True,
-        help_text="URL for logo click."
-    )
-    social_link_text = models.CharField(max_length=50, blank=True)
-    social_logo = models.ForeignKey(
-        IMAGE_MODEL,
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
+        min_num=0,
+        max_num=1,
     )
 
     content_panels = HeroPage.content_panels + [
@@ -209,32 +155,9 @@ class MissionPage(HeroPage):
             StreamFieldPanel("popular_pages"),
         ], heading="Searchbar settings"
         ),
-        MultiFieldPanel([
-            FieldPanel("name", classname="full title"),
-            FieldPanel("person_title"),
-            FieldPanel("alignment"),
-            ImageChooserPanel("image"),
-            FieldPanel("video_upload"),
-            ImageChooserPanel("embassy_logo"),
-            FieldPanel("background"),
-            FieldPanel("social_media_link"),
-            FieldPanel("social_media_text"),
-            FieldPanel("address"),
-            FieldPanel("telephone"),
-            FieldPanel("opening_hours"),
-            FieldPanel("closure_dates"),
-            FieldPanel("emergency_contact_details"),
-            StreamFieldPanel("links"),
-        ], heading="Person"),
+        StreamFieldPanel("stories", heading="Two Column Feature"),
+        StreamFieldPanel("person", heading="Person + Social Feed"),
 
-        MultiFieldPanel([
-            FieldPanel("twitter_title"),
-            FieldPanel("twitter_username"),
-        ], heading="Twitter feed"),
-        MultiFieldPanel(
-            [ImageChooserPanel("social_logo"), FieldPanel("social_url"), FieldPanel("social_link_text")],
-            "Additional Social feed",
-        ),
     ]
 
     settings_panels = HeroPage.settings_panels + [
@@ -253,12 +176,12 @@ class Magazine(HeroPage):
     template = "irelandie_assets/pages/magazine.html"
 
     body = StreamField(
-            [
-                ("rich_text", blocks.AdvancedRichTextBlock()),
-                ("link_card", blocks.LinkCardsBlock())
-            ],
-            blank=True,
-        )
+        [
+            ("rich_text", blocks.AdvancedRichTextBlock()),
+            ("link_card", blocks.LinkCardsBlock())
+        ],
+        blank=True,
+    )
 
     content_panels = HeroPage.content_panels + [
         StreamFieldPanel("body")
