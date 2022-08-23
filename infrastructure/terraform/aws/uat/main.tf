@@ -79,11 +79,11 @@ locals {
     },
     ayoola_dev = {
       description = "Ayoola - Sidero"
-      cidr_blocks  = ["109.76.23.230/32"]
+      cidr_blocks  = ["109.76.60.118/32"]
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["192.168.8.116/32"]
+      cidr_blocks  = ["192.176.1.84/32"]
     },
     kleverson_dev = {
       description = "Kleverson Morais - OGCIO"
@@ -948,7 +948,7 @@ module "database" {
   db_username           = "${local.environment_name}_ireland_ie_username"
   db_password           = data.aws_ssm_parameter.random_db_password.value
   db_instance_class     = local.db_instance_class
-  db_engine_version     = local.db_engine_version 
+  db_engine_version     = local.db_engine_version
   name                  = "${local.environment_name}-db"
   subnets               = module.network.public_subnet_ids
   security_group_ids    = [aws_security_group.db.id]

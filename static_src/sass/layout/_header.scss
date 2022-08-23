@@ -127,8 +127,8 @@
         width: 90px;
 
         @include media-query(medium) {
-            height: 40px;
-            width: 160px;
+            height: max-content;
+            width: 125px;
         }
 
         #{$root}--condensed & {
@@ -136,6 +136,11 @@
             width: 80px;
             margin-left: 50%;
             transform: translateX(-50%);
+        }
+
+        &--svg {
+            height: 40px;
+            width: 160px;
         }
     }
 
