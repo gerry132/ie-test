@@ -131,15 +131,12 @@ def has_root_override(context, page, header=True):
 
     for p in pages:
         if p.content_type.name == 'mission page':
-            try:
-                m = MissionPage.objects.live().get(id=p.id)
-                if m.root_page:
-                    if header:
-                        return m.root_navigation
-                    else:
-                        return m.custom_footer
-            except MissionPage.DoesNotExist:
-                return False
+            m = MissionPage.objects.live().get(id=p.id)
+            if m.root_page:
+                if header:
+                    return m.root_navigation
+                else:
+                    return m.custom_footer
 
     return False
 
