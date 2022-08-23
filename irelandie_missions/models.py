@@ -2,16 +2,14 @@
 from django.db import models
 from django.utils.functional import cached_property
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
-from wagtail.core.fields import StreamField, RichTextField
+from wagtail.core.fields import StreamField
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.images import get_image_model_string
-from wagtail.images.edit_handlers import ImageChooserPanel
 
 from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_navigation.blocks import LinkBlock
 from irelandie_pages.models import FreeFormPageBase
 from irelandie_utils import blocks
-from irelandie_utils.blocks import StoryLinkBlock
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage
 
 
