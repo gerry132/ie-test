@@ -4,43 +4,41 @@
 {% load util_tags %}
 {% load i18n %}
 
+
 <div class="story section section--padding">
-        <div class="story__container story--dark">
-            <div class="story__width_left">
-                <div class="story{% if value.background == 'dark' %} story--dark{% endif %}{% if value.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
-                    <div class="wrapper wrapper--large wrapper--padding">
+	<div class="story__container story--dark">
+		<div class="story__width_left">
+			<div class="story{% if value.background == 'dark' %} story--dark{% endif %}{% if value.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
+				<div class="wrapper wrapper--large">
+					<div class="story__container">
+                        {% image value.image width-460 class="story__image story__image_margin" %}
+                        {% if value.video %}
+                            <div class="story__video-block">
+                                <video class="video-block__video" aria-label="{{ value.title }}" title="{{ value.title }}" autoplay loop muted data-video controls>
+                                    <source src="{{ value.video.url }}" type="video/mp4">
+                                    {% trans 'Your browser does not support the video tag.' %}
 
-                        <div class="story__container">
-                            {% image value.image width-460 class="story__image story__image_margin" %}
-                            {% if value.video %}
-                                <div class="story__video-block">
-                                    <video class="video-block__video" aria-label="{{ value.title }}" title="{{ value.title }}" autoplay loop muted data-video controls>
-                                        <source src="{{ value.video.url }}" type="video/mp4">
-                                        {% trans 'Your browser does not support the video tag.' %}
-                                    </video>
-                                </div>
-                            {% endif %}
-
-                            <div class="story__content">
-                                <div class="story__copy">
-                                    {% image value.embassy_logo width-460 class="story__logo" %}
-
-
-                                    <h3 class="story__heading heading--2">{{ value.name }}</h3>
-
-                                    {% if value.social_media_link %}
-                                        <a href="{{ value.social_media_link }}">
-                                            <div class="story__twitter">
+                                </video>
+                            </div>
+                        {% endif %}
+                        <div class="story__content">
+                            <div class="story__copy">
+                                {% image value.embassy_logo width-460 class="story__logo" %}
+                                <h3 class="story__heading heading--2">{{ value.name }}</h3>
+                                {% if value.social_media_link %}
+                                    <a href="{{ value.social_media_link }}">
+										<div class="story__twitter">
                                                 {% if value.social_media_text %}
                                                     {{ value.social_media_text }}
                                                 {% endif %}
                                                 {% include "patterns/atoms/icons/icon.html" with name="twitter" classname="story__twitter-icon" %}
-                                            </div>
-                                        </a>
-                                    {% endif %}
+                                        </div>
+									</a>
+                                {% endif %}
 
-                                    {% if value.address or value.telephone or value.opening_hours or value.closure_dates or value.emergency_contact_details %}
-                                        <div class="rich-text">
+                                {% if value.address or value.telephone or value.opening_hours or value.closure_dates or value.emergency_contact_details %}
+
+									<div class="rich-text">
                                             {% if value.address %}
                                                 {{ value.address|richtext }}
                                             {% endif %}
@@ -62,100 +60,127 @@
                                             {% endif %}
                                         </div>
                                     {% endif %}
-                                </div>
-
-                                {% if value.links %}
-                    {% if value.links|length > 2 %}
-                    <div class="story-links">
-                        <div class="your-class story-links__container">
-                          <div class="slider slider-mobile">
-                            {% for link in value.links %}
-                            <div id="last" class="slide-mobile" style="width: 100%;">
-                              <div class="story-links">
-                                  <div class="your-class story-links__container">
-                                          {% include_block link %}
-                                  </div>
-                                  </div>
                             </div>
-                            {% endfor %}
-                          </div>
-                            <div class="slider slider-desktop">
+                            {% if value.links %}
+                                {% if value.links|length > 2 %}
+                                    <div class="story-links">
+                                        <div class="your-class story-links__container">
+                                            <div class="slider slider-mobile">
+                                                {% for link in value.links %}
+                                                    <div id="last" class="slide-mobile" style="width: 100%;">
+                                                        <div class="story-links">
+                                                            <div class="your-class story-links__container">
+                                                                  {% include_block link %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
 
-                              {% for link in value.links %}
-                                {% if forloop.counter|divisibleby:2 %}
-                                          {% include_block link %}
+                                            </div>
+                                            <div class="slider slider-desktop">
+                                                {% for link in value.links %}
+                                                    {% if forloop.counter|divisibleby:2 %}
+                                                              {% include_block link %}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 {% else %}
                                 {% with next_element=value.links|next:forloop.counter0 %}
-                                    {% if next_element %}
-                                      <div id="next" class="slide">
-                                          <div class="story-links">
-                                              <div class="your-class story-links__container">
-                                                      {{link}}
-                                    {% else %}
-                                    <div id="last" class="slide" style="width: 100%;">
-                                      <div class="story-links">
-                                          <div class="your-class story-links__container">
-                                                  {% include_block link %}
-                                          </div>
-                                          </div>
+                                {% if next_element %}
+                                    <div id="next" class="slide">
+                                        <div class="story-links">
+                                            <div class="your-class story-links__container">
+                                                {{link}}
+                                                {% else %}
+                                                    <div id="last" class="slide" style="width: 100%;">
+                                                        <div class="story-links">
+                                                            <div class="your-class story-links__container">
+                                                                      {% include_block link %}
+                                                              </div>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                                {% endwith %}
+                                                {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                            {% else %}
+                                            <div class="story-links">
+                                                <div class="your-class story-links__container">
+                                                {% for link in value.links %}
+                                                    {% include_block link %}
+                                                {% endfor %}
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endif %}
+                                        </div>
+                        {% if value.links|length > 2 %}
+									<button class="btn btn-next"></button>
+									<button class="btn btn-prev"></button>
+                        {% endif %}
                                     </div>
-                                    {% endif %}
-                                  {% endwith %}
-                                {% endif %}
-                        {% endfor %}
-                        </div>
-                        {% else %}
-                        <div class="story-links">
-                            <div class="your-class story-links__container">
-                                    {% for link in value.links %}
-                                        {% include_block link %}
-                                    {% endfor %}
                         </div>
                     </div>
-                    {% endif %}
-                {% endif %}
-            </div>
-            {% if value.links|length > 2 %}
-              <button class="btn btn-next">  </button>
-                          <button class="btn btn-prev">
-                          </button>
-            {% endif %}
-        </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="story__width_right ">
+                </div>
+                {% if value.links|length < 3 %}
+                <div class="story__width_right ">
                 {% for socialfeed in value.social_feed %}
                 {% if socialfeed.value.twitter_username %}
-                    <div class="wrapper wrapping--padding">
-                        <div class="twitter-embed section section--padding">
+						<div class="wrapper wrapping--padding">
+							<div class="twitter-embed section section--padding">
                             {% if socialfeed.value.twitter_title %}
-                                <h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
+								<h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
                             {% endif %}
-                            <a class="twitter-timeline" data-width=400 data-height=600 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
-
+								<a class="twitter-timeline" data-width=400 data-height=600 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
                                     Tweets by {{ socialfeed.value.twitter_username }}
-                            </a>
+                                </a>
+                            </div>
                         </div>
-                    </div>
                 {% endif %}
-
 
                 {% if socialfeed.value.additional_social_block %}
                         {{ socialfeed.value.additional_social_block }}
-
                 {% endif %}
-                        {% endfor %}
-            </div>
+                    {% endfor %}
                 </div>
+                {% endif %}
             </div>
-
         </div>
+        {% if value.links|length > 2 %}
+			<div class="story__width_right ">
+                {% for socialfeed in value.social_feed %}
+                {% if socialfeed.value.twitter_username %}
+                <div class="wrapper wrapping--padding">
+					<div class="twitter-embed section section--padding">
+                            {% if socialfeed.value.twitter_title %}
+                                <h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
+                            {% endif %}
+						<a class="twitter-timeline" data-width=400 data-height=600 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                    Tweets by {{ socialfeed.value.twitter_username }}
+                        </a>
+					</div>
+				</div>
+                {% endif %}
+                {% if socialfeed.value.additional_social_block %}
+                    {{ socialfeed.value.additional_social_block }}
+                {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
 </div>
-<script>
+
+{% block extra_js %}
+{% for socialfeed in value.social_feed %}
+    {% if socialfeed.value.twitter_username %}
+
+	<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    {% endif %}
+{% endfor %}
+
+
+	<script>
 function readySlides(mobile) {
   console.log(mobile);
   let slides;
@@ -217,11 +242,5 @@ readySlides(true);
 </script>
 
 
-{% block extra_js %}
-{% for socialfeed in value.social_feed %}
-    {% if socialfeed.value.twitter_username %}
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    {% endif %}
-{% endfor %}
 {% endblock %}
 
