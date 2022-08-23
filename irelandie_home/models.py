@@ -104,7 +104,7 @@ class CampaignPage(HeroPage):
     template = "patterns/pages/home/campaign_page.html"
 
     content_panels = HeroPage.content_panels + [
-        StreamFieldPanel("top_stories"),
+        StreamFieldPanel("top_stories", heading="Two Column Feature"),
         StreamFieldPanel("embeds"),
         StreamFieldPanel("pinned_stories"),
         StreamFieldPanel("secondary_stories"),

@@ -8,15 +8,56 @@
     &__container {
         position: relative;
         padding: 0 30px;
+        display: flex;
 
         @include media-query(large) {
-            display: flex;
+
             justify-content: space-between;
 
             #{$root}--right-aligned & {
                 flex-direction: row-reverse;
             }
         }
+        @media only screen and (max-width:768px) {
+
+            justify-content: space-between;
+            flex-direction: column;
+        }
+    }
+    &__width_left {
+        @include media-query(small) {
+            flex: 2;
+        }
+    }
+    &__width_right {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin: 0;
+        padding: 20px 20px;
+        @include media-query(small) {
+            flex: 1;
+        }
+    }
+
+    &__iconDetails {
+        margin:0 2%;
+        float:left;
+        height:40px;
+        width:40px;
+    }
+    &__container2 {
+        width:100%;
+        height:auto;
+
+    }
+    &__text {
+        float:left;
+    }
+
+    &__video-block {
+    height: 575px;
+    width: 460px;
     }
 
     &__image {
@@ -28,6 +69,20 @@
             max-width: 35%;
             max-height: 450px;
             min-height: 400px;
+        }
+        @media only screen and (max-width:768px) {
+
+            justify-content: space-between;
+
+            #{$root}--right-aligned & {
+                order: 2;
+            }
+        }
+    }
+
+    &__image_margin{
+    @include media-query(large) {
+        margin-top: 140px;
         }
     }
 
@@ -55,8 +110,10 @@
 
     &__logo {
         display: block;
-        max-width: 200px;
         margin-bottom: 20px;
+        width: 251px;
+        height: 79px;
+        margin-left: -20px;
     }
 
     &__copy {

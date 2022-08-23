@@ -1,0 +1,10 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+<div class='story__container2'>
+    {% image value.social_logo width-120 class="story__iconDetails" %}
+
+    <div class="story__text">
+        <a  href="{{ value.social_url }}" aria-label="{{ value.social_link_text }}">{{ value.social_link_text }}</a>
+    </div>
+</div>
