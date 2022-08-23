@@ -118,7 +118,7 @@ class CountryPage(HeroPage):
 IMAGE_MODEL = get_image_model_string()
 
 
-class MissionPage(BasePage):
+class MissionPage(HeroPage):
     template = "patterns/pages/irelandie_missions/mission.html"
     stories = StreamField(
         [
@@ -132,6 +132,14 @@ class MissionPage(BasePage):
 
     name = models.CharField(max_length=255, blank=True)
     person_title = models.CharField(max_length=255, blank=True)
+    search_bar = models.BooleanField(default=False)
+    popular_pages = StreamField(
+        [("link", LinkBlock())], blank=True, help_text="Add pages to hero search."
+    )
+    root_page = models.BooleanField(null=True)
+    root_navigation = StreamField(
+        [("link", LinkBlock())], blank=True, help_text="Override the site navigation"
+    )
     image = models.ForeignKey(
         IMAGE_MODEL,
         null=True,
@@ -194,8 +202,13 @@ class MissionPage(BasePage):
         related_name="+",
     )
 
-    content_panels = BasePage.content_panels + [
-        StreamFieldPanel("stories", heading="Two Column Feature"),
+    content_panels = HeroPage.content_panels + [
+        FieldPanel("root_page"),
+        MultiFieldPanel([
+            FieldPanel("search_bar"),
+            StreamFieldPanel("popular_pages"),
+        ], heading="Searchbar settings"
+        ),
         MultiFieldPanel([
             FieldPanel("name", classname="full title"),
             FieldPanel("person_title"),
@@ -224,35 +237,16 @@ class MissionPage(BasePage):
         ),
     ]
 
-
-class MissionHome(HeroPage):
-    template = "irelandie_assets/pages/mission.html"
-
-    twitter_title = models.CharField(max_length=50, blank=True)
-    root_navigation = StreamField(
-        [("link", LinkBlock())], blank=True, help_text="Override the site navigation"
-    )
-
-    twitter_feed = models.ForeignKey(
-        "utils.TwitterEmbed",
-        on_delete=models.SET_NULL,
-        related_name="+",
-        null=True,
-        blank=True,
-    )
-
-    root_page = models.BooleanField(null=True)
-
-    content_panels = BasePage.content_panels + [
-        FieldPanel("root_page"),
-        MultiFieldPanel([
-            FieldPanel("twitter_title"),
-            SnippetChooserPanel("twitter_feed"),
-        ], heading="Twitter feed"),
-    ]
-    settings_panels = BasePage.settings_panels + [
+    settings_panels = HeroPage.settings_panels + [
         StreamFieldPanel("root_navigation")
     ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.hero_panel, heading='Hero'),
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(settings_panels, heading='Settings', classname="settings"),
+    ])
 
 
 class Magazine(HeroPage):

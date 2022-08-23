@@ -1,0 +1,21 @@
+<div class="search-contain">
+        <div class="wrapper">
+            <form action="{% url 'search' %}">
+                <div class="searchBar">
+                    <input value="{{page.id}}" name="query_type" style="display: none;">
+                    <input id="searchQueryInput" type="search" placeholder="Search&hellip;" name="query" {% if search_query %} value="{{ search_query }}"{% endif %} data-search-input>
+                        <div class="select-contain">
+                            {% if page.popular_pages %}
+                            <select class="searchBarSelect" onchange="location = this.value; ">
+                                <option value="" name="popular_page" selected disabled hidden>Popular</option>
+                                    {% for p in page.popular_pages %}
+                                        <option value="{{p.value.page.url}}">{{p}}</option>
+                                    {% endfor %}
+                                </select>
+                            {% endif %}
+                            </div>
+                        <button type="submit" class="searchButton">Search</button> 
+                    </div>
+                </form>
+            </div>
+        </div>

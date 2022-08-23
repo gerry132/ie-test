@@ -4,6 +4,8 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.template.response import TemplateResponse
 from django.utils.cache import add_never_cache_headers, patch_cache_control
 
+from irelandie_missions.models import MissionPage
+
 from wagtail.core.models import Page, Site
 from wagtail.search.models import Query
 
@@ -14,8 +16,11 @@ def search(request):
     root_page = Site.find_for_request(request).root_page.localized
     search_query = request.GET.get("query", None)
     page = request.GET.get("page", 1)
-
+    origin = request.GET.get("query_type")
     # Search
+    if origin:
+        root_page = MissionPage.objects.live().get(id=origin)
+
     if search_query:
         search_results = (
             Page.objects.live()
