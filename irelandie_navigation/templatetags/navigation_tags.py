@@ -148,20 +148,28 @@ def has_root_override(context, page, header=True):
 @register.inclusion_tag(
     "patterns/molecules/notice-bar/noticebar.html", takes_context=True
 )
-def noticebar(context, state):
+def noticebar(context, state, page):
     request = context["request"]
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
 
-    noticebar = get_notice_bar_for_locale(NoticeBar, locale)
-
-    enable = NoticeBar.objects.get().enable
-
-    return {
-        "noticebar": noticebar,
-        "request": request,
-        "state": state,
-        "enable": enable,
-    }
+    if isinstance(page, MissionPage):
+        mission_home_enable_notice = MissionPage.objects.get(id=page.id).enable_notice_bar
+        noticebar = MissionPage.objects.get(id=page.id).notice_bar
+        return {
+            "noticebar": noticebar,
+            "request": request,
+            "state": state,
+            "enable": mission_home_enable_notice,
+        }
+    else:
+        noticebar = get_notice_bar_for_locale(NoticeBar, locale)
+        enable = NoticeBar.objects.get().enable
+        return {
+            "noticebar": noticebar,
+            "request": request,
+            "state": state,
+            "enable": enable,
+        }
 
 
 @register.simple_tag(
