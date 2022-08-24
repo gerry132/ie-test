@@ -1,0 +1,9 @@
+{% load wagtailcore_tags %}
+
+
+<div class="link-box__main">
+    <div class="link-box__line"></div>
+    {% for link_box in value.link_boxes %}
+        {% include_block link_box %}
+    {% endfor %}
+</div>
