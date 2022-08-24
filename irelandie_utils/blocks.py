@@ -352,6 +352,10 @@ class AdvancedRichTextBlock(blocks.StructBlock):
         features=["h3", "blockquote", "bold", "link", "document-link", "ul"], required=False,
     )
 
+    class Meta:
+        label = "Advanced RichTextBlock"
+        template = "patterns/molecules/streamfield/blocks/advanced_richtext_block.html"
+
 
 class RoleBlock(blocks.PageChooserBlock):
     class Meta:
@@ -791,3 +795,17 @@ class PersonSocialBlock(blocks.StructBlock):
     class Meta:
         label = "Person + Social Feed"
         template = "patterns/molecules/streamfield/blocks/person_block.html"
+
+
+class GeneralContentBlocks(blocks.StreamBlock):
+    rich_text = AdvancedRichTextBlock(group="Base")
+    image = ImageBlock(group="Base")
+    document = DocumentBlock(group="Base")
+    html = blocks.RawHTMLBlock(
+        group="HTML",
+        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
+    )
+    table = TableBlock(group="HTML")
+    youtube_video = YoutubeVideoBlock(group="HTML")
+    accordion = AccordionBlock(group="Base")
+    logos = LogoCardsBlock(group="Base")

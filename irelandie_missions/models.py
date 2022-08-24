@@ -332,3 +332,21 @@ class EmbassyPage(FreeFormPageBase):
 
     class Meta:
         verbose_name = "Embassy Page"
+
+
+class GeneralContentPage(HeroPage):
+    template = "patterns/pages/missions/general_content_page.html"
+
+    introduction = models.TextField(blank=True)
+    body = StreamField(blocks.GeneralContentBlocks(), blank=True)
+
+    content_panels = HeroPage.content_panels + [
+        FieldPanel("introduction"),
+        StreamFieldPanel("body"),
+    ]
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.hero_panel, heading='Hero'),
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
+    ])

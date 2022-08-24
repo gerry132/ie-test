@@ -1,0 +1,23 @@
+context:
+  page:
+    title: Ireland in the World
+    introduction: Etiam nac odio nec lectus posuere finibus eu at diam.
+    hero_image: dummy
+    hero_video:
+      width: 400
+      height: 700
+      file:
+        url: https://youtu.be/dQw4w9WgXcQ
+
+tags:
+  image:
+    page.hero_image fill-1920x1080:
+      raw: |
+        <img src="https://source.unsplash.com/1920?1280" width="1920" height="1280" alt="Some alt">
+    article.listing_image width-768:
+      raw: |
+        <img src="https://source.unsplash.com/1920?1280" width="1920" height="1280" alt="Some alt">
+  pageurl:
+    'page.link_page as href':
+      target_var: href
+      raw: '#'
