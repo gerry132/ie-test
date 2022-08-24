@@ -13,7 +13,6 @@
     }
 
     &--condensed {
-        height: auto;
         background-color: $color--dark-green;
     }
 
@@ -123,17 +122,9 @@
     }
 
     &__logo {
-        height: 30px;
         width: 90px;
 
-        @include media-query(medium) {
-            height: max-content;
-            width: 125px;
-        }
-
         #{$root}--condensed & {
-            height: 20px;
-            width: 80px;
             margin-left: 50%;
             transform: translateX(-50%);
         }
