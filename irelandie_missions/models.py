@@ -351,40 +351,19 @@ class EmbassyPage(FreeFormPageBase):
         verbose_name = "Embassy Page"
 
 
-class GeneralContentPage(BasePage):
+class GeneralContentPage(HeroPage):
     template = "patterns/pages/missions/general_content_page.html"
 
     introduction = models.TextField(blank=True)
-
-    hero_image = models.ForeignKey(
-        IMAGE_MODEL,
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
-    hero_video = models.ForeignKey(
-        "wagtailmedia.Media",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
     body = StreamField(blocks.GeneralContentBlocks(), blank=True)
 
-    content_panels = BasePage.content_panels + [
+    content_panels = HeroPage.content_panels + [
         FieldPanel("introduction"),
-        MultiFieldPanel(
-            [
-                ImageChooserPanel("hero_image"),
-                MediaChooserPanel("hero_video", media_type="video"),
-            ],
-            "hero",
-        ),
         StreamFieldPanel("body"),
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.hero_panel, heading='Hero'),
         ObjectList(HeroPage.promote_panels, heading='Promote'),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
