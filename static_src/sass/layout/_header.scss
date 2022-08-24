@@ -124,12 +124,7 @@
     &__logo {
         width: 90px;
 
-        @include media-query(medium) {
-            width: 125px;
-        }
-
         #{$root}--condensed & {
-            width: 80px;
             margin-left: 50%;
             transform: translateX(-50%);
         }
