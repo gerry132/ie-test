@@ -11,8 +11,6 @@ from irelandie_navigation.blocks import LinkBlock
 from irelandie_pages.models import FreeFormPageBase
 from irelandie_utils import blocks
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage
-from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtailmedia.edit_handlers import MediaChooserPanel
 
 
 class CountryGroupPageIndex(BasePage):
