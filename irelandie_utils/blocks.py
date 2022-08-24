@@ -809,3 +809,52 @@ class GeneralContentBlocks(blocks.StreamBlock):
     youtube_video = YoutubeVideoBlock(group="HTML")
     accordion = AccordionBlock(group="Base")
     logos = LogoCardsBlock(group="Base")
+
+
+class LinkBoxBlock(blocks.StructBlock):
+    heading = blocks.CharBlock()
+    introduction = blocks.RichTextBlock(required=False)
+    page = blocks.PageChooserBlock(required=False)
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
+
+    class Meta:
+        icon = "image"
+        label = "Link Box"
+        template = "patterns/molecules/link_box/link_box.html"
+
+    def clean(self, value):
+        errors = {}
+        values = [value["page"], value["url"]]
+        # Set only a Page OR a URL
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a page or set a URL."
+
+            errors["page"] = ErrorList([message])
+            errors["url"] = ErrorList([message])
+
+        # A URL must have title
+        if value["url"] and not value["heading"]:
+            errors["heading"] = ErrorList(["Please set a title for the URL"])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context["link_url"] = value["url"] or value["page"].url
+        return context
+
+
+class LinkBoxesBlock(blocks.StructBlock):
+    link_boxes = blocks.StreamBlock([("link_box", LinkBoxBlock())])
+
+    class Meta:
+        icon = "list-ul"
+        label = "Link Boxes"
+        template = "patterns/molecules/streamfield/blocks/link_boxes.html"

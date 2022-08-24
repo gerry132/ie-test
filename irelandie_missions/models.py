@@ -192,6 +192,41 @@ class Magazine(HeroPage):
     ])
 
 
+class ServicesLandingPage(HeroPage):
+    template = "patterns/pages/missions/services_landing_page.html"
+
+    rich_text = StreamField(
+        [
+            ("rich_text", blocks.AdvancedRichTextBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+
+    body = StreamField(
+        [
+            ("link_box", blocks.LinkBoxesBlock())
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+
+    content_panels = HeroPage.content_panels + [
+        StreamFieldPanel("rich_text", heading="Advanced Richtext block"),
+        StreamFieldPanel("body")
+    ]
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.hero_panel, heading='Hero'),
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
+    ])
+
+
 class MissionSearchPage(BasePage):
     template = "patterns/pages/missions/mission_search_page.html"
 
