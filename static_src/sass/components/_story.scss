@@ -70,8 +70,7 @@
         object-fit: cover;
 
         @include media-query(large) {
-            max-width: 460px;
-            max-height: 575px;
+            max-height: 620px;
             min-height: 400px;
             min-width: 30%;
         }
