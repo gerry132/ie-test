@@ -93,7 +93,6 @@
 .slider-desktop, .slider-mobile {
     width: 100%;
     max-width: 100%;
-    height: 100px;
     position: relative;
     overflow: hidden;
   }
@@ -128,13 +127,13 @@
 
   .btn-prev {
 
-    top: 50%;
+    top: 24%;
     left: -3%;
     background-image: url('../images/cssBackgrounds/navigation_left.png');
   }
 
   .btn-next {
-    top: 50%;
+    top: 24%;
     right: -3%;
     background-image: url('../images/cssBackgrounds/navigation_right.png');
   }
