@@ -135,7 +135,6 @@ class MissionPage(HeroPage):
         min_num=0,
         max_num=1,
     )
-    enable_notice_bar = models.BooleanField(default=False)
     stories = StreamField(
         [
             ("story", blocks.StoryBlock()),
@@ -165,7 +164,6 @@ class MissionPage(HeroPage):
         ),
         MultiFieldPanel([
             StreamFieldPanel("notice_bar"),
-            FieldPanel("enable_notice_bar"),
         ], heading="Noticebar settings"
         ),
         StreamFieldPanel("stories", heading="Two Column Feature"),
