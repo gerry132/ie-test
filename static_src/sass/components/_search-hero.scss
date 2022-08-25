@@ -12,8 +12,11 @@
   border-radius: 1.625rem;
   padding: 0 0.5rem 0 1.5rem;
   font-size: 1rem;
-}
 
+  @media only screen and (max-width: 400px) {
+    width: 90%;
+  }
+}
 
 .searchBarSelect {
   height: 2.8rem;
@@ -30,6 +33,10 @@
     border: #004D46;
     background-color: #004D46;
     height: 80%;
+    @media only screen and (max-width: 400px) {
+      padding-left: 10px;
+      padding-right: 10px;
+  }
 }
 
 #searchQueryInput {
@@ -41,8 +48,14 @@
   border-radius: 1.625rem;
   padding: 0 3.5rem 0 1.5rem;
   font-size: 1rem;
+  @media only screen and (max-width: 400px) {
+      padding: 0%;
+  }
 }
 
 .select-contain {
     padding-right: 30px;
+    @media only screen and (max-width: 400px) {
+      padding-right: 0%;
+  }
 }
