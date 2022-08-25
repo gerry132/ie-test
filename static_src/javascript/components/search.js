@@ -26,7 +26,6 @@ class Search {
 
         // classes
         this.activeClass = 'is-active';
-        this.hideClass = 'is-hide'
 
         this.bindEvents();
     }
@@ -50,6 +49,7 @@ class Search {
 
     toggleSearch() {
         const searchEvent = new Event('onSearchOpen');
+        const noticeBar = document.querySelector('.notice-bar--extended');
         document.dispatchEvent(searchEvent);
 
         // toggle both desktop and mobile icons
@@ -62,6 +62,7 @@ class Search {
 
         // focus the input
         this.searchInput.focus();
+        noticeBar.classList.toggle('notice-bar--extended__search-is-active');
     }
 }
 
