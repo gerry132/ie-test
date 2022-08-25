@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.functional import cached_property
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
 from wagtail.core.fields import StreamField
+from wagtail.core import blocks as wagtail_blocks
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.images import get_image_model_string
 
@@ -154,6 +155,28 @@ class MissionPage(HeroPage):
         min_num=0,
         max_num=1,
     )
+    pinned_stories = StreamField(
+            [
+                (
+                    "pinned_story",
+                    wagtail_blocks.StructBlock(
+                        [
+                            ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
+                            (
+                                "pinned_stories",
+                                wagtail_blocks.ListBlock(blocks.PinnedStoryBlock()),
+                            ),
+                        ],
+                        template="patterns/molecules/pinned-stories/pinned_stories.html",
+                    ),
+                ),
+            ],
+            block_counts={
+                "pinned_story": {"max_num": 1},
+            },
+            blank=True,
+            null=True,
+        )
 
     content_panels = HeroPage.content_panels + [
         FieldPanel("root_page"),
@@ -166,6 +189,7 @@ class MissionPage(HeroPage):
             StreamFieldPanel("notice_bar"),
         ], heading="Noticebar settings"
         ),
+        StreamFieldPanel("pinned_stories"),
         StreamFieldPanel("stories", heading="Two Column Feature"),
         StreamFieldPanel("person", heading="Person + Social Feed"),
 
