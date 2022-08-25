@@ -15,7 +15,6 @@ from .blocks import (
     LinkBlockExtended,
     LinkColumnWithHeader,
     SecondaryNavLinkColumnWithHeader,
-    NoticeBarWithMessageLink
 )
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
 

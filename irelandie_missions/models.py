@@ -229,7 +229,7 @@ class ServicesLandingPage(HeroPage):
     )
 
     content_panels = HeroPage.content_panels + [
-    StreamFieldPanel("rich_text", heading="Advanced Richtext"),
+        StreamFieldPanel("rich_text", heading="Advanced Richtext"),
         StreamFieldPanel("body")
     ]
     edit_handler = TabbedInterface([
@@ -263,8 +263,8 @@ class MissionSearchPage(BasePage):
         for group in country_groups:
             countries_count = (
                 CountryPage.objects.descendant_of(self.get_parent())
-                .filter(region=group)
-                .count()
+                    .filter(region=group)
+                    .count()
             )
             if countries_count:
                 regions.append(group)
