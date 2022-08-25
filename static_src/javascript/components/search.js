@@ -12,7 +12,6 @@ class Search {
         this.searchInput = this.searchDropdown.querySelector(
             '[data-search-input]',
         );
-        this.noticeBarOnClose = document.querySelector('.on-close');
 
         // mobile menu selectors
         this.mobileMenu = document.querySelectorAll('[data-mobile-menu]');
@@ -27,7 +26,6 @@ class Search {
 
         // classes
         this.activeClass = 'is-active';
-        this.hideClass = 'is-hide'
 
         this.bindEvents();
     }
@@ -46,25 +44,25 @@ class Search {
 
             // toggle search dropdown
             this.searchDropdown.classList.remove(this.activeClass);
-            this.noticeBarOnClose.classList.remove(this.hideClass)
         });
     }
 
     toggleSearch() {
         const searchEvent = new Event('onSearchOpen');
+        const noticeBar = document.querySelector('.notice-bar--extended');
         document.dispatchEvent(searchEvent);
 
         // toggle both desktop and mobile icons
         this.searchToggles.forEach((toggle) => {
             toggle.classList.toggle(this.activeClass);
         });
-        this.noticeBarOnClose.classList.toggle(this.hideClass)
 
         // toggle search dropdown
         this.searchDropdown.classList.toggle(this.activeClass);
 
         // focus the input
         this.searchInput.focus();
+        noticeBar.classList.toggle('notice-bar--extended__search-is-active');
     }
 }
 

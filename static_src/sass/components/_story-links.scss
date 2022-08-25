@@ -1,13 +1,12 @@
 .story-links {
     $root: &;
     margin-top: auto;
-    padding-top: $grid;
     position: relative;
     max-width: 100%;
 
     &__width{
-    @include media-query(small){
-        width: 241px;
+    @include media-query(large){
+        max-width: 560px;
     }
 
     }

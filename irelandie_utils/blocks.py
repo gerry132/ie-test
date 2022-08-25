@@ -731,16 +731,16 @@ class AdditionalSocialBlock(blocks.StructBlock):
     social_link_text = blocks.CharBlock(required=False)
 
     class Meta:
-        label = "Person + Social Feed"
+        label = "Additional Social Feed"
         template = "patterns/molecules/streamfield/blocks/additional_social_block.html"
 
 
 class SocialFieldBlock(blocks.StructBlock):
     twitter_title = blocks.CharBlock(required=False)
     twitter_username = blocks.CharBlock(max_length=100, required=False, help_text="Twitter username")
-    additional_social_block = blocks.StreamBlock(
+    additional_social_feed = blocks.StreamBlock(
         [
-            ("additional_social_block", AdditionalSocialBlock())
+            ("additional_social_feed", AdditionalSocialBlock())
         ],
         max_num=1,
         min_num=0,

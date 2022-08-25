@@ -15,7 +15,6 @@ from .blocks import (
     LinkBlockExtended,
     LinkColumnWithHeader,
     SecondaryNavLinkColumnWithHeader,
-    NoticeBarWithMessageLink
 )
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
 
@@ -178,46 +177,6 @@ class SecondaryNavigation(TranslatableMixin):
     class Meta:
         verbose_name = _("Secondary Navigation")
         verbose_name_plural = _("Secondary Navigation")
-        unique_together = ("translation_key", "locale")
-
-
-@register_snippet
-class NoticeBar(TranslatableMixin):
-    # Snippets model is used so the notice bar can be localised with TranslatableMixin.
-    name = models.CharField(
-        max_length=255,
-        unique=True,
-        help_text="Internal name given to this notice bar and the accompanied message,"
-                  " it's not displayed to a site user.",
-        verbose_name=_("Name"),
-    )
-
-    notice_bar = StreamField(
-        [("notice_bar_link", NoticeBarWithMessageLink())],
-        blank=True,
-        help_text="Notice bar message with link",
-        verbose_name=_("Notice Bar Message"),
-    )
-
-    enable = models.BooleanField(default=False)
-
-    panels = [
-        MultiFieldPanel(
-            [
-                FieldPanel("name"),
-                StreamFieldPanel("notice_bar"),
-                FieldPanel("enable"),
-            ],
-            heading=_("Notice Bar Alert"),
-        )
-    ]
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = _("Notice Bar")
-        verbose_name_plural = _("Notice Bars")
         unique_together = ("translation_key", "locale")
 
 
