@@ -229,7 +229,7 @@ class ServicesLandingPage(HeroPage):
     )
 
     content_panels = HeroPage.content_panels + [
-        StreamFieldPanel("rich_text", heading="Advanced Richtext"),
+    StreamFieldPanel("rich_text", heading="Advanced Richtext"),
         StreamFieldPanel("body")
     ]
     edit_handler = TabbedInterface([
