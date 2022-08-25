@@ -99,10 +99,6 @@
             <div class="wrapper wrapper--large">
                 {% include "patterns/molecules/search/search.html" with classes="search--dropdown" %}
             </div>
-            {% has_notice_bar as shownotice %}
-            {% if shownotice %}
-                {% noticebar state='on-open' %}
-            {% endif %}
         </div>
     </section>
 

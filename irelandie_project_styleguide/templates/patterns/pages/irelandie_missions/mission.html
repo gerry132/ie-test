@@ -6,6 +6,9 @@
 {% load i18n %}
 
 {% block main %}
+    <div>
+        {% include_block page.notice_bar %}
+    </div>
     <div class="wrapper wrapper--large wrapper--padding">
         {% include_block page.body %}
     </div>

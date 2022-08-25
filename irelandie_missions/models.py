@@ -7,7 +7,7 @@ from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.images import get_image_model_string
 
 from irelandie_home.blocks import SecondaryCallToAction
-from irelandie_navigation.blocks import LinkBlock
+from irelandie_navigation.blocks import LinkBlock, NoticeBarWithMessageLink
 from irelandie_pages.models import FreeFormPageBase
 from irelandie_utils import blocks
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage
@@ -126,6 +126,15 @@ class MissionPage(HeroPage):
     root_navigation = StreamField(
         [("link", LinkBlock())], blank=True, help_text="Override the site navigation"
     )
+    notice_bar = StreamField(
+        [
+            ("noticebar", NoticeBarWithMessageLink()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
     stories = StreamField(
         [
             ("story", blocks.StoryBlock()),
@@ -152,6 +161,10 @@ class MissionPage(HeroPage):
             FieldPanel("search_bar"),
             StreamFieldPanel("popular_pages"),
         ], heading="Searchbar settings"
+        ),
+        MultiFieldPanel([
+            StreamFieldPanel("notice_bar"),
+        ], heading="Noticebar settings"
         ),
         StreamFieldPanel("stories", heading="Two Column Feature"),
         StreamFieldPanel("person", heading="Person + Social Feed"),

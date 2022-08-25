@@ -11,6 +11,3 @@ tags:
   footerlinks:
     '':
       template_name: 'patterns/molecules/navigation/footerlinks.html'
-  noticebar:
-    '':
-      template_name: 'patterns/molecules/notice-bar/noticebar.html'
