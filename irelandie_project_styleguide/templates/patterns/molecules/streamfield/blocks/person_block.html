@@ -4,12 +4,12 @@
 {% load util_tags %}
 {% load i18n %}
 
-
 <div class="story section section--padding">
 	<div class="story__container story--dark">
 		<div class="story__width_left">
 			<div class="story{% if value.background == 'dark' %} story--dark{% endif %}{% if value.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
 				<div class="wrapper wrapper--large">
+                     {% image value.embassy_logo width-460 class="story__logo" %}
 					<div class="story__container">
                         {% image value.image width-460 class="story__image story__image_margin" %}
                         {% if value.video %}
@@ -22,8 +22,8 @@
                             </div>
                         {% endif %}
                         <div class="story__content">
-                            <div class="story__copy">
-                                {% image value.embassy_logo width-460 class="story__logo" %}
+                            <div class="story__copy1">
+
                                 {{ value.person_title }}
                                 <h3 class="story__heading heading--2">{{ value.name }}</h3>
                                 {% if value.social_media_link %}
@@ -64,12 +64,12 @@
                             </div>
                             {% if value.links %}
                                 {% if value.links|length > 2 %}
-                                    <div class="story-links">
+                                    <div class="story-links story-links__width">
                                         <div class="your-class story-links__container">
                                             <div class="slider slider-mobile">
                                                 {% for link in value.links %}
                                                     <div id="last" class="slide-mobile" style="width: 100%;">
-                                                        <div class="story-links">
+                                                        <div class="story-links story-links__width">
                                                             <div class="your-class story-links__container">
                                                                   {% include_block link %}
                                                             </div>
@@ -89,12 +89,12 @@
                                 {% with next_element=value.links|next:forloop.counter0 %}
                                 {% if next_element %}
                                     <div id="next" class="slide">
-                                        <div class="story-links">
+                                        <div class="story-links story-links__width">
                                             <div class="your-class story-links__container">
                                                 {{link}}
                                                 {% else %}
                                                     <div id="last" class="slide" style="width: 100%;">
-                                                        <div class="story-links">
+                                                        <div class="story-links story-links__width">
                                                             <div class="your-class story-links__container">
                                                                       {% include_block link %}
                                                               </div>
@@ -106,7 +106,7 @@
                                                 {% endfor %}
                                             </div>
                                             {% else %}
-                                            <div class="story-links">
+                                            <div class="story-links story-links__width">
                                                 <div class="your-class story-links__container">
                                                 {% for link in value.links %}
                                                     {% include_block link %}
@@ -140,8 +140,8 @@
                         </div>
                 {% endif %}
 
-                {% if socialfeed.value.additional_social_block %}
-                        {{ socialfeed.value.additional_social_block }}
+                {% if socialfeed.value.additional_social_feed %}
+                        {{ socialfeed.value.additional_social_feed }}
                 {% endif %}
                     {% endfor %}
                 </div>
@@ -157,14 +157,14 @@
                             {% if socialfeed.value.twitter_title %}
                                 <h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
                             {% endif %}
-						<a class="twitter-timeline" data-width=400 data-height=600 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+						<a class="twitter-timeline" data-width=450 data-height=600 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
                                     Tweets by {{ socialfeed.value.twitter_username }}
                         </a>
 					</div>
 				</div>
                 {% endif %}
-                {% if socialfeed.value.additional_social_block %}
-                    {{ socialfeed.value.additional_social_block }}
+                {% if socialfeed.value.additional_social_feed %}
+                    {{ socialfeed.value.additional_social_feed }}
                 {% endif %}
                 {% endfor %}
             </div>

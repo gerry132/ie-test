@@ -26,7 +26,7 @@
     }
     &__width_left {
         @include media-query(small) {
-            flex: 2;
+            flex: 70%;
         }
     }
     &__width_right {
@@ -36,8 +36,11 @@
         margin: 0;
         padding: 20px 20px;
         @include media-query(small) {
-            flex: 1;
+            flex: 30%;
         }
+        @media only screen and (min-width: 699px) {
+        padding: 40px;
+    }
     }
 
     &__iconDetails {
@@ -66,23 +69,22 @@
         object-fit: cover;
 
         @include media-query(large) {
-            max-width: 35%;
-            max-height: 450px;
+            max-width: 460px;
+            max-height: 575px;
             min-height: 400px;
         }
         @media only screen and (max-width:768px) {
 
             justify-content: space-between;
-
-            #{$root}--right-aligned & {
                 order: 2;
-            }
+
         }
     }
 
     &__image_margin{
     @include media-query(large) {
-        margin-top: 140px;
+        margin-top: 40px;
+        flex: 30%;
         }
     }
 
@@ -121,6 +123,12 @@
         .rich-text {
             @include font-size(s);
             font-family: $font--primary;
+        }
+    }
+
+    &__copy1 {
+        @include media-query(large) {
+            max-width: 720px;
         }
     }
 
