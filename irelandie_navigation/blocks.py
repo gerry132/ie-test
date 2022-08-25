@@ -56,5 +56,10 @@ class NoticeBarWithMessageLink(LinkBlockExtended):
         max_length=80,
     )
 
+    enable = blocks.BooleanBlock(
+        required=False,
+        default=False,
+    )
+
     class Meta:
         template = ("patterns/molecules/notice-bar/blocks/notice_bar.html",)

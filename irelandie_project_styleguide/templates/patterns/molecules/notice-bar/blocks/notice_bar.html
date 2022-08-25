@@ -1,3 +1,5 @@
 {% load wagtailcore_tags %}
 {% comment %} Notice bar for alert message {% endcomment %}
+{% if value.enable %}
 <a href="{{ link_url }}" class="alert-message notice-bar--extended">{{ link_title }}</a>
+{% endif %}
