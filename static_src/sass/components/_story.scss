@@ -27,6 +27,7 @@
     &__width_left {
         @include media-query(small) {
             flex: 70%;
+            order: 1;
         }
     }
     &__width_right {
@@ -34,9 +35,9 @@
         flex-direction: column;
         justify-content: flex-start;
         margin: 0;
-        padding: 20px 20px;
         @include media-query(small) {
             flex: 30%;
+            order: 2;
         }
         @media only screen and (min-width: 699px) {
         padding: 40px;
@@ -72,6 +73,7 @@
             max-width: 460px;
             max-height: 575px;
             min-height: 400px;
+            min-width: 30%;
         }
         @media only screen and (max-width:768px) {
 
