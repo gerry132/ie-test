@@ -23,11 +23,8 @@
             display: none;
         }
     }
-
-    @media only screen and (max-width: 1023px) {
-        .header__search.is-active {
-                top: 125px;
-            }
+    .notice-bar--extended__search-is-active {
+        top: 212;
     }
 {% endif %}
 </style>
@@ -224,4 +221,5 @@
             </div>
         </div>
     {% endif %}
+    {% include_block page.notice_bar %}
 </header>
