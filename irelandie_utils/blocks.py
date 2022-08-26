@@ -792,6 +792,21 @@ class PersonSocialBlock(blocks.StructBlock):
         required=False,
     )
 
+    def clean(self, value):
+        errors = {}
+        image = value.get('image')
+        video = value.get('video')
+
+        if not (bool(image) ^ bool(video)):
+            msg = "You can't choose both an image and a video. Choose an image or a video"
+            errors['image'] = ErrorList([msg])
+            errors['video'] = ErrorList([msg])
+
+        if errors:
+            raise StructBlockValidationError(block_errors=errors)
+
+        return super().clean(value)
+
     class Meta:
         label = "Person + Social Feed"
         template = "patterns/molecules/streamfield/blocks/person_block.html"
