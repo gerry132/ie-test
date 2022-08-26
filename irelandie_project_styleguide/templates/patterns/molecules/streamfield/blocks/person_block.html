@@ -10,11 +10,11 @@
 			<div class="story{% if value.background == 'dark' %} story--dark{% endif %}{% if value.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
 				<div class="wrapper wrapper--large">
                      {% image value.embassy_logo width-460 class="story__logo" %}
-					<div class="story__container">
+					<div class="story__container1">
                         {% image value.image width-460 class="story__image story__image_margin" %}
                         {% if value.video %}
                             <div class="story__video-block">
-                                <video class="video-block__video" aria-label="{{ value.title }}" title="{{ value.title }}" autoplay loop muted data-video controls>
+                                <video class="story__video-block" aria-label="{{ value.title }}" title="{{ value.title }}" autoplay loop muted data-video controls>
                                     <source src="{{ value.video.url }}" type="video/mp4">
                                     {% trans 'Your browser does not support the video tag.' %}
 
@@ -133,7 +133,7 @@
                             {% if socialfeed.value.twitter_title %}
 								<h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
                             {% endif %}
-								<a class="twitter-timeline" data-width="100%" data-height="auto" href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+								<a class="twitter-timeline" data-width="100%" data-height=600 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
                                     Tweets by {{ socialfeed.value.twitter_username }}
                                 </a>
                             </div>
@@ -181,8 +181,10 @@
 {% endfor %}
 
 
+<script> window.onresize = function(){ location.reload(); } </script>
+
 	<script>
-function readySlides(mobile) {
+function readySlides1(mobile) {
   console.log(mobile);
   let slides;
   let transNum;
@@ -238,8 +240,8 @@ function readySlides(mobile) {
   });
 }
 
-readySlides(false);
-readySlides(true);
+readySlides1(false);
+readySlides1(true);
 </script>
 
 

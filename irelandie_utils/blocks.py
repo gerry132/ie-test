@@ -2,7 +2,7 @@
 
 import re
 
-from django.forms.utils import ErrorList
+from django.forms.utils import ErrorList, ValidationError
 from django.utils.translation import gettext_lazy as _
 from wagtail.contrib.table_block.blocks import TableBlock as WagtailTableBlock
 from wagtail.core import blocks
@@ -791,6 +791,21 @@ class PersonSocialBlock(blocks.StructBlock):
         min_num=0,
         required=False,
     )
+
+    def clean(self, value):
+        errors = {}
+        image = value.get('image')
+        video = value.get('video')
+
+        if not (bool(image) ^ bool(video)):
+            msg = "You can't choose both an image and a video. Choose an image or a video"
+            errors['image'] = ErrorList([msg])
+            errors['video'] = ErrorList([msg])
+
+        if errors:
+            raise StructBlockValidationError(block_errors=errors)
+
+        return super().clean(value)
 
     class Meta:
         label = "Person + Social Feed"

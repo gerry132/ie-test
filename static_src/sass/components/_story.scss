@@ -12,18 +12,39 @@
 
         @include media-query(large) {
 
-            justify-content: space-between;
+            justify-content: flex-start;
 
             #{$root}--right-aligned & {
                 flex-direction: row-reverse;
             }
         }
-        @media only screen and (max-width:768px) {
+        @media only screen and (max-width:1022px) {
 
-            justify-content: space-between;
+            justify-content: flex-start;
             flex-direction: column;
         }
     }
+
+    &__container1 {
+        position: relative;
+        padding: 0 30px;
+        display: flex;
+
+        @media only screen and (min-width:1023px) {
+
+            justify-content: flex-start;
+
+            #{$root}--right-aligned & {
+                flex-direction: row-reverse;
+            }
+        }
+        @media only screen and (max-width:844px) {
+
+            justify-content: flex-start;
+            flex-direction: column;
+        }
+    }
+
     &__width_left {
         @include media-query(small) {
             flex: 70%;
@@ -60,8 +81,14 @@
     }
 
     &__video-block {
-    height: 575px;
-    width: 460px;
+    position: relative;
+    height: auto !important;
+    width: 100% !important;
+    margin: auto;
+
+    @media only screen and (max-width:1025px) {
+             order: 2;
+    }
     }
 
     &__image {
@@ -74,10 +101,12 @@
             min-height: 400px;
             min-width: 30%;
         }
-        @media only screen and (max-width:768px) {
+        @media only screen and (max-width:1024px) {
+            #{$root}--right-aligned &{
+                    justify-content: space-between;
+                    order: 2;
+            }
 
-            justify-content: space-between;
-                order: 2;
 
         }
     }
@@ -98,7 +127,7 @@
         margin: 0;
         padding: $grid 0;
 
-        @include media-query(medium) {
+        @media only screen and (min-width: 699px) {
             flex: 1 0 50%;
 
             #{$root}--right-aligned & {
@@ -106,7 +135,7 @@
             }
         }
 
-        @include media-query(large) {
+        @media only screen and (min-width: 699px) {
             padding: 40px 80px;
         }
     }
@@ -128,7 +157,7 @@
     }
 
     &__copy1 {
-        @include media-query(large) {
+        @media only screen and (min-width: 699px) {
             max-width: 720px;
         }
     }
