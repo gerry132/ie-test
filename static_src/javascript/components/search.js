@@ -12,6 +12,7 @@ class Search {
         this.searchInput = this.searchDropdown.querySelector(
             '[data-search-input]',
         );
+        this.noticeBar = document.querySelector('.notice-bar--extended');
 
         // mobile menu selectors
         this.mobileMenu = document.querySelectorAll('[data-mobile-menu]');
@@ -44,12 +45,13 @@ class Search {
 
             // toggle search dropdown
             this.searchDropdown.classList.remove(this.activeClass);
+
+            this.noticeBar.classList.remove('notice-bar--extended__search-is-active');
         });
     }
 
     toggleSearch() {
         const searchEvent = new Event('onSearchOpen');
-        const noticeBar = document.querySelector('.notice-bar--extended');
         document.dispatchEvent(searchEvent);
 
         // toggle both desktop and mobile icons
@@ -62,7 +64,7 @@ class Search {
 
         // focus the input
         this.searchInput.focus();
-        noticeBar.classList.toggle('notice-bar--extended__search-is-active');
+        this.noticeBar.classList.toggle('notice-bar--extended__search-is-active');
     }
 }
 

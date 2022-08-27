@@ -1,4 +1,4 @@
-{% load static wagtailcore_tags wagtailimages_tags navigation_tags i18n  %}
+{% load static wagtailcore_tags wagtailimages_tags navigation_tags irelandie_assets_tags i18n  %}
 
 {% comment %}
     Add header--condensed class if override menu exists on a page
@@ -23,12 +23,43 @@
             display: none;
         }
     }
-
-    @media only screen and (max-width: 1023px) {
+{% endif %}
+{% if custom_header.is_present %}
+    {% check_page_type page.content_type 'mission page' as mission_page %}
+    {% if mission_page %}
+        .notice-bar--extended {
+            top: 127px;
+        }
+        @media only screen and (max-width: 1023px) {
+            .notice-bar--extended {
+                top: 131px;
+            }
+        }
+        .notice-bar--extended__search-is-active {
+            top: 187px;
+        }
+        @media only screen and (max-width: 1023px) {
+            .notice-bar--extended__search-is-active {
+                top: 210px;
+            }
+        }
+        @media only screen and (max-width: 1023px) {
         .header__search.is-active {
                 top: 125px;
             }
-    }
+        }
+    {% endif %}
+    {% check_page_type page.content_type 'Free Form Page' as freeform_page %}
+    {% if freeform_page %}
+        .header__search.is-active {
+            top: 127px;
+        }
+        @media only screen and (max-width: 1023px) {
+            .header__search.is-active {
+                top: 129px;
+            }
+        }
+    {% endif %}
 {% endif %}
 </style>
 <header>
@@ -224,4 +255,5 @@
             </div>
         </div>
     {% endif %}
+    {% include_block page.notice_bar %}
 </header>
