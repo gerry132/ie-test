@@ -19,6 +19,11 @@ def project_title():
     return 'PROJECT TITLE'
 
 
+@register.simple_tag()
+def check_page_type(value, page_type):
+    return str(value).split('|')[-1].strip() == page_type
+
+
 # -----------------------------------------------------------------------------
 # INCLUSION TAGS
 # -----------------------------------------------------------------------------

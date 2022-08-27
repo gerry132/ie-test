@@ -40,7 +40,7 @@ class MobileMenu {
             this.close();
         } else {
             this.open();
-            this.closeSearch();
+//            this.closeSearch();
         }
     }
 
