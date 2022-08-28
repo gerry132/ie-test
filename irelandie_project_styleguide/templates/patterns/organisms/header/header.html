@@ -28,7 +28,7 @@
     {% check_page_type page.content_type 'mission page' as mission_page %}
     {% if mission_page %}
         .notice-bar--extended {
-            top: 127px;
+            top: 115px;
         }
         @media only screen and (max-width: 1023px) {
             .notice-bar--extended {
@@ -43,6 +43,9 @@
                 top: 210px;
             }
         }
+        .header__search.is-active {
+                top: 115px;
+            }
         @media only screen and (max-width: 1023px) {
         .header__search.is-active {
                 top: 125px;
