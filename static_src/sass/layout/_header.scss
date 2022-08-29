@@ -138,7 +138,7 @@
     }
 
     &__logo-wrapper {
-        @include media-query(small) {
+        @include media-query(v-small) {
             #{$root}--condensed & {
                 margin: 0 auto;
             }
