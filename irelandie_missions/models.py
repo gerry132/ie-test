@@ -197,7 +197,6 @@ class MissionPage(HeroPage):
 
     ]
 
-
     @cached_property
     def related_articles(self):
         return (
@@ -209,8 +208,6 @@ class MissionPage(HeroPage):
             .order_by("-first_published_at")[:3]
             .specific()
         )
-
-
 
     settings_panels = HeroPage.settings_panels + [
         StreamFieldPanel("root_navigation")
