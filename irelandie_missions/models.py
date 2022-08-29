@@ -125,7 +125,7 @@ class MissionPage(HeroPage):
     popular_pages = StreamField(
         [("link", LinkBlock())], blank=True, help_text="Add pages to hero search."
     )
-    root_page = models.BooleanField(null=True)
+    root_page = models.BooleanField(default=True)
     root_navigation = StreamField(
         [("link", LinkBlock())], blank=True, help_text="Override the site navigation"
     )
