@@ -1,4 +1,4 @@
-{% load static wagtailcore_tags wagtailimages_tags navigation_tags i18n  %}
+{% load static wagtailcore_tags wagtailimages_tags navigation_tags irelandie_assets_tags i18n  %}
 
 {% comment %}
     Add header--condensed class if override menu exists on a page
@@ -23,21 +23,55 @@
             display: none;
         }
     }
-
-    @media only screen and (max-width: 1023px) {    
+{% endif %}
+{% if custom_header.is_present %}
+    {% check_page_type page.content_type 'mission page' as mission_page %}
+    {% if mission_page %}
+        .notice-bar--extended {
+            top: 115px;
+        }
+        @media only screen and (max-width: 1023px) {
+            .notice-bar--extended {
+                top: 131px;
+            }
+        }
+        .notice-bar--extended__search-is-active {
+            top: 187px;
+        }
+        @media only screen and (max-width: 1023px) {
+            .notice-bar--extended__search-is-active {
+                top: 210px;
+            }
+        }
+        .header__search.is-active {
+                top: 115px;
+            }
+        @media only screen and (max-width: 1023px) {
         .header__search.is-active {
                 top: 125px;
             }
-    }
+        }
+    {% endif %}
+    {% check_page_type page.content_type 'Free Form Page' as freeform_page %}
+    {% if freeform_page %}
+        .header__search.is-active {
+            top: 127px;
+        }
+        @media only screen and (max-width: 1023px) {
+            .header__search.is-active {
+                top: 129px;
+            }
+        }
+    {% endif %}
 {% endif %}
 </style>
 <header>
     <div class="header {% if custom_header.links %}header--condensed{% endif %}" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
         <div class="wrapper wrapper--large">
             <div class="header__container">
-                {% comment %} 
+                {% comment %}
                 The main site logo should not be overriden by any custom navs.
-                The default is the app provided SVG 
+                The default is the app provided SVG
                 {% endcomment %}
 
                 <a href="/{{ language_code }}/" aria-label="Ireland.ie" class="header__logo-wrapper">
@@ -54,7 +88,8 @@
 
                 <div class="header__menus header__menus--desktop">
                     <div data-desktop-menu>
-                        {% primarynav page %}
+                        {% has_root_override page as override %}
+                        {% primarynav page override=override %}
                     </div>
                 </div>
 
@@ -63,12 +98,11 @@
                     This is called mobile nav, but actually gets shown at all screen sizes.
                     Only shows the extended primary nav on desktop, then combines all 3 navs (if available) on mobile
                     {% endcomment %}
-
                     <div class="wrapper wrapper--large wrapper--mobile-menu">
                         <div class="header__menu header__menu--primary">
-                            {% primarynav page %}
+                            {% has_root_override page as override %}
+                            {% primarynav page override=override %}
                         </div>
-
                         {% has_secondary_nav as shownav %}
                         {% if shownav %}
                         <div class="header__menu header__menu--extended">
@@ -205,12 +239,12 @@
                             <svg class="header__search-icon" aria-hidden="true">
                                 <use href="#magnifying-glass"></use>
                             </svg>
-    
+
                             <svg class="header__search-icon header__search-icon--close" aria-hidden="true">
                                 <use xlink:href="#close"></use>
                             </svg>
                         </button>
-    
+
                     <div class="header__menu-toggle header__menu-toggle--desktop">
                         <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
                             <span class="button-menu-toggle__line"></span>
@@ -219,10 +253,10 @@
                             <span class="button-menu-toggle__line"></span>
                         </button>
                     </div>
-    
                     </div>
                 </div>
             </div>
         </div>
     {% endif %}
+    {% include_block page.notice_bar %}
 </header>

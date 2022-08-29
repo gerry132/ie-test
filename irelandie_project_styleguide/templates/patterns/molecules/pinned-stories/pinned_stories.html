@@ -3,7 +3,6 @@
 
 <div class="pinned-stories section section--padding">
     <div class="pinned-stories__container">
-
         {% if value.pinned_story_hero.page %}
             <div class="pinned-stories__featured">
                 <a href="{{ value.pinned_story_hero.page.url }}" class="pinned-stories__featured-content-wrapper" style="background-image:url({{ featured_image.url }}); {{ featured_image.background_position_style }}" aria-labelledby="featured-story-title">
@@ -42,9 +41,15 @@
         {% endif %}
 
         <div class="pinned-stories__feed">
-            {% for story in value.pinned_stories %}
-                {% include "patterns/molecules/card/card.html" with card=story classes="pinned-story" %}
-            {% endfor %%}
+            {% if page.related_articles and page.override_pinned_stories %}
+                {% for story in page.related_articles %}
+                    {% include "patterns/molecules/card/news-card.html" with card=story classes="pinned-story" %}
+                {% endfor %}
+            {% else %}
+                {% for story in value.pinned_stories %}
+                    {% include "patterns/molecules/card/card.html" with card=story classes="pinned-story" %}
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>

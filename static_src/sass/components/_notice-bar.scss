@@ -1,0 +1,41 @@
+//Without custom header.
+.notice-bar--extended {
+    @include z-index(nav);
+    background-color: #007368;
+    display: flex;
+    width: 100%;
+    height: 35px;
+    position: absolute;
+    top: 102px;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+
+    @media only screen and (max-width: 1023px) {
+        top: 85px;
+    }
+}
+
+.notice-bar--extended__search-is-active {
+    top: 180px;
+
+    @media only screen and (max-width: 1023px) {
+        top: 170px;
+    }
+}
+
+.alert-message {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 28px;
+    text-align: center;
+    text-decoration-line: underline;
+    color: #FFFFFF;
+
+    &:visited, &:hover, &:active {
+        text-decoration-line: underline;
+        color: #FFFFFF;
+    }
+}

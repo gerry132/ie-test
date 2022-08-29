@@ -1,68 +1,249 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
+{% load static %}
+{% load util_tags %}
+{% load i18n %}
 
-<div class="story{% if value.person.background == 'dark' %} story--dark{% endif %}{% if value.person.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
-    <div class="wrapper wrapper--large wrapper--padding">
-        
-        <div class="story__container">
-            {% image value.person.image width-460 class="story__image" %}
+<div class="story section section--padding">
+	<div class="story__container story--dark">
+		<div class="story__width_left">
+			<div class="story{% if value.background == 'dark' %} story--dark{% endif %}{% if value.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
+				<div class="wrapper wrapper--large">
+                     {% image value.embassy_logo width-460 class="story__logo" %}
+					<div class="story__container1">
+                        {% image value.image width-460 class="story__image story__image_margin" %}
+                        {% if value.video %}
+                            <div class="story__video-block">
+                                <video class="story__video-block" aria-label="{{ value.title }}" title="{{ value.title }}" autoplay loop muted data-video controls>
+                                    <source src="{{ value.video.url }}" type="video/mp4">
+                                    {% trans 'Your browser does not support the video tag.' %}
 
-            <div class="story__content">
-                <div class="story__copy">
-                    {% image value.person.embassy_logo width-460 class="story__logo" %}
-
-                    {% if value.person.title %}
-                        {{ value.person.title }}
-                    {% endif %}
-
-                    <h3 class="story__heading heading--2">{{ value.person.name }}</h3>
-
-                    {% if value.person.social_media_link %}
-                        <a href="{{ value.person.social_media_link }}">
-                            <div class="story__twitter">
-                                {% if value.person.social_media_text %}
-                                    {{ value.person.social_media_text }}
-                                {% endif %}
-                                {% include "patterns/atoms/icons/icon.html" with name="twitter" classname="story__twitter-icon" %}
+                                </video>
                             </div>
-                        </a>
-                    {% endif %}
-                    
-                    {% if value.person.address or value.person.telephone or value.person.opening_hours or value.person.closure_dates or value.person.emergency_contact_details %}
-                        <div class="rich-text">
-                            {% if value.person.address %}
-                                {{ value.person.address|richtext }}
-                            {% endif %}
+                        {% endif %}
+                        <div class="story__content">
+                            <div class="story__copy1">
 
-                            {% if value.person.telephone %}
-                                {{ value.person.telephone }}
-                            {% endif %}
+                                {{ value.person_title }}
+                                <h3 class="story__heading heading--2">{{ value.name }}</h3>
+                                {% if value.social_media_link %}
+                                    <a href="{{ value.social_media_link }}">
+										<div class="story__twitter">
+                                                {% if value.social_media_text %}
+                                                    {{ value.social_media_text }}
+                                                {% endif %}
+                                                {% include "patterns/atoms/icons/icon.html" with name="twitter" classname="story__twitter-icon" %}
+                                        </div>
+									</a>
+                                {% endif %}
 
-                            {% if value.person.opening_hours %}
-                                {{ value.person.opening_hours|richtext }}
-                            {% endif %}
+                                {% if value.address or value.telephone or value.opening_hours or value.closure_dates or value.emergency_contact_details %}
 
-                            {% if value.person.closure_dates %}
-                                {{ value.person.closure_dates|richtext }}
-                            {% endif %}
+									<div class="rich-text">
+                                            {% if value.address %}
+                                                {{ value.address|richtext }}
+                                            {% endif %}
 
-                            {% if value.person.emergency_contact_details %}
-                                {{ value.person.emergency_contact_details|richtext }}
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                </div>
+                                            {% if value.telephone %}
+                                                {% trans 'Tel.:' %} {{ value.telephone }}
+                                            {% endif %}
 
-                {% if value.person.links %}
-                    <div class="story-links">
-                        <div class="story-links__container">
-                            {% for link in value.person.links %}
-                                {% include_block link %}
-                            {% endfor %}
+                                            {% if value.opening_hours %}
+                                                {{ value.opening_hours|richtext }}
+                                            {% endif %}
+
+                                            {% if value.closure_dates %}
+                                                {{ value.closure_dates|richtext }}
+                                            {% endif %}
+
+                                            {% if value.emergency_contact_details %}
+                                                {{ value.emergency_contact_details|richtext }}
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                            </div>
+                            {% if value.links %}
+                                {% if value.links|length > 2 %}
+                                    <div class="story-links story-links__width">
+                                        <div class="your-class story-links__container">
+                                            <div class="slider slider-mobile">
+                                                {% for link in value.links %}
+                                                    <div id="last" class="slide-mobile" style="width: 100%;">
+                                                        <div class="story-links story-links__width">
+                                                            <div class="your-class story-links__container">
+                                                                  {% include_block link %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+
+                                            </div>
+                                            <div class="slider slider-desktop">
+                                                {% for link in value.links %}
+                                                    {% if forloop.counter|divisibleby:2 %}
+                                                              {% include_block link %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                {% with next_element=value.links|next:forloop.counter0 %}
+                                {% if next_element %}
+                                    <div id="next" class="slide">
+                                        <div class="story-links story-links__width">
+                                            <div class="your-class story-links__container">
+                                                {{link}}
+                                                {% else %}
+                                                    <div id="last" class="slide" style="width: 100%;">
+                                                        <div class="story-links story-links__width">
+                                                            <div class="your-class story-links__container">
+                                                                      {% include_block link %}
+                                                              </div>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                                {% endwith %}
+                                                {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                            {% else %}
+                                            <div class="story-links story-links__width">
+                                                <div class="your-class story-links__container">
+                                                {% for link in value.links %}
+                                                    {% include_block link %}
+                                                {% endfor %}
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endif %}
+                                        </div>
+                        {% if value.links|length > 2 %}
+									<button class="btn btn-next"></button>
+									<button class="btn btn-prev"></button>
+                        {% endif %}
+                                    </div>
                         </div>
                     </div>
+                </div>
+                {% if value.links|length < 3 %}
+                <div class="story__width_right ">
+                {% for socialfeed in value.social_feed %}
+                {% if socialfeed.value.twitter_username %}
+						<div class="wrapper wrapping--padding">
+							<div class="twitter-embed section section--padding">
+                            {% if socialfeed.value.twitter_title %}
+								<h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
+                            {% endif %}
+								<a class="twitter-timeline" data-width="100%" data-height=600 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                    Tweets by {{ socialfeed.value.twitter_username }}
+                                </a>
+                            </div>
+                        </div>
+                {% endif %}
+
+                {% if socialfeed.value.additional_social_feed %}
+                        {{ socialfeed.value.additional_social_feed }}
+                {% endif %}
+                    {% endfor %}
+                </div>
                 {% endif %}
             </div>
         </div>
+        {% if value.links|length > 2 %}
+			<div class="story__width_right ">
+                {% for socialfeed in value.social_feed %}
+                {% if socialfeed.value.twitter_username %}
+                <div class="wrapper wrapping--padding">
+					<div class="twitter-embed section section--padding">
+                            {% if socialfeed.value.twitter_title %}
+                                <h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
+                            {% endif %}
+						<a class="twitter-timeline" data-width="100% !important" data-height=600 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                    Tweets by {{ socialfeed.value.twitter_username }}
+                        </a>
+					</div>
+				</div>
+                {% endif %}
+                {% if socialfeed.value.additional_social_feed %}
+                    {{ socialfeed.value.additional_social_feed }}
+                {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 </div>
+
+{% block extra_js %}
+{% for socialfeed in value.social_feed %}
+    {% if socialfeed.value.twitter_username %}
+
+	<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    {% endif %}
+{% endfor %}
+
+
+<script> window.onresize = function(){ location.reload(); } </script>
+
+	<script>
+function readySlides1(mobile) {
+  console.log(mobile);
+  let slides;
+  let transNum;
+  if(mobile) {
+    slides = document.querySelectorAll(".slide-mobile");
+    transNum = 100;
+  } else {
+    slides = document.querySelectorAll(".slide");
+    transNum = 100;
+  }
+
+  slides.forEach((slide, indx) => {
+    slide.style.transform = `translateX(${indx * transNum}%)`;
+  });
+  // select next slide button
+  const nextSlide = document.querySelector(".btn-next");
+  // current slide counter
+  let curSlide = 0;
+  // maximum number of slides
+  let maxSlide = slides.length - 1;
+
+  // add event listener and navigation functionality
+  nextSlide.addEventListener("click", function () {
+    // check if current slide is the last and reset current slide
+    if (curSlide === maxSlide) {
+      curSlide = 0;
+    } else {
+      curSlide++;
+    }
+
+    //   move slide by -100%
+    slides.forEach((slide, indx) => {
+      slide.style.transform = `translateX(${transNum * (indx - curSlide)}%)`;
+    });
+  });
+
+  // select next slide button
+  const prevSlide = document.querySelector(".btn-prev");
+
+  // add event listener and navigation functionality
+  prevSlide.addEventListener("click", function () {
+    // check if current slide is the first and reset current slide to last
+    if (curSlide === 0) {
+      curSlide = maxSlide;
+    } else {
+      curSlide--;
+    }
+
+    //   move slide by 100%
+    slides.forEach((slide, indx) => {
+      slide.style.transform = `translateX(${transNum * (indx - curSlide)}%)`;
+    });
+  });
+}
+
+readySlides1(false);
+readySlides1(true);
+</script>
+
+
+{% endblock %}
+

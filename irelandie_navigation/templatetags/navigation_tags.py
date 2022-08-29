@@ -12,6 +12,8 @@ from irelandie_navigation.models import (
     SiteSettings,
     CustomHeader,
 )
+
+from irelandie_missions.models import MissionPage
 from irelandie_utils.models import SocialMediaSettings
 
 register = template.Library()
@@ -46,17 +48,24 @@ def get_nav_for_locale(cls, locale):
 @register.inclusion_tag(
     "patterns/molecules/navigation/primarynav.html", takes_context=True
 )
-def primarynav(context, page):
+def primarynav(context, page, override=None):
     request = context["request"]
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
 
-    navigation = get_nav_for_locale(PrimaryNavigation, locale)
+    try:
+        navigation = page.root_navigation
+        if not page.root_navigation:
+            navigation = get_nav_for_locale(PrimaryNavigation, locale)
+    except AttributeError:
+        navigation = get_nav_for_locale(PrimaryNavigation, locale)
 
     try:
         custom_header = CustomHeader.objects.get(id=page.custom_header.id)
     except AttributeError:
         custom_header = None
 
+    if override:
+        navigation = override
     return {
         "primarynav": navigation,
         "customnav": custom_header,
@@ -92,10 +101,33 @@ def has_secondary_nav(context):
     return bool(get_nav_for_locale(SecondaryNavigation, locale))
 
 
+@register.simple_tag(
+    takes_context=True
+)
+def has_root_override(context, page, header=True):
+    if isinstance(page, int) or isinstance(page, str):
+        # accounts for search
+        return False
+
+    pages = page.get_ancestors()
+
+    for p in pages:
+        if p.content_type.name == 'mission page':
+            m = MissionPage.objects.live().get(id=p.id)
+            if m.root_page:
+                if header:
+                    return m.root_navigation
+                else:
+                    return m.custom_footer
+
+    return False
+
 # FOOTER NAVIGATION
 # ----------------------------------------------------------------------
 # The data for the footer navigation is managed in the FooterNavigation
 # snippets model.
+
+
 @register.inclusion_tag(
     "patterns/molecules/navigation/footernav.html", takes_context=True
 )
@@ -308,6 +340,7 @@ def custom_header_settings(context, page):
         logo_alt = custom_header.logo_alt or site_settings.site_logo_alt
         links = custom_header.links
         url = custom_header.url
+        is_present = True
     else:
         # no custom header is set for the page, use the site settings
         # if the site settings has values for the fields
@@ -315,6 +348,7 @@ def custom_header_settings(context, page):
         logo_alt = site_settings.site_logo_alt
         links = None
         url = None
+        is_present = False
 
     return {
         "url": url,
@@ -322,4 +356,5 @@ def custom_header_settings(context, page):
         "logo_alt": logo_alt,
         "links": links,
         "site_settings": site_settings,
+        "is_present": is_present
     }

@@ -47,3 +47,19 @@ class SecondaryNavLinkColumnWithHeader(blocks.StructBlock):
 
     class Meta:
         template = ("patterns/molecules/navigation/blocks/secondary_nav_column.html",)
+
+
+class NoticeBarWithMessageLink(LinkBlockExtended):
+    title = blocks.CharBlock(
+        help_text=_("Leave blank to use the page's own title as a message"),
+        required=False,
+        max_length=80,
+    )
+
+    enable = blocks.BooleanBlock(
+        required=False,
+        default=False,
+    )
+
+    class Meta:
+        template = ("patterns/molecules/notice-bar/blocks/notice_bar.html",)

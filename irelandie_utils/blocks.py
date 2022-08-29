@@ -14,12 +14,10 @@ from wagtail.snippets.blocks import SnippetChooserBlock
 
 from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment
 
-
 ALT_HELP_TEXT = """A short one-sentence literal description
                     of the %s is
                     required to make the page accessible to the
                     visually impaired. Details: https://axesslab.com/alt-texts/"""
-
 
 ALT_VID = ALT_HELP_TEXT % 'video'
 ALT_IMAGE = ALT_HELP_TEXT % 'image'
@@ -141,6 +139,7 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 
     class Meta:
         icon = "snippet"
+        label = "Two Column Feature"
         template = "patterns/molecules/streamfield/blocks/story_block.html"
 
 
@@ -336,7 +335,13 @@ class PlaceBlock(blocks.PageChooserBlock):
     pass
 
 
-class RichTextBlock(blocks.StructBlock):
+class RichTextBlock(blocks.RichTextBlock):
+    class Meta:
+        label = "RichTextBlock"
+        template = "patterns/molecules/streamfield/blocks/paragraph_block.html"
+
+
+class AdvancedRichTextBlock(blocks.StructBlock):
     paragraph_alignment = blocks.ChoiceBlock(
         required=False,
         choices=ParagraphAlignment.choices,
@@ -348,8 +353,8 @@ class RichTextBlock(blocks.StructBlock):
     )
 
     class Meta:
-        label = "RichTextBlock"
-        template = "patterns/molecules/streamfield/blocks/paragraph_block.html"
+        label = "Advanced RichTextBlock"
+        template = "patterns/molecules/streamfield/blocks/advanced_richtext_block.html"
 
 
 class RoleBlock(blocks.PageChooserBlock):
@@ -521,6 +526,60 @@ class ArticleCardsBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/article_cards.html"
 
 
+class LinkCardBlock(blocks.StructBlock):
+    image = ImageChooserBlock()
+    image_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_IMAGE),
+    )
+    title = blocks.CharBlock()
+    summary = blocks.TextBlock()
+    page = blocks.PageChooserBlock(required=False)
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
+
+    class Meta:
+        icon = "image"
+        label = "Link Card"
+        template = "patterns/molecules/link_card/link_card.html"
+
+    def clean(self, value):
+        errors = {}
+        values = [value["page"], value["url"]]
+        # Set only a Page OR a URL
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a page or set a URL."
+
+            errors["page"] = ErrorList([message])
+            errors["url"] = ErrorList([message])
+
+        # A URL must have title
+        if value["url"] and not value["title"]:
+            errors["title"] = ErrorList(["Please set a title for the URL"])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context["link_url"] = value["url"] or value["page"].url
+        return context
+
+
+class LinkCardsBlock(blocks.StructBlock):
+    link_cards = blocks.StreamBlock([("link_card", LinkCardBlock())])
+
+    class Meta:
+        icon = "list-ul"
+        label = "Link Cards"
+        template = "patterns/molecules/streamfield/blocks/link_cards.html"
+
+
 class FeaturedArticlesBlock(blocks.StructBlock):
     title = blocks.CharBlock()
     summary = blocks.TextBlock()
@@ -660,3 +719,157 @@ class FreeFormBlocks(FreeFormBlocksBase):
         group="HTML",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
+
+
+class AdditionalSocialBlock(blocks.StructBlock):
+    social_logo = ImageChooserBlock(required=False)
+    social_url = blocks.URLBlock(
+        label="Social_URL",
+        required=False,
+        help_text="URL for logo click",
+    )
+    social_link_text = blocks.CharBlock(required=False)
+
+    class Meta:
+        label = "Additional Social Feed"
+        template = "patterns/molecules/streamfield/blocks/additional_social_block.html"
+
+
+class SocialFieldBlock(blocks.StructBlock):
+    twitter_title = blocks.CharBlock(required=False)
+    twitter_username = blocks.CharBlock(max_length=100, required=False, help_text="Twitter username")
+    additional_social_feed = blocks.StreamBlock(
+        [
+            ("additional_social_feed", AdditionalSocialBlock())
+        ],
+        max_num=1,
+        min_num=0,
+        required=False,
+    )
+
+
+class PersonSocialBlock(blocks.StructBlock):
+    name = blocks.CharBlock(required=False)
+    person_title = blocks.CharBlock(required=False)
+    image = ImageChooserBlock(required=False)
+    video = VideoChooserBlock(required=False)
+    embassy_logo = ImageChooserBlock(required=False)
+    social_media_link = blocks.URLBlock(required=False)
+    social_media_text = blocks.CharBlock(
+        max_length=255, required=False, default="Connect with person on this social media"
+    )
+    address = blocks.RichTextBlock(required=False)
+    telephone = blocks.CharBlock(required=False)
+    opening_hours = blocks.RichTextBlock(required=False)
+    closure_dates = blocks.RichTextBlock(required=False)
+    emergency_contact_details = blocks.RichTextBlock(required=False)
+
+    alignment = blocks.ChoiceBlock(
+        required=True,
+        choices=StoryAlignment.choices,
+        default=StoryAlignment.LEFT,
+    )
+    background = blocks.ChoiceBlock(
+        required=True,
+        choices=StoryBackground.choices,
+        default=StoryBackground.LIGHT,
+    )
+
+    links = blocks.StreamBlock(
+        [
+            ("link", StoryLinkBlock()),
+        ],
+        max_num=6,
+        min_num=0,
+        required=False,
+    )
+    social_feed = blocks.StreamBlock(
+        [
+            ("social_feed", SocialFieldBlock()),
+        ],
+        max_num=1,
+        min_num=0,
+        required=False,
+    )
+
+    def clean(self, value):
+        errors = {}
+        image = value.get('image')
+        video = value.get('video')
+
+        if not (bool(image) ^ bool(video)):
+            msg = "You can't choose both an image and a video. Choose an image or a video"
+            errors['image'] = ErrorList([msg])
+            errors['video'] = ErrorList([msg])
+
+        if errors:
+            raise StructBlockValidationError(block_errors=errors)
+
+        return super().clean(value)
+
+    class Meta:
+        label = "Person + Social Feed"
+        template = "patterns/molecules/streamfield/blocks/person_block.html"
+
+
+class GeneralContentBlocks(blocks.StreamBlock):
+    rich_text = AdvancedRichTextBlock(group="Base")
+    image = ImageBlock(group="Base")
+    document = DocumentBlock(group="Base")
+    html = blocks.RawHTMLBlock(
+        group="HTML",
+        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
+    )
+    table = TableBlock(group="HTML")
+    youtube_video = YoutubeVideoBlock(group="HTML")
+    accordion = AccordionBlock(group="Base")
+    logos = LogoCardsBlock(group="Base")
+
+
+class LinkBoxBlock(blocks.StructBlock):
+    heading = blocks.CharBlock()
+    introduction = blocks.RichTextBlock(required=False)
+    page = blocks.PageChooserBlock(required=False)
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
+
+    class Meta:
+        icon = "image"
+        label = "Link Box"
+        template = "patterns/molecules/link_box/link_box.html"
+
+    def clean(self, value):
+        errors = {}
+        values = [value["page"], value["url"]]
+        # Set only a Page OR a URL
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a page or set a URL."
+
+            errors["page"] = ErrorList([message])
+            errors["url"] = ErrorList([message])
+
+        # A URL must have title
+        if value["url"] and not value["heading"]:
+            errors["heading"] = ErrorList(["Please set a title for the URL"])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context["link_url"] = value["url"] or value["page"].url
+        return context
+
+
+class LinkBoxesBlock(blocks.StructBlock):
+    link_boxes = blocks.StreamBlock([("link_box", LinkBoxBlock())])
+
+    class Meta:
+        icon = "list-ul"
+        label = "Link Boxes"
+        template = "patterns/molecules/streamfield/blocks/link_boxes.html"

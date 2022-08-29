@@ -1,9 +1,15 @@
 .story-links {
     $root: &;
     margin-top: auto;
-    padding-top: $grid;
     position: relative;
     max-width: 100%;
+
+    &__width{
+    @media only screen and (min-width: 599px){
+        max-width: 560px;
+    }
+
+    }
 
     &__container {
         background-color: $color--white;

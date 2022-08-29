@@ -8,15 +8,87 @@
     &__container {
         position: relative;
         padding: 0 30px;
+        display: flex;
 
         @include media-query(large) {
-            display: flex;
-            justify-content: space-between;
+
+            justify-content: flex-start;
 
             #{$root}--right-aligned & {
                 flex-direction: row-reverse;
             }
         }
+        @media only screen and (max-width:1022px) {
+
+            justify-content: flex-start;
+            flex-direction: column;
+        }
+    }
+
+    &__container1 {
+        position: relative;
+        padding: 0 30px;
+        display: flex;
+
+        @media only screen and (min-width:1023px) {
+
+            justify-content: flex-start;
+
+            #{$root}--right-aligned & {
+                flex-direction: row-reverse;
+            }
+        }
+        @media only screen and (max-width:844px) {
+
+            justify-content: flex-start;
+            flex-direction: column;
+        }
+    }
+
+    &__width_left {
+        @include media-query(small) {
+            flex: 70%;
+            order: 1;
+        }
+    }
+    &__width_right {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin: 0;
+        @include media-query(small) {
+            flex: 30%;
+            order: 2;
+        }
+        @media only screen and (min-width: 699px) {
+        padding: 40px;
+    }
+    }
+
+    &__iconDetails {
+        margin:0 2%;
+        float:left;
+        height:40px;
+        width:40px;
+    }
+    &__container2 {
+        width:100%;
+        height:auto;
+
+    }
+    &__text {
+        float:left;
+    }
+
+    &__video-block {
+    position: relative;
+    height: auto !important;
+    width: 100% !important;
+    margin: auto;
+
+    @media only screen and (max-width:1025px) {
+             order: 2;
+    }
     }
 
     &__image {
@@ -25,9 +97,24 @@
         object-fit: cover;
 
         @include media-query(large) {
-            max-width: 35%;
-            max-height: 450px;
+            max-height: 620px;
             min-height: 400px;
+            min-width: 30%;
+        }
+        @media only screen and (max-width:1024px) {
+            #{$root}--right-aligned &{
+                    justify-content: space-between;
+                    order: 2;
+            }
+
+
+        }
+    }
+
+    &__image_margin{
+    @include media-query(large) {
+        margin-top: 40px;
+        flex: 30%;
         }
     }
 
@@ -40,7 +127,7 @@
         margin: 0;
         padding: $grid 0;
 
-        @include media-query(medium) {
+        @media only screen and (min-width: 699px) {
             flex: 1 0 50%;
 
             #{$root}--right-aligned & {
@@ -48,14 +135,13 @@
             }
         }
 
-        @include media-query(large) {
+        @media only screen and (min-width: 699px) {
             padding: 40px 80px;
         }
     }
 
     &__logo {
         display: block;
-        max-width: 200px;
         margin-bottom: 20px;
     }
 
@@ -67,6 +153,12 @@
         .rich-text {
             @include font-size(s);
             font-family: $font--primary;
+        }
+    }
+
+    &__copy1 {
+        @media only screen and (min-width: 699px) {
+            max-width: 720px;
         }
     }
 

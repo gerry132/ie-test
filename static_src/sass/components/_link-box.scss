@@ -1,0 +1,71 @@
+.link-box {
+    $root: &;
+
+    &__main{
+    @media only screen and (min-width: 699px) {
+        max-width:80%
+    }
+    }
+    &__content{
+        padding: 20px;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        color: #292929;
+    }
+    &__container{
+        flex: 1 0 80%;
+        margin-right: 40px;
+    }
+
+    &__heading{
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 29px;
+        text-decoration-line: underline;
+
+        color: #1D70B8;
+    }
+
+
+    &__vector{
+        position: absolute;
+        width: 19px;
+        height: 26px;
+        left: 972px;
+        top: 683px;
+
+        border: 5px solid #1D70B8;
+    }
+
+    &__line{
+        width: 938px;
+        height: 0px;
+        max-width: 95%;
+        margin-top: -2%;
+
+        border-bottom: 0.25px solid #ccc;
+    }
+    &__btn {
+    position: relative;
+    width: 66px;
+    height: 32px;
+    border: none;
+    border-radius: 30%;
+    cursor: pointer;
+    background-color: #fff;
+    font-size: 18px;
+    background-image: url('../images/cssBackgrounds/Vector2.png');
+    background-repeat: no-repeat;
+    right: 0%;
+
+    @media only screen and (max-width: 1028px) {
+        right: -3%;
+    }
+  }
+}
+
+
+

@@ -13,8 +13,8 @@
     }
 
     &--condensed {
-        height: auto;
         background-color: $color--dark-green;
+        height: auto
     }
 
     &--override {
@@ -28,7 +28,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 30px;
+        padding: 20px 30px;
 
         @include media-query(large) {
             justify-content: space-evenly;
@@ -125,12 +125,10 @@
     &__logo {
         height: 30px;
         width: 90px;
-
         @include media-query(medium) {
             height: 40px;
             width: 160px;
         }
-
         #{$root}--condensed & {
             height: 20px;
             width: 80px;
@@ -140,7 +138,7 @@
     }
 
     &__logo-wrapper {
-        @include media-query(small) {
+        @include media-query(v-small-min) {
             #{$root}--condensed & {
                 margin: 0 auto;
             }

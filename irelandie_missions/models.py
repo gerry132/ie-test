@@ -3,11 +3,14 @@ from django.db import models
 from django.utils.functional import cached_property
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
 from wagtail.core.fields import StreamField
+from wagtail.core import blocks as wagtail_blocks
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
+from wagtail.images import get_image_model_string
 
 from irelandie_home.blocks import SecondaryCallToAction
-from irelandie_navigation.blocks import LinkBlock
+from irelandie_navigation.blocks import LinkBlock, NoticeBarWithMessageLink
 from irelandie_pages.models import FreeFormPageBase
+from irelandie_news.models import NewsPage
 from irelandie_utils import blocks
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage
 
@@ -93,7 +96,7 @@ class CountryPage(HeroPage):
 
     content_panels = HeroPage.content_panels + [
         SnippetChooserPanel("region"),
-        StreamFieldPanel("stories"),
+        StreamFieldPanel("stories", heading="Two Column Feature"),
         StreamFieldPanel("embeds"),
         StreamFieldPanel("featured_stories"),
         StreamFieldPanel("featured_embassies"),
@@ -112,25 +115,167 @@ class CountryPage(HeroPage):
     ])
 
 
-class MissionPage(BasePage):
-    template = "irelandie_assets/pages/mission.html"
+IMAGE_MODEL = get_image_model_string()
 
-    twitter_title = models.CharField(max_length=50, blank=True)
 
-    twitter_feed = models.ForeignKey(
-        "utils.TwitterEmbed",
-        on_delete=models.SET_NULL,
-        related_name="+",
+class MissionPage(HeroPage):
+    template = "patterns/pages/irelandie_missions/mission.html"
+    search_bar = models.BooleanField(default=False)
+    override_pinned_stories = models.BooleanField(default=True)
+    popular_pages = StreamField(
+        [("link", LinkBlock())], blank=True, help_text="Add pages to hero search."
+    )
+    root_page = models.BooleanField(default=True)
+    root_navigation = StreamField(
+        [("link", LinkBlock())], blank=True, help_text="Override the site navigation"
+    )
+    notice_bar = StreamField(
+        [
+            ("noticebar", NoticeBarWithMessageLink()),
+        ],
+        blank=True,
         null=True,
+        min_num=0,
+        max_num=1,
+    )
+    stories = StreamField(
+        [
+            ("story", blocks.StoryBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+
+    person = StreamField(
+        [
+            ("person", blocks.PersonSocialBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+    pinned_stories = StreamField(
+            [
+                (
+                    "pinned_story",
+                    wagtail_blocks.StructBlock(
+                        [
+                            ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
+                            (
+                                "pinned_stories",
+                                wagtail_blocks.ListBlock(blocks.PinnedStoryBlock()),
+                            ),
+                        ],
+                        template="patterns/molecules/pinned-stories/pinned_stories.html",
+                    ),
+                ),
+            ],
+            block_counts={
+                "pinned_story": {"max_num": 1},
+            },
+            blank=True,
+            null=True,
+    )
+
+    content_panels = HeroPage.content_panels + [
+        FieldPanel("root_page"),
+        MultiFieldPanel([
+            FieldPanel("search_bar"),
+            StreamFieldPanel("popular_pages"),
+        ], heading="Searchbar settings"
+        ),
+        MultiFieldPanel([
+            StreamFieldPanel("notice_bar"),
+        ], heading="Noticebar settings"
+        ),
+        StreamFieldPanel("pinned_stories"),
+        StreamFieldPanel("stories", heading="Two Column Feature"),
+        StreamFieldPanel("person", heading="Person + Social Feed"),
+
+    ]
+
+    @cached_property
+    def related_articles(self):
+        return (
+            NewsPage.objects
+            .child_of(self)
+            .filter(locale=self.locale)
+            .public()
+            .live()
+            .order_by("-first_published_at")[:3]
+            .specific()
+        )
+
+    settings_panels = HeroPage.settings_panels + [
+        StreamFieldPanel("root_navigation")
+    ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.hero_panel, heading='Hero'),
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(settings_panels, heading='Settings', classname="settings"),
+    ])
+
+
+class Magazine(HeroPage):
+    template = "irelandie_assets/pages/magazine.html"
+
+    body = StreamField(
+        [
+            ("rich_text", blocks.AdvancedRichTextBlock()),
+            ("link_card", blocks.LinkCardsBlock())
+        ],
         blank=True,
     )
 
-    content_panels = BasePage.content_panels + [
-        MultiFieldPanel([
-            FieldPanel("twitter_title"),
-            SnippetChooserPanel("twitter_feed"),
-        ], heading="Twitter feed"),
+    content_panels = HeroPage.content_panels + [
+        StreamFieldPanel("body")
     ]
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.hero_panel, heading='Hero'),
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
+    ])
+
+
+class ServicesLandingPage(HeroPage):
+    template = "patterns/pages/missions/services_landing_page.html"
+
+    rich_text = StreamField(
+        [
+            ("rich_text", blocks.AdvancedRichTextBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+
+    body = StreamField(
+        [
+            ("link_box", blocks.LinkBoxesBlock())
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+
+    content_panels = HeroPage.content_panels + [
+        StreamFieldPanel("rich_text", heading="Advanced Richtext"),
+        StreamFieldPanel("body")
+    ]
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.hero_panel, heading='Hero'),
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
+    ])
 
 
 class MissionSearchPage(BasePage):
@@ -273,3 +418,21 @@ class EmbassyPage(FreeFormPageBase):
 
     class Meta:
         verbose_name = "Embassy Page"
+
+
+class GeneralContentPage(HeroPage):
+    template = "patterns/pages/missions/general_content_page.html"
+
+    introduction = models.TextField(blank=True)
+    body = StreamField(blocks.GeneralContentBlocks(), blank=True)
+
+    content_panels = HeroPage.content_panels + [
+        FieldPanel("introduction"),
+        StreamFieldPanel("body"),
+    ]
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.hero_panel, heading='Hero'),
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
+    ])

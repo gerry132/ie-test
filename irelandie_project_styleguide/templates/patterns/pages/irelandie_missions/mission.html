@@ -1,0 +1,24 @@
+{% extends "patterns/hero_page.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load static %}
+{% load util_tags %}
+{% load i18n %}
+
+{% block main %}
+    <div class="wrapper wrapper--large wrapper--padding">
+        {% include_block page.body %}
+    </div>
+    {% include_block page.pinned_stories %}
+    {% include_block page.stories %}
+    {% include_block page.person %}
+
+
+{% endblock %}
+
+{% block extra_js %}
+    {% if value.twitter_username %}
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    {% endif %}
+{% endblock %}
+

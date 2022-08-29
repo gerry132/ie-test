@@ -11,8 +11,11 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
 
-from .blocks import LinkBlockExtended, LinkColumnWithHeader, SecondaryNavLinkColumnWithHeader
-
+from .blocks import (
+    LinkBlockExtended,
+    LinkColumnWithHeader,
+    SecondaryNavLinkColumnWithHeader,
+)
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
 
 IMAGE_MODEL = get_image_model_string()

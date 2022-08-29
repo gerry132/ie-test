@@ -14,7 +14,7 @@
   gtag('js', new Date());
   gtag('config', 'G-8SKCHMSHZP');
 </script>
-    
+
     <!-- End Google Tag Manager -->
     {% if GOOGLE_TAG_MANAGER_ID %}
         {# To enable GTM code you need to specify GOOGLE_TAG_MANAGER_ID in Django settings #}
@@ -103,12 +103,17 @@
     </section>
 
     {% custom_header_settings page as custom_header_settings %}
-    {% include "patterns/organisms/header/header.html" with custom_header=custom_header_settings %}
+    {% include "patterns/organisms/header/header.html" with custom_header=custom_header_settings page=page %}
 {% endblock header %}
 
 {% block footer %}
-    {% custom_footer_settings page as custom_footer_settings %}
-    {% include "patterns/organisms/footer/footer.html" with custom_footer=custom_footer_settings %}
+    {% has_root_override page header=false as override %}
+    {% if override %}
+        {% include "patterns/organisms/footer/footer.html" with custom_footer=override %}
+    {% else %}
+        {% custom_footer_settings page as custom_footer_settings %}
+        {% include "patterns/organisms/footer/footer.html" with custom_footer=custom_footer_settings %}
+    {% endif %}
 {% endblock footer %}
 
 {% block web_chat_widget %}

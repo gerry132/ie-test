@@ -1,0 +1,19 @@
+tags:
+  image:
+    page.image width-460 class="story__image":
+      raw: |
+        <img src="https://source.unsplash.com/460x500?ocean" width="460" height="500" alt="Some alt" class="story__image">
+    page.embassy_logo width-460 class="story__logo":
+      raw: |
+        <img src="https://source.unsplash.com/460x500?ocean" width="460" height="500" alt="Some alt" class="story__image">
+  pageurl:
+    page.page as href:
+      target_var: href
+      raw: '#'
+  include_block:
+    'link':
+      template_name: 'patterns/molecules/streamfield/blocks/story_link_block.html'
+    'stories':
+      template_name: 'patterns/molecules/streamfield/blocks/story_block.html'
+    'person':
+      template_name: 'patterns/molecules/streamfield/blocks/person_block.html'
