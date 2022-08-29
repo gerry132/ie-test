@@ -10,6 +10,7 @@ from wagtail.images import get_image_model_string
 from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_navigation.blocks import LinkBlock, NoticeBarWithMessageLink
 from irelandie_pages.models import FreeFormPageBase
+from irelandie_news.models import NewsPage
 from irelandie_utils import blocks
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage
 
@@ -120,6 +121,7 @@ IMAGE_MODEL = get_image_model_string()
 class MissionPage(HeroPage):
     template = "patterns/pages/irelandie_missions/mission.html"
     search_bar = models.BooleanField(default=False)
+    override_pinned_stories = models.BooleanField(default=True)
     popular_pages = StreamField(
         [("link", LinkBlock())], blank=True, help_text="Add pages to hero search."
     )
@@ -176,7 +178,7 @@ class MissionPage(HeroPage):
             },
             blank=True,
             null=True,
-        )
+    )
 
     content_panels = HeroPage.content_panels + [
         FieldPanel("root_page"),
@@ -194,6 +196,21 @@ class MissionPage(HeroPage):
         StreamFieldPanel("person", heading="Person + Social Feed"),
 
     ]
+
+
+    @cached_property
+    def related_articles(self):
+        return (
+            NewsPage.objects
+            .child_of(self)
+            .filter(locale=self.locale)
+            .public()
+            .live()
+            .order_by("-first_published_at")[:3]
+            .specific()
+        )
+
+
 
     settings_panels = HeroPage.settings_panels + [
         StreamFieldPanel("root_navigation")
