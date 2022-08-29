@@ -28,11 +28,11 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        padding: 20px 30px 0;
+        padding: 20px 30px;
 
         @include media-query(large) {
             justify-content: space-evenly;
-            padding: 20px 30px 0;
+            padding: 20px 30px;
         }
 
         #{$root}--condensed & {
@@ -123,22 +123,22 @@
     }
 
     &__logo {
-
-        #{$root}--condensed & {
-            margin-left: 50%;
-            transform: translateX(-50%);
-            height: 17px;
-            width: 42px;
-        }
-
-        &--svg {
+        height: 30px;
+        width: 90px;
+        @include media-query(medium) {
             height: 40px;
             width: 160px;
+        }
+        #{$root}--condensed & {
+            height: 20px;
+            width: 80px;
+            margin-left: 50%;
+            transform: translateX(-50%);
         }
     }
 
     &__logo-wrapper {
-        @include media-query(v-small) {
+        @include media-query(v-small-min) {
             #{$root}--condensed & {
                 margin: 0 auto;
             }
