@@ -2,7 +2,7 @@
 from django.db import models
 from django.utils.functional import cached_property
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
-from wagtail.core.fields import StreamField
+from wagtail.core.fields import StreamField, RichTextField
 from wagtail.core import blocks as wagtail_blocks
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.images import get_image_model_string
@@ -245,7 +245,7 @@ class Magazine(HeroPage):
 
 class TableOfContents(BasePage):
     template = "patterns/pages/toc/table_of_contents.html"
-
+    introduction = RichTextField(blank=True)
     related_content = StreamField(
         [
             ("related_item", blocks.RelatedContentBlock()),
@@ -262,6 +262,7 @@ class TableOfContents(BasePage):
         )
 
     content_panels = BasePage.content_panels + [
+        FieldPanel("introduction"),
         StreamFieldPanel("body"),
         StreamFieldPanel("related_content")
     ]

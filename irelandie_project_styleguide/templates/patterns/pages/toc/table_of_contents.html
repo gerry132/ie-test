@@ -31,7 +31,11 @@
             {% endif %}
         {% endfor %}
 
-
+        {% if page.introduction %}
+            <div class="wrapper wrapper--large wrapper--padding">
+                <p class="intro__description">{{ page.introduction|richtext }}</p>
+            </div>
+        {% endif %}
             {% for blocks in page.body %}
                 {% if blocks.block_type == 'content' %}
                 <div id="{{blocks.value.title}}">
