@@ -9,6 +9,10 @@
         margin: 0 auto;
     }
 
+    &--large--toc {
+        max-width: $site-width;
+        margin: 0 15%;
+    }
     &--main {
         background-color: $color--white;
     }
