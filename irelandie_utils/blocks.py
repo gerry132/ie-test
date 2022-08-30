@@ -725,9 +725,9 @@ class RelatedContentBlock(blocks.StructBlock):
     page = blocks.PageChooserBlock()
     title = blocks.CharBlock()
 
-
     class Meta:
         label = "Related Content"
+
 
 class TocBlocks(blocks.StreamBlock):
     rich_text = AdvancedRichTextBlock(group="Base")
