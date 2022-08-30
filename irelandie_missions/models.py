@@ -243,6 +243,32 @@ class Magazine(HeroPage):
     ])
 
 
+class TableOfContents(BasePage):
+    template = "patterns/pages/toc/table_of_contents.html"
+    
+    related_content = StreamField(
+        [
+            ("related_item", blocks.RelatedContentBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+    )
+    body = StreamField(
+        [   
+            ("content", blocks.TocBlock()) 
+        ],
+        blank=True
+        )
+
+    
+    content_panels = BasePage.content_panels + [
+        StreamFieldPanel("body"),
+        StreamFieldPanel("related_content")
+    ]
+
+
+
 class ServicesLandingPage(HeroPage):
     template = "patterns/pages/missions/services_landing_page.html"
 

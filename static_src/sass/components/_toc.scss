@@ -1,0 +1,37 @@
+
+
+.toc-contents {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+
+    color: #1D70B8;
+}
+
+.related-content {
+    width: 15%;
+    @include media-query(max-medium) {
+        display: none;
+    }
+}
+
+
+.related-content--mobile {
+    width: 70%;
+
+    @include media-query(medium) {
+        display: none;
+    }
+}
+
+.header--related-content {
+    width: 75%;
+    border-top: solid;
+    border-top-width: 2px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 26px;
+}

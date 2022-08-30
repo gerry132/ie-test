@@ -721,6 +721,34 @@ class FreeFormBlocks(FreeFormBlocksBase):
     )
 
 
+class RelatedContentBlock(blocks.StructBlock):
+    page = blocks.PageChooserBlock()
+    title = blocks.CharBlock()
+
+
+    class Meta:
+        label = "Related Content"
+
+class TocBlocks(blocks.StreamBlock):
+    rich_text = AdvancedRichTextBlock(group="Base")
+    image = ImageBlock(group="Base")
+    document = DocumentBlock(group="Base")
+    accordion = AccordionBlock(group="Base")
+
+    logos = LogoCardsBlock(group="Module")
+
+    table = TableBlock(group="HTML")
+    html = blocks.RawHTMLBlock(
+        group="HTML",
+        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
+    )
+
+
+class TocBlock(blocks.StructBlock):
+    title = blocks.CharBlock()
+    content = TocBlocks()
+
+
 class AdditionalSocialBlock(blocks.StructBlock):
     social_logo = ImageChooserBlock(required=False)
     social_url = blocks.URLBlock(
