@@ -466,11 +466,6 @@ svg {
     vertical-align: top;
 }
 
-img {
-    height: auto;
-    max-width: 100%;
-}
-
 button,
 input,
 select,
