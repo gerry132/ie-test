@@ -117,6 +117,7 @@ class CountryPage(HeroPage):
 
 IMAGE_MODEL = get_image_model_string()
 
+
 class JobContentPage(BasePage):
     template = "patterns/pages/irelandie_job/job.html"
     generic_hero = StreamField(
@@ -163,7 +164,6 @@ class JobIndexPage(BasePage):
         min_num=0,
         max_num=1,
     )
-
 
     content_panels = BasePage.content_panels + [
         StreamFieldPanel("generic_hero")
