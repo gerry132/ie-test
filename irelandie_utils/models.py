@@ -26,7 +26,7 @@ from wagtail.snippets.models import register_snippet
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
-from irelandie_utils.blocks import ArticleStoryBlock
+from irelandie_utils.blocks import ArticleStoryBlock, AdvancedRichTextBlock
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
 
@@ -274,6 +274,26 @@ class CallToActionSnippet(models.Model):
             return block.value["url"]
 
         return block.value["page"].get_url()
+
+    def __str__(self):
+        return self.title
+
+
+@register_snippet
+class PrivacyPolicySnippet(models.Model):
+    title = models.CharField(max_length=255)
+    privacy_snippet = StreamField(
+        [
+            ("privacy_policy", AdvancedRichTextBlock()),
+        ],
+        blank=True,
+        null=True,
+        max_num=1,
+    )
+    panels = [
+        FieldPanel("title"),
+        StreamFieldPanel("privacy_snippet"),
+    ]
 
     def __str__(self):
         return self.title
