@@ -243,7 +243,7 @@ class Magazine(HeroPage):
     ])
 
 
-class TableOfContents(BasePage):
+class ServiceContent(BasePage):
     template = "patterns/pages/toc/table_of_contents.html"
     introduction = RichTextField(blank=True)
     related_content = StreamField(
