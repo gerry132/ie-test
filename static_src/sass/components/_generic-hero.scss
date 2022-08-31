@@ -10,11 +10,12 @@
     }
     &__content{
         flex: 60%;
-        max-width: 670px;
+
 
     }
     &__container1{
         padding-left:20px;
+        max-width: 520px;
         @media only screen and (max-width: 1023px) {
             padding-top: 40px;
             padding-right:20px;
@@ -40,24 +41,22 @@
 
     }
     &__image{
-    margin-right:110px;
-    float: right;
-    margin-top: 25px;
+        margin: 15px auto;
+        display: block;
     }
     &__mobileHide{
-    flex: 40%;
-    background-image: url('../images/cssBackgrounds/offwhite.png');
-     position: relative;
-     width: 100%;
-     background-position: right;
-     background-attachment: inherit;
-     background-repeat: no-repeat;
-     align-self: flex-end;
-         @media only screen and (max-width: 1023px) {
-            display: none;
-        }
+        flex: 40%;
+        background-image: url('../images/cssBackgrounds/offwhite.png');
+         position: relative;
+         width: 100%;
+         background-position: right;
+         background-attachment: inherit;
+         background-repeat: no-repeat;
+         background-size: cover;
+             @media only screen and (max-width: 1023px) {
+                display: none;
+            }
     }
-
 
 }
 
