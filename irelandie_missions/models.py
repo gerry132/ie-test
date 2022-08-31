@@ -153,6 +153,35 @@ class JobContentPage(BasePage):
     ]
 
 
+class JobIndexPage(BasePage):
+    template = "patterns/pages/irelandie_job/job_index.html"
+    generic_hero = StreamField(
+        [
+            ("generic_hero", blocks.GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+
+    content_panels = BasePage.content_panels + [
+        StreamFieldPanel("generic_hero")
+    ]
+
+    @cached_property
+    def related_jobs(self):
+        return (
+            JobContentPage.objects
+            .child_of(self)
+            .filter(locale=self.locale)
+            .public()
+            .live()
+            .order_by("-first_published_at")
+            .specific()
+        )
+
+
 class MissionPage(HeroPage):
     template = "patterns/pages/irelandie_missions/mission.html"
     search_bar = models.BooleanField(default=False)
