@@ -123,6 +123,12 @@
     }
 
     &__logo {
+        height: 30px;
+        width: 90px;
+        @include media-query(medium) {
+            height: 40px;
+            width: 160px;
+        }
         #{$root}--condensed & {
             height: 20px;
             width: 80px;
@@ -247,22 +253,6 @@
                     top: $condensed-header-height;
                 }
             }
-        }
-    }
-}
-
-.desktop {
-    &__logo {
-        @include media-query(v-small) {
-            display: none;
-        }
-    }
-}
-
-.mobile {
-    &__logo {
-        @include media-query(large) {
-            display: none;
         }
     }
 }

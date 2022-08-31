@@ -42,13 +42,6 @@ class SiteSettings(BaseSetting, ClusterableModel):
         on_delete=models.SET_NULL,
         related_name="+",
     )
-    mobile_logo = models.ForeignKey(
-        IMAGE_MODEL,
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
     site_logo_alt = models.CharField(
         max_length=255,
         blank=False,
@@ -64,7 +57,6 @@ class SiteSettings(BaseSetting, ClusterableModel):
     panels = [
         MultiFieldPanel([
             ImageChooserPanel("site_logo"),
-            ImageChooserPanel("mobile_logo"),
             FieldPanel("site_logo_alt"),
             FieldPanel("google_my_map"),
         ], heading="Site Logo"),
@@ -274,13 +266,6 @@ class CustomHeader(TranslatableMixin):
         on_delete=models.SET_NULL,
         related_name="+",
     )
-    mobile_logo = models.ForeignKey(
-        IMAGE_MODEL,
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
     logo_alt = models.CharField(
         max_length=255,
         blank=False,
@@ -291,7 +276,6 @@ class CustomHeader(TranslatableMixin):
     panels = [
         MultiFieldPanel([
             ImageChooserPanel("logo"),
-            ImageChooserPanel("mobile_logo"),
             FieldPanel("logo_alt"),
             FieldPanel("url")
         ], heading="Logo"),
