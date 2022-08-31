@@ -1,0 +1,26 @@
+{% extends "patterns/hero_page.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load static %}
+{% load util_tags %}
+{% load i18n %}
+
+
+{% block content %}
+ <!-- Main -->
+    {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+
+    {% if page.title or page.generic_hero %}
+        {% include "patterns/molecules/streamfield/blocks/generic_hero.html" with page=page %}
+    {% endif %}
+
+    {% block main %}
+        <!-- Body -->
+    <div class="section section--padding">
+        <div class="wrapper wrapper--large wrapper--padding">
+            {{page.related_jobs}}
+        </div>
+    </div>
+    {% endblock %}
+{% endblock %}
+

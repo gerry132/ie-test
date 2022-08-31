@@ -117,7 +117,6 @@ class CountryPage(HeroPage):
 
 IMAGE_MODEL = get_image_model_string()
 
-
 class JobContentPage(BasePage):
     template = "patterns/pages/irelandie_job/job.html"
     generic_hero = StreamField(
@@ -151,6 +150,36 @@ class JobContentPage(BasePage):
         StreamFieldPanel("privacy_policy"),
         StreamFieldPanel("body")
     ]
+
+
+class JobIndexPage(BasePage):
+    template = "patterns/pages/irelandie_job/job_index.html"
+    generic_hero = StreamField(
+        [
+            ("generic_hero", blocks.GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+
+
+    content_panels = BasePage.content_panels + [
+        StreamFieldPanel("generic_hero")
+    ]
+
+    @cached_property
+    def related_jobs(self):
+        return (
+            JobContentPage.objects
+            .child_of(self)
+            .filter(locale=self.locale)
+            .public()
+            .live()
+            .order_by("-first_published_at")
+            .specific()
+        )
 
 
 class MissionPage(HeroPage):
