@@ -206,7 +206,7 @@ class MissionPage(HeroPage):
             .filter(locale=self.locale)
             .public()
             .live()
-            .order_by("-first_published_at")[:3]
+            .order_by("-first_published_at")[:4]
             .specific()
         )
 
