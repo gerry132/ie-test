@@ -9,9 +9,8 @@ Example:
     {% include "patterns/molecules/card/card.html" with card=card %}
 {% endcomment %}
 
-{% if card.page %}
-{% pageurl card.page as href %}
-    <a href="{{ href }}" class="card{% if large %} card--large{% endif %}{% if not card.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
+{% if card.url %}
+    <a href="{{ card.url }}" class="card{% if large %} card--large{% endif %}{% if not card.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
 {% else %}
     <div class="card{% if not card.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
 {% endif %}
@@ -27,13 +26,13 @@ Example:
 
             <p class="card__summary">{{ card.introduction }}</p>
 
-            {% if card.page %}
+            {% if card.url %}
                 <span class="card__link">
                     {% trans 'Read story' %}
                 </span>
             {% endif %}
         </div>
-{% if card.page %}
+{% if card.url %}
     </a>
 {% else %}
     </div>
