@@ -182,6 +182,7 @@ class MissionPage(HeroPage):
 
     content_panels = HeroPage.content_panels + [
         FieldPanel("root_page"),
+        FieldPanel("override_pinned_stories"),
         MultiFieldPanel([
             FieldPanel("search_bar"),
             StreamFieldPanel("popular_pages"),
@@ -205,7 +206,7 @@ class MissionPage(HeroPage):
             .filter(locale=self.locale)
             .public()
             .live()
-            .order_by("-first_published_at")[:3]
+            .order_by("-first_published_at")[:4]
             .specific()
         )
 
@@ -268,9 +269,17 @@ class ServiceContent(BasePage):
     ]
 
 
-class ServicesLandingPage(HeroPage):
+class ServicesLandingPage(BasePage):
     template = "patterns/pages/missions/services_landing_page.html"
-
+    generic_hero = StreamField(
+        [
+            ("generic_hero", blocks.GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
     rich_text = StreamField(
         [
             ("rich_text", blocks.AdvancedRichTextBlock()),
@@ -291,16 +300,11 @@ class ServicesLandingPage(HeroPage):
         max_num=1,
     )
 
-    content_panels = HeroPage.content_panels + [
+    content_panels = BasePage.content_panels + [
+        StreamFieldPanel("generic_hero"),
         StreamFieldPanel("rich_text", heading="Advanced Richtext"),
         StreamFieldPanel("body")
     ]
-    edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='Content'),
-        ObjectList(HeroPage.hero_panel, heading='Hero'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
-        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
-    ])
 
 
 class MissionSearchPage(BasePage):

@@ -3,15 +3,15 @@
 {% load static %}
 {% load util_tags %}
 {% load i18n %}
-
+</div>
+        </div>
 <div class="story section section--padding">
-	<div class="story__container story--dark">
-		<div class="story__width_left">
-			<div class="story{% if value.background == 'dark' %} story--dark{% endif %}{% if value.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
-				<div class="wrapper wrapper--large">
+
+			<div class="story{% if value.background == 'dark' %} story--dark{% endif %} section section--padding">
+<div class="wrapper wrapper--padding">
                      {% image value.embassy_logo width-460 class="story__logo" %}
 					<div class="story__container1">
-                        {% image value.image width-460 class="story__image story__image_margin" %}
+                        {% image value.person_image width-460 class="story__image_margin story__image" %}
                         {% if value.video %}
                             <div class="story__video-block">
                                 <video class="story__video-block" aria-label="{{ value.title }}" title="{{ value.title }}" autoplay loop muted data-video controls>
@@ -21,7 +21,7 @@
                                 </video>
                             </div>
                         {% endif %}
-                        <div class="story__content">
+                        <div class="story__content story__alignm">
                             <div class="story__copy1">
 
                                 {{ value.person_title }}
@@ -64,11 +64,11 @@
                             </div>
                             {% if value.links %}
                                 {% if value.links|length > 2 %}
-                                    <div class="story-links story-links__width">
+                                    <div class="story-links__width story-links">
                                         <div class="your-class story-links__container">
                                             <div class="slider slider-mobile">
                                                 {% for link in value.links %}
-                                                    <div id="last" class="slide-mobile" style="width: 100%;">
+                                                    <div id="last1" class="slide-mobile1" style="width: 100%;">
                                                         <div class="story-links story-links__width">
                                                             <div class="your-class story-links__container">
                                                                   {% include_block link %}
@@ -88,12 +88,12 @@
                                 {% else %}
                                 {% with next_element=value.links|next:forloop.counter0 %}
                                 {% if next_element %}
-                                    <div id="next" class="slide">
+                                    <div id="next1" class="slide1">
                                         <div class="story-links story-links__width">
                                             <div class="your-class story-links__container">
                                                 {{link}}
                                                 {% else %}
-                                                    <div id="last" class="slide" style="width: 100%;">
+                                                    <div id="last1" class="slide1" style="width: 100%;">
                                                         <div class="story-links story-links__width">
                                                             <div class="your-class story-links__container">
                                                                       {% include_block link %}
@@ -117,61 +117,80 @@
                                             {% endif %}
                                         </div>
                         {% if value.links|length > 2 %}
-									<button class="btn btn-next"></button>
-									<button class="btn btn-prev"></button>
+									<button class="btn btn-next1"></button>
+									<button class="btn btn-prev1"></button>
                         {% endif %}
+                                        {% if value.links|length < 3 %}
+                                            <div class="story__width_right ">
+                                            {% for socialfeed in value.social_feed %}
+                                            {% if socialfeed.value.twitter_username %}
+                                                    <div class="wrapper wrapping--padding">
+                                                        <div class="twitter-embed">
+                                                        {% if socialfeed.value.twitter_title %}
+                                                            <h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
+                                                        {% endif %}
+                                                            {% if socialfeed.value.additional_social_feed %}
+                                                                <a class="twitter-timeline" data-width="100% !important" data-height=500 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                                                            Tweets by {{ socialfeed.value.twitter_username }}
+                                                                </a>
+                                                                {% else %}
+                                                                <a class="twitter-timeline" data-width="100% !important" data-height=560 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                                                            Tweets by {{ socialfeed.value.twitter_username }}
+                                                                </a>
+                                                                {% endif %}
+                                                        </div>
+                                                    </div>
+                                            {% endif %}
+
+                                            {% if socialfeed.value.additional_social_feed %}
+                                                <div class="story__additional_social_feed">
+                                                {{ socialfeed.value.additional_social_feed }}
+                                            {% endif %}
+                                            </div>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
                                     </div>
                         </div>
-                    </div>
-                </div>
-                {% if value.links|length < 3 %}
-                <div class="story__width_right ">
-                {% for socialfeed in value.social_feed %}
-                {% if socialfeed.value.twitter_username %}
-						<div class="wrapper wrapping--padding">
-							<div class="twitter-embed section section--padding">
-                            {% if socialfeed.value.twitter_title %}
-								<h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
-                            {% endif %}
-								<a class="twitter-timeline" data-width="100%" data-height=600 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
-                                    Tweets by {{ socialfeed.value.twitter_username }}
-                                </a>
+                        {% if value.links|length > 2 %}
+                            <div class="story__width_right ">
+                                {% for socialfeed in value.social_feed %}
+                                {% if socialfeed.value.twitter_username %}
+                                <div class="wrapper wrapping--padding">
+                                    <div class="twitter-embed">
+                                            {% if socialfeed.value.twitter_title %}
+                                                <h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
+                                            {% endif %}
+                                        {% if socialfeed.value.additional_social_feed %}
+                                        <a class="twitter-timeline" data-width="100% !important" data-height=500 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                                    Tweets by {{ socialfeed.value.twitter_username }}
+                                        </a>
+                                        {% else %}
+                                        <a class="twitter-timeline" data-width="100% !important" data-height=560 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                                    Tweets by {{ socialfeed.value.twitter_username }}
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if socialfeed.value.additional_social_feed %}
+                                <div class="story__additional_social_feed">
+                                    {{ socialfeed.value.additional_social_feed }}
+                                {% endif %}
+                                </div>
+                                {% endfor %}
                             </div>
-                        </div>
-                {% endif %}
+                         {% endif %}
+                    </div>
 
-                {% if socialfeed.value.additional_social_feed %}
-                        {{ socialfeed.value.additional_social_feed }}
-                {% endif %}
-                    {% endfor %}
-                </div>
-                {% endif %}
+
             </div>
-        </div>
-        {% if value.links|length > 2 %}
-			<div class="story__width_right ">
-                {% for socialfeed in value.social_feed %}
-                {% if socialfeed.value.twitter_username %}
-                <div class="wrapper wrapping--padding">
-					<div class="twitter-embed section section--padding">
-                            {% if socialfeed.value.twitter_title %}
-                                <h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
-                            {% endif %}
-						<a class="twitter-timeline" data-width="100% !important" data-height=600 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
-                                    Tweets by {{ socialfeed.value.twitter_username }}
-                        </a>
-					</div>
-				</div>
-                {% endif %}
-                {% if socialfeed.value.additional_social_feed %}
-                    {{ socialfeed.value.additional_social_feed }}
-                {% endif %}
-                {% endfor %}
             </div>
-        {% endif %}
-    </div>
+
+
+
 </div>
-
 {% block extra_js %}
 {% for socialfeed in value.social_feed %}
     {% if socialfeed.value.twitter_username %}
@@ -186,56 +205,56 @@
 	<script>
 function readySlides1(mobile) {
   console.log(mobile);
-  let slides;
-  let transNum;
+  let slides1;
+  let transNum1;
   if(mobile) {
-    slides = document.querySelectorAll(".slide-mobile");
-    transNum = 100;
+    slides1 = document.querySelectorAll(".slide-mobile1");
+    transNum1 = 100;
   } else {
-    slides = document.querySelectorAll(".slide");
-    transNum = 100;
+    slides1 = document.querySelectorAll(".slide1");
+    transNum1 = 100;
   }
 
-  slides.forEach((slide, indx) => {
-    slide.style.transform = `translateX(${indx * transNum}%)`;
+  slides1.forEach((slide1, index) => {
+    slide1.style.transform = `translateX(${index * transNum1}%)`;
   });
   // select next slide button
-  const nextSlide = document.querySelector(".btn-next");
+  const nextSlide1 = document.querySelector(".btn-next1");
   // current slide counter
-  let curSlide = 0;
+  let curSlide1 = 0;
   // maximum number of slides
-  let maxSlide = slides.length - 1;
+  let maxSlide1 = slides1.length - 1;
 
   // add event listener and navigation functionality
-  nextSlide.addEventListener("click", function () {
+  nextSlide1.addEventListener("click", function () {
     // check if current slide is the last and reset current slide
-    if (curSlide === maxSlide) {
-      curSlide = 0;
+    if (curSlide1 === maxSlide1) {
+      curSlide1 = 0;
     } else {
-      curSlide++;
+      curSlide1++;
     }
 
     //   move slide by -100%
-    slides.forEach((slide, indx) => {
-      slide.style.transform = `translateX(${transNum * (indx - curSlide)}%)`;
+    slides1.forEach((slide1, index) => {
+      slide1.style.transform = `translateX(${transNum1 * (index - curSlide1)}%)`;
     });
   });
 
   // select next slide button
-  const prevSlide = document.querySelector(".btn-prev");
+  const prevSlide = document.querySelector(".btn-prev1");
 
   // add event listener and navigation functionality
   prevSlide.addEventListener("click", function () {
     // check if current slide is the first and reset current slide to last
-    if (curSlide === 0) {
-      curSlide = maxSlide;
+    if (curSlide1 === 0) {
+      curSlide1 = maxSlide1;
     } else {
-      curSlide--;
+      curSlide1--;
     }
 
     //   move slide by 100%
-    slides.forEach((slide, indx) => {
-      slide.style.transform = `translateX(${transNum * (indx - curSlide)}%)`;
+    slides1.forEach((slide1, index) => {
+      slide1.style.transform = `translateX(${transNum1 * (index - curSlide1)}%)`;
     });
   });
 }
@@ -246,4 +265,3 @@ readySlides1(true);
 
 
 {% endblock %}
-

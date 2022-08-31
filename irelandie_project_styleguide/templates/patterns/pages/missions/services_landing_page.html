@@ -3,11 +3,21 @@
 {% load wagtailimages_tags %}
 {% load static %}
 
-{% block main %}
-<div class="section section--padding">
-    <div class="wrapper wrapper--large wrapper--padding">
-        {% include_block page.rich_text %}
-        {% include_block page.body %}
+{% block content %}
+ <!-- Main -->
+    {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+
+    {% if page.title or page.generic_hero %}
+        {% include "patterns/molecules/streamfield/blocks/generic_hero.html" with page=page %}
+    {% endif %}
+
+    {% block main %}
+        <!-- Body -->
+    <div class="section section--padding">
+        <div class="wrapper wrapper--large wrapper--padding">
+            {% include_block page.rich_text %}
+            {% include_block page.body %}
+        </div>
     </div>
-</div>
+    {% endblock %}
 {% endblock %}
