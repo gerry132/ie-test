@@ -2,7 +2,7 @@
 from django.db import models
 from django.utils.functional import cached_property
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
-from wagtail.core.fields import StreamField
+from wagtail.core.fields import StreamField, RichTextField
 from wagtail.core import blocks as wagtail_blocks
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.images import get_image_model_string
@@ -243,6 +243,31 @@ class Magazine(HeroPage):
     ])
 
 
+class ServiceContent(BasePage):
+    template = "patterns/pages/toc/table_of_contents.html"
+    introduction = RichTextField(blank=True)
+    related_content = StreamField(
+        [
+            ("related_item", blocks.RelatedContentBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+    )
+    body = StreamField(
+        [
+            ("content", blocks.TocBlock())
+        ],
+        blank=True
+        )
+
+    content_panels = BasePage.content_panels + [
+        FieldPanel("introduction"),
+        StreamFieldPanel("body"),
+        StreamFieldPanel("related_content")
+    ]
+
+
 class ServicesLandingPage(BasePage):
     template = "patterns/pages/missions/services_landing_page.html"
     generic_hero = StreamField(
@@ -254,7 +279,6 @@ class ServicesLandingPage(BasePage):
         min_num=0,
         max_num=1,
     )
-
     rich_text = StreamField(
         [
             ("rich_text", blocks.AdvancedRichTextBlock()),
