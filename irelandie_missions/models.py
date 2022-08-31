@@ -182,6 +182,7 @@ class MissionPage(HeroPage):
 
     content_panels = HeroPage.content_panels + [
         FieldPanel("root_page"),
+        FieldPanel("override_pinned_stories"),
         MultiFieldPanel([
             FieldPanel("search_bar"),
             StreamFieldPanel("popular_pages"),
