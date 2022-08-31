@@ -133,6 +133,7 @@ class JobContentPage(BasePage):
     body = StreamField(
         [
             ("rich_text", blocks.AdvancedRichTextBlock()),
+            ("document", blocks.DocumentBlock()),
         ],
         blank=True,
     )
