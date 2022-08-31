@@ -901,3 +901,13 @@ class LinkBoxesBlock(blocks.StructBlock):
         icon = "list-ul"
         label = "Link Boxes"
         template = "patterns/molecules/streamfield/blocks/link_boxes.html"
+
+
+class GenericHeroBlock(blocks.StructBlock):
+    hero_image = ImageChooserBlock(required=False)
+    hero_title = blocks.CharBlock(required=True)
+    subtitle = blocks.CharBlock(required=False)
+
+    class Meta:
+        label = "Generic Hero Block"
+        template = "patterns/molecules/streamfield/blocks/generic_hero.html"
