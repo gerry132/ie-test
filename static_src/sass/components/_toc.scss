@@ -10,8 +10,10 @@
     color: #1D70B8;
 }
 
+
+
 .related-content {
-    width: 15%;
+    width: 60%;
     @include media-query(max-medium) {
         display: none;
     }
@@ -27,7 +29,6 @@
 }
 
 .header--related-content {
-    width: 75%;
     border-top: solid;
     border-top-width: 2px;
     font-style: normal;
@@ -35,3 +36,18 @@
     font-size: 22px;
     line-height: 26px;
 }
+
+#wrapper {
+    display: grid;
+    grid-template-columns: 65% 1fr;
+    min-width: 85%;
+  }
+  #left {
+    grid-column:1;
+    overflow: hidden;
+  }
+  
+  #right {
+    grid-column:2;
+    overflow: hidden;
+  }
