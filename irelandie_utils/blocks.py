@@ -779,7 +779,7 @@ class SocialFieldBlock(blocks.StructBlock):
 class PersonSocialBlock(blocks.StructBlock):
     name = blocks.CharBlock(required=False)
     person_title = blocks.CharBlock(required=False)
-    image = ImageChooserBlock(required=False)
+    person_image = ImageChooserBlock(required=False)
     video = VideoChooserBlock(required=False)
     embassy_logo = ImageChooserBlock(required=False)
     social_media_link = blocks.URLBlock(required=False)
@@ -822,12 +822,12 @@ class PersonSocialBlock(blocks.StructBlock):
 
     def clean(self, value):
         errors = {}
-        image = value.get('image')
+        person_image = value.get('person_image')
         video = value.get('video')
 
-        if not (bool(image) ^ bool(video)):
+        if not (bool(person_image) ^ bool(video)):
             msg = "You can't choose both an image and a video. Choose an image or a video"
-            errors['image'] = ErrorList([msg])
+            errors['person_image'] = ErrorList([msg])
             errors['video'] = ErrorList([msg])
 
         if errors:
