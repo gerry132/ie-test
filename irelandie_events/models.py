@@ -31,7 +31,7 @@ class EventPage(Page, TranslatableMixin):
     )
     description = models.TextField(blank=True)
     date = models.DateTimeField(blank=True, null=True)
-    countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
+    countries = ParentalManyToManyField("irelandie_missions.DestinationPage", blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("first_published_at"),
