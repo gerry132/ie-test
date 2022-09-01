@@ -30,8 +30,9 @@
         </div>
       </div>
 </div>
+<div class="section--master">
    <div class="section section--padding section--white">
-    <div class="wrapper wrapper--large--toc wrapper--padding">
+    <div class="wrapper wrapper--large--toc wrapper--padding content--padding">
         {% for block in page.body %}
             {% if block.block_type == 'content' %}
                 <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter }}. {{block.value.title}}</h2></a>
@@ -39,7 +40,7 @@
         {% endfor %}
 
         {% if page.introduction %}
-            <div class="wrapper wrapper--large wrapper--padding">
+            <div class="wrapper wrapper--large wrapper--padding content--padding">
                 <p class="intro__description">{{ page.introduction|richtext }}</p>
             </div>
         {% endif %}
@@ -50,15 +51,15 @@
                         {% if block.block_type == 'heading' or block.block_type == 'rich_text' or block.block_type == 'image' or block.block_type == 'document' or block.block_type == 'table' %}
 
                                 {% if block.block_type == 'table' %}
-                                    <div id="{{block.title}}" class="wrapper wrapper--small wrapper--padding">
+                                    <div id="{{block.title}}" class="wrapper wrapper--small wrapper--padding content--padding">
                                         {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}
                                     </div>
                                 {% elif block.block_type == 'heading' or block.block_type == 'rich_text' %}
-                                    <div class="wrapper wrapper--large wrapper--padding">
+                                    <div class="wrapper wrapper--large wrapper--padding content--padding">
                                         {% include_block block %}
                                     </div>
                                 {% else %}
-                                    <div class="wrapper wrapper--small wrapper--padding">
+                                    <div class="wrapper wrapper--small wrapper--padding content--padding">
                                         {% include_block block %}
                                     </div>
                                 {% endif %}
@@ -67,17 +68,17 @@
                         {% elif block.block_type == 'stories' %}
                             {% include_block block %}
                         {% elif block.block_type == 'logos' %}
-                            <div class="wrapper wrapper--large wrapper--padding">
+                            <div class="wrapper wrapper--large wrapper--padding content--padding">
                                 <div class="section section--padding">
                                     {% include_block block %}
                                 </div>
                             </div>
                         {% elif block.block_type == 'accordion' %}
-                            <div class="section section--padding">
+                            <div class="section section--padding content--padding">
                                 {% include_block block %}
                             </div>
                         {% else %}
-                            <div class="wrapper wrapper--large wrapper--padding">
+                            <div class="wrapper wrapper--large wrapper--padding content--padding">
                                 {% include_block block %}
                                 
                             </div>
@@ -86,7 +87,7 @@
             </div>
                 {% endif %}
             {% endfor %}
-            <div class="related-content--mobile wrapper--padding">
+            <div class="related-content--mobile wrapper--padding content--padding">
                 {% if page.related_content %}
                 <h4 class="header--related-content">Related Content</h4>
                     {% for p in page.related_content %}
@@ -96,5 +97,6 @@
             </div>
 
             {% endblock %}
+</div>
 </div>
 </div>
