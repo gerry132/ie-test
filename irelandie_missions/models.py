@@ -137,7 +137,10 @@ class JobContentPage(BasePage):
         ],
         blank=True,
     )
-
+    summary = models.TextField(
+        help_text="Brief job summary for index page",
+        null=True
+        )
     privacy_policy = models.ForeignKey(
           'utils.PrivacyPolicySnippet',
           null=True,
@@ -148,6 +151,7 @@ class JobContentPage(BasePage):
 
     content_panels = BasePage.content_panels + [
         StreamFieldPanel("generic_hero"),
+        FieldPanel("summary"),
         StreamFieldPanel("privacy_policy"),
         StreamFieldPanel("body")
     ]
