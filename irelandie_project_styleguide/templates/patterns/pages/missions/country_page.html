@@ -2,22 +2,12 @@
 {% load wagtailcore_tags wagtailimages_tags static %}
 
 {% block main %}
-    {% include_block page.stories %}
-    {% include_block page.embeds %}
-    {% if page.featured_stories or page.featured_embassies %}
-        <div class="section section--padding section--grey">
-            <div class="wrapper wrapper--large">
-                <div class="featured-blocks">
-                    {% include_block page.featured_stories %}
-                    {% include_block page.featured_embassies %}
-                </div>
+    {% if not page.hero_image and page.secondary_title %}
+            <div class="wrapper wrapper--large wrapper--padding">
+                <h2 class="secondary-title">{{ page.secondary_title }}</h2>
             </div>
-        </div>
     {% endif %}
-
-    {% if page.twitter_feed %}
-        {% include "patterns/molecules/streamfield/blocks/twitter_embed.html" with value=page.twitter_feed title=page.twitter_title %}
-    {% endif %}
+    {% include_block page.stories %}
 
     {% if page.logo_cards %}
         <div class="section section--padding section--grey">
@@ -26,6 +16,8 @@
             </div>
         </div>
     {% endif %}
+    {% include_block page.pinned_stories %}
+
 {% endblock %}
 
 {% block extra_js %}

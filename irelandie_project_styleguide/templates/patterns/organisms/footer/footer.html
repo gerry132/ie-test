@@ -8,9 +8,11 @@
             <a href="/{{ language_code }}/" aria-label="Ireland.ie">
             {% if custom_footer.logo %}
                 {% if custom_footer.logo_alt %}
-                    {% image custom_footer.logo width-200 class="footer__logo" alt=custom_footer.logo_alt %}
+                    {% image custom_footer.logo width-200 class="footer__logo desktop__logo" alt=custom_footer.logo_alt %}
+                    {% image custom_footer.mobile_logo width-200 class="footer__logo mobile__logo" alt=custom_footer.logo_alt %}
                 {% else %}
-                    {% image custom_footer.logo width-200 class="footer__logo" alt=custom_footer.logo.alt_default %}
+                    {% image custom_footer.logo width-200 class="footer__logo desktop__logo" alt=custom_footer.logo.alt_default %}
+                    {% image custom_footer.logo width-200 class="footer__logo mobile__logo" alt=custom_footer.logo.alt_default %}
                 {% endif %}
             {% else %}
                 {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="footer__logo footer__logo--svg" %}

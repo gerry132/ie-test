@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function(){
      document.getElementById("country_results").innerHTML = this.responseText;
     }
   };
-  xhttp.open("GET", "{{ current_site.full_url }}/api/v2/pages/?type=irelandie_missions.CountryPage&fields=title&locale={{ page.locale.language_code }}&format=json", true);
+  xhttp.open("GET", "{{ current_site.full_url }}/api/v2/pages/?type=irelandie_missions.DestinationPage&fields=title&locale={{ page.locale.language_code }}&format=json", true);
   xhttp.send();
 }, false);
 //search

@@ -31,39 +31,12 @@ class CountryGroupPageIndex(BasePage):
     ]
 
 
-class CountryPage(HeroPage):
+class DestinationPage(HeroPage):
     template = "patterns/pages/missions/country_page.html"
 
     stories = StreamField(
         [
             ("story", blocks.StoryBlock()),
-        ],
-        blank=True,
-        null=True,
-        min_num=0,
-        max_num=1,
-    )
-    embeds = StreamField(
-        [
-            ("youtube", blocks.YoutubeVideoBlock()),
-        ],
-        blank=True,
-        null=True,
-        min_num=0,
-        max_num=1,
-    )
-    featured_stories = StreamField(
-        [
-            ("featured_story", blocks.FeaturedStoryBlock()),
-        ],
-        blank=True,
-        null=True,
-        min_num=0,
-        max_num=1,
-    )
-    featured_embassies = StreamField(
-        [
-            ("embassy_story", blocks.EmbassyStory()),
         ],
         blank=True,
         null=True,
@@ -78,34 +51,53 @@ class CountryPage(HeroPage):
         null=True,
     )
 
-    twitter_title = models.CharField(max_length=50, blank=True)
-
-    twitter_feed = models.ForeignKey(
-        "utils.TwitterEmbed",
-        on_delete=models.SET_NULL,
-        related_name="+",
-        null=True,
-        blank=True,
-    )
-
     logo_cards = StreamField(
         [("logo_cards", blocks.LogoCardsBlock())],
         blank=True,
         max_num=1,
     )
 
+    pinned_stories = StreamField(
+        [
+            (
+                "pinned_story",
+                wagtail_blocks.StructBlock(
+                    [
+                        ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
+                        (
+                            "pinned_stories",
+                            wagtail_blocks.ListBlock(blocks.PinnedStoryBlock()),
+                        ),
+                    ],
+                    template="patterns/molecules/pinned-stories/pinned_stories.html",
+                ),
+            ),
+        ],
+        block_counts={
+            "pinned_story": {"max_num": 1},
+        },
+        blank=True,
+        null=True,
+    )
+
     content_panels = HeroPage.content_panels + [
         SnippetChooserPanel("region"),
         StreamFieldPanel("stories", heading="Two Column Feature"),
-        StreamFieldPanel("embeds"),
-        StreamFieldPanel("featured_stories"),
-        StreamFieldPanel("featured_embassies"),
         StreamFieldPanel("logo_cards", heading="Logo Cards"),
-        MultiFieldPanel([
-            FieldPanel("twitter_title"),
-            SnippetChooserPanel("twitter_feed"),
-        ], heading="Twitter feed"),
+        StreamFieldPanel("pinned_stories"),
     ]
+
+    @cached_property
+    def related_articles(self):
+        return (
+            NewsPage.objects
+            .child_of(self)
+            .filter(locale=self.locale)
+            .public()
+            .live()
+            .order_by("-first_published_at")[:4]
+            .specific()
+        )
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
@@ -137,7 +129,10 @@ class JobContentPage(BasePage):
         ],
         blank=True,
     )
-
+    summary = models.TextField(
+        help_text="Brief job summary for index page",
+        null=True
+        )
     privacy_policy = models.ForeignKey(
           'utils.PrivacyPolicySnippet',
           null=True,
@@ -148,9 +143,39 @@ class JobContentPage(BasePage):
 
     content_panels = BasePage.content_panels + [
         StreamFieldPanel("generic_hero"),
+        FieldPanel("summary"),
         StreamFieldPanel("privacy_policy"),
         StreamFieldPanel("body")
     ]
+
+
+class JobIndexPage(BasePage):
+    template = "patterns/pages/irelandie_job/job_index.html"
+    generic_hero = StreamField(
+        [
+            ("generic_hero", blocks.GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+
+    content_panels = BasePage.content_panels + [
+        StreamFieldPanel("generic_hero")
+    ]
+
+    @cached_property
+    def related_jobs(self):
+        return (
+            JobContentPage.objects
+            .child_of(self)
+            .filter(locale=self.locale)
+            .public()
+            .live()
+            .order_by("-first_published_at")
+            .specific()
+        )
 
 
 class MissionPage(HeroPage):
@@ -364,7 +389,7 @@ class MissionSearchPage(BasePage):
 
         for group in country_groups:
             countries_count = (
-                CountryPage.objects.descendant_of(self.get_parent())
+                DestinationPage.objects.descendant_of(self.get_parent())
                 .filter(region=group)
                 .count()
             )
@@ -375,7 +400,7 @@ class MissionSearchPage(BasePage):
 
     @cached_property
     def countries(self):
-        return CountryPage.objects.descendant_of(self.get_parent())
+        return DestinationPage.objects.descendant_of(self.get_parent())
 
     def get_context(self, request):
         context = super().get_context(request)
@@ -390,7 +415,7 @@ class ConsulatePage(FreeFormPageBase):
     body = StreamField(blocks.FreeFormBlocksBase(), blank=True)
 
     parent_page_types = [
-        "irelandie_missions.CountryPage",
+        "irelandie_missions.DestinationPage",
         "irelandie_pages.FreeFormPage",
     ]
 
@@ -440,7 +465,7 @@ class EmbassyPage(FreeFormPageBase):
     body = StreamField(blocks.FreeFormBlocksBase(), blank=True)
 
     parent_page_types = [
-        "irelandie_missions.CountryPage",
+        "irelandie_missions.DestinationPage",
         "irelandie_pages.FreeFormPage",
     ]
 

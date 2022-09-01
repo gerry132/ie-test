@@ -422,7 +422,7 @@
 #     description = models.TextField(blank=True, null=True)
 #
 #     parent_page_types = ['HomepagePage']
-#     subpage_types = ['CountryPage']
+#     subpage_types = ['DestinationPage']
 #
 #     content_panels = Page.content_panels + [
 #         FieldPanel('description'),
@@ -586,7 +586,7 @@
 #     ]
 #
 #
-# class CountryPage(Page, TranslatableMixin):
+# class DestinationPage(Page, TranslatableMixin):
 #
 #     parent_page_types = ['CountryGroupPageIndex']
 #     subpage_types = ['MissionPage']
@@ -619,7 +619,7 @@
 #
 # class MissionPage(Page, TranslatableMixin):
 #
-#     parent_page_types = ['CountryPage']
+#     parent_page_types = ['DestinationPage']
 #     subpage_types = [
 #         'AlertPageIndex',
 #         'ContactDetailPageIndex',
