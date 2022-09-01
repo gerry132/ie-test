@@ -30,7 +30,7 @@ from irelandie_events.models import EventPage, EventPageIndex
 from irelandie_images.models import CustomImage
 from wagtail_localize.models import LocaleSynchronization
 from wagtail_localize.synctree import PageIndex
-from irelandie_missions.models import CountryGroupPageIndex, CountryPage, MissionPage
+from irelandie_missions.models import CountryGroupPageIndex, DestinationPage, MissionPage
 from irelandie_news.models import NewsPage, NewsPageIndex
 from irelandie_people.models import PersonPage, PersonPageIndex, RolePage, RolePageIndex
 from irelandie_places.models import PlacePage, PlacePageIndex
@@ -106,7 +106,7 @@ class Command(BaseCommand):
             )
             for country in region["countries"]:
                 country_index_page = _create_index_page(
-                    region_index_page, CountryPage, country["name"]
+                    region_index_page, DestinationPage, country["name"]
                 )
 
                 missions = [

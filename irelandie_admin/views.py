@@ -4,7 +4,7 @@ from django.http import Http404
 from django.http.request import QueryDict
 from django.template.response import TemplateResponse
 from django.views.decorators.vary import vary_on_headers
-from irelandie_missions.models import CountryPage
+from irelandie_missions.models import DestinationPage
 from wagtail.admin.auth import user_has_any_page_permission, user_passes_test
 from wagtail.admin.forms.search import SearchForm
 from wagtail.admin.views.pages.search import page_filter_search
@@ -20,7 +20,7 @@ def search(request):
     content_types = []
     pagination_query_params = QueryDict({}, mutable=True)
     ordering = None
-    country_pages = CountryPage.objects.all().order_by('locale__id', 'title')
+    country_pages = DestinationPage.objects.all().order_by('locale__id', 'title')
 
     if "ordering" in request.GET:
         if request.GET["ordering"] in [
@@ -70,7 +70,7 @@ def search(request):
     selected_country = None
     if "parent_country" in request.GET and request.GET["parent_country"]:
         selected_country = int(request.GET["parent_country"])
-        country_obj = CountryPage.objects.get(pk=selected_country)
+        country_obj = DestinationPage.objects.get(pk=selected_country)
         pages = pages.descendant_of(country_obj)
         all_pages = all_pages.descendant_of(country_obj)
 

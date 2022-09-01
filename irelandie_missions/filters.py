@@ -1,6 +1,6 @@
 from rest_framework.filters import BaseFilterBackend
 
-from irelandie_missions.models import CountryPage, CountryGroupPageIndex
+from irelandie_missions.models import DestinationPage, CountryGroupPageIndex
 
 
 class MissionPageFieldFilter(BaseFilterBackend):
@@ -18,7 +18,7 @@ class MissionPageFieldFilter(BaseFilterBackend):
 
             if self.country_parameter in request.GET:
                 country = request.GET[self.country_parameter]
-                country_page = CountryPage.objects.filter(title__iexact=country).first()
+                country_page = DestinationPage.objects.filter(title__iexact=country).first()
                 queryset = queryset.child_of(country_page)
 
             if self.country_group_parameter in request.GET:
