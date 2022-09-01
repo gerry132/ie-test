@@ -40,8 +40,6 @@ class DestinationPage(HeroPage):
         ],
         blank=True,
         null=True,
-        min_num=0,
-        max_num=1,
     )
 
     region = models.ForeignKey(
