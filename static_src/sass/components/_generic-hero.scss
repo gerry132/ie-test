@@ -2,6 +2,9 @@
     $root: &;
     position: relative;
     background: #004D46;
+    @media only screen and (min-width: 1023px){
+    max-height:285px
+    }
 
     &__container{
             position: relative;
