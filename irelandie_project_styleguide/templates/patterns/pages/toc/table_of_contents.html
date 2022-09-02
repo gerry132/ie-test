@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<div class="section section--padding section--white section--toc">
+<div id="main-header" class="section section--padding section--white section--toc">
     <div id="wrapper" class="wrapper--large--toc">
         <div id="left">
             <div class="wrapper wrapper--padding">
@@ -24,7 +24,7 @@
                 {% if page.related_content %}
                 <h4 class="header--related-content">Related Content</h4>
                     {% for p in page.related_content %}
-                    <a href="{{p.value.page.url}}"><h2 class="toc-contents">{{ forloop.counter }}. {{p.value.title}}</h2></a>
+                    <a href="{{p.value.page.url}}"><h2 class="toc-contents">{{p.value.title}}</h2></a>
                     {% endfor %} 
                 {% endif %}
             </div>
@@ -94,7 +94,7 @@
                 {% if page.related_content %}
                 <h4 class="header--related-content">Related Content</h4>
                     {% for p in page.related_content %}
-                    <a href="{{p.value.page.url}}"><h2 class="toc-contents">{{ forloop.counter }}. {{p.value.title}}</h2></a>
+                    <a href="{{p.value.page.url}}"><h2 class="toc-contents">{{p.value.title}}</h2></a>
                     {% endfor %} 
                 {% endif %}
             </div>
