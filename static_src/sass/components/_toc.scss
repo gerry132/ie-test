@@ -50,7 +50,7 @@
     grid-column:1;
     overflow: hidden;
     @include media-query(max-large) {
-        overflow: auto;
+        overflow: visible;
     }
   }
   
