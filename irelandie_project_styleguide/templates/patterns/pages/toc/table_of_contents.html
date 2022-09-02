@@ -34,14 +34,14 @@
 <div class="section--master">
    <div class="section section--padding section--white">
     <div class="wrapper wrapper--large--toc wrapper--padding content--padding">
+        <div style="padding-bottom: 20px;">
         {% for block in page.body %}
             {% get_content_length page as content_length %}
             {% if block.block_type == 'content' and content_length > 1 %}
-                <h1>{{page.body.content}}</h1>
                 <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter }}. {{block.value.title}}</h2></a>
             {% endif %}
         {% endfor %}
-
+    </div>
         {% if page.introduction %}
             <div class="wrapper wrapper--large wrapper--padding content--padding">
                 <p class="intro__description">{{ page.introduction|richtext }}</p>
