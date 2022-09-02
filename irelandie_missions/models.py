@@ -111,7 +111,8 @@ IMAGE_MODEL = get_image_model_string()
 class JobContentPage(BasePage):
     template = "patterns/pages/irelandie_job/job.html"
     subtitle = models.CharField(max_length=100, 
-                                null=True, required=False)
+                                null=True,
+                                blank=True)
     body = StreamField(
         [
             ("rich_text", blocks.AdvancedRichTextBlock()),
@@ -133,7 +134,7 @@ class JobContentPage(BasePage):
 
     content_panels = BasePage.content_panels + [
         FieldPanel("subtitle"),
-        FieldPanel("summary"),
+        FieldPanel("job_index_page_summary"),
         StreamFieldPanel("privacy_policy"),
         StreamFieldPanel("body")
     ]
