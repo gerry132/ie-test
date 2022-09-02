@@ -110,7 +110,7 @@ IMAGE_MODEL = get_image_model_string()
 
 class JobContentPage(BasePage):
     template = "patterns/pages/irelandie_job/job.html"
-    subtitle = models.CharField(max_length=100, 
+    subtitle = models.CharField(max_length=100,
                                 null=True,
                                 blank=True)
     body = StreamField(
