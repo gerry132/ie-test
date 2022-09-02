@@ -217,6 +217,7 @@ class MissionPage(HeroPage):
                                 "pinned_stories",
                                 wagtail_blocks.ListBlock(blocks.PinnedStoryBlock()),
                             ),
+                            ("default_image", blocks.ImageBlock()),
                         ],
                         template="patterns/molecules/pinned-stories/pinned_stories.html",
                     ),
