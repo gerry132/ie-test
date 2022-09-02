@@ -39,6 +39,10 @@
 
 .content--padding {
     padding-right: 15% !important;
+
+    @include media-query(max-large) {
+        padding-right: 0% !important;
+    }
 }
 
 #wrapper {
