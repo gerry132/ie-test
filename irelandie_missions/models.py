@@ -119,7 +119,7 @@ class JobContentPage(BasePage):
         ],
         blank=True,
     )
-    summary = models.TextField(
+    job_index_page_summary = models.TextField(
         help_text="Brief job summary for index page",
         null=True
         )
