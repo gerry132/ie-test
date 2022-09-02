@@ -14,7 +14,7 @@
 
 .related-content {
     width: 60%;
-    @include media-query(max-medium) {
+    @include media-query(max-large) {
         display: none;
     }
 }
@@ -22,8 +22,8 @@
 
 .related-content--mobile {
     width: 70%;
-
-    @include media-query(medium) {
+    padding-top: 30px !important;
+    @include media-query(large) {
         display: none;
     }
 }
@@ -49,9 +49,16 @@
   #left {
     grid-column:1;
     overflow: hidden;
+    @include media-query(max-large) {
+        overflow: auto;
+    }
   }
   
   #right {
     grid-column:2;
     overflow: hidden;
+
+    @include media-query(max-large) {
+        display: none;
+    }
   }

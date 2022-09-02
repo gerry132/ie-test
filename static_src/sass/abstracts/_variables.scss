@@ -56,7 +56,8 @@ $breakpoints: (
     'small' '(min-width: 480px)',
     'medium' '(min-width: 599px)',
     'max-medium' '(max-width: 599px)',
-    'large' '(min-width: 1023px)'
+    'large' '(min-width: 1023px)',
+    'max-large' '(max-width: 1023px)'
 );
 
 $mobile-header-height: 85px;
