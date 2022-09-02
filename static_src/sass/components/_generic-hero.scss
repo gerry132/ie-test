@@ -2,24 +2,25 @@
     $root: &;
     position: relative;
     background: #004D46;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
     &__container{
             position: relative;
-            display: flex;
-    }
-    &__content{
-        flex: 60%;
-
-
     }
     &__container1{
         padding-left:20px;
-        max-width: 520px;
         @media only screen and (max-width: 1023px) {
             padding-top: 40px;
             padding-right:20px;
         }
+    }
+
+    &__image{
+    pointer-events: none;
+    position: absolute;
+    height: 100%;
+    @media only screen and (max-width: 1023px) {
+                display: none;
+            }
     }
 
 
@@ -39,23 +40,6 @@
 
         color: #FFFFFF;
 
-    }
-    &__image{
-        margin: 15px auto;
-        display: block;
-    }
-    &__mobileHide{
-        flex: 40%;
-        background-image: url('../images/cssBackgrounds/offwhite.png');
-         position: relative;
-         width: 100%;
-         background-position: right;
-         background-attachment: inherit;
-         background-repeat: no-repeat;
-         background-size: cover;
-             @media only screen and (max-width: 1023px) {
-                display: none;
-            }
     }
 
 }

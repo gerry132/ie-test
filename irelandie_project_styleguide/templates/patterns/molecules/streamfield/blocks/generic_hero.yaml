@@ -1,5 +1,6 @@
 tags:
   image:
-    block.value.image width-460 class="story__image":
+    'block.value.hero_image width-1280 class="generic-hero__image"':
       raw: |
-        <img src="https://source.unsplash.com/460x500?ocean" alt="Some alt" class="story__image">
+        <img src="https://source.unsplash.com/1920?1280"  alt="Some alt class="generic-hero__image"">
+

@@ -905,7 +905,7 @@ class LinkBoxesBlock(blocks.StructBlock):
 
 class GenericHeroBlock(blocks.StructBlock):
     hero_image = ImageChooserBlock(required=False)
-    hero_title = blocks.CharBlock(required=True)
+    hero_title = blocks.CharBlock(required=True, max_length=120)
     subtitle = blocks.CharBlock(required=False)
 
     class Meta:

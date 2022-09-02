@@ -4,6 +4,11 @@
 
 <div class="generic-hero">
     <div class="wrapper wrapper--large">
+        {% for block in page.generic_hero %}
+        {% if block.value.hero_image %}
+            {% image block.value.hero_image width-1280 class="generic-hero__image" %}
+        {% endif %}
+        {% endfor %}
         <div class="generic-hero__container" >
         <div class="section section--padding generic-hero__content" >
                 <div class="generic-hero__container1">
@@ -23,16 +28,7 @@
                     {% endfor %}
                 </div>
         </div>
-            {% for block in page.generic_hero %}
-        {% if block.value.hero_image %}
-        <div class="generic-hero__mobileHide">
 
-                        {% image block.value.hero_image width-460 class="generic-hero__image"%}
-
-
-        </div>
-            {% endif %}
-            {% endfor %}
         </div>
     </div>
 </div>
