@@ -252,7 +252,7 @@ class MissionPage(HeroPage):
     def related_articles(self):
         return (
             NewsPage.objects
-            .child_of(self)
+            .descendant_of(self)
             .filter(locale=self.locale)
             .public()
             .live()
