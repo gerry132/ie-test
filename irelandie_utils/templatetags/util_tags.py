@@ -52,5 +52,5 @@ def get_content_length(page):
     counter = 0
     for block in page.body:
         if block.block_type == 'content':
-            counter+=1
+            counter += 1
     return counter
