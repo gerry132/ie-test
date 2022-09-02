@@ -127,6 +127,7 @@
 
     &__copy {
         max-width: 500px;
+        padding-top: 20px;
 
         #{$root}--background-video & {
             max-width: 100%;
