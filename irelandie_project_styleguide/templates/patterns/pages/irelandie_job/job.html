@@ -10,14 +10,17 @@
  <!-- Main -->
     {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
 
-    {% if page.title or page.generic_hero %}
-        {% include "patterns/molecules/streamfield/blocks/generic_hero.html" with page=page %}
-    {% endif %}
-
     {% block main %}
         <!-- Body -->
     <div class="section section--padding">
         <div class="wrapper wrapper--large wrapper--padding">
+            <h1 class="hero__title">
+                    {{ page.title }}
+            </h1>
+            
+            {% if page.subtitle %}
+                <p>{% firstof page.subtitle %}</p>
+            {% endif %}
             {% include_block page.rich_text %}
             {% include_block page.body %}
             {% include_block page.privacy_policy.privacy_snippet %}
