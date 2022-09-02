@@ -20,7 +20,7 @@
     &--override {
             display: block;
             height: auto;
-            top: 45px;
+            top: 50px;
     }
 
     &__container {
@@ -124,8 +124,6 @@
 
     &__logo {
         #{$root}--condensed & {
-            height: 20px;
-            width: 80px;
             margin-left: 50%;
             transform: translateX(-50%);
         }
