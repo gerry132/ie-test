@@ -18,12 +18,17 @@
         <!-- Body -->
     <div class="section section--padding">
         <div class="wrapper wrapper--large wrapper--padding">
+        
         {% if page.related_jobs %}
+        <div class="link-box__main">
+            <div class="link-box__line"></div>
             {% for job in page.related_jobs %}
                 {% include "patterns/molecules/job/job-card.html" with job=job %}
             {% endfor %} 
+            </div>
+        </div>
         {% else %}    
-            <h1>There are currently no vacancies</h1>
+            <h1 class="heading--1">There are currently no vacancies</h1>
         {% endif %}
         </div>
     </div>
