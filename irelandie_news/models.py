@@ -29,3 +29,6 @@ class NewsPage(ArticlePage):
         blank=True,
         max_num=3
     )
+
+    class Meta:
+        verbose_name = "News Content"
