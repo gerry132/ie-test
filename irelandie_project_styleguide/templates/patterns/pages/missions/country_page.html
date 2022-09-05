@@ -16,12 +16,18 @@
             </div>
         </div>
     {% endif %}
-    {% include_block page.pinned_stories %}
 
-{% endblock %}
-
-{% block extra_js %}
-    {% if page.twitter_feed %}
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    {% for block in page.body %}
+    {% if block.block_type == 'logo_cards' %}
+        <div class="section section--padding section--grey">
+            <div class="wrapper wrapper--large wrapper--padding">
+                {% include_block block %}
+            </div>
+        </div>
+    {% else %}
+        {% include_block block %}
     {% endif %}
+    {% endfor %}
+
 {% endblock %}
+
