@@ -55,8 +55,10 @@ class DestinationPage(HeroPage):
         max_num=1,
     )
 
-    pinned_stories = StreamField(
+    body = StreamField(
         [
+            ("two_column_feature", blocks.StoryBlock()),
+            ("logo_cards", blocks.LogoCardsBlock()),
             (
                 "pinned_story",
                 wagtail_blocks.StructBlock(
@@ -66,6 +68,7 @@ class DestinationPage(HeroPage):
                             "pinned_stories",
                             wagtail_blocks.ListBlock(blocks.PinnedStoryBlock()),
                         ),
+                        ("default_image", blocks.ImageBlock()),
                     ],
                     template="patterns/molecules/pinned-stories/pinned_stories.html",
                 ),
@@ -82,7 +85,7 @@ class DestinationPage(HeroPage):
         SnippetChooserPanel("region"),
         StreamFieldPanel("stories", heading="Two Column Feature"),
         StreamFieldPanel("logo_cards", heading="Logo Cards"),
-        StreamFieldPanel("pinned_stories"),
+        StreamFieldPanel("body"),
     ]
 
     @cached_property
@@ -123,14 +126,14 @@ class JobContentPage(BasePage):
     job_index_page_summary = models.TextField(
         help_text="Brief job summary for index page",
         null=True
-        )
+    )
     privacy_policy = models.ForeignKey(
-          'utils.PrivacyPolicySnippet',
-          null=True,
-          blank=True,
-          on_delete=models.SET_NULL,
-          related_name='+'
-      )
+        'utils.PrivacyPolicySnippet',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     content_panels = BasePage.content_panels + [
         FieldPanel("subtitle"),
@@ -209,27 +212,27 @@ class MissionPage(HeroPage):
         max_num=1,
     )
     pinned_stories = StreamField(
-            [
-                (
-                    "pinned_story",
-                    wagtail_blocks.StructBlock(
-                        [
-                            ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
-                            (
-                                "pinned_stories",
-                                wagtail_blocks.ListBlock(blocks.PinnedStoryBlock()),
-                            ),
-                            ("default_image", blocks.ImageBlock()),
-                        ],
-                        template="patterns/molecules/pinned-stories/pinned_stories.html",
-                    ),
+        [
+            (
+                "pinned_story",
+                wagtail_blocks.StructBlock(
+                    [
+                        ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
+                        (
+                            "pinned_stories",
+                            wagtail_blocks.ListBlock(blocks.PinnedStoryBlock()),
+                        ),
+                        ("default_image", blocks.ImageBlock()),
+                    ],
+                    template="patterns/molecules/pinned-stories/pinned_stories.html",
                 ),
-            ],
-            block_counts={
-                "pinned_story": {"max_num": 1},
-            },
-            blank=True,
-            null=True,
+            ),
+        ],
+        block_counts={
+            "pinned_story": {"max_num": 1},
+        },
+        blank=True,
+        null=True,
     )
 
     content_panels = HeroPage.content_panels + [
@@ -312,7 +315,7 @@ class ServiceContent(BasePage):
             ("content", blocks.TocBlock())
         ],
         blank=True
-        )
+    )
 
     content_panels = BasePage.content_panels + [
         FieldPanel("introduction"),
