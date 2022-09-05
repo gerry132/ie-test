@@ -217,10 +217,6 @@ class MissionPage(HeroPage):
                 wagtail_blocks.StructBlock(
                     [
                         ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
-                        (
-                            "pinned_stories",
-                            wagtail_blocks.ListBlock(blocks.PinnedStoryBlock()),
-                        ),
                         ("default_image", blocks.ImageBlock()),
                     ],
                     template="patterns/molecules/pinned-stories/pinned_stories.html",
