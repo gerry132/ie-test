@@ -7,11 +7,11 @@
             <h2 class="related-articles__title heading--2">
                 {% trans 'You may also be interested in these articles' %}
             </h2>
-            <div class="featured-blocks featured-blocks--three">
+            <div class="featured-blocks featured-blocks--four">
                 {% for article in articles %}
                     {% pageurl article as href %}
                     <a href="{{ href }}" class="card{% if large %} card--large{% endif %}{% if classes %} {{ classes }}{% endif %}">
-                        {% comment %} 
+                        {% comment %}
                             It's possible that neither images are set in the admin.
                             It will fail silently, here and simply not render an image tag.
                             To prevent the panel from collapsing still render the container div
@@ -26,8 +26,8 @@
                         <div class="card__content">
                             <h3 class="card__title">{% if article.listing_title %}{{ article.listing_title }}{% else %}{{ article.title }}{% endif %}</h3>
 
-                            {% if article.listing_summary %}
-                                <p class="card__summary">{{ article.listing_summary }}</p>
+                            {% if article.listing_summary or article.introduction %}
+                                <p class="card__summary">{% if article.listing_summary %}{{ article.listing_summary }}{% else %}{{ article.introduction }}{% endif %}</p>
                             {% endif %}
 
                             {% if article %}

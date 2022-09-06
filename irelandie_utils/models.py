@@ -29,11 +29,11 @@ from irelandie_navigation.mixins import SocialMediaFieldsMixin
 from irelandie_utils.blocks import ArticleStoryBlock, AdvancedRichTextBlock
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
+import django.utils.timezone
 
 SEARCH_DESCRIPTION_LABEL = "Meta description"  # NOTE changing this requires migrations
 
 IMAGE_MODEL = get_image_model_string()
-
 
 ALT_HELP_TEXT = """A short one-sentence literal description
                     of the video/image is
@@ -176,7 +176,7 @@ class ListingFields(models.Model):
         max_length=255,
         blank=True,
         help_text="The text summary used when this page appears in listings. It's also used as "
-        f"the description for search engines if the '{SEARCH_DESCRIPTION_LABEL}' field above is not defined.",
+                  f"the description for search engines if the '{SEARCH_DESCRIPTION_LABEL}' field above is not defined.",
     )
 
     class Meta:
@@ -624,6 +624,66 @@ class ArticlePage(BasePage):
             .order_by("-first_published_at")[:3]
             .specific()
         )
+
+
+class MinimalArticlePage(BasePage):
+    introduction = models.TextField(blank=True)
+
+    hero_image = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    hero_video = models.ForeignKey(
+        "wagtailmedia.Media",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+
+    publication_date = models.DateTimeField(default=django.utils.timezone.now)
+
+    body = StreamField(ArticleStoryBlock(), blank=True)
+
+    related_articles_active = models.BooleanField(default=True)
+
+    class Meta:
+        abstract = True
+
+    content_panels = Page.content_panels + [
+        FieldPanel("introduction"),
+        MultiFieldPanel(
+            [
+                ImageChooserPanel("hero_image"),
+                MediaChooserPanel("hero_video", media_type="video"),
+            ],
+            "hero",
+        ),
+        FieldPanel("publication_date"),
+        StreamFieldPanel("body"),
+        FieldPanel("related_articles_active", heading="Featured News Checkbox"),
+    ]
+
+    search_fields = BasePage.search_fields + [
+        index.SearchField("introduction"),
+        index.SearchField("body"),
+    ]
+
+    def clean(self):
+        if self.hero_image and self.hero_video:
+            raise ValidationError(
+                {
+                    "hero_image": ValidationError(
+                        "You can't choose both an image and a video for the hero media. Choose an image or a video"
+                    ),
+                    "hero_video": ValidationError(
+                        "You can't choose both an image and a video for the hero media. Choose an image or a video"
+                    ),
+                }
+            )
 
 
 @register_snippet
