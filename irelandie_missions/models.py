@@ -64,10 +64,6 @@ class DestinationPage(HeroPage):
                 wagtail_blocks.StructBlock(
                     [
                         ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
-                        (
-                            "pinned_stories",
-                            wagtail_blocks.ListBlock(blocks.PinnedStoryBlock()),
-                        ),
                         ("default_image", blocks.ImageBlock()),
                     ],
                     template="patterns/molecules/pinned-stories/pinned_stories.html",
@@ -90,15 +86,21 @@ class DestinationPage(HeroPage):
 
     @cached_property
     def related_articles(self):
-        return (
-            NewsPage.objects
-            .child_of(self)
-            .filter(locale=self.locale)
-            .public()
-            .live()
-            .order_by("-first_published_at")[:4]
-            .specific()
-        )
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                m = MissionPage.objects.live().get(id=p.id)
+                if m.root_page:        
+                    return (
+                        NewsPage.objects
+                        .child_of(m)
+                        .filter(locale=self.locale)
+                        .public()
+                        .live()
+                        .order_by("-first_published_at")[:4]
+                        .specific()
+                    )
+        return None
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
