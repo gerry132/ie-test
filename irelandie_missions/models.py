@@ -203,6 +203,14 @@ class MissionPage(HeroPage):
         null=True,
         min_num=0,
     )
+    additional_stories = StreamField(
+        [
+            ("story", blocks.StoryBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+    )
 
     person = StreamField(
         [
@@ -248,7 +256,8 @@ class MissionPage(HeroPage):
         StreamFieldPanel("stories", heading="Two Column Feature"),
         StreamFieldPanel("pinned_stories"),
         StreamFieldPanel("person", heading="Person + Social Feed"),
-
+        StreamFieldPanel("additional_stories", 
+                        heading="Additional Two Column Feature"),
     ]
 
     @cached_property
