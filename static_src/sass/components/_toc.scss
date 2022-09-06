@@ -45,6 +45,15 @@
     }
 }
 
+
+.no-vac {
+    font-size: 48px !important;
+
+    @include media-query(max-medium) {
+        font-size: 24px !important;
+    }
+}
+
 #wrapper {
     display: grid;
     grid-template-columns: 65% 1fr;
