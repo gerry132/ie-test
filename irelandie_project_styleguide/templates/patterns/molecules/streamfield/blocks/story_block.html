@@ -93,6 +93,7 @@
         </div>
     </div>
 </div>
+{% if value.links|length <= 2 %}
 <script>
 function readySlides(mobile) {
   console.log(mobile);
@@ -153,3 +154,4 @@ function readySlides(mobile) {
 readySlides(false);
 readySlides(true);
 </script>
+{% endif %}
