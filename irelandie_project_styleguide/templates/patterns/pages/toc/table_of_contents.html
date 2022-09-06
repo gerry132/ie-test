@@ -4,14 +4,14 @@
 
 
 {% block content %}
-
+{% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
 <div id="main-header" class="section section--padding section--white section--toc">
     <div id="wrapper" class="wrapper--large--toc">
         <div id="left">
             <div class="wrapper wrapper--padding">
                 <div class="intro--toc">
                     <div class="container">
-                        <h1 class="heading--1">{{ page.title }}</h1>
+                        <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
                         {% if page.description %}
                             <p class="intro__description">{{ page.description }}</p>
                         {% endif %}
