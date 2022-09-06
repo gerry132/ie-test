@@ -12,7 +12,10 @@
     {% include_block page.stories %}
     {% include_block page.pinned_stories %}
     {% include_block page.person %}
-    {% include_block page.additional_stories %}
+    {% for block in page.body %}
+        {% include_block block %}
+    {% endfor %}
+
 
 {% endblock %}
 
