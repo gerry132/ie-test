@@ -90,7 +90,7 @@ class DestinationPage(HeroPage):
         for p in pages:
             if p.content_type.name == 'mission page':
                 m = MissionPage.objects.live().get(id=p.id)
-                if m.root_page:        
+                if m.root_page:
                     return (
                         NewsPage.objects
                         .child_of(m)
