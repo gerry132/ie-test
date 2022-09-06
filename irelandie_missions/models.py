@@ -245,8 +245,8 @@ class MissionPage(HeroPage):
             StreamFieldPanel("notice_bar"),
         ], heading="Noticebar settings"
         ),
-        StreamFieldPanel("pinned_stories"),
         StreamFieldPanel("stories", heading="Two Column Feature"),
+        StreamFieldPanel("pinned_stories"),
         StreamFieldPanel("person", heading="Person + Social Feed"),
 
     ]
