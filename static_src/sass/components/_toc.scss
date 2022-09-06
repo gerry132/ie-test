@@ -45,6 +45,11 @@
     }
 }
 
+.toc--heading {
+    @include media-query(max-small) {
+        font-size: 2.2rem;
+    }
+}
 
 .no-vac {
     font-size: 48px !important;

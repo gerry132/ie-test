@@ -53,6 +53,7 @@ $border-radius: 16px;
 $breakpoints: (
     'v-small' '(min-width: 200px) and (max-width: 1023px)',
     'v-small-min' '(min-width: 200px)',
+    'max-small' '(max-width: 380px)',
     'small' '(min-width: 480px)',
     'medium' '(min-width: 599px)',
     'max-medium' '(max-width: 599px)',
