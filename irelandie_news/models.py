@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
+from functools import cached_property
+
 from django.db import models
 from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page
 
 from irelandie_news.blocks import NewsPageBlock
-from irelandie_utils.models import ArticlePage, BasePage
+from irelandie_utils.models import MinimalArticlePage, BasePage
 
 
 class NewsPageIndex(BasePage):
@@ -19,16 +21,21 @@ class NewsPageIndex(BasePage):
     ]
 
 
-class NewsPage(ArticlePage):
+class NewsPage(MinimalArticlePage):
     template = "patterns/pages/irelandie_news/news_page.html"
 
-    override_related_articles = StreamField(
-        [
-            ("article", NewsPageBlock()),
-        ],
-        blank=True,
-        max_num=3
-    )
+    @cached_property
+    def related_articles(self):
+        return (
+            NewsPage.objects.exact_type(type(self))
+            .child_of(self.get_parent())
+            .filter(locale=self.locale)
+            .exclude(pk=self.pk)
+            .public()
+            .live()
+            .order_by("publication_date")[:4]
+            .specific()
+        )
 
     class Meta:
         verbose_name = "News Content"

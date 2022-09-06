@@ -16,6 +16,11 @@
     {% block main %}
         <!-- Body -->
         <div class="section section--padding">
+            <div class="wrapper wrapper--large wrapper--padding">
+                {% if page.publication_date %}
+                    {{ page.publication_date }}
+                {% endif %}
+            </div>
             {% for block in page.body %}
                 {% if block.block_type == 'table' %}
                     <div class="wrapper wrapper--small wrapper--padding">
