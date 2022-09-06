@@ -27,7 +27,7 @@ class NewsPage(MinimalArticlePage):
         return (
             NewsPage.objects.exact_type(type(self))
             .child_of(self.get_parent())
-            .filter(locale=self.locale)
+            .filter(locale=self.locale, related_articles_active=True)
             .exclude(pk=self.pk)
             .public()
             .live()
