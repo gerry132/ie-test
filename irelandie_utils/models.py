@@ -26,7 +26,7 @@ from wagtail.snippets.models import register_snippet
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
-from irelandie_utils.blocks import ArticleStoryBlock, AdvancedRichTextBlock, ImageBlock
+from irelandie_utils.blocks import ArticleStoryBlock, AdvancedRichTextBlock
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
 import django.utils.timezone

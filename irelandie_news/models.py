@@ -3,10 +3,8 @@ from functools import cached_property
 
 from django.db import models
 from wagtail.admin.edit_handlers import FieldPanel
-from wagtail.core.fields import StreamField
 from wagtail.core.models import Page
 
-from irelandie_news.blocks import NewsPageBlock
 from irelandie_utils.models import MinimalArticlePage, BasePage
 
 
