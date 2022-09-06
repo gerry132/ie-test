@@ -94,7 +94,8 @@ class DestinationPage(HeroPage):
                     return (
                         NewsPage.objects
                         .child_of(m)
-                        .filter(locale=self.locale)
+                        .filter(locale=self.locale,
+                                related_articles_active=True)
                         .public()
                         .live()
                         .order_by("-first_published_at")[:4]
@@ -255,7 +256,8 @@ class MissionPage(HeroPage):
         return (
             NewsPage.objects
             .descendant_of(self)
-            .filter(locale=self.locale)
+            .filter(locale=self.locale,
+                    related_articles_active=True)
             .public()
             .live()
             .order_by("-first_published_at")[:4]
