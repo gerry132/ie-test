@@ -610,6 +610,7 @@ class ArticleStoryBlock(blocks.StreamBlock):
     document = DocumentBlock(group="Base")
 
     person = PersonBlock(group="Module")
+    logos = LogoCardsBlock(group="Module")
 
     html = blocks.RawHTMLBlock(
         group="HTML",
