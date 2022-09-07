@@ -203,6 +203,14 @@ class MissionPage(HeroPage):
         null=True,
         min_num=0,
     )
+    stories_between = StreamField(
+        [
+            ("story", blocks.StoryBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+    )
     body = StreamField(
         [
             ("two_column_feature", blocks.StoryBlock()),
@@ -254,6 +262,7 @@ class MissionPage(HeroPage):
         ),
         StreamFieldPanel("stories", heading="Two Column Feature"),
         StreamFieldPanel("pinned_stories"),
+        StreamFieldPanel("stories_between", heading="Two Column"),
         StreamFieldPanel("person", heading="Person + Social Feed"),
         StreamFieldPanel("body"),
     ]
