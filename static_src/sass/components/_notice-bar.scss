@@ -36,6 +36,7 @@
 
     @include media-query(max-medium) {
         font-size: 12px !important;
+        line-height: 15px;
     }
 
     &:visited, &:hover, &:active {
