@@ -34,6 +34,10 @@
     text-decoration-line: underline;
     color: #FFFFFF;
 
+    @include media-query(max-medium) {
+        font-size: 12px !important;
+    }
+
     &:visited, &:hover, &:active {
         text-decoration-line: underline;
         color: #FFFFFF;
