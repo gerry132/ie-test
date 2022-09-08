@@ -340,7 +340,7 @@ def custom_header_settings(context, page):
         # if custom header is set for the page, use the values from it if they are set
         # otherwise use the site settings values
         logo = custom_header.logo or site_settings.site_logo
-        mobile_logo = custom_header.mobile_logo or site_settings.mobile_logo
+        mobile_logo = custom_header.mobile_logo
         logo_alt = custom_header.logo_alt or site_settings.site_logo_alt
         links = custom_header.links
         url = custom_header.url
