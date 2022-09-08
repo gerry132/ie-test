@@ -123,6 +123,7 @@
     }
 
     &__logo {
+        max-width: initial;
         #{$root}--condensed & {
             margin-left: 50%;
             transform: translateX(-50%);
