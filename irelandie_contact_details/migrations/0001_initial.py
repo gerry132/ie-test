@@ -2,8 +2,8 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 
 
 class Migration(migrations.Migration):
@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('emails', models.CharField(blank=True, max_length=255)),
                 ('telephone_numbers', models.CharField(blank=True, max_length=255)),
                 ('faxes', models.CharField(blank=True, max_length=255)),
-                ('body', wagtail.core.fields.StreamField([('richtext', wagtail.core.blocks.RichTextBlock())], blank=True, null=True)),
+                ('body', wagtail.fields.StreamField([('richtext', wagtail.blocks.RichTextBlock())], blank=True, null=True)),
             ],
             options={
                 'abstract': False,

@@ -1,7 +1,7 @@
 import unicodedata
 
 from django.utils.translation import get_language_info
-from wagtail.core.models import Locale as Locale
+from wagtail.models import Locale as Locale
 import locale
 
 

@@ -3,8 +3,8 @@
 from django.db import migrations, models
 import django.db.models.deletion
 import uuid
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 
 
 class Migration(migrations.Migration):
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('translation_key', models.UUIDField(default=uuid.uuid4, editable=False)),
                 ('name', models.CharField(help_text="Internal name for this navigation, it's not displayed to a site user.", max_length=255, unique=True, verbose_name='Name')),
-                ('links', wagtail.core.fields.StreamField([('link', wagtail.core.blocks.StructBlock([('page', wagtail.core.blocks.PageChooserBlock(required=False)), ('title', wagtail.core.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False))]))], blank=True, help_text='Custom main site navigation', verbose_name='Links')),
+                ('links', wagtail.fields.StreamField([('link', wagtail.blocks.StructBlock([('page', wagtail.blocks.PageChooserBlock(required=False)), ('title', wagtail.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False))]))], blank=True, help_text='Custom main site navigation', verbose_name='Links')),
                 ('logo_alt', models.CharField(blank=True, help_text='The alt text shown for accessibility: https://axesslab.com/alt-texts/', max_length=255, verbose_name='Logo Alt text')),
                 ('locale', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='wagtailcore.locale')),
                 ('logo', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='irelandie_images.customimage')),

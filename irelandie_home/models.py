@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from wagtail.admin.edit_handlers import TabbedInterface, ObjectList, StreamFieldPanel
-from wagtail.core import blocks as wagtail_blocks
-from wagtail.core.fields import StreamField
+from wagtail.admin.panels import TabbedInterface, ObjectList, StreamFieldPanel
+from wagtail import blocks as wagtail_blocks
+from wagtail.fields import StreamField
 from irelandie_home.blocks import SecondaryCallToAction
 
 from irelandie_utils import blocks

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from wagtail.core import blocks as wagtail_blocks
+from wagtail import blocks as wagtail_blocks
 
 from irelandie_utils import blocks
 

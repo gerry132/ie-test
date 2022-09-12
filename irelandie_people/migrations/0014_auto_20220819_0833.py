@@ -2,8 +2,8 @@
 
 from django.db import migrations
 import irelandie_utils.blocks
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 
 
 class Migration(migrations.Migration):
@@ -16,11 +16,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='person',
             name='video',
-            field=wagtail.core.fields.StreamField([('video', wagtail.core.blocks.StructBlock([('video', irelandie_utils.blocks.CustomVideoChooserBlock()), ('video_alt', wagtail.core.blocks.CharBlock(help_text='A short one-sentence literal description\n                    of the video is\n                    required to make the page accessible to the\n                    visually impaired. Details: https://axesslab.com/alt-texts/', required=True))]))], blank=True),
+            field=wagtail.fields.StreamField([('video', wagtail.blocks.StructBlock([('video', irelandie_utils.blocks.CustomVideoChooserBlock()), ('video_alt', wagtail.blocks.CharBlock(help_text='A short one-sentence literal description\n                    of the video is\n                    required to make the page accessible to the\n                    visually impaired. Details: https://axesslab.com/alt-texts/', required=True))]))], blank=True),
         ),
         migrations.AlterField(
             model_name='person',
             name='links',
-            field=wagtail.core.fields.StreamField([('link', wagtail.core.blocks.StructBlock([('page', wagtail.core.blocks.PageChooserBlock(required=False)), ('title', wagtail.core.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False)), ('summary', wagtail.core.blocks.CharBlock(required=False)), ('url', wagtail.core.blocks.URLBlock(help_text='An external link.', label='URL', required=False))], max_num=6, min_num=0))], blank=True),
+            field=wagtail.fields.StreamField([('link', wagtail.blocks.StructBlock([('page', wagtail.blocks.PageChooserBlock(required=False)), ('title', wagtail.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False)), ('summary', wagtail.blocks.CharBlock(required=False)), ('url', wagtail.blocks.URLBlock(help_text='An external link.', label='URL', required=False))], max_num=6, min_num=0))], blank=True),
         ),
     ]

@@ -2,7 +2,7 @@
 
 from functools import lru_cache
 from django import template
-from wagtail.core.models import Locale
+from wagtail.models import Locale
 
 from irelandie_navigation.models import (
     CustomFooter,

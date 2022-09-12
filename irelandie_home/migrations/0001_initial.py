@@ -3,8 +3,8 @@
 from django.db import migrations, models
 import django.db.models.deletion
 import irelandie_utils.blocks
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.images.blocks
 
 
@@ -21,9 +21,9 @@ class Migration(migrations.Migration):
             name='HomePage',
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('alerts', wagtail.core.fields.StreamField([('alerts', irelandie_utils.blocks.AlertBlock())], blank=True, null=True)),
-                ('jumpboxes', wagtail.core.fields.StreamField([('jumpbox', wagtail.core.blocks.StructBlock([('page', wagtail.core.blocks.PageChooserBlock(required=False)), ('description', wagtail.core.blocks.CharBlock(required=False)), ('text', wagtail.core.blocks.CharBlock(required=False)), ('url', wagtail.core.blocks.URLBlock(required=False))]))], blank=True, null=True)),
-                ('jumpboxes_with_image', wagtail.core.fields.StreamField([('jumpbox', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('page', wagtail.core.blocks.PageChooserBlock(required=False)), ('description', wagtail.core.blocks.CharBlock(required=False)), ('text', wagtail.core.blocks.CharBlock(required=False)), ('url', wagtail.core.blocks.URLBlock(required=False))]))], blank=True, null=True)),
+                ('alerts', wagtail.fields.StreamField([('alerts', irelandie_utils.blocks.AlertBlock())], blank=True, null=True)),
+                ('jumpboxes', wagtail.fields.StreamField([('jumpbox', wagtail.blocks.StructBlock([('page', wagtail.blocks.PageChooserBlock(required=False)), ('description', wagtail.blocks.CharBlock(required=False)), ('text', wagtail.blocks.CharBlock(required=False)), ('url', wagtail.blocks.URLBlock(required=False))]))], blank=True, null=True)),
+                ('jumpboxes_with_image', wagtail.fields.StreamField([('jumpbox', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('page', wagtail.blocks.PageChooserBlock(required=False)), ('description', wagtail.blocks.CharBlock(required=False)), ('text', wagtail.blocks.CharBlock(required=False)), ('url', wagtail.blocks.URLBlock(required=False))]))], blank=True, null=True)),
             ],
             options={
                 'abstract': False,

@@ -6,7 +6,7 @@ from django.views import defaults
 from django.views.decorators.http import require_http_methods
 from wagtail.api.v2.serializers import PageSerializer
 from wagtail.api.v2.views import PagesAPIViewSet
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 from irelandie_missions.filters import MissionPageFieldFilter
 from irelandie_utils.utils import get_locale_from_language_code_or_default

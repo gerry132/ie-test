@@ -2,8 +2,8 @@
 
 from django.db import migrations
 import irelandie_utils.blocks
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.documents.blocks
 import wagtail.images.blocks
 import wagtail.snippets.blocks
@@ -19,6 +19,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='newspage',
             name='body',
-            field=wagtail.core.fields.StreamField([('rich_text', wagtail.core.blocks.StructBlock([('paragraph_alignment', wagtail.core.blocks.ChoiceBlock(choices=[('wide', 'Wide'), ('narrow', 'Narrow')], required=False)), ('heading', wagtail.core.blocks.CharBlock(required=False)), ('rich_text', wagtail.core.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'], required=False))], group='Base')), ('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('image_alt', wagtail.core.blocks.CharBlock(help_text='The alt text shown for accessibility: https://axesslab.com/alt-texts/', required=False)), ('caption', wagtail.core.blocks.CharBlock(required=False))], group='Base')), ('document', wagtail.core.blocks.StructBlock([('document', wagtail.documents.blocks.DocumentChooserBlock()), ('title', wagtail.core.blocks.CharBlock(required=False))], group='Base')), ('person', wagtail.core.blocks.StructBlock([('person', wagtail.snippets.blocks.SnippetChooserBlock(target_model='irelandie_people.Person'))], group='Module')), ('html', wagtail.core.blocks.RawHTMLBlock(group='HTML', template='patterns/molecules/streamfield/blocks/raw_html_block.html')), ('role', irelandie_utils.blocks.RoleBlock(group='HTML')), ('table', irelandie_utils.blocks.TableBlock(group='HTML')), ('video', irelandie_utils.blocks.CustomVideoChooserBlock(group='HTML')), ('youtube_video', wagtail.core.blocks.StructBlock([('url', wagtail.core.blocks.CharBlock()), ('slido_embed', wagtail.core.blocks.TextBlock(help_text='Slido iframe code. Ensure that the code you add here is only Slido provided code.', required=False))], group='HTML'))], blank=True),
+            field=wagtail.fields.StreamField([('rich_text', wagtail.blocks.StructBlock([('paragraph_alignment', wagtail.blocks.ChoiceBlock(choices=[('wide', 'Wide'), ('narrow', 'Narrow')], required=False)), ('heading', wagtail.blocks.CharBlock(required=False)), ('rich_text', wagtail.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'], required=False))], group='Base')), ('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('image_alt', wagtail.blocks.CharBlock(help_text='The alt text shown for accessibility: https://axesslab.com/alt-texts/', required=False)), ('caption', wagtail.blocks.CharBlock(required=False))], group='Base')), ('document', wagtail.blocks.StructBlock([('document', wagtail.documents.blocks.DocumentChooserBlock()), ('title', wagtail.blocks.CharBlock(required=False))], group='Base')), ('person', wagtail.blocks.StructBlock([('person', wagtail.snippets.blocks.SnippetChooserBlock(target_model='irelandie_people.Person'))], group='Module')), ('html', wagtail.blocks.RawHTMLBlock(group='HTML', template='patterns/molecules/streamfield/blocks/raw_html_block.html')), ('role', irelandie_utils.blocks.RoleBlock(group='HTML')), ('table', irelandie_utils.blocks.TableBlock(group='HTML')), ('video', irelandie_utils.blocks.CustomVideoChooserBlock(group='HTML')), ('youtube_video', wagtail.blocks.StructBlock([('url', wagtail.blocks.CharBlock()), ('slido_embed', wagtail.blocks.TextBlock(help_text='Slido iframe code. Ensure that the code you add here is only Slido provided code.', required=False))], group='HTML'))], blank=True),
         ),
     ]

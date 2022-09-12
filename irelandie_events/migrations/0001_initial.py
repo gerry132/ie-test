@@ -3,8 +3,8 @@
 from django.db import migrations, models
 import django.db.models.deletion
 import irelandie_utils.blocks
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.documents.blocks
 import wagtail.images.blocks
 
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
             name='EventPage',
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('body', wagtail.core.fields.StreamField([('section', wagtail.core.blocks.StructBlock([('title', wagtail.core.blocks.CharBlock(required=False)), ('body', wagtail.core.blocks.StreamBlock([('contact_detail', irelandie_utils.blocks.ContactDetailBlock()), ('document', wagtail.core.blocks.StructBlock([('document', wagtail.documents.blocks.DocumentChooserBlock()), ('title', wagtail.core.blocks.CharBlock(required=False))])), ('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.core.blocks.CharBlock(required=False))])), ('place', irelandie_utils.blocks.PlaceBlock()), ('rich_text', irelandie_utils.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'])), ('table', irelandie_utils.blocks.TableBlock()), ('youtube_video', wagtail.core.blocks.StructBlock([('url', wagtail.core.blocks.CharBlock())]))], required=False))]))], blank=True, null=True)),
+                ('body', wagtail.fields.StreamField([('section', wagtail.blocks.StructBlock([('title', wagtail.blocks.CharBlock(required=False)), ('body', wagtail.blocks.StreamBlock([('contact_detail', irelandie_utils.blocks.ContactDetailBlock()), ('document', wagtail.blocks.StructBlock([('document', wagtail.documents.blocks.DocumentChooserBlock()), ('title', wagtail.blocks.CharBlock(required=False))])), ('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.blocks.CharBlock(required=False))])), ('place', irelandie_utils.blocks.PlaceBlock()), ('rich_text', irelandie_utils.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'])), ('table', irelandie_utils.blocks.TableBlock()), ('youtube_video', wagtail.blocks.StructBlock([('url', wagtail.blocks.CharBlock())]))], required=False))]))], blank=True, null=True)),
                 ('description', models.TextField(blank=True)),
                 ('date', models.DateTimeField(blank=True, null=True)),
             ],

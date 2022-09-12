@@ -2,8 +2,8 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.snippets.blocks
 
 
@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='missionpage',
             name='persons',
-            field=wagtail.core.fields.StreamField([('persons', wagtail.core.blocks.StructBlock([('person', wagtail.snippets.blocks.SnippetChooserBlock(target_model='irelandie_people.Person'))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('persons', wagtail.blocks.StructBlock([('person', wagtail.snippets.blocks.SnippetChooserBlock(target_model='irelandie_people.Person'))]))], blank=True, null=True),
         ),
         migrations.AddField(
             model_name='missionpage',

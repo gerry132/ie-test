@@ -3,8 +3,8 @@
 from django.db import migrations, models
 import django.db.models.deletion
 import uuid
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 
 
 class Migration(migrations.Migration):
@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('facebook_app_id', models.CharField(blank=True, help_text='Your Facebook app ID.', max_length=255)),
                 ('youtube_user', models.CharField(blank=True, help_text='Your YouTube username.', max_length=255)),
                 ('linkedin_profile', models.CharField(blank=True, help_text='Your LinkedIn profile URL.', max_length=255)),
-                ('links', wagtail.core.fields.StreamField([('link', wagtail.core.blocks.StructBlock([('page', wagtail.core.blocks.PageChooserBlock(required=False)), ('title', wagtail.core.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False)), ('url', wagtail.core.blocks.URLBlock(help_text='An external link.', label='URL', required=False))]))], blank=True, help_text='Single list of elements at the base of the page.')),
+                ('links', wagtail.fields.StreamField([('link', wagtail.blocks.StructBlock([('page', wagtail.blocks.PageChooserBlock(required=False)), ('title', wagtail.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False)), ('url', wagtail.blocks.URLBlock(help_text='An external link.', label='URL', required=False))]))], blank=True, help_text='Single list of elements at the base of the page.')),
                 ('logo_alt', models.CharField(blank=True, help_text='The alt text shown for accessibility: https://axesslab.com/alt-texts/', max_length=255, verbose_name='Logo Alt text')),
                 ('locale', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='wagtailcore.locale')),
                 ('logo', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='irelandie_images.customimage')),

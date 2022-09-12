@@ -2,8 +2,8 @@
 from functools import cached_property
 
 from django.db import models
-from wagtail.admin.edit_handlers import FieldPanel
-from wagtail.core.models import Page
+from wagtail.admin.panels import FieldPanel
+from wagtail.models import Page
 
 from irelandie_utils.models import MinimalArticlePage, BasePage
 

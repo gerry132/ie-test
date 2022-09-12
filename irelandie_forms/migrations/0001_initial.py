@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail.core.fields
+import wagtail.fields
 
 
 class Migration(migrations.Migration):
@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                 ('listing_title', models.CharField(blank=True, help_text='Override the page title used when this page appears in listings', max_length=255)),
                 ('listing_summary', models.CharField(blank=True, help_text="The text summary used when this page appears in listings. It's also used as the description for search engines if the 'Meta description' field above is not defined.", max_length=255)),
                 ('introduction', models.TextField(blank=True)),
-                ('thank_you_text', wagtail.core.fields.RichTextField(blank=True, help_text='Text displayed to the user on successful submission of the form')),
+                ('thank_you_text', wagtail.fields.RichTextField(blank=True, help_text='Text displayed to the user on successful submission of the form')),
                 ('action_text', models.CharField(blank=True, help_text='Form action text. Defaults to "Submit"', max_length=32)),
             ],
             options={

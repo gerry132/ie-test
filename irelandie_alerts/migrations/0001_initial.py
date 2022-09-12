@@ -2,8 +2,8 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 
 
 class Migration(migrations.Migration):
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
                 ('alert_type', models.CharField(choices=[('info', 'Info'), ('error', 'Danger'), ('success', 'Success'), ('warning', 'Warning')], default='info', max_length=255)),
-                ('body', wagtail.core.fields.StreamField([('richtext', wagtail.core.blocks.RichTextBlock())], blank=True, null=True)),
+                ('body', wagtail.fields.StreamField([('richtext', wagtail.blocks.RichTextBlock())], blank=True, null=True)),
             ],
             options={
                 'abstract': False,
