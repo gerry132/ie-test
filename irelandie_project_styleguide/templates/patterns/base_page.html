@@ -94,14 +94,6 @@
         {% include "patterns/molecules/skip-link/skip-link.html" %}
     </section>
 
-    <section aria-label="{% trans 'Search' %}">
-        <div class="header__search{% if page.override_primary_navigation %} header__search--condensed{% endif %}" data-search-dropdown>
-            <div class="wrapper wrapper--large">
-                {% include "patterns/molecules/search/search.html" with classes="search--dropdown" %}
-            </div>
-        </div>
-    </section>
-
     {% custom_header_settings page as custom_header_settings %}
     {% include "patterns/organisms/header/header.html" with custom_header=custom_header_settings page=page %}
 {% endblock header %}

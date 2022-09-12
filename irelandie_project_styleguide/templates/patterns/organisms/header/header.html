@@ -27,42 +27,13 @@
 {% if custom_header.is_present %}
     {% check_page_type page.content_type 'mission page' as mission_page %}
     {% if mission_page %}
-        .notice-bar--extended {
-            top: 115px;
-        }
-        @media only screen and (max-width: 1023px) {
-            .notice-bar--extended {
-                top: 131px;
-            }
-        }
         .notice-bar--extended__search-is-active {
-            top: 187px;
+            top: 80px;
         }
-        @media only screen and (max-width: 1023px) {
-            .notice-bar--extended__search-is-active {
-                top: 210px;
-            }
-        }
-        .header__search.is-active {
-                top: 115px;
-            }
-        @media only screen and (max-width: 1023px) {
-        .header__search.is-active {
-                top: 125px;
-            }
         }
     {% endif %}
     {% check_page_type page.content_type 'Free Form Page' as freeform_page %}
-    {% if freeform_page %}
-        .header__search.is-active {
-            top: 127px;
-        }
-        @media only screen and (max-width: 1023px) {
-            .header__search.is-active {
-                top: 129px;
-            }
-        }
-    {% endif %}
+
 {% endif %}
 </style>
 <header>
@@ -185,6 +156,15 @@
                 </div>
             </div>
         </div>
+        {% if not custom_header.links %}
+        <div aria-label="{% trans 'Search' %}">
+            <div class="header__search{% if page.override_primary_navigation %} header__search--condensed{% endif %}" data-search-dropdown style="top: 85px">
+                <div class="wrapper wrapper--large">
+                    {% include "patterns/molecules/search/search.html" with classes="search--dropdown" %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 
     {% comment %}
@@ -285,7 +265,15 @@
                     </div>
                 </div>
             </div>
+            <div aria-label="{% trans 'Search' %}">
+                <div class="header__search{% if page.override_primary_navigation %} header__search--condensed{% endif %}" data-search-dropdown>
+                    <div class="wrapper wrapper--large">
+                        {% include "patterns/molecules/search/search.html" with classes="search--dropdown" %}
+                    </div>
+                </div>
+            </div>
+            {% include_block page.notice_bar %}
         </div>
     {% endif %}
-    {% include_block page.notice_bar %}
+
 </header>
