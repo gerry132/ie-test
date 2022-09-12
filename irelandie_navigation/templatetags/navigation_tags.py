@@ -346,6 +346,7 @@ def custom_header_settings(context, page):
         # no custom header is set for the page, use the site settings
         # if the site settings has values for the fields
         logo = site_settings.site_logo
+        mobile_logo = site_settings.mobile_logo
         logo_alt = site_settings.site_logo_alt
         links = None
         url = None
