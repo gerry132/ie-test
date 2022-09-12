@@ -215,6 +215,14 @@ class CustomFooter(SocialMediaFieldsMixin, TranslatableMixin):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    mobile_logo = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+
     logo_alt = models.CharField(
         max_length=255,
         blank=False,
@@ -225,6 +233,7 @@ class CustomFooter(SocialMediaFieldsMixin, TranslatableMixin):
     panels = [
         MultiFieldPanel([
             ImageChooserPanel("logo"),
+            ImageChooserPanel("mobile_logo"),
             FieldPanel("logo_alt"),
         ], heading="Logo"),
         FieldPanel("name"),
