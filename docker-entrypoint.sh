@@ -1,5 +1,6 @@
 #!/bin/bash
 
+wagtail updatemodulepaths
 
 if $( python3 manage.py migrate  --noinput > /dev/null ); then
     echo "Migrations run successfully"
