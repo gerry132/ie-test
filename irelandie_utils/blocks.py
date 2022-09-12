@@ -610,6 +610,7 @@ class ArticleStoryBlock(blocks.StreamBlock):
     document = DocumentBlock(group="Base")
 
     person = PersonBlock(group="Module")
+    logos = LogoCardsBlock(group="Module")
 
     html = blocks.RawHTMLBlock(
         group="HTML",
@@ -721,6 +722,34 @@ class FreeFormBlocks(FreeFormBlocksBase):
     )
 
 
+class RelatedContentBlock(blocks.StructBlock):
+    page = blocks.PageChooserBlock()
+    title = blocks.CharBlock()
+
+    class Meta:
+        label = "Related Content"
+
+
+class TocBlocks(blocks.StreamBlock):
+    rich_text = AdvancedRichTextBlock(group="Base")
+    image = ImageBlock(group="Base")
+    document = DocumentBlock(group="Base")
+    accordion = AccordionBlock(group="Base")
+
+    logos = LogoCardsBlock(group="Module")
+
+    table = TableBlock(group="HTML")
+    html = blocks.RawHTMLBlock(
+        group="HTML",
+        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
+    )
+
+
+class TocBlock(blocks.StructBlock):
+    title = blocks.CharBlock()
+    content = TocBlocks()
+
+
 class AdditionalSocialBlock(blocks.StructBlock):
     social_logo = ImageChooserBlock(required=False)
     social_url = blocks.URLBlock(
@@ -751,7 +780,7 @@ class SocialFieldBlock(blocks.StructBlock):
 class PersonSocialBlock(blocks.StructBlock):
     name = blocks.CharBlock(required=False)
     person_title = blocks.CharBlock(required=False)
-    image = ImageChooserBlock(required=False)
+    person_image = ImageChooserBlock(required=False)
     video = VideoChooserBlock(required=False)
     embassy_logo = ImageChooserBlock(required=False)
     social_media_link = blocks.URLBlock(required=False)
@@ -794,12 +823,12 @@ class PersonSocialBlock(blocks.StructBlock):
 
     def clean(self, value):
         errors = {}
-        image = value.get('image')
+        person_image = value.get('person_image')
         video = value.get('video')
 
-        if not (bool(image) ^ bool(video)):
+        if not (bool(person_image) ^ bool(video)):
             msg = "You can't choose both an image and a video. Choose an image or a video"
-            errors['image'] = ErrorList([msg])
+            errors['person_image'] = ErrorList([msg])
             errors['video'] = ErrorList([msg])
 
         if errors:
@@ -873,3 +902,13 @@ class LinkBoxesBlock(blocks.StructBlock):
         icon = "list-ul"
         label = "Link Boxes"
         template = "patterns/molecules/streamfield/blocks/link_boxes.html"
+
+
+class GenericHeroBlock(blocks.StructBlock):
+    hero_image = ImageChooserBlock(required=False)
+    hero_title = blocks.CharBlock(required=True, max_length=120)
+    subtitle = blocks.CharBlock(required=False)
+
+    class Meta:
+        label = "Generic Hero Block"
+        template = "patterns/molecules/streamfield/blocks/generic_hero.html"

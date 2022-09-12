@@ -48,7 +48,7 @@ class PersonPage(Page, TranslatableMixin):
         verbose_name=_("Image Alt text"),
         help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/")
     )
-    countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
+    countries = ParentalManyToManyField("irelandie_missions.DestinationPage", blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("first_published_at"),
@@ -85,7 +85,7 @@ class RolePage(Page, TranslatableMixin):
         on_delete=models.SET_NULL,
         related_name="+",
     )
-    countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
+    countries = ParentalManyToManyField("irelandie_missions.DestinationPage", blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("first_published_at"),

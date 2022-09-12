@@ -6,6 +6,9 @@ from irelandie_utils.models import SocialMediaSettings
 
 import re
 
+import uuid
+
+
 register = template.Library()
 
 
@@ -45,3 +48,18 @@ def new_width(iframe, width):
 @register.simple_tag
 def get_starting_index(length):
     return length[len(length)-2:len(length)]
+
+
+@register.simple_tag
+def get_unique_ref():
+    ref = uuid.uuid4().hex
+    return ref
+
+
+@register.simple_tag
+def get_content_length(page):
+    counter = 0
+    for block in page.body:
+        if block.block_type == 'content':
+            counter += 1
+    return counter

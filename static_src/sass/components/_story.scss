@@ -27,16 +27,15 @@
 
     &__container1 {
         position: relative;
-        padding: 0 30px;
         display: flex;
-
+        align-items: stretch;
         @media only screen and (min-width:1023px) {
 
             justify-content: flex-start;
+        }
 
-            #{$root}--right-aligned & {
-                flex-direction: row-reverse;
-            }
+        @media only screen and (min-width: 844px) and (max-width: 1023px) {
+	        flex-wrap: wrap;
         }
         @media only screen and (max-width:844px) {
 
@@ -45,24 +44,18 @@
         }
     }
 
-    &__width_left {
-        @include media-query(small) {
-            flex: 70%;
-            order: 1;
-        }
-    }
     &__width_right {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         margin: 0;
-        @include media-query(small) {
-            flex: 30%;
-            order: 2;
-        }
-        @media only screen and (min-width: 699px) {
+        order: 3;
         padding: 40px;
-    }
+        @include media-query(small) {
+            align-self: stretch;
+            justify-content: space-between;
+            flex: 30%;
+        }
     }
 
     &__iconDetails {
@@ -85,10 +78,10 @@
     height: auto !important;
     width: 100% !important;
     margin: auto;
+    order: 2;
+    flex: 1 1 30%;
 
-    @media only screen and (max-width:1025px) {
-             order: 2;
-    }
+
     }
 
     &__image {
@@ -97,14 +90,13 @@
         object-fit: cover;
 
         @include media-query(large) {
-            max-height: 620px;
+            max-height: 450px;
             min-height: 400px;
             min-width: 30%;
         }
         @media only screen and (max-width:1024px) {
             #{$root}--right-aligned &{
                     justify-content: space-between;
-                    order: 2;
             }
 
 
@@ -112,9 +104,18 @@
     }
 
     &__image_margin{
+    order: 2;
+    margin: 40px 0px;
+    max-height: inherit;
+
     @include media-query(large) {
-        margin-top: 40px;
+
         flex: 30%;
+
+        }
+        @media only screen and (max-width:844px) {
+        margin: auto;
+
         }
     }
 
@@ -128,7 +129,7 @@
         padding: $grid 0;
 
         @media only screen and (min-width: 699px) {
-            flex: 1 0 50%;
+            flex: 1 0 40%;
 
             #{$root}--right-aligned & {
                 margin-left: -80px;
@@ -136,13 +137,16 @@
         }
 
         @media only screen and (min-width: 699px) {
-            padding: 40px 80px;
+            padding: 40px 60px;
         }
+    }
+    &__alignm{
+            align-self: stretch;
+            justify-content: space-between;
     }
 
     &__logo {
         display: block;
-        margin-bottom: 20px;
     }
 
     &__copy {
@@ -184,5 +188,8 @@
         margin-left: 5px;
         vertical-align: middle;
         color: $color--black;
+    }
+    &__additional_social_feed{
+    padding-top: 20px;
     }
 }

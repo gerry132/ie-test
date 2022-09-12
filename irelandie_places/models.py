@@ -51,7 +51,7 @@ class PlacePage(Page, TranslatableMixin):
     opening_hours_sunday_from = models.TimeField(blank=True, null=True)
     opening_hours_sunday_to = models.TimeField(blank=True, null=True)
 
-    countries = ParentalManyToManyField("irelandie_missions.CountryPage", blank=True)
+    countries = ParentalManyToManyField("irelandie_missions.DestinationPage", blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("first_published_at"),

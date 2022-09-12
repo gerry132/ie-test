@@ -1,0 +1,105 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags i18n %}
+{% load util_tags wagtailcore_tags %}
+
+
+{% block content %}
+{% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+<div id="main-header" class="section section--padding section--white section--toc">
+    <div id="wrapper" class="wrapper--large--toc">
+        <div id="left">
+            <div class="wrapper wrapper--padding">
+                <div class="intro--toc">
+                    <div class="container">
+                        <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                        {% if page.description %}
+                            <p class="intro__description">{{ page.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="right">
+            <div class="related-content">
+                {% if page.related_content %}
+                <h4 class="header--related-content">Related Content</h4>
+                    {% for p in page.related_content %}
+                    <a href="{{p.value.page.url}}"><h2 class="toc-contents">{{p.value.title}}</h2></a>
+                    {% endfor %} 
+                {% endif %}
+            </div>
+        </div>
+      </div>
+</div>
+<div class="section--master">
+   <div class="section section--white">
+    <div class="wrapper wrapper--large--toc wrapper--padding content--padding">
+        <div style="padding-bottom: 20px;">
+        {% for block in page.body %}
+            {% get_content_length page as content_length %}
+            {% if block.block_type == 'content' and content_length > 1 %}
+                <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter }}. {{block.value.title}}</h2></a>
+            {% endif %}
+        {% endfor %}
+    </div>
+        {% if page.introduction %}
+            <div class="wrapper wrapper--large wrapper--padding content--padding">
+                <p class="intro__description">{{ page.introduction|richtext }}</p>
+            </div>
+        {% endif %}
+            {% for blocks in page.body %}
+                {% if blocks.block_type == 'content' %}
+                <div id="{{blocks.value.title}}">
+                    {% for block in blocks.value.content %} 
+                        {% if block.block_type == 'heading' or block.block_type == 'rich_text' or block.block_type == 'image' or block.block_type == 'document' or block.block_type == 'table' %}
+
+                                {% if block.block_type == 'table' %}
+                                    <div id="{{block.title}}" class="wrapper wrapper--small wrapper--padding content--padding">
+                                        {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}
+                                    </div>
+                                {% elif block.block_type == 'heading' or block.block_type == 'rich_text' %}
+                                    <div class="wrapper wrapper--large wrapper--padding content--padding">
+                                        {% include_block block %}
+                                    </div>
+                                {% else %}
+                                    <div class="wrapper wrapper--small wrapper--padding content--padding">
+                                        {% include_block block %}
+                                    </div>
+                                {% endif %}
+                        {% elif block.block_type == 'pinned_stories' %}
+                            {% include_block block %}
+                        {% elif block.block_type == 'stories' %}
+                            {% include_block block %}
+                        {% elif block.block_type == 'logos' %}
+                            <div class="wrapper wrapper--large wrapper--padding content--padding">
+                                <div class="section section--padding">
+                                    {% include_block block %}
+                                </div>
+                            </div>
+                        {% elif block.block_type == 'accordion' %}
+                            <div class="section section--padding content--padding">
+                                {% include_block block %}
+                            </div>
+                        {% else %}
+                            <div class="wrapper wrapper--large wrapper--padding content--padding">
+                                {% include_block block %}
+                                
+                            </div>
+                        {% endif %}
+                {% endfor %}
+            </div>
+                {% endif %}
+            {% endfor %}
+            <div class="related-content--mobile wrapper--padding content--padding">
+                {% if page.related_content %}
+                <h4 class="header--related-content">Related Content</h4>
+                    {% for p in page.related_content %}
+                    <a href="{{p.value.page.url}}"><h2 class="toc-contents">{{p.value.title}}</h2></a>
+                    {% endfor %} 
+                {% endif %}
+            </div>
+
+            {% endblock %}
+</div>
+</div>
+</div>

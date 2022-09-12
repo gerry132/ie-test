@@ -11,6 +11,10 @@
         }
     }
 
+    &--toc {
+        display: flex;
+    }
+
     &--grey {
         background-color: $color--background-grey;
     }

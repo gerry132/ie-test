@@ -7,10 +7,20 @@
         <div class="footer__header">
             <a href="/{{ language_code }}/" aria-label="Ireland.ie">
             {% if custom_footer.logo %}
-                {% if custom_footer.logo_alt %}
-                    {% image custom_footer.logo width-200 class="footer__logo" alt=custom_footer.logo_alt %}
+                    {% if custom_footer.logo_alt %}
+                        {% if custom_footer.mobile_logo and custom_footer.logo %}
+                            {% image custom_footer.logo original class="footer__logo desktop__logo" alt=custom_footer.logo_alt %}
+                            {% image custom_footer.mobile_logo original class="footer__logo mobile__logo" alt=custom_footer.logo_alt %}
+                        {% else %}
+                            {% image custom_footer.logo original class="footer__logo" alt=custom_footer.logo_alt %}
+                    {% endif %}
                 {% else %}
-                    {% image custom_footer.logo width-200 class="footer__logo" alt=custom_footer.logo.alt_default %}
+                    {% if custom_footer.mobile_logo and custom_footer.logo %}
+                        {% image custom_footer.logo original class="footer__logo desktop__logo" alt=custom_footer.logo.alt_default %}
+                        {% image custom_footer.mobile_logo original class="footer__logo mobile__logo" alt=custom_footer.logo.alt_default %}
+                    {% else %}
+                        {% image custom_footer.logo original class="footer__logo" alt=custom_footer.logo.alt_default %}
+                    {% endif %}
                 {% endif %}
             {% else %}
                 {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="footer__logo footer__logo--svg" %}

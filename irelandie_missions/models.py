@@ -2,7 +2,7 @@
 from django.db import models
 from django.utils.functional import cached_property
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
-from wagtail.core.fields import StreamField
+from wagtail.core.fields import StreamField, RichTextField
 from wagtail.core import blocks as wagtail_blocks
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.images import get_image_model_string
@@ -31,7 +31,7 @@ class CountryGroupPageIndex(BasePage):
     ]
 
 
-class CountryPage(HeroPage):
+class DestinationPage(HeroPage):
     template = "patterns/pages/missions/country_page.html"
 
     stories = StreamField(
@@ -40,35 +40,6 @@ class CountryPage(HeroPage):
         ],
         blank=True,
         null=True,
-        min_num=0,
-        max_num=1,
-    )
-    embeds = StreamField(
-        [
-            ("youtube", blocks.YoutubeVideoBlock()),
-        ],
-        blank=True,
-        null=True,
-        min_num=0,
-        max_num=1,
-    )
-    featured_stories = StreamField(
-        [
-            ("featured_story", blocks.FeaturedStoryBlock()),
-        ],
-        blank=True,
-        null=True,
-        min_num=0,
-        max_num=1,
-    )
-    featured_embassies = StreamField(
-        [
-            ("embassy_story", blocks.EmbassyStory()),
-        ],
-        blank=True,
-        null=True,
-        min_num=0,
-        max_num=1,
     )
 
     region = models.ForeignKey(
@@ -78,34 +49,59 @@ class CountryPage(HeroPage):
         null=True,
     )
 
-    twitter_title = models.CharField(max_length=50, blank=True)
-
-    twitter_feed = models.ForeignKey(
-        "utils.TwitterEmbed",
-        on_delete=models.SET_NULL,
-        related_name="+",
-        null=True,
-        blank=True,
-    )
-
     logo_cards = StreamField(
         [("logo_cards", blocks.LogoCardsBlock())],
         blank=True,
         max_num=1,
     )
 
+    body = StreamField(
+        [
+            ("two_column_feature", blocks.StoryBlock()),
+            ("logo_cards", blocks.LogoCardsBlock()),
+            (
+                "pinned_story",
+                wagtail_blocks.StructBlock(
+                    [
+                        ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
+                        ("default_image", blocks.ImageBlock()),
+                    ],
+                    template="patterns/molecules/pinned-stories/pinned_stories.html",
+                ),
+            ),
+        ],
+        block_counts={
+            "pinned_story": {"max_num": 1},
+        },
+        blank=True,
+        null=True,
+    )
+
     content_panels = HeroPage.content_panels + [
         SnippetChooserPanel("region"),
         StreamFieldPanel("stories", heading="Two Column Feature"),
-        StreamFieldPanel("embeds"),
-        StreamFieldPanel("featured_stories"),
-        StreamFieldPanel("featured_embassies"),
         StreamFieldPanel("logo_cards", heading="Logo Cards"),
-        MultiFieldPanel([
-            FieldPanel("twitter_title"),
-            SnippetChooserPanel("twitter_feed"),
-        ], heading="Twitter feed"),
+        StreamFieldPanel("body"),
     ]
+
+    @cached_property
+    def related_articles(self):
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                m = MissionPage.objects.live().get(id=p.id)
+                if m.root_page:
+                    return (
+                        NewsPage.objects
+                        .child_of(m)
+                        .filter(locale=self.locale,
+                                related_articles_active=True)
+                        .public()
+                        .live()
+                        .order_by("-first_published_at")[:4]
+                        .specific()
+                    )
+        return None
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
@@ -116,6 +112,67 @@ class CountryPage(HeroPage):
 
 
 IMAGE_MODEL = get_image_model_string()
+
+
+class JobContentPage(BasePage):
+    template = "patterns/pages/irelandie_job/job.html"
+    subtitle = models.CharField(max_length=100,
+                                null=True,
+                                blank=True)
+    body = StreamField(
+        [
+            ("rich_text", blocks.AdvancedRichTextBlock()),
+            ("document", blocks.DocumentBlock()),
+        ],
+        blank=True,
+    )
+    job_index_page_summary = models.TextField(
+        help_text="Brief job summary for index page",
+        null=True
+    )
+    privacy_policy = models.ForeignKey(
+        'utils.PrivacyPolicySnippet',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    content_panels = BasePage.content_panels + [
+        FieldPanel("subtitle"),
+        FieldPanel("job_index_page_summary"),
+        StreamFieldPanel("privacy_policy"),
+        StreamFieldPanel("body")
+    ]
+
+
+class JobIndexPage(BasePage):
+    template = "patterns/pages/irelandie_job/job_index.html"
+    generic_hero = StreamField(
+        [
+            ("generic_hero", blocks.GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+
+    content_panels = BasePage.content_panels + [
+        StreamFieldPanel("generic_hero")
+    ]
+
+    @cached_property
+    def related_jobs(self):
+        return (
+            JobContentPage.objects
+            .child_of(self)
+            .filter(locale=self.locale)
+            .public()
+            .live()
+            .order_by("-first_published_at")
+            .specific()
+        )
 
 
 class MissionPage(HeroPage):
@@ -145,7 +202,21 @@ class MissionPage(HeroPage):
         blank=True,
         null=True,
         min_num=0,
-        max_num=1,
+    )
+    stories_between = StreamField(
+        [
+            ("story", blocks.StoryBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+    )
+    body = StreamField(
+        [
+            ("two_column_feature", blocks.StoryBlock()),
+        ],
+        blank=True,
+        null=True
     )
 
     person = StreamField(
@@ -158,30 +229,28 @@ class MissionPage(HeroPage):
         max_num=1,
     )
     pinned_stories = StreamField(
-            [
-                (
-                    "pinned_story",
-                    wagtail_blocks.StructBlock(
-                        [
-                            ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
-                            (
-                                "pinned_stories",
-                                wagtail_blocks.ListBlock(blocks.PinnedStoryBlock()),
-                            ),
-                        ],
-                        template="patterns/molecules/pinned-stories/pinned_stories.html",
-                    ),
+        [
+            (
+                "pinned_story",
+                wagtail_blocks.StructBlock(
+                    [
+                        ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
+                        ("default_image", blocks.ImageBlock()),
+                    ],
+                    template="patterns/molecules/pinned-stories/pinned_stories.html",
                 ),
-            ],
-            block_counts={
-                "pinned_story": {"max_num": 1},
-            },
-            blank=True,
-            null=True,
+            ),
+        ],
+        block_counts={
+            "pinned_story": {"max_num": 1},
+        },
+        blank=True,
+        null=True,
     )
 
     content_panels = HeroPage.content_panels + [
         FieldPanel("root_page"),
+        FieldPanel("override_pinned_stories"),
         MultiFieldPanel([
             FieldPanel("search_bar"),
             StreamFieldPanel("popular_pages"),
@@ -191,21 +260,23 @@ class MissionPage(HeroPage):
             StreamFieldPanel("notice_bar"),
         ], heading="Noticebar settings"
         ),
-        StreamFieldPanel("pinned_stories"),
         StreamFieldPanel("stories", heading="Two Column Feature"),
+        StreamFieldPanel("pinned_stories"),
+        StreamFieldPanel("stories_between", heading="Two Column"),
         StreamFieldPanel("person", heading="Person + Social Feed"),
-
+        StreamFieldPanel("body"),
     ]
 
     @cached_property
     def related_articles(self):
         return (
             NewsPage.objects
-            .child_of(self)
-            .filter(locale=self.locale)
+            .descendant_of(self)
+            .filter(locale=self.locale,
+                    related_articles_active=True)
             .public()
             .live()
-            .order_by("-first_published_at")[:3]
+            .order_by("-publication_date")[:4]
             .specific()
         )
 
@@ -243,9 +314,42 @@ class Magazine(HeroPage):
     ])
 
 
-class ServicesLandingPage(HeroPage):
-    template = "patterns/pages/missions/services_landing_page.html"
+class ServiceContent(BasePage):
+    template = "patterns/pages/toc/table_of_contents.html"
+    introduction = RichTextField(blank=True)
+    related_content = StreamField(
+        [
+            ("related_item", blocks.RelatedContentBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+    )
+    body = StreamField(
+        [
+            ("content", blocks.TocBlock())
+        ],
+        blank=True
+    )
 
+    content_panels = BasePage.content_panels + [
+        FieldPanel("introduction"),
+        StreamFieldPanel("body"),
+        StreamFieldPanel("related_content")
+    ]
+
+
+class ServicesLandingPage(BasePage):
+    template = "patterns/pages/missions/services_landing_page.html"
+    generic_hero = StreamField(
+        [
+            ("generic_hero", blocks.GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
     rich_text = StreamField(
         [
             ("rich_text", blocks.AdvancedRichTextBlock()),
@@ -266,16 +370,11 @@ class ServicesLandingPage(HeroPage):
         max_num=1,
     )
 
-    content_panels = HeroPage.content_panels + [
+    content_panels = BasePage.content_panels + [
+        StreamFieldPanel("generic_hero"),
         StreamFieldPanel("rich_text", heading="Advanced Richtext"),
         StreamFieldPanel("body")
     ]
-    edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='Content'),
-        ObjectList(HeroPage.hero_panel, heading='Hero'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
-        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
-    ])
 
 
 class MissionSearchPage(BasePage):
@@ -300,7 +399,7 @@ class MissionSearchPage(BasePage):
 
         for group in country_groups:
             countries_count = (
-                CountryPage.objects.descendant_of(self.get_parent())
+                DestinationPage.objects.descendant_of(self.get_parent())
                 .filter(region=group)
                 .count()
             )
@@ -311,7 +410,7 @@ class MissionSearchPage(BasePage):
 
     @cached_property
     def countries(self):
-        return CountryPage.objects.descendant_of(self.get_parent())
+        return DestinationPage.objects.descendant_of(self.get_parent())
 
     def get_context(self, request):
         context = super().get_context(request)
@@ -326,7 +425,7 @@ class ConsulatePage(FreeFormPageBase):
     body = StreamField(blocks.FreeFormBlocksBase(), blank=True)
 
     parent_page_types = [
-        "irelandie_missions.CountryPage",
+        "irelandie_missions.DestinationPage",
         "irelandie_pages.FreeFormPage",
     ]
 
@@ -376,7 +475,7 @@ class EmbassyPage(FreeFormPageBase):
     body = StreamField(blocks.FreeFormBlocksBase(), blank=True)
 
     parent_page_types = [
-        "irelandie_missions.CountryPage",
+        "irelandie_missions.DestinationPage",
         "irelandie_pages.FreeFormPage",
     ]
 

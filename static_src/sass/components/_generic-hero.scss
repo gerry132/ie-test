@@ -1,0 +1,51 @@
+.generic-hero {
+    $root: &;
+    position: relative;
+    background: #004D46;
+    @media only screen and (min-width: 1023px){
+    max-height:285px
+    }
+
+    &__container{
+            position: relative;
+    }
+    &__container1{
+        padding-left:20px;
+        @media only screen and (max-width: 1023px) {
+            padding-top: 40px;
+            padding-right:20px;
+        }
+    }
+
+    &__image{
+    pointer-events: none;
+    position: absolute;
+    height: 100%;
+    @media only screen and (max-width: 1023px) {
+                display: none;
+            }
+    }
+
+
+    &__title {
+
+
+        color: #FAFBFC;
+    }
+    &__subtitle {
+        position: relative;
+
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 22px;
+        line-height: 29px;
+
+        color: #FFFFFF;
+
+    }
+
+}
+
+
+

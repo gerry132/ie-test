@@ -9,6 +9,14 @@
         margin: 0 auto;
     }
 
+    &--large--toc {
+        max-width: $site-width;
+        margin: 0 15%;
+        
+        @include media-query(max-medium) {
+            margin: 0 0%;
+        }
+    }
     &--main {
         background-color: $color--white;
     }

@@ -97,7 +97,7 @@
     overflow: hidden;
   }
 
-  .slide, .slide-mobile {
+  .slide, .slide-mobile, .slide1, .slide-mobile1 {
     width: 100%;
     max-width: 100%;
     height: 350px;
@@ -106,6 +106,9 @@
   }
 
   .slide img {
+    object-fit: cover;
+  }
+  .slide1 img {
     object-fit: cover;
   }
 
@@ -125,14 +128,14 @@
     transform: scale(1.1);
   }
 
-  .btn-prev {
+  .btn-prev, .btn-prev1{
 
     top: 24%;
     left: -3%;
     background-image: url('../images/cssBackgrounds/navigation_left.png');
   }
 
-  .btn-next {
+  .btn-next, .btn-next1 {
     top: 24%;
     right: -3%;
     background-image: url('../images/cssBackgrounds/navigation_right.png');

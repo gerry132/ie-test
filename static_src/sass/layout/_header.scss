@@ -20,7 +20,7 @@
     &--override {
             display: block;
             height: auto;
-            top: 45px;
+            top: 50px;
     }
 
     &__container {
@@ -123,15 +123,8 @@
     }
 
     &__logo {
-        height: 30px;
-        width: 90px;
-        @include media-query(medium) {
-            height: 40px;
-            width: 160px;
-        }
+        max-width: initial;
         #{$root}--condensed & {
-            height: 20px;
-            width: 80px;
             margin-left: 50%;
             transform: translateX(-50%);
         }
@@ -253,6 +246,21 @@
                     top: $condensed-header-height;
                 }
             }
+        }
+    }
+}
+.desktop {
+    &__logo {
+        @include media-query(v-small) {
+            display: none;
+        }
+    }
+}
+
+.mobile {
+    &__logo {
+        @include media-query(large) {
+            display: none;
         }
     }
 }

@@ -9,9 +9,13 @@
     <div class="wrapper wrapper--large wrapper--padding">
         {% include_block page.body %}
     </div>
-    {% include_block page.pinned_stories %}
     {% include_block page.stories %}
+    {% include_block page.pinned_stories %}
+    {% include_block page.stories_between %}
     {% include_block page.person %}
+    {% for block in page.body %}
+        {% include_block block %}
+    {% endfor %}
 
 
 {% endblock %}

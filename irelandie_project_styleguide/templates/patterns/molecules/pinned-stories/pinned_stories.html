@@ -41,9 +41,9 @@
         {% endif %}
 
         <div class="pinned-stories__feed">
-            {% if page.related_articles and page.override_pinned_stories %}
+            {% if page.related_articles %}
                 {% for story in page.related_articles %}
-                    {% include "patterns/molecules/card/news-card.html" with card=story classes="pinned-story" %}
+                    {% include "patterns/molecules/card/news-card.html" with card=story classes="pinned-story" default_image=value.default_image %}
                 {% endfor %}
             {% else %}
                 {% for story in value.pinned_stories %}
