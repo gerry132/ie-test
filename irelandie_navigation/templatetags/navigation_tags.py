@@ -261,6 +261,7 @@ def custom_footer_settings(context, page):
         # if custom footer is set for the page, use the values from it if they are set
         # otherwise use the site settings values
         logo = custom_footer.logo or site_settings.site_logo
+        mobile_logo = site_settings.mobile_logo
         logo_alt = custom_footer.logo_alt or site_settings.site_logo_alt
         twitter_handle = custom_footer.twitter_handle or footer_social_media.twitter_handle
         facebook_app_id = custom_footer.facebook_app_id or footer_social_media.facebook_app_id
@@ -281,6 +282,7 @@ def custom_footer_settings(context, page):
         # no custom footer is set for the page, use the site settings
         # if thr site settings has values for the fields
         logo = site_settings.site_logo
+        mobile_logo = site_settings.mobile_logo
         logo_alt = site_settings.site_logo_alt
         twitter_handle = footer_social_media.twitter_handle
         facebook_app_id = footer_social_media.facebook_app_id
@@ -303,6 +305,7 @@ def custom_footer_settings(context, page):
 
     return {
         "logo": logo,
+        "mobile_logo": mobile_logo,
         "logo_alt": logo_alt,
         "twitter_handle": twitter_handle,
         "facebook_app_id": facebook_app_id,
