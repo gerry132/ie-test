@@ -11,7 +11,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from wagtail.core.models import (
+from wagtail.models import (
     Collection,
     GroupCollectionPermission,
     GroupPagePermission,

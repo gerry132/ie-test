@@ -1,4 +1,4 @@
-from wagtail.core.models import Locale
+from wagtail.models import Locale
 
 
 def get_locale_from_language_code_or_default(language_code):

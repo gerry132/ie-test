@@ -2,8 +2,8 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 
 
 class Migration(migrations.Migration):
@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ('secondary_title', models.CharField(blank=True, max_length=255)),
                 ('hexcolor', models.CharField(blank=True, max_length=7)),
                 ('transparency', models.PositiveIntegerField(blank=True, null=True)),
-                ('body', wagtail.core.fields.StreamField([('rich_text', wagtail.core.blocks.StructBlock([('paragraph_alignment', wagtail.core.blocks.ChoiceBlock(choices=[('wide', 'Wide'), ('narrow', 'Narrow')], required=False)), ('heading', wagtail.core.blocks.CharBlock(required=False)), ('rich_text', wagtail.core.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'], required=False))])), ('link_box', wagtail.core.blocks.StructBlock([('link_boxes', wagtail.core.blocks.StreamBlock([('link_box', wagtail.core.blocks.StructBlock([('heading', wagtail.core.blocks.CharBlock()), ('introduction', wagtail.core.blocks.RichTextBlock(required=False)), ('page', wagtail.core.blocks.PageChooserBlock(required=False)), ('url', wagtail.core.blocks.URLBlock(help_text='An external link.', label='URL', required=False))]))]))]))], blank=True)),
+                ('body', wagtail.fields.StreamField([('rich_text', wagtail.blocks.StructBlock([('paragraph_alignment', wagtail.blocks.ChoiceBlock(choices=[('wide', 'Wide'), ('narrow', 'Narrow')], required=False)), ('heading', wagtail.blocks.CharBlock(required=False)), ('rich_text', wagtail.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'], required=False))])), ('link_box', wagtail.blocks.StructBlock([('link_boxes', wagtail.blocks.StreamBlock([('link_box', wagtail.blocks.StructBlock([('heading', wagtail.blocks.CharBlock()), ('introduction', wagtail.blocks.RichTextBlock(required=False)), ('page', wagtail.blocks.PageChooserBlock(required=False)), ('url', wagtail.blocks.URLBlock(help_text='An external link.', label='URL', required=False))]))]))]))], blank=True)),
                 ('custom_footer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='irelandie_navigation.customfooter')),
                 ('custom_header', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='irelandie_navigation.customheader')),
                 ('hero_image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='irelandie_images.customimage')),

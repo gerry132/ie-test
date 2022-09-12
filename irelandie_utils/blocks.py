@@ -5,8 +5,8 @@ import re
 from django.forms.utils import ErrorList
 from django.utils.translation import gettext_lazy as _
 from wagtail.contrib.table_block.blocks import TableBlock as WagtailTableBlock
-from wagtail.core import blocks
-from wagtail.core.blocks.struct_block import StructBlockValidationError, StructValue
+from wagtail import blocks
+from wagtail.blocks.struct_block import StructBlockValidationError, StructValue
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import VideoChooserBlock

@@ -2,8 +2,8 @@
 
 from django.db import migrations
 import irelandie_utils.blocks
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.documents.blocks
 import wagtail.images.blocks
 
@@ -18,6 +18,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='eventpage',
             name='body',
-            field=wagtail.core.fields.StreamField([('section', wagtail.core.blocks.StructBlock([('title', wagtail.core.blocks.CharBlock(required=False)), ('body', wagtail.core.blocks.StreamBlock([('contact_detail', irelandie_utils.blocks.ContactDetailBlock()), ('document', wagtail.core.blocks.StructBlock([('document', wagtail.documents.blocks.DocumentChooserBlock()), ('title', wagtail.core.blocks.CharBlock(required=False))])), ('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('image_alt', wagtail.core.blocks.CharBlock(help_text='A short one-sentence literal description\n                    of the image is\n                    required to make the page accessible to the\n                    visually impaired. Details: https://axesslab.com/alt-texts/', required=True)), ('caption', wagtail.core.blocks.CharBlock(required=False))])), ('place', irelandie_utils.blocks.PlaceBlock()), ('rich_text', wagtail.core.blocks.StructBlock([('paragraph_alignment', wagtail.core.blocks.ChoiceBlock(choices=[('wide', 'Wide'), ('narrow', 'Narrow')], required=False)), ('heading', wagtail.core.blocks.CharBlock(required=False)), ('rich_text', wagtail.core.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'], required=False))], features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'])), ('table', irelandie_utils.blocks.TableBlock()), ('youtube_video', wagtail.core.blocks.StructBlock([('url', wagtail.core.blocks.CharBlock()), ('slido_embed', wagtail.core.blocks.TextBlock(help_text='Slido iframe code. Ensure that the code you add here is only Slido provided code.', required=False))]))], required=False))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('section', wagtail.blocks.StructBlock([('title', wagtail.blocks.CharBlock(required=False)), ('body', wagtail.blocks.StreamBlock([('contact_detail', irelandie_utils.blocks.ContactDetailBlock()), ('document', wagtail.blocks.StructBlock([('document', wagtail.documents.blocks.DocumentChooserBlock()), ('title', wagtail.blocks.CharBlock(required=False))])), ('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('image_alt', wagtail.blocks.CharBlock(help_text='A short one-sentence literal description\n                    of the image is\n                    required to make the page accessible to the\n                    visually impaired. Details: https://axesslab.com/alt-texts/', required=True)), ('caption', wagtail.blocks.CharBlock(required=False))])), ('place', irelandie_utils.blocks.PlaceBlock()), ('rich_text', wagtail.blocks.StructBlock([('paragraph_alignment', wagtail.blocks.ChoiceBlock(choices=[('wide', 'Wide'), ('narrow', 'Narrow')], required=False)), ('heading', wagtail.blocks.CharBlock(required=False)), ('rich_text', wagtail.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'], required=False))], features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'])), ('table', irelandie_utils.blocks.TableBlock()), ('youtube_video', wagtail.blocks.StructBlock([('url', wagtail.blocks.CharBlock()), ('slido_embed', wagtail.blocks.TextBlock(help_text='Slido iframe code. Ensure that the code you add here is only Slido provided code.', required=False))]))], required=False))]))], blank=True, null=True),
         ),
     ]

@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
 from modelcluster.fields import ParentalKey
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     MultiFieldPanel,
     PageChooserPanel,
@@ -14,10 +14,10 @@ from wagtail.admin.edit_handlers import (
     HelpPanel, TabbedInterface, ObjectList,
 )
 from wagtail.contrib.settings.models import BaseSetting, register_setting
-from wagtail.core import blocks
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Orderable, Page, TranslatableMixin
-from wagtail.core.query import PageQuerySet
+from wagtail import blocks
+from wagtail.fields import RichTextField, StreamField
+from wagtail.models import Orderable, Page, TranslatableMixin
+from wagtail.query import PageQuerySet
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images import get_image_model_string
 from wagtail.search import index

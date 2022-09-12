@@ -4,8 +4,8 @@ from django.db import migrations, models
 import django.db.models.deletion
 import irelandie_news.blocks
 import irelandie_utils.blocks
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.documents.blocks
 import wagtail.images.blocks
 
@@ -67,7 +67,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='newspage',
             name='override_related_articles',
-            field=wagtail.core.fields.StreamField([('article', irelandie_news.blocks.NewsPageBlock())], blank=True),
+            field=wagtail.fields.StreamField([('article', irelandie_news.blocks.NewsPageBlock())], blank=True),
         ),
         migrations.AddField(
             model_name='newspage',
@@ -107,7 +107,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='newspage',
             name='body',
-            field=wagtail.core.fields.StreamField([('contact_detail', irelandie_utils.blocks.ContactDetailBlock()), ('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.core.blocks.CharBlock(required=False))])), ('rich_text', wagtail.core.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'])), ('person', irelandie_utils.blocks.PersonBlock()), ('place', irelandie_utils.blocks.PlaceBlock()), ('document', wagtail.core.blocks.StructBlock([('document', wagtail.documents.blocks.DocumentChooserBlock()), ('title', wagtail.core.blocks.CharBlock(required=False))])), ('table', irelandie_utils.blocks.TableBlock()), ('role', irelandie_utils.blocks.RoleBlock()), ('youtube_video', wagtail.core.blocks.StructBlock([('url', wagtail.core.blocks.CharBlock())]))], blank=True, default=''),
+            field=wagtail.fields.StreamField([('contact_detail', irelandie_utils.blocks.ContactDetailBlock()), ('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.blocks.CharBlock(required=False))])), ('rich_text', wagtail.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'])), ('person', irelandie_utils.blocks.PersonBlock()), ('place', irelandie_utils.blocks.PlaceBlock()), ('document', wagtail.blocks.StructBlock([('document', wagtail.documents.blocks.DocumentChooserBlock()), ('title', wagtail.blocks.CharBlock(required=False))])), ('table', irelandie_utils.blocks.TableBlock()), ('role', irelandie_utils.blocks.RoleBlock()), ('youtube_video', wagtail.blocks.StructBlock([('url', wagtail.blocks.CharBlock())]))], blank=True, default=''),
             preserve_default=False,
         ),
     ]

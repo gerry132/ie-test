@@ -8,7 +8,7 @@ from irelandie_missions.models import DestinationPage
 from wagtail.admin.auth import user_has_any_page_permission, user_passes_test
 from wagtail.admin.forms.search import SearchForm
 from wagtail.admin.views.pages.search import page_filter_search
-from wagtail.core.models import Page
+from wagtail.models import Page
 from wagtail.search.query import MATCH_ALL
 
 

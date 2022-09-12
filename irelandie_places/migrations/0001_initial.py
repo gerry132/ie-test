@@ -3,8 +3,8 @@
 from django.db import migrations, models
 import django.db.models.deletion
 import irelandie_utils.blocks
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.documents.blocks
 
 
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
                 ('description', models.TextField(blank=True)),
-                ('body', wagtail.core.fields.StreamField([('section', wagtail.core.blocks.StructBlock([('title', wagtail.core.blocks.CharBlock(required=False)), ('body', wagtail.core.blocks.StreamBlock([('contact_detail', irelandie_utils.blocks.ContactDetailBlock()), ('document', wagtail.core.blocks.StructBlock([('document', wagtail.documents.blocks.DocumentChooserBlock()), ('title', wagtail.core.blocks.CharBlock(required=False))])), ('person', irelandie_utils.blocks.PersonBlock()), ('rich_text', irelandie_utils.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'])), ('role', irelandie_utils.blocks.RoleBlock()), ('table', irelandie_utils.blocks.TableBlock())], required=False))]))], blank=True, null=True)),
+                ('body', wagtail.fields.StreamField([('section', wagtail.blocks.StructBlock([('title', wagtail.blocks.CharBlock(required=False)), ('body', wagtail.blocks.StreamBlock([('contact_detail', irelandie_utils.blocks.ContactDetailBlock()), ('document', wagtail.blocks.StructBlock([('document', wagtail.documents.blocks.DocumentChooserBlock()), ('title', wagtail.blocks.CharBlock(required=False))])), ('person', irelandie_utils.blocks.PersonBlock()), ('rich_text', irelandie_utils.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'])), ('role', irelandie_utils.blocks.RoleBlock()), ('table', irelandie_utils.blocks.TableBlock())], required=False))]))], blank=True, null=True)),
                 ('address_line_1', models.CharField(blank=True, max_length=255)),
                 ('address_line_2', models.CharField(blank=True, max_length=255)),
                 ('address_line_3', models.CharField(blank=True, max_length=255)),

@@ -2,8 +2,8 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.images.blocks
 
 
@@ -27,8 +27,8 @@ class Migration(migrations.Migration):
                 ('listing_summary', models.CharField(blank=True, help_text="The text summary used when this page appears in listings. It's also used as the description for search engines if the 'Meta description' field above is not defined.", max_length=255)),
                 ('webchat_script', models.TextField(blank=True)),
                 ('web_bot_script', models.TextField(blank=True)),
-                ('generic_hero', wagtail.core.fields.StreamField([('generic_hero', wagtail.core.blocks.StructBlock([('hero_image', wagtail.images.blocks.ImageChooserBlock(required=False)), ('hero_title', wagtail.core.blocks.CharBlock(required=True)), ('subtitle', wagtail.core.blocks.CharBlock(required=False))]))], blank=True, null=True)),
-                ('body', wagtail.core.fields.StreamField([('rich_text', wagtail.core.blocks.StructBlock([('paragraph_alignment', wagtail.core.blocks.ChoiceBlock(choices=[('wide', 'Wide'), ('narrow', 'Narrow')], required=False)), ('heading', wagtail.core.blocks.CharBlock(required=False)), ('rich_text', wagtail.core.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'], required=False))]))], blank=True)),
+                ('generic_hero', wagtail.fields.StreamField([('generic_hero', wagtail.blocks.StructBlock([('hero_image', wagtail.images.blocks.ImageChooserBlock(required=False)), ('hero_title', wagtail.blocks.CharBlock(required=True)), ('subtitle', wagtail.blocks.CharBlock(required=False))]))], blank=True, null=True)),
+                ('body', wagtail.fields.StreamField([('rich_text', wagtail.blocks.StructBlock([('paragraph_alignment', wagtail.blocks.ChoiceBlock(choices=[('wide', 'Wide'), ('narrow', 'Narrow')], required=False)), ('heading', wagtail.blocks.CharBlock(required=False)), ('rich_text', wagtail.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'], required=False))]))], blank=True)),
                 ('custom_footer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='irelandie_navigation.customfooter')),
                 ('custom_header', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='irelandie_navigation.customheader')),
                 ('listing_image', models.ForeignKey(blank=True, help_text='Choose the image you wish to be displayed when this page appears in listings', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='irelandie_images.customimage')),

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from wagtail.core.fields import StreamField
+from wagtail.fields import StreamField
 
 from irelandie_corporate_information.blocks import CorportateInformationPageBlock
 from irelandie_utils.models import ArticlePage, BasePage

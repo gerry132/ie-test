@@ -3,8 +3,8 @@
 from django.db import migrations, models
 import django.db.models.deletion
 import irelandie_utils.blocks
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 
 
 class Migration(migrations.Migration):
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
                 ('description', models.TextField(blank=True)),
-                ('body', wagtail.core.fields.StreamField([('section', wagtail.core.blocks.StructBlock([('title', wagtail.core.blocks.CharBlock(required=False)), ('body', wagtail.core.blocks.StreamBlock([('contact_detail', irelandie_utils.blocks.ContactDetailBlock()), ('place', irelandie_utils.blocks.PlaceBlock()), ('rich_text', irelandie_utils.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'])), ('role', irelandie_utils.blocks.RoleBlock())], required=False))]))], blank=True, null=True)),
+                ('body', wagtail.fields.StreamField([('section', wagtail.blocks.StructBlock([('title', wagtail.blocks.CharBlock(required=False)), ('body', wagtail.blocks.StreamBlock([('contact_detail', irelandie_utils.blocks.ContactDetailBlock()), ('place', irelandie_utils.blocks.PlaceBlock()), ('rich_text', irelandie_utils.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'])), ('role', irelandie_utils.blocks.RoleBlock())], required=False))]))], blank=True, null=True)),
                 ('image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.image')),
             ],
             options={
@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
                 ('description', models.TextField(blank=True)),
-                ('body', wagtail.core.fields.StreamField([('section', wagtail.core.blocks.StructBlock([('title', wagtail.core.blocks.CharBlock(required=False)), ('body', wagtail.core.blocks.StreamBlock([('contact_detail', irelandie_utils.blocks.ContactDetailBlock()), ('person', irelandie_utils.blocks.PersonBlock()), ('rich_text', irelandie_utils.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul']))], required=False))]))], blank=True, null=True)),
+                ('body', wagtail.fields.StreamField([('section', wagtail.blocks.StructBlock([('title', wagtail.blocks.CharBlock(required=False)), ('body', wagtail.blocks.StreamBlock([('contact_detail', irelandie_utils.blocks.ContactDetailBlock()), ('person', irelandie_utils.blocks.PersonBlock()), ('rich_text', irelandie_utils.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul']))], required=False))]))], blank=True, null=True)),
                 ('role_holder', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='irelandie_people.personpage')),
             ],
             options={

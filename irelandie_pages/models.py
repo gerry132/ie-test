@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 
-from wagtail.core.fields import StreamField
-from wagtail.admin.edit_handlers import TabbedInterface, ObjectList, StreamFieldPanel, FieldPanel, MultiFieldPanel
+from wagtail.fields import StreamField
+from wagtail.admin.panels import TabbedInterface, ObjectList, StreamFieldPanel, FieldPanel, MultiFieldPanel
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
 from irelandie_utils.models import HeroPage

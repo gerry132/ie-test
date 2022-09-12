@@ -2,8 +2,8 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.images.blocks
 
 
@@ -20,17 +20,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='countrypage',
             name='embeds',
-            field=wagtail.core.fields.StreamField([('youtube', wagtail.core.blocks.StructBlock([('url', wagtail.core.blocks.CharBlock())]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('youtube', wagtail.blocks.StructBlock([('url', wagtail.blocks.CharBlock())]))], blank=True, null=True),
         ),
         migrations.AddField(
             model_name='countrypage',
             name='featured_embassies',
-            field=wagtail.core.fields.StreamField([('embassy_story', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('page', wagtail.core.blocks.PageChooserBlock(page_type=['irelandie_missions.MissionPage'], required=False)), ('title', wagtail.core.blocks.CharBlock(required=False))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('embassy_story', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('page', wagtail.blocks.PageChooserBlock(page_type=['irelandie_missions.MissionPage'], required=False)), ('title', wagtail.blocks.CharBlock(required=False))]))], blank=True, null=True),
         ),
         migrations.AddField(
             model_name='countrypage',
             name='featured_stories',
-            field=wagtail.core.fields.StreamField([('featured_story', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('page', wagtail.core.blocks.PageChooserBlock(required=False)), ('title', wagtail.core.blocks.CharBlock(required=False))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('featured_story', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('page', wagtail.blocks.PageChooserBlock(required=False)), ('title', wagtail.blocks.CharBlock(required=False))]))], blank=True, null=True),
         ),
         migrations.AddField(
             model_name='countrypage',
@@ -65,7 +65,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='countrypage',
             name='stories',
-            field=wagtail.core.fields.StreamField([('story', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('page', wagtail.core.blocks.PageChooserBlock(required=False)), ('title', wagtail.core.blocks.CharBlock(required=False)), ('summary', wagtail.core.blocks.CharBlock(required=False)), ('links', wagtail.core.blocks.StreamBlock([('link', wagtail.core.blocks.StructBlock([('page', wagtail.core.blocks.PageChooserBlock(required=False)), ('title', wagtail.core.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False)), ('summary', wagtail.core.blocks.CharBlock(required=False)), ('url', wagtail.core.blocks.URLBlock(help_text='An external link.', label='URL', required=False))]))], max_num=3, min_num=0, required=False))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('story', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('page', wagtail.blocks.PageChooserBlock(required=False)), ('title', wagtail.blocks.CharBlock(required=False)), ('summary', wagtail.blocks.CharBlock(required=False)), ('links', wagtail.blocks.StreamBlock([('link', wagtail.blocks.StructBlock([('page', wagtail.blocks.PageChooserBlock(required=False)), ('title', wagtail.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False)), ('summary', wagtail.blocks.CharBlock(required=False)), ('url', wagtail.blocks.URLBlock(help_text='An external link.', label='URL', required=False))]))], max_num=3, min_num=0, required=False))]))], blank=True, null=True),
         ),
         migrations.AddField(
             model_name='countrypage',
