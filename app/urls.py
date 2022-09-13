@@ -13,7 +13,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 from wagtail.api.v2.router import WagtailAPIRouter
 
-from irelandie_utils.views import PagesAPIEndpoint, set_language_wagtail
+from irelandie_utils.views import PagesAPIEndpoint, NewsPagesAPIEndpoint, set_language_wagtail
 from irelandie_search import views as search_views
 
 
@@ -25,6 +25,7 @@ PREFIX_DEFAULT_LANGUAGE = getattr(
 
 # Create the router. "wagtailapi" is the URL namespace
 api_router = WagtailAPIRouter('wagtailapi')
+api_router.register_endpoint('news', NewsPagesAPIEndpoint)
 api_router.register_endpoint('pages', PagesAPIEndpoint)
 
 urlpatterns = [
