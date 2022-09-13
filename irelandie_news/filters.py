@@ -24,7 +24,7 @@ class NewsPageFieldFilter(BaseFilterBackend):
                 queryset = queryset.filter(publication_date__lte=date_range['high'])
 
         return queryset
-    
+
     @staticmethod
     def get_date_range(year):
 
