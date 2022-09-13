@@ -1,0 +1,30 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load static %}
+
+{% block content %}
+ <!-- Main -->
+    {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+
+    {% if page.title or page.generic_hero %}
+        {% include "patterns/molecules/streamfield/blocks/generic_hero.html" with page=page %}
+    {% endif %}
+
+    {% block main %}
+        <!-- Body -->
+    <div class="section section--padding">
+        <div class="wrapper wrapper--large wrapper--padding">
+            <div class="link-button__grid-container">
+            {% include_block page.link_button %}
+            </div>
+        </div>
+    </div>
+
+{% if page.related_articles %}
+<!-- related_articles -->
+        {% include "patterns/molecules/related-articles/related-articles.html" with articles=page.related_articles %}
+{% endif %}
+
+    {% endblock %}
+{% endblock %}
