@@ -2,8 +2,8 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 
 
 class Migration(migrations.Migration):
@@ -59,12 +59,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='missionpage',
             name='popular_pages',
-            field=wagtail.core.fields.StreamField([('link', wagtail.core.blocks.StructBlock([('page', wagtail.core.blocks.PageChooserBlock(required=False)), ('title', wagtail.core.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False))]))], blank=True, help_text='Add pages to hero search.'),
+            field=wagtail.fields.StreamField([('link', wagtail.blocks.StructBlock([('page', wagtail.blocks.PageChooserBlock(required=False)), ('title', wagtail.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False))]))], blank=True, help_text='Add pages to hero search.'),
         ),
         migrations.AddField(
             model_name='missionpage',
             name='root_navigation',
-            field=wagtail.core.fields.StreamField([('link', wagtail.core.blocks.StructBlock([('page', wagtail.core.blocks.PageChooserBlock(required=False)), ('title', wagtail.core.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False))]))], blank=True, help_text='Override the site navigation'),
+            field=wagtail.fields.StreamField([('link', wagtail.blocks.StructBlock([('page', wagtail.blocks.PageChooserBlock(required=False)), ('title', wagtail.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False))]))], blank=True, help_text='Override the site navigation'),
         ),
         migrations.AddField(
             model_name='missionpage',

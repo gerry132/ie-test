@@ -6,7 +6,7 @@ from django.utils.cache import add_never_cache_headers, patch_cache_control
 
 from irelandie_missions.models import MissionPage
 
-from wagtail.core.models import Page, Site
+from wagtail.models import Page, Site
 from wagtail.search.models import Query
 
 from irelandie_utils.cache import get_default_cache_control_kwargs

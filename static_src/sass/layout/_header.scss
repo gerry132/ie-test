@@ -236,16 +236,6 @@
             width: 100%;
             height: auto;
             border-top: 0;
-            // offset for fixed header
-            top: $mobile-header-height;
-
-            @include media-query(large) {
-                top: $desktop-header-height;
-
-                &--condensed {
-                    top: $condensed-header-height;
-                }
-            }
         }
     }
 }

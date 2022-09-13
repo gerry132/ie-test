@@ -2,8 +2,8 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.images.blocks
 
 
@@ -23,16 +23,16 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(blank=True, max_length=255)),
                 ('social_media_link', models.URLField(blank=True)),
                 ('social_media_text', models.CharField(blank=True, default='Connect with person on this social media', max_length=255)),
-                ('address', wagtail.core.fields.RichTextField(blank=True)),
+                ('address', wagtail.fields.RichTextField(blank=True)),
                 ('telephone', models.CharField(blank=True, max_length=255)),
-                ('opening_hours', wagtail.core.fields.RichTextField(blank=True)),
-                ('closure_dates', wagtail.core.fields.RichTextField(blank=True)),
-                ('emergency_contact_details', wagtail.core.fields.RichTextField(blank=True)),
+                ('opening_hours', wagtail.fields.RichTextField(blank=True)),
+                ('closure_dates', wagtail.fields.RichTextField(blank=True)),
+                ('emergency_contact_details', wagtail.fields.RichTextField(blank=True)),
                 ('our_services_url', models.URLField(blank=True)),
                 ('our_role_url', models.URLField(blank=True)),
                 ('alignment', models.CharField(choices=[('left', 'Left'), ('right', 'Right')], default='left', max_length=255)),
                 ('background', models.CharField(choices=[('light', 'Light'), ('dark', 'Dark')], default='light', max_length=255)),
-                ('links', wagtail.core.fields.StreamField([('link', wagtail.core.blocks.StructBlock([('page', wagtail.core.blocks.PageChooserBlock(required=False)), ('icon', wagtail.images.blocks.ImageChooserBlock(required=False)), ('title', wagtail.core.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False)), ('summary', wagtail.core.blocks.CharBlock(required=False)), ('url', wagtail.core.blocks.URLBlock(help_text='An external link.', label='URL', required=False))], max_num=6, min_num=0))], blank=True)),
+                ('links', wagtail.fields.StreamField([('link', wagtail.blocks.StructBlock([('page', wagtail.blocks.PageChooserBlock(required=False)), ('icon', wagtail.images.blocks.ImageChooserBlock(required=False)), ('title', wagtail.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False)), ('summary', wagtail.blocks.CharBlock(required=False)), ('url', wagtail.blocks.URLBlock(help_text='An external link.', label='URL', required=False))], max_num=6, min_num=0))], blank=True)),
                 ('embassy_logo', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='irelandie_images.customimage')),
                 ('image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='irelandie_images.customimage')),
             ],

@@ -4,8 +4,8 @@ from django.db import migrations, models
 import django.db.models.deletion
 import irelandie_speeches.blocks
 import irelandie_utils.blocks
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.documents.blocks
 import wagtail.images.blocks
 
@@ -47,8 +47,8 @@ class Migration(migrations.Migration):
                 ('listing_summary', models.CharField(blank=True, help_text="The text summary used when this page appears in listings. It's also used as the description for search engines if the 'Meta description' field above is not defined.", max_length=255)),
                 ('introduction', models.TextField(blank=True)),
                 ('hero_title', models.CharField(blank=True, max_length=255)),
-                ('body', wagtail.core.fields.StreamField([('contact_detail', irelandie_utils.blocks.ContactDetailBlock()), ('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.core.blocks.CharBlock(required=False))])), ('rich_text', wagtail.core.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'])), ('person', irelandie_utils.blocks.PersonBlock()), ('place', irelandie_utils.blocks.PlaceBlock()), ('document', wagtail.core.blocks.StructBlock([('document', wagtail.documents.blocks.DocumentChooserBlock()), ('title', wagtail.core.blocks.CharBlock(required=False))])), ('table', irelandie_utils.blocks.TableBlock()), ('role', irelandie_utils.blocks.RoleBlock()), ('youtube_video', wagtail.core.blocks.StructBlock([('url', wagtail.core.blocks.CharBlock())]))], blank=True)),
-                ('override_related_articles', wagtail.core.fields.StreamField([('article', irelandie_speeches.blocks.SpeechPageBlock())], blank=True)),
+                ('body', wagtail.fields.StreamField([('contact_detail', irelandie_utils.blocks.ContactDetailBlock()), ('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.blocks.CharBlock(required=False))])), ('rich_text', wagtail.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'])), ('person', irelandie_utils.blocks.PersonBlock()), ('place', irelandie_utils.blocks.PlaceBlock()), ('document', wagtail.blocks.StructBlock([('document', wagtail.documents.blocks.DocumentChooserBlock()), ('title', wagtail.blocks.CharBlock(required=False))])), ('table', irelandie_utils.blocks.TableBlock()), ('role', irelandie_utils.blocks.RoleBlock()), ('youtube_video', wagtail.blocks.StructBlock([('url', wagtail.blocks.CharBlock())]))], blank=True)),
+                ('override_related_articles', wagtail.fields.StreamField([('article', irelandie_speeches.blocks.SpeechPageBlock())], blank=True)),
                 ('call_to_action', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='utils.calltoactionsnippet')),
                 ('hero_image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='irelandie_images.customimage')),
                 ('hero_video', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailmedia.media')),

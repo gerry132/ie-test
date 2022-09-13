@@ -2,8 +2,8 @@
 
 from django.db import migrations
 import irelandie_utils.blocks
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.images.blocks
 
 
@@ -17,11 +17,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='person',
             name='links',
-            field=wagtail.core.fields.StreamField([('link', wagtail.core.blocks.StructBlock([('page', wagtail.core.blocks.PageChooserBlock(required=False)), ('icon', wagtail.core.blocks.ChoiceBlock(choices=[('government-building', 'Government Building'), ('money', 'Money'), ('passport', 'Passport'), ('plane', 'Plane'), ('ticket', 'Ticket')])), ('title', wagtail.core.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False)), ('summary', wagtail.core.blocks.CharBlock(required=False)), ('url', wagtail.core.blocks.URLBlock(help_text='An external link.', label='URL', required=False))], max_num=6, min_num=0))], blank=True),
+            field=wagtail.fields.StreamField([('link', wagtail.blocks.StructBlock([('page', wagtail.blocks.PageChooserBlock(required=False)), ('icon', wagtail.blocks.ChoiceBlock(choices=[('government-building', 'Government Building'), ('money', 'Money'), ('passport', 'Passport'), ('plane', 'Plane'), ('ticket', 'Ticket')])), ('title', wagtail.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False)), ('summary', wagtail.blocks.CharBlock(required=False)), ('url', wagtail.blocks.URLBlock(help_text='An external link.', label='URL', required=False))], max_num=6, min_num=0))], blank=True),
         ),
         migrations.AlterField(
             model_name='personpage',
             name='body',
-            field=wagtail.core.fields.StreamField([('section', wagtail.core.blocks.StructBlock([('title', wagtail.core.blocks.CharBlock(required=False)), ('body', wagtail.core.blocks.StreamBlock([('contact_detail', irelandie_utils.blocks.ContactDetailBlock()), ('place', irelandie_utils.blocks.PlaceBlock()), ('rich_text', irelandie_utils.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'])), ('role', irelandie_utils.blocks.RoleBlock())], required=False)), ('image', wagtail.images.blocks.ImageChooserBlock()), ('page', wagtail.core.blocks.PageChooserBlock(required=False)), ('links', wagtail.core.blocks.StreamBlock([('link', wagtail.core.blocks.StructBlock([('page', wagtail.core.blocks.PageChooserBlock(required=False)), ('icon', wagtail.core.blocks.ChoiceBlock(choices=[('government-building', 'Government Building'), ('money', 'Money'), ('passport', 'Passport'), ('plane', 'Plane'), ('ticket', 'Ticket')])), ('title', wagtail.core.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False)), ('summary', wagtail.core.blocks.CharBlock(required=False)), ('url', wagtail.core.blocks.URLBlock(help_text='An external link.', label='URL', required=False))]))], max_num=3, min_num=0, required=False))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('section', wagtail.blocks.StructBlock([('title', wagtail.blocks.CharBlock(required=False)), ('body', wagtail.blocks.StreamBlock([('contact_detail', irelandie_utils.blocks.ContactDetailBlock()), ('place', irelandie_utils.blocks.PlaceBlock()), ('rich_text', irelandie_utils.blocks.RichTextBlock(features=['h3', 'blockquote', 'bold', 'link', 'document-link', 'ul'])), ('role', irelandie_utils.blocks.RoleBlock())], required=False)), ('image', wagtail.images.blocks.ImageChooserBlock()), ('page', wagtail.blocks.PageChooserBlock(required=False)), ('links', wagtail.blocks.StreamBlock([('link', wagtail.blocks.StructBlock([('page', wagtail.blocks.PageChooserBlock(required=False)), ('icon', wagtail.blocks.ChoiceBlock(choices=[('government-building', 'Government Building'), ('money', 'Money'), ('passport', 'Passport'), ('plane', 'Plane'), ('ticket', 'Ticket')])), ('title', wagtail.blocks.CharBlock(help_text="Leave blank to use the page's own title", required=False)), ('summary', wagtail.blocks.CharBlock(required=False)), ('url', wagtail.blocks.URLBlock(help_text='An external link.', label='URL', required=False))]))], max_num=3, min_num=0, required=False))]))], blank=True, null=True),
         ),
     ]
