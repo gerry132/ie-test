@@ -1,0 +1,55 @@
+.link-button {
+    $root: &;
+    display: block;
+    border-radius: $border-radius;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    background-color: #004D46;
+    position: relative;
+    height: 40px;
+
+    @include media-query(medium) {
+        max-width: 400px;
+    }
+
+
+    &__grid-container{
+        display: grid;
+        @media only screen and (min-width:600px) {
+               grid-template-columns: repeat(2,1fr);
+        }
+        @media only screen and (min-width:1023px) {
+               grid-template-columns: repeat(3,1fr);
+        }
+
+    }
+
+    &__content{
+        display: flex;
+    }
+
+   &__title{
+       flex: 80%;
+       padding: 6px 20px;
+       font-family: 'Inter';
+       font-style: normal;
+       font-weight: 700;
+       font-size: 22px;
+       line-height: 27px;
+
+       color: #FFFFFF;
+   }
+
+   &__arrow{
+        background-image: url('../images/cssBackgrounds/arrow-right.svg');
+        background-color: transparent;
+        background-repeat: no-repeat;
+        color: $color--white;
+        position: relative;
+        display: block;
+        border: 0;
+        padding-right: 26px;
+        margin-top: 6px;
+        cursor: pointer;
+       }
+}
