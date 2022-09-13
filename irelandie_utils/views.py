@@ -46,7 +46,6 @@ class PagesAPIEndpoint(PagesAPIViewSet):
         return context
 
 
-
 class NewsPagesAPIEndpoint(PagesAPIViewSet):
     base_serializer_class = PageSerializer
     filter_backends = [

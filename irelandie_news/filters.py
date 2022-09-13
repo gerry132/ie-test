@@ -1,7 +1,5 @@
 from rest_framework.filters import BaseFilterBackend
 
-from irelandie_news.models import NewsPage
-
 import datetime
 
 x = datetime.datetime(2020, 5, 17)
