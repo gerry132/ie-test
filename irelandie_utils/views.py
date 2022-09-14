@@ -46,31 +46,6 @@ class PagesAPIEndpoint(PagesAPIViewSet):
         return context
 
 
-class NewsPagesAPIEndpoint(PagesAPIViewSet):
-    base_serializer_class = PageSerializer
-    filter_backends = [
-        # NOTE: filters should be listed before the SearchFilter
-        NewsPageFieldFilter,
-    ] + PagesAPIViewSet.filter_backends
-    known_query_parameters = PagesAPIViewSet.known_query_parameters.union(
-        ["year"]
-    )
-
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-
-        # If this request access a page, put the page locale in the context
-        lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
-        if lookup_url_kwarg in self.kwargs:
-            context.update({"locale": self.get_object().locale})
-        # Get the locale from GET parameter
-        elif (request := self.request) and "locale" in request.GET:
-            locale = get_locale_from_language_code_or_default(request.GET.get("locale"))
-            context.update({"locale": locale})
-
-        return context
-
-
 @require_http_methods(["POST"])
 def set_language_wagtail(request):
     page_id = request.POST.get("page_id")

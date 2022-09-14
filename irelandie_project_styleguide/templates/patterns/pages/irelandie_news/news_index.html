@@ -1,6 +1,59 @@
 {% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags i18n %}
+{% load util_tags wagtailcore_tags %}
 
 {% block content %}
-    <h1>{{ page.title }}</h1>
-    <p>{{ page.description }}</p>
-{% endblock %}
+
+<script>
+function getNewsArticles() {
+    $.ajax({
+            url : '{{ current_site.full_url }}',
+            type : 'GET',
+            data : {
+                'year' : 2022
+            },
+            success : function(data) {              
+                alert('Data: '+data);
+                document.getElementById('news--wrapper').innerHTML = data;
+            },
+            error : function(request,error)
+            {
+                alert("Request: "+JSON.stringify(request));
+            }
+    });
+}
+</script>
+
+{% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+<div id="main-header" class="section section--padding section--white section--toc">
+    <div id="wrapper" class="wrapper--large--toc">
+        <div id="left">
+            <div class="wrapper wrapper--padding">
+                <div class="intro--toc">
+                    <div class="container">
+                        <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                        {% if page.description %}
+                            <p class="intro__description">{{ page.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="right">
+            <div class="related-content">
+                <h4 class="header--related-content">Year</h4>
+                <button onclick="getNewsArticles()">Test News Articles</button>
+            </div>
+        </div>
+      </div>
+</div>
+<div class="section--master">
+   <div class="section section--white">
+    <div class="wrapper wrapper--large--toc wrapper--padding content--padding">
+        <div style="padding-bottom: 20px;">
+            <div id="news--wrapper"></div>
+        </div>
+    {% endblock %}
+</div>
+</div>
+</div>

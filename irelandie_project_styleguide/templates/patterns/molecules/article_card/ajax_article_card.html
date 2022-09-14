@@ -1,0 +1,32 @@
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+
+<div class="article-cards featured-blocks featured-blocks--four">
+{% for value in page.related_articles %}
+
+<a href="{{ link_url }}" class="card">
+    
+    <div class="card__image-container">
+        {% if value.image_alt %}
+            {% image value.hero_image width-500 alt=value.image_alt class="card__image" %}
+        {% else %}
+            {% image value.hero_image width-500 alt=value.image.alt_default class="card__image" %}
+        {% endif %}
+    </div>
+
+    <div class="card__content">
+        <h3 class="card__title">
+            {{ value.title }}
+        </h3>
+
+        <p class="card__summary">
+            {{ value.introduction }}
+        </p>
+
+        <span class="card__link">
+            {% trans 'Read story' %}
+        </span>
+    </div>
+</a>
+
+{% endfor %}
+</div>
