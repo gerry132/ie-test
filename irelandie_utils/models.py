@@ -146,7 +146,8 @@ class SocialFields(models.Model):
 
     promote_panels = [
         MultiFieldPanel(
-            [ImageChooserPanel("social_image"), FieldPanel("social_text")],
+            [FieldPanel("social_image", permission="access_admin"),
+             FieldPanel("social_text", permission="access_admin")],
             "Social networks",
         )
     ]
@@ -185,13 +186,14 @@ class ListingFields(models.Model):
     promote_panels = [
         MultiFieldPanel(
             [
-                ImageChooserPanel("listing_image"),
+                FieldPanel("listing_image", permission="access_admin"),
                 FieldPanel(
                     "listing_image_alt",
-                    help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/")
+                    help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
+                    permission="access_admin"
                 ),
-                FieldPanel("listing_title"),
-                FieldPanel("listing_summary"),
+                FieldPanel("listing_title", permission="access_admin"),
+                FieldPanel("listing_summary", permission="access_admin"),
             ],
             "Listing information",
         )
@@ -346,8 +348,8 @@ class BasePage(SocialFields, ListingFields, Page):
 
     webchat_panel = [
         MultiFieldPanel([
-            FieldPanel("webchat_script"),
-            FieldPanel("web_bot_script"),
+            FieldPanel("webchat_script", permission="access_admin"),
+            FieldPanel("web_bot_script", permission="access_admin"),
         ], "Chatbot")
     ]
 
@@ -360,7 +362,7 @@ class BasePage(SocialFields, ListingFields, Page):
     )
 
     custom_footer_panel = [
-        SnippetChooserPanel("custom_footer")
+        FieldPanel("custom_footer", permission="access_admin")
     ]
 
     custom_header = models.ForeignKey(
@@ -372,20 +374,44 @@ class BasePage(SocialFields, ListingFields, Page):
     )
 
     custom_header_panel = [
-        SnippetChooserPanel("custom_header")
+        FieldPanel("custom_header", permission="access_admin")
     ]
 
     class Meta:
         abstract = True
 
-    promote_panels = (
-        Page.promote_panels +
-        SocialFields.promote_panels +
-        ListingFields.promote_panels +
-        webchat_panel +
-        custom_footer_panel +
-        custom_header_panel
+    COMMON_PROMOTE_PANELS = (
+        FieldPanel('slug', permission="access_admin"),
+        FieldPanel('seo_title', permission="access_admin"),
+        FieldPanel('search_description', permission="access_admin"),
     )
+
+    promote_panels = (
+        [
+            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
+            FieldPanel('show_in_menus', permission="access_admin"),
+        ] +
+        SocialFields.promote_panels +
+        ListingFields.promote_panels
+    )
+    settings_panels = ([
+                           MultiFieldPanel(
+                               [
+                                   FieldPanel('go_live_at', permission="access_admin"),
+                                   FieldPanel('expire_at', permission="access_admin"),
+                               ],
+                               "Scheduled publishing"
+                           ),
+                           MultiFieldPanel(
+                               [
+                                   FieldPanel("custom_header", permission="access_admin"),
+                                   FieldPanel("custom_footer", permission="access_admin")
+                               ],
+                               "Root Navigation"
+                           ),
+                       ] +
+                       webchat_panel
+                       )
 
     search_fields = Page.search_fields + [
         index.SearchField("listing_title"),
