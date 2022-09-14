@@ -72,14 +72,16 @@
                         {% endif %}
                     {% endif %}
                 {% else %}
+                    {% if custom_header.links %}
+                        {% image custom_header_settings.site_settings.mobile_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
+                    {% endif %}
                     {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
-                {% endif %}
+                    {% endif %}
                 </a>
 
                 <div class="header__menus header__menus--desktop">
                     <div data-desktop-menu>
-                        {% has_root_override page as override %}
-                        {% primarynav page override=override %}
+                        {% primarynav page %}
                     </div>
                 </div>
 
@@ -90,8 +92,7 @@
                     {% endcomment %}
                     <div class="wrapper wrapper--large wrapper--mobile-menu">
                         <div class="header__menu header__menu--primary">
-                            {% has_root_override page as override %}
-                            {% primarynav page override=override %}
+                            {% primarynav page %}
                         </div>
                         {% has_secondary_nav as shownav %}
                         {% if shownav %}

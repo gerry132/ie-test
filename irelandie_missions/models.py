@@ -178,14 +178,10 @@ class JobIndexPage(BasePage):
 class MissionPage(HeroPage):
     template = "patterns/pages/irelandie_missions/mission.html"
     search_bar = models.BooleanField(default=False)
-    override_pinned_stories = models.BooleanField(default=True)
     popular_pages = StreamField(
         [("link", LinkBlock())], blank=True, help_text="Add pages to hero search."
     )
     root_page = models.BooleanField(default=True)
-    root_navigation = StreamField(
-        [("link", LinkBlock())], blank=True, help_text="Override the site navigation"
-    )
     notice_bar = StreamField(
         [
             ("noticebar", NoticeBarWithMessageLink()),
@@ -249,8 +245,6 @@ class MissionPage(HeroPage):
     )
 
     content_panels = HeroPage.content_panels + [
-        FieldPanel("root_page"),
-        FieldPanel("override_pinned_stories"),
         MultiFieldPanel([
             FieldPanel("search_bar"),
             StreamFieldPanel("popular_pages"),
@@ -280,9 +274,13 @@ class MissionPage(HeroPage):
             .specific()
         )
 
-    settings_panels = HeroPage.settings_panels + [
-        StreamFieldPanel("root_navigation")
-    ]
+    settings_panels = (
+       [
+           FieldPanel("root_page", permission="access_admin"),
+       ] +
+       HeroPage.settings_panels
+
+    )
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),

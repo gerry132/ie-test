@@ -93,9 +93,16 @@
     <section aria-label="{% trans 'Skip to main content' %}">
         {% include "patterns/molecules/skip-link/skip-link.html" %}
     </section>
+    {% has_root_override page header=True as override %}
+    {% if override %}
+        {% custom_header_settings page as custom_header_settings %}
+        {% include "patterns/organisms/header/header.html" with custom_header=override custom_header_settings=custom_header_settings page=page %}
+    {% else %}
+        {% custom_header_settings page as custom_header_settings %}
+        {% include "patterns/organisms/header/header.html" with custom_header=custom_header_settings page=page %}
+    {% endif %}
 
-    {% custom_header_settings page as custom_header_settings %}
-    {% include "patterns/organisms/header/header.html" with custom_header=custom_header_settings page=page %}
+
 {% endblock header %}
 
 {% block footer %}
