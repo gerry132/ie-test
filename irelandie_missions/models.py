@@ -139,9 +139,9 @@ class JobContentPage(BasePage):
     )
 
     content_panels = BasePage.content_panels + [
-        FieldPanel("subtitle"),
+        FieldPanel("subtitle", permission="access_admin"),
         FieldPanel("job_index_page_summary"),
-        StreamFieldPanel("privacy_policy"),
+        StreamFieldPanel("privacy_policy", permission="access_admin"),
         StreamFieldPanel("body")
     ]
 
@@ -159,7 +159,7 @@ class JobIndexPage(BasePage):
     )
 
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero")
+        StreamFieldPanel("generic_hero", permission="access_admin")
     ]
 
     @cached_property
@@ -246,16 +246,16 @@ class MissionPage(HeroPage):
 
     content_panels = HeroPage.content_panels + [
         MultiFieldPanel([
-            FieldPanel("search_bar"),
-            StreamFieldPanel("popular_pages"),
-        ], heading="Searchbar settings"
+            FieldPanel("search_bar", permission="access_admin"),
+            StreamFieldPanel("popular_pages", permission="access_admin"),
+        ], heading="Searchbar settings",
         ),
         MultiFieldPanel([
             StreamFieldPanel("notice_bar"),
         ], heading="Noticebar settings"
         ),
         StreamFieldPanel("stories", heading="Two Column Feature"),
-        StreamFieldPanel("pinned_stories"),
+        StreamFieldPanel("pinned_stories", permission="access_admin"),
         StreamFieldPanel("stories_between", heading="Two Column"),
         StreamFieldPanel("person", heading="Person + Social Feed"),
         StreamFieldPanel("body"),
@@ -369,9 +369,9 @@ class ServicesLandingPage(BasePage):
     )
 
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero"),
-        StreamFieldPanel("rich_text", heading="Advanced Richtext"),
-        StreamFieldPanel("body")
+        StreamFieldPanel("generic_hero", permission="access_admin"),
+        StreamFieldPanel("rich_text", heading="Advanced Richtext", permission="access_admin"),
+        StreamFieldPanel("body", permission="access_admin")
     ]
 
 
