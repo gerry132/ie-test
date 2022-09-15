@@ -61,7 +61,7 @@ class NewsPageIndex(BasePage):
                    .order_by()
                    .values('publication_date')
                    .distinct()
-                  )
+                   )
         year_list = []
         for year in yearset:
             if year['publication_date'].year not in year_list:
