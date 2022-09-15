@@ -15,7 +15,7 @@
 
     &__grid-container{
         display: grid;
-        grid-row-gap: 20px;
+        grid-gap: 20px;
         @media only screen and (min-width:600px) {
                grid-template-columns: repeat(2,1fr);
         }
@@ -53,4 +53,9 @@
         margin-top: 6px;
         cursor: pointer;
        }
+
+    &__searchbar{
+        width: 260px;
+        height: 44px;
+    }
 }
