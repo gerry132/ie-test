@@ -7,11 +7,6 @@
 {% block content %}
  <!-- Main -->
 
-<script>
-function newsIndexRedirect(year) {
-
-}
-</script>
 
     {% if page.title or page.generic_hero %}
         {% include "patterns/molecules/streamfield/blocks/generic_hero.html" with page=page %}
@@ -28,7 +23,7 @@ function newsIndexRedirect(year) {
             <div class="section section--padding">
                 <h4>News Archive</h4>
                 <select  class="link-button__searchbar"  onchange="if (this.value) window.location.href=this.value">
-                    <option selected="true" disabled="disabled" hidden="hidden">Choose year</option>
+                    <option selected="true" disabled="disabled">Choose year</option>
                     {% for p in page.get_years %}
                             {% for value in get_news_index %}
                                 <option value="{{ page.get_root_index }}?year_r={{p}}&redirect=true">{{p}}</option>
