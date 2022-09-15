@@ -159,7 +159,7 @@ class NewsLandingPage(BasePage):
             if year['publication_date'].year not in year_list:
                 year_list.append(year['publication_date'].year)
         return year_list
-    
+
     @cached_property
     def get_root_index(self):
         return self.get_parent().url
