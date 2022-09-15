@@ -15,20 +15,30 @@ class NewsPageIndex(BasePage):
     template = "patterns/pages/irelandie_news/news_index.html"
     ajax_template = "patterns/molecules/article_card/ajax_article_card.html"
     description = models.TextField(blank=True)
-
+    generic_hero = StreamField(
+        [
+            ("generic_hero", blocks.GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
     content_panels = Page.content_panels + [
         FieldPanel("description"),
+        StreamFieldPanel("generic_hero", permission="access_admin"),
     ]
 
-    @cached_property
-    def related_articles(self, date=None):
-        if not date:
-            high_date = datetime.datetime.now()
-            low_date = datetime.datetime(high_date.year, 1, 1)
-        else:
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        if 'year' in request.GET:
+            year = int(request.GET['year'])
             low_date = datetime.datetime(year, 1, 1)
             high_date = datetime.datetime(year, 12, 31)
-        return (
+        else:
+            high_date = datetime.datetime.now()
+            low_date = datetime.datetime(high_date.year, 1, 1)
+        context['related_articles'] = (
             NewsPage.objects.child_of(self)
             .filter(publication_date__lte=high_date,
                     publication_date__gte=low_date,
@@ -39,6 +49,25 @@ class NewsPageIndex(BasePage):
             .order_by("publication_date")
             .specific()
         )
+
+        return context
+
+    @cached_property
+    def get_years(self):
+        
+        yearset = (NewsPage.objects.child_of(self)
+            .public()
+            .live()
+            .order_by()
+            .values('publication_date')
+            .distinct()
+        )
+        year_list = []
+        for year in yearset:
+            if year['publication_date'].year not in year_list:
+                year_list.append(year['publication_date'].year)
+        return year_list
+
 
 
 class NewsPage(MinimalArticlePage):

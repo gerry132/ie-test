@@ -5,25 +5,30 @@
 {% block content %}
 
 <script>
-function getNewsArticles() {
+function getNewsArticles(year=null) {
+    if (year===null) {
+        year = new Date().getFullYear();
+        console.log(year);
+    }
     $.ajax({
             url : '{{ current_site.full_url }}',
             type : 'GET',
             data : {
-                'year' : 2022
+                'year' : year
             },
             success : function(data) {              
-                alert('Data: '+data);
                 document.getElementById('news--wrapper').innerHTML = data;
             },
             error : function(request,error)
             {
-                alert("Request: "+JSON.stringify(request));
             }
     });
 }
+getNewsArticles();
 </script>
-
+{% if page.generic_hero %}
+    {% include "patterns/molecules/streamfield/blocks/generic_hero.html" with page=page %}
+{% endif %}
 {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
 <div id="main-header" class="section section--padding section--white section--toc">
     <div id="wrapper" class="wrapper--large--toc">
@@ -32,17 +37,26 @@ function getNewsArticles() {
                 <div class="intro--toc">
                     <div class="container">
                         <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
-                        {% if page.description %}
-                            <p class="intro__description">{{ page.description }}</p>
-                        {% endif %}
                     </div>
+                </div>
+                <div class="wrapper--padding related-content--mobile">
+                    <h4>News Archive</h4>
+                    <select class="searchBarNews" style="width: 100%;" onchange="getNewsArticles(this.value); ">
+                            {% for p in page.get_years %}
+                                <option value="{{p}}">{{p}}</option>
+                            {% endfor %}
+                        </select>
                 </div>
             </div>
         </div>
         <div id="right">
             <div class="related-content">
-                <h4 class="header--related-content">Year</h4>
-                <button onclick="getNewsArticles()">Test News Articles</button>
+                <h4>News Archive</h4>
+                <select class="searchBarNews" style="width: 100%;" onchange="getNewsArticles(this.value); ">
+                        {% for p in page.get_years %}
+                            <option value="{{p}}">{{p}}</option>
+                        {% endfor %}
+                    </select>
             </div>
         </div>
       </div>
@@ -51,7 +65,7 @@ function getNewsArticles() {
    <div class="section section--white">
     <div class="wrapper wrapper--large--toc wrapper--padding content--padding">
         <div style="padding-bottom: 20px;">
-            <div id="news--wrapper"></div>
+            <div id="news--wrapper" style="padding-bottom: 15%"></div>
         </div>
     {% endblock %}
 </div>
