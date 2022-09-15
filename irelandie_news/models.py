@@ -54,20 +54,19 @@ class NewsPageIndex(BasePage):
 
     @cached_property
     def get_years(self):
-        
+
         yearset = (NewsPage.objects.child_of(self)
-            .public()
-            .live()
-            .order_by()
-            .values('publication_date')
-            .distinct()
+                    .public()
+                    .live()
+                    .order_by()
+                    .values('publication_date')
+                    .distinct()
         )
         year_list = []
         for year in yearset:
             if year['publication_date'].year not in year_list:
                 year_list.append(year['publication_date'].year)
         return year_list
-
 
 
 class NewsPage(MinimalArticlePage):
