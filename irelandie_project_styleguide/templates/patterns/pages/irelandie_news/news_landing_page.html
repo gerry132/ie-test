@@ -7,7 +7,12 @@
 {% block content %}
  <!-- Main -->
 
+<script>
+function newsIndexRedirect(year) {
 
+}
+</script>
+{{page.get_root_index}}
     {% if page.title or page.generic_hero %}
         {% include "patterns/molecules/streamfield/blocks/generic_hero.html" with page=page %}
     {% endif %}
@@ -25,7 +30,7 @@
                 <select  class="searchBarNews" style="width: 100%;"  onchange="if (this.value) window.location.href=this.value">
                         {% for p in page.get_years %}
                             {% for value in get_news_index %}
-                                <option value="{{ value.full_url }}">{{p}}</option>
+                                <option value="{{ page.get_root_index }}?year_r={{p}}&redirect=true">{{p}}</option>
                             {% endfor %}
                         {% endfor %}
                     </select>

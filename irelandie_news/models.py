@@ -31,7 +31,11 @@ class NewsPageIndex(BasePage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        if 'year' in request.GET:
+        if request.GET.get('year'):
+            year = int(request.GET.get('year'))
+            low_date = datetime.datetime(year, 1, 1)
+            high_date = datetime.datetime(year, 12, 31)
+        elif 'year' in request.GET:
             year = int(request.GET['year'])
             low_date = datetime.datetime(year, 1, 1)
             high_date = datetime.datetime(year, 12, 31)
@@ -54,7 +58,6 @@ class NewsPageIndex(BasePage):
 
     @cached_property
     def get_years(self):
-
         yearset = (NewsPage.objects.child_of(self)
                    .public()
                    .live()
@@ -96,6 +99,9 @@ class NewsPage(MinimalArticlePage):
 
 class NewsLandingPage(BasePage):
     template = "patterns/pages/irelandie_news/news_landing_page.html"
+    parent_page_types = [
+        'NewsPageIndex',
+    ]
     generic_hero = StreamField(
         [
             ("generic_hero", blocks.GenericHeroBlock()),
@@ -153,3 +159,7 @@ class NewsLandingPage(BasePage):
             if year['publication_date'].year not in year_list:
                 year_list.append(year['publication_date'].year)
         return year_list
+    
+    @cached_property
+    def get_root_index(self):
+        return self.get_parent().url
