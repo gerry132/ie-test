@@ -479,7 +479,7 @@ class HeroPage(BasePage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
-    alt_text = models.CharField(blank=False,
+    alt_text = models.CharField(blank=True,
                                 null=True,
                                 max_length=255,
                                 help_text=ALT_HELP_TEXT)
@@ -514,6 +514,14 @@ class HeroPage(BasePage):
                 {
                     "link_text": ValidationError(
                         "You must provide some Link text if you choose a link page"
+                    )
+                }
+            )
+        if self.hero_image and not self.alt_text:
+            raise ValidationError(
+                {
+                    "alt_text": ValidationError(
+                        "You must provide an alt_text."
                     )
                 }
             )
