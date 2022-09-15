@@ -2,14 +2,16 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
  <!-- Main -->
-    {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+
 
     {% if page.title or page.generic_hero %}
         {% include "patterns/molecules/streamfield/blocks/generic_hero.html" with page=page %}
     {% endif %}
+    {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
 
     {% block main %}
         <!-- Body -->
@@ -17,6 +19,16 @@
         <div class="wrapper wrapper--large wrapper--padding">
             <div class="link-button__grid-container">
             {% include_block page.link_button %}
+            </div>
+            <div class="related-content">
+                <h4>News Archive</h4>
+                <select  class="searchBarNews" style="width: 100%;"  onchange="if (this.value) window.location.href=this.value">
+                        {% for p in page.get_years %}
+                            {% for value in get_news_index %}
+                                <option value="{{ value.full_url }}">{{p}}</option>
+                            {% endfor %}
+                        {% endfor %}
+                    </select>
             </div>
         </div>
     </div>
