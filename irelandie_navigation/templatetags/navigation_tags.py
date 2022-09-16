@@ -338,6 +338,7 @@ def custom_header_settings(context, page):
         logo_alt = custom_header.logo_alt or site_settings.site_logo_alt
         links = custom_header.links
         url = custom_header.url
+        link_page = custom_header.link_page
         is_present = True
     else:
         # no custom header is set for the page, use the site settings
@@ -355,6 +356,7 @@ def custom_header_settings(context, page):
         "mobile_logo": mobile_logo,
         "logo_alt": logo_alt,
         "links": links,
+        "link_page": link_page,
         "site_settings": site_settings,
         "is_present": is_present
     }
