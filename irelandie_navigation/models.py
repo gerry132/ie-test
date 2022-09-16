@@ -277,6 +277,7 @@ class CustomHeader(TranslatableMixin):
         max_num=1)
     links = StreamField(
         [("link", LinkBlockExtended())],
+        [("links", LinkBlockExtended())],
         blank=True,
         help_text="Custom main site navigation",
         verbose_name=_("Links"),
