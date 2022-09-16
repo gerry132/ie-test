@@ -11,7 +11,6 @@ from wagtail.models import TranslatableMixin
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
-from wagtail import blocks
 
 from .blocks import (
     LinkBlockExtended,
