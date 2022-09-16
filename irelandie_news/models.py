@@ -18,6 +18,10 @@ class NewsPageIndex(BasePage):
     subpage_types = [
         'NewsPage'
     ]
+
+    parent_page_types = [
+        'NewsLandingPage'
+    ]
     generic_hero = StreamField(
         [
             ("generic_hero", blocks.GenericHeroBlock()),
@@ -82,6 +86,11 @@ class NewsPage(MinimalArticlePage):
         'hero_image',
         'introduction',
     ]
+    parent_page_types = [
+        'NewsPageIndex'
+    ]
+
+    subpage_types = []
 
     @cached_property
     def related_articles(self):
@@ -128,9 +137,8 @@ class NewsLandingPage(BasePage):
 
     @cached_property
     def related_articles(self):
-        print(self.get_first_child())
         return (
-            NewsPage.objects.child_of(self.get_parent())
+            NewsPage.objects.child_of(self.get_first_child())
             .filter(locale=self.locale,
                     related_articles_active=True)
             .public()
@@ -147,6 +155,7 @@ class NewsLandingPage(BasePage):
             .live()
             .specific()
         )
+
         return context
 
     @cached_property
@@ -166,4 +175,4 @@ class NewsLandingPage(BasePage):
 
     @cached_property
     def get_root_index(self):
-        return self.get_parent().url
+        return self.get_first_child().url
