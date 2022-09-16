@@ -13,11 +13,12 @@
         <div class="section section--padding generic-hero__content" >
                 <div class="generic-hero__container1">
                     <h1 class="generic-hero__title">
+                        {% if not page.generic_hero %}
+                            {{ page.title }}
+                        {% endif %}
                         {% for block in page.generic_hero %}
                             {% if block.value.hero_title %}
                                 {{ block.value.hero_title }}
-                            {% else %}
-                                {{ page.title }}
                             {% endif %}
                         {% endfor %}
                     </h1>
