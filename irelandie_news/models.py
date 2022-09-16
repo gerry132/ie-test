@@ -15,6 +15,9 @@ class NewsPageIndex(BasePage):
     template = "patterns/pages/irelandie_news/news_index.html"
     ajax_template = "patterns/molecules/article_card/ajax_article_card.html"
     description = models.TextField(blank=True)
+    subpage_types = [
+        'NewsPage'
+    ]
     generic_hero = StreamField(
         [
             ("generic_hero", blocks.GenericHeroBlock()),
@@ -99,7 +102,7 @@ class NewsPage(MinimalArticlePage):
 
 class NewsLandingPage(BasePage):
     template = "patterns/pages/irelandie_news/news_landing_page.html"
-    parent_page_types = [
+    subpage_types = [
         'NewsPageIndex',
     ]
     generic_hero = StreamField(
@@ -125,6 +128,7 @@ class NewsLandingPage(BasePage):
 
     @cached_property
     def related_articles(self):
+        print(self.get_first_child())
         return (
             NewsPage.objects.child_of(self.get_parent())
             .filter(locale=self.locale,
