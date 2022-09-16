@@ -150,7 +150,7 @@ class NewsLandingPage(BasePage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context['get_news_index'] = (
-            NewsPageIndex.objects
+            NewsPageIndex.objects.child_of(self)
             .public()
             .live()
             .specific()
@@ -160,7 +160,7 @@ class NewsLandingPage(BasePage):
 
     @cached_property
     def get_years(self):
-        yearset = (NewsPage.objects.child_of(self.get_parent())
+        yearset = (NewsPage.objects.child_of(self.get_first_child())
                    .public()
                    .live()
                    .order_by()
