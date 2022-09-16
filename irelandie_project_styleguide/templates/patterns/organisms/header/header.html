@@ -180,7 +180,7 @@
                         <a href="{{ custom_header.url }}" aria-label="Ireland.ie" class="header__logo-wrapper">
                     {% elif custom_header.link_page %}
                         {% for block in custom_header.link_page %}
-                            <a href="{{block.value.page.url}}" aria-label="Ireland.ie" class="header__logo-wrapper"></a>
+                            <a href="{{block.value.page.url}}" aria-label="Ireland.ie" class="header__logo-wrapper">
                         {% endfor %}
                     {% endif %}
                     {% if custom_header_settings.site_settings.site_logo and not custom_header.logo %}
