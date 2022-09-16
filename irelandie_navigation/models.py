@@ -281,12 +281,6 @@ class CustomHeader(TranslatableMixin):
         help_text="Custom main site navigation",
         verbose_name=_("Links"),
     )
-    link = StreamField(
-        [("link", LinkBlockExtended())],
-        blank=True,
-        help_text="Custom main site navigation",
-        verbose_name=_("Links"),
-    )
     logo = models.ForeignKey(
         IMAGE_MODEL,
         null=True,
@@ -318,7 +312,6 @@ class CustomHeader(TranslatableMixin):
         ], heading="Logo"),
         FieldPanel("name"),
         StreamFieldPanel("links"),
-        StreamFieldPanel("link"),
     ]
 
     def __str__(self):
