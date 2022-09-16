@@ -119,7 +119,7 @@ class NewsLandingPage(BasePage):
         null=True,
     )
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero"),
+        StreamFieldPanel("generic_hero", permission="access_admin"),
         StreamFieldPanel("link_button")
     ]
 
