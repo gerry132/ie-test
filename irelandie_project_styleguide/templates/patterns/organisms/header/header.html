@@ -8,6 +8,9 @@
 
 
 <style>
+    .hidden {
+      display: none;
+    }
     @media only screen and (min-width: 1023px) {
         .custom-nav-mob {
             display: none;
@@ -258,7 +261,7 @@
                         </button>
 
                     <div class="header__menu-toggle header__menu-toggle--desktop">
-                        <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
+                        <button id="nav2" class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
                             <span class="button-menu-toggle__line"></span>
                             <span class="button-menu-toggle__line"></span>
                             <span class="button-menu-toggle__line"></span>
@@ -275,8 +278,22 @@
                     </div>
                 </div>
             </div>
-            {% include_block page.notice_bar %}
+            <notice_bar class="notice_bar">
+                {% include_block page.notice_bar %}
+            </notice_bar>
         </div>
     {% endif %}
 
 </header>
+<script>
+    const notice_bar = document.querySelector('.notice_bar');
+    const toggle = document.querySelector('[data-mobile-menu-toggle]');
+    const btnToggle = document.querySelector('.header__menu-toggle--desktop')
+
+    toggle.addEventListener('click', () => {
+      notice_bar.classList.toggle('hidden')
+    });
+    btnToggle.addEventListener('click', () => {
+      notice_bar.classList.toggle('hidden')
+    });
+</script>
