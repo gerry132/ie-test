@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.forms import ValidationError
 from django.utils.translation import gettext_lazy as _
 from modelcluster.models import ClusterableModel
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel, StreamFieldPanel
@@ -270,6 +271,10 @@ class CustomHeader(TranslatableMixin):
         help_text="URL for logo click.",
         verbose_name=_("URL"),
     )
+    link_page = StreamField(
+        [("internal_link", LinkBlockExtended())],
+        blank=True,
+        max_num=1)
     links = StreamField(
         [("link", LinkBlockExtended())],
         blank=True,
@@ -302,7 +307,8 @@ class CustomHeader(TranslatableMixin):
             ImageChooserPanel("logo"),
             ImageChooserPanel("mobile_logo"),
             FieldPanel("logo_alt"),
-            FieldPanel("url")
+            FieldPanel("url"),
+            FieldPanel("link_page"),
         ], heading="Logo"),
         FieldPanel("name"),
         StreamFieldPanel("links"),
@@ -310,6 +316,19 @@ class CustomHeader(TranslatableMixin):
 
     def __str__(self):
         return self.name
+
+    def clean(self):
+        if self.link_page and self.url:
+            raise ValidationError(
+                {
+                    "link_page": ValidationError(
+                        "You can't choose both an internal page and an external url."
+                    ),
+                    "url": ValidationError(
+                        "You can't choose both an internal page and an external url."
+                    ),
+                }
+            )
 
     class Meta:
         verbose_name = _("Custom Header")
