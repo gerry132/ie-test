@@ -11,7 +11,7 @@ from wagtail.admin.panels import (
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
-    TabbedInterface,
+    TabbedInterface, StreamFieldPanel,
 )
 from wagtail.contrib.forms.models import (
     FORM_FIELD_CHOICES,
@@ -72,6 +72,13 @@ class FormPage(HoneypotMixin, BasePage):
     )
 
     search_fields = BasePage.search_fields + [index.SearchField("introduction")]
+    accordions = models.ForeignKey(
+        'utils.Accordion',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     content_panels = BasePage.content_panels + [
         FieldPanel("introduction"),
@@ -90,6 +97,7 @@ class FormPage(HoneypotMixin, BasePage):
             ],
             "Email",
         ),
+        StreamFieldPanel("accordions"),
     ]
 
     form_builder = CustomFormBuilder

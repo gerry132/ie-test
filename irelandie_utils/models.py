@@ -26,7 +26,7 @@ from wagtail.snippets.models import register_snippet
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
-from irelandie_utils.blocks import ArticleStoryBlock, AdvancedRichTextBlock
+from irelandie_utils.blocks import ArticleStoryBlock, AdvancedRichTextBlock, AccordionBlock
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
 import django.utils.timezone
@@ -295,6 +295,25 @@ class PrivacyPolicySnippet(models.Model):
     panels = [
         FieldPanel("title"),
         StreamFieldPanel("privacy_snippet"),
+    ]
+
+    def __str__(self):
+        return self.title
+
+
+@register_snippet
+class Accordion(models.Model):
+    title = models.CharField(max_length=255)
+    accordions = StreamField(
+        [
+            ("accordions", AccordionBlock()),
+        ],
+        blank=True,
+        null=True,
+    )
+    panels = [
+        FieldPanel("title"),
+        StreamFieldPanel("accordions", permission="access_admin"),
     ]
 
     def __str__(self):
