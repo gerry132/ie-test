@@ -349,6 +349,7 @@ def custom_header_settings(context, page):
         links = None
         url = None
         is_present = False
+        link_page = None
 
     return {
         "url": url,
