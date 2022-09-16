@@ -91,6 +91,7 @@ class NewsPage(MinimalArticlePage):
     ]
 
     subpage_types = []
+
     @cached_property
     def related_articles(self):
         return (
