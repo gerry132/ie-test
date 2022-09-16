@@ -277,7 +277,12 @@ class CustomHeader(TranslatableMixin):
         max_num=1)
     links = StreamField(
         [("link", LinkBlockExtended())],
-        [("links", LinkBlockExtended())],
+        blank=True,
+        help_text="Custom main site navigation",
+        verbose_name=_("Links"),
+    )
+    link = StreamField(
+        [("link", LinkBlockExtended())],
         blank=True,
         help_text="Custom main site navigation",
         verbose_name=_("Links"),
@@ -313,6 +318,7 @@ class CustomHeader(TranslatableMixin):
         ], heading="Logo"),
         FieldPanel("name"),
         StreamFieldPanel("links"),
+        StreamFieldPanel("link"),
     ]
 
     def __str__(self):
