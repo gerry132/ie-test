@@ -148,7 +148,6 @@ class FormPage(HoneypotMixin, BasePage):
             if p.value.get('description') == topic:
                 return p.value.get('email')
 
-
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         if request.POST:
@@ -164,7 +163,6 @@ class FormPage(HoneypotMixin, BasePage):
 
     def get_submission_class(self):
         return NeverSaveFormSubmission
-
 
     def send_mail(self, form, submit=False):
         self.form = form
