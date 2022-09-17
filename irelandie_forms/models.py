@@ -94,7 +94,7 @@ class FormPage(HoneypotMixin, BasePage):
         [("email_map", EmailMapBlock())],
         blank=False,
         null=True,
-        min_num=1,
+        help_text="Multiple emails must be in a comma seperated list."
     )
     search_fields = BasePage.search_fields + [index.SearchField("introduction")]
     accordions = models.ForeignKey(
@@ -151,14 +151,15 @@ class FormPage(HoneypotMixin, BasePage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         if request.POST:
+            submitted_date_str = date.today().strftime('%x')
+            subject = f"{self.subject} - {submitted_date_str}"
             if 'topic' in request.POST:
-                print(request.POST)
                 self.topic = request.POST['topic']
                 addresses = [x.strip() for x in self.get_mapped_value(self.topic).split(',')]
-                submitted_date_str = date.today().strftime('%x')
-                subject = f"{self.subject} - {submitted_date_str}"
-                send_mail(subject, self.render_email(self.form), addresses, self.from_address,)
+            else:
+                addresses = [x.strip() for x in self.to_address.split(',')]
 
+            send_mail(subject, self.render_email(self.form), addresses, self.from_address,)
         return context
 
     def get_submission_class(self):
