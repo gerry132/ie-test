@@ -63,3 +63,8 @@ def get_content_length(page):
         if block.block_type == 'content':
             counter += 1
     return counter
+
+@register.simple_tag
+def get_email_list(page):
+    print(page.email_map.email_map.value)
+
