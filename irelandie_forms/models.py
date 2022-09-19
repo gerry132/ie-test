@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
+from django.template.response import TemplateResponse
 from modelcluster.fields import ParentalKey
 from wagtail.admin.panels import (
     FieldPanel,
@@ -148,7 +149,6 @@ class FormPage(HoneypotMixin, BasePage):
             if p.value.get('description') == topic:
                 return p.value.get('email')
 
-
     def serve(self, request, *args, **kwargs):
         if request.method == "POST":
             form = self.get_form(
@@ -167,7 +167,6 @@ class FormPage(HoneypotMixin, BasePage):
         context = self.get_context(request)
         context["form"] = form
         return TemplateResponse(request, self.get_template(request), context)
-
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
