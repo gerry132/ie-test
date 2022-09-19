@@ -9,6 +9,7 @@ class MobileMenu {
         // search selectors
         this.searchToggles = document.querySelectorAll('[data-toggle-search]');
         this.searchDropdown = document.querySelector('[data-search-dropdown]');
+        this.noticeBars = document.querySelector('.notice-bar');
 
         // Any callbacks to be called on open or close.
         this.openCb = openCb;
@@ -29,6 +30,7 @@ class MobileMenu {
         // Listen for when the search opens and close any open desktop menu dropdowns
         document.addEventListener('onSearchOpen', () => {
             this.node.classList.remove('is-open');
+            this.noticeBars.classList.remove('notice-bar__hidden');
             this.closeCb();
 
             this.state.open = false;
@@ -51,6 +53,7 @@ class MobileMenu {
 
         this.node.classList.add('is-open');
         this.node.setAttribute('aria-expanded', 'true');
+        this.noticeBars.classList.add('notice-bar__hidden');
         this.openCb();
 
         this.state.open = true;
@@ -59,6 +62,7 @@ class MobileMenu {
     close() {
         this.node.classList.remove('is-open');
         this.node.setAttribute('aria-expanded', 'false');
+        this.noticeBars.classList.remove('notice-bar__hidden');
         this.closeCb();
 
         this.state.open = false;
