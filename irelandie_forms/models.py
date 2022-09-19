@@ -65,6 +65,7 @@ class EmailMapBlock(blocks.StructBlock):
     description = blocks.CharBlock(required=True)
     email = blocks.CharBlock(required=True)
 
+
 # Never cache form pages since they include CSRF tokens.
 @method_decorator(never_cache, name="serve")
 class FormPage(HoneypotMixin, BasePage):
