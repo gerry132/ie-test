@@ -14,8 +14,12 @@
     {% block main %}
         <!-- Body -->
     <div class="section section--padding">
+        {% if page.rich_text %}
+            <div class="wrapper wrapper--large--toc section--padding">
+                {% include_block page.rich_text %}
+            </div>
+        {% endif %}
             <div id="link-box_wrapper" class="wrapper--large--toc">
-                    {% include_block page.rich_text %}
                     {% include_block page.body %}
                     <div class="link-box__related-content">
                     {% if page.related_content %}
