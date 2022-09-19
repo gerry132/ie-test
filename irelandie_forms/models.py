@@ -65,7 +65,6 @@ class EmailMapBlock(blocks.StructBlock):
     description = blocks.CharBlock(required=True)
     email = blocks.CharBlock(required=True)
 
-
 # Never cache form pages since they include CSRF tokens.
 @method_decorator(never_cache, name="serve")
 class FormPage(HoneypotMixin, BasePage):
@@ -90,7 +89,9 @@ class FormPage(HoneypotMixin, BasePage):
     action_text = models.CharField(
         max_length=32, blank=True, help_text='Form action text. Defaults to "Submit"'
     )
-
+    email_map_text = models.CharField(
+        max_length=32, blank=True, help_text='Topic selection for email_map. Defaults to "Choose Topic"'
+    )
     email_map = StreamField(
         [("email_map", EmailMapBlock())],
         blank=False,
@@ -113,6 +114,7 @@ class FormPage(HoneypotMixin, BasePage):
     content_panels = BasePage.content_panels + [
         FieldPanel("introduction"),
         InlinePanel("form_fields", label="Form fields"),
+        FieldPanel("email_map_text"),
         FieldPanel("email_map"),
         FieldPanel("body"),
         FieldPanel("action_text"),
