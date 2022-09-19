@@ -24,6 +24,7 @@ class Search {
         this.allDesktopMenuItems = document.querySelectorAll(
             '[data-desktop-nav-item]',
         );
+        this.hideNoticeBar = document.querySelector('.notice-bar');
 
         // classes
         this.activeClass = 'is-active';
@@ -47,6 +48,7 @@ class Search {
             this.searchDropdown.classList.remove(this.activeClass);
 
             this.noticeBar.classList.remove('notice-bar--extended__search-is-active');
+            this.hideNoticeBar.classList.remove('notice-bar__hidden');
         });
     }
 
