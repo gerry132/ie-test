@@ -6,6 +6,8 @@ from wagtail.admin.panels import FieldPanel, StreamFieldPanel
 from wagtail.models import Page
 from wagtail.fields import StreamField
 from irelandie_utils import blocks
+
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 import datetime
 
 from irelandie_utils.models import MinimalArticlePage, BasePage
@@ -49,7 +51,7 @@ class NewsPageIndex(BasePage):
         else:
             high_date = datetime.datetime.now()
             low_date = datetime.datetime(high_date.year, 1, 1)
-        context['related_articles'] = (
+        rel_art = (
             NewsPage.objects.child_of(self)
             .filter(publication_date__lte=high_date,
                     publication_date__gte=low_date,
@@ -60,7 +62,16 @@ class NewsPageIndex(BasePage):
             .order_by("publication_date")
             .specific()
         )
-
+        paginator = Paginator(rel_art, 20)
+        # Try to get the ?page=x value
+        page = request.GET.get("page")
+        try:
+            posts = paginator.page(page)
+        except PageNotAnInteger:
+            posts = paginator.page(1)
+        except EmptyPage:
+            posts = paginator.page(paginator.num_pages)
+        context['related_articles'] = posts
         return context
 
     @cached_property
