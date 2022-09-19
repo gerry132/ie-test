@@ -8,9 +8,6 @@
 
 
 <style>
-    .hidden {
-      display: none;
-    }
     @media only screen and (min-width: 1023px) {
         .custom-nav-mob {
             display: none;
@@ -167,6 +164,9 @@
                     {% include "patterns/molecules/search/search.html" with classes="search--dropdown" %}
                 </div>
             </div>
+            <div class="notice-bar">
+                    {% include_block page.notice_bar %}
+            </div>
         </div>
         {% endif %}
     </div>
@@ -281,22 +281,10 @@
                     </div>
                 </div>
             </div>
-            <notice_bar class="notice_bar">
+            <div class="notice-bar">
                 {% include_block page.notice_bar %}
-            </notice_bar>
+            </div>
         </div>
     {% endif %}
 
 </header>
-<script>
-    const notice_bar = document.querySelector('.notice_bar');
-    const toggle = document.querySelector('[data-mobile-menu-toggle]');
-    const btnToggle = document.querySelector('.header__menu-toggle--desktop')
-
-    toggle.addEventListener('click', () => {
-      notice_bar.classList.toggle('hidden')
-    });
-    btnToggle.addEventListener('click', () => {
-      notice_bar.classList.toggle('hidden')
-    });
-</script>
