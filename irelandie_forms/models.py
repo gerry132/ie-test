@@ -148,6 +148,27 @@ class FormPage(HoneypotMixin, BasePage):
             if p.value.get('description') == topic:
                 return p.value.get('email')
 
+
+    def serve(self, request, *args, **kwargs):
+        if request.method == "POST":
+            form = self.get_form(
+                request.POST, request.FILES, page=self, user=request.user
+            )
+
+            if form.is_valid():
+                form_submission = self.process_form_submission(form)
+                self.form = form
+                return self.render_landing_page(
+                    request, form_submission, *args, **kwargs
+                )
+        else:
+            form = self.get_form(page=self, user=request.user)
+
+        context = self.get_context(request)
+        context["form"] = form
+        return TemplateResponse(request, self.get_template(request), context)
+
+
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         if request.POST:
