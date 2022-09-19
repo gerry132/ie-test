@@ -174,7 +174,6 @@ class FormPage(HoneypotMixin, BasePage):
         if request.POST:
             submitted_date_str = date.today().strftime('%x')
             subject = f"{self.subject} - {submitted_date_str}"
-
             if 'topic' in request.POST:
                 self.topic = request.POST['topic']
                 addresses = [x.strip() for x in self.get_mapped_value(self.topic).split(',')]
