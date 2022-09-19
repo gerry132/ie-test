@@ -6,11 +6,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: $mobile-header-height;
 
-    @include media-query(large) {
-        height: $desktop-header-height;
-    }
 
     &--condensed {
         background-color: $color--dark-green;
