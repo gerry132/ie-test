@@ -30,6 +30,7 @@ class MobileMenu {
         // Listen for when the search opens and close any open desktop menu dropdowns
         document.addEventListener('onSearchOpen', () => {
             this.node.classList.remove('is-open');
+            this.noticeBars.classList.remove('notice-bar__hidden');
             this.closeCb();
 
             this.state.open = false;
