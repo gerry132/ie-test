@@ -32,7 +32,7 @@
                 <div class="form__container">
                     {% csrf_token %}
                     {% if page.email_map %}
-                    <select class="searchBarSelect" form="form--sub" name="topic" label="vagina">
+                    <select class="searchBarSelect" form="form--sub" name="topic">
                         <option value="" name="popular_page" selected disabled hidden>Choose Topic</option>
                             {% for p in page.email_map %}
                                 <option value="{{p.value.description}}">{{p.value.description}}</option>
