@@ -67,6 +67,19 @@
         font-weight: $weight--bold;
         color: $color--primary;
     }
+    &__date{
+    text-align: right;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    /* Text 4 */
+
+    color: #B0B7C3;
+    }
 }
 
 .card-with-image {
