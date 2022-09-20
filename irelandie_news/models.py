@@ -97,8 +97,8 @@ class NewsPageIndex(BasePage):
         yearset = (NewsPage.objects.child_of(self)
                    .public()
                    .live()
-                   .order_by()
-                   .values('-publication_date')
+                   .order_by('-publication_date')
+                   .values('publication_date')
                    .distinct()
                    )
         year_list = []
