@@ -11,7 +11,7 @@ function getNewsArticles(year=null) {
 
     if (redirect && year===null) {
         year = params.get("year_r");
-    } 
+    }
     else if (year===null) {
         year = null;
     }
@@ -21,7 +21,7 @@ function getNewsArticles(year=null) {
             data : {
                 'year' : year
             },
-            success : function(data) {              
+            success : function(data) {
                 document.getElementById('news--wrapper').innerHTML = data;
                 if (year) {
                     document.getElementById('news-list').value = year;
@@ -51,6 +51,8 @@ getNewsArticles();
                     <div class="container">
                         {% if not page.generic_hero %}
                             <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                        {% else %}
+                            <h2 class="story__heading heading--2">{{ page.description }}</h2>
                         {% endif %}
                     </div>
                 </div>
