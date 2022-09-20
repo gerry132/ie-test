@@ -98,7 +98,7 @@ class NewsPageIndex(BasePage):
                    .public()
                    .live()
                    .order_by()
-                   .values('publication_date')
+                   .values('-publication_date')
                    .distinct()
                    )
         year_list = []
