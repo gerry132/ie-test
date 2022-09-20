@@ -192,14 +192,12 @@ class NewsLandingPage(BasePage):
     def get_years(self):
         if self.get_first_child():
             yearset = (NewsPage.objects.child_of(self.get_first_child())
-                    .public()
-                    .live()
-                    .order_by()
-                    .values('publication_date')
-                    .distinct()
-                    )
-        else:
-            return
+                        .public()
+                        .live()
+                        .order_by()
+                        .values('publication_date')
+                        .distinct()
+                        )
         year_list = []
         for year in yearset:
             if year['publication_date'].year not in year_list:
