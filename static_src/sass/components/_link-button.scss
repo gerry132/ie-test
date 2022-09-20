@@ -58,4 +58,16 @@
         width: 260px;
         height: 44px;
     }
+    &__button{
+        width: 253px;
+        height: 41px;
+        border: 1px solid #323B4B;
+        border-radius: 10px;
+        background-color: transparent;
+        cursor: pointer;
+    }
+    &__container{
+        padding-top: 40px;
+        text-align: center;
+    }
 }
