@@ -13,7 +13,7 @@ function getNewsArticles(year=null) {
         year = params.get("year_r");
     } 
     else if (year===null) {
-        year = new Date().getFullYear();
+        year = null;
     }
     $.ajax({
             url : '{{ current_site.full_url }}',
@@ -23,8 +23,13 @@ function getNewsArticles(year=null) {
             },
             success : function(data) {              
                 document.getElementById('news--wrapper').innerHTML = data;
-                document.getElementById('news-list').value = year;
-                document.getElementById('news-list-mobile').value = year;
+                if (year) {
+                    document.getElementById('news-list').value = year;
+                    document.getElementById('news-list-mobile').value = year;
+                } else {
+                    document.getElementById('news-list').value = 'all';
+                    document.getElementById('news-list-mobile').value = 'all';
+                }
             },
             error : function(request,error)
             {
@@ -52,6 +57,7 @@ getNewsArticles();
                 <div class="wrapper--padding related-content--mobile">
                     <h4>News Archive</h4>
                     <select id="news-list" class="searchBarNews" style="width: 100%;" onchange="getNewsArticles(this.value); ">
+                            <option value="all">All</option>
                             {% for p in page.get_years %}
                                 <option value="{{p}}">{{p}}</option>
                             {% endfor %}
@@ -63,6 +69,7 @@ getNewsArticles();
             <div class="related-content">
                 <h4>News Archive</h4>
                 <select id="news-list-mobile" class="searchBarNews" style="width: 100%;" onchange="getNewsArticles(this.value); ">
+                        <option value="all">All</option>
                         {% for p in page.get_years %}
                             <option value="{{p}}">{{p}}</option>
                         {% endfor %}

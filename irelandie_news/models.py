@@ -40,28 +40,46 @@ class NewsPageIndex(BasePage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
+        year = None
         if request.GET.get('year'):
-            year = int(request.GET.get('year'))
-            low_date = datetime.datetime(year, 1, 1)
-            high_date = datetime.datetime(year, 12, 31)
+            if request.GET.get('year') == 'all':
+                year = None
+            else:
+                year = int(request.GET.get('year'))
+                low_date = datetime.datetime(year, 1, 1)
+                high_date = datetime.datetime(year, 12, 31)
+            
         elif 'year' in request.GET:
-            year = int(request.GET['year'])
-            low_date = datetime.datetime(year, 1, 1)
-            high_date = datetime.datetime(year, 12, 31)
+            if request.GET['year']:
+                year = int(request.GET['year'])
+                low_date = datetime.datetime(year, 1, 1)
+                high_date = datetime.datetime(year, 12, 31)
+            else:
+                year = None
         else:
             high_date = datetime.datetime.now()
             low_date = datetime.datetime(high_date.year, 1, 1)
-        rel_art = (
-            NewsPage.objects.child_of(self)
-            .filter(publication_date__lte=high_date,
-                    publication_date__gte=low_date,
-                    locale=self.locale)
-            .exclude(pk=self.pk)
-            .public()
-            .live()
-            .order_by("publication_date")
-            .specific()
-        )
+        if year:
+            rel_art = (
+                NewsPage.objects.child_of(self)
+                .filter(publication_date__lte=high_date,
+                        publication_date__gte=low_date,
+                        locale=self.locale)
+                .exclude(pk=self.pk)
+                .public()
+                .live()
+                .order_by("-publication_date")
+                .specific()
+            )
+        else:
+            rel_art = (
+                NewsPage.objects.child_of(self)
+                .exclude(pk=self.pk)
+                .public()
+                .live()
+                .order_by("-publication_date")
+                .specific()
+            )
         paginator = Paginator(rel_art, 20)
         # Try to get the ?page=x value
         page = request.GET.get("page")
