@@ -48,7 +48,7 @@ class NewsPageIndex(BasePage):
                 year = int(request.GET.get('year'))
                 low_date = datetime.datetime(year, 1, 1)
                 high_date = datetime.datetime(year, 12, 31)
-            
+
         elif 'year' in request.GET:
             if request.GET['year']:
                 year = int(request.GET['year'])
