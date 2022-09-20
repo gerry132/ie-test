@@ -192,12 +192,12 @@ class NewsLandingPage(BasePage):
     def get_years(self):
         if self.get_first_child():
             yearset = (NewsPage.objects.child_of(self.get_first_child())
-                        .public()
-                        .live()
-                        .order_by()
-                        .values('publication_date')
-                        .distinct()
-                        )
+                       .public()
+                       .live()
+                       .order_by()
+                       .values('publication_date')
+                       .distinct()
+                       )
         year_list = []
         for year in yearset:
             if year['publication_date'].year not in year_list:
@@ -206,4 +206,5 @@ class NewsLandingPage(BasePage):
 
     @cached_property
     def get_root_index(self):
-        return self.get_first_child().url
+        if self.get_first_child():
+            return self.get_first_child().url
