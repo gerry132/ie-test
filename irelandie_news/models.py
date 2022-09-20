@@ -166,15 +166,16 @@ class NewsLandingPage(BasePage):
 
     @cached_property
     def related_articles(self):
-        return (
-            NewsPage.objects.child_of(self.get_first_child())
-            .filter(locale=self.locale,
-                    related_articles_active=True)
-            .public()
-            .live()
-            .order_by("-publication_date")[:4]
-            .specific()
-        )
+        if self.get_first_child():
+            return (
+                NewsPage.objects.child_of(self.get_first_child())
+                .filter(locale=self.locale,
+                        related_articles_active=True)
+                .public()
+                .live()
+                .order_by("-publication_date")[:4]
+                .specific()
+            )
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
@@ -189,13 +190,16 @@ class NewsLandingPage(BasePage):
 
     @cached_property
     def get_years(self):
-        yearset = (NewsPage.objects.child_of(self.get_first_child())
-                   .public()
-                   .live()
-                   .order_by()
-                   .values('publication_date')
-                   .distinct()
-                   )
+        if self.get_first_child():
+            yearset = (NewsPage.objects.child_of(self.get_first_child())
+                    .public()
+                    .live()
+                    .order_by()
+                    .values('publication_date')
+                    .distinct()
+                    )
+        else:
+            return
         year_list = []
         for year in yearset:
             if year['publication_date'].year not in year_list:
