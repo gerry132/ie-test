@@ -58,3 +58,11 @@
         {% block extra_js %}{% endblock %}
     </body>
 </html>
+<script>
+    const generic_hero = document.querySelector('.main--generic-hero');
+    const toggle = document.querySelector('.header__search-toggle');
+
+    toggle.addEventListener('click', () => {
+      generic_hero.classList.toggle('generic-hero__search-is-active')
+    });
+</script>

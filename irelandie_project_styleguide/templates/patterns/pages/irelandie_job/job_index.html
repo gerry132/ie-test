@@ -8,7 +8,6 @@
 
 {% block content %}
  <!-- Main -->
-    {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
 
     {% if page.title or page.generic_hero %}
         {% include "patterns/molecules/streamfield/blocks/generic_hero.html" with page=page %}
@@ -18,16 +17,16 @@
         <!-- Body -->
     <div class="section section--padding">
         <div class="wrapper wrapper--large wrapper--padding">
-        
+
         {% if page.related_jobs %}
         <div class="link-box__main">
             <div class="link-box__line"></div>
             {% for job in page.related_jobs %}
                 {% include "patterns/molecules/job/job-card.html" with job=job %}
-            {% endfor %} 
+            {% endfor %}
             </div>
         </div>
-        {% else %}    
+        {% else %}
             <h1 class="heading--1 no-vac">There are currently no vacancies.</h1>
         {% endif %}
         </div>

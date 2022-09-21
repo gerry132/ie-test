@@ -1,17 +1,6 @@
 {% extends "patterns/hero_page.html" %}
 {% load wagtailcore_tags wagtailimages_tags static i18n %}
 
-{% block content %}
-
-    {% comment %}
-        Responsive hero images
-    {% endcomment %}
-    {% if page.hero_image or page.hero_video %}
-        {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
-        {% include "patterns/molecules/hero/hero.html" with page=page classes="hero--article" %}
-    {% else %}
-        {% include "patterns/molecules/hero/hero_section.html" with page=page %}
-    {% endif %}
 
     {% block main %}
         <!-- Body -->
@@ -48,4 +37,4 @@
         </div>
 
     {% endblock %}
-{% endblock %}
+
