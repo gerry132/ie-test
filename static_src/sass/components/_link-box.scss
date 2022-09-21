@@ -3,7 +3,7 @@
 
     &__main{
     @media only screen and (min-width: 699px) {
-        max-width:80%
+        max-width:95%
     }
     }
     &__content{
@@ -65,6 +65,29 @@
         right: -3%;
     }
   }
+  &__related-content{
+    width: 60%;
+    @media only screen and (max-width: 1023px) {
+    width: 90%;
+    padding-top: 20px;
+    }
+    @media only screen and (min-width: 1022px) {
+        position: relative;
+        top: -14px;
+    }
+  }
+}
+#link-box_wrapper {
+    display: grid;
+    @media only screen and (min-width:699px) {
+        grid-template-columns: 65% 1fr;
+        min-width: 85%;
+    }
+    @media only screen and (max-width: 1023px) {
+        grid-auto-flow: row;
+        grid-template-columns: 100%;
+    }
+
 }
 
 

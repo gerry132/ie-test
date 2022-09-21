@@ -18,20 +18,38 @@
 
 
 {% block content %}
+<div class="section" style="padding-top: 40px;">
+{% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+</div>
 <div class="section section--padding section--grey">
     <div class="wrapper wrapper--large wrapper--padding">
         <div class="intro">
             <div class="container">
                 <h1 class="intro__title">{{ page.title }}</h1>
-                <p class="intro__description">{{ page.introduction|richtext }}</p>
+                <p class="intro__description">{{ page.introduction }}</p>
             </div>
         </div>
 
         {% if page.form_fields.exists %}
-            <form action="{% pageurl page %}" method="post" class="form">
+            <form action="{% pageurl page %}" method="post" class="form" id="form--sub">
                 <div class="form__container">
                     {% csrf_token %}
-
+                    {% if page.email_map %}
+                    <div id="field-con" style="padding-bottom: 20px;">
+                    <select class="field--selection" form="form--sub" name="topic">
+                        <option value="" name="popular_page" selected disabled hidden>
+                        {% if page.email_map_text %}
+                            {{page.email_map_text}}
+                        {% else %}
+                            Choose Topic
+                        {% endif %}
+                        </option>
+                            {% for p in page.email_map %}
+                                <option value="{{p.value.description}}">{{p.value.description}}</option>
+                            {% endfor %}
+                    </select>
+                </div>
+                    {% endif %}
                     {% if form.errors %}
                         <div class="form__errors">
                             {% trans 'There were some errors with your form. Please amend the fields highlighted below.' %}
@@ -47,6 +65,10 @@
                 </div>
             </form>
         {% endif %}
+        {% include_block page.accordions.accordions %}
+        {% for block in page.body %}
+            {% include_block block %}
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

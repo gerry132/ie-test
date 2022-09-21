@@ -40,6 +40,11 @@ def next(list_val, current_index):
 
 
 @register.simple_tag
+def return_date_from_datetime(date_obj):
+    return date_obj.strftime("%b. %d, %Y")
+
+
+@register.simple_tag
 def new_width(iframe, width):
     res = re.sub(r'width="\d{1,3}"', 'width="'+str(width)+'%"', iframe)
     return res

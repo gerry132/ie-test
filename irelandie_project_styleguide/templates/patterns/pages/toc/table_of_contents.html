@@ -4,7 +4,9 @@
 
 
 {% block content %}
+<div class="section section--padding">
 {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+</div>
 <div id="main-header" class="section section--padding section--white section--toc">
     <div id="wrapper" class="wrapper--large--toc">
         <div id="left">
@@ -25,7 +27,7 @@
                 <h4 class="header--related-content">Related Content</h4>
                     {% for p in page.related_content %}
                     <a href="{{p.value.page.url}}"><h2 class="toc-contents">{{p.value.title}}</h2></a>
-                    {% endfor %} 
+                    {% endfor %}
                 {% endif %}
             </div>
         </div>
@@ -50,7 +52,7 @@
             {% for blocks in page.body %}
                 {% if blocks.block_type == 'content' %}
                 <div id="{{blocks.value.title}}">
-                    {% for block in blocks.value.content %} 
+                    {% for block in blocks.value.content %}
                         {% if block.block_type == 'heading' or block.block_type == 'rich_text' or block.block_type == 'image' or block.block_type == 'document' or block.block_type == 'table' %}
 
                                 {% if block.block_type == 'table' %}
@@ -83,7 +85,7 @@
                         {% else %}
                             <div class="wrapper wrapper--large wrapper--padding content--padding">
                                 {% include_block block %}
-                                
+
                             </div>
                         {% endif %}
                 {% endfor %}
@@ -95,7 +97,7 @@
                 <h4 class="header--related-content">Related Content</h4>
                     {% for p in page.related_content %}
                     <a href="{{p.value.page.url}}"><h2 class="toc-contents">{{p.value.title}}</h2></a>
-                    {% endfor %} 
+                    {% endfor %}
                 {% endif %}
             </div>
 

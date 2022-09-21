@@ -1,0 +1,20 @@
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+{% load util_tags %}
+
+{% for value in related_articles %}
+<a href="{{ value.url }}" class="link-box">
+    <div class="link-box__content">
+        <div class="link-box__container">
+            <h3 class="link-box__heading heading--3">{{ value.title }}</h3>
+            <p><i>{% return_date_from_datetime value.publication_date %}</i></p>
+           <div class="rich-text">
+                {{ value.introduction|richtext }}
+            </div>
+        </div>
+        <button class="link-box__btn"></button>
+    </div>
+    <br>
+    <div class="link-box__line"></div>
+</a>
+
+{% endfor %}

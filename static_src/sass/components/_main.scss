@@ -12,4 +12,11 @@
             padding-top: $condensed-header-height;
         }
     }
+    &--generic-hero{
+        padding-top:140px;
+    }
+}
+.generic-hero__search-is-active{
+    position: relative;
+    top:88px;
 }

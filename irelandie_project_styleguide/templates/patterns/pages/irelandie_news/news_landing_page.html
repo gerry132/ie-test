@@ -1,0 +1,86 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+ <!-- Main -->
+
+
+    {% if page.title or page.generic_hero %}
+        {% include "patterns/molecules/streamfield/blocks/generic_hero.html" with page=page %}
+    {% endif %}
+
+    {% block main %}
+        <!-- Body -->
+    <div class="section section--padding">
+        <div class="wrapper wrapper--large wrapper--padding">
+            <div class="link-button__grid-container">
+            {% include_block page.link_button %}
+            </div>
+            <div class="section section--padding">
+                {% if page.get_root_index %}
+                    <h4>News Archive</h4>
+                    <select  class="link-button__searchbar"  onchange="if (this.value) window.location.href=this.value">
+                        <option selected="true" disabled="disabled">Choose year</option>
+                        {% for p in page.get_years %}
+                            {% for value in get_news_index %}
+                                <option value="{{ page.get_root_index }}?year_r={{p}}&redirect=true">{{p}}</option>
+                            {% endfor %}
+                        {% endfor %}
+                    </select>
+                {% endif %}
+            </div>
+        </div>
+        {% if page.related_articles %}
+<!-- related_articles -->
+            <div class="wrapper wrapper--large">
+                <div class="related-articles">
+                    <div class="featured-blocks featured-blocks--four">
+                        {% for article in page.related_articles %}
+                            {% pageurl article as href %}
+                            <a href="{{ href }}" class="card{% if large %} card--large{% endif %}{% if classes %} {{ classes }}{% endif %}">
+                                {% comment %}
+                                    It's possible that neither images are set in the admin.
+                                    It will fail silently, here and simply not render an image tag.
+                                    To prevent the panel from collapsing still render the container div
+                                {% endcomment %}
+                                <div class="card__image-container">
+                                    {% if article.listing_image %}
+                                        {% image article.listing_image width-768 class="card__image" %}
+                                    {% elif article.hero_image %}
+                                        {% image article.hero_image width-768 class="card__image" %}
+                                    {% endif %}
+                                </div>
+                                <div class="card__content">
+                                    {% if article.publication_date %}
+                                    <p class="card__date">{{ article.publication_date|date:"jS F Y" }}</p>
+                                    {% endif %}
+                                    <h3 class="card__title">{% if article.listing_title %}{{ article.listing_title }}{% else %}{{ article.title }}{% endif %}</h3>
+                                    {% if article.listing_summary or article.introduction %}
+                                        <p class="card__summary">{% if article.listing_summary %}{{ article.listing_summary }}{% else %}{{ article.introduction }}{% endif %}</p>
+                                    {% endif %}
+
+                                    {% if article %}
+                                        <span class="card__link">
+                                            {% trans 'Read more' %}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if page.get_root_index %}
+        <div class="wrapper wrapper--large link-button__container">
+            <button class="link-button__button" onClick="window.location.href='{{ page.get_root_index }}';">
+                Read all news
+            </button>
+        </div>
+        {% endif %}
+    </div>
+    {% endblock %}
+{% endblock %}

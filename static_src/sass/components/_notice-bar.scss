@@ -11,12 +11,15 @@
     align-items: center;
 
 }
+.notice-bar__hidden {
+      display: none;
+    }
 
 .notice-bar--extended__search-is-active {
-    top: 180px;
+    top: 60px;
 
     @media only screen and (max-width: 1023px) {
-        top: 170px;
+        top: 50px;
     }
 }
 

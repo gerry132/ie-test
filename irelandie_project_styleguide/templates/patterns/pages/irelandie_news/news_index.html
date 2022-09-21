@@ -1,6 +1,91 @@
 {% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags i18n %}
+{% load util_tags wagtailcore_tags %}
 
 {% block content %}
-    <h1>{{ page.title }}</h1>
-    <p>{{ page.description }}</p>
-{% endblock %}
+
+<script async>
+function getNewsArticles(year=null) {
+    let params = (new URL(document.location)).searchParams;
+    let redirect = params.get("redirect");
+
+    if (redirect && year===null) {
+        year = params.get("year_r");
+    }
+    else if (year===null) {
+        year = null;
+    }
+    $.ajax({
+            url : '{{ current_site.full_url }}',
+            type : 'GET',
+            data : {
+                'year' : year
+            },
+            success : function(data) {
+                document.getElementById('news--wrapper').innerHTML = data;
+                if (year) {
+                    document.getElementById('news-list').value = year;
+                    document.getElementById('news-list-mobile').value = year;
+                } else {
+                    document.getElementById('news-list').value = 'all';
+                    document.getElementById('news-list-mobile').value = 'all';
+                }
+            },
+            error : function(request,error)
+            {
+            }
+    });
+}
+
+getNewsArticles();
+</script>
+{% if page.title or page.generic_hero %}
+    {% include "patterns/molecules/streamfield/blocks/generic_hero.html" with page=page %}
+{% endif %}
+<div id="main-header" class="section section--padding section--white section--toc">
+    <div id="wrapper" class="wrapper--large--toc">
+        <div id="left">
+            <div class="wrapper wrapper--padding">
+                <div class="intro--toc">
+                    <div class="container">
+                        {% if not page.description %}
+                            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                        {% else %}
+                            <h2 class="story__heading heading--2">{{ page.description }}</h2>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="wrapper--padding related-content--mobile">
+                    <h4>News Archive</h4>
+                    <select id="news-list" class="searchBarNews" style="width: 100%;" onchange="getNewsArticles(this.value); ">
+                            <option value="all">All</option>
+                            {% for p in page.get_years %}
+                                <option value="{{p}}">{{p}}</option>
+                            {% endfor %}
+                        </select>
+                </div>
+            </div>
+        </div>
+        <div id="right">
+            <div class="related-content">
+                <h4>News Archive</h4>
+                <select id="news-list-mobile" class="searchBarNews" style="width: 100%;" onchange="getNewsArticles(this.value); ">
+                        <option value="all">All</option>
+                        {% for p in page.get_years %}
+                            <option value="{{p}}">{{p}}</option>
+                        {% endfor %}
+                    </select>
+            </div>
+        </div>
+      </div>
+</div>
+<div class="section--master">
+   <div class="section section--white">
+    <div class="wrapper wrapper--large--toc wrapper--padding content--padding">
+        <div style="padding-bottom: 20px;">
+            <div id="news--wrapper" style="padding-bottom: 15%"></div>
+        </div>
+    {% endblock %}
+</div>
+</div>
+</div>

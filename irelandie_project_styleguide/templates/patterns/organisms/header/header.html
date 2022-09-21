@@ -72,14 +72,16 @@
                         {% endif %}
                     {% endif %}
                 {% else %}
+                    {% if custom_header.links %}
+                        {% image custom_header_settings.site_settings.mobile_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
+                    {% endif %}
                     {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
-                {% endif %}
+                    {% endif %}
                 </a>
 
                 <div class="header__menus header__menus--desktop">
                     <div data-desktop-menu>
-                        {% has_root_override page as override %}
-                        {% primarynav page override=override %}
+                        {% primarynav page %}
                     </div>
                 </div>
 
@@ -90,8 +92,7 @@
                     {% endcomment %}
                     <div class="wrapper wrapper--large wrapper--mobile-menu">
                         <div class="header__menu header__menu--primary">
-                            {% has_root_override page as override %}
-                            {% primarynav page override=override %}
+                            {% primarynav page %}
                         </div>
                         {% has_secondary_nav as shownav %}
                         {% if shownav %}
@@ -163,6 +164,9 @@
                     {% include "patterns/molecules/search/search.html" with classes="search--dropdown" %}
                 </div>
             </div>
+            <div class="notice-bar">
+                    {% include_block page.notice_bar %}
+            </div>
         </div>
         {% endif %}
     </div>
@@ -174,8 +178,13 @@
         <div class="header header--override header-large" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
             <div class="wrapper wrapper--large">
                 <div class="header__container">
+
                     {% if custom_header.url %}
-                        <a href="{{ custom_header.url }}/" aria-label="Ireland.ie" class="header__logo-wrapper">
+                        <a href="{{ custom_header.url }}" aria-label="Ireland.ie" class="header__logo-wrapper">
+                    {% elif custom_header.link_page %}
+                        {% for block in custom_header.link_page %}
+                            <a href="{{block.value.page.url}}" aria-label="Ireland.ie" class="header__logo-wrapper">
+                        {% endfor %}
                     {% endif %}
                     {% if custom_header_settings.site_settings.site_logo and not custom_header.logo %}
                         {% image custom_header_settings.site_settings.site_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
@@ -272,7 +281,9 @@
                     </div>
                 </div>
             </div>
-            {% include_block page.notice_bar %}
+            <div class="notice-bar">
+                {% include_block page.notice_bar %}
+            </div>
         </div>
     {% endif %}
 

@@ -52,20 +52,13 @@ def primarynav(context, page, override=None):
     request = context["request"]
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
 
-    try:
-        navigation = page.root_navigation
-        if not page.root_navigation:
-            navigation = get_nav_for_locale(PrimaryNavigation, locale)
-    except AttributeError:
-        navigation = get_nav_for_locale(PrimaryNavigation, locale)
+    navigation = get_nav_for_locale(PrimaryNavigation, locale)
 
     try:
         custom_header = CustomHeader.objects.get(id=page.custom_header.id)
     except AttributeError:
         custom_header = None
 
-    if override:
-        navigation = override
     return {
         "primarynav": navigation,
         "customnav": custom_header,
@@ -116,11 +109,12 @@ def has_root_override(context, page, header=True):
             m = MissionPage.objects.live().get(id=p.id)
             if m.root_page:
                 if header:
-                    return m.root_navigation
+                    return m.custom_header
                 else:
                     return m.custom_footer
 
     return False
+
 
 # FOOTER NAVIGATION
 # ----------------------------------------------------------------------
@@ -344,6 +338,7 @@ def custom_header_settings(context, page):
         logo_alt = custom_header.logo_alt or site_settings.site_logo_alt
         links = custom_header.links
         url = custom_header.url
+        link_page = custom_header.link_page
         is_present = True
     else:
         # no custom header is set for the page, use the site settings
@@ -354,6 +349,7 @@ def custom_header_settings(context, page):
         links = None
         url = None
         is_present = False
+        link_page = None
 
     return {
         "url": url,
@@ -361,6 +357,7 @@ def custom_header_settings(context, page):
         "mobile_logo": mobile_logo,
         "logo_alt": logo_alt,
         "links": links,
+        "link_page": link_page,
         "site_settings": site_settings,
         "is_present": is_present
     }

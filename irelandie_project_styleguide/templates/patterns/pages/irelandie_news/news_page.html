@@ -9,8 +9,10 @@
     {% if page.hero_image or page.hero_video %}
         {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
         {% include "patterns/molecules/hero/hero.html" with page=page classes="hero--article" %}
+        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
     {% else %}
         {% include "patterns/molecules/hero/hero_section.html" with page=page %}
+        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
     {% endif %}
 
     {% block main %}

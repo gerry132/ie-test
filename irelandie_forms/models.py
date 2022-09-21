@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
+from django.template.response import TemplateResponse
 from modelcluster.fields import ParentalKey
 from wagtail.admin.panels import (
     FieldPanel,
@@ -11,18 +12,22 @@ from wagtail.admin.panels import (
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
-    TabbedInterface,
+    TabbedInterface, StreamFieldPanel,
 )
+
+from datetime import date
+from wagtail.admin.mail import send_mail
 from wagtail.contrib.forms.models import (
     FORM_FIELD_CHOICES,
     AbstractFormField,
     FormBuilder,
     AbstractFormSubmission,
 )
-from wagtail.fields import RichTextField
+from wagtail.fields import RichTextField, StreamField
+from wagtail import blocks
 from wagtail.search import index
 from wagtail_honeypot.models import HoneypotMixin
-
+from irelandie_utils.blocks import AdvancedRichTextBlock
 from irelandie_utils.models import BasePage
 
 
@@ -56,13 +61,28 @@ class NeverSaveFormSubmission(AbstractFormSubmission):
         pass
 
 
+class EmailMapBlock(blocks.StructBlock):
+    description = blocks.CharBlock(required=True)
+    email = blocks.CharBlock(required=True)
+
+
 # Never cache form pages since they include CSRF tokens.
 @method_decorator(never_cache, name="serve")
 class FormPage(HoneypotMixin, BasePage):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.topic = None
+        self.form = None
+
     template = "patterns/pages/forms/form_page.html"
     landing_page_template = "patterns/pages/forms/form_page_landing.html"
 
-    introduction = RichTextField(blank=True)
+    introduction = StreamField(
+        [("rich_text", AdvancedRichTextBlock(blank=True))],
+        blank=False,
+        null=True,
+        min_num=1,
+    )
     thank_you_text = RichTextField(
         blank=True,
         help_text="Text displayed to the user on successful submission of the form",
@@ -70,12 +90,34 @@ class FormPage(HoneypotMixin, BasePage):
     action_text = models.CharField(
         max_length=32, blank=True, help_text='Form action text. Defaults to "Submit"'
     )
-
+    email_map_text = models.CharField(
+        max_length=32, blank=True, help_text='Topic selection for email_map. Defaults to "Choose Topic"'
+    )
+    email_map = StreamField(
+        [("email_map", EmailMapBlock())],
+        blank=False,
+        null=True,
+        help_text="Multiple emails must be in a comma seperated list."
+    )
     search_fields = BasePage.search_fields + [index.SearchField("introduction")]
-
+    accordions = models.ForeignKey(
+        'utils.Accordion',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    body = StreamField(
+        [("rich_text", AdvancedRichTextBlock(blank=True))],
+        blank=True,
+        null=True,
+    )
     content_panels = BasePage.content_panels + [
         FieldPanel("introduction"),
         InlinePanel("form_fields", label="Form fields"),
+        FieldPanel("email_map_text"),
+        FieldPanel("email_map"),
+        FieldPanel("body"),
         FieldPanel("action_text"),
         FieldPanel("thank_you_text"),
         MultiFieldPanel(
@@ -90,6 +132,7 @@ class FormPage(HoneypotMixin, BasePage):
             ],
             "Email",
         ),
+        StreamFieldPanel("accordions"),
     ]
 
     form_builder = CustomFormBuilder
@@ -104,5 +147,46 @@ class FormPage(HoneypotMixin, BasePage):
         ]
     )
 
+    def get_mapped_value(self, topic):
+        for p in self.email_map:
+            if p.value.get('description') == topic:
+                return p.value.get('email')
+
+    def serve(self, request, *args, **kwargs):
+        if request.method == "POST":
+            form = self.get_form(
+                request.POST, request.FILES, page=self, user=request.user
+            )
+
+            if form.is_valid():
+                form_submission = self.process_form_submission(form)
+                self.form = form
+                return self.render_landing_page(
+                    request, form_submission, *args, **kwargs
+                )
+        else:
+            form = self.get_form(page=self, user=request.user)
+
+        context = self.get_context(request)
+        context["form"] = form
+        return TemplateResponse(request, self.get_template(request), context)
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        if request.POST:
+            submitted_date_str = date.today().strftime('%x')
+            subject = f"{self.subject} - {submitted_date_str}"
+            if 'topic' in request.POST:
+                self.topic = request.POST['topic']
+                addresses = [x.strip() for x in self.get_mapped_value(self.topic).split(',')]
+            else:
+                addresses = [x.strip() for x in self.to_address.split(',')]
+
+            send_mail(subject, self.render_email(self.form), addresses, self.from_address,)
+        return context
+
     def get_submission_class(self):
         return NeverSaveFormSubmission
+
+    def send_mail(self, form, submit=False):
+        self.form = form
