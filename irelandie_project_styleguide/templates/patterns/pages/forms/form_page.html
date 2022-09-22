@@ -18,6 +18,9 @@
 
 
 {% block content %}
+<div class="section" style="padding-top: 40px;">
+{% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+</div>
 <div class="section section--padding section--grey">
     <div class="wrapper wrapper--large wrapper--padding">
         <div class="intro">
@@ -37,7 +40,7 @@
                         <option value="" name="popular_page" selected disabled hidden>
                         {% if page.email_map_text %}
                             {{page.email_map_text}}
-                        {% else %}    
+                        {% else %}
                             Choose Topic
                         {% endif %}
                         </option>
@@ -63,8 +66,8 @@
             </form>
         {% endif %}
         {% include_block page.accordions.accordions %}
-        {% for block in page.body %} 
-            {% include_block block %} 
+        {% for block in page.body %}
+            {% include_block block %}
         {% endfor %}
     </div>
 </div>

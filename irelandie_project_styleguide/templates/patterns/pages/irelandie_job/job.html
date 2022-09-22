@@ -8,7 +8,9 @@
 
 {% block content %}
  <!-- Main -->
-    {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+    <div class="section" style="padding-top: 40px;">
+        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+    </div>
 
     {% block main %}
         <!-- Body -->
@@ -17,7 +19,7 @@
             <h1 class="hero__title">
                     {{ page.title }}
             </h1>
-            
+
             {% if page.subtitle %}
                 <p>{% firstof page.subtitle %}</p>
             {% endif %}

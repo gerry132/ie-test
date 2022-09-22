@@ -10,6 +10,7 @@
     {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
 
     {% include "patterns/molecules/hero/hero.html" with page=page classes="hero--article" %}
+    {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
     {% endif %}
 
     {% block main %}

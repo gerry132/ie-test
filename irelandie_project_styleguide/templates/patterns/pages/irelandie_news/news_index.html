@@ -39,17 +39,16 @@ function getNewsArticles(year=null) {
 
 getNewsArticles();
 </script>
-{% if page.generic_hero %}
+{% if page.title or page.generic_hero %}
     {% include "patterns/molecules/streamfield/blocks/generic_hero.html" with page=page %}
 {% endif %}
-{% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
 <div id="main-header" class="section section--padding section--white section--toc">
     <div id="wrapper" class="wrapper--large--toc">
         <div id="left">
             <div class="wrapper wrapper--padding">
                 <div class="intro--toc">
                     <div class="container">
-                        {% if not page.generic_hero %}
+                        {% if not page.description %}
                             <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
                         {% else %}
                             <h2 class="story__heading heading--2">{{ page.description }}</h2>
