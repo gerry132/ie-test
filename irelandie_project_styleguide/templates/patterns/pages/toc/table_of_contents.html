@@ -21,21 +21,11 @@
                 </div>
             </div>
         </div>
-        <div id="right">
-            <div class="related-content">
-                {% if page.related_content %}
-                <h4 class="header--related-content">Related Content</h4>
-                    {% for p in page.related_content %}
-                    <a href="{{p.value.page.url}}"><h2 class="toc-contents">{{p.value.title}}</h2></a>
-                    {% endfor %}
-                {% endif %}
-            </div>
-        </div>
       </div>
 </div>
 <div class="section--master">
-   <div class="section section--white">
-    <div class="wrapper wrapper--large--toc wrapper--padding content--padding">
+   <div class="container-fluid">
+    <div class="wrapper wrapper--large--toc wrapper--padding">
         <div style="padding-bottom: 20px;">
         {% for block in page.body %}
             {% get_content_length page as content_length %}
@@ -49,12 +39,14 @@
                 <p class="intro__description">{{ page.introduction|richtext }}</p>
             </div>
         {% endif %}
+            <!---start of page body-->
+            <div class="row justify-content-start">
+            <div class="col-lg-9 col-md-12 col-sm-12">
             {% for blocks in page.body %}
                 {% if blocks.block_type == 'content' %}
                 <div id="{{blocks.value.title}}">
                     {% for block in blocks.value.content %}
                         {% if block.block_type == 'heading' or block.block_type == 'rich_text' or block.block_type == 'image' or block.block_type == 'document' or block.block_type == 'table' %}
-
                                 {% if block.block_type == 'table' %}
                                     <div id="{{block.title}}" class="wrapper wrapper--small wrapper--padding content--padding">
                                         {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}
@@ -90,18 +82,25 @@
                         {% endif %}
                 {% endfor %}
             </div>
-                {% endif %}
+            {% endif %}
             {% endfor %}
-            <div class="related-content--mobile wrapper--padding content--padding">
-                {% if page.related_content %}
-                <h4 class="header--related-content">Related Content</h4>
-                    {% for p in page.related_content %}
-                    <a href="{{p.value.page.url}}"><h2 class="toc-contents">{{p.value.title}}</h2></a>
-                    {% endfor %}
-                {% endif %}
             </div>
+            <div class="col-sm-12 related-content--mobile"></div>
+            <div class="col-sm-12 col-md-12 col-lg-3 wrapper">
+                <div class="wrapper--padding content--padding">
+                    {% if page.related_content %}
+                        <h4 class="header--related-content">Related Content</h4>
+                        {% for p in page.related_content %}
+                            <a href="{{ p.value.page.url }}"><h2 class="toc-contents">{{ p.value.title }}</h2>
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            </div>
+        <!--end of page body-->
 
-            {% endblock %}
 </div>
 </div>
 </div>
+{% endblock %}
