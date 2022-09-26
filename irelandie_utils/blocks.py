@@ -747,7 +747,7 @@ class TocBlocks(blocks.StreamBlock):
 
 class TocBlock(blocks.StructBlock):
     title = blocks.CharBlock()
-    content = TocBlocks()
+    content = TocBlocks(required=False)
 
 
 class TocBlockSnippets(blocks.StreamBlock):
@@ -759,7 +759,7 @@ class TocBlockSnippets(blocks.StreamBlock):
 
 class TocAdminBlock(blocks.StructBlock):
     title = blocks.CharBlock()
-    content = TocBlocks()
+    content = TocBlocks(required=False)
     snippets = TocBlockSnippets(required=False)
 
 
