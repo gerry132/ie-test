@@ -222,7 +222,7 @@ class PinnedStoryHeroBlock(BaseBlockLinkValidation):
         required=True,
         help_text=_(ALT_IMAGE),
     )
-    title = blocks.CharBlock(required=False)
+    button_text = blocks.CharBlock(required=False)
     summary = blocks.CharBlock(required=False)
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -230,7 +230,6 @@ class PinnedStoryHeroBlock(BaseBlockLinkValidation):
         required=False,
         help_text="An external link.",
     )
-    button_text = blocks.CharBlock(required=False)
 
     class Meta:
         value_class = AlernatePinnedStoryHeroLinkText
