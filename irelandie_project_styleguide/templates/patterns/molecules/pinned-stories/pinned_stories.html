@@ -9,10 +9,10 @@
                     <div class="pinned-stories__featured-content">
                         {% comment %}
                             The logic here is: If a page is chosen the title can also be set to override that but take into account
-                            the button text could also have a value and use it instead.
+                            the button text/title could also have a value and use it instead.
                         {% endcomment %}
                         <h3 class="pinned-stories__featured-title heading--3" id="featured-story-title">
-                            {% firstof value.pinned_story_hero.button_text value.pinned_story_hero.page.title %}
+                            {% firstof value.pinned_story_hero.title value.pinned_story_hero.page.title %}
                         </h3>
                         <p class="pinned-stories__featured-summary">{{ value.pinned_story_hero.summary }}</p>
                     </div>
@@ -24,7 +24,7 @@
                     <div class="pinned-stories__featured-content">
                         <h3 class="pinned-stories__featured-title heading--3" id="featured-story-title">
 
-                        {{ value.pinned_story_hero.button_text }}
+                        {{ value.pinned_story_hero.title }}
                         </h3>
                         <p class="pinned-stories__featured-summary">{{ value.pinned_story_hero.summary }}</p>
                     </div>
