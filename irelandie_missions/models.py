@@ -323,16 +323,30 @@ class ServiceContent(BasePage):
         null=True,
         min_num=0,
     )
+    admin_body1 = StreamField(
+        [
+            ("admin_contents", blocks.TocAdminBlock())
+        ],
+        blank=True
+    )
     body = StreamField(
         [
             ("content", blocks.TocBlock())
         ],
         blank=True
     )
+    admin_body2 = StreamField(
+        [
+            ("admin_content", blocks.TocAdminBlock())
+        ],
+        blank=True
+    )
 
     content_panels = BasePage.content_panels + [
         FieldPanel("introduction"),
+        StreamFieldPanel("admin_body1", permission="access_admin", heading="Admin_body"),
         StreamFieldPanel("body"),
+        StreamFieldPanel("admin_body2", permission="access_admin", heading="Admin_body"),
         StreamFieldPanel("related_content")
     ]
 

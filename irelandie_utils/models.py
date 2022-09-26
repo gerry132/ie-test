@@ -26,7 +26,7 @@ from wagtail.snippets.models import register_snippet
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
-from irelandie_utils.blocks import ArticleStoryBlock, AdvancedRichTextBlock, AccordionBlock
+from irelandie_utils.blocks import ArticleStoryBlock, AdvancedRichTextBlock, AccordionBlock, TocBlocks
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
 import django.utils.timezone
@@ -779,4 +779,76 @@ class TwitterEmbed(TranslatableMixin, models.Model):
     def __str__(self):
         if not self.title:
             return f"{self.username} (username)"
+        return self.title
+
+
+@register_snippet
+class Visa(models.Model):
+    title = models.CharField(max_length=255)
+    body = StreamField(
+        [
+            ("content", TocBlocks())
+        ],
+        blank=True
+    )
+    panels = [
+        FieldPanel("title"),
+        StreamFieldPanel("body", permission="access_admin"),
+    ]
+
+    def __str__(self):
+        return self.title
+
+
+@register_snippet
+class Passport(models.Model):
+    title = models.CharField(max_length=255)
+    body = StreamField(
+        [
+            ("content", TocBlocks())
+        ],
+        blank=True
+    )
+    panels = [
+        FieldPanel("title"),
+        StreamFieldPanel("body", permission="access_admin"),
+    ]
+
+    def __str__(self):
+        return self.title
+
+
+@register_snippet
+class Authentication(models.Model):
+    title = models.CharField(max_length=255)
+    body = StreamField(
+        [
+            ("content", TocBlocks())
+        ],
+        blank=True
+    )
+    panels = [
+        FieldPanel("title"),
+        StreamFieldPanel("body", permission="access_admin"),
+    ]
+
+    def __str__(self):
+        return self.title
+
+
+@register_snippet
+class Marriage(models.Model):
+    title = models.CharField(max_length=255)
+    body = StreamField(
+        [
+            ("content", TocBlocks())
+        ],
+        blank=True
+    )
+    panels = [
+        FieldPanel("title"),
+        StreamFieldPanel("body", permission="access_admin"),
+    ]
+
+    def __str__(self):
         return self.title

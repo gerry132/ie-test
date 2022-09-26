@@ -739,6 +739,7 @@ class TocBlocks(blocks.StreamBlock):
     logos = LogoCardsBlock(group="Module")
 
     table = TableBlock(group="HTML")
+    youtube_video = YoutubeVideoBlock(group="HTML")
     html = blocks.RawHTMLBlock(
         group="HTML",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
@@ -748,6 +749,19 @@ class TocBlocks(blocks.StreamBlock):
 class TocBlock(blocks.StructBlock):
     title = blocks.CharBlock()
     content = TocBlocks()
+
+
+class TocBlockSnippets(blocks.StreamBlock):
+    visas = SnippetChooserBlock(target_model="utils.Visa")
+    passports = SnippetChooserBlock(target_model="utils.Passport")
+    authentication = SnippetChooserBlock(target_model="utils.Authentication")
+    marriage = SnippetChooserBlock(target_model="utils.Marriage")
+
+
+class TocAdminBlock(blocks.StructBlock):
+    title = blocks.CharBlock()
+    content = TocBlocks()
+    snippets = TocBlockSnippets(required=False)
 
 
 class AdditionalSocialBlock(blocks.StructBlock):

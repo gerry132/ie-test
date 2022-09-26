@@ -8,7 +8,6 @@ import re
 
 import uuid
 
-
 register = template.Library()
 
 
@@ -46,13 +45,13 @@ def return_date_from_datetime(date_obj):
 
 @register.simple_tag
 def new_width(iframe, width):
-    res = re.sub(r'width="\d{1,3}"', 'width="'+str(width)+'%"', iframe)
+    res = re.sub(r'width="\d{1,3}"', 'width="' + str(width) + '%"', iframe)
     return res
 
 
 @register.simple_tag
 def get_starting_index(length):
-    return length[len(length)-2:len(length)]
+    return length[len(length) - 2:len(length)]
 
 
 @register.simple_tag
@@ -66,5 +65,14 @@ def get_content_length(page):
     counter = 0
     for block in page.body:
         if block.block_type == 'content':
+            counter += 1
+    return counter
+
+
+@register.simple_tag
+def get_admin_content_length(page):
+    counter = 0
+    for block in page.admin_body1:
+        if block.block_type == 'admin_contents':
             counter += 1
     return counter
