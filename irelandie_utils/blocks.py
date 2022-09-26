@@ -212,7 +212,7 @@ class EmbassyStory(BaseBlockLinkValidation, BaseBlockLinkContext):
 
 class AlernatePinnedStoryHeroLinkText(StructValue):
     def link_text(self):
-        text = self.get("button_text") or self.get("page")
+        text = self.get("title") or self.get("page")
         return text
 
 
@@ -230,7 +230,6 @@ class PinnedStoryHeroBlock(BaseBlockLinkValidation):
         required=False,
         help_text="An external link.",
     )
-    button_text = blocks.CharBlock(required=False)
 
     class Meta:
         value_class = AlernatePinnedStoryHeroLinkText

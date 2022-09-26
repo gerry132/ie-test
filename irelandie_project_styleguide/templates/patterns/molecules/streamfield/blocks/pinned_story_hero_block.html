@@ -8,7 +8,6 @@
         {% else %}
             {% image value.image width-400 alt=value.image.alt_default %}
         {% endif %}
-        <h3 class="pinned-stories__featured-title heading--2">{{ value.title }}</h3>
         <p class="pinned-stories__featured-summary">{{ value.summary }}</p>
 
         {% if value.link_page and value.link_text %}
@@ -17,5 +16,6 @@
                 {{ value.link_text }}
             </a>
         {% endif %}
+        <p class="pinned-stories__featured-summary">{{ value.summary }}</p>
     </div>
 </div>
