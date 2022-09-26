@@ -14,7 +14,7 @@ from irelandie_navigation.models import (
 )
 
 from irelandie_missions.models import MissionPage
-from irelandie_pages.models import FreeFormPageBase, FreeFormPage
+from irelandie_pages.models import FreeFormPage
 from irelandie_utils.models import SocialMediaSettings
 
 register = template.Library()
