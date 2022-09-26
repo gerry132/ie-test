@@ -141,9 +141,14 @@ class JobContentPage(BasePage):
     content_panels = BasePage.content_panels + [
         FieldPanel("subtitle", permission="access_admin"),
         FieldPanel("job_index_page_summary"),
+        StreamFieldPanel("body"),
         StreamFieldPanel("privacy_policy", permission="access_admin"),
-        StreamFieldPanel("body")
     ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context['privacy_policy_parent'] = self.get_parent().specific.privacy_policy
+        return context
 
 
 class JobIndexPage(BasePage):
@@ -157,9 +162,17 @@ class JobIndexPage(BasePage):
         min_num=0,
         max_num=1,
     )
+    privacy_policy = models.ForeignKey(
+        'utils.PrivacyPolicySnippet',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin")
+        StreamFieldPanel("generic_hero", permission="access_admin"),
+        StreamFieldPanel("privacy_policy", permission="access_admin"),
     ]
 
     @cached_property
@@ -275,10 +288,10 @@ class MissionPage(HeroPage):
         )
 
     settings_panels = (
-       [
-           FieldPanel("root_page", permission="access_admin"),
-       ] +
-       HeroPage.settings_panels
+        [
+            FieldPanel("root_page", permission="access_admin"),
+        ] +
+        HeroPage.settings_panels
 
     )
 
