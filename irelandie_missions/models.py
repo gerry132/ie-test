@@ -328,6 +328,15 @@ class Magazine(HeroPage):
 class ServiceContent(BasePage):
     template = "patterns/pages/toc/table_of_contents.html"
     introduction = RichTextField(blank=True)
+    notice_bar = StreamField(
+        [
+            ("noticebar", NoticeBarWithMessageLink()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
     related_content = StreamField(
         [
             ("related_item", blocks.RelatedContentBlock()),
@@ -357,6 +366,10 @@ class ServiceContent(BasePage):
 
     content_panels = BasePage.content_panels + [
         FieldPanel("introduction"),
+        MultiFieldPanel([
+            StreamFieldPanel("notice_bar"),
+        ], heading="Noticebar settings"
+        ),
         StreamFieldPanel("admin_body1", permission="access_admin", heading="Admin_body"),
         StreamFieldPanel("body"),
         StreamFieldPanel("admin_body2", permission="access_admin", heading="Admin_body"),

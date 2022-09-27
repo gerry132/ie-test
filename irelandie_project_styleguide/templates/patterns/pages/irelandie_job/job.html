@@ -28,9 +28,7 @@
             {% if page.privacy_policy %}
                 {% include_block page.privacy_policy.privacy_snippet %}
             {% else %}
-                <div style="padding-top: 20px;">
                 {{ privacy_policy_parent.privacy_snippet }}
-                </div>
             {% endif %}
         </div>
     </div>
