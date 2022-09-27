@@ -135,11 +135,20 @@ class FormPage(HoneypotMixin, BasePage):
         StreamFieldPanel("accordions"),
     ]
 
+    honeypot_panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("honeypot", permission="access_admin"),
+            ],
+            heading="Reduce Form Spam",
+        )
+    ]
+
     form_builder = CustomFormBuilder
     edit_handler = TabbedInterface(
         [
             ObjectList(content_panels, heading="Content"),
-            ObjectList(HoneypotMixin.honeypot_panels, heading="Honeypot"),
+            ObjectList(honeypot_panels, heading="Honeypot"),
             ObjectList(BasePage.promote_panels, heading="Promote"),
             ObjectList(
                 BasePage.settings_panels, heading="Settings", classname="settings"
@@ -182,7 +191,7 @@ class FormPage(HoneypotMixin, BasePage):
             else:
                 addresses = [x.strip() for x in self.to_address.split(',')]
 
-            send_mail(subject, self.render_email(self.form), addresses, self.from_address,)
+            send_mail(subject, self.render_email(self.form), addresses, self.from_address, )
         return context
 
     def get_submission_class(self):
