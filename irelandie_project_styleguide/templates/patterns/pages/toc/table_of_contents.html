@@ -3,11 +3,23 @@
 {% load util_tags wagtailcore_tags %}
 
 {% block content %}
-    {% for block in page.notice_bar %}
-        <div class="section section--padding" {% if block.value.enable %}style="padding-top: 72px;"{% endif %}>
-            {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
-        </div>
-    {% endfor %}
+<style>
+    .notice-bar--extended__search-is-active {
+                top: 0px;
+            }
+     .header__search-is-active{
+        padding-top: 100px;
+     }
+</style>
+<div class="search--is-active-services">
+    <div style="padding-top: 40px;">
+        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+    </div>
+    <div class="notice-bar">
+        {% include_block page.notice_bar_services %}
+    </div>
+</div>
+
     <!--start of page description and title-->
     <div id="main-header" class="section section--padding section--white section--toc">
         <div id="wrapper" class="wrapper--large--toc">
@@ -224,4 +236,21 @@
         </div>
     </div>
 
+{% endblock %}
+{% block extra_js %}
+<script>
+    const breadcrumbs = document.querySelector('.search--is-active-services');
+    const noticebar = document.querySelector('.notice-bar--extended');
+    const toggle = document.querySelector('.header__search-toggle');
+    const header = document.querySelector("#main-header");
+
+    toggle.addEventListener('click', () => {
+      breadcrumbs.classList.toggle('generic-hero__search-is-active')
+    });
+    toggle.addEventListener('click', () => {
+      header.classList.toggle('header__search-is-active')
+    });
+
+
+</script>
 {% endblock %}
