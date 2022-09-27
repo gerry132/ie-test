@@ -3,11 +3,15 @@
 {% load util_tags wagtailcore_tags %}
 
 {% block content %}
-    {% for block in page.notice_bar %}
-        <div class="section section--padding" {% if block.value.enable %}style="padding-top: 72px;"{% endif %}>
+
+        <div style="padding-top: 40px;">
             {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
         </div>
-    {% endfor %}
+
+        <div class="notice-bar">
+                    {% include_block page.notice_bar_services %}
+        </div>
+
     <!--start of page description and title-->
     <div id="main-header" class="section section--padding section--white section--toc">
         <div id="wrapper" class="wrapper--large--toc">
