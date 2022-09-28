@@ -140,14 +140,41 @@ class JobContentPage(BasePage):
 
     content_panels = BasePage.content_panels + [
         FieldPanel("subtitle", permission="access_admin"),
+        MultiFieldPanel(
+            [
+                FieldPanel('go_live_at'),
+                FieldPanel('expire_at'),
+            ],
+            "Scheduled publishing"
+        ),
         FieldPanel("job_index_page_summary"),
         StreamFieldPanel("body"),
         StreamFieldPanel("privacy_policy", permission="access_admin"),
     ]
 
+    settings_panels = ([
+                           MultiFieldPanel(
+                               [
+                                   FieldPanel("custom_header", permission="access_admin"),
+                                   FieldPanel("custom_footer", permission="access_admin")
+                               ],
+                               "Root Navigation"
+                           ),
+                       ] +
+                       BasePage.webchat_panel
+                       )
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(BasePage.promote_panels, heading='Promote'),
+        ObjectList(settings_panels, heading='Settings', classname="settings"),
+    ])
+
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context['privacy_policy_parent'] = self.get_parent().specific.privacy_policy
+        parent = self.get_parent()
+        if parent.content_type.name == "job index page":
+            context['privacy_policy_parent'] = self.get_parent().specific.privacy_policy
         return context
 
 
