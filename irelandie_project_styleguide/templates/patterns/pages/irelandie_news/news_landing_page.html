@@ -51,6 +51,10 @@
                                         {% image article.listing_image width-768 class="card__image" %}
                                     {% elif article.hero_image %}
                                         {% image article.hero_image width-768 class="card__image" %}
+                                    {% else %}
+                                    {% for block in default_image %}
+                                         {% image block.value.image width-500 class="card__image"  alt=block.value.image_alt %}
+                                    {% endfor %}
                                     {% endif %}
                                 </div>
                                 <div class="card__content">

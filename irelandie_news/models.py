@@ -134,6 +134,17 @@ class NewsPage(MinimalArticlePage):
             .specific()
         )
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        from irelandie_missions.models import MissionPage
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['default_image'] = missions.default_image
+        return context
+
     class Meta:
         verbose_name = "News Content"
 
@@ -185,6 +196,13 @@ class NewsLandingPage(BasePage):
             .live()
             .specific()
         )
+        from irelandie_missions.models import MissionPage
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['default_image'] = missions.default_image
 
         return context
 

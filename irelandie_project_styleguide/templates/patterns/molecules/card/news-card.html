@@ -21,8 +21,11 @@ Example:
             {% else %}
                 {% image card.hero_image width-500 alt=card.image.alt_default class="card__image" %}
             {% endif %}
-        {% else %} 
-            {% image default_image.image width-500 class="card__image"  alt=default_image.image_alt %}
+        {% else %}
+                {% for default_image in default_image %}
+                    {% image default_image.value.image width-500 class="card__image"  alt=default_image.image_alt %}
+                {% endfor %}
+
         {% endif %}
         </div>
         <div class="card__content">
