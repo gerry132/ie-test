@@ -64,12 +64,12 @@
                                     <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length }}. {{block.value.title}}</h2></a>
                                 {% endif %}
                             {% endfor %}
-                            {% endif %}
                             {% for block in page.admin_body2 %}
                                 {% if block.block_type == 'admin_content' %}
                                     <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length|add:content_length }}. {{block.value.title}}</h2></a>
                                 {% endif %}
                             {% endfor %}
+                            {% endif %}
                             {% if page.introduction %}
                                 <div class="wrapper wrapper--large wrapper--padding content--padding">
                                     <p class="intro__description">{{ page.introduction|richtext }}</p>
