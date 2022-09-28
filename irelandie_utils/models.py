@@ -715,15 +715,40 @@ class MinimalArticlePage(BasePage):
             ],
             "hero",
         ),
+        MultiFieldPanel(
+            [
+                FieldPanel('go_live_at'),
+                FieldPanel('expire_at'),
+            ],
+            "Scheduled publishing"
+        ),
         FieldPanel("publication_date"),
         StreamFieldPanel("body"),
         FieldPanel("related_articles_active", heading="Featured News Checkbox"),
     ]
 
+    settings_panels = ([
+                           MultiFieldPanel(
+                               [
+                                   FieldPanel("custom_header", permission="access_admin"),
+                                   FieldPanel("custom_footer", permission="access_admin")
+                               ],
+                               "Root Navigation"
+                           ),
+                       ] +
+                       BasePage.webchat_panel
+                       )
+
     search_fields = BasePage.search_fields + [
         index.SearchField("introduction"),
         index.SearchField("body"),
     ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(BasePage.promote_panels, heading='Promote'),
+        ObjectList(settings_panels, heading='Settings', classname="settings"),
+    ])
 
     def clean(self):
         if self.hero_image and self.hero_video:
