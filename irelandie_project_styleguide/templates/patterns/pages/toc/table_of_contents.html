@@ -52,6 +52,8 @@
                         <div>
                             {% get_admin_content_length page as admin_content_length %}
                             {% get_content_length page as content_length %}
+                            {% count_toc page as content_length_count %}
+                            {% if content_length_count > 1 %}
                             {% for block in page.admin_body1 %}
                                 {% if block.block_type == 'admin_contents' %}
                                     <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter }}. {{block.value.title}}</h2></a>
@@ -67,6 +69,7 @@
                                     <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length|add:content_length }}. {{block.value.title}}</h2></a>
                                 {% endif %}
                             {% endfor %}
+                            {% endif %}
                             {% if page.introduction %}
                                 <div class="wrapper wrapper--large wrapper--padding content--padding">
                                     <p class="intro__description">{{ page.introduction|richtext }}</p>

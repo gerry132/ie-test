@@ -76,3 +76,18 @@ def get_admin_content_length(page):
         if block.block_type == 'admin_contents':
             counter += 1
     return counter
+
+
+@register.simple_tag
+def get_admin_contents_length(page):
+    counter = 0
+    for block in page.admin_body2:
+        if block.block_type == 'admin_content':
+            counter += 1
+    return counter
+
+
+@register.simple_tag
+def count_toc(page):
+    result = get_admin_content_length(page) + get_admin_contents_length(page) + get_content_length(page)
+    return result
