@@ -96,7 +96,7 @@ class DestinationPage(HeroPage):
                                 related_articles_active=True)
                         .public()
                         .live()
-                        .order_by("-first_published_at")[:4]
+                        .order_by("-publication_date")[:4]
                         .specific()
                     )
         return None
