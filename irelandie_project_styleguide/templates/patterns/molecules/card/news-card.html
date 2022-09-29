@@ -29,6 +29,9 @@ Example:
         {% endif %}
         </div>
         <div class="card__content">
+            {% if card.publication_date %}
+            <p class="card__date">{{ card.publication_date|date:"jS F Y" }}</p>
+            {% endif %}
             <h3 class="card__title">{{ card.title }}</h3>
 
             <p class="card__summary">{{ card.introduction }}</p>
