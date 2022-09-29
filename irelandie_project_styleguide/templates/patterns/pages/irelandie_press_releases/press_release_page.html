@@ -34,7 +34,7 @@
         </div>
 
         <!-- related_articles -->
-        {% include "patterns/molecules/related-articles/related-articles.html" with articles=page.related_articles %}
+        {% include "patterns/molecules/related-articles/related-articles.html" with articles=page.related_articles default_image=default_image %}
 
     {% endblock %}
 {% endblock %}

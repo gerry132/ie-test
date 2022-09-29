@@ -64,7 +64,6 @@ class DestinationPage(HeroPage):
                 wagtail_blocks.StructBlock(
                     [
                         ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
-                        ("default_image", blocks.ImageBlock()),
                     ],
                     template="patterns/molecules/pinned-stories/pinned_stories.html",
                 ),
@@ -93,7 +92,6 @@ class DestinationPage(HeroPage):
                 if m.root_page:
                     return (
                         NewsPage.objects
-                        .child_of(m)
                         .filter(locale=self.locale,
                                 related_articles_active=True)
                         .public()
@@ -102,6 +100,16 @@ class DestinationPage(HeroPage):
                         .specific()
                     )
         return None
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['default_image'] = missions.default_image
+        return context
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
@@ -264,6 +272,15 @@ class MissionPage(HeroPage):
         min_num=0,
         max_num=1,
     )
+    default_image = StreamField(
+        [
+            ("default_image", blocks.ImageBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
     pinned_stories = StreamField(
         [
             (
@@ -271,7 +288,6 @@ class MissionPage(HeroPage):
                 wagtail_blocks.StructBlock(
                     [
                         ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
-                        ("default_image", blocks.ImageBlock()),
                     ],
                     template="patterns/molecules/pinned-stories/pinned_stories.html",
                 ),
@@ -317,6 +333,7 @@ class MissionPage(HeroPage):
     settings_panels = (
         [
             FieldPanel("root_page", permission="access_admin"),
+            FieldPanel("default_image", permission="access_admin"),
         ] +
         HeroPage.settings_panels
 

@@ -172,3 +172,14 @@ class TopicPage(HeroPage):
         ObjectList(HeroPage.promote_panels, heading='Promote'),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        from irelandie_missions.models import MissionPage
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['default_image'] = missions.default_image
+        return context
