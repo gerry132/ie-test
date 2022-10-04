@@ -16,14 +16,16 @@
 
     ul {
         list-style: outside disc;
+        margin-left: 1em;
     }
 
     ul ul {
 	    list-style-type: circle;
-	    margin-left: 10%;
+	    margin-left: 3em;
     }
 
     ol {
         list-style: outside decimal;
+        margin-left: 1em;
     }
 }
