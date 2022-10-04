@@ -20,7 +20,7 @@
 
     <div class="card__content">
         {% if article.specific.publication_date %}
-            <p class="card__date">{{ article.specific.publication_date|date:"jS F Y" }}</p>
+            <p class="card__date">{{ article.specific.publication_date|date:"j F Y" }}</p>
         {% endif %}
         <h3 class="card__title">
             {% firstof article.specific.listing_title article.title %}

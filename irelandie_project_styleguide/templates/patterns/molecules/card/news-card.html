@@ -30,7 +30,7 @@ Example:
         </div>
         <div class="card__content">
             {% if card.publication_date %}
-            <p class="card__date">{{ card.publication_date|date:"jS F Y" }}</p>
+            <p class="card__date">{{ card.publication_date|date:"j F Y" }}</p>
             {% endif %}
             <h3 class="card__title">{{ card.title }}</h3>
 

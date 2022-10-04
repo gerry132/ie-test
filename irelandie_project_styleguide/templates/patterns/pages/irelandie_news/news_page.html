@@ -20,7 +20,7 @@
         <div class="section section--padding">
             <div class="wrapper wrapper--large wrapper--padding">
                 {% if page.publication_date %}
-                    {{ page.publication_date|date:"jS F Y" }}
+                    {{ page.publication_date|date:"j F Y" }}
                 {% endif %}
             </div>
             {% for block in page.body %}

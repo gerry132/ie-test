@@ -29,7 +29,7 @@
                         </div>
                         <div class="card__content">
                             {% if article.publication_date %}
-                                    <p class="card__date">{{ article.publication_date|date:"jS F Y" }}</p>
+                                    <p class="card__date">{{ article.publication_date|date:"j F Y" }}</p>
                             {% endif %}
                             <h3 class="card__title">{% if article.listing_title %}{{ article.listing_title }}{% else %}{{ article.title }}{% endif %}</h3>
 
