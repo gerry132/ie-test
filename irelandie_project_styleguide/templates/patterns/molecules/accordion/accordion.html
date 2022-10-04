@@ -8,7 +8,7 @@
             </h2>
         {% endif %}
         {% if value.summary %}
-            <div class="accordions__summary">
+            <div class="accordions__summary rich-text">
                 {{ value.summary }}
             </div>
         {% endif %}
@@ -36,7 +36,10 @@
                         class="accordion__content"
                         aria-labelledby="question-{{ forloop.counter }}"
                         aria-hidden="true">
+
+                        <div class="rich-text">
                         {{ accordion.value.content }}
+                        </div>
 
                         {% if accordion.value.additional %}
                             {% for additional in accordion.value.additional %}
