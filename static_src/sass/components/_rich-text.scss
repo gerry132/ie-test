@@ -27,7 +27,8 @@
     }
 
     ul {
-        list-style: inside disc;
+        list-style: outside disc;
+        margin-left: 1em;
     }
 
     ul ul {
