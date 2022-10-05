@@ -17,7 +17,6 @@ class SecondaryCallToAction(blocks.StructBlock):
     class Meta:
         icon = 'link'
         template = 'patterns/molecules/streamfield/blocks/secondary_call_to_action.html'
-        label = 'Secondary Call To Action'
 
     def clean(self, value):
         errors = {}

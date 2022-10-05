@@ -11,6 +11,7 @@ from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import VideoChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
+from irelandie_home.blocks import SecondaryCallToAction
 
 from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment
 
@@ -350,6 +351,15 @@ class AdvancedRichTextBlock(blocks.StructBlock):
     rich_text = blocks.RichTextBlock(
         features=["h3", "blockquote", "bold", "link", "document-link", "ul"], required=False,
     )
+    button_link = blocks.StreamBlock(
+        [
+            ("button", SecondaryCallToAction())
+        ],
+        blank=True,
+        max_num=1,
+        min_num=0,
+        required=False,
+    )
 
     class Meta:
         label = "Advanced RichTextBlock"
@@ -668,6 +678,15 @@ class AccordionBlock(blocks.StructBlock):
                                 ]
                             ),
                         ),
+                        ("button_link", blocks.StreamBlock(
+                            [
+                                ("button", SecondaryCallToAction())
+                            ],
+                            blank=True,
+                            max_num=1,
+                            min_num=0,
+                            required=False,)
+                         ),
                         ("additional", blocks.StreamBlock([
                             ("map", MapBlock()),
                             ("table", TableBlock(group="table")),
