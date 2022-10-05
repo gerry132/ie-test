@@ -8,6 +8,18 @@
         margin-right: auto;
         max-width: 780px;
     }
+    .button_position{
+        position: relative;
+        text-align: center;
+    }
+    .button_text{
+        display: inline-block;
+        padding: 0.5em 1em;
+        border-radius: 1.625rem;
+        text-decoration: none;
+        color: white;
+        background-color: #004d46;
+    }
 
     a {
         font-weight: $weight--bold;
@@ -15,8 +27,7 @@
     }
 
     ul {
-        list-style: outside disc;
-        margin-left: 1em;
+        list-style: inside disc;
     }
 
     ul ul {
@@ -28,4 +39,6 @@
         list-style: outside decimal;
         margin-left: 1em;
     }
+
+
 }
