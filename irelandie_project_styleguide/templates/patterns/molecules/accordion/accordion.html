@@ -42,14 +42,12 @@
 
                         {% if accordion.value.button_link %}
                         {% for button in accordion.value.button_link %}
-                            <div class="wrapper wrapper--large wrapper--padding">
-                                <div class="button_position">
+                            <div class="wrapper wrapper--large">
                                     {% if button.page %}
                                         <a class="button_text" href="{{ button.page }}">{{ button.value.message }}</a>
                                     {% else %}
                                         <a class="button_text" href="{{ button.url }}">{{ button.value.message }}</a>
                                     {% endif %}
-                                </div>
                             </div>
                         {% endfor %}
                         {% endif %}
