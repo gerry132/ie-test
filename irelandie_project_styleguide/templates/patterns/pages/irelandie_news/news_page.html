@@ -20,7 +20,7 @@
         <div class="section section--padding">
             <div class="wrapper wrapper--large wrapper--padding">
                 {% if page.publication_date %}
-                    {{ page.publication_date|date:"jS F Y" }}
+                    {{ page.publication_date|date:"j F Y" }}
                 {% endif %}
             </div>
             {% for block in page.body %}
@@ -52,7 +52,7 @@
         </div>
 
         <!-- related_articles -->
-        {% include "patterns/molecules/related-articles/related-articles.html" with articles=page.related_articles %}
+        {% include "patterns/molecules/related-articles/related-articles.html" with articles=page.related_articles default_image=default_image %}
 
     {% endblock %}
 {% endblock %}

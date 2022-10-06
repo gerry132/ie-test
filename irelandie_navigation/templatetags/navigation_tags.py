@@ -14,6 +14,7 @@ from irelandie_navigation.models import (
 )
 
 from irelandie_missions.models import MissionPage
+from irelandie_pages.models import FreeFormPage
 from irelandie_utils.models import SocialMediaSettings
 
 register = template.Library()
@@ -112,6 +113,15 @@ def has_root_override(context, page, header=True):
                     return m.custom_header
                 else:
                     return m.custom_footer
+
+    for p in pages:
+        if p.content_type.name == 'Free Form Page':
+            f = FreeFormPage.objects.live().get(id=p.id)
+            if f.root_page:
+                if header:
+                    return f.custom_header
+                else:
+                    return f.custom_footer
 
     return False
 

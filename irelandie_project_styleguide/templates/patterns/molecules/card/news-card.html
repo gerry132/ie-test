@@ -21,11 +21,17 @@ Example:
             {% else %}
                 {% image card.hero_image width-500 alt=card.image.alt_default class="card__image" %}
             {% endif %}
-        {% else %} 
-            {% image default_image.image width-500 class="card__image"  alt=default_image.image_alt %}
+        {% else %}
+                {% for default_image in default_image %}
+                    {% image default_image.value.image width-500 class="card__image"  alt=default_image.image_alt %}
+                {% endfor %}
+
         {% endif %}
         </div>
         <div class="card__content">
+            {% if card.publication_date %}
+            <p class="card__date">{{ card.publication_date|date:"j F Y" }}</p>
+            {% endif %}
             <h3 class="card__title">{{ card.title }}</h3>
 
             <p class="card__summary">{{ card.introduction }}</p>

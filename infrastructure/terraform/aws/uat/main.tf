@@ -75,15 +75,16 @@ locals {
     },
     gerry_dev = {
       description = "Gerry Mcbride - OGCIO"
-      cidr_blocks = ["52.49.120.79/32", "37.228.234.123/32", "95.44.14.48/32"]
+      cidr_blocks = ["52.49.120.79/32", "37.228.233.241/32", "95.44.14.48/32"]
     },
     elijah_dev = {
       description = "Elijah - Sidero"
-      cidr_blocks  = ["102.89.44.173/32"]
+      cidr_blocks  = ["102.89.41.118/32"]
     },
+  
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.45.124/32", "80.233.37.124/32"]
+      cidr_blocks  = ["80.233.32.237/32", "80.233.40.237/32"]
     },
     kleverson_dev = {
       description = "Kleverson Morais - OGCIO"

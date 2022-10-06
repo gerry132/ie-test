@@ -26,7 +26,7 @@ from wagtail.snippets.models import register_snippet
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
-from irelandie_utils.blocks import ArticleStoryBlock, AdvancedRichTextBlock, AccordionBlock
+from irelandie_utils.blocks import ArticleStoryBlock, AdvancedRichTextBlock, AccordionBlock, TocBlocks
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
 import django.utils.timezone
@@ -678,6 +678,17 @@ class ArticlePage(BasePage):
             .specific()
         )
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        from irelandie_missions.models import MissionPage
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['default_image'] = missions.default_image
+        return context
+
 
 class MinimalArticlePage(BasePage):
     introduction = models.TextField(blank=True)
@@ -715,15 +726,40 @@ class MinimalArticlePage(BasePage):
             ],
             "hero",
         ),
+        MultiFieldPanel(
+            [
+                FieldPanel('go_live_at'),
+                FieldPanel('expire_at'),
+            ],
+            "Scheduled publishing"
+        ),
         FieldPanel("publication_date"),
         StreamFieldPanel("body"),
         FieldPanel("related_articles_active", heading="Featured News Checkbox"),
     ]
 
+    settings_panels = ([
+                           MultiFieldPanel(
+                               [
+                                   FieldPanel("custom_header", permission="access_admin"),
+                                   FieldPanel("custom_footer", permission="access_admin")
+                               ],
+                               "Root Navigation"
+                           ),
+                       ] +
+                       BasePage.webchat_panel
+                       )
+
     search_fields = BasePage.search_fields + [
         index.SearchField("introduction"),
         index.SearchField("body"),
     ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(BasePage.promote_panels, heading='Promote'),
+        ObjectList(settings_panels, heading='Settings', classname="settings"),
+    ])
 
     def clean(self):
         if self.hero_image and self.hero_video:
@@ -779,4 +815,76 @@ class TwitterEmbed(TranslatableMixin, models.Model):
     def __str__(self):
         if not self.title:
             return f"{self.username} (username)"
+        return self.title
+
+
+@register_snippet
+class Visa(models.Model):
+    title = models.CharField(max_length=255)
+    body = StreamField(
+        [
+            ("content", TocBlocks())
+        ],
+        blank=True
+    )
+    panels = [
+        FieldPanel("title"),
+        StreamFieldPanel("body", permission="access_admin"),
+    ]
+
+    def __str__(self):
+        return self.title
+
+
+@register_snippet
+class Passport(models.Model):
+    title = models.CharField(max_length=255)
+    body = StreamField(
+        [
+            ("content", TocBlocks())
+        ],
+        blank=True
+    )
+    panels = [
+        FieldPanel("title"),
+        StreamFieldPanel("body", permission="access_admin"),
+    ]
+
+    def __str__(self):
+        return self.title
+
+
+@register_snippet
+class Authentication(models.Model):
+    title = models.CharField(max_length=255)
+    body = StreamField(
+        [
+            ("content", TocBlocks())
+        ],
+        blank=True
+    )
+    panels = [
+        FieldPanel("title"),
+        StreamFieldPanel("body", permission="access_admin"),
+    ]
+
+    def __str__(self):
+        return self.title
+
+
+@register_snippet
+class Marriage(models.Model):
+    title = models.CharField(max_length=255)
+    body = StreamField(
+        [
+            ("content", TocBlocks())
+        ],
+        blank=True
+    )
+    panels = [
+        FieldPanel("title"),
+        StreamFieldPanel("body", permission="access_admin"),
+    ]
+
+    def __str__(self):
         return self.title

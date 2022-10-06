@@ -21,8 +21,11 @@
                     {% else %}
                         <h3 class="story__heading heading--2">{{ value.title }}</h3>
                     {% endif %}
+                    <div class="rich-text">
+                        {{ value.summary }}
+                    </div>
 
-                    <p>{{ value.summary }}</p>
+
 
                 {% comment %}
                     TODO: BE - add in optional CTA field
@@ -47,10 +50,10 @@
                             {% endfor %}
                           </div>
                             <div class="slider slider-desktop">
-                              
+
                               {% for link in value.links %}
                                 {% if forloop.counter|divisibleby:2 %}
-                                          {% include_block link %}   
+                                          {% include_block link %}
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +64,7 @@
                                           <div class="story-links">
                                               <div class="your-class story-links__container">
                                                       {{link}}
-                                    {% else %} 
+                                    {% else %}
                                     <div id="last" class="slide-{{ref}} slide" style="width: 100%;">
                                       <div class="story-links">
                                           <div class="your-class story-links__container">
@@ -69,8 +72,8 @@
                                           </div>
                                           </div>
                                     </div>
-                                    {% endif %}  
-                                  {% endwith %}                      
+                                    {% endif %}
+                                  {% endwith %}
                                 {% endif %}
                         {% endfor %}
                         </div>

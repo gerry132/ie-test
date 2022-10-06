@@ -24,13 +24,14 @@ class FreeFormPageBase(HeroPage):
 
     class Meta:
         abstract = True
-        verbose_name = "Free Form Page"
-        verbose_name_plural = "Free Form Pages"
+        verbose_name = "Free Form Page Base"
+        verbose_name_plural = "Free Form Pages Base"
 
 
 class FreeFormPage(FreeFormPageBase):
     template = "patterns/pages/irelandie_pages/free_form_page.html"
 
+    root_page = models.BooleanField(default=True)
     twitter_title = models.CharField(max_length=50, blank=True)
 
     twitter_feed = models.ForeignKey(
@@ -48,9 +49,31 @@ class FreeFormPage(FreeFormPageBase):
         ], heading="Twitter feed"),
     ]
 
+    settings_panels = (
+        [
+            FieldPanel("root_page", permission="access_admin"),
+        ] +
+        HeroPage.settings_panels
+
+    )
+
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
         ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
-        ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
+        ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        from irelandie_missions.models import MissionPage
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['default_image'] = missions.default_image
+        return context
+
+    class Meta:
+        verbose_name = "Free Form Page"

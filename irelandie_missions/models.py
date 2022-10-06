@@ -64,7 +64,6 @@ class DestinationPage(HeroPage):
                 wagtail_blocks.StructBlock(
                     [
                         ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
-                        ("default_image", blocks.ImageBlock()),
                     ],
                     template="patterns/molecules/pinned-stories/pinned_stories.html",
                 ),
@@ -93,15 +92,24 @@ class DestinationPage(HeroPage):
                 if m.root_page:
                     return (
                         NewsPage.objects
-                        .child_of(m)
                         .filter(locale=self.locale,
                                 related_articles_active=True)
                         .public()
                         .live()
-                        .order_by("-first_published_at")[:4]
+                        .order_by("-publication_date")[:4]
                         .specific()
                     )
         return None
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['default_image'] = missions.default_image
+        return context
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
@@ -140,10 +148,42 @@ class JobContentPage(BasePage):
 
     content_panels = BasePage.content_panels + [
         FieldPanel("subtitle", permission="access_admin"),
+        MultiFieldPanel(
+            [
+                FieldPanel('go_live_at'),
+                FieldPanel('expire_at'),
+            ],
+            "Scheduled publishing"
+        ),
         FieldPanel("job_index_page_summary"),
+        StreamFieldPanel("body"),
         StreamFieldPanel("privacy_policy", permission="access_admin"),
-        StreamFieldPanel("body")
     ]
+
+    settings_panels = ([
+                           MultiFieldPanel(
+                               [
+                                   FieldPanel("custom_header", permission="access_admin"),
+                                   FieldPanel("custom_footer", permission="access_admin")
+                               ],
+                               "Root Navigation"
+                           ),
+                       ] +
+                       BasePage.webchat_panel
+                       )
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(BasePage.promote_panels, heading='Promote'),
+        ObjectList(settings_panels, heading='Settings', classname="settings"),
+    ])
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        parent = self.get_parent()
+        if parent.content_type.name == "job index page":
+            context['privacy_policy_parent'] = self.get_parent().specific.privacy_policy
+        return context
 
 
 class JobIndexPage(BasePage):
@@ -157,9 +197,17 @@ class JobIndexPage(BasePage):
         min_num=0,
         max_num=1,
     )
+    privacy_policy = models.ForeignKey(
+        'utils.PrivacyPolicySnippet',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin")
+        StreamFieldPanel("generic_hero", permission="access_admin"),
+        StreamFieldPanel("privacy_policy", permission="access_admin"),
     ]
 
     @cached_property
@@ -224,6 +272,15 @@ class MissionPage(HeroPage):
         min_num=0,
         max_num=1,
     )
+    default_image = StreamField(
+        [
+            ("default_image", blocks.ImageBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
     pinned_stories = StreamField(
         [
             (
@@ -231,7 +288,6 @@ class MissionPage(HeroPage):
                 wagtail_blocks.StructBlock(
                     [
                         ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
-                        ("default_image", blocks.ImageBlock()),
                     ],
                     template="patterns/molecules/pinned-stories/pinned_stories.html",
                 ),
@@ -275,10 +331,11 @@ class MissionPage(HeroPage):
         )
 
     settings_panels = (
-       [
-           FieldPanel("root_page", permission="access_admin"),
-       ] +
-       HeroPage.settings_panels
+        [
+            FieldPanel("root_page", permission="access_admin"),
+            FieldPanel("default_image", permission="access_admin"),
+        ] +
+        HeroPage.settings_panels
 
     )
 
@@ -315,6 +372,15 @@ class Magazine(HeroPage):
 class ServiceContent(BasePage):
     template = "patterns/pages/toc/table_of_contents.html"
     introduction = RichTextField(blank=True)
+    notice_bar_services = StreamField(
+        [
+            ("noticebar", NoticeBarWithMessageLink()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
     related_content = StreamField(
         [
             ("related_item", blocks.RelatedContentBlock()),
@@ -323,16 +389,34 @@ class ServiceContent(BasePage):
         null=True,
         min_num=0,
     )
+    admin_body1 = StreamField(
+        [
+            ("admin_contents", blocks.TocAdminBlock())
+        ],
+        blank=True
+    )
     body = StreamField(
         [
             ("content", blocks.TocBlock())
         ],
         blank=True
     )
+    admin_body2 = StreamField(
+        [
+            ("admin_content", blocks.TocAdminBlock())
+        ],
+        blank=True
+    )
 
     content_panels = BasePage.content_panels + [
         FieldPanel("introduction"),
+        MultiFieldPanel([
+            StreamFieldPanel("notice_bar_services"),
+        ], heading="Noticebar settings"
+        ),
+        StreamFieldPanel("admin_body1", permission="access_admin", heading="Admin_body"),
         StreamFieldPanel("body"),
+        StreamFieldPanel("admin_body2", permission="access_admin", heading="Admin_body"),
         StreamFieldPanel("related_content")
     ]
 

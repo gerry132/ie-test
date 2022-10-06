@@ -51,11 +51,15 @@
                                         {% image article.listing_image width-768 class="card__image" %}
                                     {% elif article.hero_image %}
                                         {% image article.hero_image width-768 class="card__image" %}
+                                    {% else %}
+                                    {% for block in default_image %}
+                                         {% image block.value.image width-500 class="card__image"  alt=block.value.image_alt %}
+                                    {% endfor %}
                                     {% endif %}
                                 </div>
                                 <div class="card__content">
                                     {% if article.publication_date %}
-                                    <p class="card__date">{{ article.publication_date|date:"jS F Y" }}</p>
+                                    <p class="card__date">{{ article.publication_date|date:"j F Y" }}</p>
                                     {% endif %}
                                     <h3 class="card__title">{% if article.listing_title %}{{ article.listing_title }}{% else %}{{ article.title }}{% endif %}</h3>
                                     {% if article.listing_summary or article.introduction %}

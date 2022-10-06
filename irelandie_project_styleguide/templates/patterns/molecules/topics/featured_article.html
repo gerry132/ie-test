@@ -1,17 +1,27 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 
 <a href="{% pageurl article %}" class="card">
-    {% if article.specific.listing_image or article.specific.hero_image %}
+    <!--test-->
+    {% if article.specific.listing_image or article.specific.hero_image or default_image %}
         <div class="card__image-container">
             {% if article.specific.listing_image %}
                 {% image article.specific.listing_image width-500 class="card__image" %}
             {% elif article.specific.hero_image %}
                 {% image article.specific.hero_image width-500 class="card__image" %}
+            {% else %}
+            <!--test-->
+            {% for block in default_image %}
+                {% image block.value.image width-500 class="card__image" %}
+            {% endfor %}
             {% endif %}
+
         </div>
     {% endif %}
-    
+
     <div class="card__content">
+        {% if article.specific.publication_date %}
+            <p class="card__date">{{ article.specific.publication_date|date:"j F Y" }}</p>
+        {% endif %}
         <h3 class="card__title">
             {% firstof article.specific.listing_title article.title %}
         </h3>
@@ -21,7 +31,7 @@
         {% endif %}
 
         <span class="card__link">
-            {% trans 'Read story' %}
+            {% trans 'Read more' %}
         </span>
     </div>
 </a>

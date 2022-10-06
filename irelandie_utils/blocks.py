@@ -11,6 +11,7 @@ from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import VideoChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
+from irelandie_home.blocks import SecondaryCallToAction
 
 from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment
 
@@ -212,7 +213,7 @@ class EmbassyStory(BaseBlockLinkValidation, BaseBlockLinkContext):
 
 class AlernatePinnedStoryHeroLinkText(StructValue):
     def link_text(self):
-        text = self.get("button_text") or self.get("page")
+        text = self.get("title") or self.get("page")
         return text
 
 
@@ -230,7 +231,6 @@ class PinnedStoryHeroBlock(BaseBlockLinkValidation):
         required=False,
         help_text="An external link.",
     )
-    button_text = blocks.CharBlock(required=False)
 
     class Meta:
         value_class = AlernatePinnedStoryHeroLinkText
@@ -350,6 +350,15 @@ class AdvancedRichTextBlock(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     rich_text = blocks.RichTextBlock(
         features=["h3", "blockquote", "bold", "link", "document-link", "ul"], required=False,
+    )
+    button_link = blocks.StreamBlock(
+        [
+            ("button", SecondaryCallToAction())
+        ],
+        blank=True,
+        max_num=1,
+        min_num=0,
+        required=False,
     )
 
     class Meta:
@@ -669,6 +678,15 @@ class AccordionBlock(blocks.StructBlock):
                                 ]
                             ),
                         ),
+                        ("button_link", blocks.StreamBlock(
+                            [
+                                ("button", SecondaryCallToAction())
+                            ],
+                            blank=True,
+                            max_num=1,
+                            min_num=0,
+                            required=False,)
+                         ),
                         ("additional", blocks.StreamBlock([
                             ("map", MapBlock()),
                             ("table", TableBlock(group="table")),
@@ -739,6 +757,7 @@ class TocBlocks(blocks.StreamBlock):
     logos = LogoCardsBlock(group="Module")
 
     table = TableBlock(group="HTML")
+    youtube_video = YoutubeVideoBlock(group="HTML")
     html = blocks.RawHTMLBlock(
         group="HTML",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
@@ -747,7 +766,20 @@ class TocBlocks(blocks.StreamBlock):
 
 class TocBlock(blocks.StructBlock):
     title = blocks.CharBlock()
-    content = TocBlocks()
+    content = TocBlocks(required=False)
+
+
+class TocBlockSnippets(blocks.StreamBlock):
+    visas = SnippetChooserBlock(target_model="utils.Visa")
+    passports = SnippetChooserBlock(target_model="utils.Passport")
+    authentication = SnippetChooserBlock(target_model="utils.Authentication")
+    marriage = SnippetChooserBlock(target_model="utils.Marriage")
+
+
+class TocAdminBlock(blocks.StructBlock):
+    title = blocks.CharBlock()
+    content = TocBlocks(required=False)
+    snippets = TocBlockSnippets(required=False)
 
 
 class AdditionalSocialBlock(blocks.StructBlock):
