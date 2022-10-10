@@ -19,9 +19,9 @@ Example:
 {% endif %}
         <div class="card__image-container">
         {% if card.image_alt %}
-            {% image card.image width-500 class="card__image"  alt=card.image_alt %}
+            {% image card.image fill-500x300 class="card__image"  alt=card.image_alt %}
         {% else %}
-            {% image card.image width-500 alt=card.image.alt_default class="card__image" %}
+            {% image card.image fill-500x300 alt=card.image.alt_default class="card__image" %}
         {% endif %}
         </div>
         <div class="card__content">

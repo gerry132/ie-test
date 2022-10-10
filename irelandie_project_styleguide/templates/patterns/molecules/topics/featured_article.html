@@ -5,13 +5,13 @@
     {% if article.specific.listing_image or article.specific.hero_image or default_image %}
         <div class="card__image-container">
             {% if article.specific.listing_image %}
-                {% image article.specific.listing_image width-500 class="card__image" %}
+                {% image article.specific.listing_image fill-400x200 class="card__image" %}
             {% elif article.specific.hero_image %}
-                {% image article.specific.hero_image width-500 class="card__image" %}
+                {% image article.specific.hero_image fill-400x200 class="card__image" %}
             {% else %}
             <!--test-->
             {% for block in default_image %}
-                {% image block.value.image width-500 class="card__image" %}
+                {% image block.value.image fill-400x200 class="card__image" %}
             {% endfor %}
             {% endif %}
 
