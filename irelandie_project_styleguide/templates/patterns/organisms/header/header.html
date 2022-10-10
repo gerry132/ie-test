@@ -91,6 +91,7 @@
                     {% endcomment %}
                     <div class="wrapper wrapper--large wrapper--mobile-menu">
                         <div class="header__menu header__menu--primary">
+                            {% has_root_override page header=True as override %}
                             {% if override and custom_header.links %}
                                 {% for link in custom_header.links %}
                                 <ul class="custom-nav-mob">
