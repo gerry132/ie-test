@@ -131,6 +131,22 @@ class TopicPage(HeroPage):
                 "rich_text_advanced",
                 blocks.AdvancedRichTextBlock(),
             ),
+            (
+                "articles",
+                blocks.ArticleCardsBlock()
+            ),
+            (
+                "logo_cards",
+                blocks.LogoCardsBlock()
+            ),
+            (
+                "link_cards",
+                blocks.LinkCardsBlock()
+            ),
+            (
+                "youtube",
+                blocks.YoutubeVideoBlock()
+            ),
         ],
         blank=True,
         null=True,
@@ -143,31 +159,9 @@ class TopicPage(HeroPage):
         max_num=1,
     )
 
-    articles = StreamField(
-        [("articles", blocks.ArticleCardsBlock())],
-        blank=True,
-        max_num=1,
-    )
-    embeds = StreamField(
-        [
-            ("youtube", blocks.YoutubeVideoBlock()),
-        ],
-        blank=True,
-        max_num=1,
-    )
-
-    logo_cards = StreamField(
-        [("logo_cards", blocks.LogoCardsBlock())],
-        blank=True,
-        max_num=1,
-    )
-
     content_panels = HeroPage.content_panels + [
         StreamFieldPanel("body"),
         StreamFieldPanel("featured_articles"),
-        StreamFieldPanel("articles", heading="Article Cards"),
-        StreamFieldPanel("embeds"),
-        StreamFieldPanel("logo_cards", heading="Logo Cards"),
     ]
 
     edit_handler = TabbedInterface([
