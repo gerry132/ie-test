@@ -4,13 +4,13 @@
     <div class="card__image-container">
          {% if value.image %}
             {% if value.image_alt %}
-                {% image value.image width-500 alt=value.image_alt class="card__image" %}
+                {% image value.image fill-400x200 alt=value.image_alt class="card__image" %}
             {% else %}
-                {% image value.image width-500 alt=value.image.alt_default class="card__image" %}
+                {% image value.image fill-400x200 alt=value.image.alt_default class="card__image" %}
             {% endif %}
         {% else %}
             {% for block in default_image %}
-                {% image block.value.image width-500 class="card__image" %}
+                {% image block.value.image fill-400x200 class="card__image" %}
             {% endfor %}
         {% endif %}
     </div>
