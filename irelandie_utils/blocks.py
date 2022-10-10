@@ -722,26 +722,6 @@ class FreeFormBlocksBase(blocks.StreamBlock):
     person = PersonBlock(group="Snippets")
 
 
-class FreeFormBlocks(FreeFormBlocksBase):
-    rich_text = RichTextBlock(group="Base")
-    rich_text_advanced = AdvancedRichTextBlock(group="Base")
-    image = ImageBlock(group="Base")
-    document = DocumentBlock(group="Base")
-    accordion = AccordionBlock(group="Base")
-
-    articles = ArticleCardsBlock(group="Module")
-    embassy_story = EmbassyStory(group="Module")
-    featured_articles = FeaturedArticlesBlock(group="Module")
-    featured_story = FeaturedStoryBlock(group="Module")
-    logos = LogoCardsBlock(group="Module")
-
-    table = TableBlock(group="HTML")
-    html = blocks.RawHTMLBlock(
-        group="HTML",
-        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
-    )
-
-
 class RelatedContentBlock(blocks.StructBlock):
     page = blocks.PageChooserBlock()
     title = blocks.CharBlock()
@@ -985,3 +965,24 @@ class GenericHeroBlock(blocks.StructBlock):
     class Meta:
         label = "Generic Hero Block"
         template = "patterns/molecules/streamfield/blocks/generic_hero.html"
+
+
+class FreeFormBlocks(FreeFormBlocksBase):
+    rich_text = RichTextBlock(group="Base")
+    rich_text_advanced = AdvancedRichTextBlock(group="Base")
+    image = ImageBlock(group="Base")
+    document = DocumentBlock(group="Base")
+    accordion = AccordionBlock(group="Base")
+
+    articles = ArticleCardsBlock(group="Module")
+    embassy_story = EmbassyStory(group="Module")
+    featured_articles = FeaturedArticlesBlock(group="Module")
+    featured_story = FeaturedStoryBlock(group="Module")
+    logos = LogoCardsBlock(group="Module")
+    link_card = LinkCardBlock()
+    link_button = LinkButtonBlock()
+    table = TableBlock(group="HTML")
+    html = blocks.RawHTMLBlock(
+        group="HTML",
+        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
+    )
