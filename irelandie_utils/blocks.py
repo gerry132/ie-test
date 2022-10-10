@@ -615,6 +615,7 @@ class FeaturedArticlesBlock(blocks.StructBlock):
 
 class ArticleStoryBlock(blocks.StreamBlock):
     rich_text = RichTextBlock(group="Base")
+    rich_text_advanced = AdvancedRichTextBlock(group="Base")
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
 
@@ -723,6 +724,7 @@ class FreeFormBlocksBase(blocks.StreamBlock):
 
 class FreeFormBlocks(FreeFormBlocksBase):
     rich_text = RichTextBlock(group="Base")
+    rich_text_advanced = AdvancedRichTextBlock(group="Base")
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
     accordion = AccordionBlock(group="Base")

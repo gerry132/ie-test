@@ -127,6 +127,10 @@ class TopicPage(HeroPage):
                 "rich_text",
                 blocks.RichTextBlock(),
             ),
+            (
+                "rich_text_advanced",
+                blocks.AdvancedRichTextBlock(),
+            ),
         ],
         blank=True,
         null=True,
