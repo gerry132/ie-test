@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.utils.functional import cached_property
 
 from wagtail.fields import StreamField
 from wagtail.admin.panels import TabbedInterface, ObjectList, StreamFieldPanel, FieldPanel, MultiFieldPanel
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
+from irelandie_news.models import NewsPage
 
 from irelandie_utils.models import HeroPage
-from irelandie_utils.blocks import FreeFormBlocks
+from irelandie_utils.blocks import FreeFormBlocks, ImageBlock
+from irelandie_navigation.blocks import NoticeBarWithMessageLink
 
 
 class FreeFormPageBase(HeroPage):
@@ -41,8 +44,29 @@ class FreeFormPage(FreeFormPageBase):
         null=True,
         blank=True,
     )
-
+    notice_bar = StreamField(
+        [
+            ("noticebar", NoticeBarWithMessageLink()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+    default_image = StreamField(
+        [
+            ("default_image", ImageBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
     content_panels = FreeFormPageBase.content_panels + [
+        MultiFieldPanel([
+            StreamFieldPanel("notice_bar"),
+        ], heading="Noticebar settings"
+        ),
         MultiFieldPanel([
             FieldPanel("twitter_title"),
             SnippetChooserPanel("twitter_feed"),
@@ -52,6 +76,7 @@ class FreeFormPage(FreeFormPageBase):
     settings_panels = (
         [
             FieldPanel("root_page", permission="access_admin"),
+            FieldPanel("default_image", permission="access_admin"),
         ] +
         HeroPage.settings_panels
 
@@ -74,6 +99,19 @@ class FreeFormPage(FreeFormPageBase):
                 if missions.root_page:
                     context['default_image'] = missions.default_image
         return context
+
+    @cached_property
+    def related_articles(self):
+        return (
+            NewsPage.objects
+            .descendant_of(self)
+            .filter(locale=self.locale,
+                    related_articles_active=True)
+            .public()
+            .live()
+            .order_by("-publication_date")[:4]
+            .specific()
+        )
 
     class Meta:
         verbose_name = "Free Form Page"

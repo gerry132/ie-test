@@ -37,3 +37,10 @@
         </div>
     {% endif %}
 {% endfor %}
+
+
+{% if page.related_articles %}
+      <!-- related_articles -->
+      {% include "patterns/molecules/related-articles/related-articles.html" with articles=page.related_articles default_image=page.default_image %}
+
+{% endif %}
