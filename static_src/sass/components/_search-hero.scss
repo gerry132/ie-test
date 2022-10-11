@@ -23,6 +23,9 @@
   background: #f5f5f5;
   color: #5d677a;
   border: none;
+  @media only screen and (max-width: 420px) {
+    width: 100px;
+  }
 }
 
 .searchButton {
@@ -46,15 +49,17 @@
   outline: none;
   border: none;
   border-radius: 1.625rem;
-  padding: 0 3.5rem 0 1.5rem;
   font-size: 1rem;
   @media only screen and (max-width: 400px) {
       padding: 0%;
   }
+  @media only screen and (min-width: 479px) {
+    padding: 0 1.5rem 0 0.5rem;
+  }
 }
 
 .select-contain {
-    padding-right: 30px;
+    padding-right: 10px;
     @media only screen and (max-width: 400px) {
       padding-right: 0%;
   }

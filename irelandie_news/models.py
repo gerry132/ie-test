@@ -196,11 +196,10 @@ class NewsLandingPage(BasePage):
             .live()
             .specific()
         )
-        from irelandie_missions.models import MissionPage
         pages = self.get_ancestors()
         for p in pages:
-            if p.content_type.name == 'mission page':
-                missions = MissionPage.objects.live().get(id=p.id)
+            if p.content_type.name in ['mission page', 'Free Form Page']:
+                missions = get_model_info(p.content_type.name, p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
 
