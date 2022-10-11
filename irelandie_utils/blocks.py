@@ -981,6 +981,7 @@ class FreeFormBlocks(FreeFormBlocksBase):
     logos = LogoCardsBlock(group="Module")
     link_card = LinkCardBlock()
     link_button = LinkButtonBlock()
+    link_box = LinkBoxesBlock()
     table = TableBlock(group="HTML")
     html = blocks.RawHTMLBlock(
         group="HTML",
