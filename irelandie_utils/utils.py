@@ -9,6 +9,7 @@ def get_locale_from_language_code_or_default(language_code):
 
     return locale
 
+
 def get_model_info(Model, pk):
     from irelandie_missions.models import MissionPage
     from irelandie_pages.models import FreeFormPage
