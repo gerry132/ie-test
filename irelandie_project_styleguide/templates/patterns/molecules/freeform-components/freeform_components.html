@@ -32,7 +32,7 @@
             {% include_block block %}
         </div>
     {% else %}
-        <div class="wrapper wrapper--large wrapper--padding">
+        <div style="padding-bottom: 10px;" class="wrapper wrapper--large wrapper--padding">
             {% include_block block %}
         </div>
     {% endif %}
@@ -41,6 +41,6 @@
 
 {% if page.related_articles %}
       <!-- related_articles -->
-      {% include "patterns/molecules/related-articles/related-articles.html" with articles=page.related_articles default_image=page.default_image %}
+      {% include "patterns/molecules/related-articles/related-articles.html" with articles=page.related_articles default_image=default_image %}
 
 {% endif %}
