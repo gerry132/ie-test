@@ -3,6 +3,7 @@
 }
 
 .arrow-next {
+    flex-shrink: 0;
     display: inline-block;
     background-size: cover;
     background-image: url('../images/cssBackgrounds/next_arrow.png');
