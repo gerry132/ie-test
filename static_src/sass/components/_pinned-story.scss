@@ -7,10 +7,14 @@
     @include media-query(small) {
         flex: 0 0 48%;
         max-width: 48%;
-
-        &:nth-child(2n) {
+        &:nth-child(3) {
+            margin-top: -40px;
+        }
+        &:nth-child(4) {
+            margin-top: 20px;
+        }
+        &:nth-child(2) {
             margin-top: 100px;
-            margin-bottom: auto;
         }
     }
 }
