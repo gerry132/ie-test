@@ -12,10 +12,6 @@
   border-radius: 1.625rem;
   padding: 0 0.5rem 0 1.5rem;
   font-size: 1rem;
-
-  @media only screen and (max-width: 400px) {
-    width: 90%;
-  }
 }
 
 .searchBarSelect {
@@ -23,8 +19,9 @@
   background: #f5f5f5;
   color: #5d677a;
   border: none;
-  @media only screen and (max-width: 420px) {
-    width: 100px;
+  width: 180px;
+  @media only screen and (max-width: 516px) {
+    width: 110px;
   }
 }
 
@@ -36,7 +33,7 @@
     border: #004D46;
     background-color: #004D46;
     height: 80%;
-    @media only screen and (max-width: 400px) {
+    @media only screen and (max-width: 415px) {
       padding-left: 10px;
       padding-right: 10px;
   }
@@ -50,17 +47,15 @@
   border: none;
   border-radius: 1.625rem;
   font-size: 1rem;
-  @media only screen and (max-width: 400px) {
+  padding: 0 1.5rem 0 0.5rem;
+  @media only screen and (max-width: 415px) {
       padding: 0%;
-  }
-  @media only screen and (min-width: 479px) {
-    padding: 0 1.5rem 0 0.5rem;
   }
 }
 
 .select-contain {
     padding-right: 10px;
     @media only screen and (max-width: 400px) {
-      padding-right: 0%;
+      padding-right: 3px;
   }
 }
