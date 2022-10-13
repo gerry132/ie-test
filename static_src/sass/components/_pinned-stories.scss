@@ -3,7 +3,7 @@
     background-color: $color--white;
 
     &__container {
-    padding: 0 40px;
+    padding: 0 20px;
         @include media-query(large) {
             display: flex;
             flex-wrap: wrap;
@@ -96,13 +96,14 @@
     &__feed {
         background-color: $color--white;
         overflow: hidden;
-        margin-top: -20px;
-        padding: $grid $grid $grid $grid;
+        padding: 20px 0;
 
         @include media-query(small) {
-            display: flex;
-            flex-wrap: wrap;
-            column-gap: 16px;
+         column-count: 2;
+         padding: 20px 0;
+        }
+        @include media-query(large){
+            padding: $grid $grid $grid $grid;
         }
     }
 }
