@@ -23,7 +23,7 @@ from django.db.models import Q
 
 class Agent(RepeatedTimer):
     def __init__(self):
-        super().__init__(30, self.get_obj)
+        super().__init__(30000, self.get_obj)
         self.models = [
             CountryGroupPageIndex,
             JobContentPage,
