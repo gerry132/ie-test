@@ -1,4 +1,3 @@
-from time import sleep
 from datetime import datetime
 from irelandie_utils.agent.time_thread import RepeatedTimer
 from irelandie_corporate_information.models import CorportateInformationPageIndex
@@ -23,7 +22,7 @@ from irelandie_speeches.models import SpeechPage
 
 class Agent(RepeatedTimer):
     def __init__(self):
-        super().__init__(900, self.get_obj) 
+        super().__init__(900, self.get_obj)
         self.models = [
             CountryGroupPageIndex,
             JobContentPage,
