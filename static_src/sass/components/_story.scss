@@ -105,16 +105,16 @@
 
     &__image_margin{
     order: 2;
-    margin: 40px 0px;
     max-height: inherit;
 
     @include media-query(large) {
 
         flex: 30%;
+        margin: 40px 0px;
 
         }
         @media only screen and (max-width:844px) {
-        margin: auto;
+        margin: 40px auto 0 auto;
 
         }
     }
@@ -127,17 +127,14 @@
         justify-content: flex-start;
         margin: 0;
         padding: $grid 0;
+        flex: 1 0 40%;
 
-        @media only screen and (min-width: 699px) {
-            flex: 1 0 40%;
-
-            #{$root}--right-aligned & {
-                margin-left: -80px;
-            }
+        @media only screen and (min-width: 1024px) {
+            padding: 40px 60px;
         }
 
-        @media only screen and (min-width: 699px) {
-            padding: 40px 60px;
+        @media only screen and (max-width: 1023px) {
+            padding: 0 20px;
         }
     }
     &__alignm{
