@@ -18,6 +18,7 @@ from irelandie_news.models import (
 
 from irelandie_press_releases.models import PressReleasePage
 from irelandie_speeches.models import SpeechPage
+from django.db.models import Q
 
 
 class Agent(RepeatedTimer):
@@ -44,11 +45,12 @@ class Agent(RepeatedTimer):
             try:
                 go_live = model.objects.filter(
                                 go_live_at__lte=datetime.now()
-                                ).filter(live=False).filter(expire_at__gte=datetime.now())
+                                ).filter(live=False).filter(
+                                    Q(expire_at__gte=datetime.now())|Q(expire_at__gte=None))
                 expired = model.objects.filter(
                     expire_at__lte=datetime.now()).filter(live=True)
-                print("ACTIVE OBJECTS: " + go_live)
-                print("EXPIRED OBJECTS" + expired)
+                print("ACTIVE OBJECTS: " + str(go_live))
+                print("EXPIRED OBJECTS" + str(expired))
                 self.update_obj(go_live, True)
                 self.update_obj(expired, False)
                 print(model)
