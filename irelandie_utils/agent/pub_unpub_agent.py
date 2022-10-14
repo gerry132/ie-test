@@ -47,8 +47,8 @@ class Agent(RepeatedTimer):
                                 ).filter(live=False).filter(expire_at__gte=datetime.now())
                 expired = model.objects.filter(
                     expire_at__lte=datetime.now()).filter(live=True)
-                print("ACTIVE OBJECTS: " + go_live)
-                print("EXPIRED OBJECTS" + expired)
+                print("ACTIVE OBJECTS: " + str(go_live))
+                print("EXPIRED OBJECTS" + str(expired))
                 self.update_obj(go_live, True)
                 self.update_obj(expired, False)
                 print(model)
