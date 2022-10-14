@@ -473,7 +473,7 @@ class LogoCardsBlock(blocks.StructBlock):
     summary = blocks.TextBlock(required=False)
     summary_richtext = blocks.StructBlock(
                     [
-                        ("use_richtext", blocks.BooleanBlock()),
+                        ("use_richtext", blocks.BooleanBlock(required=False)),
                         ("content", AdvancedRichTextBlock())
                     ]
                     )
