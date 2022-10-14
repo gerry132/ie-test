@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.apps import AppConfig
-import sys
 
 
 class UtilsConfig(AppConfig):
@@ -9,8 +8,6 @@ class UtilsConfig(AppConfig):
     label = "utils"
 
     def ready(self):
-        if 'runserver' not in sys.argv:
-            return True
         from .agent.pub_unpub_agent import Agent
         agent = Agent()
         print(agent)
