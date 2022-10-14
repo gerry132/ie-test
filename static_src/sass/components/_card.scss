@@ -52,25 +52,12 @@
 
     &__title {
         #{$root}--no-summary & {
-        @media only screen and (min-width: 375px){
-            font-size: calc(1rem + ((1vw - 3.75px) * 2.0356));
-            min-height: 0vw;
-        }
-        @media only screen and (min-width: 768px){
             font-size: 24px;
-        }
-
         }
     }
     &__summary {
         #{$root}--no-summary & {
-        @media only screen and (min-width: 375px){
-            font-size: calc(0.5rem + ((1vw - 3.75px) * 1.7812));
-            min-height: 0vw;
-        }
-        @media only screen and (min-width: 768px){
-            font-size: 15px;
-        }
+            font-size: 18px;
         }
     }
 
