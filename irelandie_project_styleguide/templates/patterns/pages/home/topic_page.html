@@ -2,8 +2,10 @@
 {% load wagtailcore_tags i18n %}
 
 {% block main %}
-    <div class="wrapper wrapper--large wrapper--padding">
-        {% include_block page.body %}
+    <div class="section section--padding">
+        <div class="wrapper wrapper--large wrapper--padding">
+            {% include_block page.body %}
+        </div>
     </div>
 
     {% if page.featured_articles %}
