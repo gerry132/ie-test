@@ -13,3 +13,4 @@ class UtilsConfig(AppConfig):
             return True
         from .agent.pub_unpub_agent import Agent
         agent = Agent()
+        print(agent)
