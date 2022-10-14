@@ -22,7 +22,7 @@ from irelandie_speeches.models import SpeechPage
 
 class Agent(RepeatedTimer):
     def __init__(self):
-        super().__init__(20, self.get_obj)
+        super().__init__(900, self.get_obj)
         self.models = [
             CountryGroupPageIndex,
             JobContentPage,
@@ -40,8 +40,8 @@ class Agent(RepeatedTimer):
 
     def get_obj(self):
         for model in self.models:
+            print("STARTING POLL")
             try:
-                print("STARTING POLL")
                 go_live = model.objects.filter(
                                 go_live_at__lte=datetime.now()).filter(live=False)
                 expired = model.objects.filter(
