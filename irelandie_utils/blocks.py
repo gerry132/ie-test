@@ -472,11 +472,11 @@ class LogoCardsBlock(blocks.StructBlock):
     title = blocks.CharBlock()
     summary = blocks.TextBlock(required=False)
     summary_richtext = blocks.StructBlock(
-                    [
-                        ("use_richtext", blocks.BooleanBlock(required=False)),
-                        ("content", AdvancedRichTextBlock())
-                    ]
-                    )
+        [
+            ("use_richtext", blocks.BooleanBlock(required=False)),
+            ("content", AdvancedRichTextBlock())
+        ]
+    )
     cards = blocks.StreamBlock([("card", LogoCardBlock())])
 
     def clean(self, value):
@@ -707,7 +707,7 @@ class AccordionBlock(blocks.StructBlock):
                             blank=True,
                             max_num=1,
                             min_num=0,
-                            required=False,)
+                            required=False, )
                          ),
                         ("additional", blocks.StreamBlock([
                             ("map", MapBlock()),
@@ -734,7 +734,12 @@ class AccordionBlock(blocks.StructBlock):
 
 
 class FreeFormBlocksBase(blocks.StreamBlock):
-    pinned_stories = PinnedStoriesBlock(group="Module")
+    pinned_stories = blocks.StructBlock(
+        [
+            ("pinned_story_hero", PinnedStoryHeroBlock()),
+        ],
+        template="patterns/molecules/pinned-stories/pinned_stories.html", group="Module"
+    )
     stories = StoryBlock(group="Module")
 
     video = CustomVideoChooserBlockAlt(group="HTML")
