@@ -35,6 +35,7 @@ class FreeFormPage(FreeFormPageBase):
     template = "patterns/pages/irelandie_pages/free_form_page.html"
 
     root_page = models.BooleanField(default=True)
+    featured_news = models.BooleanField(default=False)
     twitter_title = models.CharField(max_length=50, blank=True)
 
     twitter_feed = models.ForeignKey(
@@ -63,6 +64,7 @@ class FreeFormPage(FreeFormPageBase):
         max_num=1,
     )
     content_panels = FreeFormPageBase.content_panels + [
+        FieldPanel("featured_news"),
         MultiFieldPanel([
             StreamFieldPanel("notice_bar"),
         ], heading="Noticebar settings"
