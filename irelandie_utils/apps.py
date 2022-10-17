@@ -7,7 +7,7 @@ class UtilsConfig(AppConfig):
     name = "irelandie_utils"
     label = "utils"
 
-    def ready(self):
-        from .agent.pub_unpub_agent import Agent
-        agent = Agent()
-        print(agent)
+    #def ready(self):
+    #    from .agent.pub_unpub_agent import Agent
+    #    agent = Agent()
+    #    print(agent)
