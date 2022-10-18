@@ -230,6 +230,13 @@ class MissionPage(HeroPage):
         [("link", LinkBlock())], blank=True, help_text="Add pages to hero search."
     )
     root_page = models.BooleanField(default=True)
+    favicon = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
     notice_bar = StreamField(
         [
             ("noticebar", NoticeBarWithMessageLink()),
@@ -333,6 +340,7 @@ class MissionPage(HeroPage):
     settings_panels = (
         [
             FieldPanel("root_page", permission="access_admin"),
+            FieldPanel("favicon", permission="access_admin"),
             FieldPanel("default_image", permission="access_admin"),
         ] +
         HeroPage.settings_panels

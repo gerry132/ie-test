@@ -36,6 +36,13 @@ ALT_IMAGE = ALT_HELP_TEXT % 'image'
 class SiteSettings(BaseSetting, ClusterableModel):
     # The settings here are currently unused.
     # We may be removing it in the future.
+    favicon = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
     site_logo = models.ForeignKey(
         IMAGE_MODEL,
         null=True,
@@ -64,6 +71,7 @@ class SiteSettings(BaseSetting, ClusterableModel):
 
     panels = [
         MultiFieldPanel([
+            ImageChooserPanel("favicon"),
             ImageChooserPanel("site_logo"),
             ImageChooserPanel("mobile_logo"),
             FieldPanel("site_logo_alt"),

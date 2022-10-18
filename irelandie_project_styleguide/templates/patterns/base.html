@@ -1,4 +1,4 @@
-{% load static wagtailuserbar wagtailcore_tags wagtailimages_tags navigation_tags util_tags wagtailaccessibility_tags %}
+{% load static wagtailuserbar wagtailcore_tags wagtailimages_tags navigation_tags util_tags wagtailaccessibility_tags i18n %}
 {% wagtail_site as current_site %}
 <!doctype html>
 <html lang="en-GB">
@@ -22,6 +22,17 @@
 
         {% tota11y %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+        {# favicons #}
+        {% favicon_child page as fav_child %}
+        {% if fav_child %}
+            {% image fav_child width-60 height-60 as fav %}
+        {% elif page.favicon %}
+            {% image page.favicon width-60 height-60 as fav %}
+        {% else %}
+            {% image settings.irelandie_navigation.SiteSettings.favicon width-60 height-60 as fav %}
+        {% endif %}
+        <link rel="shortcut icon" href="{{ fav.url }}"/>
 
         {% block extra_css %}{% endblock %}
                 <!-- OneTrust Cookies Consent Notice start for ireland.ie -->

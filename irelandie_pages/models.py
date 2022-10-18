@@ -10,6 +10,9 @@ from irelandie_news.models import NewsPage
 from irelandie_utils.models import HeroPage
 from irelandie_utils.blocks import FreeFormBlocks, ImageBlock
 from irelandie_navigation.blocks import NoticeBarWithMessageLink
+from wagtail.images import get_image_model_string
+
+IMAGE_MODEL = get_image_model_string()
 
 
 class FreeFormPageBase(HeroPage):
@@ -35,6 +38,13 @@ class FreeFormPage(FreeFormPageBase):
     template = "patterns/pages/irelandie_pages/free_form_page.html"
 
     root_page = models.BooleanField(default=True)
+    favicon = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
     featured_news = models.BooleanField(default=False)
     twitter_title = models.CharField(max_length=50, blank=True)
 
@@ -78,6 +88,7 @@ class FreeFormPage(FreeFormPageBase):
     settings_panels = (
         [
             FieldPanel("root_page", permission="access_admin"),
+            FieldPanel("favicon", permission="access_admin"),
             FieldPanel("default_image", permission="access_admin"),
         ] +
         HeroPage.settings_panels
