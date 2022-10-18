@@ -25,10 +25,10 @@
 
         {# favicons #}
         {% favicon_child page as fav_child %}
-        {% if fav_child %}
-            {% image fav_child width-60 height-60 as fav %}
-        {% elif page.favicon %}
+        {% if page.favicon %}
             {% image page.favicon width-60 height-60 as fav %}
+        {% elif fav_child %}
+            {% image fav_child width-60 height-60 as fav %}
         {% else %}
             {% image settings.irelandie_navigation.SiteSettings.favicon width-60 height-60 as fav %}
         {% endif %}
