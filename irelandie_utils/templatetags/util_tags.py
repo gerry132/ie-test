@@ -2,6 +2,9 @@
 from django import template
 from django.utils.text import camel_case_to_spaces, slugify
 
+from irelandie_home.models import HomePage
+from irelandie_missions.models import MissionPage
+from irelandie_pages.models import FreeFormPage
 from irelandie_utils.models import SocialMediaSettings
 
 import re
@@ -91,3 +94,26 @@ def get_admin_contents_length(page):
 def count_toc(page):
     result = get_admin_content_length(page) + get_admin_contents_length(page) + get_content_length(page)
     return result
+
+
+@register.simple_tag
+def favicon_child(page):
+    pages = page.get_ancestors()
+    print(pages)
+
+    for p in pages:
+        if p.content_type.name == 'mission page':
+            m = MissionPage.objects.get(id=p.id)
+            return m.favicon
+
+    for p in pages:
+        if p.content_type.name == 'Free Form Page':
+            f = FreeFormPage.objects.get(id=p.id)
+            return f.favicon
+
+    for p in pages:
+        if p.content_type.name == 'Free Form Page Base':
+            h = HomePage.objects.get(id=p.id)
+            return h.favicon
+
+    return False
