@@ -99,7 +99,6 @@ def count_toc(page):
 @register.simple_tag
 def favicon_child(page):
     pages = page.get_ancestors()
-    print(pages)
 
     for p in pages:
         if p.content_type.name == 'mission page':
