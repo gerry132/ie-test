@@ -103,16 +103,19 @@ def favicon_child(page):
     for p in pages:
         if p.content_type.name == 'mission page':
             m = MissionPage.objects.get(id=p.id)
-            return m.favicon
+            if m.favicon:
+                return m.favicon
 
     for p in pages:
         if p.content_type.name == 'Free Form Page':
             f = FreeFormPage.objects.get(id=p.id)
-            return f.favicon
+            if f.favicon:
+                return f.favicon
 
     for p in pages:
         if p.content_type.name == 'Free Form Page Base':
             h = HomePage.objects.get(id=p.id)
-            return h.favicon
+            if h.favicon:
+                return h.favicon
 
     return False
