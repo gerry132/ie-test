@@ -18,4 +18,4 @@ def get_model_info(Model, pk):
         'mission page': MissionPage
     }
 
-    return model_map[Model].objects.live().get(id=pk)
+    return model_map[Model].objects.get(id=pk)
