@@ -3,12 +3,12 @@
 {% load util_tags %}
 
 <div class="generic-hero">
-    <div class="wrapper wrapper--large">
-        {% for block in page.generic_hero %}
+    {% for block in page.generic_hero %}
         {% if block.value.hero_image %}
-            {% image block.value.hero_image width-1280 class="generic-hero__image" %}
+            {% image block.value.hero_image original class="generic-hero__image" %}
         {% endif %}
-        {% endfor %}
+    {% endfor %}
+    <div class="wrapper wrapper--large">
         <div class="generic-hero__container" >
         <div class="section section--padding generic-hero__content" >
                 <div class="generic-hero__container1">

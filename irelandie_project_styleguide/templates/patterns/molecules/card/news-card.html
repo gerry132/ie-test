@@ -17,13 +17,13 @@ Example:
         <div class="card__image-container">
         {% if card.hero_image %}
             {% if card.image_alt %}
-                {% image card.hero_image width-500 class="card__image"  alt=card.image_alt %}
+                {% image card.hero_image fill-500x300 class="card__image"  alt=card.image_alt %}
             {% else %}
-                {% image card.hero_image width-500 alt=card.image.alt_default class="card__image" %}
+                {% image card.hero_image fill-500x300 alt=card.image.alt_default class="card__image" %}
             {% endif %}
         {% else %}
                 {% for default_image in default_image %}
-                    {% image default_image.value.image width-500 class="card__image"  alt=default_image.image_alt %}
+                    {% image default_image.value.image fill-500x300 class="card__image"  alt=default_image.image_alt %}
                 {% endfor %}
 
         {% endif %}

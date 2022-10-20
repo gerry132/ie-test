@@ -6,6 +6,7 @@ from wagtail.admin.panels import FieldPanel, StreamFieldPanel
 from wagtail.models import Page
 from wagtail.fields import StreamField
 from irelandie_utils import blocks
+from irelandie_utils.utils import get_model_info
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 import datetime
@@ -136,11 +137,10 @@ class NewsPage(MinimalArticlePage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        from irelandie_missions.models import MissionPage
         pages = self.get_ancestors()
         for p in pages:
-            if p.content_type.name == 'mission page':
-                missions = MissionPage.objects.live().get(id=p.id)
+            if p.content_type.name in ['mission page', 'Free Form Page']:
+                missions = get_model_info(p.content_type.name, p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
         return context
@@ -196,11 +196,10 @@ class NewsLandingPage(BasePage):
             .live()
             .specific()
         )
-        from irelandie_missions.models import MissionPage
         pages = self.get_ancestors()
         for p in pages:
-            if p.content_type.name == 'mission page':
-                missions = MissionPage.objects.live().get(id=p.id)
+            if p.content_type.name in ['mission page', 'Free Form Page']:
+                missions = get_model_info(p.content_type.name, p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
 

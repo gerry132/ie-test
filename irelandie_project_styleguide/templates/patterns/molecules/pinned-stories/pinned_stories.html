@@ -40,7 +40,7 @@
         <div class="pinned-stories__feed">
             {% if page.related_articles %}
                 {% for story in page.related_articles %}
-                    {% if page.content_type.name == "mission page" and page.root_page %}
+                    {% if page.root_page %}
                             {% include "patterns/molecules/card/news-card.html" with card=story classes="pinned-story" default_image=page.default_image %}
                     {% else %}
                         {% include "patterns/molecules/card/news-card.html" with card=story classes="pinned-story" default_image=default_image %}

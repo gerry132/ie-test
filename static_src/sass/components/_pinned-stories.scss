@@ -3,9 +3,11 @@
     background-color: $color--white;
 
     &__container {
+    padding: 0 20px;
         @include media-query(large) {
             display: flex;
             flex-wrap: wrap;
+            padding: 0 60px;
         }
     }
 
@@ -93,18 +95,15 @@
 
     &__feed {
         background-color: $color--white;
-        justify-content: space-between;
         overflow: hidden;
-        margin-top: -20px;
-        padding: $grid $grid 100px $grid;
+        padding: 20px 0;
 
         @include media-query(small) {
-            display: flex;
-            flex-wrap: wrap;
+         column-count: 2;
+         padding: 20px 0;
         }
-
-        @include media-query(large) {
-            padding-right: 10%;
+        @include media-query(large){
+            padding: $grid $grid $grid $grid;
         }
     }
 }

@@ -16,6 +16,10 @@
         padding: 15px 30px;
     }
 
+    @include media-query(max-medium) {
+        padding: 15px 40px;
+    }
+
     &:hover {
         background-color: $color--primary;
         color: $color--white;

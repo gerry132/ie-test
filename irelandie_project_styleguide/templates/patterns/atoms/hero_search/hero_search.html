@@ -9,12 +9,16 @@
                             <select class="searchBarSelect" onchange="location = this.value; ">
                                 <option value="" name="popular_page" selected disabled hidden>Popular</option>
                                     {% for p in page.popular_pages %}
-                                        <option value="{{p.value.page.url}}">{{p}}</option>
+                                    {% if p.value.title %}
+                                            <option value="{{p.value.page.url}}">{{p.value.title}}</option>
+                                    {% else %}
+                                            <option value="{{p.value.page.url}}">{{p}}</option>
+                                    {% endif %}
                                     {% endfor %}
                                 </select>
                             {% endif %}
                             </div>
-                        <button type="submit" class="searchButton">Search</button> 
+                        <button type="submit" class="searchButton">Search</button>
                     </div>
                 </form>
             </div>

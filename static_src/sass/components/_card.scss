@@ -52,7 +52,12 @@
 
     &__title {
         #{$root}--no-summary & {
-            font-size: 32px;
+            font-size: 24px;
+        }
+    }
+    &__summary {
+        #{$root}--no-summary & {
+            font-size: 18px;
         }
     }
 

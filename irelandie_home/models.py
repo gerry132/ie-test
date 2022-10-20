@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from wagtail.admin.panels import TabbedInterface, ObjectList, StreamFieldPanel
+from django.db import models
+from wagtail.admin.panels import TabbedInterface, ObjectList, StreamFieldPanel, FieldPanel
 from wagtail import blocks as wagtail_blocks
 from wagtail.fields import StreamField
 from irelandie_home.blocks import SecondaryCallToAction
@@ -7,12 +8,21 @@ from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_utils import blocks
 from irelandie_utils.models import HeroPage
 from irelandie_pages.models import FreeFormPageBase
+from wagtail.images import get_image_model_string
+
+IMAGE_MODEL = get_image_model_string()
 
 
 class HomePage(FreeFormPageBase):
     max_count = 1
     template = "patterns/pages/home/home_page.html"
-
+    favicon = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
     top_story = StreamField(
         [
             ("story", blocks.TopStoryBlock()),
@@ -26,6 +36,9 @@ class HomePage(FreeFormPageBase):
     promote_panels = FreeFormPageBase.promote_panels + [
         StreamFieldPanel("top_story"),
     ]
+    settings_panels = ([
+        FieldPanel("favicon", permission="access_admin"),
+    ]) + FreeFormPageBase.settings_panels
 
     secondary_call_to_action = StreamField(
         [
@@ -46,7 +59,7 @@ class HomePage(FreeFormPageBase):
         ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
         ObjectList(secondary_cta_panel, heading='Call To Action'),
         ObjectList(promote_panels, heading='Promote'),
-        ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
+        ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
 
@@ -127,6 +140,26 @@ class TopicPage(HeroPage):
                 "rich_text",
                 blocks.RichTextBlock(),
             ),
+            (
+                "rich_text_advanced",
+                blocks.AdvancedRichTextBlock(),
+            ),
+            (
+                "articles",
+                blocks.ArticleCardsBlock()
+            ),
+            (
+                "logo_cards",
+                blocks.LogoCardsBlock()
+            ),
+            (
+                "link_cards",
+                blocks.LinkCardsBlock()
+            ),
+            (
+                "youtube",
+                blocks.YoutubeVideoBlock()
+            ),
         ],
         blank=True,
         null=True,
@@ -139,31 +172,9 @@ class TopicPage(HeroPage):
         max_num=1,
     )
 
-    articles = StreamField(
-        [("articles", blocks.ArticleCardsBlock())],
-        blank=True,
-        max_num=1,
-    )
-    embeds = StreamField(
-        [
-            ("youtube", blocks.YoutubeVideoBlock()),
-        ],
-        blank=True,
-        max_num=1,
-    )
-
-    logo_cards = StreamField(
-        [("logo_cards", blocks.LogoCardsBlock())],
-        blank=True,
-        max_num=1,
-    )
-
     content_panels = HeroPage.content_panels + [
         StreamFieldPanel("body"),
         StreamFieldPanel("featured_articles"),
-        StreamFieldPanel("articles", heading="Article Cards"),
-        StreamFieldPanel("embeds"),
-        StreamFieldPanel("logo_cards", heading="Logo Cards"),
     ]
 
     edit_handler = TabbedInterface([

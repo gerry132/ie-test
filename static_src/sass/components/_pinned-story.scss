@@ -2,14 +2,11 @@
     position: relative;
     font-family: $font--secondary;
     margin-top: 40px;
+    margin-bottom: auto;
 
-    @include media-query(small) {
-        flex: 0 0 45%;
-        max-width: 45%;
-
-        &:nth-child(2n) {
-            margin-top: 100px;
-            margin-bottom: -80px;
+    @media only screen and (max-width: 1024px) {
+        &:nth-child(1) {
+            margin-top: 0px;
         }
     }
 }

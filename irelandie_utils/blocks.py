@@ -470,8 +470,29 @@ class LogoCardBlock(blocks.StructBlock):
 
 class LogoCardsBlock(blocks.StructBlock):
     title = blocks.CharBlock()
-    summary = blocks.TextBlock()
+    summary = blocks.TextBlock(required=False)
+    summary_richtext = blocks.StructBlock(
+        [
+            ("use_richtext", blocks.BooleanBlock(required=False)),
+            ("content", AdvancedRichTextBlock())
+        ]
+    )
     cards = blocks.StreamBlock([("card", LogoCardBlock())])
+
+    def clean(self, value):
+        errors = {}
+        summary = value.get('summary')
+        summary_richtext = value.get('summary_richtext')
+
+        if summary and summary_richtext.get('use_richtext'):
+            msg = "You can't choose both a plaintext and richtext summary."
+            errors['summary'] = ErrorList([msg])
+            errors['summary_richtext'] = ErrorList([msg])
+
+        if errors:
+            raise StructBlockValidationError(block_errors=errors)
+
+        return super().clean(value)
 
     class Meta:
         icon = "pick"
@@ -615,6 +636,7 @@ class FeaturedArticlesBlock(blocks.StructBlock):
 
 class ArticleStoryBlock(blocks.StreamBlock):
     rich_text = RichTextBlock(group="Base")
+    rich_text_advanced = AdvancedRichTextBlock(group="Base")
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
 
@@ -685,7 +707,7 @@ class AccordionBlock(blocks.StructBlock):
                             blank=True,
                             max_num=1,
                             min_num=0,
-                            required=False,)
+                            required=False, )
                          ),
                         ("additional", blocks.StreamBlock([
                             ("map", MapBlock()),
@@ -712,32 +734,18 @@ class AccordionBlock(blocks.StructBlock):
 
 
 class FreeFormBlocksBase(blocks.StreamBlock):
-    pinned_stories = PinnedStoriesBlock(group="Module")
+    pinned_stories = blocks.StructBlock(
+        [
+            ("pinned_story_hero", PinnedStoryHeroBlock()),
+        ],
+        template="patterns/molecules/pinned-stories/pinned_stories.html", group="Module"
+    )
     stories = StoryBlock(group="Module")
 
     video = CustomVideoChooserBlockAlt(group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
 
     person = PersonBlock(group="Snippets")
-
-
-class FreeFormBlocks(FreeFormBlocksBase):
-    rich_text = RichTextBlock(group="Base")
-    image = ImageBlock(group="Base")
-    document = DocumentBlock(group="Base")
-    accordion = AccordionBlock(group="Base")
-
-    articles = ArticleCardsBlock(group="Module")
-    embassy_story = EmbassyStory(group="Module")
-    featured_articles = FeaturedArticlesBlock(group="Module")
-    featured_story = FeaturedStoryBlock(group="Module")
-    logos = LogoCardsBlock(group="Module")
-
-    table = TableBlock(group="HTML")
-    html = blocks.RawHTMLBlock(
-        group="HTML",
-        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
-    )
 
 
 class RelatedContentBlock(blocks.StructBlock):
@@ -983,3 +991,25 @@ class GenericHeroBlock(blocks.StructBlock):
     class Meta:
         label = "Generic Hero Block"
         template = "patterns/molecules/streamfield/blocks/generic_hero.html"
+
+
+class FreeFormBlocks(FreeFormBlocksBase):
+    rich_text = RichTextBlock(group="Base")
+    rich_text_advanced = AdvancedRichTextBlock(group="Base")
+    image = ImageBlock(group="Base")
+    document = DocumentBlock(group="Base")
+    accordion = AccordionBlock(group="Base")
+
+    articles = ArticleCardsBlock(group="Module")
+    embassy_story = EmbassyStory(group="Module")
+    featured_articles = FeaturedArticlesBlock(group="Module")
+    featured_story = FeaturedStoryBlock(group="Module")
+    logos = LogoCardsBlock(group="Module")
+    link_card = LinkCardBlock()
+    link_button = LinkButtonBlock()
+    link_box = LinkBoxesBlock()
+    table = TableBlock(group="HTML")
+    html = blocks.RawHTMLBlock(
+        group="HTML",
+        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
+    )

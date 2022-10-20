@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.utils.functional import cached_property
 
 from wagtail.fields import StreamField
 from wagtail.admin.panels import TabbedInterface, ObjectList, StreamFieldPanel, FieldPanel, MultiFieldPanel
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
+from irelandie_news.models import NewsPage
 
 from irelandie_utils.models import HeroPage
-from irelandie_utils.blocks import FreeFormBlocks
+from irelandie_utils.blocks import FreeFormBlocks, ImageBlock
+from irelandie_navigation.blocks import NoticeBarWithMessageLink
+from wagtail.images import get_image_model_string
+
+IMAGE_MODEL = get_image_model_string()
 
 
 class FreeFormPageBase(HeroPage):
@@ -32,6 +38,14 @@ class FreeFormPage(FreeFormPageBase):
     template = "patterns/pages/irelandie_pages/free_form_page.html"
 
     root_page = models.BooleanField(default=True)
+    favicon = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    featured_news = models.BooleanField(default=False)
     twitter_title = models.CharField(max_length=50, blank=True)
 
     twitter_feed = models.ForeignKey(
@@ -41,8 +55,30 @@ class FreeFormPage(FreeFormPageBase):
         null=True,
         blank=True,
     )
-
+    notice_bar = StreamField(
+        [
+            ("noticebar", NoticeBarWithMessageLink()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+    default_image = StreamField(
+        [
+            ("default_image", ImageBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
     content_panels = FreeFormPageBase.content_panels + [
+        FieldPanel("featured_news"),
+        MultiFieldPanel([
+            StreamFieldPanel("notice_bar"),
+        ], heading="Noticebar settings"
+        ),
         MultiFieldPanel([
             FieldPanel("twitter_title"),
             SnippetChooserPanel("twitter_feed"),
@@ -52,6 +88,8 @@ class FreeFormPage(FreeFormPageBase):
     settings_panels = (
         [
             FieldPanel("root_page", permission="access_admin"),
+            FieldPanel("favicon", permission="access_admin"),
+            FieldPanel("default_image", permission="access_admin"),
         ] +
         HeroPage.settings_panels
 
@@ -66,14 +104,26 @@ class FreeFormPage(FreeFormPageBase):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        from irelandie_missions.models import MissionPage
         pages = self.get_ancestors()
         for p in pages:
-            if p.content_type.name == 'mission page':
-                missions = MissionPage.objects.live().get(id=p.id)
+            if p.content_type.name == 'Free Form Page':
+                missions = FreeFormPage.objects.live().get(id=p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
         return context
+
+    @cached_property
+    def related_articles(self):
+        return (
+            NewsPage.objects
+            .descendant_of(self)
+            .filter(locale=self.locale,
+                    related_articles_active=True)
+            .public()
+            .live()
+            .order_by("-publication_date")[:4]
+            .specific()
+        )
 
     class Meta:
         verbose_name = "Free Form Page"

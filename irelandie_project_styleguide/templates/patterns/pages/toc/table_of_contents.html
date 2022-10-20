@@ -10,9 +10,21 @@
      .header__search-is-active{
         padding-top: 100px;
      }
+     @media only screen and (min-width: 1023px) {
+        .breadcrumb-services {
+            padding-top: 40px;
+        }
+
+    }
+    @media only screen and (max-width: 1023px) {
+        .breadcrumb-services {
+            padding-top: 80px;
+        }
+    }
+
 </style>
 <div class="search--is-active-services">
-    <div style="padding-top: 40px;">
+    <div class="breadcrumb-services">
         {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
     </div>
     <div class="notice-bar">

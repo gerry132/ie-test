@@ -31,9 +31,22 @@
         <div class="section section--padding">
             {% include_block block %}
         </div>
+    {% elif block.block_type == 'link_box' %}
+        <div class="section section--padding">
+            <div id="link-box_wrapper" class="wrapper--large--toc">
+            {% include_block block %}
+            </div>
+        </div>
     {% else %}
-        <div class="wrapper wrapper--large wrapper--padding">
+        <div style="padding-bottom: 10px;" class="wrapper wrapper--large wrapper--padding">
             {% include_block block %}
         </div>
     {% endif %}
 {% endfor %}
+
+
+{% if page.featured_news and page.related_articles %}
+      <!-- related_articles -->
+      {% include "patterns/molecules/related-articles/related-articles.html" with articles=page.related_articles default_image=default_image %}
+
+{% endif %}
