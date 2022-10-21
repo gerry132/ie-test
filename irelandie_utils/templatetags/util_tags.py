@@ -98,6 +98,9 @@ def count_toc(page):
 
 @register.simple_tag
 def favicon_child(page):
+    if isinstance(page, int) or isinstance(page, str):
+        # accounts for search
+        return False
     pages = page.get_ancestors()
 
     for p in pages:
