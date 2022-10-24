@@ -1,4 +1,5 @@
 from datetime import datetime
+import pytz
 from irelandie_utils.agent.time_thread import RepeatedTimer
 from irelandie_corporate_information.models import CorportateInformationPageIndex
 from irelandie_missions.models import (
@@ -23,7 +24,7 @@ from django.db.models import Q
 
 class Agent(RepeatedTimer):
     def __init__(self):
-        super().__init__(30000, self.get_obj)
+        super().__init__(120, self.get_obj)
         self.models = [
             CountryGroupPageIndex,
             JobContentPage,
@@ -44,11 +45,11 @@ class Agent(RepeatedTimer):
             print("STARTING POLL")
             try:
                 go_live = model.objects.filter(
-                                go_live_at__lte=datetime.now()
+                                go_live_at__lte=pytz.utc.localize(datetime.now())
                                 ).filter(live=False).filter(
-                                    Q(expire_at__gte=datetime.now()) | Q(expire_at__gte=None))
+                                    Q(expire_at__gte=datetime.now()) | Q(expire_at__isnull=True))
                 expired = model.objects.filter(
-                    expire_at__lte=datetime.now()).filter(live=True)
+                    expire_at__lte=pytz.utc.localize(datetime.now())).filter(live=True)
                 print("ACTIVE OBJECTS: " + str(go_live))
                 print("EXPIRED OBJECTS" + str(expired))
                 self.update_obj(go_live, True)
@@ -61,5 +62,5 @@ class Agent(RepeatedTimer):
         for page in obj_l:
             page.live = pub
             if pub:
-                page.first_published_at = datetime.now()
+                page.first_published_at = pytz.utc.localize(datetime.now())
             page.save()
