@@ -47,7 +47,7 @@ class Agent(RepeatedTimer):
                 go_live = model.objects.filter(
                                 go_live_at__lte=pytz.utc.localize(datetime.now())
                                 ).filter(live=False).filter(
-                                    Q(expire_at__gte=datetime.now()) | Q(expire_at__isnull=True))
+                                    Q(expire_at__gte=pytz.utc.localize(datetime.now())) | Q(expire_at__isnull=True))
                 expired = model.objects.filter(
                     expire_at__lte=pytz.utc.localize(datetime.now())).filter(live=True)
                 print("ACTIVE OBJECTS: " + str(go_live))
