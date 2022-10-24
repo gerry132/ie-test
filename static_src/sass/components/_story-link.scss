@@ -21,8 +21,8 @@
     }
 
     &:hover {
-        background-color: $color--primary;
-        color: $color--white;
+        background-color: $color--white;
+        color: $color--primary;
     }
 
     &:nth-child(odd) {
@@ -35,6 +35,10 @@
         margin-right: 15px;
         height: 45px;
         width: 48px;
+        color: $color--white;
+        #{$root}:hover & {
+            color: $color--primary;
+        }
     }
 
     &__img {
@@ -51,22 +55,22 @@
 
     &__title {
         @include font-size(xs);
-        color: $color--primary;
+        color: $color--white;
         font-weight: $weight--bold;
         transition: color $transition;
 
         #{$root}:hover & {
-            color: $color--white;
+            color: $color--primary;
         }
     }
 
     &__summary {
         @include font-size(xxs);
-        color: $color--accessible-grey;
+        color: $color--white;
         transition: color $transition;
 
         #{$root}:hover & {
-            color: $color--white;
+            color: $color--primary;
         }
     }
 }
