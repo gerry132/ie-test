@@ -748,12 +748,34 @@ class FreeFormBlocksBase(blocks.StreamBlock):
     person = PersonBlock(group="Snippets")
 
 
-class RelatedContentBlock(blocks.StructBlock):
-    page = blocks.PageChooserBlock()
+class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
+    icon = blocks.ChoiceBlock(
+        choices=(
+            ("", "Choose an icon (optional)"),
+            ("government-building", "Government Building"),
+            ("money", "Money"),
+            ("passport", "Passport"),
+            ("plane", "Plane"),
+            ("ticket", "Ticket"),
+        ),
+        required=False,
+    )
+    image = ImageChooserBlock(required=False)
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_IMAGE),
+    )
     title = blocks.CharBlock()
+    page = blocks.PageChooserBlock(required=False)
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
 
     class Meta:
         label = "Related Content"
+        template = "patterns/molecules/streamfield/blocks/related_content.html"
 
 
 class TocBlocks(blocks.StreamBlock):
