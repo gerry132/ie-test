@@ -397,6 +397,22 @@ class ServiceContent(BasePage):
         null=True,
         min_num=0,
     )
+    stories_top = StreamField(
+        [
+            ("story", blocks.StoryBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+    )
+    stories_bottom = StreamField(
+        [
+            ("story", blocks.StoryBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+    )
     admin_body1 = StreamField(
         [
             ("admin_contents", blocks.TocAdminBlock())
@@ -432,9 +448,11 @@ class ServiceContent(BasePage):
             StreamFieldPanel("notice_bar_services"),
         ], heading="Noticebar settings"
         ),
+        StreamFieldPanel("stories_top", heading="Two Column Feature"),
         StreamFieldPanel("admin_body1", permission="access_admin", heading="Admin_body"),
         StreamFieldPanel("body"),
         StreamFieldPanel("admin_body2", permission="access_admin", heading="Admin_body"),
+        StreamFieldPanel("stories_bottom", heading="Two Column"),
         StreamFieldPanel("related_content")
     ]
 
