@@ -31,23 +31,18 @@
         {% include_block page.notice_bar_services %}
     </div>
 </div>
+{% include_block page.stories_top %}
 
     <!--start of page description and title-->
-    <div id="main-header" class="section section--padding section--white section--toc">
-        <div id="wrapper" class="wrapper--large--toc">
-            <div id="left">
-                <div class="wrapper wrapper--padding">
+    <div id="main-header" class="section section--padding section--white">
+                <div class="wrapper wrapper--large wrapper--padding content--padding">
                     <div class="intro--toc">
-                        <div class="container">
                             <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
                             {% if page.description %}
                                 <p class="intro__description">{{ page.description }}</p>
                             {% endif %}
-                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
     </div>
     <!--end of page description and title-->
     <!--start of page body-->
@@ -56,7 +51,7 @@
 
     <div class="section--master">
         <div class="container-fluid">
-            <div class="wrapper wrapper--large--toc wrapper--padding">
+            <div class="wrapper wrapper--large wrapper--padding">
                 <!--start of row-->
                 <div class="row justify-content-start" style="padding-bottom: 20px;">
                     <!--start of col-lg-9 col-md-12 -->
@@ -66,6 +61,7 @@
                             {% get_content_length page as content_length %}
                             {% count_toc page as content_length_count %}
                             {% if content_length_count > 1 %}
+                            <div class="wrapper wrapper--large toc-table">
                             {% for block in page.admin_body1 %}
                                 {% if block.block_type == 'admin_contents' %}
                                     <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter }}. {{block.value.title}}</h2></a>
@@ -81,6 +77,7 @@
                                     <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length|add:content_length }}. {{block.value.title}}</h2></a>
                                 {% endif %}
                             {% endfor %}
+                            </div>
                             {% endif %}
                             {% if page.introduction %}
                                 <div class="wrapper wrapper--large wrapper--padding content--padding">
@@ -250,6 +247,7 @@
             </div>
         </div>
     </div>
+{% include_block page.stories_bottom %}
 
 {% endblock %}
 {% block extra_js %}
