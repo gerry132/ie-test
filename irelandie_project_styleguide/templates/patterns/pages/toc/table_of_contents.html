@@ -34,7 +34,7 @@
 {% include_block page.stories_top %}
 
     <!--start of page description and title-->
-    <div id="main-header" class="section section--padding section--white section--toc">
+    <div id="main-header" class="section section--padding section--white">
                 <div class="wrapper wrapper--large wrapper--padding content--padding">
                     <div class="intro--toc">
                             <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
@@ -57,11 +57,11 @@
                     <!--start of col-lg-9 col-md-12 -->
                     <div class="col-lg-9 col-md-12 col-sm-12">
                         <div>
-                            <div class="wrapper wrapper--large toc-table">
                             {% get_admin_content_length page as admin_content_length %}
                             {% get_content_length page as content_length %}
                             {% count_toc page as content_length_count %}
                             {% if content_length_count > 1 %}
+                            <div class="wrapper wrapper--large toc-table">
                             {% for block in page.admin_body1 %}
                                 {% if block.block_type == 'admin_contents' %}
                                     <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter }}. {{block.value.title}}</h2></a>
@@ -77,8 +77,8 @@
                                     <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length|add:content_length }}. {{block.value.title}}</h2></a>
                                 {% endif %}
                             {% endfor %}
-                            {% endif %}
                             </div>
+                            {% endif %}
                             {% if page.introduction %}
                                 <div class="wrapper wrapper--large wrapper--padding content--padding">
                                     <p class="intro__description">{{ page.introduction|richtext }}</p>
