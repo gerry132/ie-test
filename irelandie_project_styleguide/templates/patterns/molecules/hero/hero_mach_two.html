@@ -1,6 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 {% if hero_image %}
-    <div alt="{{page.alt_text}}" class="hero hero--background-image background-image{% if classes %} {{ classes }}{% endif %}">
+    <div style="max-height: 400px !important;" alt="{{page.alt_text}}" class="hero hero--background-image background-image{% if classes %} {{ classes }}{% endif %}">
 {% else %}
     <div alt="{{page.alt_text}}" class="hero{% if page.hero_video %} hero--background-video{% endif %}{% if classes %} {{ classes }}{% endif %}" data-video-container>
 {% endif %}
