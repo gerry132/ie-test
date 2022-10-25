@@ -458,6 +458,15 @@ class ServicesLandingPage(BasePage):
         min_num=0,
         max_num=1,
     )
+    hybrid_hero = StreamField(
+        [
+            ("hybrid_hero", blocks.HybridHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
     rich_text = StreamField(
         [
             ("rich_text", blocks.AdvancedRichTextBlock()),
@@ -488,6 +497,7 @@ class ServicesLandingPage(BasePage):
 
     content_panels = BasePage.content_panels + [
         StreamFieldPanel("generic_hero", permission="access_admin"),
+        StreamFieldPanel("hybrid_hero", permission="access_admin"),
         StreamFieldPanel("rich_text", heading="Advanced Richtext", permission="access_admin"),
         StreamFieldPanel("body", permission="access_admin"),
         StreamFieldPanel("related_content")

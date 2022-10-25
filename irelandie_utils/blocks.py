@@ -993,6 +993,16 @@ class GenericHeroBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/generic_hero.html"
 
 
+class HybridHeroBlock(blocks.StructBlock):
+    hero_image = ImageChooserBlock(required=False)
+    hero_title = blocks.CharBlock(required=True, max_length=120)
+    subtitle = blocks.CharBlock(required=False)
+
+    class Meta:
+        label = "Generic Hero Block"
+        template = "patterns/molecules/hero/hybrid_hero.html"
+
+
 class FreeFormBlocks(FreeFormBlocksBase):
     rich_text = RichTextBlock(group="Base")
     rich_text_advanced = AdvancedRichTextBlock(group="Base")
