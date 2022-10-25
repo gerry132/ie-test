@@ -2,15 +2,14 @@
 {% load wagtailimages_tags %}
 {% load util_tags %}
 
-{% for block in page.hybrid_hero %}
-{% if block.value.hero_image %}
-<h1>{{block.value.hero_image}}</h1>
-    {% include "patterns/atoms/image/hero_image.html" with hero_image=block.value.hero_image %}
-{% endif %}
+{% for block in page.generic_hero %}
+    {% if block.value.hero_image %}
+        {% include "patterns/atoms/image/hero_image.html" with hero_image=block.value.hero_image %}
+    {% endif %}
 {% endfor %}
-{% for block in page.hybrid_hero %}
-{% if block.value.hero_image %}
-    {% include "patterns/molecules/hero/hero_mach_two.html" with page=page hero_image=block.value.hero_image %}
+{% for block in page.generic_hero %}
+    {% if block.value.hero_image %}
+        {% include "patterns/molecules/hero/hero_mach_two.html" with page=page hero_image=block.value.hero_image %}
     {% endif %}
 {% endfor %}
 
