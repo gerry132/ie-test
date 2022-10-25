@@ -432,6 +432,16 @@ class ServiceContent(BasePage):
         blank=True
     )
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['default_image'] = missions.default_image
+        return context
+
     content_panels = BasePage.content_panels + [
         FieldPanel("introduction"),
         MultiFieldPanel([
@@ -494,6 +504,16 @@ class ServicesLandingPage(BasePage):
         min_num=0,
         max_num=1,
     )
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['default_image'] = missions.default_image
+        return context
 
     content_panels = BasePage.content_panels + [
         StreamFieldPanel("generic_hero", permission="access_admin"),

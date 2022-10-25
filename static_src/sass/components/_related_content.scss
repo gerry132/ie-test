@@ -1,0 +1,69 @@
+.related_content{
+    $root: &;
+    background-color: #004d46;
+    border-bottom: 1px solid $color--border;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 10px 20px;
+    transition: background-color $transition, color $transition;
+    padding: 15px 10px;
+    &:hover {
+        background-color: $color--white;
+        color: $color--primary;
+    }
+
+    &__card_width {
+        width: 268px;
+    }
+
+    &__title {
+        @include font-size(xs);
+        margin-right: 8px;
+        color: $color--white;
+        font-weight: $weight--bold;
+        transition: color $transition;
+        line-height: 27.5px;
+
+        #{$root}:hover & {
+            color: $color--primary;
+        }
+    }
+
+    &__icon {
+        margin: auto 8px;
+        height: 45px;
+        width: 48px;
+        color: $color--white;
+        flex-shrink: 0;
+        #{$root}:hover & {
+            color: $color--primary;
+        }
+    }
+
+    &__btn_content {
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    border: none;
+    border-radius: 60%;
+    cursor: pointer;
+    background-color: #fff;
+    margin: auto 8px auto auto;
+    #{$root}:hover & {
+            background-color: $color--primary;
+        }
+  }
+  &__icons{
+      transform: rotate(-90deg);
+      #{$root}:hover & {
+            color: $color--white;
+        }
+  }
+
+}
+
+
