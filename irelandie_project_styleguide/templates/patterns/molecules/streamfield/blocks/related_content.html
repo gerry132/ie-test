@@ -1,0 +1,28 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<a href="{{ value.page.url }}" class="related_content__card_width card">
+    <div class="card__image-container">
+        {% if value.image %}
+            {% if value.image_alt %}
+                {% image value.image fill-500x300 class="card__image"  alt=value.image_alt %}
+            {% else %}
+                {% image value.image fill-500x300 alt=value.image.alt_default class="card__image" %}
+            {% endif %}
+        {% else %}
+                {% for default_image in default_image %}
+                    {% image default_image.value.image fill-500x300 class="card__image"  alt=default_image.image_alt %}
+                {% endfor %}
+        {% endif %}
+    </div>
+    <div class="related_content">
+        {% if value.icon %}
+            {% include "patterns/atoms/icons/icon.html" with name=value.icon classname="related_content__icon" %}
+        {% endif %}
+            <span class="related_content__title">{{ value.title }}</span>
+        <button class="related_content__btn_content ">
+                {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="related_content__icons" %}
+        </button>
+    </div>
+
+
+</a>
