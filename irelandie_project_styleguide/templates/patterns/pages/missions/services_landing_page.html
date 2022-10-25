@@ -5,9 +5,9 @@
 
 {% block content %}
  <!-- Main -->
-   
+
     {% if page.title or page.generic_hero %}
-        {% include "patterns/molecules/streamfield/blocks/generic_hero.html" with page=page %}
+        {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
     {% endif %}
 
     {% block main %}
