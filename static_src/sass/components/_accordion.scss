@@ -1,6 +1,10 @@
 .accordion {
     $root: &;
     max-width: $wrapper--small;
+    margin-bottom: 20px;
+    border-style: solid;
+    border-color: #ECE8E6;
+    border-radius: 20px;
 
     &.is-open {
         #{$root}__icon {
@@ -19,8 +23,6 @@
     &__button {
         background-color: transparent;
         border: 0;
-        border-bottom: 1px solid darken($color--border, 10);
-        color: $color--default;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -36,7 +38,6 @@
         /* stylelint-disable */
         &:focus {
             outline: 0; // focus style implemented directly on text instead
-            border-bottom: 1px solid $color--black;
         }
         /* stylelint-enable */
     }
@@ -44,22 +45,37 @@
     &__header {
         margin: 0;
         padding: 0;
+        background: #ECE8E6;
+        border-radius: 15px;
     }
 
     &__title {
-        font-size: 30px;
+        font-size: 28px;
         line-height: 36px;
         letter-spacing: -1.35px;
         margin: 0;
-        padding: 0;
+        padding: 0 20px;
+        color: #004D46;
+    }
+    &__btn_content{
+        width: 40px;
+        height: 40px;
+        padding: 10px;
+        border: none;
+        border-radius: 60%;
+        cursor: pointer;
+        background: #A39062;
+        margin: auto 8px auto auto;
     }
 
     &__icon {
-        width: 20px;
-        height: 10px;
         margin-right: 20px;
         transition: transform, fill, 0.2s ease;
         fill: $color--default;
+        color: #fff;
+        stroke: #fff;
+        stroke-miterlimit: 1.41;
+        stroke-width: 2.7px;
 
         @media screen and (-ms-high-contrast: active) {
             filter: brightness(400%);
@@ -68,17 +84,13 @@
 
     &__content {
         display: none;
-        padding: 0 0 20px 0;
+        padding: 0 20px 20px 20px;
         margin-top: 15px;
 
-        #{$root}.is-open & {
-            border-bottom: 1px solid darken($color--border, 10);
-        }
     }
 
     &__list-item {
         padding: 10px 0;
-        border-bottom: 1px solid darken($color--border, 5);
 
         &:last-of-type {
             border-bottom: 0;
