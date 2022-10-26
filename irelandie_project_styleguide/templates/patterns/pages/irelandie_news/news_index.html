@@ -56,7 +56,7 @@ getNewsArticles();
                     </div>
                 </div>
                 <div class="wrapper--padding related-content--mobile">
-                    <h4>News Archive</h4>
+                    <h4 class="intro__title">News Archive</h4>
                     <select id="news-list" class="searchBarNews" style="width: 100%;" onchange="getNewsArticles(this.value); ">
                             <option value="all">All</option>
                             {% for p in page.get_years %}
@@ -68,7 +68,7 @@ getNewsArticles();
         </div>
         <div id="right">
             <div class="related-content">
-                <h4>News Archive</h4>
+                <h4 class="intro__title">News Archive</h4>
                 <select id="news-list-mobile" class="searchBarNews" style="width: 100%;" onchange="getNewsArticles(this.value); ">
                         <option value="all">All</option>
                         {% for p in page.get_years %}

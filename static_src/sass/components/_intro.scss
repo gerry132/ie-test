@@ -3,6 +3,10 @@
     max-width: 500px;
     margin-bottom: 40px;
     padding-top: 40px;
+    $root: &;
+    &__title{
+    color: #004D46;
+    }
 }
 
 
