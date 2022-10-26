@@ -18,8 +18,11 @@
                 {% include_block page.rich_text %}
             </div>
         {% endif %}
-            <div id="link-box_wrapper" class="wrapper--large--toc">
-                    {% include_block page.body %}
+        {% if page.related_content %}
+        <div id="link-box_wrapper">
+            {% endif %}
+            <div class="wrapper--large--toc">
+                    {% include_block page.body with default_image=default_image %}
                     <div class="link-box__related-content">
                     {% if page.related_content %}
                         <h4 class="header--related-content">Related Content</h4>
@@ -31,6 +34,9 @@
                     {% endif %}
                     </div>
         </div>
+            {% if page.related_content %}
+        </div>
+            {% endif %}
     </div>
     {% endblock %}
 {% endblock %}

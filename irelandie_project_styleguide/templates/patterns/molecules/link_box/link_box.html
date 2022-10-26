@@ -1,14 +1,29 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 
-<a href="{{ link_url }}" class="link-box">
-    <div class="link-box__content">
-        <div class="link-box__container">
-            <h3 class="link-box__heading heading--3">{{ value.heading }}</h3>
-           <div class="rich-text">
-                {{ value.introduction|richtext }}
-            </div>
-        </div>
-        <button class="link-box__btn"></button>
+<a href="{{ link_url }}" class="related_content_card">
+    <div class="card__image-container">
+        {% if value.image %}
+            {% if value.image_alt %}
+                {% image value.image fill-500x300 class="card__image"  alt=value.image_alt %}
+            {% else %}
+                {% image value.image fill-500x300 alt=value.image.alt_default class="card__image" %}
+            {% endif %}
+        {% else %}
+                {% for default_image in default_image %}
+                    {% image default_image.value.image fill-500x300 class="card__image"  alt=default_image.image_alt %}
+                {% endfor %}
+        {% endif %}
     </div>
-    <div class="link-box__line"></div>
+    <div class="link_box_padding related_content_card__related_content">
+        {% if value.icon %}
+            {% include "patterns/atoms/icons/icon.html" with name=value.icon classname="related_content_card__icon" %}
+        {% endif %}
+            <span class="related_content_card__title">{{ value.heading }}</span>
+        <button class="related_content_card__btn_content ">
+                {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="related_content_card__icons" %}
+        </button>
+    </div>
+    <div class="related_content_card__introduction">{{ value.introduction }}</div>
+
+
 </a>

@@ -918,6 +918,22 @@ class GeneralContentBlocks(blocks.StreamBlock):
 
 
 class LinkBoxBlock(blocks.StructBlock):
+    icon = blocks.ChoiceBlock(
+        choices=(
+            ("", "Choose an icon (optional)"),
+            ("government-building", "Government Building"),
+            ("money", "Money"),
+            ("passport", "Passport"),
+            ("plane", "Plane"),
+            ("ticket", "Ticket"),
+        ),
+        required=False,
+    )
+    image = ImageChooserBlock(required=False)
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_IMAGE),
+    )
     heading = blocks.CharBlock()
     introduction = blocks.RichTextBlock(required=False)
     page = blocks.PageChooserBlock(required=False)
