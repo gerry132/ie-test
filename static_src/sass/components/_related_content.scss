@@ -1,24 +1,42 @@
-.related_content{
+.related_content_card{
     $root: &;
-    background-color: #004d46;
-    border-bottom: 1px solid $color--border;
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    flex-direction: row;
-    flex: 0 0 100%;
-    max-width: 100%;
-    padding: 10px 20px;
-    transition: background-color $transition, color $transition;
-    padding: 15px 10px;
+    display: block;
+    border-radius: $border-radius;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+    background-color: $color--primary;
+    border: 1px solid $color--white;
+    overflow: hidden;
+    max-width: 400px;
+    transition: box-shadow $transition;
+
     &:hover {
+        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
         background-color: $color--white;
-        color: $color--primary;
+
+        #{$root}__image {
+            transform: scale(1.1);
+        }
+    }
+    &__card_three{
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+        grid-gap: 2rem 1rem;
     }
 
-    &__card_width {
-        width: 268px;
-    }
+    &__related_content{
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: row;
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 10px 20px;
+        transition: background-color $transition, color $transition;
+        padding: 15px 10px;
+        &:hover {
+            color: $color--primary;
+        }
+        }
 
     &__title {
         @include font-size(xs);
@@ -27,6 +45,19 @@
         font-weight: $weight--bold;
         transition: color $transition;
         line-height: 27.5px;
+
+        #{$root}:hover & {
+            color: $color--primary;
+        }
+    }
+    &__introduction {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 15px;
+        padding: 0 20px;
+        color: $color--white;
 
         #{$root}:hover & {
             color: $color--primary;
@@ -64,6 +95,8 @@
         }
   }
 
+
 }
-
-
+.link_box_padding{
+    padding: 15px 10px 0;
+    }
