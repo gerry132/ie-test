@@ -135,9 +135,11 @@
                                         onchange="this.form.submit()"
                                         class="language-switcher">
                                     {% for code, name in local_languages %}
+                                        {% if code == 'ga' or code == 'en' %}
                                         <option value="{{ code }}"{% if code == language_code %} selected{% endif %}>
                                             {{ name }}
                                         </option>
+                                        {% endif %}
                                     {% endfor %}
                                 </select>
                             </div>
