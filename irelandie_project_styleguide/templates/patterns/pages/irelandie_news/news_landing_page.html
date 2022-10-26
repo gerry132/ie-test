@@ -21,7 +21,7 @@
             </div>
             <div class="section section--padding">
                 {% if page.get_root_index %}
-                    <h4>News Archive</h4>
+                    <h4 class="intro__title">News Archive</h4>
                     <select  class="link-button__searchbar"  onchange="if (this.value) window.location.href=this.value">
                         <option selected="true" disabled="disabled">Choose year</option>
                         {% for p in page.get_years %}
