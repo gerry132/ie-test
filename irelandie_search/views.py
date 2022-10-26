@@ -18,12 +18,13 @@ def search(request):
     page = request.GET.get("page", 1)
     origin = request.GET.get("query_type")
     # Search
+
     if origin:
         root_page = MissionPage.objects.live().get(id=origin)
 
     if search_query:
         search_results = (
-            Page.objects.live()
+            Page.objects.live().public()
             .descendant_of(root_page)
             .search(search_query, operator="and", partial_match=True)
         )
