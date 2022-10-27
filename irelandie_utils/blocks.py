@@ -22,6 +22,7 @@ ALT_HELP_TEXT = """A short one-sentence literal description
 
 ALT_VID = ALT_HELP_TEXT % 'video'
 ALT_IMAGE = ALT_HELP_TEXT % 'image'
+ALT_ICON = ALT_HELP_TEXT % 'icon'
 
 
 class BaseBlockLinkValidation(blocks.StructBlock):
@@ -78,6 +79,17 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     icon = blocks.ChoiceBlock(
         choices=(
             ("", "Choose an icon (optional)"),
+            ("authentication", "Authentication"),
+            ("citizenship", "Citizenship"),
+            ("consular-fees", "Consular Fees"),
+            ("contact-phone", "Contact Phone"),
+            ("jobs", "Jobs"),
+            ("services", "Services"),
+            ("trade", "Trade"),
+            ("visas", "Visas"),
+            ("working-holiday", "Working Holiday"),
+            ("notice", "Notice"),
+            ("new-to", "New To"),
             ("government-building", "Government Building"),
             ("money", "Money"),
             ("passport", "Passport"),
@@ -85,6 +97,10 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
             ("ticket", "Ticket"),
         ),
         required=False,
+    )
+    icon_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_ICON),
     )
     image = ImageChooserBlock(required=False)
     title = blocks.CharBlock(
@@ -752,6 +768,17 @@ class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     icon = blocks.ChoiceBlock(
         choices=(
             ("", "Choose an icon (optional)"),
+            ("authentication", "Authentication"),
+            ("citizenship", "Citizenship"),
+            ("consular-fees", "Consular Fees"),
+            ("contact-phone", "Contact Phone"),
+            ("jobs", "Jobs"),
+            ("services", "Services"),
+            ("trade", "Trade"),
+            ("visas", "Visas"),
+            ("working-holiday", "Working Holiday"),
+            ("notice", "Notice"),
+            ("new-to", "New To"),
             ("government-building", "Government Building"),
             ("money", "Money"),
             ("passport", "Passport"),
@@ -759,6 +786,10 @@ class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
             ("ticket", "Ticket"),
         ),
         required=False,
+    )
+    icon_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_ICON),
     )
     image = ImageChooserBlock(required=False)
     image_alt = blocks.CharBlock(
@@ -921,6 +952,17 @@ class LinkBoxBlock(blocks.StructBlock):
     icon = blocks.ChoiceBlock(
         choices=(
             ("", "Choose an icon (optional)"),
+            ("authentication", "Authentication"),
+            ("citizenship", "Citizenship"),
+            ("consular-fees", "Consular Fees"),
+            ("contact-phone", "Contact Phone"),
+            ("jobs", "Jobs"),
+            ("services", "Services"),
+            ("trade", "Trade"),
+            ("visas", "Visas"),
+            ("working-holiday", "Working Holiday"),
+            ("notice", "Notice"),
+            ("new-to", "New To"),
             ("government-building", "Government Building"),
             ("money", "Money"),
             ("passport", "Passport"),
@@ -928,6 +970,10 @@ class LinkBoxBlock(blocks.StructBlock):
             ("ticket", "Ticket"),
         ),
         required=False,
+    )
+    icon_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_ICON),
     )
     image = ImageChooserBlock(required=False)
     image_alt = blocks.CharBlock(

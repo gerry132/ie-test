@@ -40,7 +40,7 @@
 
     &__title {
         @include font-size(xs);
-        margin-right: 8px;
+        margin: 0 8px;
         color: $color--white;
         font-weight: $weight--bold;
         transition: color $transition;
@@ -70,8 +70,13 @@
         width: 48px;
         color: $color--white;
         flex-shrink: 0;
+        fill: #004D46;
+        stroke:#fff;
+        stroke-width: 0px;
         #{$root}:hover & {
             color: $color--primary;
+            stroke:$color--primary;
+            fill: $color--white;
         }
     }
 
