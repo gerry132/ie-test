@@ -737,11 +737,6 @@ class AccordionBlock(blocks.StructBlock):
             )
         ]
     )
-    background = blocks.ChoiceBlock(
-        required=True,
-        choices=StoryBackground.choices,
-        default=StoryBackground.LIGHT,
-    )
 
     class Meta:
         icon = "collapse-down"
