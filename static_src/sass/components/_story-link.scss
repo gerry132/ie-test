@@ -36,8 +36,13 @@
         height: 45px;
         width: 48px;
         color: $color--white;
+        fill: #004D46;
+        stroke:#fff;
+        stroke-width: 0px;
         #{$root}:hover & {
             color: $color--primary;
+            stroke:$color--primary;
+            fill: $color--white;
         }
     }
 
