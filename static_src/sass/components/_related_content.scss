@@ -40,7 +40,7 @@
 
     &__title {
         @include font-size(xs);
-        margin: 0 8px;
+        margin-right: 8px;
         color: $color--white;
         font-weight: $weight--bold;
         transition: color $transition;

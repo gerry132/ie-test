@@ -1,5 +1,20 @@
 {% load wagtailcore_tags %}
 {% comment %} Notice bar for alert message {% endcomment %}
+<style>
+    .notice-svg{
+        margin: 0 5px;
+        top: 1px;
+        position: relative;
+    }
+</style>
 {% if value.enable %}
-<a href="{{ link_url }}" class="alert-message notice-bar--extended">{{ link_title }}</a>
+<a href="{{ link_url }}" class="alert-message notice-bar--extended">
+    <svg class="notice-svg" width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M16.375 8.5C16.375 12.8492 12.8492 16.375 8.5 16.375C4.15076 16.375 0.625 12.8492 0.625 8.5C0.625 4.15076 4.15076 0.625 8.5 0.625C12.8492 0.625 16.375 4.15076 16.375 8.5ZM9.375 5C9.375 5.48325 8.98325 5.875 8.5 5.875C8.01675 5.875 7.625 5.48325 7.625 5C7.625 4.51675 8.01675 4.125 8.5 4.125C8.98325 4.125 9.375 4.51675 9.375 5ZM9.5 12.875V7.625H7.5V12.875H9.5Z" fill="white"/>
+    </svg>
+    {{ link_title }}
+    <svg class="notice-svg" width="16" height="11" viewBox="0 0 16 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14.1667 5.50001L14.8031 4.86361L15.4395 5.50001L14.8031 6.13641L14.1667 5.50001ZM1.66667 6.40001C1.16962 6.40001 0.766672 5.99707 0.766672 5.50001C0.766672 5.00295 1.16962 4.60001 1.66667 4.60001V6.40001ZM10.6364 0.696947L14.8031 4.86361L13.5303 6.13641L9.36361 1.96974L10.6364 0.696947ZM14.8031 6.13641L10.6364 10.3031L9.36361 9.03028L13.5303 4.86361L14.8031 6.13641ZM14.1667 6.40001H1.66667V4.60001H14.1667V6.40001Z" fill="white"/>
+    </svg>
+</a>
 {% endif %}
