@@ -106,6 +106,48 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     title = blocks.CharBlock(
         help_text="Leave blank to use the page's own title", required=False
     )
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
+
+    class Meta:
+        template = "patterns/molecules/streamfield/blocks/story_link_block.html"
+
+
+class StoryLinkBlockPerson(BaseBlockLinkValidation, BaseBlockLinkContext):
+    page = blocks.PageChooserBlock(required=False)
+    icon = blocks.ChoiceBlock(
+        choices=(
+            ("", "Choose an icon (optional)"),
+            ("authentication", "Authentication"),
+            ("citizenship", "Citizenship"),
+            ("consular-fees", "Consular Fees"),
+            ("contact-phone", "Contact Phone"),
+            ("jobs", "Jobs"),
+            ("services", "Services"),
+            ("trade", "Trade"),
+            ("visas", "Visas"),
+            ("working-holiday", "Working Holiday"),
+            ("notice", "Notice"),
+            ("new-to", "New To"),
+            ("government-building", "Government Building"),
+            ("money", "Money"),
+            ("passport", "Passport"),
+            ("plane", "Plane"),
+            ("ticket", "Ticket"),
+        ),
+        required=False,
+    )
+    icon_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_ICON),
+    )
+    image = ImageChooserBlock(required=False)
+    title = blocks.CharBlock(
+        help_text="Leave blank to use the page's own title", required=False
+    )
     summary = blocks.CharBlock(required=False)
     url = blocks.URLBlock(
         label="URL",
@@ -894,7 +936,7 @@ class PersonSocialBlock(blocks.StructBlock):
 
     links = blocks.StreamBlock(
         [
-            ("link", StoryLinkBlock()),
+            ("link", StoryLinkBlockPerson()),
         ],
         max_num=6,
         min_num=0,
