@@ -71,10 +71,10 @@
     }
 
     &__summary {
-        @include font-size(xxs);
+        font-size: 16px;
         color: $color--white;
         transition: color $transition;
-        line-height: 24px;
+        line-height: 20px;
 
         #{$root}:hover & {
             color: $color--primary;
