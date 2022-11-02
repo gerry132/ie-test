@@ -59,11 +59,11 @@
     }
 
     &__title {
-        font-size: 20px;
+        font-size: 16px;
         color: $color--white;
         font-weight: $weight--bold;
         transition: color $transition;
-        line-height: 24px;
+        line-height: 18px;
 
         #{$root}:hover & {
             color: $color--primary;
