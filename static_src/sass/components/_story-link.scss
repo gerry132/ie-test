@@ -3,7 +3,7 @@
     border-bottom: 1px solid $color--border;
     position: relative;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     flex-direction: row;
     flex: 0 0 100%;
     max-width: 100%;
@@ -21,8 +21,8 @@
     }
 
     &:hover {
-        background-color: $color--primary;
-        color: $color--white;
+        background-color: $color--white;
+        color: $color--primary;
     }
 
     &:nth-child(odd) {
@@ -35,6 +35,15 @@
         margin-right: 15px;
         height: 45px;
         width: 48px;
+        color: $color--white;
+        fill: #004D46;
+        stroke:#fff;
+        stroke-width: 0px;
+        #{$root}:hover & {
+            color: $color--primary;
+            stroke:$color--primary;
+            fill: $color--white;
+        }
     }
 
     &__img {
@@ -50,23 +59,25 @@
     }
 
     &__title {
-        @include font-size(xs);
-        color: $color--primary;
+        font-size: 16px;
+        color: $color--white;
         font-weight: $weight--bold;
         transition: color $transition;
+        line-height: 18px;
 
         #{$root}:hover & {
-            color: $color--white;
+            color: $color--primary;
         }
     }
 
     &__summary {
-        @include font-size(xxs);
-        color: $color--accessible-grey;
+        font-size: 16px;
+        color: $color--white;
         transition: color $transition;
+        line-height: 20px;
 
         #{$root}:hover & {
-            color: $color--white;
+            color: $color--primary;
         }
     }
 }

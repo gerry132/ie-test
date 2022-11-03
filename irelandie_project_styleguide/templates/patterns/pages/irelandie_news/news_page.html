@@ -18,9 +18,11 @@
     {% block main %}
         <!-- Body -->
         <div class="section section--padding">
-            <div class="wrapper wrapper--large wrapper--padding">
+            <div class="wrapper wrapper--padding">
                 {% if page.publication_date %}
+                <div class="rich-text">
                     {{ page.publication_date|date:"j F Y" }}
+                </div>
                 {% endif %}
             </div>
             {% for block in page.body %}
@@ -32,7 +34,7 @@
                     <div class="wrapper wrapper--large wrapper--padding">
                         {% include_block block %}
                     </div>
-                {% elif block.block_type == 'heading' or block.block_type == 'rich_text' %}
+                {% elif block.block_type == 'heading' or block.block_type == 'rich_text' or block.block_type == 'rich_text_advanced' %}
                     <div class="wrapper wrapper--large wrapper--padding">
                         {% include_block block %}
                     </div>

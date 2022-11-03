@@ -9,7 +9,7 @@
     {% endif %}
 
     <div class="search-result__content">
-        <a href="{% pageurl result %}" class="search-result__title">
+        <a href="{{result.url}}" class="search-result__title">
             {% firstof result.listing_title result.title %}
         </a>
 

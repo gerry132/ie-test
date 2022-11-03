@@ -22,6 +22,7 @@ ALT_HELP_TEXT = """A short one-sentence literal description
 
 ALT_VID = ALT_HELP_TEXT % 'video'
 ALT_IMAGE = ALT_HELP_TEXT % 'image'
+ALT_ICON = ALT_HELP_TEXT % 'icon'
 
 
 class BaseBlockLinkValidation(blocks.StructBlock):
@@ -78,6 +79,17 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     icon = blocks.ChoiceBlock(
         choices=(
             ("", "Choose an icon (optional)"),
+            ("authentication", "Authentication"),
+            ("citizenship", "Citizenship"),
+            ("consular-fees", "Consular Fees"),
+            ("contact-phone", "Contact Phone"),
+            ("jobs", "Jobs"),
+            ("services", "Services"),
+            ("trade", "Trade"),
+            ("visas", "Visas"),
+            ("working-holiday", "Working Holiday"),
+            ("notice", "Notice"),
+            ("new-to", "New To"),
             ("government-building", "Government Building"),
             ("money", "Money"),
             ("passport", "Passport"),
@@ -86,11 +98,14 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         ),
         required=False,
     )
+    icon_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_ICON),
+    )
     image = ImageChooserBlock(required=False)
     title = blocks.CharBlock(
         help_text="Leave blank to use the page's own title", required=False
     )
-    summary = blocks.CharBlock(required=False)
     url = blocks.URLBlock(
         label="URL",
         required=False,
@@ -721,11 +736,6 @@ class AccordionBlock(blocks.StructBlock):
             )
         ]
     )
-    background = blocks.ChoiceBlock(
-        required=True,
-        choices=StoryBackground.choices,
-        default=StoryBackground.LIGHT,
-    )
 
     class Meta:
         icon = "collapse-down"
@@ -748,12 +758,49 @@ class FreeFormBlocksBase(blocks.StreamBlock):
     person = PersonBlock(group="Snippets")
 
 
-class RelatedContentBlock(blocks.StructBlock):
-    page = blocks.PageChooserBlock()
+class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
+    icon = blocks.ChoiceBlock(
+        choices=(
+            ("", "Choose an icon (optional)"),
+            ("authentication", "Authentication"),
+            ("citizenship", "Citizenship"),
+            ("consular-fees", "Consular Fees"),
+            ("contact-phone", "Contact Phone"),
+            ("jobs", "Jobs"),
+            ("services", "Services"),
+            ("trade", "Trade"),
+            ("visas", "Visas"),
+            ("working-holiday", "Working Holiday"),
+            ("notice", "Notice"),
+            ("new-to", "New To"),
+            ("government-building", "Government Building"),
+            ("money", "Money"),
+            ("passport", "Passport"),
+            ("plane", "Plane"),
+            ("ticket", "Ticket"),
+        ),
+        required=False,
+    )
+    icon_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_ICON),
+    )
+    image = ImageChooserBlock(required=False)
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_IMAGE),
+    )
     title = blocks.CharBlock()
+    page = blocks.PageChooserBlock(required=False)
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
 
     class Meta:
         label = "Related Content"
+        template = "patterns/molecules/streamfield/blocks/related_content.html"
 
 
 class TocBlocks(blocks.StreamBlock):
@@ -896,6 +943,37 @@ class GeneralContentBlocks(blocks.StreamBlock):
 
 
 class LinkBoxBlock(blocks.StructBlock):
+    icon = blocks.ChoiceBlock(
+        choices=(
+            ("", "Choose an icon (optional)"),
+            ("authentication", "Authentication"),
+            ("citizenship", "Citizenship"),
+            ("consular-fees", "Consular Fees"),
+            ("contact-phone", "Contact Phone"),
+            ("jobs", "Jobs"),
+            ("services", "Services"),
+            ("trade", "Trade"),
+            ("visas", "Visas"),
+            ("working-holiday", "Working Holiday"),
+            ("notice", "Notice"),
+            ("new-to", "New To"),
+            ("government-building", "Government Building"),
+            ("money", "Money"),
+            ("passport", "Passport"),
+            ("plane", "Plane"),
+            ("ticket", "Ticket"),
+        ),
+        required=False,
+    )
+    icon_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_ICON),
+    )
+    image = ImageChooserBlock(required=False)
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_IMAGE),
+    )
     heading = blocks.CharBlock()
     introduction = blocks.RichTextBlock(required=False)
     page = blocks.PageChooserBlock(required=False)
@@ -991,6 +1069,16 @@ class GenericHeroBlock(blocks.StructBlock):
     class Meta:
         label = "Generic Hero Block"
         template = "patterns/molecules/streamfield/blocks/generic_hero.html"
+
+
+class HybridHeroBlock(blocks.StructBlock):
+    hero_image = ImageChooserBlock(required=False)
+    hero_title = blocks.CharBlock(required=True, max_length=120)
+    subtitle = blocks.CharBlock(required=False)
+
+    class Meta:
+        label = "Generic Hero Block"
+        template = "patterns/molecules/hero/hybrid_hero.html"
 
 
 class FreeFormBlocks(FreeFormBlocksBase):

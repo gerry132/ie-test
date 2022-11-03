@@ -397,6 +397,22 @@ class ServiceContent(BasePage):
         null=True,
         min_num=0,
     )
+    stories_top = StreamField(
+        [
+            ("story", blocks.StoryBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+    )
+    stories_bottom = StreamField(
+        [
+            ("story", blocks.StoryBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+    )
     admin_body1 = StreamField(
         [
             ("admin_contents", blocks.TocAdminBlock())
@@ -416,15 +432,27 @@ class ServiceContent(BasePage):
         blank=True
     )
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['default_image'] = missions.default_image
+        return context
+
     content_panels = BasePage.content_panels + [
         FieldPanel("introduction"),
         MultiFieldPanel([
             StreamFieldPanel("notice_bar_services"),
         ], heading="Noticebar settings"
         ),
+        StreamFieldPanel("stories_top", heading="Two Column Feature"),
         StreamFieldPanel("admin_body1", permission="access_admin", heading="Admin_body"),
         StreamFieldPanel("body"),
         StreamFieldPanel("admin_body2", permission="access_admin", heading="Admin_body"),
+        StreamFieldPanel("stories_bottom", heading="Two Column"),
         StreamFieldPanel("related_content")
     ]
 
@@ -434,6 +462,15 @@ class ServicesLandingPage(BasePage):
     generic_hero = StreamField(
         [
             ("generic_hero", blocks.GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+    hybrid_hero = StreamField(
+        [
+            ("hybrid_hero", blocks.HybridHeroBlock()),
         ],
         blank=True,
         null=True,
@@ -468,8 +505,19 @@ class ServicesLandingPage(BasePage):
         max_num=1,
     )
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['default_image'] = missions.default_image
+        return context
+
     content_panels = BasePage.content_panels + [
         StreamFieldPanel("generic_hero", permission="access_admin"),
+        StreamFieldPanel("hybrid_hero", permission="access_admin"),
         StreamFieldPanel("rich_text", heading="Advanced Richtext", permission="access_admin"),
         StreamFieldPanel("body", permission="access_admin"),
         StreamFieldPanel("related_content")
