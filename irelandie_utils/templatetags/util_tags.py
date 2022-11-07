@@ -73,6 +73,11 @@ def get_content_length(page):
 
 
 @register.simple_tag
+def format_date(date):
+    return date.strftime('%d %B %y')
+
+
+@register.simple_tag
 def get_admin_content_length(page):
     counter = 0
     for block in page.admin_body1:
