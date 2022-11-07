@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.decorators import method_decorator
@@ -26,7 +27,13 @@ from wagtail.snippets.models import register_snippet
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
-from irelandie_utils.blocks import ArticleStoryBlock, AdvancedRichTextBlock, AccordionBlock, TocBlocks
+from irelandie_utils.blocks import (
+    ArticleStoryBlock, 
+    AdvancedRichTextBlock, 
+    AccordionBlock, 
+    TocBlocks, 
+    ContactBlock
+)
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
 import django.utils.timezone
@@ -198,6 +205,20 @@ class ListingFields(models.Model):
             "Listing information",
         )
     ]
+
+
+@register_snippet
+class ContactSnippet(models.Model):
+    title = models.CharField(max_length=255)
+    body = StreamField(
+        [
+            ("contact_details", ContactBlock()),
+        ],
+    )
+
+    def __str__(self):
+        return self.title
+
 
 
 @register_snippet

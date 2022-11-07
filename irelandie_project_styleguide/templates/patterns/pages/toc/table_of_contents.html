@@ -61,23 +61,23 @@
                             {% get_content_length page as content_length %}
                             {% count_toc page as content_length_count %}
                             {% if content_length_count > 1 %}
-                            <div class="wrapper wrapper--large toc-table">
-                            {% for block in page.admin_body1 %}
-                                {% if block.block_type == 'admin_contents' %}
-                                    <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter }}. {{block.value.title}}</h2></a>
-                                {% endif %}
-                            {% endfor %}
-                            {% for block in page.body %}
-                                {% if block.block_type == 'content' %}
-                                    <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length }}. {{block.value.title}}</h2></a>
-                                {% endif %}
-                            {% endfor %}
-                            {% for block in page.admin_body2 %}
-                                {% if block.block_type == 'admin_content' %}
-                                    <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length|add:content_length }}. {{block.value.title}}</h2></a>
-                                {% endif %}
-                            {% endfor %}
-                            </div>
+                                <div class="wrapper wrapper--large toc-table">
+                                {% for block in page.admin_body1 %}
+                                    {% if block.block_type == 'admin_contents' %}
+                                        <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter }}. {{block.value.title}}</h2></a>
+                                    {% endif %}
+                                {% endfor %}
+                                {% for block in page.body %}
+                                    {% if block.block_type == 'content' %}
+                                        <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length }}. {{block.value.title}}</h2></a>
+                                    {% endif %}
+                                {% endfor %}
+                                {% for block in page.admin_body2 %}
+                                    {% if block.block_type == 'admin_content' %}
+                                        <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length|add:content_length }}. {{block.value.title}}</h2></a>
+                                    {% endif %}
+                                {% endfor %}
+                                </div>
                             {% endif %}
                             {% if page.introduction %}
                                 <div class="wrapper wrapper--large wrapper--padding content--padding">
@@ -125,11 +125,16 @@
                                         {% endif %}
                                     {% endfor %}
                                     {% for block_snippets in blocks_admin.value.snippets %}
-                                        {% for block_body in block_snippets.value.body %}
-                                    <div class="wrapper wrapper--large wrapper--padding content--padding">
-                                            {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block_body %}
-                                    </div>
-                                        {% endfor %}
+                                        <h1>{{block_snippets.block_type}}</h1>
+                                        {% if block_snippets.block_type == 'contact_details' %}
+                                            {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
+                                        {% else %}
+                                            {% for block_body in block_snippets.value.body %}
+                                                <div class="wrapper wrapper--large wrapper--padding content--padding">
+                                                        {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block_body %}
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             {% endif %}

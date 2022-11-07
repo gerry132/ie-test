@@ -3,6 +3,7 @@
 import re
 
 from django.forms.utils import ErrorList
+from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 from wagtail.contrib.table_block.blocks import TableBlock as WagtailTableBlock
 from wagtail import blocks
@@ -649,6 +650,40 @@ class FeaturedArticlesBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/featured_articles.html"
 
 
+class ContactBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(max_length=255)
+    address_line_1 = blocks.CharBlock(max_length=255, blank=True, null=True)
+    address_line_2 = blocks.CharBlock(max_length=255, blank=True, null=True)
+    address_line_3 = blocks.CharBlock(max_length=255, blank=True, null=True)
+    post_code = blocks.CharBlock(max_length=25)
+    map_link = blocks.CharBlock(blank=False, help_text="Hyperlink to google maps")
+    international_code = blocks.CharBlock(max_length=5,
+                            blank=False,
+                            validators=[
+                                RegexValidator(
+                                    regex=r'^\+\d+$',
+                                    message="Examples: +353 +01",
+                                    code='invalid'
+                                )
+                            ],
+                            help_text="Format must be +123"
+                            )
+    telephone = blocks.CharBlock(
+                    max_length=30,
+                            validators=[
+            RegexValidator(
+                regex = r'^\d+[-]\d+[-]\d+$',
+                message ='Examples: 000-000-0000',
+                code='invalid phone number'
+            )
+        ],
+        help_text="Format must be 000-000-0000"
+    )
+
+    fax_number = blocks.CharBlock(max_length=50)
+    email = blocks.RichTextBlock(blank=False)
+
+
 class ArticleStoryBlock(blocks.StreamBlock):
     rich_text = RichTextBlock(group="Base")
     rich_text_advanced = AdvancedRichTextBlock(group="Base")
@@ -715,6 +750,7 @@ class AccordionBlock(blocks.StructBlock):
                                 ]
                             ),
                         ),
+                
                         ("button_link", blocks.StreamBlock(
                             [
                                 ("button", SecondaryCallToAction())
@@ -729,6 +765,7 @@ class AccordionBlock(blocks.StructBlock):
                             ("table", TableBlock(group="table")),
                             ("document", DocumentBlock(required=False)),
                             ("youtube", YoutubeVideoBlock(group="HTML")),
+                            ("contact_details", SnippetChooserBlock(target_model="utils.ContactSnippet"))
                         ], required=False)
                          ),
                     ]
@@ -736,7 +773,6 @@ class AccordionBlock(blocks.StructBlock):
             )
         ]
     )
-
     class Meta:
         icon = "collapse-down"
         label = "Accordion"
@@ -829,7 +865,7 @@ class TocBlockSnippets(blocks.StreamBlock):
     passports = SnippetChooserBlock(target_model="utils.Passport")
     authentication = SnippetChooserBlock(target_model="utils.Authentication")
     marriage = SnippetChooserBlock(target_model="utils.Marriage")
-
+    contact_details = SnippetChooserBlock(target_model="utils.ContactSnippet")
 
 class TocAdminBlock(blocks.StructBlock):
     title = blocks.CharBlock()
@@ -874,8 +910,7 @@ class PersonSocialBlock(blocks.StructBlock):
     social_media_text = blocks.CharBlock(
         max_length=255, required=False, default="Connect with person on this social media"
     )
-    address = blocks.RichTextBlock(required=False)
-    telephone = blocks.CharBlock(required=False)
+    contact_details = SnippetChooserBlock(target_model="utils.ContactSnippet")
     opening_hours = blocks.RichTextBlock(required=False)
     closure_dates = blocks.RichTextBlock(required=False)
     emergency_contact_details = blocks.RichTextBlock(required=False)
