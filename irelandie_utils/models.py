@@ -736,12 +736,14 @@ class MinimalArticlePage(BasePage):
     body = StreamField(ArticleStoryBlock(), blank=True)
 
     related_articles_active = models.BooleanField(default=True)
+    featured_home = models.BooleanField(default=False)
 
     class Meta:
         abstract = True
 
     content_panels = Page.content_panels + [
         FieldPanel("introduction"),
+        FieldPanel("alt_text"),
         MultiFieldPanel(
             [
                 ImageChooserPanel("hero_image"),
@@ -759,6 +761,7 @@ class MinimalArticlePage(BasePage):
         FieldPanel("publication_date"),
         StreamFieldPanel("body"),
         FieldPanel("related_articles_active", heading="Featured News Checkbox"),
+        FieldPanel("featured_home", heading="Featured Home")
     ]
 
     settings_panels = ([
