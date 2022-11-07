@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.decorators import method_decorator
@@ -28,10 +27,10 @@ from wagtailmedia.edit_handlers import MediaChooserPanel
 
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
 from irelandie_utils.blocks import (
-    ArticleStoryBlock, 
-    AdvancedRichTextBlock, 
-    AccordionBlock, 
-    TocBlocks, 
+    ArticleStoryBlock,
+    AdvancedRichTextBlock,
+    AccordionBlock,
+    TocBlocks,
     ContactBlock
 )
 from irelandie_utils.cache import get_default_cache_control_decorator
@@ -218,7 +217,6 @@ class ContactSnippet(models.Model):
 
     def __str__(self):
         return self.title
-
 
 
 @register_snippet
