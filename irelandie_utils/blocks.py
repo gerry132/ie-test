@@ -365,7 +365,7 @@ class AdvancedRichTextBlock(blocks.StructBlock):
     )
     heading = blocks.CharBlock(required=False)
     rich_text = blocks.RichTextBlock(
-        features=["h3", "blockquote", "bold", "link", "document-link", "ul"], required=False,
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul", "ol"], required=False,
     )
     button_link = blocks.StreamBlock(
         [
