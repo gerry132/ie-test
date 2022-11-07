@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+from functools import cached_property
 from django.db import models
 from wagtail.admin.panels import TabbedInterface, ObjectList, StreamFieldPanel, FieldPanel
 from wagtail import blocks as wagtail_blocks
 from wagtail.fields import StreamField
 from irelandie_home.blocks import SecondaryCallToAction
+from irelandie_news.models import NewsPage
 
 from irelandie_utils import blocks
 from irelandie_utils.models import HeroPage
@@ -61,6 +63,17 @@ class HomePage(FreeFormPageBase):
         ObjectList(promote_panels, heading='Promote'),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
+
+    @cached_property
+    def home_articles(self):
+        return (
+            NewsPage.objects.filter(locale=self.locale, featured_home=True)
+            .exclude(pk=self.pk)
+            .public()
+            .live()
+            .order_by("-publication_date")[:4]
+            .specific()
+        )
 
 
 class CampaignPage(HeroPage):
