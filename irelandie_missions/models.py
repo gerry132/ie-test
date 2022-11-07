@@ -494,7 +494,7 @@ class ServicesLandingPage(BasePage):
         min_num=0,
         max_num=1,
     )
-    
+
     rich_text = StreamField(
         [
             ("rich_text", blocks.AdvancedRichTextBlock()),
