@@ -8,6 +8,7 @@ from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.images import get_image_model_string
 
 from irelandie_home.blocks import SecondaryCallToAction
+from irelandie_home.models import HomePage
 from irelandie_navigation.blocks import LinkBlock, NoticeBarWithMessageLink
 from irelandie_pages.models import FreeFormPageBase
 from irelandie_news.models import NewsPage
@@ -104,11 +105,16 @@ class DestinationPage(HeroPage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         pages = self.get_ancestors()
+        root_found = False
         for p in pages:
             if p.content_type.name == 'mission page':
                 missions = MissionPage.objects.live().get(id=p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
+                    root_found = True
+        if not root_found:
+            f = HomePage.objects.all()[:1].get()
+            context['default_image'] = f.default_image
         return context
 
     edit_handler = TabbedInterface([
@@ -450,11 +456,15 @@ class ServiceContent(BasePage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         pages = self.get_ancestors()
+        root_found = False
         for p in pages:
             if p.content_type.name == 'mission page':
                 missions = MissionPage.objects.live().get(id=p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
+        if not root_found:
+            f = HomePage.objects.all()[:1].get()
+            context['default_image'] = f.default_image
         return context
 
     content_panels = BasePage.content_panels + [
@@ -524,11 +534,15 @@ class ServicesLandingPage(BasePage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         pages = self.get_ancestors()
+        root_found = False
         for p in pages:
             if p.content_type.name == 'mission page':
                 missions = MissionPage.objects.live().get(id=p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
+        if not root_found:
+            f = HomePage.objects.all()[:1].get()
+            context['default_image'] = f.default_image
         return context
 
     content_panels = BasePage.content_panels + [
