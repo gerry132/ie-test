@@ -27,7 +27,7 @@ from wagtail.fields import RichTextField, StreamField
 from wagtail import blocks
 from wagtail.search import index
 from wagtail_honeypot.models import HoneypotMixin
-from irelandie_utils.blocks import AdvancedRichTextBlock
+from irelandie_utils.blocks import AdvancedRichTextBlock, AccordionBlock
 from irelandie_utils.models import BasePage
 
 
@@ -100,15 +100,9 @@ class FormPage(HoneypotMixin, BasePage):
         help_text="Multiple emails must be in a comma seperated list."
     )
     search_fields = BasePage.search_fields + [index.SearchField("introduction")]
-    accordions = models.ForeignKey(
-        'utils.Accordion',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
     body = StreamField(
-        [("rich_text", AdvancedRichTextBlock(blank=True))],
+        [("rich_text", AdvancedRichTextBlock(blank=True)),
+         ("accordions", AccordionBlock())],
         blank=True,
         null=True,
     )
@@ -117,22 +111,14 @@ class FormPage(HoneypotMixin, BasePage):
         InlinePanel("form_fields", label="Form fields"),
         FieldPanel("email_map_text"),
         FieldPanel("email_map"),
+        MultiFieldPanel([
+            FieldPanel("action_text"),
+            FieldPanel("thank_you_text"),
+            FieldPanel("from_address", classname="col6"),
+            FieldPanel("to_address", classname="col6"),
+            FieldPanel("subject"),
+        ], heading='Contact Form'),
         FieldPanel("body"),
-        FieldPanel("action_text"),
-        FieldPanel("thank_you_text"),
-        MultiFieldPanel(
-            [
-                FieldRowPanel(
-                    [
-                        FieldPanel("from_address", classname="col6"),
-                        FieldPanel("to_address", classname="col6"),
-                    ]
-                ),
-                FieldPanel("subject"),
-            ],
-            "Email",
-        ),
-        StreamFieldPanel("accordions"),
     ]
 
     honeypot_panels = [

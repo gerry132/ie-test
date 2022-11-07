@@ -27,7 +27,9 @@
                         {% include_block block %}
                 </div>
             {% elif block.block_type == 'accordion' %}
+                <div class="rich-text">
                     {% include_block block %}
+                </div>
             {% else %}
                 <div class="wrapper wrapper--large wrapper--padding">
                     {% include_block block %}
