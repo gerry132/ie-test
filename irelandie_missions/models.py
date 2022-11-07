@@ -357,7 +357,15 @@ class MissionPage(HeroPage):
 
 class Magazine(HeroPage):
     template = "irelandie_assets/pages/magazine.html"
-
+    generic_hero = StreamField(
+        [
+            ("generic_hero", blocks.GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=1,
+        max_num=1,
+    )
     body = StreamField(
         [
             ("rich_text", blocks.AdvancedRichTextBlock()),
@@ -367,17 +375,24 @@ class Magazine(HeroPage):
     )
 
     content_panels = HeroPage.content_panels + [
+        StreamFieldPanel("generic_hero", permission="access_admin"),
         StreamFieldPanel("body")
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(HeroPage.hero_panel, heading='Hero'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
-        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
 
 class ServiceContent(BasePage):
+    generic_hero = StreamField(
+        [
+            ("generic_hero", blocks.GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
     template = "patterns/pages/toc/table_of_contents.html"
     introduction = RichTextField(blank=True)
     notice_bar_services = StreamField(
@@ -443,6 +458,7 @@ class ServiceContent(BasePage):
         return context
 
     content_panels = BasePage.content_panels + [
+        StreamFieldPanel("generic_hero", permission="access_admin"),
         FieldPanel("introduction"),
         MultiFieldPanel([
             StreamFieldPanel("notice_bar_services"),
@@ -517,7 +533,6 @@ class ServicesLandingPage(BasePage):
 
     content_panels = BasePage.content_panels + [
         StreamFieldPanel("generic_hero", permission="access_admin"),
-        StreamFieldPanel("hybrid_hero", permission="access_admin"),
         StreamFieldPanel("rich_text", heading="Advanced Richtext", permission="access_admin"),
         StreamFieldPanel("body", permission="access_admin"),
         StreamFieldPanel("related_content")
@@ -668,17 +683,23 @@ class EmbassyPage(FreeFormPageBase):
 
 class GeneralContentPage(HeroPage):
     template = "patterns/pages/missions/general_content_page.html"
-
+    generic_hero = StreamField(
+        [
+            ("generic_hero", blocks.GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
     introduction = models.TextField(blank=True)
     body = StreamField(blocks.GeneralContentBlocks(), blank=True)
 
     content_panels = HeroPage.content_panels + [
+        StreamFieldPanel("generic_hero", permission="access_admin"),
         FieldPanel("introduction"),
         StreamFieldPanel("body"),
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(HeroPage.hero_panel, heading='Hero'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
-        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
