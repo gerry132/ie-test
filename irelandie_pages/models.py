@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.forms import ValidationError
 from django.utils.functional import cached_property
 
 from wagtail.fields import StreamField
@@ -8,7 +9,7 @@ from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from irelandie_news.models import NewsPage
 
 from irelandie_utils.models import HeroPage
-from irelandie_utils.blocks import FreeFormBlocks, ImageBlock
+from irelandie_utils.blocks import FreeFormBlocks, ImageBlock, GenericHeroBlock
 from irelandie_navigation.blocks import NoticeBarWithMessageLink
 from wagtail.images import get_image_model_string
 
@@ -38,6 +39,15 @@ class FreeFormPage(FreeFormPageBase):
     template = "patterns/pages/irelandie_pages/free_form_page.html"
 
     root_page = models.BooleanField(default=True)
+    generic_hero = StreamField(
+        [
+            ("generic_hero", GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=1,
+        max_num=1,
+    )
     favicon = models.ForeignKey(
         IMAGE_MODEL,
         null=True,
@@ -74,6 +84,7 @@ class FreeFormPage(FreeFormPageBase):
         max_num=1,
     )
     content_panels = FreeFormPageBase.content_panels + [
+        StreamFieldPanel("generic_hero", permission="access_admin"),
         FieldPanel("featured_news"),
         MultiFieldPanel([
             StreamFieldPanel("notice_bar"),
@@ -124,6 +135,19 @@ class FreeFormPage(FreeFormPageBase):
             .order_by("-publication_date")[:4]
             .specific()
         )
+
+    def clean(self):
+        if self.generic_hero and self.hero_image:
+            raise ValidationError(
+                {
+                    "generic_hero": ValidationError(
+                        "You must specify either a hero or a generic hero."
+                    ),
+                    "hero_image": ValidationError(
+                        "You must specify either a hero or a generic hero.."
+                    ),
+                }
+            )
 
     class Meta:
         verbose_name = "Free Form Page"
