@@ -658,8 +658,8 @@ class ContactBlock(blocks.StructBlock):
     post_code = blocks.CharBlock(max_length=25)
     map_link = blocks.CharBlock(blank=False, help_text="Hyperlink to google maps")
     international_code = blocks.CharBlock(max_length=5,
-                                    blank=False,
-                                    validators=[
+                                        blank=False,
+                                        validators=[
                                     RegexValidator(
                                         regex=r'^\+\d+$',
                                         message="Examples: +353 +01",
