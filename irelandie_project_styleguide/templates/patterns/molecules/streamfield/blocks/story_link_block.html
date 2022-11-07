@@ -5,7 +5,7 @@
     {% if value.image %}
         {% image value.image width-100 height-100 alt=value.image_alt class="story-link__img" %}
     {% elif value.icon %}
-        {% include "patterns/atoms/icons/icon.html" with name=value.icon classname="story-link__icon" alt=value.icon_alt %}
+        {% include "patterns/atoms/icons/icon.html" with name=value.icon classname="story-link__icon" %}
     {% endif %}
     <span class="story-link__content">
         <span class="story-link__title">{{ link_title }}</span>

@@ -99,10 +99,6 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         ),
         required=False,
     )
-    icon_alt = blocks.CharBlock(
-        required=False,
-        help_text=_(ALT_ICON),
-    )
     image = ImageChooserBlock(required=False)
     title = blocks.CharBlock(
         help_text="Leave blank to use the page's own title", required=False
@@ -821,10 +817,6 @@ class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         ),
         required=False,
     )
-    icon_alt = blocks.CharBlock(
-        required=False,
-        help_text=_(ALT_ICON),
-    )
     image = ImageChooserBlock(required=False)
     image_alt = blocks.CharBlock(
         required=False,
@@ -1004,10 +996,6 @@ class LinkBoxBlock(blocks.StructBlock):
             ("ticket", "Ticket"),
         ),
         required=False,
-    )
-    icon_alt = blocks.CharBlock(
-        required=False,
-        help_text=_(ALT_ICON),
     )
     image = ImageChooserBlock(required=False)
     image_alt = blocks.CharBlock(
