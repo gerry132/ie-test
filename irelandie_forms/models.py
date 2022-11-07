@@ -8,11 +8,10 @@ from django.template.response import TemplateResponse
 from modelcluster.fields import ParentalKey
 from wagtail.admin.panels import (
     FieldPanel,
-    FieldRowPanel,
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
-    TabbedInterface, StreamFieldPanel,
+    TabbedInterface,
 )
 
 from datetime import date
