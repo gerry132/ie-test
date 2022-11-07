@@ -530,6 +530,9 @@ class ArticleCardBlock(blocks.StructBlock):
         required=False,
         help_text="An external link.",
     )
+    link_text = blocks.CharBlock(
+        max_length=32, blank=True, required=False, default="Read Story", help_text='Call To Action Text'
+    )
 
     class Meta:
         icon = "image"
