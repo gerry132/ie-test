@@ -410,14 +410,7 @@ class ServiceContent(BasePage):
         min_num=0,
         max_num=1,
     )
-    related_content = StreamField(
-        [
-            ("related_item", blocks.RelatedContentBlock()),
-        ],
-        blank=True,
-        null=True,
-        min_num=0,
-    )
+
     stories_top = StreamField(
         [
             ("story", blocks.StoryBlock()),
@@ -479,7 +472,6 @@ class ServiceContent(BasePage):
         StreamFieldPanel("body"),
         StreamFieldPanel("admin_body2", permission="access_admin", heading="Admin_body"),
         StreamFieldPanel("stories_bottom", heading="Two Column"),
-        StreamFieldPanel("related_content")
     ]
 
 
