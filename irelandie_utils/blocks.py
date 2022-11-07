@@ -658,27 +658,27 @@ class ContactBlock(blocks.StructBlock):
     post_code = blocks.CharBlock(max_length=25)
     map_link = blocks.CharBlock(blank=False, help_text="Hyperlink to google maps")
     international_code = blocks.CharBlock(max_length=5,
-                            blank=False,
-                            validators=[
+                                blank=False,
+                                validators=[
+                                    RegexValidator(
+                                        regex=r'^\+\d+$',
+                                        message="Examples: +353 +01",
+                                        code='invalid'
+                                    )
+                                ],
+                                help_text="Format must be +123"
+                                )
+    telephone = blocks.CharBlock(
+                                max_length=30,
+                                validators=[
                                 RegexValidator(
-                                    regex=r'^\+\d+$',
-                                    message="Examples: +353 +01",
-                                    code='invalid'
+                                    regex = r'^\d+[-]\d+[-]\d+$',
+                                    message ='Examples: 000-000-0000',
+                                    code='invalid phone number'
                                 )
                             ],
-                            help_text="Format must be +123"
-                            )
-    telephone = blocks.CharBlock(
-                    max_length=30,
-                            validators=[
-            RegexValidator(
-                regex = r'^\d+[-]\d+[-]\d+$',
-                message ='Examples: 000-000-0000',
-                code='invalid phone number'
-            )
-        ],
-        help_text="Format must be 000-000-0000"
-    )
+                            help_text="Format must be 000-000-0000"
+                        )
 
     fax_number = blocks.CharBlock(max_length=50)
     email = blocks.RichTextBlock(blank=False)
