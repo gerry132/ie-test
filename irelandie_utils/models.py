@@ -719,6 +719,10 @@ class MinimalArticlePage(BasePage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    alt_text = models.CharField(blank=True,
+                                null=True,
+                                max_length=255,
+                                help_text=ALT_HELP_TEXT)
     hero_video = models.ForeignKey(
         "wagtailmedia.Media",
         null=True,
@@ -781,6 +785,15 @@ class MinimalArticlePage(BasePage):
     ])
 
     def clean(self):
+        if self.hero_image and not self.alt_text:
+            raise ValidationError(
+                {
+                    "alt_text": ValidationError(
+                        "You must provide an alt_text."
+                    )
+                }
+            )
+
         if self.hero_image and self.hero_video:
             raise ValidationError(
                 {
