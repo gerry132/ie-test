@@ -706,6 +706,7 @@ class ArticlePage(BasePage):
                 missions = MissionPage.objects.live().get(id=p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
+
         return context
 
 
