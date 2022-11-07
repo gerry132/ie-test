@@ -26,6 +26,7 @@
 {% if page.title or page.generic_hero %}
 {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
 {% endif %}
+{% include_block page.stories_top %}
 <div class="search--is-active-services">
     <div class="breadcrumb-services">
         {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
@@ -34,7 +35,7 @@
         {% include_block page.notice_bar_services %}
     </div>
 </div>
-{% include_block page.stories_top %}
+
 
     <!--start of page description and title-->
     <div id="main-header" class="section section--padding section--white">
