@@ -494,15 +494,7 @@ class ServicesLandingPage(BasePage):
         min_num=0,
         max_num=1,
     )
-    hybrid_hero = StreamField(
-        [
-            ("hybrid_hero", blocks.HybridHeroBlock()),
-        ],
-        blank=True,
-        null=True,
-        min_num=0,
-        max_num=1,
-    )
+    
     rich_text = StreamField(
         [
             ("rich_text", blocks.AdvancedRichTextBlock()),
