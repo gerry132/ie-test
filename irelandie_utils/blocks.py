@@ -837,18 +837,8 @@ class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 
 class TocBlocks(blocks.StreamBlock):
     rich_text = AdvancedRichTextBlock(group="Base")
-    image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
-    accordion = AccordionBlock(group="Base")
-
-    logos = LogoCardsBlock(group="Module")
-
     table = TableBlock(group="HTML")
-    youtube_video = YoutubeVideoBlock(group="HTML")
-    html = blocks.RawHTMLBlock(
-        group="HTML",
-        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
-    )
 
 
 class TocBlock(blocks.StructBlock):
