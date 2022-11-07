@@ -18,10 +18,24 @@
 
 
 {% block content %}
-<div class="section" style="padding-top: 40px;">
-{% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
-</div>
-<div class="section section--padding section--grey">
+<style>
+     @media only screen and (min-width: 1023px) {
+        .breadcrumb-services {
+            padding-top: 40px;
+        }
+
+    }
+    @media only screen and (max-width: 1023px) {
+        .breadcrumb-services {
+            padding-top: 80px;
+        }
+    }
+
+</style>
+    <div class="breadcrumb-services">
+        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+    </div>
+<div class="section section--padding ">
     <div class="wrapper wrapper--large wrapper--padding">
         <div class="intro">
             <div class="container">
@@ -49,7 +63,7 @@
                                     <option value="{{p.value.description}}">{{p.value.description}}</option>
                                 {% endfor %}
                         </select>
-                    {% else %} 
+                    {% else %}
                     <select style="display: none;" class="field--selection" form="form--sub" name="topic">
                             {% for p in page.email_map %}
                                 <option selected value="{{p.value.description}}">{{p.value.description}}</option>
@@ -73,9 +87,14 @@
                 </div>
             </form>
         {% endif %}
-        {% include_block page.accordions.accordions %}
         {% for block in page.body %}
+        {% if block.block_type == 'rich_text' %}
             {% include_block block %}
+        {% elif block.block_type == 'accordions' %}
+        <div class="rich-text">
+             {% include_block block %}
+        </div>
+        {% endif %}
         {% endfor %}
     </div>
 </div>
