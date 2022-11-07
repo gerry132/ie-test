@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import template
 from django.utils.text import camel_case_to_spaces, slugify
-from datetime import datetime
 
 from irelandie_home.models import HomePage
 from irelandie_missions.models import MissionPage
