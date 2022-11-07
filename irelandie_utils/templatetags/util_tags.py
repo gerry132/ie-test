@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import template
 from django.utils.text import camel_case_to_spaces, slugify
+from datetime import datetime
 
 from irelandie_home.models import HomePage
 from irelandie_missions.models import MissionPage
@@ -70,6 +71,11 @@ def get_content_length(page):
         if block.block_type == 'content':
             counter += 1
     return counter
+
+
+@register.simple_tag
+def format_date(date):
+    return date.strftime('%d %B %y')
 
 
 @register.simple_tag

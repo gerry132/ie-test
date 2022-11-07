@@ -23,6 +23,10 @@
             {% if page.subtitle %}
                 <p>{% firstof page.subtitle %}</p>
             {% endif %}
+            
+            {% if page.expire_at %}
+                <p>Closing date: {% format_date page.expire_at %}</p>
+            {% endif %}
             {% include_block page.rich_text %}
             {% include_block page.body %}
             {% if page.privacy_policy %}
