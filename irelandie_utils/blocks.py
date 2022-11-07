@@ -962,8 +962,16 @@ class PersonSocialBlock(blocks.StructBlock):
 
 class GeneralContentBlocks(blocks.StreamBlock):
     rich_text = AdvancedRichTextBlock(group="Base")
+    image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
+    html = blocks.RawHTMLBlock(
+        group="HTML",
+        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
+    )
     table = TableBlock(group="HTML")
+    youtube_video = YoutubeVideoBlock(group="HTML")
+    accordion = AccordionBlock(group="Base")
+    logos = LogoCardsBlock(group="Base")
 
 
 class LinkBoxBlock(blocks.StructBlock):
