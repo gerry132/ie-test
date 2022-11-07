@@ -76,7 +76,7 @@ def get_content_length(page):
 def get_admin_content_length(page):
     counter = 0
     for block in page.admin_body1:
-        if block.block_type == 'admin_contents':
+        if block.block_type in ['admin_contents', 'contact_details']:
             counter += 1
     return counter
 
@@ -85,7 +85,7 @@ def get_admin_content_length(page):
 def get_admin_contents_length(page):
     counter = 0
     for block in page.admin_body2:
-        if block.block_type == 'admin_content':
+        if block.block_type in ['admin_content', 'contact_details']:
             counter += 1
     return counter
 
