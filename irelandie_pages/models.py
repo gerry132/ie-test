@@ -149,6 +149,5 @@ class FreeFormPage(FreeFormPageBase):
                 }
             )
 
-
     class Meta:
         verbose_name = "Free Form Page"
