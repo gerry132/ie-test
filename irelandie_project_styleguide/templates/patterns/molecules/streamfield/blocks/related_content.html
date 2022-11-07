@@ -16,11 +16,11 @@
     </div>
     <div class="related_content_card__related_content">
         {% if value.icon %}
-            {% include "patterns/atoms/icons/icon.html" with name=value.icon classname="related_content_card__icon" alt=value.icon_alt %}
+            {% include "patterns/atoms/icons/icon.html" with name=value.icon classname="related_content_card__icon" %}
         {% endif %}
             <span class="related_content_card__title">{{ value.title }}</span>
         <button class="related_content_card__btn_content ">
-                {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="related_content_card__icons" alt=value.icon_alt %}
+                {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="related_content_card__icons" %}
         </button>
     </div>
 
