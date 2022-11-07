@@ -49,7 +49,7 @@
                                     <option value="{{p.value.description}}">{{p.value.description}}</option>
                                 {% endfor %}
                         </select>
-                    {% else %} 
+                    {% else %}
                     <select style="display: none;" class="field--selection" form="form--sub" name="topic">
                             {% for p in page.email_map %}
                                 <option selected value="{{p.value.description}}">{{p.value.description}}</option>
@@ -73,9 +73,14 @@
                 </div>
             </form>
         {% endif %}
-        {% include_block page.accordions.accordions %}
         {% for block in page.body %}
+        {% if block.block_type == 'rich_text' %}
             {% include_block block %}
+        {% elif block.block_type == 'accordions' %}
+        <div class="rich-text">
+             {% include_block block %}
+        </div>
+        {% endif %}
         {% endfor %}
     </div>
 </div>

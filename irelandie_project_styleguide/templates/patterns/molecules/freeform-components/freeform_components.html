@@ -28,8 +28,10 @@
             </div>
         </div>
     {% elif block.block_type == 'accordion' %}
-        <div class="section section--padding">
-            {% include_block block %}
+        <div class="wrapper wrapper--padding">
+            <div class="section section--padding">
+                {% include_block block %}
+            </div>
         </div>
     {% elif block.block_type == 'link_box' %}
         <div class="section section--padding">
