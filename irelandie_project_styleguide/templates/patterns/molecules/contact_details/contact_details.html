@@ -1,0 +1,13 @@
+{% for elem in contact_details.body %}
+    
+    <h3>{{elem.value.heading}}</h3>
+    <div style="cursor: pointer;" onclick="window.open('{{elem.value.map_link}}', '_blank').focus();">
+    <address>
+        {{elem.value.address_line_1}} <br/>
+        {{elem.value.address_line_3}} <br/>
+        {{elem.value.address_line_3}} <br/>
+    </address>
+</div>
+    <a href="tel:{{elem.value.international_code}}{{elem.value.telephone}}">{{elem.value.international_code}} {{elem.value.telephone}}</a>
+    {{elem.value.email}}
+{% endfor %}
