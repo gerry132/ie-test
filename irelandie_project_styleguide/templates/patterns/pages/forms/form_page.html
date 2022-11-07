@@ -18,10 +18,24 @@
 
 
 {% block content %}
-<div class="section" style="padding-top: 40px;">
-{% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
-</div>
-<div class="section section--padding section--grey">
+<style>
+     @media only screen and (min-width: 1023px) {
+        .breadcrumb-services {
+            padding-top: 40px;
+        }
+
+    }
+    @media only screen and (max-width: 1023px) {
+        .breadcrumb-services {
+            padding-top: 80px;
+        }
+    }
+
+</style>
+    <div class="breadcrumb-services">
+        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+    </div>
+<div class="section section--padding ">
     <div class="wrapper wrapper--large wrapper--padding">
         <div class="intro">
             <div class="container">
