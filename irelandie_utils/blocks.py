@@ -749,8 +749,7 @@ class AccordionBlock(blocks.StructBlock):
                                     "image",
                                 ]
                             ),
-                        ),
-                
+                        ),  
                         ("button_link", blocks.StreamBlock(
                             [
                                 ("button", SecondaryCallToAction())
@@ -765,7 +764,8 @@ class AccordionBlock(blocks.StructBlock):
                             ("table", TableBlock(group="table")),
                             ("document", DocumentBlock(required=False)),
                             ("youtube", YoutubeVideoBlock(group="HTML")),
-                            ("contact_details", SnippetChooserBlock(target_model="utils.ContactSnippet"))
+                            ("contact_details", 
+                                SnippetChooserBlock(target_model="utils.ContactSnippet"))
                         ], required=False)
                          ),
                     ]
