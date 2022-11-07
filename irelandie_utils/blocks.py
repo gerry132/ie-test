@@ -749,7 +749,7 @@ class AccordionBlock(blocks.StructBlock):
                                     "image",
                                 ]
                             ),
-                        ),  
+                        ),
                         ("button_link", blocks.StreamBlock(
                             [
                                 ("button", SecondaryCallToAction())
@@ -764,7 +764,7 @@ class AccordionBlock(blocks.StructBlock):
                             ("table", TableBlock(group="table")),
                             ("document", DocumentBlock(required=False)),
                             ("youtube", YoutubeVideoBlock(group="HTML")),
-                            ("contact_details", 
+                            ("contact_details",
                                 SnippetChooserBlock(target_model="utils.ContactSnippet"))
                         ], required=False)
                          ),
@@ -867,6 +867,7 @@ class TocBlockSnippets(blocks.StreamBlock):
     authentication = SnippetChooserBlock(target_model="utils.Authentication")
     marriage = SnippetChooserBlock(target_model="utils.Marriage")
     contact_details = SnippetChooserBlock(target_model="utils.ContactSnippet")
+
 
 class TocAdminBlock(blocks.StructBlock):
     title = blocks.CharBlock()
