@@ -1,6 +1,8 @@
 {% extends "patterns/hero_page.html" %}
 {% load wagtailcore_tags wagtailimages_tags static i18n %}
-
+{% if page.title or page.generic_hero %}
+{% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+{% endif %}
 
     {% block main %}
         <!-- Body -->
