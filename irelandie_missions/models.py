@@ -406,7 +406,6 @@ class Magazine(HeroPage):
             )
 
 
-
 class ServiceContent(BasePage):
     generic_hero = StreamField(
         [
