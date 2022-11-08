@@ -39,7 +39,7 @@
         }
 
     &__title {
-        @include font-size(xs);
+        @include font-size(s);
         margin-right: 8px;
         color: $color--white;
         font-weight: $weight--bold;
@@ -54,7 +54,7 @@
         font-family: 'Inter';
         font-style: normal;
         font-weight: 400;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 15px;
         padding: 0 20px;
         color: $color--white;
