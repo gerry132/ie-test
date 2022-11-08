@@ -271,12 +271,14 @@ def custom_footer_settings(context, page):
         facebook_app_id = custom_footer.facebook_app_id or footer_social_media.facebook_app_id
         youtube_user = custom_footer.youtube_user or footer_social_media.youtube_user
         linkedin_profile = custom_footer.linkedin_profile or footer_social_media.linkedin_profile
+        instagram_user = custom_footer.instagram_user or footer_social_media.instagram_user
         show_social_media = any(
             [
                 twitter_handle,
                 facebook_app_id,
                 youtube_user,
                 linkedin_profile,
+                instagram_user,
             ]
         )
         navigation = custom_footer.navigation
@@ -292,12 +294,14 @@ def custom_footer_settings(context, page):
         facebook_app_id = footer_social_media.facebook_app_id
         youtube_user = footer_social_media.youtube_user
         linkedin_profile = footer_social_media.linkedin_profile
+        instagram_user = footer_social_media.instagram_user
         show_social_media = any(
             [
                 twitter_handle,
                 facebook_app_id,
                 youtube_user,
                 linkedin_profile,
+                instagram_user,
             ]
         )
         if footer_navigation:
@@ -315,6 +319,7 @@ def custom_footer_settings(context, page):
         "facebook_app_id": facebook_app_id,
         "youtube_user": youtube_user,
         "linkedin_profile": linkedin_profile,
+        "instagram_user": instagram_user,
         "show_social_media": show_social_media,
         "navigation": navigation,
         "links": links,

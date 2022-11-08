@@ -6,6 +6,7 @@ context:
       linkedin_profile: some-profile
       facebook_app_id: some-profile
       twitter_handle: some-profile
+      instagram_user: some-profile
 
 
 tags:
