@@ -45,7 +45,7 @@ class FreeFormPage(FreeFormPageBase):
         ],
         blank=True,
         null=True,
-        min_num=1,
+        min_num=0,
         max_num=1,
     )
     favicon = models.ForeignKey(
@@ -137,17 +137,18 @@ class FreeFormPage(FreeFormPageBase):
         )
 
     def clean(self):
-        if self.generic_hero and self.hero_image:
+        if self.generic_hero and not self.hero_image:
             raise ValidationError(
                 {
                     "generic_hero": ValidationError(
-                        "You must specify either a hero or a generic hero."
+                        "You must specify either a hero or a geneirc ."
                     ),
                     "hero_image": ValidationError(
-                        "You must specify either a hero or a generic hero.."
+                        "You must specify link page or link url."
                     ),
                 }
             )
+
 
     class Meta:
         verbose_name = "Free Form Page"
