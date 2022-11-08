@@ -58,8 +58,8 @@
                             {% for additional in accordion.value.additional %}
                                 {% if additional.block_type == 'contact_details' %}
                                     {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=additional.value %}
-                                {% endif %}
-                                {% if additional.block_type == 'map' %}
+                        
+                                {% elif additional.block_type == 'map' %}
                                     {% if additional.value.width %}
                                         {% new_width additional.value.iframe additional.value.width as IFRAME %}
                                         {{IFRAME|safe}}

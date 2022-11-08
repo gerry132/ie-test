@@ -2,12 +2,17 @@
     
     <h3>{{elem.value.heading}}</h3>
     <div style="cursor: pointer;" onclick="window.open('{{elem.value.map_link}}', '_blank').focus();">
-    <address>
+    {% if elem.value.address_line_1 %}
+        <address>
         {{elem.value.address_line_1}} <br/>
         {{elem.value.address_line_3}} <br/>
         {{elem.value.address_line_3}} <br/>
+        {{elem.value.post_code}} <br/>
     </address>
+    {% endif %}
 </div>
-    <a href="tel:{{elem.value.international_code}}{{elem.value.telephone}}">{{elem.value.international_code}} {{elem.value.telephone}}</a>
+    <a href="tel:{{elem.value.international_code}}{{elem.value.telephone}}">Tel: {{elem.value.international_code}} {{elem.value.telephone}}</a>
+    <br/>
+    <a href="tel:{{elem.value.international_code}}{{elem.value.telephone}}">Fax: {{elem.value.fax_number}}</a>
     {{elem.value.email}}
 {% endfor %}
