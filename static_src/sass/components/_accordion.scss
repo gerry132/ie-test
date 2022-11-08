@@ -53,14 +53,14 @@
         padding-right: 120px;
         @include media-query(max-medium) {
             padding-left: 40px;
-            padding-right: 60px;
+            padding-right: 0px;
         }
 
     }
 
     &__title {
         font-size: 22px;
-        line-height: 36px;
+        line-height: 26px;
         letter-spacing: -1.35px;
         margin: 0;
         padding: 0 20px 0 40px;
@@ -74,7 +74,9 @@
         border-radius: 60%;
         cursor: pointer;
         background: #A39062;
-        margin: auto 30px auto auto;
+            flex-shrink: 0;
+            align-self: center;
+            margin-right: 30px;
     }
 
     &__icon {
