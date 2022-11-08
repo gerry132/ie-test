@@ -140,7 +140,9 @@
                                     {% endfor %}
                                     {% for block_snippets in blocks_admin.value.snippets %}
                                         {% if block_snippets.block_type == 'contact_details' %}
-                                            {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}                     
+                                        <div id="{{block_admin.title}}" class="wrapper wrapper--small wrapper--padding content--padding">
+                                            {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
+                                        </div>                                       
                                          {% else %}
                                             {% for block_body in block_snippets.value.body %}
                                                 <div class="wrapper wrapper--large wrapper--padding content--padding">
