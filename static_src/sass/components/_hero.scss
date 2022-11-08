@@ -146,7 +146,7 @@
         align-self: flex-start;
         border-radius: $border-radius;
         color: $color--white;
-        margin-top: $grid;
+        margin: $grid 0;
     }
 
     &__video-control-toggle {
