@@ -23,7 +23,7 @@
     }
 
 </style>
-{% if page.title or page.generic_hero %}
+{% if page.generic_hero %}
 {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
 {% else %} 
 {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
