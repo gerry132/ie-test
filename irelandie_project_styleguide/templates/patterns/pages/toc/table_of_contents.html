@@ -134,7 +134,6 @@
                                         {% endif %}
                                     {% endfor %}
                                     {% for block_snippets in blocks_admin.value.snippets %}
-                                        <h1>{{block_snippets.block_type}}</h1>
                                         {% if block_snippets.block_type == 'contact_details' %}
                                             {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
                                         {% else %}
