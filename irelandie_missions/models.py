@@ -401,6 +401,14 @@ class ServiceContent(BasePage):
         min_num=0,
         max_num=1,
     )
+    related_content = StreamField(
+        [
+            ("related_item", blocks.RelatedContentBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+    )
     template = "patterns/pages/toc/table_of_contents.html"
     introduction = RichTextField(blank=True)
     notice_bar_services = StreamField(
@@ -470,6 +478,7 @@ class ServiceContent(BasePage):
         ], heading="Noticebar settings"
         ),
         StreamFieldPanel("stories_top", heading="Two Column Feature"),
+        StreamFieldPanel("related_content"),
         StreamFieldPanel("admin_body1", permission="access_admin", heading="Admin_body"),
         StreamFieldPanel("body"),
         StreamFieldPanel("admin_body2", permission="access_admin", heading="Admin_body"),
@@ -497,14 +506,6 @@ class ServicesLandingPage(BasePage):
         null=True,
         min_num=0,
         max_num=1,
-    )
-    related_content = StreamField(
-        [
-            ("related_item", blocks.RelatedContentBlock()),
-        ],
-        blank=True,
-        null=True,
-        min_num=0,
     )
 
     body = StreamField(
@@ -535,7 +536,6 @@ class ServicesLandingPage(BasePage):
         StreamFieldPanel("generic_hero", permission="access_admin"),
         StreamFieldPanel("rich_text", heading="Advanced Richtext", permission="access_admin"),
         StreamFieldPanel("body", permission="access_admin"),
-        StreamFieldPanel("related_content")
     ]
 
 
