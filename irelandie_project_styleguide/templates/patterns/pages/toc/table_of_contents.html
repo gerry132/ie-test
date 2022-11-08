@@ -28,9 +28,11 @@
 {% endif %}
 {% include_block page.stories_top %}
 <div class="search--is-active-services">
+    {% if not page.generic_hero %}
     <div class="breadcrumb-services">
         {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
     </div>
+    {% endif %}
     <div class="notice-bar">
         {% include_block page.notice_bar_services %}
     </div>

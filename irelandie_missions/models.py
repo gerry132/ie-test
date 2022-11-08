@@ -386,6 +386,8 @@ class Magazine(HeroPage):
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
 
@@ -699,5 +701,7 @@ class GeneralContentPage(HeroPage):
         StreamFieldPanel("body"),
     ]
     edit_handler = TabbedInterface([
+        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
         ObjectList(content_panels, heading='Content'),
     ])
