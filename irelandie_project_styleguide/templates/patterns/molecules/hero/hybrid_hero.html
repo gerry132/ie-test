@@ -5,12 +5,14 @@
 {% for block in page.generic_hero %}
     {% if block.value.hero_image %}
         {% include "patterns/atoms/image/hero_image.html" with hero_image=block.value.hero_image %}
+        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
     {% endif %}
 {% endfor %}
 {% for block in page.generic_hero %}
     {% if block.value.hero_image %}
         {% include "patterns/molecules/hero/hero_mach_two.html" with page=page hero_image=block.value.hero_image %}
+        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
     {% endif %}
 {% endfor %}
 
-{% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+
