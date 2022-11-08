@@ -74,7 +74,7 @@ def get_content_length(page):
 
 @register.simple_tag
 def format_date(date):
-    return date.strftime('%d %B %y')
+    return date.strftime('%d %B %Y')
 
 
 @register.simple_tag
