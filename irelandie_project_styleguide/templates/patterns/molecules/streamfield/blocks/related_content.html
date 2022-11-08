@@ -18,7 +18,7 @@
         {% if value.icon %}
             {% include "patterns/atoms/icons/icon.html" with name=value.icon classname="related_content_card__icon" %}
         {% endif %}
-            <span class="related_content_card__title">{{ value.title }}</span>
+            <span class="related_content_card__title" {% if not value.icon %}style="padding-left:10px;"{% endif %}>{{ value.title }}</span>
         <button class="related_content_card__btn_content ">
                 {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="related_content_card__icons" %}
         </button>
