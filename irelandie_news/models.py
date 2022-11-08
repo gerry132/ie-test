@@ -181,7 +181,7 @@ class NewsLandingPage(BasePage):
             return (
                 NewsPage.objects.child_of(self.get_first_child())
                 .filter(locale=self.locale,
-                        related_articles_active=True)
+                        featured_home=True)
                 .public()
                 .live()
                 .order_by("-publication_date")[:4]
