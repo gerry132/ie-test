@@ -98,10 +98,15 @@
                                 {% if blocks_admin.block_type == 'admin_contents' %}
                                 <div id="{{blocks_admin.value.title}}">
                                     {% for block_admin in blocks_admin.value.content %}
+                                        
                                         {% if block_admin.block_type == 'heading' or block_admin.block_type == 'rich_text' or block_admin.block_type == 'image' or block_admin.block_type == 'document' or block_admin.block_type == 'table' %}
                                                 {% if block_admin.block_type == 'table' %}
                                                     <div id="{{block_admin.title}}" class="wrapper wrapper--small wrapper--padding content--padding">
                                                         {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block_admin %}
+                                                    </div>
+                                                {% elif block_snippets.block_type == 'contact_details' %}
+                                                    <div id="{{block_admin.title}}" class="wrapper wrapper--small wrapper--padding content--padding">
+                                                        {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
                                                     </div>
                                                 {% elif block_admin.block_type == 'heading' or block_admin.block_type == 'rich_text' %}
                                                     <div class="wrapper wrapper--large wrapper--padding content--padding">
