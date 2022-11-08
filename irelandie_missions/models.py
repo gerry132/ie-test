@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.forms import ValidationError
 from django.utils.functional import cached_property
 from wagtail.admin.panels import FieldPanel, StreamFieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
 from wagtail.fields import StreamField, RichTextField
@@ -386,9 +387,24 @@ class Magazine(HeroPage):
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
+        ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
         ObjectList(HeroPage.promote_panels, heading='Promote'),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
+
+    def clean(self):
+        if self.generic_hero and not self.hero_image:
+            raise ValidationError(
+                {
+                    "generic_hero": ValidationError(
+                        "You must specify either a hero or a geneirc ."
+                    ),
+                    "hero_image": ValidationError(
+                        "You must specify link page or link url."
+                    ),
+                }
+            )
+
 
 
 class ServiceContent(BasePage):
