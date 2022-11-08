@@ -654,10 +654,10 @@ class ContactBlock(blocks.StructBlock):
     address_line_1 = blocks.CharBlock(max_length=255, blank=True, null=True)
     address_line_2 = blocks.CharBlock(max_length=255, blank=True, null=True)
     address_line_3 = blocks.CharBlock(max_length=255, blank=True, null=True)
-    post_code = blocks.CharBlock(max_length=25)
-    map_link = blocks.CharBlock(blank=False, help_text="Hyperlink to google maps")
+    post_code = blocks.CharBlock(max_length=25, null=True, blank=True)
+    map_link = blocks.CharBlock(blank=True, help_text="Hyperlink to google maps")
     international_code = blocks.CharBlock(max_length=5,
-                                          blank=False,
+                                          blank=True,
                                           validators=[
                                             RegexValidator(
                                                 regex=r'^\+\d+$',
@@ -667,20 +667,9 @@ class ContactBlock(blocks.StructBlock):
                                             ],
                                           help_text="Format must be +123"
                                           )
-    telephone = blocks.CharBlock(
-                                max_length=30,
-                                validators=[
-                                    RegexValidator(
-                                        regex=r'^\d+[-]\d+[-]\d+$',
-                                        message='Examples: 000-000-0000',
-                                        code='invalid phone number'
-                                    )
-                                ],
-                                help_text="Format must be 000-000-0000"
-                        )
-
-    fax_number = blocks.CharBlock(max_length=50)
-    email = blocks.RichTextBlock(blank=False)
+    telephone = blocks.CharBlock(max_length=30, blank=True)
+    fax_number = blocks.CharBlock(max_length=50, blank=True)
+    email = blocks.RichTextBlock(blank=True)
 
 
 class ArticleStoryBlock(blocks.StreamBlock):
