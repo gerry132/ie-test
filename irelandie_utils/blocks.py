@@ -665,12 +665,12 @@ class FeaturedArticlesBlock(blocks.StructBlock):
 
 
 class ContactBlock(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=255)
+    heading = blocks.CharBlock(max_length=255, required=False)
     address_line_1 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
     address_line_2 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
     address_line_3 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
     post_code = blocks.CharBlock(max_length=25, null=True, blank=True, required=False)
-    map_link = blocks.CharBlock(blank=True, help_text="Hyperlink to google maps")
+    map_link = blocks.CharBlock(blank=True, help_text="Hyperlink to google maps", required=False)
     international_code = blocks.CharBlock(max_length=5,
                                           blank=True,
                                           validators=[
