@@ -651,10 +651,10 @@ class FeaturedArticlesBlock(blocks.StructBlock):
 
 class ContactBlock(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=255)
-    address_line_1 = blocks.CharBlock(max_length=255, blank=True, null=True)
-    address_line_2 = blocks.CharBlock(max_length=255, blank=True, null=True)
-    address_line_3 = blocks.CharBlock(max_length=255, blank=True, null=True)
-    post_code = blocks.CharBlock(max_length=25, null=True, blank=True)
+    address_line_1 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
+    address_line_2 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
+    address_line_3 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
+    post_code = blocks.CharBlock(max_length=25, null=True, blank=True, required=False)
     map_link = blocks.CharBlock(blank=True, help_text="Hyperlink to google maps")
     international_code = blocks.CharBlock(max_length=5,
                                           blank=True,
@@ -665,11 +665,12 @@ class ContactBlock(blocks.StructBlock):
                                                 code='invalid'
                                             )
                                             ],
-                                          help_text="Format must be +123"
+                                          help_text="Format must be +123",
+                                          required=False
                                           )
-    telephone = blocks.CharBlock(max_length=30, blank=True)
-    fax_number = blocks.CharBlock(max_length=50, blank=True)
-    email = blocks.RichTextBlock(blank=True)
+    telephone = blocks.CharBlock(max_length=30, blank=True, required=False)
+    fax_number = blocks.CharBlock(max_length=50, blank=True, required=False)
+    email = blocks.RichTextBlock(blank=True, required=False)
 
 
 class ArticleStoryBlock(blocks.StreamBlock):
