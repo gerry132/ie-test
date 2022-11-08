@@ -6,7 +6,7 @@
             {{ value.rich_text }}
             {% if value.button_link %}
             {% for button in value.button_link %}
-                <div class="wrapper wrapper--large">
+                <div class="wrapper wrapper--large" style="padding-top: 15px;">
                         {% if button.page %}
                             <a class="button_text" href="{{ button.page }}">{{ button.value.message }}</a>
                         {% else %}
