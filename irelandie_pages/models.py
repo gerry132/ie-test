@@ -83,8 +83,7 @@ class FreeFormPage(FreeFormPageBase):
         min_num=0,
         max_num=1,
     )
-    content_panels = FreeFormPageBase.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin"),
+    content_panels = [StreamFieldPanel("generic_hero", permission="access_admin")] + (FreeFormPageBase.content_panels + [
         FieldPanel("featured_news"),
         MultiFieldPanel([
             StreamFieldPanel("notice_bar"),
@@ -94,7 +93,7 @@ class FreeFormPage(FreeFormPageBase):
             FieldPanel("twitter_title"),
             SnippetChooserPanel("twitter_feed"),
         ], heading="Twitter feed"),
-    ]
+    ])
 
     settings_panels = (
         [
