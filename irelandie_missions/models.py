@@ -478,11 +478,11 @@ class ServiceContent(BasePage):
         ], heading="Noticebar settings"
         ),
         StreamFieldPanel("stories_top", heading="Two Column Feature"),
-        StreamFieldPanel("related_content"),
         StreamFieldPanel("admin_body1", permission="access_admin", heading="Admin_body"),
         StreamFieldPanel("body"),
         StreamFieldPanel("admin_body2", permission="access_admin", heading="Admin_body"),
         StreamFieldPanel("stories_bottom", heading="Two Column"),
+        StreamFieldPanel("related_content"),
     ]
 
 
