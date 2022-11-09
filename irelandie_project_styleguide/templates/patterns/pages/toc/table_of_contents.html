@@ -25,12 +25,14 @@
 </style>
 {% if page.generic_hero %}
 {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
-{% else %} 
-{% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+{% else %}
+<div class="breadcrumb-services">
+    {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+</div>
 {% endif %}
-{% include_block page.stories_top %}
+
 <div class="search--is-active-services">
-    
+
     <div class="notice-bar">
         {% include_block page.notice_bar_services %}
     </div>
@@ -55,6 +57,7 @@
     <!--start of page body-->
 
     <!--end of page body-->
+{% include_block page.stories_top %}
 
     <div class="section--master">
         <div class="container-fluid">
@@ -73,7 +76,7 @@
                                     {% if block.block_type == 'admin_contents' or block.block_type == 'contact_details' %}
                                         <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter }}. {{block.value.title}}</h2></a>
                                     {% endif %}
-                                    
+
                                 {% endfor %}
                                 {% for block in page.body %}
                                     {% if block.block_type == 'content' %}
@@ -97,7 +100,7 @@
                                 {% if blocks_admin.block_type == 'admin_contents' %}
                                 <div id="{{blocks_admin.value.title}}">
                                     {% for block_admin in blocks_admin.value.content %}
-                                        
+
                                         {% if block_admin.block_type == 'heading' or block_admin.block_type == 'rich_text' or block_admin.block_type == 'image' or block_admin.block_type == 'document' or block_admin.block_type == 'table' %}
                                                 {% if block_admin.block_type == 'table' %}
                                                     <div id="{{block_admin.title}}" class="wrapper wrapper--small wrapper--padding content--padding">
@@ -141,7 +144,7 @@
                                         {% if block_snippets.block_type == 'contact_details' %}
                                         <div id="{{block_admin.title}}" class="wrapper wrapper--large wrapper--padding content--padding">
                                             {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
-                                        </div>                                       
+                                        </div>
                                          {% else %}
                                             {% for block_body in block_snippets.value.body %}
                                                 <div class="wrapper wrapper--large wrapper--padding content--padding">
