@@ -54,9 +54,9 @@
                               {% for link in value.links %}
                                 {% if forloop.counter|divisibleby:2 %}
                                           {% include_block link %}
-                                        </div>
-                                    </div>
-                                </div>
+                            </div>
+                        </div>
+                    </div>
                                 {% else %}
                                 {% with next_element=value.links|next:forloop.counter0 %}
                                     {% if next_element %}
@@ -93,6 +93,7 @@
                           <button class="btn btn-prev-{{ref}} btn-prev">
                           </button>
             {% endif %}
+                                      </div>
         </div>
     </div>
 </div>
