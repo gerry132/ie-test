@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.forms import ValidationError
 from django.utils.functional import cached_property
 from wagtail.admin.panels import FieldPanel, StreamFieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
 from wagtail.fields import StreamField, RichTextField
