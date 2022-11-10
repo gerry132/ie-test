@@ -238,11 +238,17 @@
                                         {% endif %}
                                     {% endfor %}
                                     {% for block_snippets in blocks_admin.value.snippets %}
-                                        {% for block_body in block_snippets.value.body %}
-                                    <div class="wrapper wrapper--large wrapper--padding content--padding">
-                                            {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block_body %}
-                                    </div>
-                                        {% endfor %}
+                                            {% if block_snippets.block_type == 'contact_details' %}
+                                                <div id="{{block_admin.title}}" class="wrapper wrapper--large wrapper--padding content--padding">
+                                                    {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
+                                                </div>
+                                            {% else %}
+                                            {% for block_body in block_snippets.value.body %}
+                                                <div class="wrapper wrapper--large wrapper--padding content--padding">
+                                                        {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block_body %}
+                                                </div>
+                                            {% endfor %}
+                                            {% endif %}
                                     {% endfor %}
                                 </div>
                             {% endif %}
