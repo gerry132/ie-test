@@ -1120,7 +1120,7 @@ class FreeFormBlocks(FreeFormBlocksBase):
     featured_articles = FeaturedArticlesBlock(group="Module")
     featured_story = FeaturedStoryBlock(group="Module")
     logos = LogoCardsBlock(group="Module")
-    link_card = LinkCardBlock()
+    link_card = LinkCardsBlock()
     link_button = LinkButtonBlock()
     link_box = LinkBoxesBlock()
     table = TableBlock(group="HTML")
