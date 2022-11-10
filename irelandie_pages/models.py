@@ -139,7 +139,7 @@ class FreeFormPage(FreeFormPageBase):
         )
 
     def clean(self):
-        if not self.generic_hero and not self.hero_image:
+        if not self.generic_hero and not self.hero_image and not self.hero_video:
             raise ValidationError(
                 {
                     "generic_hero": ValidationError(
@@ -150,16 +150,16 @@ class FreeFormPage(FreeFormPageBase):
                     ),
                 }
             )
-        if self.generic_hero and self.hero_image:
+        if self.generic_hero and self.hero_image or self.generic_hero and self.hero_video:
             raise ValidationError(
                 {
                     "generic_hero": ValidationError(
-                        "You can't choose both an generic_hero and a hero_image for the hero media. Choose an "
-                        "generic_hero or a hero_image "
+                        "You can't choose both an generic_hero and a hero image/video for the hero media. Choose a "
+                        "generic_hero or a hero image/video"
                     ),
                     "hero_image": ValidationError(
-                        "You can't choose both an generic_hero and a hero_image for the hero media. Choose an "
-                        "generic_hero or a hero_image "
+                        "You can't choose both an generic_hero and a hero image/video for the hero media. Choose a "
+                        "generic_hero or a hero image/video"
                     ),
                 }
             )
