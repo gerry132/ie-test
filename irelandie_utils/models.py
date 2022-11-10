@@ -26,7 +26,13 @@ from wagtail.snippets.models import register_snippet
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
-from irelandie_utils.blocks import ArticleStoryBlock, AdvancedRichTextBlock, AccordionBlock, TocBlocks
+from irelandie_utils.blocks import (
+    ArticleStoryBlock,
+    AdvancedRichTextBlock,
+    AccordionBlock,
+    TocBlocks,
+    ContactBlock
+)
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
 import django.utils.timezone
@@ -198,6 +204,19 @@ class ListingFields(models.Model):
             "Listing information",
         )
     ]
+
+
+@register_snippet
+class ContactSnippet(models.Model):
+    title = models.CharField(max_length=255)
+    body = StreamField(
+        [
+            ("contact_details", ContactBlock()),
+        ],
+    )
+
+    def __str__(self):
+        return self.title
 
 
 @register_snippet
@@ -687,6 +706,7 @@ class ArticlePage(BasePage):
                 missions = MissionPage.objects.live().get(id=p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
+
         return context
 
 
@@ -700,6 +720,10 @@ class MinimalArticlePage(BasePage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    alt_text = models.CharField(blank=True,
+                                null=True,
+                                max_length=255,
+                                help_text=ALT_HELP_TEXT)
     hero_video = models.ForeignKey(
         "wagtailmedia.Media",
         null=True,
@@ -713,12 +737,14 @@ class MinimalArticlePage(BasePage):
     body = StreamField(ArticleStoryBlock(), blank=True)
 
     related_articles_active = models.BooleanField(default=True)
+    featured_home = models.BooleanField(default=False)
 
     class Meta:
         abstract = True
 
     content_panels = Page.content_panels + [
         FieldPanel("introduction"),
+        FieldPanel("alt_text"),
         MultiFieldPanel(
             [
                 ImageChooserPanel("hero_image"),
@@ -736,6 +762,7 @@ class MinimalArticlePage(BasePage):
         FieldPanel("publication_date"),
         StreamFieldPanel("body"),
         FieldPanel("related_articles_active", heading="Featured News Checkbox"),
+        FieldPanel("featured_home", heading="Featured Home")
     ]
 
     settings_panels = ([
@@ -762,6 +789,15 @@ class MinimalArticlePage(BasePage):
     ])
 
     def clean(self):
+        if self.hero_image and not self.alt_text:
+            raise ValidationError(
+                {
+                    "alt_text": ValidationError(
+                        "You must provide an alt_text."
+                    )
+                }
+            )
+
         if self.hero_image and self.hero_video:
             raise ValidationError(
                 {

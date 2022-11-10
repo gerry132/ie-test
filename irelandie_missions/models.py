@@ -8,6 +8,7 @@ from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.images import get_image_model_string
 
 from irelandie_home.blocks import SecondaryCallToAction
+from irelandie_home.models import HomePage
 from irelandie_navigation.blocks import LinkBlock, NoticeBarWithMessageLink
 from irelandie_pages.models import FreeFormPageBase
 from irelandie_news.models import NewsPage
@@ -104,11 +105,16 @@ class DestinationPage(HeroPage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         pages = self.get_ancestors()
+        root_found = False
         for p in pages:
             if p.content_type.name == 'mission page':
                 missions = MissionPage.objects.live().get(id=p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
+                    root_found = True
+        if not root_found:
+            f = HomePage.objects.all()[:1].get()
+            context['default_image'] = f.default_image
         return context
 
     edit_handler = TabbedInterface([
@@ -330,7 +336,7 @@ class MissionPage(HeroPage):
             NewsPage.objects
             .descendant_of(self)
             .filter(locale=self.locale,
-                    related_articles_active=True)
+                    featured_home=True)
             .public()
             .live()
             .order_by("-publication_date")[:4]
@@ -357,7 +363,15 @@ class MissionPage(HeroPage):
 
 class Magazine(HeroPage):
     template = "irelandie_assets/pages/magazine.html"
-
+    generic_hero = StreamField(
+        [
+            ("generic_hero", blocks.GenericHeroBlock()),
+        ],
+        blank=False,
+        null=True,
+        min_num=1,
+        max_num=1,
+    )
     body = StreamField(
         [
             ("rich_text", blocks.AdvancedRichTextBlock()),
@@ -367,22 +381,20 @@ class Magazine(HeroPage):
     )
 
     content_panels = HeroPage.content_panels + [
+        StreamFieldPanel("generic_hero", permission="access_admin"),
         StreamFieldPanel("body")
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(HeroPage.hero_panel, heading='Hero'),
         ObjectList(HeroPage.promote_panels, heading='Promote'),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
 
 class ServiceContent(BasePage):
-    template = "patterns/pages/toc/table_of_contents.html"
-    introduction = RichTextField(blank=True)
-    notice_bar_services = StreamField(
+    generic_hero = StreamField(
         [
-            ("noticebar", NoticeBarWithMessageLink()),
+            ("generic_hero", blocks.GenericHeroBlock()),
         ],
         blank=True,
         null=True,
@@ -397,6 +409,18 @@ class ServiceContent(BasePage):
         null=True,
         min_num=0,
     )
+    template = "patterns/pages/toc/table_of_contents.html"
+    introduction = RichTextField(blank=True)
+    notice_bar_services = StreamField(
+        [
+            ("noticebar", NoticeBarWithMessageLink()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+
     stories_top = StreamField(
         [
             ("story", blocks.StoryBlock()),
@@ -435,14 +459,19 @@ class ServiceContent(BasePage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         pages = self.get_ancestors()
+        root_found = False
         for p in pages:
             if p.content_type.name == 'mission page':
                 missions = MissionPage.objects.live().get(id=p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
+        if not root_found:
+            f = HomePage.objects.all()[:1].get()
+            context['default_image'] = f.default_image
         return context
 
     content_panels = BasePage.content_panels + [
+        StreamFieldPanel("generic_hero", permission="access_admin"),
         FieldPanel("introduction"),
         MultiFieldPanel([
             StreamFieldPanel("notice_bar_services"),
@@ -453,7 +482,7 @@ class ServiceContent(BasePage):
         StreamFieldPanel("body"),
         StreamFieldPanel("admin_body2", permission="access_admin", heading="Admin_body"),
         StreamFieldPanel("stories_bottom", heading="Two Column"),
-        StreamFieldPanel("related_content")
+        StreamFieldPanel("related_content"),
     ]
 
 
@@ -468,15 +497,7 @@ class ServicesLandingPage(BasePage):
         min_num=0,
         max_num=1,
     )
-    hybrid_hero = StreamField(
-        [
-            ("hybrid_hero", blocks.HybridHeroBlock()),
-        ],
-        blank=True,
-        null=True,
-        min_num=0,
-        max_num=1,
-    )
+
     rich_text = StreamField(
         [
             ("rich_text", blocks.AdvancedRichTextBlock()),
@@ -485,14 +506,6 @@ class ServicesLandingPage(BasePage):
         null=True,
         min_num=0,
         max_num=1,
-    )
-    related_content = StreamField(
-        [
-            ("related_item", blocks.RelatedContentBlock()),
-        ],
-        blank=True,
-        null=True,
-        min_num=0,
     )
 
     body = StreamField(
@@ -508,19 +521,21 @@ class ServicesLandingPage(BasePage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         pages = self.get_ancestors()
+        root_found = False
         for p in pages:
             if p.content_type.name == 'mission page':
                 missions = MissionPage.objects.live().get(id=p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
+        if not root_found:
+            f = HomePage.objects.all()[:1].get()
+            context['default_image'] = f.default_image
         return context
 
     content_panels = BasePage.content_panels + [
         StreamFieldPanel("generic_hero", permission="access_admin"),
-        StreamFieldPanel("hybrid_hero", permission="access_admin"),
         StreamFieldPanel("rich_text", heading="Advanced Richtext", permission="access_admin"),
         StreamFieldPanel("body", permission="access_admin"),
-        StreamFieldPanel("related_content")
     ]
 
 
@@ -668,17 +683,25 @@ class EmbassyPage(FreeFormPageBase):
 
 class GeneralContentPage(HeroPage):
     template = "patterns/pages/missions/general_content_page.html"
-
+    generic_hero = StreamField(
+        [
+            ("generic_hero", blocks.GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
     introduction = models.TextField(blank=True)
     body = StreamField(blocks.GeneralContentBlocks(), blank=True)
 
     content_panels = HeroPage.content_panels + [
+        StreamFieldPanel("generic_hero", permission="access_admin"),
         FieldPanel("introduction"),
         StreamFieldPanel("body"),
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(HeroPage.hero_panel, heading='Hero'),
         ObjectList(HeroPage.promote_panels, heading='Promote'),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])

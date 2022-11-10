@@ -48,13 +48,22 @@
         background: #ECE8E6;
         border-radius: 15px;
     }
+    &__container{
+        padding-left: 40px;
+        padding-right: 120px;
+        @include media-query(max-medium) {
+            padding-left: 40px;
+            padding-right: 0px;
+        }
+
+    }
 
     &__title {
-        font-size: 28px;
-        line-height: 36px;
+        font-size: 22px;
+        line-height: 26px;
         letter-spacing: -1.35px;
         margin: 0;
-        padding: 0 20px;
+        padding: 0 20px 0 40px;
         color: #004D46;
     }
     &__btn_content{
@@ -65,7 +74,9 @@
         border-radius: 60%;
         cursor: pointer;
         background: #A39062;
-        margin: auto 30px auto auto;
+            flex-shrink: 0;
+            align-self: center;
+            margin-right: 30px;
     }
 
     &__icon {
@@ -84,7 +95,9 @@
 
     &__content {
         display: none;
-        padding: 0 20px 20px 20px;
+        padding: 0 20px 20px 40px;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
         margin-top: 15px;
         background: #fff;
         border-radius: 15px;

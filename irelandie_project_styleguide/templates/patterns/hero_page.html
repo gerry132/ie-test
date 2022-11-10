@@ -5,6 +5,7 @@
     {% comment %}
         Responsive hero images
     {% endcomment %}
+
     {% if page.hero_image or page.hero_video %}
         {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
 
@@ -15,6 +16,8 @@
                 <h2 class="secondary-title">{{ page.secondary_title }}</h2>
             </div>
         {% endif %}
+    {% elif page.generic_hero %}
+        {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
     {% else %}
         <div class="section section--padding_hero section--grey">
             <div class="wrapper wrapper--large wrapper--padding">

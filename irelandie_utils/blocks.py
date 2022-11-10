@@ -3,6 +3,7 @@
 import re
 
 from django.forms.utils import ErrorList
+from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 from wagtail.contrib.table_block.blocks import TableBlock as WagtailTableBlock
 from wagtail import blocks
@@ -90,6 +91,21 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
             ("working-holiday", "Working Holiday"),
             ("notice", "Notice"),
             ("new-to", "New To"),
+            ("location", "Location"),
+            ("opening-hours", "Opening Hours"),
+            ("study", "Study"),
+            ("trade2", "Trade2"),
+            ("travel", "Travel"),
+            ("closure-dates", "Closure Dates"),
+            ("contact-mail", "Contact Mail"),
+            ("family", "Family"),
+            ("how-we-can-help", "How We Can Help"),
+            ("invest", "Invest"),
+            ("link", "Link"),
+            ("live", "Live"),
+            ("marriage", "Marriage"),
+            ("news", "News"),
+            ("information", "Information"),
             ("government-building", "Government Building"),
             ("money", "Money"),
             ("passport", "Passport"),
@@ -97,10 +113,6 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
             ("ticket", "Ticket"),
         ),
         required=False,
-    )
-    icon_alt = blocks.CharBlock(
-        required=False,
-        help_text=_(ALT_ICON),
     )
     image = ImageChooserBlock(required=False)
     title = blocks.CharBlock(
@@ -364,7 +376,7 @@ class AdvancedRichTextBlock(blocks.StructBlock):
     )
     heading = blocks.CharBlock(required=False)
     rich_text = blocks.RichTextBlock(
-        features=["h3", "blockquote", "bold", "link", "document-link", "ul"], required=False,
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul", "ol"], required=False,
     )
     button_link = blocks.StreamBlock(
         [
@@ -529,6 +541,9 @@ class ArticleCardBlock(blocks.StructBlock):
         required=False,
         help_text="An external link.",
     )
+    link_text = blocks.CharBlock(
+        max_length=32, blank=True, required=False, default="Read Story", help_text='Call To Action Text'
+    )
 
     class Meta:
         icon = "image"
@@ -649,6 +664,30 @@ class FeaturedArticlesBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/featured_articles.html"
 
 
+class ContactBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(max_length=255, required=False)
+    address_line_1 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
+    address_line_2 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
+    address_line_3 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
+    post_code = blocks.CharBlock(max_length=25, null=True, blank=True, required=False)
+    map_link = blocks.CharBlock(blank=True, help_text="Hyperlink to google maps", required=False)
+    international_code = blocks.CharBlock(max_length=5,
+                                          blank=True,
+                                          validators=[
+                                            RegexValidator(
+                                                regex=r'^\+\d+$',
+                                                message="Examples: +353 +01",
+                                                code='invalid'
+                                            )
+                                            ],
+                                          help_text="Format must be +123",
+                                          required=False
+                                          )
+    telephone = blocks.CharBlock(max_length=30, blank=True, required=False)
+    fax_number = blocks.CharBlock(max_length=50, blank=True, required=False)
+    email = blocks.RichTextBlock(blank=True, required=False)
+
+
 class ArticleStoryBlock(blocks.StreamBlock):
     rich_text = RichTextBlock(group="Base")
     rich_text_advanced = AdvancedRichTextBlock(group="Base")
@@ -729,6 +768,8 @@ class AccordionBlock(blocks.StructBlock):
                             ("table", TableBlock(group="table")),
                             ("document", DocumentBlock(required=False)),
                             ("youtube", YoutubeVideoBlock(group="HTML")),
+                            ("contact_details",
+                                SnippetChooserBlock(target_model="utils.ContactSnippet"))
                         ], required=False)
                          ),
                     ]
@@ -773,6 +814,21 @@ class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
             ("working-holiday", "Working Holiday"),
             ("notice", "Notice"),
             ("new-to", "New To"),
+            ("location", "Location"),
+            ("opening-hours", "Opening Hours"),
+            ("study", "Study"),
+            ("trade2", "Trade2"),
+            ("travel", "Travel"),
+            ("closure-dates", "Closure Dates"),
+            ("contact-mail", "Contact Mail"),
+            ("family", "Family"),
+            ("how-we-can-help", "How We Can Help"),
+            ("invest", "Invest"),
+            ("link", "Link"),
+            ("live", "Live"),
+            ("marriage", "Marriage"),
+            ("news", "News"),
+            ("information", "Information"),
             ("government-building", "Government Building"),
             ("money", "Money"),
             ("passport", "Passport"),
@@ -780,10 +836,6 @@ class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
             ("ticket", "Ticket"),
         ),
         required=False,
-    )
-    icon_alt = blocks.CharBlock(
-        required=False,
-        help_text=_(ALT_ICON),
     )
     image = ImageChooserBlock(required=False)
     image_alt = blocks.CharBlock(
@@ -805,18 +857,8 @@ class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 
 class TocBlocks(blocks.StreamBlock):
     rich_text = AdvancedRichTextBlock(group="Base")
-    image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
-    accordion = AccordionBlock(group="Base")
-
-    logos = LogoCardsBlock(group="Module")
-
     table = TableBlock(group="HTML")
-    youtube_video = YoutubeVideoBlock(group="HTML")
-    html = blocks.RawHTMLBlock(
-        group="HTML",
-        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
-    )
 
 
 class TocBlock(blocks.StructBlock):
@@ -829,6 +871,7 @@ class TocBlockSnippets(blocks.StreamBlock):
     passports = SnippetChooserBlock(target_model="utils.Passport")
     authentication = SnippetChooserBlock(target_model="utils.Authentication")
     marriage = SnippetChooserBlock(target_model="utils.Marriage")
+    contact_details = SnippetChooserBlock(target_model="utils.ContactSnippet")
 
 
 class TocAdminBlock(blocks.StructBlock):
@@ -874,8 +917,7 @@ class PersonSocialBlock(blocks.StructBlock):
     social_media_text = blocks.CharBlock(
         max_length=255, required=False, default="Connect with person on this social media"
     )
-    address = blocks.RichTextBlock(required=False)
-    telephone = blocks.CharBlock(required=False)
+    contact_details = SnippetChooserBlock(target_model="utils.ContactSnippet")
     opening_hours = blocks.RichTextBlock(required=False)
     closure_dates = blocks.RichTextBlock(required=False)
     emergency_contact_details = blocks.RichTextBlock(required=False)
@@ -957,6 +999,21 @@ class LinkBoxBlock(blocks.StructBlock):
             ("working-holiday", "Working Holiday"),
             ("notice", "Notice"),
             ("new-to", "New To"),
+            ("location", "Location"),
+            ("opening-hours", "Opening Hours"),
+            ("study", "Study"),
+            ("trade2", "Trade2"),
+            ("travel", "Travel"),
+            ("closure-dates", "Closure Dates"),
+            ("contact-mail", "Contact Mail"),
+            ("family", "Family"),
+            ("how-we-can-help", "How We Can Help"),
+            ("invest", "Invest"),
+            ("link", "Link"),
+            ("live", "Live"),
+            ("marriage", "Marriage"),
+            ("news", "News"),
+            ("information", "Information"),
             ("government-building", "Government Building"),
             ("money", "Money"),
             ("passport", "Passport"),
@@ -964,10 +1021,6 @@ class LinkBoxBlock(blocks.StructBlock):
             ("ticket", "Ticket"),
         ),
         required=False,
-    )
-    icon_alt = blocks.CharBlock(
-        required=False,
-        help_text=_(ALT_ICON),
     )
     image = ImageChooserBlock(required=False)
     image_alt = blocks.CharBlock(
@@ -1069,16 +1122,6 @@ class GenericHeroBlock(blocks.StructBlock):
     class Meta:
         label = "Generic Hero Block"
         template = "patterns/molecules/streamfield/blocks/generic_hero.html"
-
-
-class HybridHeroBlock(blocks.StructBlock):
-    hero_image = ImageChooserBlock(required=False)
-    hero_title = blocks.CharBlock(required=True, max_length=120)
-    subtitle = blocks.CharBlock(required=False)
-
-    class Meta:
-        label = "Generic Hero Block"
-        template = "patterns/molecules/hero/hybrid_hero.html"
 
 
 class FreeFormBlocks(FreeFormBlocksBase):

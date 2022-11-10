@@ -12,7 +12,7 @@
      }
      @media only screen and (min-width: 1023px) {
         .breadcrumb-services {
-            padding-top: 40px;
+            padding-top: 30px;
         }
 
     }
@@ -23,24 +23,33 @@
     }
 
 </style>
+{% if page.generic_hero %}
+{% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+{% else %}
+<div class="breadcrumb-services">
+    {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+</div>
+{% endif %}
+
 <div class="search--is-active-services">
-    <div class="breadcrumb-services">
-        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
-    </div>
+
     <div class="notice-bar">
         {% include_block page.notice_bar_services %}
     </div>
 </div>
-{% include_block page.stories_top %}
+
 
     <!--start of page description and title-->
     <div id="main-header" class="section section--padding section--white">
                 <div class="wrapper wrapper--large wrapper--padding content--padding">
                     <div class="intro--toc">
-                            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
-                            {% if page.description %}
-                                <p class="intro__description">{{ page.description }}</p>
-                            {% endif %}
+                        {% if not page.title or not page.generic_hero %}
+                        <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                        {% if page.description %}
+                            <p class="intro__description">{{ page.description }}</p>
+                        {% endif %}
+
+                        {% endif %}
                     </div>
                 </div>
     </div>
@@ -48,6 +57,7 @@
     <!--start of page body-->
 
     <!--end of page body-->
+{% include_block page.stories_top %}
 
     <div class="section--master">
         <div class="container-fluid">
@@ -61,23 +71,24 @@
                             {% get_content_length page as content_length %}
                             {% count_toc page as content_length_count %}
                             {% if content_length_count > 1 %}
-                            <div class="wrapper wrapper--large toc-table">
-                            {% for block in page.admin_body1 %}
-                                {% if block.block_type == 'admin_contents' %}
-                                    <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter }}. {{block.value.title}}</h2></a>
-                                {% endif %}
-                            {% endfor %}
-                            {% for block in page.body %}
-                                {% if block.block_type == 'content' %}
-                                    <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length }}. {{block.value.title}}</h2></a>
-                                {% endif %}
-                            {% endfor %}
-                            {% for block in page.admin_body2 %}
-                                {% if block.block_type == 'admin_content' %}
-                                    <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length|add:content_length }}. {{block.value.title}}</h2></a>
-                                {% endif %}
-                            {% endfor %}
-                            </div>
+                                <div class="wrapper wrapper--large toc-table">
+                                {% for block in page.admin_body1 %}
+                                    {% if block.block_type == 'admin_contents' or block.block_type == 'contact_details' %}
+                                        <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter }}. {{block.value.title}}</h2></a>
+                                    {% endif %}
+
+                                {% endfor %}
+                                {% for block in page.body %}
+                                    {% if block.block_type == 'content' %}
+                                        <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length }}. {{block.value.title}}</h2></a>
+                                    {% endif %}
+                                {% endfor %}
+                                {% for block in page.admin_body2 %}
+                                    {% if block.block_type == 'admin_content'  or block.block_type == 'contact_details'%}
+                                        <a href="#{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length|add:content_length }}. {{block.value.title}}</h2></a>
+                                    {% endif %}
+                                {% endfor %}
+                                </div>
                             {% endif %}
                             {% if page.introduction %}
                                 <div class="wrapper wrapper--large wrapper--padding content--padding">
@@ -89,10 +100,15 @@
                                 {% if blocks_admin.block_type == 'admin_contents' %}
                                 <div id="{{blocks_admin.value.title}}">
                                     {% for block_admin in blocks_admin.value.content %}
+
                                         {% if block_admin.block_type == 'heading' or block_admin.block_type == 'rich_text' or block_admin.block_type == 'image' or block_admin.block_type == 'document' or block_admin.block_type == 'table' %}
                                                 {% if block_admin.block_type == 'table' %}
                                                     <div id="{{block_admin.title}}" class="wrapper wrapper--small wrapper--padding content--padding">
                                                         {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block_admin %}
+                                                    </div>
+                                                {% elif block_snippets.block_type == 'contact_details' %}
+                                                    <div id="{{block_admin.title}}" class="wrapper wrapper--large wrapper--padding content--padding">
+                                                        {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
                                                     </div>
                                                 {% elif block_admin.block_type == 'heading' or block_admin.block_type == 'rich_text' %}
                                                     <div class="wrapper wrapper--large wrapper--padding content--padding">
@@ -114,7 +130,7 @@
                                                 </div>
                                             </div>
                                         {% elif block_admin.block_type == 'accordion' %}
-                                            <div class="section section--padding content--padding">
+                                            <div class="wrapper wrapper--large wrapper--padding content--padding">
                                                 {% include_block block_admin %}
                                             </div>
                                         {% else %}
@@ -125,11 +141,17 @@
                                         {% endif %}
                                     {% endfor %}
                                     {% for block_snippets in blocks_admin.value.snippets %}
-                                        {% for block_body in block_snippets.value.body %}
-                                    <div class="wrapper wrapper--large wrapper--padding content--padding">
-                                            {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block_body %}
-                                    </div>
-                                        {% endfor %}
+                                        {% if block_snippets.block_type == 'contact_details' %}
+                                        <div id="{{block_admin.title}}" class="wrapper wrapper--large wrapper--padding content--padding">
+                                            {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
+                                        </div>
+                                         {% else %}
+                                            {% for block_body in block_snippets.value.body %}
+                                                <div class="wrapper wrapper--large wrapper--padding content--padding">
+                                                        {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block_body %}
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             {% endif %}
@@ -164,7 +186,7 @@
                                             </div>
                                         </div>
                                     {% elif block.block_type == 'accordion' %}
-                                        <div class="section section--padding content--padding">
+                                        <div class="wrapper wrapper--large wrapper--padding content--padding">
                                             {% include_block block %}
                                         </div>
                                     {% else %}
@@ -205,7 +227,7 @@
                                                 </div>
                                             </div>
                                         {% elif block_admin.block_type == 'accordion' %}
-                                            <div class="section section--padding content--padding">
+                                            <div class="wrapper wrapper--large wrapper--padding content--padding">
                                                 {% include_block block_admin %}
                                             </div>
                                         {% else %}

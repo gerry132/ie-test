@@ -250,6 +250,7 @@ class CustomFooter(SocialMediaFieldsMixin, TranslatableMixin):
         FieldPanel("facebook_app_id"),
         FieldPanel("youtube_user"),
         FieldPanel("linkedin_profile"),
+        FieldPanel("instagram_user"),
         StreamFieldPanel("navigation"),
         StreamFieldPanel("links"),
     ]

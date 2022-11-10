@@ -1,8 +1,44 @@
-{% extends "patterns/hero_page.html" %}
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags i18n %}
+{% load util_tags wagtailcore_tags wagtailimages_tags%}
 {% load wagtailcore_tags wagtailimages_tags static i18n %}
+{% block content %}
+<style>
+     @media only screen and (min-width: 1023px) {
+        .breadcrumb-services {
+            padding-top: 40px;
+        }
+
+    }
+    @media only screen and (max-width: 1023px) {
+        .breadcrumb-services {
+            padding-top: 80px;
+        }
+    }
+
+</style>
+{% if page.generic_hero %}
+{% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+{% else %}
+<div class="breadcrumb-services">
+    {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+</div>
+{% endif %}
+<div id="main-header" class="section section--padding section--white">
+                <div class="wrapper wrapper--large wrapper--padding content--padding">
+                    <div class="intro--toc">
+                        {% if not page.title or not page.generic_hero %}
+                        <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                        {% if page.description %}
+                            <p class="intro__description">{{ page.description }}</p>
+                        {% endif %}
+
+                        {% endif %}
+                    </div>
+                </div>
+    </div>
 
 
-    {% block main %}
         <!-- Body -->
         <div class="section section--padding">
             {% for block in page.body %}
@@ -27,7 +63,11 @@
                         {% include_block block %}
                 </div>
             {% elif block.block_type == 'accordion' %}
-                    {% include_block block %}
+                <div class="wrapper wrapper--padding">
+                    <div class="rich-text">
+                        {% include_block block %}
+                    </div>
+                </div>
             {% else %}
                 <div class="wrapper wrapper--large wrapper--padding">
                     {% include_block block %}
