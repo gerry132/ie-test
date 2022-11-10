@@ -496,30 +496,14 @@ class LogoCardBlock(blocks.StructBlock):
 
 
 class LogoCardsBlock(blocks.StructBlock):
-    title = blocks.CharBlock()
-    summary = blocks.TextBlock(required=False)
     summary_richtext = blocks.StructBlock(
         [
-            ("use_richtext", blocks.BooleanBlock(required=False)),
             ("content", AdvancedRichTextBlock())
-        ]
+        ],
+        blank=True,
+        null=True,
     )
     cards = blocks.StreamBlock([("card", LogoCardBlock())])
-
-    def clean(self, value):
-        errors = {}
-        summary = value.get('summary')
-        summary_richtext = value.get('summary_richtext')
-
-        if summary and summary_richtext.get('use_richtext'):
-            msg = "You can't choose both a plaintext and richtext summary."
-            errors['summary'] = ErrorList([msg])
-            errors['summary_richtext'] = ErrorList([msg])
-
-        if errors:
-            raise StructBlockValidationError(block_errors=errors)
-
-        return super().clean(value)
 
     class Meta:
         icon = "pick"
@@ -1136,7 +1120,7 @@ class FreeFormBlocks(FreeFormBlocksBase):
     featured_articles = FeaturedArticlesBlock(group="Module")
     featured_story = FeaturedStoryBlock(group="Module")
     logos = LogoCardsBlock(group="Module")
-    link_card = LinkCardBlock()
+    link_card = LinkCardsBlock()
     link_button = LinkButtonBlock()
     link_box = LinkBoxesBlock()
     table = TableBlock(group="HTML")
