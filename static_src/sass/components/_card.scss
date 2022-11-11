@@ -61,6 +61,8 @@
         }
     }
     &__summary {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
         #{$root}--no-summary & {
             font-size: 18px;
         }
