@@ -184,7 +184,7 @@ class NewsLandingPage(BasePage):
                         related_articles_active=True)
                 .public()
                 .live()
-                .order_by("-publication_date")[:4]
+                .order_by("-publication_date")[:8]
                 .specific()
             )
 
