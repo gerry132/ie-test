@@ -16,16 +16,14 @@
     {% block main %}
         <!-- Body -->
     <div class="section section--padding">
-        <div class="wrapper wrapper--large wrapper--padding">
-
         {% if page.related_jobs %}
         <div class="link-box__main">
-            <div class="link-box__line"></div>
             {% for job in page.related_jobs %}
+            <div class="wrapper wrapper--large--toc wrapper--padding content--padding">
                 {% include "patterns/molecules/job/job-card.html" with job=job %}
+            </div>
             {% endfor %}
             </div>
-        </div>
         {% else %}
             <h1 class="heading--1 no-vac">There are currently no vacancies.</h1>
         {% endif %}
