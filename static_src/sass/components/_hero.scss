@@ -73,6 +73,9 @@
             max-width: 100%;
         }
     }
+    &__introduction{
+        font-size: 20px;
+    }
 
     &__video-wrapper {
         @include z-index(video-hero);
