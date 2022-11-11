@@ -34,6 +34,7 @@
         <!-- Body -->
         <div class="section section--padding">
              {% if not page.hero_image and not page.hero_video %}
+            <div class="wrapper wrapper--padding">
                 <div class="rich-text">
                         <h1 class="hero__title">
                                 {{ page.title }}
@@ -42,6 +43,7 @@
                             <div class="hero__introduction"><p>{% firstof page.introduction %}</p></div>
                         {% endif %}
                 </div>
+            </div>
              {% endif %}
             <div class="wrapper wrapper--padding">
                 {% if page.publication_date %}
