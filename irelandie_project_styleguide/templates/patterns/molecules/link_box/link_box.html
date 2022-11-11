@@ -1,7 +1,7 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 
 <a href="{{ link_url }}" class="related_content_card">
-    <div class="card__image-container">
+    <div class="card__image-container1">
         {% if value.image %}
             {% if value.image_alt %}
                 {% image value.image fill-500x300 class="card__image"  alt=value.image_alt %}
