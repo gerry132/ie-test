@@ -658,12 +658,12 @@ class ContactBlock(blocks.StructBlock):
     international_code = blocks.CharBlock(max_length=5,
                                           blank=True,
                                           validators=[
-                                            RegexValidator(
-                                                regex=r'^\+\d+$',
-                                                message="Examples: +353 +01",
-                                                code='invalid'
-                                            )
-                                            ],
+                                              RegexValidator(
+                                                  regex=r'^\+\d+$',
+                                                  message="Examples: +353 +01",
+                                                  code='invalid'
+                                              )
+                                          ],
                                           help_text="Format must be +123",
                                           required=False
                                           )
@@ -689,6 +689,17 @@ class ArticleStoryBlock(blocks.StreamBlock):
     table = TableBlock(group="HTML")
     video = CustomVideoChooserBlockAlt(group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
+
+
+class MinimalArticleStoryBlock(blocks.StreamBlock):
+    rich_text = RichTextBlock(group="Base")
+    rich_text_advanced = AdvancedRichTextBlock(group="Base")
+    image = ImageBlock(group="Base")
+    document = DocumentBlock(group="Base")
+
+    logos = LogoCardsBlock(group="Module")
+    table = TableBlock(group="Module")
+    youtube_video = YoutubeVideoBlock(group="Module")
 
 
 class PinnedStoriesBlock(blocks.StructBlock):
@@ -753,7 +764,7 @@ class AccordionBlock(blocks.StructBlock):
                             ("document", DocumentBlock(required=False)),
                             ("youtube", YoutubeVideoBlock(group="HTML")),
                             ("contact_details",
-                                SnippetChooserBlock(target_model="utils.ContactSnippet"))
+                             SnippetChooserBlock(target_model="utils.ContactSnippet"))
                         ], required=False)
                          ),
                     ]

@@ -31,7 +31,7 @@ from irelandie_utils.blocks import (
     AdvancedRichTextBlock,
     AccordionBlock,
     TocBlocks,
-    ContactBlock
+    ContactBlock, MinimalArticleStoryBlock
 )
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
@@ -734,7 +734,7 @@ class MinimalArticlePage(BasePage):
 
     publication_date = models.DateTimeField(default=django.utils.timezone.now)
 
-    body = StreamField(ArticleStoryBlock(), blank=True)
+    body = StreamField(MinimalArticleStoryBlock(), blank=True)
 
     related_articles_active = models.BooleanField(default=True)
     featured_home = models.BooleanField(default=False)
