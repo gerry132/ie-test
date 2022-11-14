@@ -1,4 +1,4 @@
-{% load static wagtailuserbar wagtailcore_tags wagtailimages_tags navigation_tags util_tags wagtailaccessibility_tags i18n %}
+{% load static wagtailuserbar wagtailcore_tags wagtailimages_tags navigation_tags util_tags irelandie_assets_tags wagtailaccessibility_tags i18n %}
 {% wagtail_site as current_site %}
 <!doctype html>
 <html lang="en-GB">
@@ -54,8 +54,10 @@
 
         {% block header %}
         {% endblock %}
-
-        <main class="wrapper wrapper--main main{% if page.override_primary_navigation %} main--condensed{% endif %} {% if page.generic_hero %} main--generic-hero{% endif %}" id="main-content">
+            {% check_page_type page.content_type 'news page index' as NewsPageIndex %}
+            {% check_page_type page.content_type 'news landing page' as NewsLandingPage %}
+        <main class="wrapper wrapper--main main{% if page.override_primary_navigation %} main--condensed{% endif %} {% if page.generic_hero or NewsPageIndex or NewsLandingPage %} main--generic-hero{% endif %}
+            {% if not page.hero_image and not page.hero_video and not page.generic_hero and not NewsPageIndex and not NewsLandingPage %} main--without-hero {% endif %}" id="main-content">
             {% block content %}
                 {{ pattern_library_rendered_pattern }}
             {% endblock %}

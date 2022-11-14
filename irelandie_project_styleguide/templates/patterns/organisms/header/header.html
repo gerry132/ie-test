@@ -295,7 +295,15 @@
             <div class="notice-bar">
                 {% include_block page.notice_bar %}
             </div>
+            {% if not page.hero_image and not page.hero_video and not page.generic_hero %}
+            {% check_page_type page.content_type 'news page index' as NewsPageIndex %}
+            {% check_page_type page.content_type 'news landing page' as NewsLandingPage %}
+            {% if not NewsPageIndex and not NewsLandingPage %}
+                {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+            {% endif %}
+            {% endif %}
         </div>
+
     {% endif %}
 
 </header>

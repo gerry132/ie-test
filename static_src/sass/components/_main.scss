@@ -15,6 +15,13 @@
     &--generic-hero{
         padding-top:140px;
     }
+    &--without-hero{
+        padding-top: 170px;
+
+        @include media-query(max-medium) {
+            padding-top: 210px;
+        }
+    }
 }
 .generic-hero__search-is-active{
     position: relative;
