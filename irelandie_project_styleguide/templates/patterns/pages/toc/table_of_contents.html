@@ -10,25 +10,11 @@
      .header__search-is-active{
         padding-top: 100px;
      }
-     @media only screen and (min-width: 1023px) {
-        .breadcrumb-services {
-            padding-top: 30px;
-        }
-
-    }
-    @media only screen and (max-width: 1023px) {
-        .breadcrumb-services {
-            padding-top: 80px;
-        }
     }
 
 </style>
 {% if page.generic_hero %}
-{% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
-{% else %}
-<div class="breadcrumb-services">
-    {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
-</div>
+    {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
 {% endif %}
 
 <div class="search--is-active-services">
@@ -40,19 +26,18 @@
 
 
     <!--start of page description and title-->
+{% if not page.title or not page.generic_hero %}
     <div id="main-header" class="section section--padding section--white">
                 <div class="wrapper wrapper--large wrapper--padding content--padding">
                     <div class="intro--toc">
-                        {% if not page.title or not page.generic_hero %}
                         <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
                         {% if page.description %}
                             <p class="intro__description">{{ page.description }}</p>
                         {% endif %}
-
-                        {% endif %}
                     </div>
                 </div>
     </div>
+{% endif %}
     <!--end of page description and title-->
     <!--start of page body-->
 

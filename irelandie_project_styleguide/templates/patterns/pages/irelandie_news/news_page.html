@@ -2,20 +2,6 @@
 {% load wagtailcore_tags wagtailimages_tags static i18n %}
 
 {% block content %}
-<style>
-     @media only screen and (min-width: 1023px) {
-        .breadcrumb-services {
-            padding-top: 40px;
-        }
-
-    }
-    @media only screen and (max-width: 1023px) {
-        .breadcrumb-services {
-            padding-top: 80px;
-        }
-    }
-
-</style>
 
     {% comment %}
         Responsive hero images
@@ -24,10 +10,6 @@
         {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
         {% include "patterns/molecules/hero/hero.html" with page=page classes="hero--article" %}
         {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
-    {% else %}
-        <div class="breadcrumb-services">
-            {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
-        </div>
     {% endif %}
 
     {% block main %}
