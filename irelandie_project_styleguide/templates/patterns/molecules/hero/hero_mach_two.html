@@ -1,6 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 {% if hero_image %}
-    <div style="max-height: 400px !important; min-height: 200px !important;" alt="{{page.alt_text}}" class="hero hero--background-image background-image{% if classes %} {{ classes }}{% endif %}">
+    <div style="max-height: 500px !important; min-height: 200px !important;" alt="{{page.alt_text}}" class="hero hero--background-image background-image{% if classes %} {{ classes }}{% endif %}">
 {% else %}
     <div alt="{{page.alt_text}}" class="hero{% if page.hero_video %} hero--background-video{% endif %}{% if classes %} {{ classes }}{% endif %}" data-video-container>
 {% endif %}
@@ -8,21 +8,21 @@
 <div class="hero__content-container wrapper wrapper--large wrapper--padding">
         <div class="hero__content">
             <div class="hero__copy">
-                <h1 class="hero__title">
+                <h1 class="hero__title_hybrid hero__title">
                 {% for block in page.generic_hero %}
                     {% if block.value.hero_title %}
                         {{ block.value.hero_title }}
                     {% endif %}
                 {% endfor %}
                 </h1>
-                
+
                 {% for block in page.generic_hero %}
                     {% if block.value.subtitle %}
                         <p class="generic-hero__subtitle">{% firstof block.value.subtitle %}</p>
                     {% endif %}
                 {% endfor %}
-                
-            </div>    
+
+            </div>
         </div>
     </div>
 </div>

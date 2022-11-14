@@ -77,6 +77,16 @@
         font-size: 20px;
     }
 
+    &__title_hybrid{
+      @include media-query(max-large) {
+        font-size: 48px;
+        padding-top: 80px;
+        line-height: 52px;
+        margin: 0;
+    }
+
+    }
+
     &__video-wrapper {
         @include z-index(video-hero);
         position: absolute;
@@ -129,7 +139,7 @@
     }
 
     &__copy {
-        max-width: 500px;
+        max-width: 1280px;
         padding-top: 20px;
 
         #{$root}--background-video & {
