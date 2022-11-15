@@ -296,17 +296,25 @@
 {% block extra_js %}
 <script>
     const breadCrumb = document.querySelector('.search--is-active-services');
+    const notice_bar_services = document.querySelector('.notice-bar-services');
     const toggle_search = document.querySelector('.header__search-toggle');
     const header = document.querySelector("#main-header");
-    const noticeBarServ = document.querySelector(".notice-bar");
     const toggle_serv = document.querySelector('.header__menu-toggle')
     const toggle_mob_serv = document.querySelector('.header__menu-toggle--desktop');
+
 
     toggle_serv.addEventListener('click', () => {
       breadCrumb.classList.toggle('notice-bar__hidden')
     });
     toggle_mob_serv.addEventListener('click', () => {
       breadCrumb.classList.toggle('notice-bar__hidden')
+    });
+
+    toggle_serv.addEventListener('click', () => {
+      notice_bar_services.classList.toggle('notice-bar__hidden')
+    });
+    toggle_mob_serv.addEventListener('click', () => {
+      notice_bar_services.classList.toggle('notice-bar__hidden')
     });
 
     toggle_search.addEventListener('click', () => {
