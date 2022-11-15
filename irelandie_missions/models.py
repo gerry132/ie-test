@@ -159,7 +159,10 @@ class JobContentPage(BasePage):
                 FieldPanel('go_live_at'),
                 FieldPanel('expire_at'),
             ],
-            "Scheduled publishing"
+            heading="Scheduled publishing", help_text="The expiry date you select will unpublish the job advert on "
+                                                      "the selected date. It will also automatically output the "
+                                                      "selected date as the 'Closing date:' on the published job "
+                                                      "advert. "
         ),
         FieldPanel("job_index_page_summary"),
         StreamFieldPanel("body"),
