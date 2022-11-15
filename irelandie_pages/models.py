@@ -131,7 +131,7 @@ class FreeFormPage(FreeFormPageBase):
             NewsPage.objects
             .descendant_of(self)
             .filter(locale=self.locale,
-                    related_articles_active=True)
+                    featured_home=True)
             .public()
             .live()
             .order_by("-publication_date")[:4]

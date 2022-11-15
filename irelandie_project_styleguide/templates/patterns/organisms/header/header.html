@@ -8,6 +8,9 @@
 
 
 <style>
+.breadcrumbs__hidden{
+    display: none;
+}
     @media only screen and (min-width: 1023px) {
         .custom-nav-mob {
             display: none;
@@ -327,10 +330,10 @@
       breadcrumbs.classList.toggle('generic-hero__search-is-active')
     });
     toggle_desk.addEventListener('click', () => {
-      breadcrumbs.classList.toggle('notice-bar__hidden')
+      breadcrumbs.classList.toggle('breadcrumbs__hidden')
     });
     toggle_mob.addEventListener('click', () => {
-      breadcrumbs.classList.toggle('notice-bar__hidden')
+      breadcrumbs.classList.toggle('breadcrumbs__hidden')
     });
 
 
