@@ -1,4 +1,4 @@
-{% load wagtailcore_tags wagtailimages_tags i18n %}
+{% load wagtailcore_tags wagtailimages_tags util_tags i18n %}
 {% if hero_image %}
     <div style="max-height: 500px !important; min-height: 350px !important;" alt="{{page.alt_text}}" class="hero hero--background-image background-image{% if classes %} {{ classes }}{% endif %}">
 {% else %}
@@ -11,7 +11,11 @@
                 <h1 class="hero__title_hybrid hero__title">
                 {% for block in page.generic_hero %}
                     {% if block.value.hero_title %}
+                    {% title_length block.value.hero_title as title_length %}
+                    <div class="{% if title_length > 35 %}hero__title_length{% endif %}">
                         {{ block.value.hero_title }}
+                    </div>
+
                     {% endif %}
                 {% endfor %}
                 </h1>

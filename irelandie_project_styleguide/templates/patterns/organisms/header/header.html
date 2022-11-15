@@ -39,7 +39,7 @@
 {% endif %}
 </style>
 <header>
-    <div class="header {% if custom_header.links %}header--condensed{% endif %}" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,1)"{% endif %}>
+    <div class="header {% if custom_header.links %}header--condensed{% endif %}" {% if not page.hero_image and not page.hero_video and not page.generic_hero %}style="background-color: rgba(0,77,70,1)"{% endif %}>
         <div class="wrapper wrapper--large">
             <div class="header__container">
                 {% comment %}
@@ -159,7 +159,7 @@
                         </svg>
                     </button>
 
-                <div class="header__menu-toggle header__menu-toggle--desk{% if shownav %} header__menu-toggle--desktop{% endif %}">
+                <div class="header__menu-toggle{% if shownav %} header__menu-toggle--desktop{% endif %}">
                     <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
                         <span class="button-menu-toggle__line"></span>
                         <span class="button-menu-toggle__line"></span>
@@ -189,7 +189,7 @@
         Only show this override nav if available on the page
     {% endcomment %}
     {% if custom_header.links %}
-        <div class="header header--override header-large" {% if not page.hero_image and not page.hero_video %}style="background-color: rgba(0,77,70,0.75)"{% endif %}>
+        <div class="header header--override header-large" {% if not page.hero_image and not page.hero_video and not page.generic_hero %}style="background-color: rgba(0,77,70,0.75)"{% endif %}>
             <div class="wrapper wrapper--large">
                 <div class="header__container">
 
@@ -277,7 +277,7 @@
                             </svg>
                         </button>
 
-                    <div class="header__menu-toggle--mobile header__menu-toggle header__menu-toggle--desktop">
+                    <div class="header__menu-toggle header__menu-toggle--desktop">
                         <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
                             <span class="button-menu-toggle__line"></span>
                             <span class="button-menu-toggle__line"></span>
@@ -318,8 +318,8 @@
 
 <script>
     const breadcrumbs = document.querySelector('.breadcrumb');
-    const toggle_desk = document.querySelector('.header__menu-toggle--desk');
-    const toggle_mob = document.querySelector('.header__menu-toggle--mobile');
+    const toggle_desk = document.querySelector('.header__menu-toggle');
+    const toggle_mob = document.querySelector('.header__menu-toggle--desktop');
     const search_desk = document.querySelector('[data-toggle-search]');
     const search_mob = document.querySelector('.header__search-toggle--mobile');
 
