@@ -17,14 +17,14 @@
         <!-- Body -->
     <div class="section section--padding">
         {% if page.related_jobs %}
-        <div class="wrapper link-box__job_margin wrapper--padding content--padding">
-        <div class="link-box__main1">
-            <div style="width:unset;" class="link-box__heading1 link-box__line"></div>
+        <div class="wrapper link-box__job_margin content--padding">
+        <div class="link-box">
+            <div class="link-box__heading1 link-box__line"></div>
             {% for job in page.related_jobs %}
                 {% include "patterns/molecules/job/job-card.html" with job=job %}
-            </div>
+        </div>
             {% endfor %}
-            </div>
+        </div>
         {% else %}
             <h1 class="heading--1 no-vac">There are currently no vacancies.</h1>
         {% endif %}
