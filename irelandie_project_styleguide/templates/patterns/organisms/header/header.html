@@ -159,7 +159,7 @@
                         </svg>
                     </button>
 
-                <div class="header__menu-toggle{% if shownav %} header__menu-toggle--desktop{% endif %}">
+                <div class="header__menu-toggle header__menu-toggle--desktop">
                     <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
                         <span class="button-menu-toggle__line"></span>
                         <span class="button-menu-toggle__line"></span>
@@ -277,7 +277,7 @@
                             </svg>
                         </button>
 
-                    <div class="header__menu-toggle header__menu-toggle--desktop">
+                    <div class="header__menu-toggle header__menu-toggle--mobile">
                         <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
                             <span class="button-menu-toggle__line"></span>
                             <span class="button-menu-toggle__line"></span>
@@ -318,8 +318,8 @@
 
 <script>
     const breadcrumbs = document.querySelector('.breadcrumb');
-    const toggle_desk = document.querySelector('.header__menu-toggle');
-    const toggle_mob = document.querySelector('.header__menu-toggle--desktop');
+    const toggle_desk = document.querySelector('.header__menu-toggle--desktop');
+    const toggle_mob = document.querySelector('.header__menu-toggle--mobile');
     const search_desk = document.querySelector('[data-toggle-search]');
     const search_mob = document.querySelector('.header__search-toggle--mobile');
 
