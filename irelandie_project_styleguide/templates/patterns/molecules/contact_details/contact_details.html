@@ -12,9 +12,13 @@
     </address>
     {% endif %}
 </div>
+    {% if elem.value.international_code %} 
     <a href="tel:{{elem.value.international_code}}{{elem.value.telephone}}">Tel: {{elem.value.international_code}} {{elem.value.telephone}}</a>
     <br/>
+    {% endif %}
+    {% if elem.value.fax %}
     <p>Fax: {{elem.value.fax_number}}</p>
+    {% endif %}
     {{elem.value.email}}
 {% endfor %}
 </div>
