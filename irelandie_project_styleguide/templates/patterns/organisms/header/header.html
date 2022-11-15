@@ -264,7 +264,7 @@
                             </form>
                         <!-- End of the locale selector -->
                         {% endif %}
-                        <button class="header__search-toggle" aria-label="{% trans 'Search' %}" data-toggle-search>
+                        <button class="header__search-toggle header__search-toggle--mobile" aria-label="{% trans 'Search' %}" data-toggle-search>
                             <svg class="header__search-icon" aria-hidden="true">
                                 <use href="#magnifying-glass"></use>
                             </svg>
@@ -292,18 +292,46 @@
                     </div>
                 </div>
             </div>
+
+            {% if not page.hero_image and not page.hero_video and not page.generic_hero %}
+            {% check_page_type page.content_type 'news page index' as NewsPageIndex %}
+            {% check_page_type page.content_type 'job index page' as JobIndexPage %}
+            {% check_page_type page.content_type 'news landing page' as NewsLandingPage %}
+            {% if not NewsPageIndex and not NewsLandingPage and not JobIndexPage %}
+            <div class="breadcrumb">
+                {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+            </div>
+            {% endif %}
+            {% endif %}
+
             <div class="notice-bar">
                 {% include_block page.notice_bar %}
             </div>
-            {% if not page.hero_image and not page.hero_video and not page.generic_hero %}
-            {% check_page_type page.content_type 'news page index' as NewsPageIndex %}
-            {% check_page_type page.content_type 'news landing page' as NewsLandingPage %}
-            {% if not NewsPageIndex and not NewsLandingPage %}
-                {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
-            {% endif %}
-            {% endif %}
         </div>
 
     {% endif %}
 
 </header>
+
+<script>
+    const breadcrumbs = document.querySelector('.breadcrumb');
+    const toggle_desk = document.querySelector('.header__menu-toggle');
+    const toggle_mob = document.querySelector('.header__menu-toggle--desktop');
+    const search_desk = document.querySelector('[data-toggle-search]');
+    const search_mob = document.querySelector('.header__search-toggle--mobile');
+
+    search_desk.addEventListener('click', () => {
+      breadcrumbs.classList.toggle('generic-hero__search-is-active')
+    });
+    search_mob.addEventListener('click', () => {
+      breadcrumbs.classList.toggle('generic-hero__search-is-active')
+    });
+    toggle_desk.addEventListener('click', () => {
+      breadcrumbs.classList.toggle('notice-bar__hidden')
+    });
+    toggle_mob.addEventListener('click', () => {
+      breadcrumbs.classList.toggle('notice-bar__hidden')
+    });
+
+
+</script>
