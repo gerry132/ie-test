@@ -300,7 +300,7 @@
     const toggle_search = document.querySelector('.header__search-toggle');
     const header = document.querySelector("#main-header");
     const toggle_serv = document.querySelector('.header__menu-toggle')
-    const toggle_mob_serv = document.querySelector('.header__menu-toggle--desktop');
+    const toggle_mob_serv = document.querySelector('[data-mobile-menu-toggle]');
 
 
     toggle_serv.addEventListener('click', () => {
@@ -308,13 +308,6 @@
     });
     toggle_mob_serv.addEventListener('click', () => {
       breadCrumb.classList.toggle('notice-bar__hidden')
-    });
-
-    toggle_serv.addEventListener('click', () => {
-      notice_bar_services.classList.toggle('notice-bar__hidden')
-    });
-    toggle_mob_serv.addEventListener('click', () => {
-      notice_bar_services.classList.toggle('notice-bar__hidden')
     });
 
     toggle_search.addEventListener('click', () => {
@@ -322,6 +315,13 @@
     });
     toggle_search.addEventListener('click', () => {
       header.classList.toggle('header__search-is-active')
+    });
+
+    toggle_serv.addEventListener('click', () => {
+      notice_bar_services.classList.toggle('notice-bar__hidden')
+    });
+    toggle_mob_serv.addEventListener('click', () => {
+      notice_bar_services.classList.toggle('notice-bar__hidden')
     });
 
 
