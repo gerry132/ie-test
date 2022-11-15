@@ -77,6 +77,21 @@
         font-size: 20px;
     }
 
+    &__title_length{
+      font-size: 48px;
+      line-height: 43px;
+    @include media-query(max-medium){
+        font-size: 34px;
+        line-height: 30px;
+        }
+
+        @include media-query(large){
+        font-size: 60px;
+        line-height: 58px;
+        }
+
+    }
+
     &__title_hybrid{
     padding-top: 40px;
       @include media-query(max-large) {
