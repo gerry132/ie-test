@@ -79,16 +79,15 @@
 
     &__title_length{
       font-size: 48px;
-      line-height: 43px;
-    @include media-query(max-medium){
-        font-size: 34px;
-        line-height: 30px;
-        }
-
-        @include media-query(large){
-        font-size: 60px;
-        line-height: 58px;
-        }
+      line-height: 52px;
+      @include media-query(max-medium){
+          font-size: 34px;
+          line-height: 38px;
+      }
+      @include media-query(large){
+          font-size: 60px;
+          line-height: 66px;
+      }
 
     }
 
@@ -96,7 +95,7 @@
     padding-top: 40px;
       @include media-query(max-large) {
         font-size: 48px;
-        padding-top: 80px;
+        padding-top: 20px;
         line-height: 52px;
         margin: 0;
     }
