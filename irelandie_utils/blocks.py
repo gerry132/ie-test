@@ -82,35 +82,35 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
             ("", "Choose an icon (optional)"),
             ("authentication", "Authentication"),
             ("citizenship", "Citizenship"),
+            ("closure-dates", "Closure Dates"),
             ("consular-fees", "Consular Fees"),
             ("contact-phone", "Contact Phone"),
-            ("jobs", "Jobs"),
-            ("services", "Services"),
-            ("trade", "Trade"),
-            ("visas", "Visas"),
-            ("working-holiday", "Working Holiday"),
-            ("notice", "Notice"),
-            ("new-to", "New To"),
-            ("location", "Location"),
-            ("opening-hours", "Opening Hours"),
-            ("study", "Study"),
-            ("trade2", "Trade2"),
-            ("travel", "Travel"),
-            ("closure-dates", "Closure Dates"),
             ("contact-mail", "Contact Mail"),
             ("family", "Family"),
+            ("government-building", "Government Building"),
             ("how-we-can-help", "How We Can Help"),
+            ("information", "Information"),
             ("invest", "Invest"),
+            ("jobs", "Jobs"),
             ("link", "Link"),
             ("live", "Live"),
+            ("location", "Location"),
             ("marriage", "Marriage"),
-            ("news", "News"),
-            ("information", "Information"),
-            ("government-building", "Government Building"),
             ("money", "Money"),
+            ("new-to", "New To"),
+            ("news", "News"),
+            ("notice", "Notice"),
+            ("opening-hours", "Opening Hours"),
             ("passport", "Passport"),
             ("plane", "Plane"),
+            ("services", "Services"),
+            ("study", "Study"),
             ("ticket", "Ticket"),
+            ("trade", "Trade"),
+            ("trade2", "Trade2"),
+            ("travel", "Travel"),
+            ("visas", "Visas"),
+            ("working-holiday", "Working Holiday"),
         ),
         required=False,
     )
@@ -123,6 +123,30 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         required=False,
         help_text="An external link.",
     )
+
+    def clean(self, value):
+        errors = {}
+        values = [value["page"], value["url"]]
+        # Set only a Page OR a URL
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose a page or set a URL."
+
+            errors["page"] = ErrorList([message])
+            errors["url"] = ErrorList([message])
+
+        # A URL must have title
+        if value["url"] and not value["title"]:
+            errors["title"] = ErrorList(["Please set a title for the URL"])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context["link_url"] = value["url"] or value["page"].url
+        return context
 
     class Meta:
         template = "patterns/molecules/streamfield/blocks/story_link_block.html"
@@ -496,30 +520,14 @@ class LogoCardBlock(blocks.StructBlock):
 
 
 class LogoCardsBlock(blocks.StructBlock):
-    title = blocks.CharBlock()
-    summary = blocks.TextBlock(required=False)
     summary_richtext = blocks.StructBlock(
         [
-            ("use_richtext", blocks.BooleanBlock(required=False)),
             ("content", AdvancedRichTextBlock())
-        ]
+        ],
+        blank=True,
+        null=True,
     )
     cards = blocks.StreamBlock([("card", LogoCardBlock())])
-
-    def clean(self, value):
-        errors = {}
-        summary = value.get('summary')
-        summary_richtext = value.get('summary_richtext')
-
-        if summary and summary_richtext.get('use_richtext'):
-            msg = "You can't choose both a plaintext and richtext summary."
-            errors['summary'] = ErrorList([msg])
-            errors['summary_richtext'] = ErrorList([msg])
-
-        if errors:
-            raise StructBlockValidationError(block_errors=errors)
-
-        return super().clean(value)
 
     class Meta:
         icon = "pick"
@@ -674,12 +682,12 @@ class ContactBlock(blocks.StructBlock):
     international_code = blocks.CharBlock(max_length=5,
                                           blank=True,
                                           validators=[
-                                            RegexValidator(
-                                                regex=r'^\+\d+$',
-                                                message="Examples: +353 +01",
-                                                code='invalid'
-                                            )
-                                            ],
+                                              RegexValidator(
+                                                  regex=r'^\+\d+$',
+                                                  message="Examples: +353 +01",
+                                                  code='invalid'
+                                              )
+                                          ],
                                           help_text="Format must be +123",
                                           required=False
                                           )
@@ -705,6 +713,17 @@ class ArticleStoryBlock(blocks.StreamBlock):
     table = TableBlock(group="HTML")
     video = CustomVideoChooserBlockAlt(group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
+
+
+class MinimalArticleStoryBlock(blocks.StreamBlock):
+    rich_text = RichTextBlock(group="Base")
+    rich_text_advanced = AdvancedRichTextBlock(group="Base")
+    image = ImageBlock(group="Base")
+    document = DocumentBlock(group="Base")
+
+    logos = LogoCardsBlock(group="Module")
+    table = TableBlock(group="Module")
+    youtube_video = YoutubeVideoBlock(group="Module")
 
 
 class PinnedStoriesBlock(blocks.StructBlock):
@@ -769,7 +788,7 @@ class AccordionBlock(blocks.StructBlock):
                             ("document", DocumentBlock(required=False)),
                             ("youtube", YoutubeVideoBlock(group="HTML")),
                             ("contact_details",
-                                SnippetChooserBlock(target_model="utils.ContactSnippet"))
+                             SnippetChooserBlock(target_model="utils.ContactSnippet"))
                         ], required=False)
                          ),
                     ]
@@ -805,35 +824,35 @@ class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
             ("", "Choose an icon (optional)"),
             ("authentication", "Authentication"),
             ("citizenship", "Citizenship"),
+            ("closure-dates", "Closure Dates"),
             ("consular-fees", "Consular Fees"),
             ("contact-phone", "Contact Phone"),
-            ("jobs", "Jobs"),
-            ("services", "Services"),
-            ("trade", "Trade"),
-            ("visas", "Visas"),
-            ("working-holiday", "Working Holiday"),
-            ("notice", "Notice"),
-            ("new-to", "New To"),
-            ("location", "Location"),
-            ("opening-hours", "Opening Hours"),
-            ("study", "Study"),
-            ("trade2", "Trade2"),
-            ("travel", "Travel"),
-            ("closure-dates", "Closure Dates"),
             ("contact-mail", "Contact Mail"),
             ("family", "Family"),
+            ("government-building", "Government Building"),
             ("how-we-can-help", "How We Can Help"),
+            ("information", "Information"),
             ("invest", "Invest"),
+            ("jobs", "Jobs"),
             ("link", "Link"),
             ("live", "Live"),
+            ("location", "Location"),
             ("marriage", "Marriage"),
-            ("news", "News"),
-            ("information", "Information"),
-            ("government-building", "Government Building"),
             ("money", "Money"),
+            ("new-to", "New To"),
+            ("news", "News"),
+            ("notice", "Notice"),
+            ("opening-hours", "Opening Hours"),
             ("passport", "Passport"),
             ("plane", "Plane"),
+            ("services", "Services"),
+            ("study", "Study"),
             ("ticket", "Ticket"),
+            ("trade", "Trade"),
+            ("trade2", "Trade2"),
+            ("travel", "Travel"),
+            ("visas", "Visas"),
+            ("working-holiday", "Working Holiday"),
         ),
         required=False,
     )
@@ -990,35 +1009,35 @@ class LinkBoxBlock(blocks.StructBlock):
             ("", "Choose an icon (optional)"),
             ("authentication", "Authentication"),
             ("citizenship", "Citizenship"),
+            ("closure-dates", "Closure Dates"),
             ("consular-fees", "Consular Fees"),
             ("contact-phone", "Contact Phone"),
-            ("jobs", "Jobs"),
-            ("services", "Services"),
-            ("trade", "Trade"),
-            ("visas", "Visas"),
-            ("working-holiday", "Working Holiday"),
-            ("notice", "Notice"),
-            ("new-to", "New To"),
-            ("location", "Location"),
-            ("opening-hours", "Opening Hours"),
-            ("study", "Study"),
-            ("trade2", "Trade2"),
-            ("travel", "Travel"),
-            ("closure-dates", "Closure Dates"),
             ("contact-mail", "Contact Mail"),
             ("family", "Family"),
+            ("government-building", "Government Building"),
             ("how-we-can-help", "How We Can Help"),
+            ("information", "Information"),
             ("invest", "Invest"),
+            ("jobs", "Jobs"),
             ("link", "Link"),
             ("live", "Live"),
+            ("location", "Location"),
             ("marriage", "Marriage"),
-            ("news", "News"),
-            ("information", "Information"),
-            ("government-building", "Government Building"),
             ("money", "Money"),
+            ("new-to", "New To"),
+            ("news", "News"),
+            ("notice", "Notice"),
+            ("opening-hours", "Opening Hours"),
             ("passport", "Passport"),
             ("plane", "Plane"),
+            ("services", "Services"),
+            ("study", "Study"),
             ("ticket", "Ticket"),
+            ("trade", "Trade"),
+            ("trade2", "Trade2"),
+            ("travel", "Travel"),
+            ("visas", "Visas"),
+            ("working-holiday", "Working Holiday"),
         ),
         required=False,
     )
@@ -1136,7 +1155,7 @@ class FreeFormBlocks(FreeFormBlocksBase):
     featured_articles = FeaturedArticlesBlock(group="Module")
     featured_story = FeaturedStoryBlock(group="Module")
     logos = LogoCardsBlock(group="Module")
-    link_card = LinkCardBlock()
+    link_card = LinkCardsBlock()
     link_button = LinkButtonBlock()
     link_box = LinkBoxesBlock()
     table = TableBlock(group="HTML")

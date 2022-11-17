@@ -25,6 +25,11 @@
             margin-bottom: 0;
         }
     }
+    &__image-container1 {
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+    }
 
     &__image-container {
         height: 300px;
@@ -56,6 +61,8 @@
         }
     }
     &__summary {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
         #{$root}--no-summary & {
             font-size: 18px;
         }

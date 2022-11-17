@@ -30,9 +30,11 @@
         text-decoration: underline;
         overflow-wrap: break-word;
         word-wrap: break-word;
+        font-weight: 400;
     }
 
     &__meta {
         @include font-size(xs);
+        font-weight: 400;
     }
 }

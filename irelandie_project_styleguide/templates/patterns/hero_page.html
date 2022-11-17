@@ -1,10 +1,11 @@
 {% extends "patterns/base_page.html" %}
-{% load wagtailcore_tags wagtailimages_tags static %}
+{% load wagtailcore_tags wagtailimages_tags static irelandie_assets_tags %}
 
 {% block content %}
     {% comment %}
         Responsive hero images
     {% endcomment %}
+    {% check_page_type page.content_type 'Free Form Page' as FreeFormPage %}
 
     {% if page.hero_image or page.hero_video %}
         {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
@@ -18,6 +19,15 @@
         {% endif %}
     {% elif page.generic_hero %}
         {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+    {% elif FreeFormPage %}
+        <div class="wrapper wrapper--large wrapper--padding">
+                <h1 class="hero__title">
+                    {{ page.title }}
+                </h1>
+                {% if page.description or page.introduction or page.secondary_title %}
+                <div class="hero__introduction"><p>{% firstof page.description page.introduction page.secondary_title %}</p></div>
+                {% endif %}
+        </div>
     {% else %}
         <div class="section section--padding_hero section--grey">
             <div class="wrapper wrapper--large wrapper--padding">

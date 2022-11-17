@@ -4,13 +4,8 @@
 {% load util_tags %}
 {% load i18n %}
 
-<div class="intro">
-    <h2 class="intro__title">{{ value.title }}</h2>
-    {% if value.summary_richtext.use_richtext %}
-        <div class="intro__description">{% include_block value.summary_richtext.content %}</div>
-    {% else %}
-        <div class="intro__description">{{ value.summary }}</div>
-    {% endif %}
+<div class="intro" style="max-width:1024px;">
+    <div class="intro__description">{% include_block value.summary_richtext.content %}</div>
 </div>
 
 <div class="logo-cards featured-blocks featured-blocks--four">

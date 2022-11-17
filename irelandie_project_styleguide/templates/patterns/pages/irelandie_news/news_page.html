@@ -10,14 +10,23 @@
         {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
         {% include "patterns/molecules/hero/hero.html" with page=page classes="hero--article" %}
         {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
-    {% else %}
-        {% include "patterns/molecules/hero/hero_section.html" with page=page %}
-        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
     {% endif %}
 
     {% block main %}
         <!-- Body -->
         <div class="section section--padding">
+             {% if not page.hero_image and not page.hero_video %}
+            <div class="wrapper wrapper--padding">
+                <div class="rich-text">
+                        <h1 class="hero__title">
+                                {{ page.title }}
+                        </h1>
+                        {% if page.introduction %}
+                            <div class="hero__introduction"><p>{% firstof page.introduction %}</p></div>
+                        {% endif %}
+                </div>
+            </div>
+             {% endif %}
             <div class="wrapper wrapper--padding">
                 {% if page.publication_date %}
                 <div class="rich-text">

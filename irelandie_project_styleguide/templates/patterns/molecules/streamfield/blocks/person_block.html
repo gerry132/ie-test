@@ -18,7 +18,7 @@
                                 </video>
                             </div>
                         {% endif %}
-                        <div class="story__content story__alignm">
+                        <div class="story__alignm story__content ">
                             <div class="story__copy1">
 
                                 {{ value.person_title }}
@@ -37,7 +37,7 @@
                                 {% if value.contact_details or value.opening_hours or value.closure_dates or value.emergency_contact_details %}
 
 									<div class="rich-text">
-                                            {% if value.contact_details %} 
+                                            {% if value.contact_details %}
                                                 {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=value.contact_details %}
                                             {% endif %}
                                             {% if value.opening_hours %}

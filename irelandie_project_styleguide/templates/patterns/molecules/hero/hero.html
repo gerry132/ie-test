@@ -6,14 +6,14 @@
     <div alt="{{page.alt_text}}" class="hero{% if page.hero_video %} hero--background-video{% endif %}{% if classes %} {{ classes }}{% endif %}" data-video-container>
 {% endif %}
 
-{% if page.hexcolor or page.transparency %} 
+{% if page.hexcolor or page.transparency %}
 <style>
     .hero::before {
     content: '';
-    background: linear-gradient(0deg, 
-                            {% if page.hexcolor %} {{page.hexcolor}} {% else %} black {% endif %} 0%, 
-                            rgba(0, 0, 0, 0) 
-                            
+    background: linear-gradient(0deg,
+                            {% if page.hexcolor %} {{page.hexcolor}} {% else %} black {% endif %} 0%,
+                            rgba(0, 0, 0, 0)
+
                             {% if page.transparency %} {{page.transparency}}% {% else %}100% {% endif %});
     display: block;
     left: 0;
@@ -46,17 +46,19 @@
                         {{ page.title }}
                     {% endif %}
                 </h1>
-                
+
                 {% if page.summary or page.introduction %}
                     <p>{% firstof page.summary page.introduction %}</p>
                 {% endif %}
-                
+
                 {% if page.link_page and page.link_text %}
                     {% pageurl page.link_page as href %}
                     <a href="{{ href }}" class="hero__button button">{{ page.link_text }}</a>
                 {% endif %}
                 {% if page.search_bar %}
+                <div style="max-width:500px;">
                     {% include "patterns/atoms/hero_search/hero_search.html" %}
+                </div>
                 {% endif %}
             </div>
             {% if page.hero_video %}

@@ -47,6 +47,11 @@ def return_date_from_datetime(date_obj):
 
 
 @register.simple_tag
+def title_length(title):
+    return len(str(title))
+
+
+@register.simple_tag
 def new_width(iframe, width):
     res = re.sub(r'width="\d{1,3}"', 'width="' + str(width) + '%"', iframe)
     return res

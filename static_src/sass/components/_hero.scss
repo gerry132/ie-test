@@ -73,6 +73,34 @@
             max-width: 100%;
         }
     }
+    &__introduction{
+        font-size: 20px;
+    }
+
+    &__title_length{
+      font-size: 48px;
+      line-height: 52px;
+      @include media-query(max-medium){
+          font-size: 34px;
+          line-height: 38px;
+      }
+      @include media-query(large){
+          font-size: 55px;
+          line-height: 62px;
+      }
+
+    }
+
+    &__title_hybrid{
+    padding-top: 40px;
+      @include media-query(max-large) {
+        font-size: 48px;
+        padding-top: 20px;
+        line-height: 52px;
+        margin: 0;
+    }
+
+    }
 
     &__video-wrapper {
         @include z-index(video-hero);
@@ -124,10 +152,18 @@
             flex: 1 0 50%;
         }
     }
+    &__copy_hybrid {
+        max-width: 1024px;
+        padding-top: 20px;
+
+        #{$root}--background-video & {
+            max-width: 100%;
+        }
+    }
 
     &__copy {
-        max-width: 500px;
-        padding-top: 20px;
+        max-width: 1024px;
+        padding-top: 80px;
 
         #{$root}--background-video & {
             max-width: 100%;

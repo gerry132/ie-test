@@ -1,7 +1,9 @@
 .field--selection {
     border-radius: 16px;
+    background: #ebe9e1;
     border: 1px solid transparent;
-    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 25%);
+    border-bottom-color: #000;
+    box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
     width: 100%;
     padding: 10px;
 }

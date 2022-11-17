@@ -5,61 +5,74 @@
 {% block content %}
 <style>
     .notice-bar--extended__search-is-active {
-                top: 0px;
+                top: 80px;
             }
      .header__search-is-active{
-        padding-top: 100px;
+        padding-top: 80px;
      }
-     @media only screen and (min-width: 1023px) {
-        .breadcrumb-services {
-            padding-top: 30px;
+     @media only screen and (min-width: 1024px) {
+        .notice-bar-services {
+           position: relative;
+           top: 30px;
         }
-
+     }
+     @media only screen and (max-width: 1023px) {
+        .notice-bar-services {
+           position: relative;
+           top: 70px;
+        }
     }
-    @media only screen and (max-width: 1023px) {
-        .breadcrumb-services {
-            padding-top: 80px;
+
+     @media only screen and (min-width: 1024px) {
+        .search--is-active-services {
+           position: relative;
+           top: 20px;
+        }
+     }
+     @media only screen and (max-width: 1023px) {
+        .search--is-active-services {
+           position: relative;
+           top: 40px;
         }
     }
 
 </style>
 {% if page.generic_hero %}
-{% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
-{% else %}
-<div class="breadcrumb-services">
-    {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
-</div>
+    <div class="notice-bar notice-bar-services">
+            {% include_block page.notice_bar_services %}
+    </div>
+    {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+
 {% endif %}
-
+{% if not page.generic_hero %}
 <div class="search--is-active-services">
-
     <div class="notice-bar">
         {% include_block page.notice_bar_services %}
     </div>
 </div>
+{% endif %}
 
 
     <!--start of page description and title-->
+{% if not page.title or not page.generic_hero %}
     <div id="main-header" class="section section--padding section--white">
                 <div class="wrapper wrapper--large wrapper--padding content--padding">
                     <div class="intro--toc">
-                        {% if not page.title or not page.generic_hero %}
                         <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
                         {% if page.description %}
                             <p class="intro__description">{{ page.description }}</p>
                         {% endif %}
-
-                        {% endif %}
                     </div>
                 </div>
     </div>
+{% endif %}
     <!--end of page description and title-->
     <!--start of page body-->
 
     <!--end of page body-->
 {% include_block page.stories_top %}
 
-    <div class="section--master">
+    <div class="section--master {% if page.generic_hero %} section section--padding {% endif %}">
         <div class="container-fluid">
             <div class="wrapper wrapper--large wrapper--padding">
                 <!--start of row-->
@@ -238,11 +251,17 @@
                                         {% endif %}
                                     {% endfor %}
                                     {% for block_snippets in blocks_admin.value.snippets %}
-                                        {% for block_body in block_snippets.value.body %}
-                                    <div class="wrapper wrapper--large wrapper--padding content--padding">
-                                            {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block_body %}
-                                    </div>
-                                        {% endfor %}
+                                            {% if block_snippets.block_type == 'contact_details' %}
+                                                <div id="{{block_admin.title}}" class="wrapper wrapper--large wrapper--padding content--padding">
+                                                    {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
+                                                </div>
+                                            {% else %}
+                                            {% for block_body in block_snippets.value.body %}
+                                                <div class="wrapper wrapper--large wrapper--padding content--padding">
+                                                        {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block_body %}
+                                                </div>
+                                            {% endfor %}
+                                            {% endif %}
                                     {% endfor %}
                                 </div>
                             {% endif %}
@@ -258,7 +277,7 @@
                     <!--start of  col-md-12 col-lg-3 -->
                     <div class="col-sm-12 col-md-12 col-lg-3 wrapper">
                             {% if page.related_content %}
-                                <h4 class="header--related-content">Related Content</h4>
+                                <h4 class="header--related-content">Related content</h4>
                                 {% for p in page.related_content %}
                                     <div style="padding-bottom: 20px;">
                                                 {% include_block p with default_image=default_image%}
@@ -276,16 +295,33 @@
 {% endblock %}
 {% block extra_js %}
 <script>
-    const breadcrumbs = document.querySelector('.search--is-active-services');
-    const noticebar = document.querySelector('.notice-bar--extended');
-    const toggle = document.querySelector('.header__search-toggle');
+    const breadCrumb = document.querySelector('.search--is-active-services');
+    const notice_bar_services = document.querySelector('.notice-bar-services');
+    const toggle_search = document.querySelector('.header__search-toggle');
     const header = document.querySelector("#main-header");
+    const toggle_serv = document.querySelector('[data-mobile-menu-toggle]')
+    const toggle_mob_serv = document.querySelector('.header__menu-toggle--mobile');
 
-    toggle.addEventListener('click', () => {
-      breadcrumbs.classList.toggle('generic-hero__search-is-active')
+
+    toggle_serv.addEventListener('click', () => {
+      breadCrumb.classList.toggle('notice-bar__hidden')
     });
-    toggle.addEventListener('click', () => {
+    toggle_mob_serv.addEventListener('click', () => {
+      breadCrumb.classList.toggle('notice-bar__hidden')
+    });
+
+    toggle_search.addEventListener('click', () => {
+      breadCrumb.classList.toggle('generic-hero__search-is-active')
+    });
+    toggle_search.addEventListener('click', () => {
       header.classList.toggle('header__search-is-active')
+    });
+
+    toggle_serv.addEventListener('click', () => {
+      notice_bar_services.classList.toggle('notice-bar__hidden')
+    });
+    toggle_mob_serv.addEventListener('click', () => {
+      notice_bar_services.classList.toggle('notice-bar__hidden')
     });
 
 

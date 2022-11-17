@@ -80,13 +80,13 @@
     margin: 20px auto;
     order: 2;
     flex: 1 1 30%;
+    border-radius: $border-radius;
 
 
     }
 
     &__image {
-        border-top-left-radius: $border-radius;
-        border-top-right-radius: $border-radius;
+        border-radius: $border-radius;
         object-fit: cover;
 
         @include media-query(large) {
@@ -130,16 +130,24 @@
         flex: 1 0 40%;
 
         @media only screen and (min-width: 1024px) {
-            padding: 40px 60px;
+            padding: 0px 60px;
         }
 
         @media only screen and (max-width: 1023px) {
-            padding: 0 20px;
+            padding: 40px 20px;
         }
     }
     &__alignm{
             align-self: stretch;
             justify-content: space-between;
+
+            @media only screen and (min-width: 1024px) {
+            padding: 40px 60px;
+            }
+
+            @media only screen and (max-width: 1023px) {
+                padding: 0 20px;
+            }
     }
 
     &__logo {

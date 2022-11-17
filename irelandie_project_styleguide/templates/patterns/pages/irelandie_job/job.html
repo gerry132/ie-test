@@ -8,9 +8,6 @@
 
 {% block content %}
  <!-- Main -->
-    <div class="section" style="padding-top: 40px;">
-        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
-    </div>
 
     {% block main %}
         <!-- Body -->
@@ -23,12 +20,19 @@
             {% if page.subtitle %}
                 <p>{% firstof page.subtitle %}</p>
             {% endif %}
-            
+
             {% if page.expire_at %}
                 <p>Closing date: {% format_date page.expire_at %}</p>
             {% endif %}
-            {% include_block page.rich_text %}
-            {% include_block page.body %}
+             {% for block in page.body %}
+                {% if block.block_type == 'document' %}
+                    <div class="rich-text">
+                        {% include_block block %}
+                    </div>
+                {% else %}
+                    {% include_block block %}
+                {% endif %}
+             {% endfor %}
             {% if page.privacy_policy %}
                 {% include_block page.privacy_policy.privacy_snippet %}
             {% else %}
