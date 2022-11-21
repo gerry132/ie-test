@@ -1145,7 +1145,7 @@ class GenericHeroBlock(blocks.StructBlock):
     subtitle = blocks.CharBlock(required=False)
 
     class Meta:
-        label = "Generic Hero Block"
+        label = "Mini Hero Block"
         template = "patterns/molecules/streamfield/blocks/generic_hero.html"
 
 
