@@ -393,6 +393,7 @@ class RichTextBlock(blocks.RichTextBlock):
 
 
 class AdvancedRichTextBlock(blocks.StructBlock):
+    section_id = blocks.CharBlock(required=False)
     paragraph_alignment = blocks.ChoiceBlock(
         required=False,
         choices=ParagraphAlignment.choices,

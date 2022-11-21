@@ -1,5 +1,5 @@
 {% load wagtailcore_tags %}
-<div class="rich-text">
+<div class="rich-text" {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
     {% if value.paragraph_alignment == 'narrow' %}
         <div class="rich-text rich-text__narrow">
             <h3 class="story__heading heading--2">{{ value.heading }}</h3>
