@@ -770,7 +770,7 @@ class AccordionBlock(blocks.StructBlock):
                                     "document-link",
                                     "ul",
                                     "image",
-                                ]
+                                ], required=False,
                             ),
                         ),
                         ("button_link", blocks.StreamBlock(

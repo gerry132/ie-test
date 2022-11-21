@@ -489,6 +489,10 @@ class ServiceContent(BasePage):
     ]
 
 
+class Notice(ServiceContent):
+    template = "patterns/pages/missions/notice_page.html"
+
+
 class ServicesLandingPage(BasePage):
     template = "patterns/pages/missions/services_landing_page.html"
     generic_hero = StreamField(
