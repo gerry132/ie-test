@@ -880,6 +880,20 @@ class TocBlocks(blocks.StreamBlock):
     table = TableBlock(group="HTML")
 
 
+class GeneralContentBlocks(blocks.StreamBlock):
+    rich_text = AdvancedRichTextBlock(group="Base")
+    image = ImageBlock(group="Base")
+    document = DocumentBlock(group="Base")
+    html = blocks.RawHTMLBlock(
+        group="HTML",
+        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
+    )
+    table = TableBlock(group="HTML")
+    youtube_video = YoutubeVideoBlock(group="HTML")
+    accordion = AccordionBlock(group="Base")
+    logos = LogoCardsBlock(group="Base")
+
+
 class TocBlock(blocks.StructBlock):
     title = blocks.CharBlock()
     content = TocBlocks(required=False)
@@ -895,8 +909,13 @@ class TocBlockSnippets(blocks.StreamBlock):
 
 class TocAdminBlock(blocks.StructBlock):
     title = blocks.CharBlock()
-    content = TocBlocks(required=False)
-    snippets = TocBlockSnippets(required=False)
+    content = blocks.StreamBlock(
+        [
+            ("content", GeneralContentBlocks()),
+            ("snippets", TocBlockSnippets())
+        ],
+        required=False,
+    )
 
 
 class AdditionalSocialBlock(blocks.StructBlock):
@@ -987,20 +1006,6 @@ class PersonSocialBlock(blocks.StructBlock):
     class Meta:
         label = "Person + Social Feed"
         template = "patterns/molecules/streamfield/blocks/person_block.html"
-
-
-class GeneralContentBlocks(blocks.StreamBlock):
-    rich_text = AdvancedRichTextBlock(group="Base")
-    image = ImageBlock(group="Base")
-    document = DocumentBlock(group="Base")
-    html = blocks.RawHTMLBlock(
-        group="HTML",
-        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
-    )
-    table = TableBlock(group="HTML")
-    youtube_video = YoutubeVideoBlock(group="HTML")
-    accordion = AccordionBlock(group="Base")
-    logos = LogoCardsBlock(group="Base")
 
 
 class LinkBoxBlock(blocks.StructBlock):
