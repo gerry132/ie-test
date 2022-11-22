@@ -489,8 +489,90 @@ class ServiceContent(BasePage):
     ]
 
 
-class Notice(ServiceContent):
+class NoticePage(BasePage):
     template = "patterns/pages/missions/notice_page.html"
+    generic_hero = StreamField(
+        [
+            ("generic_hero", blocks.GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+    related_content = StreamField(
+        [
+            ("related_item", blocks.RelatedContentBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+    )
+    introduction = RichTextField(blank=True)
+
+    stories_top = StreamField(
+        [
+            ("story", blocks.StoryBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+    )
+    stories_bottom = StreamField(
+        [
+            ("story", blocks.StoryBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+    )
+    admin_body1 = StreamField(
+        [
+            ("admin_contents", blocks.TocAdminBlock())
+        ],
+        blank=True
+    )
+    body = StreamField(
+        [
+            ("content", blocks.TocBlock())
+        ],
+        blank=True
+    )
+    admin_body2 = StreamField(
+        [
+            ("admin_content", blocks.TocAdminBlock())
+        ],
+        blank=True
+    )
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        pages = self.get_ancestors()
+        root_found = False
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['default_image'] = missions.default_image
+        if not root_found:
+            f = HomePage.objects.all()[:1].get()
+            context['default_image'] = f.default_image
+        return context
+
+    content_panels = BasePage.content_panels + [
+        StreamFieldPanel("generic_hero", permission="access_admin"),
+        FieldPanel("introduction"),
+        StreamFieldPanel("stories_top", heading="Two Column Feature"),
+        StreamFieldPanel("admin_body1", permission="access_admin", heading="Admin_body"),
+        StreamFieldPanel("body"),
+        StreamFieldPanel("admin_body2", permission="access_admin", heading="Admin_body"),
+        StreamFieldPanel("stories_bottom", heading="Two Column"),
+        StreamFieldPanel("related_content"),
+    ]
+
+    class Meta:
+        verbose_name = "Notice"
+        verbose_name_plural = "Notice"
 
 
 class ServicesLandingPage(BasePage):
