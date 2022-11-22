@@ -59,7 +59,7 @@
             {% check_page_type page.content_type 'job index page' as JobIndexPage %}
             {% has_root_override page header=True as override %}
         <main class="wrapper wrapper--main main{% if page.override_primary_navigation %} main--condensed{% endif %} {% if page.generic_hero and NewsPageIndex and override or page.generic_hero and NewsLandingPage and override or page.generic_hero and JobIndexPage and override or NewsPageIndex and override or NewsLandingPage and override or JobIndexPage and override %}
-         main--generic-hero{% endif %}{% if not page.hero_image and not page.hero_video and not page.generic_hero and not NewsPageIndex and not NewsLandingPage and not JobIndexPage %} main--without-hero {% endif %}" id="main-content">
+         main--generic-hero{% endif %}{% if not page.hero_image and not page.hero_video and not page.generic_hero and not NewsPageIndex and not NewsLandingPage and not JobIndexPage and override %} main--without-hero {% endif %}" id="main-content">
             {% block content %}
                 {{ pattern_library_rendered_pattern }}
             {% endblock %}
