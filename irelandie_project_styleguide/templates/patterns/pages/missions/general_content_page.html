@@ -4,25 +4,24 @@
 {% load wagtailcore_tags wagtailimages_tags static i18n %}
 {% block content %}
 {% if page.generic_hero %}
-{% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+    {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
 {% endif %}
-<div id="main-header" class="section section--padding section--white">
-                <div class="wrapper wrapper--large wrapper--padding content--padding">
-                    <div class="intro--toc">
-                        {% if not page.title or not page.generic_hero %}
-                        <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
-                        {% if page.description %}
-                            <p class="intro__description">{{ page.description }}</p>
-                        {% endif %}
-
-                        {% endif %}
+{% if not page.generic_hero %}
+        <div id="main-header" class="section section--padding section--white">
+                    <div class="wrapper wrapper--large wrapper--padding content--padding">
+                        <div class="intro--toc">
+                            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                            {% if page.description %}
+                                <p class="intro__description">{{ page.description }}</p>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
-    </div>
+        </div>
+{% endif %}
 
 
         <!-- Body -->
-
+<div class="section--master {% if page.generic_hero %} section section--padding {% endif %}">
             {% for block in page.body %}
                 {% if block.block_type == 'heading' or block.block_type == 'rich_text' or block.block_type == 'image' or block.block_type == 'document' or block.block_type == 'table' %}
 
@@ -39,7 +38,6 @@
                             {% include_block block %}
                         </div>
                     {% endif %}
-                </div>
             {% elif block.block_type == 'logos' %}
                 <div class="wrapper wrapper--large wrapper--padding">
                         {% include_block block %}
@@ -56,7 +54,6 @@
                 </div>
             {% endif %}
         {% endfor %}
-
-
+</div>
     {% endblock %}
 
