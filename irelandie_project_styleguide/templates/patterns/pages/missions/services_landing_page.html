@@ -6,15 +6,26 @@
 {% block content %}
  <!-- Main -->
 
-    {% if page.title or page.generic_hero %}
+    {% if page.generic_hero %}
         {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+    {% endif %}
+    {% if not page.generic_hero %}
+        <div id="main-header" class="section section--padding section--white">
+                    <div class="wrapper wrapper--large wrapper--padding content--padding">
+                        <div class="intro--toc">
+                            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                            {% if page.description %}
+                                <p class="intro__description">{{ page.description }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+        </div>
     {% endif %}
 
     {% block main %}
         <!-- Body -->
-    <div class="section section--padding">
         {% if page.rich_text %}
-            <div class="wrapper wrapper--large--toc section--padding">
+            <div class="wrapper wrapper--large--toc {% if page.generic_hero %} section section--padding {% endif %}">
                 {% include_block page.rich_text %}
             </div>
         {% endif %}
@@ -37,6 +48,5 @@
             {% if page.related_content %}
         </div>
             {% endif %}
-    </div>
     {% endblock %}
 {% endblock %}
