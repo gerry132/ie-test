@@ -215,7 +215,7 @@ class JobIndexPage(BasePage):
     )
 
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin"),
+        StreamFieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         StreamFieldPanel("privacy_policy", permission="access_admin"),
     ]
 
@@ -384,7 +384,7 @@ class Magazine(HeroPage):
     )
 
     content_panels = HeroPage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin"),
+        StreamFieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         StreamFieldPanel("body")
     ]
     edit_handler = TabbedInterface([
@@ -474,7 +474,7 @@ class ServiceContent(BasePage):
         return context
 
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin"),
+        StreamFieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("introduction"),
         MultiFieldPanel([
             StreamFieldPanel("notice_bar_services"),
@@ -560,7 +560,7 @@ class NoticePage(BasePage):
         return context
 
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin"),
+        StreamFieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("introduction"),
         StreamFieldPanel("stories_top", heading="Two Column Feature"),
         StreamFieldPanel("admin_body1", permission="access_admin", heading="Admin_body"),
@@ -622,7 +622,7 @@ class ServicesLandingPage(BasePage):
         return context
 
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin"),
+        StreamFieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         StreamFieldPanel("rich_text", heading="Advanced Richtext", permission="access_admin"),
         StreamFieldPanel("body", permission="access_admin"),
     ]
@@ -785,7 +785,7 @@ class GeneralContentPage(HeroPage):
     body = StreamField(blocks.GeneralContentBlocks(), blank=True)
 
     content_panels = HeroPage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin"),
+        StreamFieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("introduction"),
         StreamFieldPanel("body"),
     ]
