@@ -119,3 +119,8 @@
         margin-top: 8px;
     }
 }
+.primary-nav__link[aria-current="page"] {
+      color: lighten($color--secondary, 20%);
+      border-bottom: 1px solid $color--secondary;
+      background-color: transparent;
+}
