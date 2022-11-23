@@ -30,12 +30,12 @@
     <!--start of page body-->
 
     <!--end of page body-->
-<div class="wrapper wrapper--large wrapper--padding content--padding">
-    <p>Last updated: {% format_date page.last_published_at %}</p>
-</div>
-{% include_block page.stories_top %}
 
-    <div class="section--master {% if page.generic_hero %} section section--padding {% endif %}">
+    <div class="section--master " style="{% if not page.generic_hero %} margin-top: -3%;{% endif %}">
+        <div class="wrapper wrapper--large wrapper--padding content--padding">
+            <p>Last updated: {% format_date page.last_published_at %}</p>
+        </div>
+        {% include_block page.stories_top %}
         <div class="container-fluid">
             <div class="wrapper wrapper--large wrapper--padding">
                 <!--start of row-->
@@ -67,7 +67,7 @@
                                 </div>
                             {% endif %}
                             {% if page.introduction %}
-                                <div class="wrapper wrapper--large  content--padding">
+                                <div class="wrapper wrapper--large content--padding">
                                     <p class="intro__description">{{ page.introduction|richtext }}</p>
                                 </div>
                             {% endif %}
@@ -78,42 +78,7 @@
                                     {% for block_admins in blocks_admin.value.content %}
                                         {% if block_admins.block_type == 'content' %}
                                             {% for subblock in block_admins.value %}
-                                                {% if subblock.block_type == 'heading' or subblock.block_type == 'rich_text' or subblock.block_type == 'image' or subblock.block_type == 'document' or subblock.block_type == 'table' %}
-                                                {% if subblock.block_type == 'table' %}
-                                                    <div id="{{subblock.title}}" class="wrapper wrapper--small  content--padding">
-                                                        {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=subblock %}
-                                                    </div>
-                                                {% elif block_snippets.block_type == 'contact_details' %}
-                                                    <div id="{{subblock.title}}" class="wrapper wrapper--large  content--padding">
-                                                        {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
-                                                    </div>
-                                                {% elif subblock.block_type == 'heading' or subblock.block_type == 'rich_text' %}
-                                                    <div class="wrapper wrapper--large  content--padding">
-                                                        {% include_block subblock %}
-                                                    </div>
-                                                {% else %}
-                                                    <div class="wrapper wrapper--small  content--padding">
-                                                        {% include_block subblock %}
-                                                    </div>
-                                                {% endif %}
-                                                {% elif subblock.block_type == 'stories' %}
-                                                    {% include_block subblock %}
-                                                {% elif subblock.block_type == 'logos' %}
-                                                    <div class="wrapper wrapper--large  content--padding">
-                                                        <div class="section section--padding">
-                                                            {% include_block subblock %}
-                                                        </div>
-                                                    </div>
-                                                {% elif subblock.block_type == 'accordion' %}
-                                                    <div class="wrapper wrapper--large  content--padding">
-                                                        {% include_block subblock %}
-                                                    </div>
-                                                {% else %}
-                                                    <div class="wrapper wrapper--large  content--padding">
-                                                        {% include_block subblock %}
-
-                                                    </div>
-                                                {% endif %}
+                                                {% include  "patterns/pages/toc/general_blocks.html" with subblock=subblock %}
                                             {% endfor %}
 
                                     {% elif block_admins.block_type == 'snippets' %}
@@ -123,10 +88,11 @@
                                                 {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
                                             </div>
                                              {% else %}
-                                                {% for block_body in block_snippets.value.body %}
-                                                    <div class="wrapper wrapper--large  content--padding">
-                                                            {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block_body %}
-                                                    </div>
+                                                {% for elem in block_snippets.value.body %}
+                                                        {% for subblock in elem.value %}
+                                                           {% include  "patterns/pages/toc/general_blocks.html" with subblock=subblock %}
+                                                        {% endfor %}
+
                                                 {% endfor %}
                                             {% endif %}
                                         {% endfor %}
@@ -140,39 +106,7 @@
                             {% if blocks.block_type == 'content' %}
                             <div id="{{blocks.value.title}}">
                                 {% for block in blocks.value.content %}
-                                    {% if block.block_type == 'heading' or block.block_type == 'rich_text' or block.block_type == 'image' or block.block_type == 'document' or block.block_type == 'table' %}
-                                            {% if block.block_type == 'table' %}
-                                                <div id="{{block.title}}" class="wrapper wrapper--small  content--padding">
-                                                    {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}
-                                                </div>
-                                            {% elif block.block_type == 'heading' or block.block_type == 'rich_text' %}
-                                                <div class="wrapper wrapper--large  content--padding">
-                                                    {% include_block block %}
-                                                </div>
-                                            {% else %}
-                                                <div class="wrapper wrapper--small  content--padding">
-                                                    {% include_block block %}
-                                                </div>
-                                            {% endif %}
-                                    {% elif block.block_type == 'pinned_stories' %}
-                                        {% include_block block %}
-                                    {% elif block.block_type == 'stories' %}
-                                        {% include_block block %}
-                                    {% elif block.block_type == 'logos' %}
-                                        <div class="wrapper wrapper--large  content--padding">
-                                            <div class="section section--padding">
-                                                {% include_block block %}
-                                            </div>
-                                        </div>
-                                    {% elif block.block_type == 'accordion' %}
-                                        <div class="wrapper wrapper--large  content--padding">
-                                            {% include_block block %}
-                                        </div>
-                                    {% else %}
-                                        <div class="wrapper wrapper--large  content--padding">
-                                            {% include_block block %}
-                                        </div>
-                                    {% endif %}
+                                    {% include  "patterns/pages/toc/general_blocks.html" with subblock=block %}
                             {% endfor %}
                         </div>
                         {% endif %}
@@ -183,42 +117,7 @@
                                     {% for block_admins in blocks_admin.value.content %}
                                         {% if block_admins.block_type == 'content' %}
                                             {% for subblock in block_admins.value %}
-                                                {% if subblock.block_type == 'heading' or subblock.block_type == 'rich_text' or subblock.block_type == 'image' or subblock.block_type == 'document' or subblock.block_type == 'table' %}
-                                                {% if subblock.block_type == 'table' %}
-                                                    <div id="{{subblock.title}}" class="wrapper wrapper--small  content--padding">
-                                                        {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=subblock %}
-                                                    </div>
-                                                {% elif block_snippets.block_type == 'contact_details' %}
-                                                    <div id="{{subblock.title}}" class="wrapper wrapper--large  content--padding">
-                                                        {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
-                                                    </div>
-                                                {% elif subblock.block_type == 'heading' or subblock.block_type == 'rich_text' %}
-                                                    <div class="wrapper wrapper--large  content--padding">
-                                                        {% include_block subblock %}
-                                                    </div>
-                                                {% else %}
-                                                    <div class="wrapper wrapper--small  content--padding">
-                                                        {% include_block subblock %}
-                                                    </div>
-                                                {% endif %}
-                                                {% elif subblock.block_type == 'stories' %}
-                                                    {% include_block subblock %}
-                                                {% elif subblock.block_type == 'logos' %}
-                                                    <div class="wrapper wrapper--large  content--padding">
-                                                        <div class="section section--padding">
-                                                            {% include_block subblock %}
-                                                        </div>
-                                                    </div>
-                                                {% elif subblock.block_type == 'accordion' %}
-                                                    <div class="wrapper wrapper--large  content--padding">
-                                                        {% include_block subblock %}
-                                                    </div>
-                                                {% else %}
-                                                    <div class="wrapper wrapper--large  content--padding">
-                                                        {% include_block subblock %}
-
-                                                    </div>
-                                                {% endif %}
+                                                {% include  "patterns/pages/toc/general_blocks.html" with subblock=subblock %}
                                             {% endfor %}
 
                                     {% elif block_admins.block_type == 'snippets' %}
@@ -228,10 +127,11 @@
                                                 {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
                                             </div>
                                              {% else %}
-                                                {% for block_body in block_snippets.value.body %}
-                                                    <div class="wrapper wrapper--large  content--padding">
-                                                            {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block_body %}
-                                                    </div>
+                                                {% for elem in block_snippets.value.body %}
+                                                        {% for subblock in elem.value %}
+                                                             {% include  "patterns/pages/toc/general_blocks.html" with subblock=subblock %}
+
+                                                        {% endfor %}
                                                 {% endfor %}
                                             {% endif %}
                                         {% endfor %}
@@ -241,6 +141,7 @@
                                 </div>
                             {% endif %}
                             {% endfor %}
+
                             </div>
 
                         </div>
@@ -264,8 +165,9 @@
                 </div>
             </div>
         </div>
+        {% include_block page.stories_bottom %}
     </div>
-{% include_block page.stories_bottom %}
+
 
 {% endblock %}
 {% block extra_js %}
