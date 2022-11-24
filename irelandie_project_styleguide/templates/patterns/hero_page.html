@@ -1,5 +1,5 @@
 {% extends "patterns/base_page.html" %}
-{% load wagtailcore_tags wagtailimages_tags static irelandie_assets_tags %}
+{% load wagtailcore_tags wagtailimages_tags static irelandie_assets_tags navigation_tags %}
 
 {% block content %}
     {% comment %}
@@ -20,6 +20,8 @@
     {% elif page.generic_hero %}
         {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
     {% elif FreeFormPage %}
+        {% has_root_override page header=True as override %}
+    <div class="section section--padding section--white {% if not override and page.get_ancestors|length > 2 %} section--padding_without_hero{% endif %}">
         <div class="wrapper wrapper--large wrapper--padding">
                 <h1 class="hero__title">
                     {{ page.title }}
@@ -28,6 +30,7 @@
                 <div class="hero__introduction"><p>{% firstof page.description page.introduction page.secondary_title %}</p></div>
                 {% endif %}
         </div>
+    </div>
     {% else %}
         <div class="section section--padding_hero section--grey">
             <div class="wrapper wrapper--large wrapper--padding">
