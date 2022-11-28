@@ -30,8 +30,7 @@ from irelandie_utils.blocks import (
     ArticleStoryBlock,
     AdvancedRichTextBlock,
     AccordionBlock,
-    TocBlocks,
-    ContactBlock, MinimalArticleStoryBlock
+    ContactBlock, MinimalArticleStoryBlock, GeneralContentBlocks
 )
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
@@ -859,7 +858,7 @@ class Visa(models.Model):
     title = models.CharField(max_length=255)
     body = StreamField(
         [
-            ("content", TocBlocks())
+            ("content", GeneralContentBlocks())
         ],
         blank=True
     )
@@ -877,7 +876,7 @@ class Passport(models.Model):
     title = models.CharField(max_length=255)
     body = StreamField(
         [
-            ("content", TocBlocks())
+            ("content", GeneralContentBlocks())
         ],
         blank=True
     )
@@ -895,7 +894,7 @@ class Authentication(models.Model):
     title = models.CharField(max_length=255)
     body = StreamField(
         [
-            ("content", TocBlocks())
+            ("content", GeneralContentBlocks())
         ],
         blank=True
     )
@@ -913,7 +912,7 @@ class Marriage(models.Model):
     title = models.CharField(max_length=255)
     body = StreamField(
         [
-            ("content", TocBlocks())
+            ("content", GeneralContentBlocks())
         ],
         blank=True
     )
