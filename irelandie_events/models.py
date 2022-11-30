@@ -3,7 +3,7 @@ from django import forms
 from django.db import models
 
 from modelcluster.fields import ParentalManyToManyField
-from wagtail.admin.panels import FieldPanel, StreamFieldPanel
+from wagtail.admin.panels import FieldPanel
 from wagtail.fields import StreamField
 from wagtail.models import Page, TranslatableMixin
 
@@ -36,7 +36,7 @@ class EventPage(Page, TranslatableMixin):
     content_panels = Page.content_panels + [
         FieldPanel("first_published_at"),
         FieldPanel("description"),
-        StreamFieldPanel("body"),
+        FieldPanel("body"),
         FieldPanel("date"),
         FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
     ]

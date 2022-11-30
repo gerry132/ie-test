@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.utils.functional import cached_property
-from wagtail.admin.panels import FieldPanel, StreamFieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
 from wagtail.fields import StreamField, RichTextField
 from wagtail import blocks as wagtail_blocks
-from wagtail.snippets.edit_handlers import SnippetChooserPanel
+
 from wagtail.images import get_image_model_string
 
 from irelandie_home.blocks import SecondaryCallToAction
@@ -28,7 +28,7 @@ class CountryGroupPageIndex(BasePage):
         FieldPanel("description"),
     ]
     settings_panels = BasePage.settings_panels + [
-        StreamFieldPanel("override_primary_navigation")
+        FieldPanel("override_primary_navigation")
     ]
 
 
@@ -78,10 +78,10 @@ class DestinationPage(HeroPage):
     )
 
     content_panels = HeroPage.content_panels + [
-        SnippetChooserPanel("region"),
-        StreamFieldPanel("stories", heading="Two Column Feature"),
-        StreamFieldPanel("logo_cards", heading="Logo Cards"),
-        StreamFieldPanel("body"),
+        FieldPanel("region"),
+        FieldPanel("stories", heading="Two Column Feature"),
+        FieldPanel("logo_cards", heading="Logo Cards"),
+        FieldPanel("body"),
     ]
 
     @cached_property
@@ -165,8 +165,8 @@ class JobContentPage(BasePage):
                                                       "advert. "
         ),
         FieldPanel("job_index_page_summary"),
-        StreamFieldPanel("body"),
-        StreamFieldPanel("privacy_policy", permission="access_admin"),
+        FieldPanel("body"),
+        FieldPanel("privacy_policy", permission="access_admin"),
     ]
 
     settings_panels = ([
@@ -215,8 +215,8 @@ class JobIndexPage(BasePage):
     )
 
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin"),
-        StreamFieldPanel("privacy_policy", permission="access_admin"),
+        FieldPanel("generic_hero", permission="access_admin"),
+        FieldPanel("privacy_policy", permission="access_admin"),
     ]
 
     @cached_property
@@ -319,18 +319,18 @@ class MissionPage(HeroPage):
     content_panels = HeroPage.content_panels + [
         MultiFieldPanel([
             FieldPanel("search_bar", permission="access_admin"),
-            StreamFieldPanel("popular_pages", permission="access_admin"),
+            FieldPanel("popular_pages", permission="access_admin"),
         ], heading="Searchbar settings",
         ),
         MultiFieldPanel([
-            StreamFieldPanel("notice_bar"),
+            FieldPanel("notice_bar"),
         ], heading="Noticebar settings"
         ),
-        StreamFieldPanel("stories", heading="Two Column Feature"),
-        StreamFieldPanel("pinned_stories", permission="access_admin"),
-        StreamFieldPanel("stories_between", heading="Two Column"),
-        StreamFieldPanel("person", heading="Person + Social Feed"),
-        StreamFieldPanel("body"),
+        FieldPanel("stories", heading="Two Column Feature"),
+        FieldPanel("pinned_stories", permission="access_admin"),
+        FieldPanel("stories_between", heading="Two Column"),
+        FieldPanel("person", heading="Person + Social Feed"),
+        FieldPanel("body"),
     ]
 
     @cached_property
@@ -384,8 +384,8 @@ class Magazine(HeroPage):
     )
 
     content_panels = HeroPage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin"),
-        StreamFieldPanel("body")
+        FieldPanel("generic_hero", permission="access_admin"),
+        FieldPanel("body")
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
@@ -474,18 +474,18 @@ class ServiceContent(BasePage):
         return context
 
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin"),
+        FieldPanel("generic_hero", permission="access_admin"),
         FieldPanel("introduction"),
         MultiFieldPanel([
-            StreamFieldPanel("notice_bar_services"),
+            FieldPanel("notice_bar_services"),
         ], heading="Noticebar settings"
         ),
-        StreamFieldPanel("stories_top", heading="Two Column Feature"),
-        StreamFieldPanel("admin_body1", permission="access_admin", heading="Admin_body"),
-        StreamFieldPanel("body"),
-        StreamFieldPanel("admin_body2", permission="access_admin", heading="Admin_body"),
-        StreamFieldPanel("stories_bottom", heading="Two Column"),
-        StreamFieldPanel("related_content"),
+        FieldPanel("stories_top", heading="Two Column Feature"),
+        FieldPanel("admin_body1", permission="access_admin", heading="Admin_body"),
+        FieldPanel("body"),
+        FieldPanel("admin_body2", permission="access_admin", heading="Admin_body"),
+        FieldPanel("stories_bottom", heading="Two Column"),
+        FieldPanel("related_content"),
     ]
 
 
@@ -540,9 +540,9 @@ class ServicesLandingPage(BasePage):
         return context
 
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin"),
-        StreamFieldPanel("rich_text", heading="Advanced Richtext", permission="access_admin"),
-        StreamFieldPanel("body", permission="access_admin"),
+        FieldPanel("generic_hero", permission="access_admin"),
+        FieldPanel("rich_text", heading="Advanced Richtext", permission="access_admin"),
+        FieldPanel("body", permission="access_admin"),
     ]
 
 
@@ -618,12 +618,12 @@ class ConsulatePage(FreeFormPageBase):
     content_panels = FreeFormPageBase.content_panels + [
         MultiFieldPanel([
             FieldPanel("twitter_title"),
-            SnippetChooserPanel("twitter_feed"),
+            FieldPanel("twitter_feed"),
         ], heading="Twitter feed"),
     ]
 
     secondary_cta_panel = [
-        StreamFieldPanel("secondary_call_to_action")
+        FieldPanel("secondary_call_to_action")
     ]
 
     edit_handler = TabbedInterface([
@@ -668,12 +668,12 @@ class EmbassyPage(FreeFormPageBase):
     content_panels = FreeFormPageBase.content_panels + [
         MultiFieldPanel([
             FieldPanel("twitter_title"),
-            SnippetChooserPanel("twitter_feed"),
+            FieldPanel("twitter_feed"),
         ], heading="Twitter feed"),
     ]
 
     secondary_cta_panel = [
-        StreamFieldPanel("secondary_call_to_action")
+        FieldPanel("secondary_call_to_action")
     ]
 
     edit_handler = TabbedInterface([
@@ -703,9 +703,9 @@ class GeneralContentPage(HeroPage):
     body = StreamField(blocks.GeneralContentBlocks(), blank=True)
 
     content_panels = HeroPage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin"),
+        FieldPanel("generic_hero", permission="access_admin"),
         FieldPanel("introduction"),
-        StreamFieldPanel("body"),
+        FieldPanel("body"),
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),

@@ -2,7 +2,7 @@
 from functools import cached_property
 
 from django.db import models
-from wagtail.admin.panels import FieldPanel, StreamFieldPanel
+from wagtail.admin.panels import FieldPanel
 from wagtail.models import Page
 from wagtail.fields import StreamField
 from irelandie_utils import blocks
@@ -36,7 +36,7 @@ class NewsPageIndex(BasePage):
     )
     content_panels = Page.content_panels + [
         FieldPanel("description"),
-        StreamFieldPanel("generic_hero", permission="access_admin"),
+        FieldPanel("generic_hero", permission="access_admin"),
     ]
 
     def get_context(self, request, *args, **kwargs):
@@ -171,8 +171,8 @@ class NewsLandingPage(BasePage):
         null=True,
     )
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin"),
-        StreamFieldPanel("link_button")
+        FieldPanel("generic_hero", permission="access_admin"),
+        FieldPanel("link_button")
     ]
 
     @cached_property

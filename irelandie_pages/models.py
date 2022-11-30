@@ -4,8 +4,8 @@ from django.forms import ValidationError
 from django.utils.functional import cached_property
 
 from wagtail.fields import StreamField
-from wagtail.admin.panels import TabbedInterface, ObjectList, StreamFieldPanel, FieldPanel, MultiFieldPanel
-from wagtail.snippets.edit_handlers import SnippetChooserPanel
+from wagtail.admin.panels import TabbedInterface, ObjectList, FieldPanel, MultiFieldPanel
+
 from irelandie_news.models import NewsPage
 
 from irelandie_utils.models import HeroPage
@@ -24,7 +24,7 @@ class FreeFormPageBase(HeroPage):
     body = StreamField(FreeFormBlocks(), blank=True)
 
     content_panels = HeroPage.content_panels + [
-        StreamFieldPanel("body"),
+        FieldPanel("body"),
     ]
 
     hero_panel = HeroPage.hero_panel
@@ -83,17 +83,17 @@ class FreeFormPage(FreeFormPageBase):
         min_num=0,
         max_num=1,
     )
-    content_panels = [StreamFieldPanel("generic_hero", permission="access_admin")] + (
+    content_panels = [FieldPanel("generic_hero", permission="access_admin")] + (
         FreeFormPageBase.content_panels +
         [
             FieldPanel("featured_news"),
             MultiFieldPanel([
-                StreamFieldPanel("notice_bar"),
+                FieldPanel("notice_bar"),
             ], heading="Noticebar settings"
             ),
             MultiFieldPanel([
                 FieldPanel("twitter_title"),
-                SnippetChooserPanel("twitter_feed"),
+                FieldPanel("twitter_feed"),
             ], heading="Twitter feed"),
         ]
     )
