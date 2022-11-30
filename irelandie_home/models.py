@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from functools import cached_property
 from django.db import models
-from wagtail.admin.panels import TabbedInterface, ObjectList, StreamFieldPanel, FieldPanel
+from wagtail.admin.panels import TabbedInterface, ObjectList, FieldPanel
 from wagtail import blocks as wagtail_blocks
 from wagtail.fields import StreamField
 from irelandie_home.blocks import SecondaryCallToAction
@@ -47,7 +47,7 @@ class HomePage(FreeFormPageBase):
     )
 
     promote_panels = FreeFormPageBase.promote_panels + [
-        StreamFieldPanel("top_story"),
+        FieldPanel("top_story"),
     ]
     settings_panels = ([
         FieldPanel("favicon", permission="access_admin"),
@@ -62,7 +62,7 @@ class HomePage(FreeFormPageBase):
     )
 
     secondary_cta_panel = [
-        StreamFieldPanel("secondary_call_to_action")
+        FieldPanel("secondary_call_to_action")
 
     ]
     # Only allow creating HomePages at the root level
@@ -159,10 +159,10 @@ class CampaignPage(HeroPage):
     template = "patterns/pages/home/campaign_page.html"
 
     content_panels = HeroPage.content_panels + [
-        StreamFieldPanel("top_stories", heading="Two Column Feature"),
-        StreamFieldPanel("embeds"),
-        StreamFieldPanel("pinned_stories"),
-        StreamFieldPanel("secondary_stories"),
+        FieldPanel("top_stories", heading="Two Column Feature"),
+        FieldPanel("embeds"),
+        FieldPanel("pinned_stories"),
+        FieldPanel("secondary_stories"),
     ]
 
     edit_handler = TabbedInterface([
@@ -215,8 +215,8 @@ class TopicPage(HeroPage):
     )
 
     content_panels = HeroPage.content_panels + [
-        StreamFieldPanel("body"),
-        StreamFieldPanel("featured_articles"),
+        FieldPanel("body"),
+        FieldPanel("featured_articles"),
     ]
 
     edit_handler = TabbedInterface([

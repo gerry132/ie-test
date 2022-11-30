@@ -3,7 +3,7 @@ from django import forms
 from django.db import models
 
 from modelcluster.fields import ParentalManyToManyField
-from wagtail.admin.panels import FieldPanel, StreamFieldPanel
+from wagtail.admin.panels import FieldPanel
 from wagtail.blocks import RichTextBlock
 from wagtail.fields import StreamField
 from wagtail.models import Page, TranslatableMixin
@@ -38,6 +38,6 @@ class AlertPage(Page, TranslatableMixin):
 
     content_panels = Page.content_panels + [
         FieldPanel("alert_type"),
-        StreamFieldPanel("body"),
+        FieldPanel("body"),
         FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
     ]

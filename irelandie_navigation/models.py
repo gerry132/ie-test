@@ -4,11 +4,11 @@ from django.db import models
 from django.forms import ValidationError
 from django.utils.translation import gettext_lazy as _
 from modelcluster.models import ClusterableModel
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel, StreamFieldPanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.fields import StreamField
 from wagtail.models import TranslatableMixin
-from wagtail.images.edit_handlers import ImageChooserPanel
+
 from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
 
@@ -71,9 +71,9 @@ class SiteSettings(BaseSetting, ClusterableModel):
 
     panels = [
         MultiFieldPanel([
-            ImageChooserPanel("favicon"),
-            ImageChooserPanel("site_logo"),
-            ImageChooserPanel("mobile_logo"),
+            FieldPanel("favicon"),
+            FieldPanel("site_logo"),
+            FieldPanel("mobile_logo"),
             FieldPanel("site_logo_alt"),
             FieldPanel("google_my_map"),
         ], heading="Site Logo"),
@@ -100,7 +100,7 @@ class PrimaryNavigation(TranslatableMixin):
         MultiFieldPanel(
             [
                 FieldPanel("lang"),
-                StreamFieldPanel("navigation"),
+                FieldPanel("navigation"),
             ],
             heading=_("Primary Navigation"),
         )
@@ -145,8 +145,8 @@ class FooterNavigation(TranslatableMixin):
         MultiFieldPanel(
             [
                 FieldPanel("lang"),
-                StreamFieldPanel("navigation"),
-                StreamFieldPanel("links"),
+                FieldPanel("navigation"),
+                FieldPanel("links"),
                 FieldPanel("email_address"),
             ],
             heading=_("Footer Navigation"),
@@ -182,7 +182,7 @@ class SecondaryNavigation(TranslatableMixin):
         MultiFieldPanel(
             [
                 FieldPanel("lang"),
-                StreamFieldPanel("navigation"),
+                FieldPanel("navigation"),
             ],
             heading=_("Secondary Navigation"),
         )
@@ -241,8 +241,8 @@ class CustomFooter(SocialMediaFieldsMixin, TranslatableMixin):
 
     panels = [
         MultiFieldPanel([
-            ImageChooserPanel("logo"),
-            ImageChooserPanel("mobile_logo"),
+            FieldPanel("logo"),
+            FieldPanel("mobile_logo"),
             FieldPanel("logo_alt"),
         ], heading="Logo"),
         FieldPanel("name"),
@@ -251,8 +251,8 @@ class CustomFooter(SocialMediaFieldsMixin, TranslatableMixin):
         FieldPanel("youtube_user"),
         FieldPanel("linkedin_profile"),
         FieldPanel("instagram_user"),
-        StreamFieldPanel("navigation"),
-        StreamFieldPanel("links"),
+        FieldPanel("navigation"),
+        FieldPanel("links"),
     ]
 
     def __str__(self):
@@ -313,14 +313,14 @@ class CustomHeader(TranslatableMixin):
 
     panels = [
         MultiFieldPanel([
-            ImageChooserPanel("logo"),
-            ImageChooserPanel("mobile_logo"),
+            FieldPanel("logo"),
+            FieldPanel("mobile_logo"),
             FieldPanel("logo_alt"),
             FieldPanel("url"),
             FieldPanel("link_page"),
         ], heading="Logo"),
         FieldPanel("name"),
-        StreamFieldPanel("links"),
+        FieldPanel("links"),
     ]
 
     def __str__(self):
