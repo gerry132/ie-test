@@ -83,7 +83,7 @@ class FreeFormPage(FreeFormPageBase):
         min_num=0,
         max_num=1,
     )
-    content_panels = [FieldPanel("generic_hero", permission="access_admin")] + (
+    content_panels = [StreamFieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block")] + (
         FreeFormPageBase.content_panels +
         [
             FieldPanel("featured_news"),

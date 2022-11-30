@@ -6,21 +6,30 @@
 {% block content %}
  <!-- Main -->
 
-    {% if page.title or page.generic_hero %}
+    {% if page.generic_hero %}
         {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+    {% endif %}
+    {% if not page.generic_hero %}
+        <div id="main-header" class="section section--padding section--white">
+                    <div class="wrapper wrapper--large wrapper--padding content--padding">
+                        <div class="intro--toc">
+                            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                            {% if page.description %}
+                                <p class="intro__description">{{ page.description }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+        </div>
     {% endif %}
 
     {% block main %}
         <!-- Body -->
-    <div class="section section--padding">
+<div class="section--master {% if page.generic_hero %} section section--padding {% endif %}">
         {% if page.rich_text %}
-            <div class="wrapper wrapper--large--toc section--padding">
+            <div class="wrapper wrapper--large--toc">
                 {% include_block page.rich_text %}
             </div>
         {% endif %}
-        {% if page.related_content %}
-        <div id="link-box_wrapper">
-            {% endif %}
             <div class="wrapper--large--toc">
                     {% include_block page.body with default_image=default_image %}
                     <div class="link-box__related-content">
@@ -34,9 +43,7 @@
                     {% endif %}
                     </div>
         </div>
-            {% if page.related_content %}
-        </div>
-            {% endif %}
     </div>
+{% if not page.generic_hero %} <div style="padding-bottom: 40px;"></div> {% endif %}
     {% endblock %}
 {% endblock %}
