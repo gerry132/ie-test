@@ -36,11 +36,7 @@ class NewsPageIndex(BasePage):
     )
     content_panels = Page.content_panels + [
         FieldPanel("description"),
-<<<<<<< HEAD
-        FieldPanel("generic_hero", permission="access_admin"),
-=======
-        StreamFieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
->>>>>>> develop
+        FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
     ]
 
     def get_context(self, request, *args, **kwargs):
@@ -175,8 +171,8 @@ class NewsLandingPage(BasePage):
         null=True,
     )
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
-        StreamFieldPanel("link_button")
+        FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
+        FieldPanel("link_button")
     ]
 
     @cached_property

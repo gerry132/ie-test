@@ -215,8 +215,8 @@ class JobIndexPage(BasePage):
     )
 
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
-        StreamFieldPanel("privacy_policy", permission="access_admin"),
+        FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
+        FieldPanel("privacy_policy", permission="access_admin"),
     ]
 
     @cached_property
@@ -384,8 +384,8 @@ class Magazine(HeroPage):
     )
 
     content_panels = HeroPage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
-        StreamFieldPanel("body")
+        FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
+        FieldPanel("body")
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
@@ -474,7 +474,7 @@ class ServiceContent(BasePage):
         return context
 
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
+        FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("introduction"),
         MultiFieldPanel([
             FieldPanel("notice_bar_services"),
@@ -560,14 +560,14 @@ class NoticePage(BasePage):
         return context
 
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
+        FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("introduction"),
-        StreamFieldPanel("stories_top", heading="Two Column Feature"),
-        StreamFieldPanel("admin_body1", permission="access_admin", heading="Admin_body"),
-        StreamFieldPanel("body"),
-        StreamFieldPanel("admin_body2", permission="access_admin", heading="Admin_body"),
-        StreamFieldPanel("stories_bottom", heading="Two Column"),
-        StreamFieldPanel("related_content"),
+        FieldPanel("stories_top", heading="Two Column Feature"),
+        FieldPanel("admin_body1", permission="access_admin", heading="Admin_body"),
+        FieldPanel("body"),
+        FieldPanel("admin_body2", permission="access_admin", heading="Admin_body"),
+        FieldPanel("stories_bottom", heading="Two Column"),
+        FieldPanel("related_content"),
     ]
 
     class Meta:
@@ -622,9 +622,9 @@ class ServicesLandingPage(BasePage):
         return context
 
     content_panels = BasePage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
-        StreamFieldPanel("rich_text", heading="Advanced Richtext", permission="access_admin"),
-        StreamFieldPanel("body", permission="access_admin"),
+        FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
+        FieldPanel("rich_text", heading="Advanced Richtext", permission="access_admin"),
+        FieldPanel("body", permission="access_admin"),
     ]
 
 
@@ -785,7 +785,7 @@ class GeneralContentPage(HeroPage):
     body = StreamField(blocks.GeneralContentBlocks(), blank=True)
 
     content_panels = HeroPage.content_panels + [
-        StreamFieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
+        FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("introduction"),
         FieldPanel("body"),
     ]
