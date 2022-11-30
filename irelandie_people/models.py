@@ -6,12 +6,11 @@ from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.panels import (
     FieldPanel,
     PageChooserPanel,
-    StreamFieldPanel,
     MultiFieldPanel,
 )
 from wagtail.fields import StreamField, RichTextField
 from wagtail.models import Page, TranslatableMixin
-from wagtail.images.edit_handlers import ImageChooserPanel
+
 from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
 from irelandie_utils.blocks import CustomVideoChooserBlockAlt, StoryLinkBlock
@@ -53,9 +52,9 @@ class PersonPage(Page, TranslatableMixin):
     content_panels = Page.content_panels + [
         FieldPanel("first_published_at"),
         FieldPanel("description"),
-        StreamFieldPanel("body"),
+        FieldPanel("body"),
         MultiFieldPanel([
-            ImageChooserPanel("image"),
+            FieldPanel("image"),
             FieldPanel("image_alt"),
         ], heading="Image"),
         FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
@@ -90,7 +89,7 @@ class RolePage(Page, TranslatableMixin):
     content_panels = Page.content_panels + [
         FieldPanel("first_published_at"),
         FieldPanel("description"),
-        StreamFieldPanel("body"),
+        FieldPanel("body"),
         PageChooserPanel("role_holder"),
         FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
     ]
@@ -158,12 +157,12 @@ class Person(models.Model):
         MultiFieldPanel(
             [
                 FieldPanel("alignment"),
-                ImageChooserPanel("image"),
-                StreamFieldPanel("video"),
+                FieldPanel("image"),
+                FieldPanel("video"),
             ],
             heading="Photo",
         ),
-        ImageChooserPanel("embassy_logo"),
+        FieldPanel("embassy_logo"),
         FieldPanel("background"),
         FieldPanel("social_media_link"),
         FieldPanel("social_media_text"),
@@ -172,5 +171,5 @@ class Person(models.Model):
         FieldPanel("opening_hours"),
         FieldPanel("closure_dates"),
         FieldPanel("emergency_contact_details"),
-        StreamFieldPanel("links"),
+        FieldPanel("links"),
     ]

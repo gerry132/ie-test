@@ -9,7 +9,6 @@ from wagtail.admin.panels import (
     FieldPanel,
     MultiFieldPanel,
     PageChooserPanel,
-    StreamFieldPanel,
     FieldRowPanel,
     HelpPanel, TabbedInterface, ObjectList,
 )
@@ -18,10 +17,10 @@ from wagtail import blocks
 from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Orderable, Page, TranslatableMixin
 from wagtail.query import PageQuerySet
-from wagtail.images.edit_handlers import ImageChooserPanel
+
 from wagtail.images import get_image_model_string
 from wagtail.search import index
-from wagtail.snippets.edit_handlers import SnippetChooserPanel
+
 from wagtail.snippets.models import register_snippet
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
@@ -266,10 +265,10 @@ class CallToActionSnippet(models.Model):
         FieldPanel("title"),
         FieldPanel("summary"),
         MultiFieldPanel([
-            ImageChooserPanel("image"),
+            FieldPanel("image"),
             FieldPanel("image_alt"),
         ], heading="Image"),
-        StreamFieldPanel("link"),
+        FieldPanel("link"),
     ]
 
     def get_link_text(self):
@@ -312,7 +311,7 @@ class PrivacyPolicySnippet(models.Model):
     )
     panels = [
         FieldPanel("title"),
-        StreamFieldPanel("privacy_snippet"),
+        FieldPanel("privacy_snippet"),
     ]
 
     def __str__(self):
@@ -331,7 +330,7 @@ class Accordion(models.Model):
     )
     panels = [
         FieldPanel("title"),
-        StreamFieldPanel("accordions", permission="access_admin"),
+        FieldPanel("accordions", permission="access_admin"),
     ]
 
     def __str__(self):
@@ -578,7 +577,7 @@ class HeroPage(BasePage):
     hero_panel = [
         HelpPanel("For the hero to display you must set the image or video field below."),
         FieldRowPanel([
-            ImageChooserPanel("hero_image", classname="col6"),
+            FieldPanel("hero_image", classname="col6"),
             MediaChooserPanel("hero_video", media_type="video", classname="col6"),
         ], "Hero Media"),
         FieldPanel("hero_title"),
@@ -643,15 +642,15 @@ class ArticlePage(BasePage):
         FieldPanel("introduction"),
         MultiFieldPanel(
             [
-                ImageChooserPanel("hero_image"),
+                FieldPanel("hero_image"),
                 MediaChooserPanel("hero_video", media_type="video"),
             ],
             "hero",
         ),
-        SnippetChooserPanel("call_to_action"),
-        StreamFieldPanel("body"),
+        FieldPanel("call_to_action"),
+        FieldPanel("body"),
         FieldPanel("related_articles_active"),
-        StreamFieldPanel("override_related_articles"),
+        FieldPanel("override_related_articles"),
     ]
 
     search_fields = BasePage.search_fields + [
@@ -746,7 +745,7 @@ class MinimalArticlePage(BasePage):
         FieldPanel("alt_text"),
         MultiFieldPanel(
             [
-                ImageChooserPanel("hero_image"),
+                FieldPanel("hero_image"),
                 MediaChooserPanel("hero_video", media_type="video"),
             ],
             "hero",
@@ -759,7 +758,7 @@ class MinimalArticlePage(BasePage):
             "Scheduled publishing"
         ),
         FieldPanel("publication_date"),
-        StreamFieldPanel("body"),
+        FieldPanel("body"),
         FieldPanel("related_articles_active", heading="Featured News Checkbox"),
         FieldPanel("featured_home", heading="Featured Home")
     ]
@@ -864,7 +863,7 @@ class Visa(models.Model):
     )
     panels = [
         FieldPanel("title"),
-        StreamFieldPanel("body", permission="access_admin"),
+        FieldPanel("body", permission="access_admin"),
     ]
 
     def __str__(self):
@@ -882,7 +881,7 @@ class Passport(models.Model):
     )
     panels = [
         FieldPanel("title"),
-        StreamFieldPanel("body", permission="access_admin"),
+        FieldPanel("body", permission="access_admin"),
     ]
 
     def __str__(self):
@@ -900,7 +899,7 @@ class Authentication(models.Model):
     )
     panels = [
         FieldPanel("title"),
-        StreamFieldPanel("body", permission="access_admin"),
+        FieldPanel("body", permission="access_admin"),
     ]
 
     def __str__(self):
@@ -918,7 +917,7 @@ class Marriage(models.Model):
     )
     panels = [
         FieldPanel("title"),
-        StreamFieldPanel("body", permission="access_admin"),
+        FieldPanel("body", permission="access_admin"),
     ]
 
     def __str__(self):
