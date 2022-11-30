@@ -74,7 +74,6 @@ INSTALLED_APPS = [
     "irelandie_forms",
     #
     "wagtail_localize",
-    #"wagtail_localize.locales",
     "wagtail.contrib.forms",
     "wagtail.contrib.modeladmin",
     "wagtail.contrib.redirects",
