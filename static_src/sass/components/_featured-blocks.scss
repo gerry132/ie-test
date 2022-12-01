@@ -25,6 +25,7 @@
                 minmax(calc(50% - 30px), 1fr)
             );
             grid-gap: $grid;
+            justify-items: center;
 
             &--three {
                 grid-template-columns: repeat(
