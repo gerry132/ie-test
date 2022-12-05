@@ -153,11 +153,12 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 
 
 class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
-    image = ImageChooserBlock(required=True)
+    image = ImageChooserBlock(required=False)
     image_alt = blocks.CharBlock(
-        required=True,
+        required=False,
         help_text=_(ALT_IMAGE),
     )
+    video = VideoChooserBlock(required=False)
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
         label="URL",
@@ -188,6 +189,26 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         min_num=0,
         required=False,
     )
+
+    def clean(self, value):
+        errors = {}
+        person_image = value.get('image')
+        video = value.get('video')
+
+        if not (bool(person_image) ^ bool(video)):
+            msg = "You can't choose both an image and a video. Choose an image or a video"
+            errors['image'] = ErrorList([msg])
+            errors['video'] = ErrorList([msg])
+
+        if not (bool(person_image) | bool(video)):
+            msg = "You have to choose either an image or a video."
+            errors['image'] = ErrorList([msg])
+            errors['video'] = ErrorList([msg])
+
+        if errors:
+            raise StructBlockValidationError(block_errors=errors)
+
+        return super().clean(value)
 
     class Meta:
         icon = "snippet"
@@ -952,9 +973,13 @@ class PersonSocialBlock(blocks.StructBlock):
     person_image = ImageChooserBlock(required=False)
     video = VideoChooserBlock(required=False)
     embassy_logo = ImageChooserBlock(required=False)
-    social_media_link = blocks.URLBlock(required=False)
-    social_media_text = blocks.CharBlock(
-        max_length=255, required=False, default="Connect with person on this social media"
+    person_social_feed = blocks.StreamBlock(
+        [
+            ("person_social_feed", AdditionalSocialBlock())
+        ],
+        max_num=1,
+        min_num=0,
+        required=False,
     )
     contact_details = SnippetChooserBlock(target_model="utils.ContactSnippet")
     opening_hours = blocks.RichTextBlock(required=False)
