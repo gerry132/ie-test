@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='pressreleasepage',
             name='countries',
-            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='irelandie_missions.CountryPage'),
+            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='irelandie_missions.DestinationPage'),
         ),
     ]
