@@ -118,6 +118,10 @@
     }
 
     }
+    &__image_person {
+        border-radius: $border-radius;
+        margin: 20px auto;
+        }
 
     &__image {
         border-radius: $border-radius;
