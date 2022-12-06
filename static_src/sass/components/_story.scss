@@ -90,6 +90,38 @@
     }
 
     }
+    &__video-block_person_additional_social_feed {
+    position: relative;
+    margin: 20px auto;
+    flex: 1 1 30%;
+    border-radius: $border-radius;
+    min-width: 30%;
+    max-width: 100%;
+    @include media-query(medium){
+        max-height: 500px;
+        min-height: 400px;
+
+    }
+
+    }
+    &__video-block_person {
+    position: relative;
+    margin: 20px auto;
+    flex: 1 1 30%;
+    border-radius: $border-radius;
+    min-width: 30%;
+    max-width: 100%;
+    @include media-query(medium){
+        max-height: 560px;
+        min-height: 400px;
+
+    }
+
+    }
+    &__image_person {
+        border-radius: $border-radius;
+        margin: 20px auto;
+        }
 
     &__image {
         border-radius: $border-radius;
@@ -119,7 +151,6 @@
     @include media-query(large) {
 
         align-self: stretch;
-        justify-content: space-between;
         flex: 30%;
         margin: 40px 0px;
 

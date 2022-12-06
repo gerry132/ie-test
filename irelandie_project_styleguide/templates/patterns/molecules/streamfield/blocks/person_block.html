@@ -12,9 +12,15 @@
 
                         <h3 class="story__heading heading--2">{{ value.name }}</h3>
                             {{ value.person_title }}
-                        {% image value.person_image width-460 class=" story__image" %}
-                        {% if value.video %}
-                                <video class="story__video-block" aria-label="{{ value.title }}" title="{{ value.title }}" loop data-video controls>
+                        {% image value.person_image width-460 class=" story__image_person" %}
+                        {% if value.video and value.person_social_feed %}
+                                <video class="story__video-block_person_additional_social_feed" aria-label="{{ value.title }}" title="{{ value.title }}" loop data-video controls>
+                                    <source src="{{ value.video.url }}" type="video/mp4">
+                                    {% trans 'Your browser does not support the video tag.' %}
+
+                                </video>
+                            {% elif value.video %}
+                            <video class="story__video-block_person" aria-label="{{ value.title }}" title="{{ value.title }}" loop data-video controls>
                                     <source src="{{ value.video.url }}" type="video/mp4">
                                     {% trans 'Your browser does not support the video tag.' %}
 
