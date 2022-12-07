@@ -18,15 +18,20 @@ from .blocks import (
     SecondaryNavLinkColumnWithHeader,
 )
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
+from wagtail.models import DraftStateMixin, RevisionMixin
+from django.contrib.contenttypes.fields import GenericRelation
+from wagtail.admin.panels import PublishingPanel
+from wagtail.search import index
+from modelcluster.fields import ParentalKey
+from taggit.models import TaggedItemBase
+from taggit.managers import TaggableManager
 
 IMAGE_MODEL = get_image_model_string()
-
 
 ALT_HELP_TEXT = """A short one-sentence literal description
                     of the %s is
                     required to make the page accessible to the
                     visually impaired. Details: https://axesslab.com/alt-texts/"""
-
 
 ALT_VID = ALT_HELP_TEXT % 'video'
 ALT_IMAGE = ALT_HELP_TEXT % 'image'
@@ -80,9 +85,17 @@ class SiteSettings(BaseSetting, ClusterableModel):
     ]
 
 
+class PrimaryNavigationTag(TaggedItemBase):
+    content_object = ParentalKey('irelandie_navigation.PrimaryNavigation', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
 @register_snippet
-class PrimaryNavigation(TranslatableMixin):
+class PrimaryNavigation(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
+    tags = TaggableManager(through=PrimaryNavigationTag, blank=True)
+    title = models.CharField(max_length=255, blank=True)
+
     lang = models.CharField(
         max_length=255,
         unique=True,
@@ -95,16 +108,29 @@ class PrimaryNavigation(TranslatableMixin):
         help_text="Main site navigation",
         verbose_name=_("Links"),
     )
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="primarynavigation")
 
     panels = [
+        FieldPanel("title"),
         MultiFieldPanel(
             [
                 FieldPanel("lang"),
                 FieldPanel("navigation"),
             ],
             heading=_("Primary Navigation"),
-        )
+        ),
+        FieldPanel('tags'),
+        PublishingPanel(),
     ]
+
+    search_fields = [
+        index.FilterField('locale_id'),
+        index.SearchField("title", partial_match=True),
+    ]
+
+    @property
+    def revisions(self):
+        return self._revisions
 
     def __str__(self):
         return self.lang
@@ -115,9 +141,16 @@ class PrimaryNavigation(TranslatableMixin):
         unique_together = ("translation_key", "locale")
 
 
+class FooterNavigationTag(TaggedItemBase):
+    content_object = ParentalKey('irelandie_navigation.FooterNavigation', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
 @register_snippet
-class FooterNavigation(TranslatableMixin):
+class FooterNavigation(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
+    tags = TaggableManager(through=FooterNavigationTag, blank=True)
+    title = models.CharField(max_length=255, blank=True)
     lang = models.CharField(
         max_length=255,
         unique=True,
@@ -140,8 +173,10 @@ class FooterNavigation(TranslatableMixin):
         blank=True,
         verbose_name=_("email address"),
     )
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="footernavigation")
 
     panels = [
+        FieldPanel("title"),
         MultiFieldPanel(
             [
                 FieldPanel("lang"),
@@ -150,8 +185,19 @@ class FooterNavigation(TranslatableMixin):
                 FieldPanel("email_address"),
             ],
             heading=_("Footer Navigation"),
-        )
+        ),
+        FieldPanel('tags'),
+        PublishingPanel(),
     ]
+
+    search_fields = [
+        index.FilterField('locale_id'),
+        index.SearchField("title", partial_match=True),
+    ]
+
+    @property
+    def revisions(self):
+        return self._revisions
 
     def __str__(self):
         return self.lang
@@ -162,9 +208,16 @@ class FooterNavigation(TranslatableMixin):
         unique_together = ("translation_key", "locale")
 
 
+class SecondaryNavigationTag(TaggedItemBase):
+    content_object = ParentalKey('irelandie_navigation.SecondaryNavigation', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
 @register_snippet
-class SecondaryNavigation(TranslatableMixin):
+class SecondaryNavigation(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
+    tags = TaggableManager(through=SecondaryNavigationTag, blank=True)
+    title = models.CharField(max_length=255, blank=True)
     lang = models.CharField(
         max_length=255,
         unique=True,
@@ -177,16 +230,29 @@ class SecondaryNavigation(TranslatableMixin):
         help_text="Multiple columns of links with optional header.",
         verbose_name=_("Columns"),
     )
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="cecondarynavigation")
 
     panels = [
+        FieldPanel("title"),
         MultiFieldPanel(
             [
                 FieldPanel("lang"),
                 FieldPanel("navigation"),
             ],
             heading=_("Secondary Navigation"),
-        )
+        ),
+        FieldPanel('tags'),
+        PublishingPanel(),
     ]
+
+    search_fields = [
+        index.FilterField('locale_id'),
+        index.SearchField("title", partial_match=True),
+    ]
+
+    @property
+    def revisions(self):
+        return self._revisions
 
     def __str__(self):
         return self.lang
@@ -197,9 +263,17 @@ class SecondaryNavigation(TranslatableMixin):
         unique_together = ("translation_key", "locale")
 
 
+class CustomFooterTag(TaggedItemBase):
+    content_object = ParentalKey('irelandie_navigation.CustomFooter', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
 @register_snippet
-class CustomFooter(SocialMediaFieldsMixin, TranslatableMixin):
+class CustomFooter(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, SocialMediaFieldsMixin,
+                   TranslatableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
+    tags = TaggableManager(through=CustomFooterTag, blank=True)
+    title = models.CharField(max_length=255, blank=True)
     name = models.CharField(
         max_length=255,
         unique=True,
@@ -238,8 +312,10 @@ class CustomFooter(SocialMediaFieldsMixin, TranslatableMixin):
         verbose_name=_("Logo Alt text"),
         help_text=_(ALT_IMAGE),
     )
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="customfooter")
 
     panels = [
+        FieldPanel("title"),
         MultiFieldPanel([
             FieldPanel("logo"),
             FieldPanel("mobile_logo"),
@@ -253,7 +329,18 @@ class CustomFooter(SocialMediaFieldsMixin, TranslatableMixin):
         FieldPanel("instagram_user"),
         FieldPanel("navigation"),
         FieldPanel("links"),
+        FieldPanel('tags'),
+        PublishingPanel(),
     ]
+
+    search_fields = [
+        index.FilterField('locale_id'),
+        index.SearchField("title", partial_match=True),
+    ]
+
+    @property
+    def revisions(self):
+        return self._revisions
 
     def __str__(self):
         return self.name
@@ -264,9 +351,16 @@ class CustomFooter(SocialMediaFieldsMixin, TranslatableMixin):
         unique_together = ("translation_key", "locale")
 
 
+class CustomHeaderTag(TaggedItemBase):
+    content_object = ParentalKey('irelandie_navigation.CustomHeader', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
 @register_snippet
-class CustomHeader(TranslatableMixin):
+class CustomHeader(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
+    tags = TaggableManager(through=CustomHeaderTag, blank=True)
+    title = models.CharField(max_length=255, blank=True)
     name = models.CharField(
         max_length=255,
         unique=True,
@@ -310,8 +404,10 @@ class CustomHeader(TranslatableMixin):
         verbose_name=_("Logo Alt text"),
         help_text=_(ALT_IMAGE),
     )
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="customheader")
 
     panels = [
+        FieldPanel("title"),
         MultiFieldPanel([
             FieldPanel("logo"),
             FieldPanel("mobile_logo"),
@@ -321,7 +417,18 @@ class CustomHeader(TranslatableMixin):
         ], heading="Logo"),
         FieldPanel("name"),
         FieldPanel("links"),
+        FieldPanel('tags'),
+        PublishingPanel(),
     ]
+
+    search_fields = [
+        index.FilterField('locale_id'),
+        index.SearchField("title", partial_match=True),
+    ]
+
+    @property
+    def revisions(self):
+        return self._revisions
 
     def __str__(self):
         return self.name
