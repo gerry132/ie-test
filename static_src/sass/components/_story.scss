@@ -79,16 +79,15 @@
     &__video-block {
     position: relative;
     margin: 20px auto;
-    flex: 1 1 30%;
     border-radius: $border-radius;
     min-width: 30%;
     max-width: 100%;
     object-fit: cover;
-    aspect-ratio: 16/9;
     @include media-query(medium){
         max-height: 450px;
         min-height: 400px;
-
+        width:400px;
+        height:400px;
     }
 
     }
@@ -100,7 +99,7 @@
     min-width: 30%;
     max-width: 100%;
     @include media-query(medium){
-        max-height: 450px;
+        max-height: 520px;
         min-height: 400px;
 
     }
@@ -114,7 +113,7 @@
     min-width: 30%;
     max-width: 100%;
     @include media-query(medium){
-        max-height: 500px;
+        max-height: 580px;
         min-height: 400px;
 
     }
