@@ -83,6 +83,8 @@
     border-radius: $border-radius;
     min-width: 30%;
     max-width: 100%;
+    object-fit: cover;
+    aspect-ratio: 16/9;
     @include media-query(medium){
         max-height: 450px;
         min-height: 400px;
@@ -98,7 +100,7 @@
     min-width: 30%;
     max-width: 100%;
     @include media-query(medium){
-        max-height: 500px;
+        max-height: 450px;
         min-height: 400px;
 
     }
@@ -112,7 +114,7 @@
     min-width: 30%;
     max-width: 100%;
     @include media-query(medium){
-        max-height: 560px;
+        max-height: 500px;
         min-height: 400px;
 
     }
