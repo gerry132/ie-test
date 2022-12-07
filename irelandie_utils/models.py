@@ -958,6 +958,7 @@ class TwitterEmbed(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableMod
     ]
 
     search_fields = [
+        index.FilterField('locale_id'),
         index.SearchField("title", partial_match=True),
     ]
 
