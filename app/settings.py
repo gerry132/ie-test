@@ -129,6 +129,7 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "irelandie_utils.middleware.ReplaceViewsMiddleware",
+    "custom_logout.middleware.custom_logout.CustomMiddleware",
 ]
 
 if DEBUG_TOOLBAR is True:
