@@ -75,7 +75,6 @@ class RolePageIndex(Page, TranslatableMixin):
 
 
 class RolePage(Page, TranslatableMixin):
-
     PERSON_PAGE_MODEL = PersonPage
 
     description = models.TextField(blank=True)
@@ -103,9 +102,11 @@ class RolePage(Page, TranslatableMixin):
         FieldPanel("countries", widget=forms.CheckboxSelectMultiple),
     ]
 
+
 class PersonTag(TaggedItemBase):
     content_object = ParentalKey('irelandie_people.Person', on_delete=models.CASCADE,
                                  related_name='tagged_items')
+
 
 @register_snippet
 class Person(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
