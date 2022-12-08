@@ -4,7 +4,7 @@ document.body.innerHTML += `<script src="https://ajax.googleapis.com/ajax/libs/j
         <h2>Logout in:</h2>
         <div id="countdown"></div>
         <h2>Press Ok to remain logged in</h2>
-        <input type="button" value="OK" id="btn" onclick="setNewCookie()">
+        <input type="button" value="OK" id="btn" onclick="setNewExpiryCookie()">
     </div>`
 
 
