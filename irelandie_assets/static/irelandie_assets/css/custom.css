@@ -1,0 +1,25 @@
+#alert-wrapper{
+    border:1px solid black;
+    height:205px;
+    width:300px;
+    padding:30px;
+    padding-top:20px;
+    position:relative;
+    margin:0 auto;
+
+}
+#btn{
+    position:absolute;
+    bottom:20px;
+    right:20px;
+    width:70px;
+    height:30px;
+    border:1px solid grey;
+    background-color:white;
+}
+#btn:hover{
+    border:1px solid black;
+}
+#btn:active{
+    background-color:rgb(250,250,250);
+}
