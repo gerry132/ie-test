@@ -1,8 +1,6 @@
-from django.http import HttpResponse
 from django.utils.deprecation import MiddlewareMixin
 
 from datetime import datetime, timedelta
-
 
 
 class CustomMiddleware(MiddlewareMixin):
@@ -18,7 +16,7 @@ class CustomMiddleware(MiddlewareMixin):
 
     def process_view(self, request, view_func, view_args, view_kwargs):
         # This code is executed just before the view is called
-        pass 
+        pass
 
     def process_response(self, request, response):
         if request.user.is_authenticated:

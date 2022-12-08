@@ -3,10 +3,6 @@
 from django.templatetags.static import static
 from django.utils.html import format_html
 from wagtail.admin.menu import MenuItem
-
-
-from django.utils.safestring import mark_safe
-
 from wagtail import hooks
 
 
@@ -18,6 +14,7 @@ def global_admin_css():
         static("/irelandie_assets/css/custom.css")
     )
 
+
 @hooks.register("insert_global_admin_js", order=100)
 def global_admin_js():
     """Add /static/css/custom.js to the admin."""
@@ -25,6 +22,7 @@ def global_admin_js():
         '<script src="{}"></script>',
         static("/irelandie_assets/js/custom.js")
     )
+
 
 # Register shortcut to access django-defender's blocked list view within django admin
 class DjangoAdminMenuItem(MenuItem):
