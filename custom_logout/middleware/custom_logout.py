@@ -27,6 +27,6 @@ class CustomMiddleware(MiddlewareMixin):
         print(exception)
 
     def add_logout_expiry(self, response):
-        login_expire_at = datetime.now() + timedelta(hours=1)
+        login_expire_at = datetime.now() + timedelta(hours=0.03)
         response.set_cookie('logout_at', login_expire_at)
         return response
