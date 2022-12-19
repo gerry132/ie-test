@@ -4,7 +4,9 @@
 {% block main %}
     {% include "patterns/molecules/freeform-components/freeform_components.html" with default_image=page.default_image  %}
     {% if page.twitter_feed %}
+    <div style="text-align: -webkit-center;">
         {% include "patterns/molecules/streamfield/blocks/twitter_embed.html" with value=page.twitter_feed title=page.twitter_title %}
+    </div>
     {% endif %}
 {% endblock %}
 

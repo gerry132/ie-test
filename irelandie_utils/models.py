@@ -34,6 +34,12 @@ from irelandie_utils.blocks import (
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
 import django.utils.timezone
+from wagtail.models import DraftStateMixin, RevisionMixin
+from django.contrib.contenttypes.fields import GenericRelation
+from wagtail.admin.panels import PublishingPanel
+from taggit.models import TaggedItemBase
+from taggit.managers import TaggableManager
+from modelcluster.models import ClusterableModel
 
 SEARCH_DESCRIPTION_LABEL = "Meta description"  # NOTE changing this requires migrations
 
@@ -204,21 +210,49 @@ class ListingFields(models.Model):
     ]
 
 
+class ContactSnippetTag(TaggedItemBase):
+    content_object = ParentalKey('utils.ContactSnippet', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
 @register_snippet
-class ContactSnippet(models.Model):
+class ContactSnippet(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+    tags = TaggableManager(through=ContactSnippetTag, blank=True)
     title = models.CharField(max_length=255)
     body = StreamField(
         [
             ("contact_details", ContactBlock()),
         ],
     )
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="contactnnippet")
+
+    panels = [
+        FieldPanel("title"),
+        FieldPanel("body"),
+        FieldPanel('tags'),
+        PublishingPanel(),
+    ]
+
+    search_fields = [
+        index.SearchField("title", partial_match=True),
+    ]
+
+    @property
+    def revisions(self):
+        return self._revisions
 
     def __str__(self):
         return self.title
 
 
+class CallToActionSnippetTag(TaggedItemBase):
+    content_object = ParentalKey('utils.CallToActionSnippet', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
 @register_snippet
-class CallToActionSnippet(models.Model):
+class CallToActionSnippet(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+    tags = TaggableManager(through=CallToActionSnippetTag, blank=True)
     title = models.CharField(max_length=255)
     summary = RichTextField(blank=True, max_length=255)
     image = models.ForeignKey(
@@ -260,6 +294,7 @@ class CallToActionSnippet(models.Model):
         ),
         blank=True,
     )
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="calltoactionsnippet")
 
     panels = [
         FieldPanel("title"),
@@ -269,7 +304,17 @@ class CallToActionSnippet(models.Model):
             FieldPanel("image_alt"),
         ], heading="Image"),
         FieldPanel("link"),
+        FieldPanel('tags'),
+        PublishingPanel(),
     ]
+
+    search_fields = [
+        index.SearchField("title", partial_match=True),
+    ]
+
+    @property
+    def revisions(self):
+        return self._revisions
 
     def get_link_text(self):
         # Link is required, so we should always have
@@ -298,8 +343,14 @@ class CallToActionSnippet(models.Model):
         return self.title
 
 
+class PrivacyPolicySnippetTag(TaggedItemBase):
+    content_object = ParentalKey('utils.PrivacyPolicySnippet', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
 @register_snippet
-class PrivacyPolicySnippet(models.Model):
+class PrivacyPolicySnippet(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+    tags = TaggableManager(through=PrivacyPolicySnippetTag, blank=True)
     title = models.CharField(max_length=255)
     privacy_snippet = StreamField(
         [
@@ -309,17 +360,34 @@ class PrivacyPolicySnippet(models.Model):
         null=True,
         max_num=1,
     )
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="privacypolicysnippet")
     panels = [
         FieldPanel("title"),
         FieldPanel("privacy_snippet"),
+        FieldPanel('tags'),
+        PublishingPanel(),
     ]
+
+    search_fields = [
+        index.SearchField("title", partial_match=True),
+    ]
+
+    @property
+    def revisions(self):
+        return self._revisions
 
     def __str__(self):
         return self.title
 
 
+class AccordionTag(TaggedItemBase):
+    content_object = ParentalKey('utils.Accordion', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
 @register_snippet
-class Accordion(models.Model):
+class Accordion(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+    tags = TaggableManager(through=AccordionTag, blank=True)
     title = models.CharField(max_length=255)
     accordions = StreamField(
         [
@@ -328,10 +396,21 @@ class Accordion(models.Model):
         blank=True,
         null=True,
     )
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="accordion")
     panels = [
         FieldPanel("title"),
         FieldPanel("accordions", permission="access_admin"),
+        FieldPanel('tags'),
+        PublishingPanel(),
     ]
+
+    search_fields = [
+        index.SearchField("title", partial_match=True),
+    ]
+
+    @property
+    def revisions(self):
+        return self._revisions
 
     def __str__(self):
         return self.title
@@ -809,16 +888,45 @@ class MinimalArticlePage(BasePage):
             )
 
 
+class CountryGroupTag(TaggedItemBase):
+    content_object = ParentalKey('utils.CountryGroup', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
 @register_snippet
-class CountryGroup(models.Model):
+class CountryGroup(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+    tags = TaggableManager(through=CountryGroupTag, blank=True)
+    title = models.CharField(max_length=255, blank=True)
     region = models.CharField(max_length=100)
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="CountryGroup")
+
+    panels = [
+        FieldPanel("title"),
+        FieldPanel("region"),
+        FieldPanel('tags'),
+        PublishingPanel(),
+    ]
+
+    search_fields = [
+        index.SearchField("title", partial_match=True),
+    ]
+
+    @property
+    def revisions(self):
+        return self._revisions
 
     def __str__(self):
         return self.region
 
 
+class TwitterEmbedTag(TaggedItemBase):
+    content_object = ParentalKey('utils.TwitterEmbed', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
 @register_snippet
-class TwitterEmbed(TranslatableMixin, models.Model):
+class TwitterEmbed(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin, models.Model):
+    tags = TaggableManager(through=TwitterEmbedTag, blank=True)
     title = models.CharField(
         max_length=255,
         blank=True,
@@ -835,6 +943,7 @@ class TwitterEmbed(TranslatableMixin, models.Model):
         default=0,
         help_text="Height of the embedded tweet panel in pixels",
     )
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="twitterEmbed")
 
     panels = [
         FieldPanel("title"),
@@ -844,16 +953,36 @@ class TwitterEmbed(TranslatableMixin, models.Model):
             FieldPanel("width"),
             FieldPanel("height"),
         ], heading="Dimensions"),
+        FieldPanel('tags'),
+        PublishingPanel(),
     ]
+
+    search_fields = [
+        index.FilterField('locale_id'),
+        index.SearchField("title", partial_match=True),
+    ]
+
+    @property
+    def revisions(self):
+        return self._revisions
 
     def __str__(self):
         if not self.title:
             return f"{self.username} (username)"
         return self.title
 
+    class Meta:
+        unique_together = ('translation_key', 'locale')
+
+
+class VisaTag(TaggedItemBase):
+    content_object = ParentalKey('utils.Visa', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
 
 @register_snippet
-class Visa(models.Model):
+class Visa(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+    tags = TaggableManager(through=VisaTag, blank=True)
     title = models.CharField(max_length=255)
     body = StreamField(
         [
@@ -861,17 +990,34 @@ class Visa(models.Model):
         ],
         blank=True
     )
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="visa")
     panels = [
         FieldPanel("title"),
         FieldPanel("body", permission="access_admin"),
+        FieldPanel('tags'),
+        PublishingPanel(),
     ]
+
+    search_fields = [
+        index.SearchField("title", partial_match=True),
+    ]
+
+    @property
+    def revisions(self):
+        return self._revisions
 
     def __str__(self):
         return self.title
 
 
+class PassportTag(TaggedItemBase):
+    content_object = ParentalKey('utils.Passport', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
 @register_snippet
-class Passport(models.Model):
+class Passport(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+    tags = TaggableManager(through=PassportTag, blank=True)
     title = models.CharField(max_length=255)
     body = StreamField(
         [
@@ -879,17 +1025,34 @@ class Passport(models.Model):
         ],
         blank=True
     )
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="passport")
     panels = [
         FieldPanel("title"),
         FieldPanel("body", permission="access_admin"),
+        FieldPanel('tags'),
+        PublishingPanel(),
     ]
+
+    search_fields = [
+        index.SearchField("title", partial_match=True),
+    ]
+
+    @property
+    def revisions(self):
+        return self._revisions
 
     def __str__(self):
         return self.title
 
 
+class AuthenticationTag(TaggedItemBase):
+    content_object = ParentalKey('utils.Authentication', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
 @register_snippet
-class Authentication(models.Model):
+class Authentication(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+    tags = TaggableManager(through=AuthenticationTag, blank=True)
     title = models.CharField(max_length=255)
     body = StreamField(
         [
@@ -897,17 +1060,34 @@ class Authentication(models.Model):
         ],
         blank=True
     )
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="authentication")
     panels = [
         FieldPanel("title"),
         FieldPanel("body", permission="access_admin"),
+        FieldPanel('tags'),
+        PublishingPanel(),
     ]
+
+    search_fields = [
+        index.SearchField("title", partial_match=True),
+    ]
+
+    @property
+    def revisions(self):
+        return self._revisions
 
     def __str__(self):
         return self.title
 
 
+class MarriageTag(TaggedItemBase):
+    content_object = ParentalKey('utils.Marriage', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
 @register_snippet
-class Marriage(models.Model):
+class Marriage(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+    tags = TaggableManager(through=MarriageTag, blank=True)
     title = models.CharField(max_length=255)
     body = StreamField(
         [
@@ -915,10 +1095,21 @@ class Marriage(models.Model):
         ],
         blank=True
     )
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="marriage")
     panels = [
         FieldPanel("title"),
         FieldPanel("body", permission="access_admin"),
+        FieldPanel('tags'),
+        PublishingPanel(),
     ]
+
+    search_fields = [
+        index.SearchField("title", partial_match=True),
+    ]
+
+    @property
+    def revisions(self):
+        return self._revisions
 
     def __str__(self):
         return self.title

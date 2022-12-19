@@ -33,12 +33,11 @@
 
             justify-content: flex-start;
         }
-
-        @media only screen and (min-width: 844px) and (max-width: 1023px) {
-	        flex-wrap: wrap;
+        @media only screen and (max-width:1024px) {
+            flex-wrap: wrap;
         }
-        @media only screen and (max-width:844px) {
 
+        @media only screen and (max-width:844px) {
             justify-content: flex-start;
             flex-direction: column;
         }
@@ -67,6 +66,10 @@
     &__container2 {
         width:100%;
         height:auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
 
     }
     &__text {
@@ -75,19 +78,58 @@
 
     &__video-block {
     position: relative;
-    height: auto !important;
-    width: 100% !important;
     margin: 20px auto;
-    order: 2;
-    flex: 1 1 30%;
     border-radius: $border-radius;
-
+    min-width: 30%;
+    max-width: 100%;
+    object-fit: cover;
+    @include media-query(medium){
+        max-height: 450px;
+        min-height: 400px;
+        width:400px;
+        height:400px;
+    }
 
     }
+    &__video-block_person_additional_social_feed {
+    position: relative;
+    margin: 20px auto;
+    flex: 1 1 30%;
+    border-radius: $border-radius;
+    min-width: 30%;
+    max-width: 100%;
+    object-fit: fill;
+    @include media-query(medium){
+        max-height: 520px;
+        min-height: 400px;
+
+    }
+
+    }
+    &__video-block_person {
+    position: relative;
+    margin: 20px auto;
+    flex: 1 1 30%;
+    border-radius: $border-radius;
+    min-width: 30%;
+    max-width: 100%;
+    object-fit: fill;
+    @include media-query(medium){
+        max-height: 580px;
+        min-height: 400px;
+
+    }
+
+    }
+    &__image_person {
+        border-radius: $border-radius;
+        margin: 20px auto;
+        }
 
     &__image {
         border-radius: $border-radius;
         object-fit: cover;
+        align-self: center;
 
         @include media-query(large) {
             max-height: 450px;
@@ -106,15 +148,18 @@
     &__image_margin{
     order: 2;
     max-height: inherit;
+    display:flex;
+    flex-direction: column;
 
     @include media-query(large) {
 
+        align-self: stretch;
         flex: 30%;
         margin: 40px 0px;
 
         }
-        @media only screen and (max-width:844px) {
-        margin: 40px auto 0 auto;
+        @media only screen and (max-width:1024px) {
+        margin: 40px 20px 0 20px;
 
         }
     }

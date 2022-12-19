@@ -15,6 +15,15 @@ from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
 from irelandie_utils.blocks import CustomVideoChooserBlockAlt, StoryLinkBlock
 
+from wagtail.models import DraftStateMixin, RevisionMixin
+from django.contrib.contenttypes.fields import GenericRelation
+from wagtail.admin.panels import PublishingPanel
+from wagtail.search import index
+from modelcluster.fields import ParentalKey
+from taggit.models import TaggedItemBase
+from taggit.managers import TaggableManager
+from modelcluster.models import ClusterableModel
+
 from .blocks import PersonPageSectionBlock, RolePageSectionBlock
 
 IMAGE_MODEL = get_image_model_string()
@@ -66,7 +75,6 @@ class RolePageIndex(Page, TranslatableMixin):
 
 
 class RolePage(Page, TranslatableMixin):
-
     PERSON_PAGE_MODEL = PersonPage
 
     description = models.TextField(blank=True)
@@ -95,8 +103,14 @@ class RolePage(Page, TranslatableMixin):
     ]
 
 
+class PersonTag(TaggedItemBase):
+    content_object = ParentalKey('irelandie_people.Person', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
 @register_snippet
-class Person(models.Model):
+class Person(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+    tags = TaggableManager(through=PersonTag, blank=True)
     name = models.CharField(max_length=255)
     title = models.CharField(max_length=255, blank=True)
     image = models.ForeignKey(
@@ -143,6 +157,7 @@ class Person(models.Model):
         ],
         blank=True,
     )
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="person")
 
     class Meta:
         verbose_name = "Person"
@@ -172,4 +187,14 @@ class Person(models.Model):
         FieldPanel("closure_dates"),
         FieldPanel("emergency_contact_details"),
         FieldPanel("links"),
+        FieldPanel('tags'),
+        PublishingPanel(),
     ]
+
+    search_fields = [
+        index.SearchField("title", partial_match=True),
+    ]
+
+    @property
+    def revisions(self):
+        return self._revisions
