@@ -15,7 +15,7 @@ from wagtail.admin.panels import (
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail import blocks
 from wagtail.fields import RichTextField, StreamField
-from wagtail.models import Orderable, Page, TranslatableMixin
+from wagtail.models import Orderable, Page, TranslatableMixin, PreviewableMixin
 from wagtail.query import PageQuerySet
 
 from wagtail.images import get_image_model_string
@@ -349,7 +349,8 @@ class PrivacyPolicySnippetTag(TaggedItemBase):
 
 
 @register_snippet
-class PrivacyPolicySnippet(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class PrivacyPolicySnippet(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model,
+                           PreviewableMixin):
     tags = TaggableManager(through=PrivacyPolicySnippetTag, blank=True)
     title = models.CharField(max_length=255)
     privacy_snippet = StreamField(
@@ -375,6 +376,9 @@ class PrivacyPolicySnippet(DraftStateMixin, RevisionMixin, index.Indexed, Cluste
     @property
     def revisions(self):
         return self._revisions
+
+    def get_preview_template(self, request, mode_name):
+        return "patterns/pages/irelandie_job/job.html"
 
     def __str__(self):
         return self.title

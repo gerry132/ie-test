@@ -7,7 +7,7 @@ from modelcluster.models import ClusterableModel
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.fields import StreamField
-from wagtail.models import TranslatableMixin
+from wagtail.models import TranslatableMixin, PreviewableMixin
 
 from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
@@ -91,7 +91,12 @@ class PrimaryNavigationTag(TaggedItemBase):
 
 
 @register_snippet
-class PrimaryNavigation(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin):
+class PrimaryNavigation(DraftStateMixin,
+                        RevisionMixin,
+                        index.Indexed,
+                        ClusterableModel,
+                        TranslatableMixin,
+                        PreviewableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
     tags = TaggableManager(through=PrimaryNavigationTag, blank=True)
     title = models.CharField(max_length=255, blank=True)
@@ -135,6 +140,9 @@ class PrimaryNavigation(DraftStateMixin, RevisionMixin, index.Indexed, Clusterab
     def __str__(self):
         return self.lang
 
+    def get_preview_template(self, request, mode_name):
+        return "patterns/pages/home/home_page.html"
+
     class Meta:
         verbose_name = _("Primary Navigation")
         verbose_name_plural = _("Primary Navigation")
@@ -147,7 +155,12 @@ class FooterNavigationTag(TaggedItemBase):
 
 
 @register_snippet
-class FooterNavigation(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin):
+class FooterNavigation(DraftStateMixin,
+                       RevisionMixin, 
+                       index.Indexed, 
+                       ClusterableModel, 
+                       TranslatableMixin,
+                       PreviewableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
     tags = TaggableManager(through=FooterNavigationTag, blank=True)
     title = models.CharField(max_length=255, blank=True)
@@ -202,6 +215,9 @@ class FooterNavigation(DraftStateMixin, RevisionMixin, index.Indexed, Clusterabl
     def __str__(self):
         return self.lang
 
+    def get_preview_template(self, request, mode_name):
+        return "patterns/pages/home/home_page.html"
+
     class Meta:
         verbose_name = _("Footer Navigation")
         verbose_name_plural = _("Footer Navigation")
@@ -214,7 +230,12 @@ class SecondaryNavigationTag(TaggedItemBase):
 
 
 @register_snippet
-class SecondaryNavigation(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin):
+class SecondaryNavigation(DraftStateMixin, 
+                          RevisionMixin, 
+                          index.Indexed, 
+                          ClusterableModel, 
+                          TranslatableMixin,
+                          PreviewableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
     tags = TaggableManager(through=SecondaryNavigationTag, blank=True)
     title = models.CharField(max_length=255, blank=True)
@@ -257,6 +278,9 @@ class SecondaryNavigation(DraftStateMixin, RevisionMixin, index.Indexed, Cluster
     def __str__(self):
         return self.lang
 
+    def get_preview_template(self, request, mode_name):
+        return "patterns/pages/home/home_page.html"
+
     class Meta:
         verbose_name = _("Secondary Navigation")
         verbose_name_plural = _("Secondary Navigation")
@@ -270,7 +294,7 @@ class CustomFooterTag(TaggedItemBase):
 
 @register_snippet
 class CustomFooter(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, SocialMediaFieldsMixin,
-                   TranslatableMixin):
+                   TranslatableMixin, PreviewableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
     tags = TaggableManager(through=CustomFooterTag, blank=True)
     title = models.CharField(max_length=255, blank=True)
@@ -345,6 +369,9 @@ class CustomFooter(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableMod
     def __str__(self):
         return self.name
 
+    def get_preview_template(self, request, mode_name):
+        return "patterns/pages/home/home_page.html"
+
     class Meta:
         verbose_name = _("Custom Footer")
         verbose_name_plural = _("Custom Footers")
@@ -357,7 +384,8 @@ class CustomHeaderTag(TaggedItemBase):
 
 
 @register_snippet
-class CustomHeader(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin):
+class CustomHeader(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, 
+                   TranslatableMixin, PreviewableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
     tags = TaggableManager(through=CustomHeaderTag, blank=True)
     title = models.CharField(max_length=255, blank=True)
@@ -432,6 +460,9 @@ class CustomHeader(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableMod
 
     def __str__(self):
         return self.name
+
+    def get_preview_template(self, request, mode_name):
+        return "patterns/pages/home/home_page.html"
 
     def clean(self):
         if self.link_page and self.url:
