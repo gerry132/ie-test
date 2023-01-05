@@ -1,0 +1,26 @@
+{% load wagtailcore_tags static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<div style="font-size: 20px;">
+{% for elem in object.body %}
+
+    <h3>{{elem.value.heading}}</h3>
+    <div style="cursor: pointer;" onclick="window.open('{{elem.value.map_link}}', '_blank').focus();">
+    {% if elem.value.address_line_1 %}
+        <address style="font-style: normal;">
+        {{elem.value.address_line_1}} <br/>
+        {{elem.value.address_line_2}} <br/>
+        {{elem.value.address_line_3}} <br/>
+        {{elem.value.post_code}} <br/>
+    </address>
+    {% endif %}
+</div>
+    {% if elem.value.international_code %}
+    <a href="tel:{{elem.value.international_code}}{{elem.value.telephone}}">Tel: {{elem.value.international_code}} {{elem.value.telephone}}</a>
+    <br/>
+    {% endif %}
+    {% if elem.value.fax_number %}
+    <p>Fax: {{elem.value.fax_number}}</p>
+    {% endif %}
+    {{elem.value.email}}
+{% endfor %}
+</div>

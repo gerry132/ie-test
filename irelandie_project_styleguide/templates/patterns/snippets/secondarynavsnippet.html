@@ -1,0 +1,9 @@
+{% load wagtailcore_tags wagtailimages_tags static util_tags %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<script src="{% static 'js/main.js' %}"></script>
+{% include "patterns/atoms/sprites/sprites.html" %}
+<div class="header__menus header__menus--mobile is-visible" data-mobile-menu>
+    <div class="wrapper wrapper--large wrapper--mobile-menu">
+{% include "patterns/molecules/navigation/secondarynav.html" with secondarynav=object.navigation %}
+    </div>
+</div>
