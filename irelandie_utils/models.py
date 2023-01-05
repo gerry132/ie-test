@@ -352,7 +352,8 @@ class PrivacyPolicySnippetTag(TaggedItemBase):
 
 
 @register_snippet
-class PrivacyPolicySnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class PrivacyPolicySnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
+                           models.Model):
     tags = TaggableManager(through=PrivacyPolicySnippetTag, blank=True)
     title = models.CharField(max_length=255)
     privacy_snippet = StreamField(
@@ -934,7 +935,8 @@ class TwitterEmbedTag(TaggedItemBase):
 
 
 @register_snippet
-class TwitterEmbed(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin, models.Model):
+class TwitterEmbed(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin,
+                   models.Model):
     tags = TaggableManager(through=TwitterEmbedTag, blank=True)
     title = models.CharField(
         max_length=255,

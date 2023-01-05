@@ -91,7 +91,8 @@ class PrimaryNavigationTag(TaggedItemBase):
 
 
 @register_snippet
-class PrimaryNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin):
+class PrimaryNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
+                        TranslatableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
     tags = TaggableManager(through=PrimaryNavigationTag, blank=True)
     title = models.CharField(max_length=255, blank=True)
@@ -150,7 +151,8 @@ class FooterNavigationTag(TaggedItemBase):
 
 
 @register_snippet
-class FooterNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin):
+class FooterNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
+                       TranslatableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
     tags = TaggableManager(through=FooterNavigationTag, blank=True)
     title = models.CharField(max_length=255, blank=True)
@@ -220,7 +222,8 @@ class SecondaryNavigationTag(TaggedItemBase):
 
 
 @register_snippet
-class SecondaryNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin):
+class SecondaryNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
+                          TranslatableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
     tags = TaggableManager(through=SecondaryNavigationTag, blank=True)
     title = models.CharField(max_length=255, blank=True)
@@ -278,8 +281,8 @@ class CustomFooterTag(TaggedItemBase):
 
 
 @register_snippet
-class CustomFooter(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, SocialMediaFieldsMixin,
-                   TranslatableMixin):
+class CustomFooter(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
+                   SocialMediaFieldsMixin, TranslatableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
     tags = TaggableManager(through=CustomFooterTag, blank=True)
     title = models.CharField(max_length=255, blank=True)
@@ -369,7 +372,8 @@ class CustomHeaderTag(TaggedItemBase):
 
 
 @register_snippet
-class CustomHeader(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin):
+class CustomHeader(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
+                   TranslatableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
     tags = TaggableManager(through=CustomHeaderTag, blank=True)
     title = models.CharField(max_length=255, blank=True)
