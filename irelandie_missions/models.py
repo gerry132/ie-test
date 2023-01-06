@@ -59,6 +59,10 @@ class DestinationPage(HeroPage):
     body = StreamField(
         [
             ("two_column_feature", blocks.StoryBlock()),
+            ("rich_text_advanced", blocks.AdvancedRichTextBlock()),
+            ("youtube_video", blocks.YoutubeVideoBlock()),
+            ("video", blocks.CustomVideoChooserBlockAlt()),
+            ("link_cards", blocks.LinkCardsBlock()),
             ("logo_cards", blocks.LogoCardsBlock()),
             (
                 "pinned_story",
