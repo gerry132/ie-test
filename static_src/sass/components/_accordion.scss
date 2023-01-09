@@ -49,11 +49,13 @@
         border-radius: 15px;
     }
     &__container{
-        padding-left: 40px;
-        padding-right: 120px;
+        margin:0 auto;
+        max-width: 780px;
+        @include media-query(max-large) {
+            max-width: 576px;
+        }
         @include media-query(max-medium) {
-            padding-left: 40px;
-            padding-right: 0px;
+            max-width: 299px;
         }
 
     }
@@ -111,5 +113,10 @@
             border-bottom: 0;
             padding-bottom: 0;
         }
+    }
+
+    &__rich-text{
+        margin-left: unset;
+        margin-right: unset;
     }
 }
