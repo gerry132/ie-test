@@ -23,7 +23,10 @@
                     {{ value.summary }}
                 </div>
             {% endif %}
-        </div>
+            {% if value.summary_richtext %}
+                {% include_block value.summary_richtext %}
+            {% endif %}
+
 
         <div class="accordion__container">
             {% for accordion in value.accordions %}
@@ -90,6 +93,7 @@
                     </div>
                 </div>
             {% endfor %}
+        </div>
         </div>
     </div>
 </div>

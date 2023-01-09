@@ -168,7 +168,7 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     primary_title = blocks.CharBlock(required=False, label="Supporting title")
     title = blocks.CharBlock(required=False)
     summary = blocks.RichTextBlock(
-        features=["h3", "blockquote", "bold", "link", "document-link", "ul"],
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul", "ol"],
         required=False,
     )
     alignment = blocks.ChoiceBlock(
@@ -769,6 +769,7 @@ class AccordionBlock(blocks.StructBlock):
         features=["h3", "blockquote", "bold", "link", "document-link", "ul"],
         required=False,
     )
+    summary_richtext = AdvancedRichTextBlock()
     accordions = blocks.StreamBlock(
         [
             (
