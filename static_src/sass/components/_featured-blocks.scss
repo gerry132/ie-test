@@ -31,11 +31,28 @@
             grid-gap: $grid;
             justify-content: center;
 
+            &--two{
+                grid-gap: 40px;
+                @include media-query(medium){
+                grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(calc(45% - 30px), 287px)
+                );
+            }
+
+            @include media-query(large){
+                grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(calc(45% - 30px), 366px)
+                );
+            }
+            }
+
             &--three {
             @include media-query(medium){
                 grid-template-columns: repeat(
                     auto-fit,
-                    minmax(calc(33.33% - 30px), 299px)
+                    minmax(calc(33.33% - 30px), 281px)
                 );
             }
 

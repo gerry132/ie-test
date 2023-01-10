@@ -7,10 +7,19 @@
         }
 </style>
 <div class="section section--padding padding">
-    <div class="article-cards featured-blocks featured-blocks--three">
-        {% for link_card in value.link_cards %}
-            {% include_block link_card %}
-        {% endfor %}
-    </div>
+        {% if value.link_cards|length > 2 %}
+        <div class="article-cards featured-blocks featured-blocks--three">
+            {% for link_card in value.link_cards %}
+                {% include_block link_card %}
+             {% endfor %}
+        </div>
+        {% else %}
+        <div class="article-cards featured-blocks featured-blocks--two">
+            {% for link_card in value.link_cards %}
+                {% include_block link_card %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
 </div>
 
