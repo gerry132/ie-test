@@ -769,7 +769,7 @@ class AccordionBlock(blocks.StructBlock):
         features=["h3", "blockquote", "bold", "link", "document-link", "ul"],
         required=False,
     )
-    summary_richtext = AdvancedRichTextBlock()
+    summary_richtext = AdvancedRichTextBlock(required=False)
     accordions = blocks.StreamBlock(
         [
             (
