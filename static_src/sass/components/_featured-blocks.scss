@@ -29,13 +29,20 @@
     @supports (display: grid) {
             display: grid;
             grid-gap: $grid;
-            justify-items: center;
+            justify-content: center;
 
             &--three {
             @include media-query(medium){
                 grid-template-columns: repeat(
                     auto-fit,
-                    minmax(calc(33.33% - 30px), 1fr)
+                    minmax(calc(33.33% - 30px), 299px)
+                );
+            }
+
+            @include media-query(large){
+                grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(calc(25% - 30px), 366px)
                 );
             }
 
@@ -49,13 +56,16 @@
                     minmax(calc(50% - 30px), 1fr)
                 );
                 }
-            }
+
             @include media-query(large){
                 grid-template-columns: repeat(
                     auto-fit,
                     minmax(calc(25% - 30px), 1fr)
                 );
             }
+
+            }
+
 
     }
 }
