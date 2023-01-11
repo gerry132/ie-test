@@ -323,12 +323,19 @@ WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
     ("ar", "Arabic"),
     ("ch", "Chinese"),
     ("en", "English"),
-    ("de", "German"),
-    ("ga", "Irish"),
-    ("ja", "Japanese"),
     ("fr", "French"),
+    ("de", "German"),
+    ("hi", "Hindi"),
+    ("hu", "Hungarian"),
+    ("ga", "Irish"),
+    ("it", "Italian"),
+    ("ja", "Japanese"),
+    ("ko", "korean"),
+    ("pl", "Polish"),
+    ("pt", "Portuguese"),
     ("ru", "Russian"),
     ("es", "Spanish"),
+    ("vi", "Vietnamese"),
 ]
 
 LOCALE_PATHS = [

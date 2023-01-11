@@ -42,7 +42,12 @@
                         {% endfor %}
                     {% endif %}
                     </div>
-        </div>
+            </div>
+        {% if page.additional_rich_text %}
+            <div class="wrapper wrapper--large--toc">
+                {% include_block page.additional_rich_text %}
+            </div>
+        {% endif %}
     </div>
 {% if not page.generic_hero %} <div style="padding-bottom: 40px;"></div> {% endif %}
     {% endblock %}
