@@ -469,7 +469,7 @@ class ServiceContent(BasePage):
         root_found = False
         for p in pages:
             if p.content_type.name == 'mission page':
-                missions = MissionPage.objects.live().get(id=p.id)
+                missions = MissionPage.objects.get(id=p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
         if not root_found:
@@ -624,7 +624,7 @@ class ServicesLandingPage(BasePage):
         root_found = False
         for p in pages:
             if p.content_type.name == 'mission page':
-                missions = MissionPage.objects.live().get(id=p.id)
+                missions = MissionPage.objects.get(id=p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
         if not root_found:
