@@ -716,17 +716,17 @@ class ContactBlock(blocks.StructBlock):
                                           )
     telephone = blocks.CharBlock(max_length=30, blank=True, required=False)
     alt_international_code = blocks.CharBlock(max_length=5,
-                                          blank=True,
-                                          validators=[
-                                              RegexValidator(
-                                                  regex=r'^\+\d+$',
-                                                  message="Examples: +353 +01",
-                                                  code='invalid'
+                                              blank=True,
+                                              validators=[
+                                                  RegexValidator(
+                                                      regex=r'^\+\d+$',
+                                                      message="Examples: +353 +01",
+                                                      code='invalid'
+                                                  )
+                                              ],
+                                              help_text="Format must be +123",
+                                              required=False
                                               )
-                                          ],
-                                          help_text="Format must be +123",
-                                          required=False
-                                          )
     alt_telephone = blocks.CharBlock(max_length=30, blank=True, required=False)
     fax_number = blocks.CharBlock(max_length=50, blank=True, required=False)
     email = blocks.RichTextBlock(blank=True, required=False)
