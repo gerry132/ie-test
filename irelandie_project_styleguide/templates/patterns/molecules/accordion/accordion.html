@@ -1,17 +1,32 @@
-{% load util_tags wagtailcore_tags %}
-
+{% load util_tags wagtailcore_tags irelandie_assets_tags %}
+<style>
+    {% check_page_type page.content_type 'service content' as servicecontent %}
+    {% if servicecontent %}
+    @media only screen and (min-width: 1023px) {
+        .accordion__container {
+            max-width: 654px;
+        }
+        }
+        }
+    {% endif %}
+</style>
 <div class="accordions">
     <div class="wrapper wrapper--large">
-        {% if value.title %}
-            <h2 class="heading heading--2 accordions__title">
+        <div style="max-width: 1024px;">
+            {% if value.title %}
+            <h2 class="heading--2 accordions__title">
                 {{ value.title }}
             </h2>
-        {% endif %}
-        {% if value.summary %}
-            <div class="accordions__summary rich-text">
-                {{ value.summary }}
-            </div>
-        {% endif %}
+            {% endif %}
+            {% if value.summary %}
+                <div class="accordions__summary accordion__rich-text rich-text">
+                    {{ value.summary }}
+                </div>
+            {% endif %}
+            {% if value.summary_richtext %}
+                {% include_block value.summary_richtext %}
+            {% endif %}
+
 
         <div class="accordion__container">
             {% for accordion in value.accordions %}
@@ -58,7 +73,7 @@
                             {% for additional in accordion.value.additional %}
                                 {% if additional.block_type == 'contact_details' %}
                                     {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=additional.value %}
-                        
+
                                 {% elif additional.block_type == 'map' %}
                                     {% if additional.value.width %}
                                         {% new_width additional.value.iframe additional.value.width as IFRAME %}
@@ -78,6 +93,7 @@
                     </div>
                 </div>
             {% endfor %}
+        </div>
         </div>
     </div>
 </div>

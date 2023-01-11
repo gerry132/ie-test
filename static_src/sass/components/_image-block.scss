@@ -1,13 +1,16 @@
 .image-block {
     position: relative;
     height: auto;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     display: table;
 
     &__image{
         border-top-left-radius: 14px;
         border-top-right-radius: 14px;
+    }
+    &__image_border{
+        border-radius: 14px;
     }
 
     &__caption {

@@ -168,7 +168,7 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     primary_title = blocks.CharBlock(required=False, label="Supporting title")
     title = blocks.CharBlock(required=False)
     summary = blocks.RichTextBlock(
-        features=["h3", "blockquote", "bold", "link", "document-link", "ul"],
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul", "ol"],
         required=False,
     )
     alignment = blocks.ChoiceBlock(
@@ -699,6 +699,7 @@ class ContactBlock(blocks.StructBlock):
     address_line_1 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
     address_line_2 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
     address_line_3 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
+    address_line_4 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
     post_code = blocks.CharBlock(max_length=25, null=True, blank=True, required=False)
     map_link = blocks.CharBlock(blank=True, help_text="Hyperlink to google maps", required=False)
     international_code = blocks.CharBlock(max_length=5,
@@ -714,6 +715,19 @@ class ContactBlock(blocks.StructBlock):
                                           required=False
                                           )
     telephone = blocks.CharBlock(max_length=30, blank=True, required=False)
+    alt_international_code = blocks.CharBlock(max_length=5,
+                                              blank=True,
+                                              validators=[
+                                                  RegexValidator(
+                                                      regex=r'^\+\d+$',
+                                                      message="Examples: +353 +01",
+                                                      code='invalid'
+                                                  )
+                                              ],
+                                              help_text="Format must be +123",
+                                              required=False
+                                              )
+    alt_telephone = blocks.CharBlock(max_length=30, blank=True, required=False)
     fax_number = blocks.CharBlock(max_length=50, blank=True, required=False)
     email = blocks.RichTextBlock(blank=True, required=False)
 
@@ -769,6 +783,7 @@ class AccordionBlock(blocks.StructBlock):
         features=["h3", "blockquote", "bold", "link", "document-link", "ul"],
         required=False,
     )
+    summary_richtext = AdvancedRichTextBlock(required=False)
     accordions = blocks.StreamBlock(
         [
             (

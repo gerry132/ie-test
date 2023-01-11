@@ -1,0 +1,20 @@
+{% load wagtailcore_tags wagtailimages_tags static i18n %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<div style="text-align: -webkit-center;">
+        <div class="wrapper wrapper--large wrapping--padding">
+    <div class="twitter-embed section section--padding">
+        {% if object.title %}
+            <p>{% trans 'Follow our' %}</p>
+            <h3 class="story__heading heading--2">{{ object.title }}</h3>
+        {% endif %}
+        <a class="twitter-timeline" {% if object.width > 0 %}data-width="{{ object.width }}"{% endif %} {% if object.height > 0 %}data-height="{{ object.height }}"{% endif %} href="https://twitter.com/{{ object.username }}?ref_src=twsrc%5Etfw">
+            {% if object.title %}
+                {{ object.title }}
+            {% else %}
+                Tweets by {{ object.username }}
+            {% endif %}
+        </a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+</div>
+</div>
+

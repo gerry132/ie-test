@@ -1,0 +1,6 @@
+{% load wagtailcore_tags wagtailimages_tags static util_tags navigation_tags %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<script src="{% static 'js/main.js' %}"></script>
+{% include "patterns/atoms/sprites/sprites.html" %}
+{% custom_header_settings page as custom_header_settings %}
+{% include "patterns/organisms/header/header.html" with custom_header=object custom_header_settings=custom_header_settings page=page %}
