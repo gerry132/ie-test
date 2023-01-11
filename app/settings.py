@@ -98,6 +98,7 @@ INSTALLED_APPS = [
     "wagtailcaptcha",
     "modelcluster",
     "taggit",
+    "passwordreset",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -130,6 +131,7 @@ MIDDLEWARE = [
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "irelandie_utils.middleware.ReplaceViewsMiddleware",
     "custom_logout.middleware.custom_logout.CustomMiddleware",
+    "custompasswordreset.middleware.force_reset.ForcePasswordReset"
 ]
 
 if DEBUG_TOOLBAR is True:
