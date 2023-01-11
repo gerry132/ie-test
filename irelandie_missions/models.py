@@ -610,6 +610,13 @@ class ServicesLandingPage(BasePage):
         min_num=0,
         max_num=1,
     )
+    additional_rich_text = StreamField(
+        [
+            ("additional_rich_text", blocks.AdvancedRichTextBlock()),
+        ],
+        blank=True,
+        null=True,
+    )
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
@@ -629,6 +636,7 @@ class ServicesLandingPage(BasePage):
         FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("rich_text", heading="Advanced Richtext", permission="access_admin"),
         FieldPanel("body", permission="access_admin"),
+        FieldPanel("additional_rich_text", heading="Advanced Richtext", permission="access_admin"),
     ]
 
 
