@@ -9,7 +9,7 @@ class ForcePasswordReset(MiddlewareMixin):
     def _call_(self, request):
 
         # Code that is executed in each request before the view is called
-        
+
         response = self.get_response(request)
         # Code that is executed in each request after the view is called
         return response
@@ -39,17 +39,12 @@ class ForcePasswordReset(MiddlewareMixin):
         print(exception)
 
     def is_expired(self, user):
-        print(1111111111111111111)
-        print(timezone.now())
-        print(11111111111111111111)
         if not user.password_reset:
             reset_time = timezone.now() + timedelta(minutes=2)
             user.password_reset = reset_time
             user.save()
         elif user.password_reset < timezone.now():
-            print('pip')
             user.reset_lock = True
             user.save()
             return True
         return False 
-    
