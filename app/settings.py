@@ -103,6 +103,7 @@ INSTALLED_APPS = [
     "irelandie_project_styleguide.apps.ProjectStyleguideConfig",
     "rest_framework",
     "corsheaders",
+    
 ]
 
 if DEBUG_TOOLBAR is True:
@@ -203,11 +204,16 @@ else:
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 VALIDATOR_ROOT = "django.contrib.auth.password_validation"
+CUSTOM_VALIDATOR_ROOT = "custompasswordvalidators"
+
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": f"{VALIDATOR_ROOT}.UserAttributeSimilarityValidator"},
     {"NAME": f"{VALIDATOR_ROOT}.MinimumLengthValidator"},
     {"NAME": f"{VALIDATOR_ROOT}.CommonPasswordValidator"},
     {"NAME": f"{VALIDATOR_ROOT}.NumericPasswordValidator"},
+    {"NAME": f"{CUSTOM_VALIDATOR_ROOT}.case_mix.CaseMixValidator"},
+    {"NAME": f"{CUSTOM_VALIDATOR_ROOT}.symbols.SymbolValidator"},
+    {"NAME": f"{CUSTOM_VALIDATOR_ROOT}.entirely_letters.EntirelyLettersValidator"},
 ]
 
 # Internationalization
