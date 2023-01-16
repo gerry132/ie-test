@@ -69,7 +69,6 @@ def force_password_reset(request):
                     if form.is_bound:
                         form.save()
 
-
             # Prevent a password change from logging this user out
             update_session_auth_hash(request, user)
             user.password_reset = timezone.now() + timedelta(minutes=2)
