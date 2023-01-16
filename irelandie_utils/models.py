@@ -383,9 +383,6 @@ class PrivacyPolicySnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, ind
     def revisions(self):
         return self._revisions
 
-    def get_preview_template(self, request, mode_name):
-        return "patterns/pages/irelandie_job/job.html"
-
     def __str__(self):
         return self.title
 

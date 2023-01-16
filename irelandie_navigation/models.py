@@ -139,9 +139,6 @@ class PrimaryNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.
     def __str__(self):
         return self.lang
 
-    def get_preview_template(self, request, mode_name):
-        return "patterns/pages/home/home_page.html"
-
     class Meta:
         verbose_name = _("Primary Navigation")
         verbose_name_plural = _("Primary Navigation")
@@ -213,9 +210,6 @@ class FooterNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.I
     def __str__(self):
         return self.lang
 
-    def get_preview_template(self, request, mode_name):
-        return "patterns/pages/home/home_page.html"
-
     class Meta:
         verbose_name = _("Footer Navigation")
         verbose_name_plural = _("Footer Navigation")
@@ -274,9 +268,6 @@ class SecondaryNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, inde
 
     def __str__(self):
         return self.lang
-
-    def get_preview_template(self, request, mode_name):
-        return "patterns/pages/home/home_page.html"
 
     class Meta:
         verbose_name = _("Secondary Navigation")
@@ -369,9 +360,6 @@ class CustomFooter(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
     def __str__(self):
         return self.name
 
-    def get_preview_template(self, request, mode_name):
-        return "patterns/pages/home/home_page.html"
-
     class Meta:
         verbose_name = _("Custom Footer")
         verbose_name_plural = _("Custom Footers")
@@ -463,9 +451,6 @@ class CustomHeader(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
 
     def __str__(self):
         return self.name
-
-    def get_preview_template(self, request, mode_name):
-        return "patterns/pages/home/home_page.html"
 
     def clean(self):
         if self.link_page and self.url:
