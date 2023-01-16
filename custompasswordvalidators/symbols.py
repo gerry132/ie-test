@@ -5,7 +5,7 @@ from django.utils.translation import ugettext as _
 
 
 class SymbolValidator(object):
-    def validate(self, password):
+    def validate(self, password, user=None):
         if not re.findall(r'[()[\]{}|\\`~!@#$%^&*_\-+=;:\'",<>./?]', password):
             raise ValidationError(
                 _("Your password must contain at least 1 symbol: " +
