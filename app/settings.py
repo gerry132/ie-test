@@ -92,6 +92,7 @@ INSTALLED_APPS = [
     "wagtailcaptcha",
     "modelcluster",
     "taggit",
+    "passwordreset",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -123,6 +124,7 @@ MIDDLEWARE = [
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "irelandie_utils.middleware.ReplaceViewsMiddleware",
     "custom_logout.middleware.custom_logout.CustomMiddleware",
+    "custompasswordreset.middleware.force_reset.ForcePasswordReset"
 ]
 
 if DEBUG_TOOLBAR is True:
@@ -201,11 +203,16 @@ else:
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 VALIDATOR_ROOT = "django.contrib.auth.password_validation"
+CUSTOM_VALIDATOR_ROOT = "custompasswordvalidators"
+
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": f"{VALIDATOR_ROOT}.UserAttributeSimilarityValidator"},
     {"NAME": f"{VALIDATOR_ROOT}.MinimumLengthValidator"},
     {"NAME": f"{VALIDATOR_ROOT}.CommonPasswordValidator"},
     {"NAME": f"{VALIDATOR_ROOT}.NumericPasswordValidator"},
+    {"NAME": f"{CUSTOM_VALIDATOR_ROOT}.case_mix.CaseMixValidator"},
+    {"NAME": f"{CUSTOM_VALIDATOR_ROOT}.symbols.SymbolValidator"},
+    {"NAME": f"{CUSTOM_VALIDATOR_ROOT}.entirely_letters.EntirelyLettersValidator"},
 ]
 
 # Internationalization
