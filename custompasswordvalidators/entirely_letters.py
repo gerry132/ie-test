@@ -5,8 +5,8 @@ from django.utils.translation import ugettext as _
 
 
 class EntirelyLettersValidator(object):
-    def validate(self, password, user=None):
-        if not len(re.findall('\d', password)) == 0:
+    def validate(self, password):
+        if not len(re.findall(r'\d', password)) == 0:
             raise ValidationError(
                 _("The password must contain numbers as well as letters."),
                 code='password_no_number',
