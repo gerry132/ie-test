@@ -103,7 +103,6 @@ INSTALLED_APPS = [
     "irelandie_project_styleguide.apps.ProjectStyleguideConfig",
     "rest_framework",
     "corsheaders",
-    
 ]
 
 if DEBUG_TOOLBAR is True:

@@ -47,4 +47,4 @@ class ForcePasswordReset(MiddlewareMixin):
             user.reset_lock = True
             user.save()
             return True
-        return False 
+        return False
