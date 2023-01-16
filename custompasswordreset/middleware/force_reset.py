@@ -33,7 +33,7 @@ class ForcePasswordReset(MiddlewareMixin):
 
     def is_expired(self, user):
         if not user.password_reset:
-            reset_time = timezone.now() + timedelta(minutes=2)
+            reset_time = timezone.now() + timedelta(minutes=87600)
             user.password_reset = reset_time
             user.save()
         elif user.password_reset < timezone.now():
