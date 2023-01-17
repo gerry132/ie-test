@@ -15,7 +15,7 @@ from wagtail.admin.panels import (
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail import blocks
 from wagtail.fields import RichTextField, StreamField
-from wagtail.models import Orderable, Page, TranslatableMixin
+from wagtail.models import Orderable, Page, TranslatableMixin, PreviewableMixin
 from wagtail.query import PageQuerySet
 
 from wagtail.images import get_image_model_string
@@ -216,7 +216,7 @@ class ContactSnippetTag(TaggedItemBase):
 
 
 @register_snippet
-class ContactSnippet(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class ContactSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
     tags = TaggableManager(through=ContactSnippetTag, blank=True)
     title = models.CharField(max_length=255)
     body = StreamField(
@@ -236,6 +236,9 @@ class ContactSnippet(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableM
     search_fields = [
         index.SearchField("title", partial_match=True),
     ]
+
+    def get_preview_template(self, request, mode_name):
+        return "patterns/snippets/contactsnippet.html"
 
     @property
     def revisions(self):
@@ -349,7 +352,8 @@ class PrivacyPolicySnippetTag(TaggedItemBase):
 
 
 @register_snippet
-class PrivacyPolicySnippet(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class PrivacyPolicySnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
+                           models.Model):
     tags = TaggableManager(through=PrivacyPolicySnippetTag, blank=True)
     title = models.CharField(max_length=255)
     privacy_snippet = StreamField(
@@ -372,6 +376,9 @@ class PrivacyPolicySnippet(DraftStateMixin, RevisionMixin, index.Indexed, Cluste
         index.SearchField("title", partial_match=True),
     ]
 
+    def get_preview_template(self, request, mode_name):
+        return "patterns/snippets/privacypolicysnippet.html"
+
     @property
     def revisions(self):
         return self._revisions
@@ -386,7 +393,7 @@ class AccordionTag(TaggedItemBase):
 
 
 @register_snippet
-class Accordion(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class Accordion(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
     tags = TaggableManager(through=AccordionTag, blank=True)
     title = models.CharField(max_length=255)
     accordions = StreamField(
@@ -407,6 +414,9 @@ class Accordion(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
     search_fields = [
         index.SearchField("title", partial_match=True),
     ]
+
+    def get_preview_template(self, request, mode_name):
+        return "patterns/snippets/accordionsnippet.html"
 
     @property
     def revisions(self):
@@ -925,7 +935,8 @@ class TwitterEmbedTag(TaggedItemBase):
 
 
 @register_snippet
-class TwitterEmbed(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin, models.Model):
+class TwitterEmbed(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, TranslatableMixin,
+                   models.Model):
     tags = TaggableManager(through=TwitterEmbedTag, blank=True)
     title = models.CharField(
         max_length=255,
@@ -962,6 +973,9 @@ class TwitterEmbed(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableMod
         index.SearchField("title", partial_match=True),
     ]
 
+    def get_preview_template(self, request, mode_name):
+        return "patterns/snippets/twitterembedsnippet.html"
+
     @property
     def revisions(self):
         return self._revisions
@@ -981,7 +995,7 @@ class VisaTag(TaggedItemBase):
 
 
 @register_snippet
-class Visa(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class Visa(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
     tags = TaggableManager(through=VisaTag, blank=True)
     title = models.CharField(max_length=255)
     body = StreamField(
@@ -1002,6 +1016,9 @@ class Visa(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, mode
         index.SearchField("title", partial_match=True),
     ]
 
+    def get_preview_template(self, request, mode_name):
+        return "patterns/snippets/general_block_snippet.html"
+
     @property
     def revisions(self):
         return self._revisions
@@ -1016,7 +1033,7 @@ class PassportTag(TaggedItemBase):
 
 
 @register_snippet
-class Passport(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class Passport(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
     tags = TaggableManager(through=PassportTag, blank=True)
     title = models.CharField(max_length=255)
     body = StreamField(
@@ -1037,6 +1054,9 @@ class Passport(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, 
         index.SearchField("title", partial_match=True),
     ]
 
+    def get_preview_template(self, request, mode_name):
+        return "patterns/snippets/general_block_snippet.html"
+
     @property
     def revisions(self):
         return self._revisions
@@ -1051,7 +1071,7 @@ class AuthenticationTag(TaggedItemBase):
 
 
 @register_snippet
-class Authentication(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class Authentication(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
     tags = TaggableManager(through=AuthenticationTag, blank=True)
     title = models.CharField(max_length=255)
     body = StreamField(
@@ -1072,6 +1092,9 @@ class Authentication(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableM
         index.SearchField("title", partial_match=True),
     ]
 
+    def get_preview_template(self, request, mode_name):
+        return "patterns/snippets/general_block_snippet.html"
+
     @property
     def revisions(self):
         return self._revisions
@@ -1086,7 +1109,7 @@ class MarriageTag(TaggedItemBase):
 
 
 @register_snippet
-class Marriage(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class Marriage(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
     tags = TaggableManager(through=MarriageTag, blank=True)
     title = models.CharField(max_length=255)
     body = StreamField(
@@ -1106,6 +1129,9 @@ class Marriage(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, 
     search_fields = [
         index.SearchField("title", partial_match=True),
     ]
+
+    def get_preview_template(self, request, mode_name):
+        return "patterns/snippets/general_block_snippet.html"
 
     @property
     def revisions(self):

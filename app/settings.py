@@ -15,29 +15,22 @@ import os
 
 from dotenv import load_dotenv
 
-
 TRUE = ["1", "True", "true", 1, True]
 
-
 load_dotenv()
-
 
 # Name of root directory, directory with settings.pt in it
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-
 DEBUG_TOOLBAR = os.environ.get("DEBUG_TOOLBAR", "0") in TRUE
-
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "0") in TRUE
-
 
 ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
@@ -74,6 +67,7 @@ INSTALLED_APPS = [
     "irelandie_forms",
     #
     "wagtail_localize",
+    "wagtail.locales",
     "wagtail.contrib.forms",
     "wagtail.contrib.modeladmin",
     "wagtail.contrib.redirects",
@@ -98,6 +92,7 @@ INSTALLED_APPS = [
     "wagtailcaptcha",
     "modelcluster",
     "taggit",
+    "passwordreset",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -115,7 +110,6 @@ if DEBUG_TOOLBAR is True:
         "debug_toolbar",
     ]
 
-
 MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -130,6 +124,7 @@ MIDDLEWARE = [
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "irelandie_utils.middleware.ReplaceViewsMiddleware",
     "custom_logout.middleware.custom_logout.CustomMiddleware",
+    "custompasswordreset.middleware.force_reset.ForcePasswordReset"
 ]
 
 if DEBUG_TOOLBAR is True:
@@ -137,9 +132,7 @@ if DEBUG_TOOLBAR is True:
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
 
-
 ROOT_URLCONF = "app.urls"
-
 
 TEMPLATES = [
     {
@@ -167,7 +160,6 @@ TEMPLATES = [
     },
 ]
 
-
 # Django Pattern Library
 PATTERN_LIBRARY_ENABLED = os.environ.get("PATTERN_LIBRARY_ENABLED", "0") in TRUE
 PATTERN_LIBRARY = {
@@ -182,16 +174,13 @@ PATTERN_LIBRARY = {
     "BASE_TEMPLATE_NAMES": ["patterns/base_page.html"],
 }
 
-
 WSGI_APPLICATION = "app.wsgi.application"
-
 
 # In production, email is handled with Amazon SES
 if "EMAIL_BACKEND" in os.environ:
     EMAIL_BACKEND = os.environ["EMAIL_BACKEND"]
 else:
     EMAIL_BACKEND = "django_ses.SESBackend"
-
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -210,18 +199,21 @@ else:
 
     DATABASES["default"] = dj_database_url.config(conn_max_age=600)
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 VALIDATOR_ROOT = "django.contrib.auth.password_validation"
+CUSTOM_VALIDATOR_ROOT = "custompasswordvalidators"
+
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": f"{VALIDATOR_ROOT}.UserAttributeSimilarityValidator"},
     {"NAME": f"{VALIDATOR_ROOT}.MinimumLengthValidator"},
     {"NAME": f"{VALIDATOR_ROOT}.CommonPasswordValidator"},
     {"NAME": f"{VALIDATOR_ROOT}.NumericPasswordValidator"},
+    {"NAME": f"{CUSTOM_VALIDATOR_ROOT}.case_mix.CaseMixValidator"},
+    {"NAME": f"{CUSTOM_VALIDATOR_ROOT}.symbols.SymbolValidator"},
+    {"NAME": f"{CUSTOM_VALIDATOR_ROOT}.entirely_letters.EntirelyLettersValidator"},
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -235,7 +227,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -257,7 +248,6 @@ STATIC_URL = "/static/"
 MEDIA_ROOT = os.path.join(PROJECT_DIR, "media")
 MEDIA_URL = "/media/"
 
-
 #
 
 USE_CACHE = os.environ.get("USE_CACHE", "0") in TRUE
@@ -276,7 +266,6 @@ if USE_CACHE is True:
         }
     }
     DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
-
 
 # # https://docs.djangoproject.com/en/stable/ref/settings/#secure-ssl-redirect
 # SECURE_SSL_REDIRECT = False
@@ -314,13 +303,11 @@ CORS_ALLOW_ALL_ORIGINS = os.environ.get("CORS_ALLOW_ALL_ORIGINS", False) in TRUE
 if CORS_ALLOW_ALL_ORIGINS is False:
     CORS_ALLOWED_ORIGINS = os.environ["CORS_ALLOWED_ORIGINS"].split(",")
 
-
 if DEBUG_TOOLBAR is True:
     INTERNAL_IPS = [
         "127.0.0.1",
         "localhost",
     ]
-
 
 #
 
@@ -343,22 +330,26 @@ WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
     ("ar", "Arabic"),
     ("ch", "Chinese"),
     ("en", "English"),
-    ("de", "German"),
-    ("ga", "Irish"),
-    ("ja", "Japanese"),
     ("fr", "French"),
+    ("de", "German"),
+    ("hi", "Hindi"),
+    ("hu", "Hungarian"),
+    ("ga", "Irish"),
+    ("it", "Italian"),
+    ("ja", "Japanese"),
+    ("ko", "korean"),
+    ("pl", "Polish"),
+    ("pt", "Portuguese"),
     ("ru", "Russian"),
     ("es", "Spanish"),
+    ("vi", "Vietnamese"),
 ]
-
 
 LOCALE_PATHS = [
     os.path.join(PROJECT_DIR, "locale"),
 ]
 
-
 WAGTAIL_LOCALIZE_DEFAULT_TRANSLATION_MODE = "simple"
-
 
 # AWS
 
@@ -377,18 +368,13 @@ if USE_S3 is True:
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
-
 WAGTAIL_SITE_NAME = "Ireland.ie"
-
 
 BASE_URL = os.environ.get("BASE_URL", "http://localhost:8000")
 
-
 WAGTAIL_I18N_ENABLED = True
 
-
 PREFIX_DEFAULT_LANGUAGE = True
-
 
 WAGTAILADMIN_COMMENTS_ENABLED = False
 WAGTAIL_MODERATION_ENABLED = False
@@ -396,12 +382,10 @@ WAGTAILIMAGES_IMAGE_MODEL = "irelandie_images.CustomImage"
 WAGTAILIMAGES_FEATURE_DETECTION_ENABLED = False
 WAGTAILDOCS_DOCUMENT_MODEL = "irelandie_documents.CustomDocument"
 
-
 WAGTAILSEARCH_BACKENDS = {"default": {"BACKEND": "wagtail.search.backends.database"}}
 
 # Default size of the pagination used on the front-end.
 DEFAULT_PER_PAGE = 10
-
 
 # WAGTAIL_EXPERIMENTAL_FEATURES = ['slim-sidebar']
 
@@ -419,7 +403,6 @@ WAGTAILMEDIA = {
     "VIDEO_EXTENSIONS": ["mp4"],  # list of extensions
 }
 
-
 # Recaptcha
 # These settings are required for the captcha challange to work.
 # https://github.com/springload/wagtail-django-recaptcha
@@ -434,7 +417,6 @@ else:
 
 if USE_CACHE is True:
     SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-
 
 LOGGING = {
     "version": 1,

@@ -3,12 +3,18 @@
 <div class="streamfield">
     <figure class="image-block">
         {% if value.image_alt %}
-            {% image value.image width-1000 class="image image-block__image" loading="lazy" alt=value.image_alt %}
+            {% if not value.caption %}
+                {% image value.image width-1000 class="image image-block__image_border" loading="lazy" alt=value.image_alt %}
+            {% else %}
+                {% image value.image width-1000 class="image image-block__image" loading="lazy" alt=value.image_alt %}
+            {% endif %}
         {% else %}
             {% image value.image width-1000 class="image image-block__image" loading="lazy" alt=value.image.alt_default %}
         {% endif %}
-        <figcaption class="image-block__caption">
-            {{ value.caption }}
-        </figcaption>
+        {% if value.caption %}
+            <figcaption class="image-block__caption">
+                {{ value.caption }}
+            </figcaption>
+        {% endif %}
     </figure>
 </div>

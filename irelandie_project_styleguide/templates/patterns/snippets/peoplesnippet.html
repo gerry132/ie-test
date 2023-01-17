@@ -1,0 +1,183 @@
+{% load wagtailcore_tags wagtailimages_tags static util_tags %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<script src="{% static 'js/main.js' %}"></script>
+{% include "patterns/atoms/sprites/sprites.html" %}
+
+
+<div class="story{% if object.background == 'dark' %} story--dark{% endif %}{% if object.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
+    <div class="wrapper wrapper--large wrapper--padding">
+
+        <div class="story__container">
+            {% image object.image width-460 class="story__image" %}
+
+            <div class="story__content">
+                <div class="story__copy">
+                    {% image object.embassy_logo width-460 class="story__logo" %}
+
+                    {% if object.title %}
+                        {{ object.title }}
+                    {% endif %}
+
+                    <h3 class="story__heading heading--2">{{ object.name }}</h3>
+
+                    {% if object.social_media_link %}
+                        <a href="{{ object.social_media_link }}">
+                            <div class="story__twitter">
+                                {% if object.social_media_text %}
+                                    {{ object.social_media_text }}
+                                {% endif %}
+                                {% include "patterns/atoms/icons/icon.html" with name="twitter" classname="story__twitter-icon" %}
+                            </div>
+                        </a>
+                    {% endif %}
+
+                    {% if object.address or object.telephone or object.opening_hours or object.closure_dates or object.emergency_contact_details %}
+                        <div class="rich-text">
+                            {% if object.address %}
+                                {{ object.address|richtext }}
+                            {% endif %}
+
+                            {% if object.telephone %}
+                                {{ object.telephone }}
+                            {% endif %}
+
+                            {% if object.opening_hours %}
+                                {{ object.opening_hours|richtext }}
+                            {% endif %}
+
+                            {% if object.closure_dates %}
+                                {{ object.closure_dates|richtext }}
+                            {% endif %}
+
+                            {% if object.emergency_contact_details %}
+                                {{ object.emergency_contact_details|richtext }}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                                                 {% if object.links %}
+                    {% if object.links|length > 2 %}
+                    <div class="story-links">
+                        <div class="your-class story-links__container">
+                          <div class="slider slider-mobile">
+                            {% for link in object.links %}
+                            <div id="last" class="slide-mobile" style="width: 100%;">
+                              <div class="story-links">
+                                  <div class="your-class story-links__container">
+                                          {% include_block link %}
+                                  </div>
+                                  </div>
+                            </div>
+                            {% endfor %}
+                          </div>
+                            <div class="slider slider-desktop">
+
+                              {% for link in object.links %}
+                                {% if forloop.counter|divisibleby:2 %}
+                                          {% include_block link %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% else %}
+                                {% with next_element=object.links|next:forloop.counter0 %}
+                                    {% if next_element %}
+                                      <div id="next" class="slide">
+                                          <div class="story-links">
+                                              <div class="your-class story-links__container">
+                                                      {{link}}
+                                    {% else %}
+                                    <div id="last" class="slide" style="width: 100%;">
+                                      <div class="story-links">
+                                          <div class="your-class story-links__container">
+                                                  {% include_block link %}
+                                          </div>
+                                          </div>
+                                    </div>
+                                    {% endif %}
+                                  {% endwith %}
+                                {% endif %}
+                        {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="story-links">
+                            <div class="your-class story-links__container">
+                                    {% for link in object.links %}
+                                        {% include_block link %}
+                                    {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+            {% if object.links|length > 2 %}
+              <button class="btn btn-next">  </button>
+                          <button class="btn btn-prev">
+                          </button>
+            {% endif %}
+        </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+<script>
+function readySlides(mobile) {
+  console.log(mobile);
+  let slides;
+  let transNum;
+  if(mobile) {
+    slides = document.querySelectorAll(".slide-mobile");
+    transNum = 100;
+  } else {
+    slides = document.querySelectorAll(".slide");
+    transNum = 100;
+  }
+
+  slides.forEach((slide, indx) => {
+    slide.style.transform = `translateX(${indx * transNum}%)`;
+  });
+  // select next slide button
+  const nextSlide = document.querySelector(".btn-next");
+  // current slide counter
+  let curSlide = 0;
+  // maximum number of slides
+  let maxSlide = slides.length - 1;
+
+  // add event listener and navigation functionality
+  nextSlide.addEventListener("click", function () {
+    // check if current slide is the last and reset current slide
+    if (curSlide === maxSlide) {
+      curSlide = 0;
+    } else {
+      curSlide++;
+    }
+
+    //   move slide by -100%
+    slides.forEach((slide, indx) => {
+      slide.style.transform = `translateX(${transNum * (indx - curSlide)}%)`;
+    });
+  });
+
+  // select next slide button
+  const prevSlide = document.querySelector(".btn-prev");
+
+  // add event listener and navigation functionality
+  prevSlide.addEventListener("click", function () {
+    // check if current slide is the first and reset current slide to last
+    if (curSlide === 0) {
+      curSlide = maxSlide;
+    } else {
+      curSlide--;
+    }
+
+    //   move slide by 100%
+    slides.forEach((slide, indx) => {
+      slide.style.transform = `translateX(${transNum * (indx - curSlide)}%)`;
+    });
+  });
+}
+
+readySlides(false);
+readySlides(true);
+</script>

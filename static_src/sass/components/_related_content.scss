@@ -19,8 +19,9 @@
     }
     &__card_three{
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(310px, 410px));
         grid-gap: 2rem 1rem;
+        justify-content: center;
     }
 
     &__related_content{

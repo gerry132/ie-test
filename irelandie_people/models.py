@@ -9,7 +9,7 @@ from wagtail.admin.panels import (
     MultiFieldPanel,
 )
 from wagtail.fields import StreamField, RichTextField
-from wagtail.models import Page, TranslatableMixin
+from wagtail.models import Page, TranslatableMixin, PreviewableMixin
 
 from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
@@ -109,7 +109,7 @@ class PersonTag(TaggedItemBase):
 
 
 @register_snippet
-class Person(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class Person(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
     tags = TaggableManager(through=PersonTag, blank=True)
     name = models.CharField(max_length=255)
     title = models.CharField(max_length=255, blank=True)
@@ -194,6 +194,9 @@ class Person(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, mo
     search_fields = [
         index.SearchField("title", partial_match=True),
     ]
+
+    def get_preview_template(self, request, mode_name):
+        return "patterns/snippets/peoplesnippet.html"
 
     @property
     def revisions(self):
