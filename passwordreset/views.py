@@ -71,7 +71,7 @@ def force_password_reset(request):
 
             # Prevent a password change from logging this user out
             update_session_auth_hash(request, user)
-            user.password_reset = timezone.now() + timedelta(minutes=2)
+            user.password_reset = timezone.now() + timedelta(minutes=87600)
             user.reset_lock = False
             user.save()
 
