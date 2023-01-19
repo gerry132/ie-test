@@ -328,7 +328,7 @@ if "DEFAULT_FROM_EMAIL" in os.environ:
 
 WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
     ("ar", "Arabic"),
-    ("ch", "Chinese"),
+    ("zh-hans", "Chinese"),
     ("en", "English"),
     ("fr", "French"),
     ("de", "German"),
