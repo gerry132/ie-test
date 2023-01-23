@@ -1,17 +1,51 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
-{% load util_tags %}
+{% load util_tags i18n %}
+{% for block in page.generic_hero %}
+ <div class="mini-hero__container">
+    {% if block.value.hero_image %}
+                        {% if block.value.hero_image_alignment == 'left' %}
+                            <div class="mini-hero__image_left">
+                                {% image block.value.hero_image original class="image mini-hero__image_left" %}
+                            </div>
+                        {% else %}
+                            <div class="mini-hero__image">
+                                {% image block.value.hero_image original class="image mini-hero__image" %}
+                            </div>
+                        {% endif %}
+                    {% elif block.value.hero_video %}
+                        {% if block.value.hero_image_alignment == 'left' %}
+                            <video class="mini-hero__video_left" aria-label="{{ block.value.hero_video.title  }}" title="{{ block.value.hero_video.title  }}" loop data-video controls>
+                                <source src="{{ block.value.hero_video.url }}" type="video/mp4">
+                                    {% trans 'Your browser does not support the video tag.' %}
+                            </video>
+                        {% else %}
+                            <video class="mini-hero__video" aria-label="{{ block.value.hero_video.title  }}" title="{{block.value.hero_video.title  }}" loop data-video controls>
+                                <source src="{{ block.value.hero_video.url }}" type="video/mp4">
+                                    {% trans 'Your browser does not support the video tag.' %}
+                            </video>
+                         {% endif %}
 
-{% for block in page.generic_hero %}
-    {% if block.value.hero_image %}
-        {% include "patterns/atoms/image/hero_image.html" with hero_image=block.value.hero_image %}
-    {% endif %}
+                    {% endif %}
+        <div class="{% if block.value.hero_image_alignment == 'left' %}mini-hero__content_left{% else %}
+        mini-hero__content_right{% endif %} mini-hero__content" style="{% if block.value.text_color %}background-color: {{block.value.text_color}};{% endif %}">
+                <h1 class="mini-hero__title">
+
+                    {% if block.value.hero_title %}
+                        {% title_length block.value.hero_title as title_length %}
+                            <div class="{% if title_length > 25 %}mini-hero__title_length{% endif %}">
+                                {{ block.value.hero_title }}
+                            </div>
+                    {% endif %}
+                </h1>
+                    {% if block.value.subtitle %}
+                        <p class="mini-hero__subtitle">{% firstof block.value.subtitle %}</p>
+                    {% endif %}
+        </div>
+
+    </div>
+
 {% endfor %}
-{% for block in page.generic_hero %}
-    {% if block.value.hero_image %}
-        {% include "patterns/molecules/hero/hero_mach_two.html" with page=page hero_image=block.value.hero_image %}
-    {% endif %}
-{% endfor %}
-{% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+
 
 
