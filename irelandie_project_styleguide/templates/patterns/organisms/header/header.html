@@ -179,18 +179,10 @@
                 </div>
             </div>
 
-            {% if not page.hero_image and not page.hero_video and not page.generic_hero %}
-            {% check_page_type page.content_type 'news page index' as NewsPageIndex %}
-            {% check_page_type page.content_type 'job index page' as JobIndexPage %}
-            {% check_page_type page.content_type 'news landing page' as NewsLandingPage %}
-            {% check_page_type page.content_type 'general content page' as GeneralContentPage %}
-            {% check_page_type page.content_type 'Notice' as NoticePage %}
-            {% check_page_type page.content_type 'Free Form Page' as FreeFormPage %}
-            {% if GeneralContentPage or NoticePage or FreeFormPage and not NewsPageIndex and not NewsLandingPage and not JobIndexPage %}
+            {% if not page.hero_image and not page.hero_video or page.generic_hero %}
             <div class="breadcrumb">
                 {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
             </div>
-            {% endif %}
             {% endif %}
 
             <div class="notice-bar">
@@ -311,15 +303,10 @@
                 </div>
             </div>
 
-            {% if not page.hero_image and not page.hero_video and not page.generic_hero %}
-            {% check_page_type page.content_type 'news page index' as NewsPageIndex %}
-            {% check_page_type page.content_type 'job index page' as JobIndexPage %}
-            {% check_page_type page.content_type 'news landing page' as NewsLandingPage %}
-            {% if not NewsPageIndex and not NewsLandingPage and not JobIndexPage %}
+            {% if not page.hero_image and not page.hero_video or page.generic_hero %}
             <div class="breadcrumb">
                 {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
             </div>
-            {% endif %}
             {% endif %}
 
             <div class="notice-bar">

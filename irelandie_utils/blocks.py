@@ -1180,9 +1180,36 @@ class LinkButtonBlock(blocks.StructBlock):
 
 
 class GenericHeroBlock(blocks.StructBlock):
+    hero_image_alignment = blocks.ChoiceBlock(
+        required=True,
+        choices=StoryAlignment.choices,
+        default=StoryAlignment.RIGHT,
+    )
     hero_image = ImageChooserBlock(required=False)
+    hero_video = VideoChooserBlock(required=False)
+    text_color = blocks.CharBlock(required=False, default='#E7E5E1')
     hero_title = blocks.CharBlock(required=True, max_length=120)
     subtitle = blocks.CharBlock(required=False)
+
+    def clean(self, value):
+        errors = {}
+        hero_image = value.get('hero_image')
+        hero_video = value.get('hero_video')
+
+        if not (bool(hero_image) ^ bool(hero_video)):
+            msg = "You should choose an image or a video."
+            errors['hero_image'] = ErrorList([msg])
+            errors['hero_video'] = ErrorList([msg])
+
+        if bool(hero_image) and bool(hero_video):
+            msg = "You can't choose both an image and a video. Choose an image or a video"
+            errors['hero_image'] = ErrorList([msg])
+            errors['hero_video'] = ErrorList([msg])
+
+        if errors:
+            raise StructBlockValidationError(block_errors=errors)
+
+        return super().clean(value)
 
     class Meta:
         label = "Mini Hero Block"
