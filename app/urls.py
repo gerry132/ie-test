@@ -10,12 +10,12 @@ from django.views.generic import RedirectView
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
+from wagtail.contrib.sitemaps.views import sitemap
 
 from wagtail.api.v2.router import WagtailAPIRouter
 
 from irelandie_utils.views import PagesAPIEndpoint, set_language_wagtail
 from irelandie_search import views as search_views
-
 
 PREFIX_DEFAULT_LANGUAGE = getattr(
     dj_settings,
@@ -32,29 +32,25 @@ urlpatterns = [
     path('django-admin/', admin.site.urls),
     path('admin/', include(wagtailadmin_urls)),
     path("search/", search_views.search, name="search"),
+    path('sitemap.xml', sitemap),
     path('', include(wagtaildocs_urls)),
     path("api/v2/", api_router.urls),
 ]
 
-
 if dj_settings.DEBUG_TOOLBAR is True:
-
     import debug_toolbar
 
     urlpatterns += [
         path('__debug__/', include(debug_toolbar.urls)),
     ]
 
-
 if dj_settings.USE_S3 is True:
     urlpatterns += staticfiles_urlpatterns()
-
 
 urlpatterns += static(
     dj_settings.MEDIA_URL,
     document_root=dj_settings.MEDIA_ROOT
 )
-
 
 urlpatterns += i18n_patterns(
     # set up set language redirect view
@@ -63,7 +59,6 @@ urlpatterns += i18n_patterns(
     path('i18n/set_language_wagtail', set_language_wagtail, name="set_language_wagtail"),
     prefix_default_language=PREFIX_DEFAULT_LANGUAGE,
 )
-
 
 urlpatterns += [
     path(
@@ -76,6 +71,7 @@ urlpatterns += [
 # Pattern Lib
 if dj_settings.PATTERN_LIBRARY_ENABLED is True:
     from irelandie_project_styleguide.views import example_form
+
     urlpatterns += [
         path(
             "pattern-library/pattern/patterns/pages/forms/example_form.html",
@@ -83,7 +79,6 @@ if dj_settings.PATTERN_LIBRARY_ENABLED is True:
         ),
         path("pattern-library/", include("pattern_library.urls")),
     ]
-
 
 handler404 = 'irelandie_utils.views.page_not_found'
 handler500 = 'irelandie_utils.views.server_error'

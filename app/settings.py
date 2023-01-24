@@ -99,6 +99,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sitemaps",
     "pattern_library",
     "irelandie_project_styleguide.apps.ProjectStyleguideConfig",
     "rest_framework",
