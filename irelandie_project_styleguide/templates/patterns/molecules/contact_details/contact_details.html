@@ -8,7 +8,9 @@
             {{elem.value.address_line_1}} <br/>
             {{elem.value.address_line_2}} <br/>
             {{elem.value.address_line_3}} <br/>
-            {{elem.value.address_line_4}} <br/>
+            {% if elem.value.address_line_4 %}
+                {{elem.value.address_line_4}} <br/>
+            {% endif %}
             {{elem.value.post_code}} <br/>
     </address>
     {% endif %}
@@ -16,10 +18,9 @@
     {% if elem.value.international_code %}
         <div><a href="tel:{{elem.value.international_code}}{{elem.value.telephone}}">Tel: {{elem.value.international_code}} {{elem.value.telephone}}</a></div>
     {% endif %}
-    {% if elem.value.alt_international_code %}
+    {% if elem.value.alt_international_code and elem.value.alt_telephone%}
         <div><a href="tel:{{elem.value.alt_international_code}}{{elem.value.alt_telephone}}">Alt tel: {{elem.value.alt_international_code}} {{elem.value.alt_telephone}}</a></div>
     {% endif %}
-    <br/>
     {% if elem.value.fax_number %}
     <p>Fax: {{elem.value.fax_number}}</p>
     {% endif %}
