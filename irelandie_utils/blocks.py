@@ -1187,7 +1187,7 @@ class GenericHeroBlock(blocks.StructBlock):
     )
     hero_image = ImageChooserBlock(required=False)
     hero_video = VideoChooserBlock(required=False)
-    text_color = blocks.CharBlock(required=False, default='#E7E5E1')
+    background_color = blocks.CharBlock(required=False, default='#E7E5E1')
     hero_title = blocks.CharBlock(required=True, max_length=120)
     subtitle = blocks.CharBlock(required=False)
 

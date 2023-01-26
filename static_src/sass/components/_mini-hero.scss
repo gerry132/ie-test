@@ -3,14 +3,20 @@
     &__container{
         position: relative;
         height: 420px;
+         @media only screen and (min-width: 560px) and (max-width: 821px){
+            height: 445px;
+        }
+        @media only screen and (max-width: 560px){
+            height: 380px;
+        }
     }
     &__content_left{
         margin-left: 50%;
-        margin-top:5%;
-        margin-bottom:5%;
+        margin-top:4%;
+        margin-bottom:4%;
     }
     &__content_right{
-        margin: 5%;
+        margin: 4%;
     }
 
     &__content{
@@ -22,6 +28,10 @@
             padding: 50px;
             position: absolute;
             width: 43%;
+            @media screen and (min-width: 822px){
+                height:266px;
+
+            }
 
         @media screen and (max-width: 821px){
             margin-left: 10%;

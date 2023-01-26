@@ -1,28 +1,4 @@
-.main {
-    padding-top: $mobile-header-height;
 
-    @include media-query(large) {
-        padding-top: $desktop-header-height;
-    }
-
-    &--condensed {
-        padding-top: $mobile-header-height;
-
-        @include media-query(large) {
-            padding-top: $condensed-header-height;
-        }
-    }
-    &--generic-hero{
-        padding-top:140px;
-    }
-    &--without-hero{
-        padding-top: 190px;
-
-        @include media-query(max-medium) {
-            padding-top: 210px;
-        }
-    }
-}
 .generic-hero__search-is-active{
     position: relative;
     top:88px;
