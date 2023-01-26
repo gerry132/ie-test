@@ -845,9 +845,28 @@ resource "aws_lb_listener_rule" "www_ireland_ie_443_admin_redirect" {
 
 # Public facing site rule
 
+resource "aws_lb_listener_rule" "ireland_ie_www_redirect" {
+  listener_arn    = aws_lb_listener.public_sites_443.arn
+  priority        = 5
+
+  action {
+    type              = "redirect"
+    redirect {
+      host            = "www.${local.domain_ireland_ie}"
+      status_code     = "HTTP_302"
+    }
+  }
+
+  condition {
+    host_header {
+      values  = [local.domain_ireland_ie]
+    }
+  }
+}
+
 resource "aws_lb_listener_rule" "ireland_ie_443" {
   listener_arn    = aws_lb_listener.public_sites_443.arn
-  priority        = 4
+  priority        = 6
 
   action {
     type                = "forward"
@@ -860,7 +879,6 @@ resource "aws_lb_listener_rule" "ireland_ie_443" {
     }
   }
 }
-
 
 # -----------------------------------------------------------------------------
 # Listener certificates
