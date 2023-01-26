@@ -55,8 +55,7 @@
         {% block header %}
         {% endblock %}
             {% has_root_override page header=True as override %}
-        <main class="wrapper wrapper--main main" id="main-content"
-              style="{% if page.generic_hero and override %}padding-top: 200px;{% endif %}">
+        <main class="wrapper wrapper--main main" id="main-content">
             {% block content %}
                 {{ pattern_library_rendered_pattern }}
             {% endblock %}
