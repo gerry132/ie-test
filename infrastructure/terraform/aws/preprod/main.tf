@@ -696,6 +696,9 @@ resource "aws_lb_target_group" "default_admin" {
 
 resource "aws_acm_certificate" "ireland_ie_content" {
   domain_name                 = "preprod.ireland.ie"
+  subject_alternative_names = [
+     "www.preprod.ireland.ie"
+  ]
   validation_method           = "DNS"
 
   lifecycle {
@@ -863,6 +866,25 @@ resource "aws_lb_listener_rule" "www_ireland_ie_443_admin_redirect" {
       values  = [
         "/admin/*",
       ]
+    }
+  }
+}
+
+resource "aws_lb_listener_rule" "ireland_ie_www_redirect" {
+  listener_arn    = aws_lb_listener.public_sites_443.arn
+  priority        = 5
+
+  action {
+    type              = "redirect"
+    redirect {
+      host            = "www.${local.domain_ireland_ie}"
+      status_code     = "HTTP_302"
+    }
+  }
+
+  condition {
+    host_header {
+      values  = [local.domain_ireland_ie]
     }
   }
 }
