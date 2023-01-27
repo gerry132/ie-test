@@ -2,7 +2,7 @@
 
 wagtail updatemodulepaths
 
-if $( python3 manage.py migrate irelandie_news 0041_auto_20230126_1351 --noinput > /dev/null ); then
+if $( python3 manage.py migrate  --noinput > /dev/null ); then
     echo "Migrations run successfully"
 else
     echo "Migrations not successful."
