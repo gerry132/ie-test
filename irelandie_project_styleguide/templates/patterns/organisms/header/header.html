@@ -179,7 +179,8 @@
                 </div>
             </div>
 
-            {% if page.generic_hero or not page.hero_image or not page.hero_video %}
+            {% check_page_type page.content_type 'News Content' as newspage %}
+            {% if not page.hero_image and not page.hero_video or newspage %}
             <div class="breadcrumb">
                 {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
             </div>
@@ -303,11 +304,13 @@
                 </div>
             </div>
 
-            {% if page.generic_hero or not page.hero_image or not page.hero_video %}
+            {% check_page_type page.content_type 'News Content' as newspage %}
+            {% if not page.hero_image and not page.hero_video or newspage %}
             <div class="breadcrumb">
                 {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
             </div>
             {% endif %}
+
 
             <div class="notice-bar">
                 {% include_block page.notice_bar %}
