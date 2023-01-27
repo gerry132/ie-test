@@ -4,12 +4,6 @@
 
 {% block content %}
 <style>
-
-     @media only screen and (max-width: 823px){
-     .toc-padding{
-        padding-top: 60px;
-     }
-    }
     .notice-bar--extended__search-is-active {
                 top: 80px;
             }
@@ -77,6 +71,7 @@
 
     <!--end of page body-->
 {% include_block page.stories_top %}
+
     <div class="section--master {% if page.generic_hero %} section section--padding {% endif %}">
         <div class="container-fluid">
             <div class="wrapper wrapper--large wrapper--padding">
@@ -89,11 +84,6 @@
                             {% get_content_length page as content_length %}
                             {% count_toc page as content_length_count %}
                             {% if content_length_count > 1 %}
-                            {% for block in page.generic_hero %}
-                                {% if block.value.subtitle|length > 40 %}
-                                    <div class="toc-padding"></div>
-                                {% endif %}
-                            {% endfor %}
                             <a name="top"></a>
                                 <div class="wrapper wrapper--large toc-table">
                                 {% for block in page.admin_body1 %}

@@ -29,7 +29,7 @@ from irelandie_utils.blocks import (
     ArticleStoryBlock,
     AdvancedRichTextBlock,
     AccordionBlock,
-    ContactBlock, MinimalArticleStoryBlock, GeneralContentBlocks, ImageBlock
+    ContactBlock, MinimalArticleStoryBlock, GeneralContentBlocks
 )
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
@@ -800,13 +800,23 @@ class ArticlePage(BasePage):
 class MinimalArticlePage(BasePage):
     introduction = models.TextField(blank=True)
 
-    featured_image = StreamField(
-        [
-            ("featured_image", ImageBlock()),
-        ],
-        blank=True,
+    hero_image = models.ForeignKey(
+        IMAGE_MODEL,
         null=True,
-        max_num=1,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    alt_text = models.CharField(blank=True,
+                                null=True,
+                                max_length=255,
+                                help_text=ALT_HELP_TEXT)
+    hero_video = models.ForeignKey(
+        "wagtailmedia.Media",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
     )
 
     publication_date = models.DateTimeField(default=django.utils.timezone.now)
@@ -821,7 +831,14 @@ class MinimalArticlePage(BasePage):
 
     content_panels = Page.content_panels + [
         FieldPanel("introduction"),
-        FieldPanel("featured_image"),
+        FieldPanel("alt_text"),
+        MultiFieldPanel(
+            [
+                FieldPanel("hero_image"),
+                MediaChooserPanel("hero_video", media_type="video"),
+            ],
+            "hero",
+        ),
         MultiFieldPanel(
             [
                 FieldPanel('go_live_at'),
@@ -857,6 +874,28 @@ class MinimalArticlePage(BasePage):
         ObjectList(BasePage.promote_panels, heading='Promote'),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
+
+    def clean(self):
+        if self.hero_image and not self.alt_text:
+            raise ValidationError(
+                {
+                    "alt_text": ValidationError(
+                        "You must provide an alt_text."
+                    )
+                }
+            )
+
+        if self.hero_image and self.hero_video:
+            raise ValidationError(
+                {
+                    "hero_image": ValidationError(
+                        "You can't choose both an image and a video for the hero media. Choose an image or a video"
+                    ),
+                    "hero_video": ValidationError(
+                        "You can't choose both an image and a video for the hero media. Choose an image or a video"
+                    ),
+                }
+            )
 
 
 class CountryGroupTag(TaggedItemBase):

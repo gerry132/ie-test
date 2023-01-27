@@ -3,7 +3,7 @@
     &__container{
         position: relative;
         height: 420px;
-         @media only screen and (min-width: 560px) and (max-width: 823px){
+         @media only screen and (min-width: 560px) and (max-width: 821px){
             height: 445px;
         }
         @media only screen and (max-width: 560px){
@@ -28,15 +28,12 @@
             padding: 50px;
             position: absolute;
             width: 43%;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            @media screen and (min-width: 823px){
+            @media screen and (min-width: 822px){
                 height:266px;
 
             }
 
-        @media screen and (max-width: 823px){
+        @media screen and (max-width: 821px){
             margin-left: 10%;
             margin-top: -8%;
             max-width: 80%;
@@ -63,7 +60,7 @@
     }
         &__title_length{
             font-size: 45px;
-            line-height: 48px;
+            line-height: 40px;
             @media screen and (max-width: 1023px){
                 font-size: 28px;
                 line-height: 34px;
@@ -89,7 +86,7 @@
     &__image_left{
         max-height: 360px;
         width: 100%;
-        @media screen and (min-width: 823px){
+        @media screen and (min-width: 820px){
             display: block;
             float: left;
             margin-bottom: 0;
@@ -102,7 +99,7 @@
     &__image{
         max-height: 360px;
         width: 100%;
-        @media screen and (min-width: 823px){
+        @media screen and (min-width: 820px){
             display: block;
             float: right;
             margin-bottom: 0;
@@ -115,7 +112,7 @@
     &__video_left{
         height: 70%;
         width: 100%;
-        @media screen and (min-width: 823px){
+        @media screen and (min-width: 820px){
             display: block;
             float: left;
             margin-bottom: 0;
@@ -128,7 +125,7 @@
     &__video{
         height: 70%;
         width: 100%;
-        @media screen and (min-width: 823px){
+        @media screen and (min-width: 820px){
             display: block;
             float: right;
             margin-bottom: 0;

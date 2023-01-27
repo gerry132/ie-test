@@ -113,7 +113,7 @@ class NewsPage(MinimalArticlePage):
     template = "patterns/pages/irelandie_news/news_page.html"
     api_fields = [
         'publication_date',
-        'featured_image',
+        'hero_image',
         'introduction',
     ]
     parent_page_types = [

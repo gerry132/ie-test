@@ -2,16 +2,12 @@
 
 <a href="{% pageurl article %}" class="card">
     <!--test-->
-    {% if article.specific.listing_image or article.specific.hero_image or article.specific.featured_image or default_image %}
+    {% if article.specific.listing_image or article.specific.hero_image or default_image %}
         <div class="card__image-container">
             {% if article.specific.listing_image %}
                 {% image article.specific.listing_image fill-400x200 class="card__image" %}
             {% elif article.specific.hero_image %}
                 {% image article.specific.hero_image fill-400x200 class="card__image" %}
-            {% elif article.specific.featured_image %}
-                {% for block in article.specific.featured_image %}
-                    {% image block.value.image fill-400x200 class="card__image" %}
-                {% endfor %}
             {% else %}
             <!--test-->
             {% for block in default_image %}
