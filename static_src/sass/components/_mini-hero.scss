@@ -52,6 +52,7 @@
         font-weight: 800;
         font-size: 56px;
         line-height: 68px;
+        margin-bottom: 0%;
 
         color: #000000;
 
@@ -63,7 +64,7 @@
     }
         &__title_length{
             font-size: 45px;
-            line-height: 48px;
+            line-height: 52px;
             @media screen and (max-width: 1023px){
                 font-size: 28px;
                 line-height: 34px;
