@@ -9,14 +9,6 @@
         <meta name="description" content="{% if page.search_description %}{{ page.search_description }}{% else %}{{ page.listing_summary }}{% endif %}" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        {% comment %}
-            Set "noindex" if the site is not being requested on a configured
-            domain to prevent search engines crawling admin domains.
-            This ignores ports for simplicity.
-        {% endcomment %}
-        {% if SEO_NOINDEX or request.get_host != current_site.hostname %}
-            <meta name="robots" content="noindex">
-        {% endif %}
 
         {% block meta_tags %}{% endblock %}
 

@@ -811,13 +811,9 @@ class MinimalArticlePage(BasePage):
                                 null=True,
                                 max_length=255,
                                 help_text=ALT_HELP_TEXT)
-    hero_video = models.ForeignKey(
-        "wagtailmedia.Media",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
+    caption = models.CharField(blank=True,
+                               null=True,
+                               max_length=255, )
 
     publication_date = models.DateTimeField(default=django.utils.timezone.now)
 
@@ -831,11 +827,12 @@ class MinimalArticlePage(BasePage):
 
     content_panels = Page.content_panels + [
         FieldPanel("introduction"),
-        FieldPanel("alt_text"),
+
         MultiFieldPanel(
             [
-                FieldPanel("hero_image"),
-                MediaChooserPanel("hero_video", media_type="video"),
+                FieldPanel("hero_image", heading="Featured Image"),
+                FieldPanel("alt_text"),
+                FieldPanel("caption"),
             ],
             "hero",
         ),
@@ -882,18 +879,6 @@ class MinimalArticlePage(BasePage):
                     "alt_text": ValidationError(
                         "You must provide an alt_text."
                     )
-                }
-            )
-
-        if self.hero_image and self.hero_video:
-            raise ValidationError(
-                {
-                    "hero_image": ValidationError(
-                        "You can't choose both an image and a video for the hero media. Choose an image or a video"
-                    ),
-                    "hero_video": ValidationError(
-                        "You can't choose both an image and a video for the hero media. Choose an image or a video"
-                    ),
                 }
             )
 

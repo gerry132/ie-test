@@ -6,16 +6,10 @@
     {% comment %}
         Responsive hero images
     {% endcomment %}
-    {% if page.hero_image or page.hero_video %}
-        {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
-        {% include "patterns/molecules/hero/hero.html" with page=page classes="hero--article" %}
-        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
-    {% endif %}
 
     {% block main %}
         <!-- Body -->
         <div class="section section--padding">
-             {% if not page.hero_image and not page.hero_video %}
             <div class="wrapper wrapper--padding">
                 <div class="rich-text">
                         <h1 class="hero__title">
@@ -26,7 +20,6 @@
                         {% endif %}
                 </div>
             </div>
-             {% endif %}
             <div class="wrapper wrapper--padding">
                 {% if page.publication_date %}
                 <div class="rich-text">
@@ -34,6 +27,24 @@
                 </div>
                 {% endif %}
             </div>
+            <div class="streamfield">
+            <figure class="image-block">
+                {% if page.alt_text %}
+                    {% if not page.caption %}
+                        {% image page.hero_image width-1000 class="image image-block__image_border" loading="lazy" alt=page.alt_text %}
+                    {% else %}
+                        {% image page.hero_image width-1000 class="image image-block__image" loading="lazy" alt=page.alt_text %}
+                    {% endif %}
+                {% else %}
+                    {% image page.hero_image width-1000 class="image image-block__image" loading="lazy" alt=value.hero_image.alt_default %}
+                {% endif %}
+                {% if page.caption %}
+                    <figcaption class="image-block__caption">
+                        {{ page.caption }}
+                    </figcaption>
+                {% endif %}
+            </figure>
+        </div>
             {% for block in page.body %}
                 {% if block.block_type == 'table' %}
                     <div class="wrapper wrapper--small wrapper--padding">
