@@ -52,8 +52,10 @@
                                 <div class="card__image-container">
                                     {% if article.listing_image %}
                                         {% image article.listing_image fill-400x200 class="card__image" %}
-                                    {% elif article.hero_image %}
-                                        {% image article.hero_image fill-400x200 class="card__image" %}
+                                    {% elif article.featured_image %}
+                                        {% for block in article.featured_image %}
+                                            {% image block.value.image fill-400x200 class="card__image" %}
+                                        {% endfor %}
                                     {% else %}
                                     {% for block in default_image %}
                                          {% image block.value.image fill-400x200 class="card__image"  alt=block.value.image_alt %}
