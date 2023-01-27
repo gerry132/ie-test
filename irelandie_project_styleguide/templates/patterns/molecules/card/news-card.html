@@ -15,12 +15,14 @@ Example:
     <div class="card{% if not card.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
 {% endif %}
         <div class="card__image-container">
-        {% if card.hero_image %}
-            {% if card.image_alt %}
-                {% image card.hero_image fill-500x300 class="card__image"  alt=card.image_alt %}
-            {% else %}
-                {% image card.hero_image fill-500x300 alt=card.image.alt_default class="card__image" %}
-            {% endif %}
+        {% if card.featured_image %}
+             {% for block in card.featured_image %}
+                {% if block.value.image_alt %}
+                    {% image block.value.image fill-500x300 class="card__image"  alt=block.value.image_alt %}
+                {% else %}
+                    {% image block.value.image fill-500x300 alt=block.value.image.alt_default class="card__image" %}
+                {% endif %}
+            {% endfor %}
         {% else %}
                 {% for default_image in default_image %}
                     {% image default_image.value.image fill-500x300 class="card__image"  alt=default_image.image_alt %}
