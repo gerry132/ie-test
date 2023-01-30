@@ -292,6 +292,11 @@ class CustomFooter(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
         help_text="Internal name for this navigation, it's not displayed to a site user.",
         verbose_name=_("Name"),
     )
+    link_page = StreamField(
+        [("link_page", LinkBlockExtended())],
+        blank=True,
+        max_num=1,
+        help_text="URL for logo click.", )
     navigation = StreamField(
         [("column", LinkColumnWithHeader())],
         blank=True,
@@ -332,6 +337,7 @@ class CustomFooter(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
             FieldPanel("logo"),
             FieldPanel("mobile_logo"),
             FieldPanel("logo_alt"),
+            FieldPanel("link_page"),
         ], heading="Logo"),
         FieldPanel("name"),
         FieldPanel("twitter_handle"),
