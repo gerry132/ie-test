@@ -1,6 +1,9 @@
 //Without custom header.
+.notice-bar{
+    position: relative;
+    z-index: 1;
+}
 .notice-bar--extended {
-    @include z-index(nav);
     background-color: #007368;
     display: flex;
     width: 100%;
@@ -9,7 +12,6 @@
     color: #fff;
     justify-content: center;
     align-items: center;
-
 }
 .notice-bar__hidden {
       display: none;

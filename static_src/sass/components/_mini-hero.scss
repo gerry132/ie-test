@@ -42,6 +42,7 @@
             max-width: 80%;
             padding: 20px;
             width: 80%;
+            min-height: 150px;
         }
 
 
@@ -103,6 +104,9 @@
     &__image{
         max-height: 360px;
         width: 100%;
+        @media screen and (max-width: 565px){
+            height: 260px;
+        }
         @media screen and (min-width: 823px){
             display: block;
             float: right;
@@ -129,6 +133,7 @@
     &__video{
         height: 70%;
         width: 100%;
+        object-fit: fill;
         @media screen and (min-width: 823px){
             display: block;
             float: right;
