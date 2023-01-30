@@ -1,9 +1,8 @@
 .footer {
+    filter: invert(1);
     font-family: $font--secondary;
-    border-top-left-radius: $border-radius;
-    border-top-right-radius: $border-radius;
     color: $color--secondary;
-    background-color: $color--primary;
+    background-color: #12131a;
     padding: 40px $grid;
 
     @include media-query(medium) {
@@ -11,6 +10,7 @@
     }
 
     &__header {
+        filter: invert(9%) sepia(98%) saturate(0%) hue-rotate(203deg) brightness(100%) contrast(102%);
         border-bottom: 1px solid rgba($color--border, 0.3);
         padding-bottom: 30px;
 
