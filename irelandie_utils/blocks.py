@@ -533,7 +533,7 @@ class LogoCardBlock(blocks.StructBlock):
     )
     title = blocks.CharBlock()
     summary = blocks.TextBlock()
-    url = blocks.URLBlock()
+    url = blocks.URLBlock(required=False)
 
     class Meta:
         icon = "image"
