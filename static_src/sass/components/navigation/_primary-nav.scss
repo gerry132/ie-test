@@ -37,7 +37,6 @@
             font-weight: $weight--normal;
             text-align: left;
             border-bottom: 0;
-            position: relative;
 
             .header--condensed &,
             .header__menu--extended & {
@@ -124,3 +123,104 @@
       border-bottom: 1px solid $color--secondary;
       background-color: transparent;
 }
+
+.mega_menu {
+  $root: &;
+  display: inline-block;
+  &.is-hidden {
+                display: none;
+            }
+}
+@media only screen and (min-width: 1023px){
+.sub-nav-hidden{
+            display: none;
+}
+}
+.sub-nav-hidden{
+     $root: &;
+     &.is-visible {
+          display: inline-block;
+     }
+}
+
+.mega_menu-content {
+
+  display: none;
+  position: absolute;
+  background-color: #EDECE5;
+  width: 100%;
+  left: 0;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 30px;
+  display: block;
+  visibility: hidden;
+  min-width: 160px;
+}
+
+.mega_menu:hover{
+    background-color: #EDECE5;
+    color: #000000;
+
+}
+.mega_menu:hover .mega_menu__icon {
+    transform: rotate(180deg);
+    color: #000000;
+}
+.mega_menu__icon{
+    margin: 2px 5px;
+}
+.mega_menu:hover .primary-nav__link {
+    color: #000000;
+}
+.mega_menu:hover .menu {
+  visibility: visible;
+  z-index: 2;
+
+}
+.mega_menu:hover .mega_menu-content_col3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  z-index:100;
+
+}
+.mega_menu:hover .mega_menu-content_col2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  z-index:100;
+
+}
+
+.mega_menu:hover .mega_menu-content_col {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-flow: row;
+  z-index:100;
+
+}
+.grid_item:hover {
+
+    text-decoration: none;
+}
+.grid_items:hover {
+
+    text-decoration: none;
+}
+.grid_item {
+  border-left: 1px solid #000000;
+  padding-left: 50px;
+  color: #000000;
+    text-decoration: underline;
+}
+.grid_item:nth-child(4n-3){
+    border-left: none;
+}
+.grid_items {
+  border-left: 1px solid #000000;
+  padding-left: 50px;
+  color: #000000;
+  text-decoration: underline;
+}
+.grid_items:nth-child(2n-1){
+    border-left: none;
+}
+

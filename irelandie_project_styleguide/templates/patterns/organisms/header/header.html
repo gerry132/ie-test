@@ -29,7 +29,8 @@
 {% endif %}
 {% if custom_header.is_present %}
     {% check_page_type page.content_type 'mission page' as mission_page %}
-    {% if mission_page %}
+    {% check_page_type page.content_type 'Free Form Page' as free_form_page %}
+    {% if mission_page or free_form_page %}
         .notice-bar--extended__search-is-active {
             top: 80px;
         }

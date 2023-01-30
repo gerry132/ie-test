@@ -4,13 +4,12 @@
 
 {% block content %}
 <style>
-@media only screen and (min-width: 447px) and (max-width: 560px){
+@media only screen and (max-width: 350px){
      .toc-padding{
         padding-top: 100px;
      }
     }
-
-     @media only screen and (max-width: 823px){
+     @media only screen and (min-width: 351px) and (max-width: 570px){
      .toc-padding{
         padding-top: 60px;
      }
@@ -21,17 +20,9 @@
      .header__search-is-active{
         padding-top: 80px;
      }
-     @media only screen and (min-width: 1024px) {
         .notice-bar-services {
            position: relative;
-           top: 30px;
-        }
-     }
-     @media only screen and (max-width: 1023px) {
-        .notice-bar-services {
-           position: relative;
-           top: 70px;
-        }
+           z-index: 1;
     }
 
      @media only screen and (min-width: 1024px) {
@@ -48,19 +39,13 @@
     }
 
 </style>
-{% if page.generic_hero %}
+
     <div class="notice-bar notice-bar-services">
             {% include_block page.notice_bar_services %}
     </div>
+{% if page.generic_hero %}
     {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
 
-{% endif %}
-{% if not page.generic_hero %}
-<div class="search--is-active-services">
-    <div class="notice-bar">
-        {% include_block page.notice_bar_services %}
-    </div>
-</div>
 {% endif %}
 
 
@@ -245,38 +230,4 @@
     </div>
 {% include_block page.stories_bottom %}
 
-{% endblock %}
-{% block extra_js %}
-<script>
-    const breadCrumb = document.querySelector('.search--is-active-services');
-    const notice_bar_services = document.querySelector('.notice-bar-services');
-    const toggle_search = document.querySelector('.header__search-toggle');
-    const header = document.querySelector("#main-header");
-    const toggle_serv = document.querySelector('[data-mobile-menu-toggle]')
-    const toggle_mob_serv = document.querySelector('.header__menu-toggle--mobile');
-
-
-    toggle_serv.addEventListener('click', () => {
-      breadCrumb.classList.toggle('notice-bar__hidden')
-    });
-    toggle_mob_serv.addEventListener('click', () => {
-      breadCrumb.classList.toggle('notice-bar__hidden')
-    });
-
-    toggle_search.addEventListener('click', () => {
-      breadCrumb.classList.toggle('generic-hero__search-is-active')
-    });
-    toggle_search.addEventListener('click', () => {
-      header.classList.toggle('header__search-is-active')
-    });
-
-    toggle_serv.addEventListener('click', () => {
-      notice_bar_services.classList.toggle('notice-bar__hidden')
-    });
-    toggle_mob_serv.addEventListener('click', () => {
-      notice_bar_services.classList.toggle('notice-bar__hidden')
-    });
-
-
-</script>
 {% endblock %}

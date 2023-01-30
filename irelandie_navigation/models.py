@@ -15,7 +15,7 @@ from wagtail.snippets.models import register_snippet
 from .blocks import (
     LinkBlockExtended,
     LinkColumnWithHeader,
-    SecondaryNavLinkColumnWithHeader,
+    SecondaryNavLinkColumnWithHeader, LinkBlockExtendedwithMegaMenu,
 )
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
 from wagtail.models import DraftStateMixin, RevisionMixin
@@ -104,7 +104,7 @@ class PrimaryNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.
         verbose_name=_("Language"),
     )
     navigation = StreamField(
-        [("link", LinkBlockExtended())],
+        [("link", LinkBlockExtendedwithMegaMenu())],
         blank=True,
         help_text="Main site navigation",
         verbose_name=_("Links"),

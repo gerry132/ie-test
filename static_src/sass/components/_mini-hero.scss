@@ -103,6 +103,9 @@
     &__image{
         max-height: 360px;
         width: 100%;
+        @media screen and (max-width: 565px){
+            height: 260px;
+        }
         @media screen and (min-width: 823px){
             display: block;
             float: right;

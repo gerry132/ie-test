@@ -16,6 +16,21 @@ class LinkBlock(BaseBlockLinkContext):
         template = ("patterns/molecules/navigation/blocks/menu_item.html",)
 
 
+class LinkBlockExtendedwithMegaMenu(LinkBlock, BaseBlockLinkContext, BaseBlockLinkValidation):
+    # This is a custom block that extends the LinkBlock and adds a url field.
+    # This is used in PrimaryNavigation() & FooterNavigation()
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
+    mega_menu = blocks.StreamBlock([("mega_menu", LinkBlock())],
+                                   required=False, )
+
+    class Meta:
+        template = ("patterns/molecules/navigation/blocks/menu_item_with_megamenu.html",)
+
+
 class LinkBlockExtended(LinkBlock, BaseBlockLinkContext, BaseBlockLinkValidation):
     # This is a custom block that extends the LinkBlock and adds a url field.
     # This is used in PrimaryNavigation() & FooterNavigation()
