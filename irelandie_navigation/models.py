@@ -292,11 +292,10 @@ class CustomFooter(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
         help_text="Internal name for this navigation, it's not displayed to a site user.",
         verbose_name=_("Name"),
     )
-    link_page = StreamField(
-        [("link_page", LinkBlockExtended())],
-        blank=True,
-        max_num=1,
-        help_text="URL for logo click.", )
+    page = models.ForeignKey(
+        "wagtailcore.Page", blank=True, null=True, on_delete=models.SET_NULL
+    )
+    url = models.URLField(blank=True)
     navigation = StreamField(
         [("column", LinkColumnWithHeader())],
         blank=True,
@@ -337,7 +336,8 @@ class CustomFooter(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
             FieldPanel("logo"),
             FieldPanel("mobile_logo"),
             FieldPanel("logo_alt"),
-            FieldPanel("link_page"),
+            FieldPanel("page", heading="Link Page"),
+            FieldPanel("url", heading="Link Url"),
         ], heading="Logo"),
         FieldPanel("name"),
         FieldPanel("twitter_handle"),
@@ -362,6 +362,20 @@ class CustomFooter(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
     @property
     def revisions(self):
         return self._revisions
+
+    def clean(self):
+
+        if self.page and self.url:
+            raise ValidationError(
+                {
+                    "page": ValidationError(
+                        "You must specify link page or link url. You can't use both."
+                    ),
+                    "url": ValidationError(
+                        "You must specify link page or link url. You can't use both."
+                    ),
+                }
+            )
 
     def __str__(self):
         return self.name
