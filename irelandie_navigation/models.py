@@ -104,7 +104,7 @@ class PrimaryNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.
         verbose_name=_("Language"),
     )
     navigation = StreamField(
-        [("link", LinkBlockExtendedwithMegaMenu())],
+        [("link", LinkBlockExtended())],
         blank=True,
         help_text="Main site navigation",
         verbose_name=_("Links"),
