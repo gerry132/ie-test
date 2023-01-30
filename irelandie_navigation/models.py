@@ -15,7 +15,7 @@ from wagtail.snippets.models import register_snippet
 from .blocks import (
     LinkBlockExtended,
     LinkColumnWithHeader,
-    SecondaryNavLinkColumnWithHeader, LinkBlockExtendedwithMegaMenu,
+    SecondaryNavLinkColumnWithHeader,
 )
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
 from wagtail.models import DraftStateMixin, RevisionMixin
