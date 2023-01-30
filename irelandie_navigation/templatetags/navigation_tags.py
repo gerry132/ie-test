@@ -297,6 +297,7 @@ def custom_footer_settings(context, page):
         youtube_user = footer_social_media.youtube_user
         linkedin_profile = footer_social_media.linkedin_profile
         instagram_user = footer_social_media.instagram_user
+        url = None
         show_social_media = any(
             [
                 twitter_handle,
