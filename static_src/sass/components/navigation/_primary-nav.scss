@@ -139,7 +139,7 @@
 .sub-nav-hidden{
      $root: &;
      &.is-visible {
-          display: inline-block;
+          display: flex;
      }
 }
 
