@@ -266,8 +266,8 @@ def custom_footer_settings(context, page):
         # otherwise use the site settings values
         logo = custom_footer.logo or site_settings.site_logo
         mobile_logo = custom_footer.mobile_logo
-        page = custom_footer.page
-        url = custom_footer.url or None
+        link_page = custom_footer.page or None
+        link_url = custom_footer.url or None
         logo_alt = custom_footer.logo_alt or site_settings.site_logo_alt
         twitter_handle = custom_footer.twitter_handle or footer_social_media.twitter_handle
         facebook_app_id = custom_footer.facebook_app_id or footer_social_media.facebook_app_id
@@ -297,7 +297,8 @@ def custom_footer_settings(context, page):
         youtube_user = footer_social_media.youtube_user
         linkedin_profile = footer_social_media.linkedin_profile
         instagram_user = footer_social_media.instagram_user
-        url = None
+        link_url = None
+        link_page = None
         show_social_media = any(
             [
                 twitter_handle,
@@ -318,8 +319,8 @@ def custom_footer_settings(context, page):
         "logo": logo,
         "mobile_logo": mobile_logo,
         "logo_alt": logo_alt,
-        "page": page,
-        "url": url,
+        "link_page": link_page,
+        "link_url": link_url,
         "twitter_handle": twitter_handle,
         "facebook_app_id": facebook_app_id,
         "youtube_user": youtube_user,
