@@ -14,9 +14,8 @@ class SocialMediaFieldsMixin(models.Model):
     youtube_user = models.CharField(
         max_length=255, blank=True, help_text="Your YouTube username."
     )
-    linkedin_profile = models.CharField(
-        max_length=255, blank=True, help_text="Your LinkedIn profile URL."
-    )
+    linkedin_profile = models.URLField(blank=True, help_text="Your LinkedIn profile URL."
+                                       )
     instagram_user = models.CharField(
         max_length=255, blank=True, help_text="Your Instagram username."
     )
