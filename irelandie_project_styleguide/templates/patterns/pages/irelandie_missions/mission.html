@@ -24,5 +24,12 @@
     {% if value.twitter_username %}
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     {% endif %}
+{% if page.web_bot_script %}
+    {{ page.web_bot_script|safe }}
+    {% endif %}
+
+    {% if page.webchat_script %}
+    {{ page.webchat_script|safe }}
+{% endif %}
 {% endblock %}
 
