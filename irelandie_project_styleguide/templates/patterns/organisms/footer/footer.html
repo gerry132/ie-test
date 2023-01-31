@@ -5,10 +5,10 @@
 <footer class="footer">
     <div class="wrapper wrapper--large">
         <div class="footer__header">
-            {% if custom_footer.page %}
-                    <a href="{{custom_footer.page.url}}" aria-label="Ireland.ie">
-            {% elif custom_footer.url %}
-                    <a href="{{custom_footer.url}}" aria-label="Ireland.ie">
+            {% if custom_footer.link_page %}
+                    <a href="{{custom_footer.link_page.url}}" aria-label="Ireland.ie">
+            {% elif custom_footer.link_url %}
+                    <a href="{{custom_footer.link_url}}" aria-label="Ireland.ie">
             {% else %}
                     <a href="/{{ language_code }}/" aria-label="Ireland.ie">
             {% endif %}
