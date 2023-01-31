@@ -4,6 +4,13 @@
 {% load wagtailcore_tags honeypot_tags %}
 
 {% block extra_js %}
+{% if page.web_bot_script %}
+    {{ page.web_bot_script|safe }}
+    {% endif %}
+
+    {% if page.webchat_script %}
+    {{ page.webchat_script|safe }}
+{% endif %}
   <script async>
     var whf_name = "whf_name";
     var data_whf_name = "[data-" + whf_name + "]";
