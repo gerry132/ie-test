@@ -29,7 +29,8 @@
 {% endif %}
 {% if custom_header.is_present %}
     {% check_page_type page.content_type 'mission page' as mission_page %}
-    {% if mission_page %}
+    {% check_page_type page.content_type 'Free Form Page' as free_form_page %}
+    {% if mission_page or free_form_page %}
         .notice-bar--extended__search-is-active {
             top: 80px;
         }
@@ -39,7 +40,7 @@
 {% endif %}
 </style>
 <header>
-    <div class="header {% if custom_header.links %}header--condensed{% endif %}" {% if not page.hero_image and not page.hero_video and not page.generic_hero %}style="background-color: rgba(0,77,70,1)"{% endif %}>
+    <div class="header {% if custom_header.links %}header--condensed{% endif %}">
         <div class="wrapper wrapper--large">
             <div class="header__container">
                 {% comment %}
@@ -179,18 +180,11 @@
                 </div>
             </div>
 
-            {% if not page.hero_image and not page.hero_video and not page.generic_hero %}
-            {% check_page_type page.content_type 'news page index' as NewsPageIndex %}
-            {% check_page_type page.content_type 'job index page' as JobIndexPage %}
-            {% check_page_type page.content_type 'news landing page' as NewsLandingPage %}
-            {% check_page_type page.content_type 'general content page' as GeneralContentPage %}
-            {% check_page_type page.content_type 'Notice' as NoticePage %}
-            {% check_page_type page.content_type 'Free Form Page' as FreeFormPage %}
-            {% if GeneralContentPage or NoticePage or FreeFormPage and not NewsPageIndex and not NewsLandingPage and not JobIndexPage %}
+            {% check_page_type page.content_type 'News Content' as newspage %}
+            {% if not page.hero_image and not page.hero_video or newspage %}
             <div class="breadcrumb">
                 {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
             </div>
-            {% endif %}
             {% endif %}
 
             <div class="notice-bar">
@@ -204,7 +198,7 @@
         Only show this override nav if available on the page
     {% endcomment %}
     {% if custom_header.links %}
-        <div class="header header--override header-large" {% if not page.hero_image and not page.hero_video and not page.generic_hero %}style="background-color: rgba(0,77,70,0.75)"{% endif %}>
+        <div class="header header--override header-large">
             <div class="wrapper wrapper--large">
                 <div class="header__container">
 
@@ -311,16 +305,13 @@
                 </div>
             </div>
 
-            {% if not page.hero_image and not page.hero_video and not page.generic_hero %}
-            {% check_page_type page.content_type 'news page index' as NewsPageIndex %}
-            {% check_page_type page.content_type 'job index page' as JobIndexPage %}
-            {% check_page_type page.content_type 'news landing page' as NewsLandingPage %}
-            {% if not NewsPageIndex and not NewsLandingPage and not JobIndexPage %}
+            {% check_page_type page.content_type 'News Content' as newspage %}
+            {% if not page.hero_image and not page.hero_video or newspage %}
             <div class="breadcrumb">
                 {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
             </div>
             {% endif %}
-            {% endif %}
+
 
             <div class="notice-bar">
                 {% include_block page.notice_bar %}

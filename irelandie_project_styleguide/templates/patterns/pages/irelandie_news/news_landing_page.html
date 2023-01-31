@@ -1,19 +1,33 @@
 {% extends "patterns/base_page.html" %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
-{% load static %}
+{% load static navigation_tags %}
 {% load i18n %}
 
 {% block content %}
  <!-- Main -->
 
 
-    {% if page.title or page.generic_hero %}
-        {% include "patterns/molecules/streamfield/blocks/generic_hero.html" with page=page %}
-    {% endif %}
+{% if page.generic_hero %}
+    {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+{% endif %}
+{% has_root_override page header=True as override %}
+{% if not page.generic_hero %}
+        <div id="main-header" class="section section--padding section--white {% if not override and page.get_ancestors|length > 2 %} section--padding_without_hero{% endif %}">
+                    <div class="wrapper wrapper--large wrapper--padding content--padding">
+                        <div class="intro--toc">
+                            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                            {% if page.description %}
+                                <p class="intro__description">{{ page.description }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+        </div>
+{% endif %}
 
     {% block main %}
         <!-- Body -->
+{% if page.link_button %}
     <div class="section section--padding">
         <div class="wrapper wrapper--large wrapper--padding">
             <div class="link-button__grid-container">
@@ -21,6 +35,7 @@
             </div>
         </div>
     </div>
+{% endif %}
         {% if page.related_articles %}
 <!-- related_articles -->
             <div class="wrapper wrapper--large">

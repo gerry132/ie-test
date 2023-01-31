@@ -1,5 +1,5 @@
 {% load wagtailcore_tags wagtailimages_tags %}
-
+{% if value.url %}
 <a href="{{ value.url }}" class="logo-card">
     <div class="logo-card__logo-container">
         {% if value.image_alt %}
@@ -15,3 +15,20 @@
         </p>
     </div>
 </a>
+{% else %}
+<div class="logo-card">
+    <div class="logo-card__logo-container">
+        {% if value.image_alt %}
+            {% image value.image width-250 class="logo-card__logo" alt=value.image_alt %}
+        {% else %}
+            {% image value.image width-250 class="logo-card__logo" alt=value.image.alt_default %}
+        {% endif %}
+    </div>
+    <div class="logo-card__content">
+        <h3 class="logo-card__title">{{ value.title }}</h3>
+        <p class="logo-card__summary">
+            {{ value.summary }}
+        </p>
+    </div>
+</div>
+{% endif %}

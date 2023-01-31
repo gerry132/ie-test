@@ -1,0 +1,41 @@
+{% load wagtailcore_tags navigation_tags util_tags i18n %}
+<div class="mega_menu" data-mobile-mega-menu>
+<a class="primary-nav__link" href="{{ link_url }}">
+   {{ link_title }}
+{% if link.value.mega_menu %}
+        <span class="mega_menu__icon">
+            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="mega_menu__icon" %}
+        </span>
+{% endif %}
+</a>
+{% if link.value.mega_menu %}
+    {% get_mega_menu_length link.value.mega_menu as length %}
+    <div class="mega_menu-content menu">
+       <div style="padding-left:50px;font-weight: 700;">{{ link_title }}</div>
+        <div class="{% if length == 3 %}mega_menu-content_col3{% elif length <= 6 %}mega_menu-content_col2
+    {% else %}mega_menu-content_col{% endif %}">
+        {% for link in value.mega_menu %}
+
+            <a class="{% if length == 3 or length > 6 %}grid_item{% else %}grid_items{% endif %}" href="{{ link.value.page.url }}">
+                  {% if link.value.title %}
+                    {{ link.value.title }}
+                  {% else %}
+                    {{ link.value.page.title }}
+              {% endif %}</a>
+
+
+        {% endfor %}
+    </div>
+    </div>
+
+    {% endif %}
+
+</div>
+<a class="sub-nav-hidden {{ nav_type }}__link" {% if has_children %}data-open-subnav{% endif %} href="{{ link_url }}" {% if has_children %}aria-haspopup="true" aria-expanded="false"{% endif %}>
+    {{ link_title }}
+    {% if has_children %}
+        <span class="{{ nav_type }}__icon">
+            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="primary-nav__svg" %}
+        </span>
+    {% endif %}
+</a>

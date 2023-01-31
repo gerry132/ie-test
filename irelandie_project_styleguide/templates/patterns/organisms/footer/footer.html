@@ -5,7 +5,13 @@
 <footer class="footer">
     <div class="wrapper wrapper--large">
         <div class="footer__header">
-            <a href="/{{ language_code }}/" aria-label="Ireland.ie">
+            {% if custom_footer.page %}
+                    <a href="{{custom_footer.page.url}}" aria-label="Ireland.ie">
+            {% elif custom_footer.url %}
+                    <a href="{{custom_footer.url}}" aria-label="Ireland.ie">
+            {% else %}
+                    <a href="/{{ language_code }}/" aria-label="Ireland.ie">
+            {% endif %}
             {% if custom_footer.logo %}
                     {% if custom_footer.logo_alt %}
                         {% if custom_footer.mobile_logo and custom_footer.logo %}
@@ -38,7 +44,7 @@
                 {% endif %}
 
                 {% if custom_footer.linkedin_profile %}
-                    <a href="https://twitter.com/{{ custom_footer.linkedin_profile }}" class="footer__social-link" aria-label="{% trans 'Connect on Linkedin' %}">
+                    <a href="https://www.linkedin.com/in/{{ custom_footer.linkedin_profile }}" class="footer__social-link" aria-label="{% trans 'Connect on Linkedin' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="linkedin" classname="footer__social-icon" %}
                     </a>
                 {% endif %}

@@ -374,10 +374,8 @@ class Magazine(HeroPage):
         [
             ("generic_hero", blocks.GenericHeroBlock()),
         ],
-        blank=False,
+        blank=True,
         null=True,
-        min_num=1,
-        max_num=1,
     )
     body = StreamField(
         [
