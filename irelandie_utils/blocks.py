@@ -856,48 +856,48 @@ class FreeFormBlocksBase(blocks.StreamBlock):
 
 
 class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
-    icon = blocks.ChoiceBlock(
-        choices=(
-            ("", "Choose an icon (optional)"),
-            ("authentication", "Authentication"),
-            ("citizenship", "Citizenship"),
-            ("closure-dates", "Closure Dates"),
-            ("consular-fees", "Consular Fees"),
-            ("contact-phone", "Contact Phone"),
-            ("contact-mail", "Contact Mail"),
-            ("family", "Family"),
-            ("government-building", "Government Building"),
-            ("how-we-can-help", "How We Can Help"),
-            ("information", "Information"),
-            ("invest", "Invest"),
-            ("jobs", "Jobs"),
-            ("link", "Link"),
-            ("live", "Live"),
-            ("location", "Location"),
-            ("marriage", "Marriage"),
-            ("money", "Money"),
-            ("new-to", "New To"),
-            ("news", "News"),
-            ("notice", "Notice"),
-            ("opening-hours", "Opening Hours"),
-            ("passport", "Passport"),
-            ("plane", "Plane"),
-            ("services", "Services"),
-            ("study", "Study"),
-            ("ticket", "Ticket"),
-            ("trade", "Trade"),
-            ("trade2", "Trade2"),
-            ("travel", "Travel"),
-            ("visas", "Visas"),
-            ("working-holiday", "Working Holiday"),
-        ),
-        required=False,
-    )
-    image = ImageChooserBlock(required=False)
-    image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_(ALT_IMAGE),
-    )
+    # icon = blocks.ChoiceBlock(
+    #     choices=(
+    #         ("", "Choose an icon (optional)"),
+    #         ("authentication", "Authentication"),
+    #         ("citizenship", "Citizenship"),
+    #         ("closure-dates", "Closure Dates"),
+    #         ("consular-fees", "Consular Fees"),
+    #         ("contact-phone", "Contact Phone"),
+    #         ("contact-mail", "Contact Mail"),
+    #         ("family", "Family"),
+    #         ("government-building", "Government Building"),
+    #         ("how-we-can-help", "How We Can Help"),
+    #         ("information", "Information"),
+    #         ("invest", "Invest"),
+    #         ("jobs", "Jobs"),
+    #         ("link", "Link"),
+    #         ("live", "Live"),
+    #         ("location", "Location"),
+    #         ("marriage", "Marriage"),
+    #         ("money", "Money"),
+    #         ("new-to", "New To"),
+    #         ("news", "News"),
+    #         ("notice", "Notice"),
+    #         ("opening-hours", "Opening Hours"),
+    #         ("passport", "Passport"),
+    #         ("plane", "Plane"),
+    #         ("services", "Services"),
+    #         ("study", "Study"),
+    #         ("ticket", "Ticket"),
+    #         ("trade", "Trade"),
+    #         ("trade2", "Trade2"),
+    #         ("travel", "Travel"),
+    #         ("visas", "Visas"),
+    #         ("working-holiday", "Working Holiday"),
+    #     ),
+    #     required=False,
+    # )
+    # image = ImageChooserBlock(required=False)
+    # image_alt = blocks.CharBlock(
+    #     required=False,
+    #     help_text=_(ALT_IMAGE),
+    # )
     title = blocks.CharBlock()
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -908,7 +908,6 @@ class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 
     class Meta:
         label = "Related Content"
-        template = "patterns/molecules/streamfield/blocks/related_content.html"
 
 
 class TocBlocks(blocks.StreamBlock):
@@ -1050,48 +1049,48 @@ class PersonSocialBlock(blocks.StructBlock):
 
 
 class LinkBoxBlock(blocks.StructBlock):
-    icon = blocks.ChoiceBlock(
-        choices=(
-            ("", "Choose an icon (optional)"),
-            ("authentication", "Authentication"),
-            ("citizenship", "Citizenship"),
-            ("closure-dates", "Closure Dates"),
-            ("consular-fees", "Consular Fees"),
-            ("contact-phone", "Contact Phone"),
-            ("contact-mail", "Contact Mail"),
-            ("family", "Family"),
-            ("government-building", "Government Building"),
-            ("how-we-can-help", "How We Can Help"),
-            ("information", "Information"),
-            ("invest", "Invest"),
-            ("jobs", "Jobs"),
-            ("link", "Link"),
-            ("live", "Live"),
-            ("location", "Location"),
-            ("marriage", "Marriage"),
-            ("money", "Money"),
-            ("new-to", "New To"),
-            ("news", "News"),
-            ("notice", "Notice"),
-            ("opening-hours", "Opening Hours"),
-            ("passport", "Passport"),
-            ("plane", "Plane"),
-            ("services", "Services"),
-            ("study", "Study"),
-            ("ticket", "Ticket"),
-            ("trade", "Trade"),
-            ("trade2", "Trade2"),
-            ("travel", "Travel"),
-            ("visas", "Visas"),
-            ("working-holiday", "Working Holiday"),
-        ),
-        required=False,
-    )
-    image = ImageChooserBlock(required=False)
-    image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_(ALT_IMAGE),
-    )
+    # icon = blocks.ChoiceBlock(
+    #     choices=(
+    #         ("", "Choose an icon (optional)"),
+    #         ("authentication", "Authentication"),
+    #         ("citizenship", "Citizenship"),
+    #         ("closure-dates", "Closure Dates"),
+    #         ("consular-fees", "Consular Fees"),
+    #         ("contact-phone", "Contact Phone"),
+    #         ("contact-mail", "Contact Mail"),
+    #         ("family", "Family"),
+    #         ("government-building", "Government Building"),
+    #         ("how-we-can-help", "How We Can Help"),
+    #         ("information", "Information"),
+    #         ("invest", "Invest"),
+    #         ("jobs", "Jobs"),
+    #         ("link", "Link"),
+    #         ("live", "Live"),
+    #         ("location", "Location"),
+    #         ("marriage", "Marriage"),
+    #         ("money", "Money"),
+    #         ("new-to", "New To"),
+    #         ("news", "News"),
+    #         ("notice", "Notice"),
+    #         ("opening-hours", "Opening Hours"),
+    #         ("passport", "Passport"),
+    #         ("plane", "Plane"),
+    #         ("services", "Services"),
+    #         ("study", "Study"),
+    #         ("ticket", "Ticket"),
+    #         ("trade", "Trade"),
+    #         ("trade2", "Trade2"),
+    #         ("travel", "Travel"),
+    #         ("visas", "Visas"),
+    #         ("working-holiday", "Working Holiday"),
+    #     ),
+    #     required=False,
+    # )
+    # image = ImageChooserBlock(required=False)
+    # image_alt = blocks.CharBlock(
+    #     required=False,
+    #     help_text=_(ALT_IMAGE),
+    # )
     heading = blocks.CharBlock()
     introduction = blocks.RichTextBlock(required=False)
     page = blocks.PageChooserBlock(required=False)

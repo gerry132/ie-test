@@ -615,6 +615,14 @@ class ServicesLandingPage(BasePage):
         blank=True,
         null=True,
     )
+    related_content = StreamField(
+        [
+            ("related_item", blocks.RelatedContentBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+    )
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
@@ -635,6 +643,7 @@ class ServicesLandingPage(BasePage):
         FieldPanel("rich_text", heading="Advanced Richtext", permission="access_admin"),
         FieldPanel("body", permission="access_admin"),
         FieldPanel("additional_rich_text", heading="Advanced Richtext", permission="access_admin"),
+        FieldPanel("related_content"),
     ]
 
 
