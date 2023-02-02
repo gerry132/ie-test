@@ -7,6 +7,7 @@
         }
 </style>
 <div class="section section--padding padding">
+    <div class="wrapper wrapper--large wrapper--padding">
         {% if value.link_cards|length > 2 %}
         <div class="article-cards featured-blocks featured-blocks--three">
             {% for link_card in value.link_cards %}
@@ -20,6 +21,7 @@
             {% endfor %}
         </div>
         {% endif %}
+    </div>
 
 </div>
 

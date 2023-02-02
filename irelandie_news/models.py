@@ -91,6 +91,12 @@ class NewsPageIndex(BasePage):
         except EmptyPage:
             rel_art = paginator.page(paginator.num_pages)
         context['related_articles'] = rel_art
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = get_model_info(p.content_type.name, p.id)
+                if missions.root_page:
+                    context['mission_web_bot'] = missions.web_bot_script
         return context
 
     @cached_property
@@ -143,6 +149,8 @@ class NewsPage(MinimalArticlePage):
                 missions = get_model_info(p.content_type.name, p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
+                if missions.root_page and missions.content_type.name == 'mission page':
+                    context['mission_web_bot'] = missions.web_bot_script
         return context
 
     class Meta:
@@ -202,6 +210,8 @@ class NewsLandingPage(BasePage):
                 missions = get_model_info(p.content_type.name, p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
+                if missions.root_page and missions.content_type.name == 'mission page':
+                    context['mission_web_bot'] = missions.web_bot_script
 
         return context
 

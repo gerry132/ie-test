@@ -24,10 +24,18 @@
                 {% include_block block %}
             </div>
         </div>
+    {% elif block.block_type == 'rich_text_advanced' %}
+        <div class="section section--padding">
+                {% include_block block %}
+        </div>
     {% else %}
         {% include_block block %}
     {% endif %}
     {% endfor %}
+
+    {% if page.html %}
+        {% include_block page.html %}
+    {% endif %}
 
 {% endblock %}
 
