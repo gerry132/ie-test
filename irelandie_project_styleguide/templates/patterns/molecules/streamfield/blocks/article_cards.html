@@ -1,8 +1,13 @@
 {% load wagtailcore_tags %}
 
-<div class="intro">
-    <h2 class="intro__title">{{ value.title }}</h2>
-    <div class="intro__description">{{ value.summary }}</div>
+<div class="intro" style="max-width:1024px;">
+
+    {% if value.title and value.summary %}
+        <h2 class="intro__title">{{ value.title }}</h2>
+        <div class="intro__description">{{ value.summary }}</div>
+    {% else %}
+        <div class="intro__description">{% include_block value.summary_richtext %}</div>
+    {% endif %}
 </div>
 
 <div class="article-cards featured-blocks featured-blocks--four">
