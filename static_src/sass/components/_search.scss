@@ -9,7 +9,7 @@
     &--dropdown {
         @include media-query(medium) {
             position: relative;
-            background-color: $color--primary;
+            background-color: #EDECE5;
         }
 
         #{$root}__icon {
@@ -19,8 +19,8 @@
         #{$root}__input {
             @include font-size(l);
             font-weight: $weight--medium;
-            color: $color--grey;
-            border-bottom: 1px solid rgba($color--white, 0.5);
+            color: #292929;
+            border-bottom: 1px solid #292929;
 
             &:focus {
                 border-bottom: 1px solid $color--primary;
@@ -67,7 +67,7 @@
 
     &__button-icon,
     &__icon {
-        color: $color--white;
+        color: #292929;
         width: 30px;
         height: 30px;
     }
