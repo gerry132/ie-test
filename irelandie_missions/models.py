@@ -298,6 +298,7 @@ class MissionPage(HeroPage):
     body = StreamField(
         [
             ("two_column_feature", blocks.StoryBlock()),
+            ("stats_block", blocks.StatsBlock())
         ],
         blank=True,
         null=True
