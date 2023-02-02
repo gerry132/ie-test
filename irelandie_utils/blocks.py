@@ -606,8 +606,10 @@ class ArticleCardBlock(blocks.StructBlock):
 
 
 class ArticleCardsBlock(blocks.StructBlock):
-    title = blocks.CharBlock()
-    summary = blocks.TextBlock()
+    title = blocks.CharBlock(required=False)
+    summary = blocks.TextBlock(required=False)
+    summary_richtext = AdvancedRichTextBlock(required=False)
+
     articles = blocks.StreamBlock([("article", ArticleCardBlock())])
 
     class Meta:
