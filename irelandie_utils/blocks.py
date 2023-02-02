@@ -618,6 +618,30 @@ class ArticleCardsBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/article_cards.html"
 
 
+class StatBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    summary = blocks.RichTextBlock(
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul", "ol"],
+        required=False,
+    )
+
+    class Meta:
+        icon = "list-ul"
+        label = "Stat Block"
+        template = "patterns/molecules/streamfield/blocks/stat_block.html"
+
+
+class StatsBlock(blocks.StructBlock):
+    richtext = AdvancedRichTextBlock(required=False)
+
+    stats = blocks.StreamBlock([("stats", StatBlock())])
+
+    class Meta:
+        icon = "list-ul"
+        label = "Stats Block"
+        template = "patterns/molecules/streamfield/blocks/stats_block.html"
+
+
 class LinkCardBlock(blocks.StructBlock):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
