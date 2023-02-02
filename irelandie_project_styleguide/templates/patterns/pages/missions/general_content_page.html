@@ -1,7 +1,7 @@
 {% extends "patterns/base_page.html" %}
 {% load wagtailcore_tags i18n %}
-{% load util_tags navigation_tags wagtailcore_tags wagtailimages_tags%}
-{% load wagtailcore_tags wagtailimages_tags static i18n %}
+{% load util_tags navigation_tags wagtailimages_tags%}
+{% load static %}
 {% block content %}
 {% if page.generic_hero %}
     {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
@@ -20,7 +20,7 @@
         </div>
 {% endif %}
 
-
+{% block main %}
         <!-- Body -->
 <div class="section--master {% if page.generic_hero %} section section--padding {% endif %}">
             {% for block in page.body %}
@@ -56,5 +56,6 @@
             {% endif %}
         {% endfor %}
 </div>
+{% endblock %}
     {% endblock %}
 
