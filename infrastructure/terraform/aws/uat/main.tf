@@ -83,7 +83,7 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.54.139/32", "80.233.62.139/32"]
+      cidr_blocks  = ["80.233.50.158/32", "80.233.58.158/32"]
     },
     kleverson_dev = {
       description = "Kleverson Morais - OGCIO"
