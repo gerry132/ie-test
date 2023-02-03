@@ -181,6 +181,15 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         choices=StoryBackground.choices,
         default=StoryBackground.LIGHT,
     )
+    button_link = blocks.StreamBlock(
+        [
+            ("button", SecondaryCallToAction())
+        ],
+        blank=True,
+        max_num=1,
+        min_num=0,
+        required=False,
+    )
     links = blocks.StreamBlock(
         [
             ("link", StoryLinkBlock()),

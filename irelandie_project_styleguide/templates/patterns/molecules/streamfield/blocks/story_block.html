@@ -1,7 +1,11 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% load util_tags i18n %}
-
+<style>
+    .story__image{
+        border-radius: unset;
+    }
+</style>
 {% get_unique_ref as ref %}
 <div class="story{% if value.background == 'dark' %} story--dark{% endif %}{% if value.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
     <div class="wrapper wrapper--large">
@@ -35,6 +39,19 @@
                     <div class="rich-text">
                         {{ value.summary }}
                     </div>
+                    {% if value.button_link %}
+                    {% for button in value.button_link %}
+                    <div class="rich-text">
+                        <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
+                                {% if button.value.page %}
+                                <a class="button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
+                            {% else %}
+                                <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
 
 
 
