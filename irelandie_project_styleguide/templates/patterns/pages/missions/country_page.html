@@ -7,6 +7,15 @@
                 <h2 class="secondary-title">{{ page.secondary_title }}</h2>
             </div>
     {% endif %}
+    {% for block in page.body1 %}
+        {% if block.block_type == 'rich_text_advanced' %}
+            <div class="section section--padding">
+                    {% include_block block %}
+            </div>
+        {% else %}
+            {% include_block block %}
+        {% endif %}
+    {% endfor %}
     {% include_block page.stories %}
 
     {% if page.logo_cards %}

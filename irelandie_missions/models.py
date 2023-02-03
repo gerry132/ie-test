@@ -67,6 +67,7 @@ class DestinationPage(HeroPage):
             ("html", wagtail_blocks.RawHTMLBlock(
                 template="patterns/molecules/streamfield/blocks/raw_html_block.html",
             )),
+            ("stats_block", blocks.StatsBlock()),
             (
                 "pinned_story",
                 wagtail_blocks.StructBlock(
@@ -83,9 +84,24 @@ class DestinationPage(HeroPage):
         blank=True,
         null=True,
     )
+    body1 = StreamField(
+        [
+            ("rich_text_advanced", blocks.AdvancedRichTextBlock()),
+            ("youtube_video", blocks.YoutubeVideoBlock()),
+            ("video", blocks.CustomVideoChooserBlockAlt()),
+            ("link_cards", blocks.LinkCardsBlock()),
+            ("html", wagtail_blocks.RawHTMLBlock(
+                template="patterns/molecules/streamfield/blocks/raw_html_block.html",
+            )),
+            ("stats_block", blocks.StatsBlock())
+        ],
+        blank=True,
+        null=True,
+    )
 
     content_panels = HeroPage.content_panels + [
         FieldPanel("region"),
+        FieldPanel("body1", heading="Body"),
         FieldPanel("stories", heading="Two Column Feature"),
         FieldPanel("logo_cards", heading="Logo Cards"),
         FieldPanel("body"),

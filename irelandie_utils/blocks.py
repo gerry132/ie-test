@@ -954,6 +954,7 @@ class GeneralContentBlocks(blocks.StreamBlock):
     youtube_video = YoutubeVideoBlock(group="HTML")
     accordion = AccordionBlock(group="Base")
     logos = LogoCardsBlock(group="Base")
+    stats_block = StatsBlock(group="Base")
 
 
 class TocBlock(blocks.StructBlock):
@@ -1261,3 +1262,4 @@ class FreeFormBlocks(FreeFormBlocksBase):
         group="HTML",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
+    stats_block = StatsBlock(group="Base")
