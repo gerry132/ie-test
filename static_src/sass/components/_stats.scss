@@ -3,28 +3,31 @@
     &__grid{
             display: grid;
             grid-gap: 20px;
-        @media only screen and (min-width: 620px){
-            grid-template-columns: repeat(auto-fit,minmax(calc(33.33% - 30px),281px));
+            grid-template-columns: repeat(auto-fit,minmax(calc(33.33% - 30px),310px));
             justify-content: center;
-        }
     }
     &__border{
-        @media only screen and (max-width: 619px){
-            border-bottom: 2px solid #A39161;
-        }
-        @media only screen and (min-width: 620px){
             border-left: 2px solid #A39161;
             padding-left: 20px;
-        }
+
     }
     &__title{
         font-family: 'FS Kim';
         font-style: normal;
         font-weight: 700;
+        font-size: 90px;
+        line-height: 120%;
+        @media only screen and (max-width: 620px){
+            font-size: 60px;
+        }
     }
     &__summary{
         font-family: 'Lato';
         font-style: normal;
         font-weight: 400;
+        font-size: 26px;
+        line-height: 31px;
+
+        letter-spacing: -0.005em;
     }
 }
