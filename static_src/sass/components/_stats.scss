@@ -3,7 +3,7 @@
     &__grid{
             display: grid;
             grid-gap: 20px;
-            grid-template-columns: repeat(auto-fit,minmax(calc(33.33% - 30px),310px));
+            grid-template-columns: repeat(auto-fit,minmax(calc(33.33% - 30px),340px));
             justify-content: center;
     }
     &__border{
@@ -15,10 +15,10 @@
         font-family: 'FS Kim';
         font-style: normal;
         font-weight: 700;
-        font-size: 90px;
+        font-size: 99px;
         line-height: 120%;
-        @media only screen and (max-width: 620px){
-            font-size: 60px;
+        @media only screen and (max-width: 416px){
+            font-size: 80px;
         }
     }
     &__summary{

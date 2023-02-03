@@ -21,6 +21,10 @@
         {% include_block block %}
     {% elif block.block_type == 'stories' %}
         {% include_block block %}
+    {% elif block.block_type == 'html' %}
+        {% include_block block %}
+    {% elif block.block_type == 'articles' or block.block_type == 'featured_articles' %}
+        {% include_block block %}
     {% elif block.block_type == 'logos' %}
         <div class="wrapper wrapper--large wrapper--padding" style="padding-bottom:40px;">
                 {% include_block block %}
@@ -38,7 +42,7 @@
             </div>
         </div>
     {% else %}
-        <div style="padding-bottom: 10px;" class="wrapper wrapper--large wrapper--padding">
+        <div style="padding-bottom: 40px;" class="wrapper wrapper--large wrapper--padding">
             {% include_block block %}
         </div>
     {% endif %}
