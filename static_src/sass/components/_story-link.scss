@@ -27,7 +27,7 @@
 
     &:nth-child(odd) {
         @include media-query(medium) {
-            border-right: 1px solid $color--border;
+            border-right: 1px solid #808053;
         }
     }
 
@@ -35,15 +35,10 @@
         margin-right: 15px;
         height: 45px;
         width: 48px;
-        color: $color--white;
-        fill: #004D46;
-        stroke:#fff;
+        color: #292929;
+        fill: #292929;
+        stroke: #292929;
         stroke-width: 0px;
-        #{$root}:hover & {
-            color: $color--primary;
-            stroke:$color--primary;
-            fill: $color--white;
-        }
     }
 
     &__img {
@@ -60,25 +55,22 @@
 
     &__title {
         font-size: 16px;
-        color: $color--white;
+        color: #292929;
         font-weight: $weight--bold;
         transition: color $transition;
         line-height: 18px;
 
         #{$root}:hover & {
-            color: $color--primary;
+            text-decoration: underline;
         }
     }
 
     &__summary {
         font-size: 16px;
-        color: $color--white;
+        color: #292929;
         transition: color $transition;
         line-height: 20px;
 
-        #{$root}:hover & {
-            color: $color--primary;
-        }
     }
 }
 
@@ -133,7 +125,6 @@
     height: 40px;
     padding: 10px;
     border: none;
-    border-radius: 30%;
     cursor: pointer;
     background-color: #fff;
     font-size: 18px;

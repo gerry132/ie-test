@@ -13,9 +13,9 @@
     }
 
     &__container {
-        background-color: $color--primary;
-        border-radius: $border-radius;
-        box-shadow: 0 43px 63px 0 rgba(0, 0, 0, 0.1);
+        background: #FFFFFF;
+        opacity: 0.9;
+        box-shadow: 0px 20px 40px 4px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-wrap: wrap;
         overflow: hidden;
