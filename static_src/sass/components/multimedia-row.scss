@@ -1,0 +1,102 @@
+.multimedia{
+    $root: &;
+    &__video-control-button {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        height: 80px;
+        width: 80px;
+        position: absolute;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        border: 0;
+        background-color: #004d46;
+        color: #fff;
+        justify-self: center;
+    &:hover {
+            cursor: pointer;
+            transform: translate(-50%,-50%) scale(1.1);
+        }
+    }
+    &__video-control-button-icon {
+        color: $color--white;
+
+        &.icon {
+            height: 30px;
+            width: 30px;
+        }
+
+        &--pause {
+            display: none;
+
+            #{$root}__video-control-button.active & {
+                display: block;
+            }
+        }
+
+        &--play {
+            display: block;
+
+            #{$root}__video-control-button.active & {
+                display: none;
+            }
+        }
+    }
+    &__video-flex{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    }
+
+    &__video--block{
+    position: relative;
+    display: block;
+    border-radius: 16px;
+    min-width: 30%;
+    max-width: 100%;
+    object-fit: fill;
+    @media only screen and (min-width: 599px){
+        max-height: 520px;
+    }
+    }
+    &__card__image-container {
+    height:200px;
+    @media only screen and (min-width: 1024px){
+        height: 250px;
+    }
+    overflow: hidden;
+    position: relative;
+    }
+    &__card__content {
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        &--two{
+        @media only screen and (max-width: 1024px){
+            padding: 20px;
+            margin: auto;
+            width: 80%;
+        }
+    }
+    }
+    &__card__title{
+     font-weight: 700;
+    font-size: 32px;
+    line-height: 40px;
+
+    color: #292929;
+    font-family: Sofia Pro;
+    }
+    &__card__summary{
+        font-weight: 400;
+        color: #292929;
+        font-family: Sofia Pro;
+    }
+
+
+}

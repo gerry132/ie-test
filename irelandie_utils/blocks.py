@@ -1251,6 +1251,29 @@ class GenericHeroBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/generic_hero.html"
 
 
+class VideoBlock(blocks.StructBlock):
+    video = CustomVideoChooserBlock()
+    video_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_VID),
+    )
+    caption = blocks.CharBlock(required=False)
+
+
+class MultimediaRowBlock(blocks.StructBlock):
+    richtext = AdvancedRichTextBlock(required=False)
+    multimedia = blocks.StreamBlock(
+        [
+            ("link_card", LinkCardBlock()),
+            ("video", VideoBlock())
+        ]
+    )
+
+    class Meta:
+        label = "Multimedia Row"
+        template = "patterns/molecules/streamfield/blocks/multimedia_block.html"
+
+
 class FreeFormBlocks(FreeFormBlocksBase):
     rich_text = RichTextBlock(group="Base")
     rich_text_advanced = AdvancedRichTextBlock(group="Base")
@@ -1272,3 +1295,4 @@ class FreeFormBlocks(FreeFormBlocksBase):
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
     stats_block = StatsBlock(group="Base")
+    multimedia_row = MultimediaRowBlock(group="Base")
