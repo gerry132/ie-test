@@ -72,9 +72,7 @@ def password_reset_enabled():
 class CustomNameEmailForm(NameEmailForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
         self.fields['email'].disabled = True
-        print(self.fields)
 
 
 class SettingsTab:
