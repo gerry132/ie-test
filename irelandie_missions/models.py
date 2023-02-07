@@ -68,6 +68,7 @@ class DestinationPage(HeroPage):
                 template="patterns/molecules/streamfield/blocks/raw_html_block.html",
             )),
             ("stats_block", blocks.StatsBlock()),
+            ("multimedia_row", blocks.MultimediaRowBlock()),
             (
                 "pinned_story",
                 wagtail_blocks.StructBlock(
@@ -95,7 +96,8 @@ class DestinationPage(HeroPage):
             ("html", wagtail_blocks.RawHTMLBlock(
                 template="patterns/molecules/streamfield/blocks/raw_html_block.html",
             )),
-            ("stats_block", blocks.StatsBlock())
+            ("stats_block", blocks.StatsBlock()),
+            ("multimedia_row", blocks.MultimediaRowBlock()),
         ],
         blank=True,
         null=True,
