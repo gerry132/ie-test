@@ -14,7 +14,7 @@
     <div class="{% if value.multimedia|length > 2 %}featured-blocks featured-blocks--three{% else %}featured-blocks featured-blocks--two{% endif %}">
         {% for block in value.multimedia %}
         {% if block.block_type == 'link_card' %}
-            <a href="{{ link_url }}" class="card">
+            <a href="{% if block.value.page.url %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}" class="card">
                 <div class="multimedia__card__image-container">
                     {% if block.value.image_alt %}
                         {% image block.value.image fill-400x200 alt=block.value.image_alt class="card__image" %}
