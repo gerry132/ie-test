@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     #
     "app",
     "health_check",
-    #
+    "accview_non_admin",
     "irelandie_admin",
     "irelandie_assets",
     "irelandie_documents",
@@ -125,7 +125,8 @@ MIDDLEWARE = [
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "irelandie_utils.middleware.ReplaceViewsMiddleware",
     "custom_logout.middleware.custom_logout.CustomMiddleware",
-    "custompasswordreset.middleware.force_reset.ForcePasswordReset"
+    "custompasswordreset.middleware.force_reset.ForcePasswordReset",
+    "admincheck.middleware.admin_check.IsUserAdmin"
 ]
 
 if DEBUG_TOOLBAR is True:
