@@ -292,11 +292,11 @@ def custom_footer_settings(context, page):
         logo = site_settings.site_logo
         mobile_logo = site_settings.mobile_logo
         logo_alt = site_settings.site_logo_alt
-        twitter_handle = footer_social_media.twitter_handle or footer_navigation.twitter_handle
-        facebook_app_id = footer_social_media.facebook_app_id or footer_navigation.facebook_app_id
-        youtube_user = footer_social_media.youtube_user or footer_navigation.youtube_user
-        linkedin_profile = footer_social_media.linkedin_profile or footer_navigation.linkedin_profile
-        instagram_user = footer_social_media.instagram_user or footer_navigation.instagram_user
+        twitter_handle = footer_navigation.twitter_handle or footer_social_media.twitter_handle
+        facebook_app_id = footer_navigation.facebook_app_id or footer_social_media.facebook_app_id
+        youtube_user = footer_navigation.youtube_user or footer_social_media.youtube_user
+        linkedin_profile = footer_navigation.linkedin_profile or footer_social_media.linkedin_profile
+        instagram_user = footer_navigation.instagram_user or footer_social_media.instagram_user
         link_url = None
         link_page = None
         show_social_media = any(
