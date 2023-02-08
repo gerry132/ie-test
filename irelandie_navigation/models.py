@@ -152,7 +152,7 @@ class FooterNavigationTag(TaggedItemBase):
 
 @register_snippet
 class FooterNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
-                       TranslatableMixin):
+                       SocialMediaFieldsMixin, TranslatableMixin):
     # Snippets model is used so the navigation can be localised with TranslatableMixin.
     tags = TaggableManager(through=FooterNavigationTag, blank=True)
     title = models.CharField(max_length=255, blank=True)
@@ -191,6 +191,11 @@ class FooterNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.I
             ],
             heading=_("Footer Navigation"),
         ),
+        FieldPanel("twitter_handle"),
+        FieldPanel("facebook_app_id"),
+        FieldPanel("youtube_user"),
+        FieldPanel("linkedin_profile"),
+        FieldPanel("instagram_user"),
         FieldPanel('tags'),
         PublishingPanel(),
     ]
