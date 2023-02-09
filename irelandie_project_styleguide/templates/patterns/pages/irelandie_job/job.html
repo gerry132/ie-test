@@ -13,14 +13,12 @@
         <!-- Body -->
     <div class="section section--padding">
         <div class="wrapper wrapper--large wrapper--padding">
-            <div class="intro--toc">
+            <div class="rich-text">
                 <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
                 {% if page.subtitle %}
                     <p class="hero__introduction">{{ page.subtitle }}</p>
                 {% endif %}
             </div>
-
-
             {% if page.expire_at %}
                 <p>Closing date: {% format_date page.expire_at %}</p>
             {% endif %}
