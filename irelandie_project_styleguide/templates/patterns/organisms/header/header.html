@@ -137,7 +137,6 @@
                                 <select name="language" id="language-switcher"
                                         onchange="this.form.submit()"
                                         class="language-switcher">
-                                    {{ LANGUAGE_CODE }}
                                     {% get_language_info for LANGUAGE_CODE as current_lang %}
                                      <option value="{{ current_lang.code }}"{% if current_lang == language_code %} selected{% endif %}>
                                             {{ current_lang.name_local }}
@@ -269,7 +268,6 @@
                                     <select name="language" id="language-switcher"
                                             onchange="this.form.submit()"
                                             class="language-switcher">
-                                         {{ LANGUAGE_CODE }}
                                         {% get_language_info for LANGUAGE_CODE as current_lang %}
                                          <option value="{{ current_lang.code }}"{% if current_lang == language_code %} selected{% endif %}>
                                                 {{ current_lang.name_local }}
