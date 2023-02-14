@@ -41,6 +41,7 @@ h6,
 .heading {
     @include heading-text();
     margin: 0 0 1rem;
+    color: #004D44;
 }
 
 .heading {
@@ -50,7 +51,6 @@ h6,
         padding-top: 40px;
     }
 }
-
 html,
 .body-text {
     @include body-text();
@@ -76,7 +76,7 @@ h1,
 h2,
 .heading--2 {
     @include font-size(l);
-    font-weight: $weight--normal;
+    font-weight: $weight--bold;
 
     @include media-query(medium) {
         @include font-size(xl);

@@ -64,6 +64,11 @@ class DestinationPage(HeroPage):
             ("video", blocks.CustomVideoChooserBlockAlt()),
             ("link_cards", blocks.LinkCardsBlock()),
             ("logo_cards", blocks.LogoCardsBlock()),
+            ("html", wagtail_blocks.RawHTMLBlock(
+                template="patterns/molecules/streamfield/blocks/raw_html_block.html",
+            )),
+            ("stats_block", blocks.StatsBlock()),
+            ("multimedia_row", blocks.MultimediaRowBlock()),
             (
                 "pinned_story",
                 wagtail_blocks.StructBlock(
@@ -80,9 +85,27 @@ class DestinationPage(HeroPage):
         blank=True,
         null=True,
     )
+    body1 = StreamField(
+        [
+            ("two_column_feature", blocks.StoryBlock()),
+            ("rich_text_advanced", blocks.AdvancedRichTextBlock()),
+            ("youtube_video", blocks.YoutubeVideoBlock()),
+            ("video", blocks.CustomVideoChooserBlockAlt()),
+            ("link_cards", blocks.LinkCardsBlock()),
+            ("logo_cards", blocks.LogoCardsBlock()),
+            ("html", wagtail_blocks.RawHTMLBlock(
+                template="patterns/molecules/streamfield/blocks/raw_html_block.html",
+            )),
+            ("stats_block", blocks.StatsBlock()),
+            ("multimedia_row", blocks.MultimediaRowBlock()),
+        ],
+        blank=True,
+        null=True,
+    )
 
     content_panels = HeroPage.content_panels + [
         FieldPanel("region"),
+        FieldPanel("body1", heading="Body"),
         FieldPanel("stories", heading="Two Column Feature"),
         FieldPanel("logo_cards", heading="Logo Cards"),
         FieldPanel("body"),
@@ -115,6 +138,7 @@ class DestinationPage(HeroPage):
                 missions = MissionPage.objects.live().get(id=p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
+                    context['mission_web_bot'] = missions.web_bot_script
                     root_found = True
         if not root_found:
             f = HomePage.objects.all()[:1].get()
@@ -196,6 +220,12 @@ class JobContentPage(BasePage):
         parent = self.get_parent()
         if parent.content_type.name == "job index page":
             context['privacy_policy_parent'] = self.get_parent().specific.privacy_policy
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['mission_web_bot'] = missions.web_bot_script
         return context
 
 
@@ -234,6 +264,16 @@ class JobIndexPage(BasePage):
             .order_by("-first_published_at")
             .specific()
         )
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['mission_web_bot'] = missions.web_bot_script
+        return context
 
 
 class MissionPage(HeroPage):
@@ -278,6 +318,7 @@ class MissionPage(HeroPage):
     body = StreamField(
         [
             ("two_column_feature", blocks.StoryBlock()),
+            ("stats_block", blocks.StatsBlock())
         ],
         blank=True,
         null=True
@@ -395,6 +436,16 @@ class Magazine(HeroPage):
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['mission_web_bot'] = missions.web_bot_script
+        return context
+
 
 class ServiceContent(BasePage):
     generic_hero = StreamField(
@@ -470,6 +521,7 @@ class ServiceContent(BasePage):
                 missions = MissionPage.objects.get(id=p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
+                    context['mission_web_bot'] = missions.web_bot_script
         if not root_found:
             f = HomePage.objects.all()[:1].get()
             context['default_image'] = f.default_image
@@ -556,6 +608,7 @@ class NoticePage(BasePage):
                 missions = MissionPage.objects.live().get(id=p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
+                    context['mission_web_bot'] = missions.web_bot_script
         if not root_found:
             f = HomePage.objects.all()[:1].get()
             context['default_image'] = f.default_image
@@ -615,6 +668,14 @@ class ServicesLandingPage(BasePage):
         blank=True,
         null=True,
     )
+    related_content = StreamField(
+        [
+            ("related_item", blocks.RelatedContentBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+    )
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
@@ -625,6 +686,7 @@ class ServicesLandingPage(BasePage):
                 missions = MissionPage.objects.get(id=p.id)
                 if missions.root_page:
                     context['default_image'] = missions.default_image
+                    context['mission_web_bot'] = missions.web_bot_script
         if not root_found:
             f = HomePage.objects.all()[:1].get()
             context['default_image'] = f.default_image
@@ -635,6 +697,7 @@ class ServicesLandingPage(BasePage):
         FieldPanel("rich_text", heading="Advanced Richtext", permission="access_admin"),
         FieldPanel("body", permission="access_admin"),
         FieldPanel("additional_rich_text", heading="Advanced Richtext", permission="access_admin"),
+        FieldPanel("related_content"),
     ]
 
 
@@ -804,3 +867,13 @@ class GeneralContentPage(HeroPage):
         ObjectList(HeroPage.promote_panels, heading='Promote'),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        pages = self.get_ancestors()
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['mission_web_bot'] = missions.web_bot_script
+        return context

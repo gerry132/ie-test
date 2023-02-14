@@ -20,12 +20,13 @@
                     </div>
         </div>
 {% endif %}
+{% block main %}
 <div class="section section--padding">
     <div class="wrapper wrapper--large wrapper--padding">
         {% include_block page.body %}
     </div>
 </div>
 
-
+{% endblock %}
 {% endblock %}
 

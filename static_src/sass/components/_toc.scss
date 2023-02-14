@@ -10,11 +10,11 @@
 .toc-contents {
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 500;
     font-size: 18px;
     line-height: 22px;
+    text-decoration: underline;
+    font-weight: 500;
 
-    color: #004D46;
 }
 
 
@@ -39,9 +39,8 @@
     border-top-width: 2px;
     font-style: normal;
     font-weight: 700;
-    font-size: 22px;
+    font-size: 32px;
     line-height: 26px;
-    color: #004D46;
 }
 
 .content--padding {
@@ -53,7 +52,6 @@
 }
 
 .toc--heading {
-    color: #004D46;
     @include media-query(max-small) {
         font-size: 2.2rem;
     }

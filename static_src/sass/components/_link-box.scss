@@ -34,7 +34,6 @@
         line-height: 29px;
         text-decoration-line: underline;
 
-        color: #004D46;
     }
     &__heading1{
         margin-left: auto;
@@ -84,10 +83,6 @@
     @media only screen and (max-width: 1023px) {
     width: 90%;
     padding-top: 20px;
-    }
-    @media only screen and (min-width: 1022px) {
-        position: relative;
-        top: -14px;
     }
   }
   &__job_margin{

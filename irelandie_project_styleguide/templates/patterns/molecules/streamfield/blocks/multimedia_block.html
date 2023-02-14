@@ -1,0 +1,62 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load static %}
+{% load util_tags %}
+{% load i18n %}
+<style>
+
+</style>
+<div class="wrapper wrapper--large wrapper--padding">
+    <div class="intro" style="max-width:1024px;">
+        <div class="intro__description">{% include_block value.richtext %}</div>
+    </div>
+
+    <div class="{% if value.multimedia|length > 2 %}featured-blocks featured-blocks--three{% else %}featured-blocks featured-blocks--two{% endif %}">
+        {% for block in value.multimedia %}
+        {% if block.block_type == 'link_card' %}
+            <a href="{% if block.value.page.url %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}" class="card">
+                <div class="multimedia__card__image-container">
+                    {% if block.value.image_alt %}
+                        {% image block.value.image fill-400x200 alt=block.value.image_alt class="card__image" %}
+                    {% else %}
+                        {% image block.value.image fill-400x200 alt=block.value.image.alt_default class="card__image" %}
+                    {% endif %}
+                </div>
+
+                <div class="{% if value.multimedia|length < 3 %}multimedia__card__content--two{% endif %} multimedia__card__content">
+                    <h3 class="multimedia__card__title">
+                        {{ block.value.title }}
+                    </h3>
+
+                    <p class="multimedia__card__summary">
+                        {{ block.value.summary }}
+                    </p>
+                </div>
+            </a>
+        {% else %}
+        <div class="multimedia__video-flex" data-multimedia-container>
+             <div style="position:relative;">
+                    <button class="multimedia__video-control-button" aria-label="{% trans 'Toggle video playback' %}" data-multimedia-toggle>
+                        {% include "patterns/atoms/icons/icon.html" with name="play" classname="multimedia__video-control-button-icon multimedia__video-control-button-icon--play" %}
+                        {% include "patterns/atoms/icons/icon.html" with name="pause" classname="multimedia__video-control-button-icon multimedia__video-control-button-icon--pause" %}
+                    </button>
+
+                    <video class="multimedia__video--block" aria-label="{{ block.value.title }}" title="{{ block.value.title }}" loop data-video controls data-multimedia style="{% if value.multimedia|length > 2 and block.value.caption|length > 34 %}
+                    min-height: 380px;{% elif block.value.caption %}min-height: 420px;{% else %}min-height: 475px;{% endif %}">
+                        <source src="{{ block.value.video.url }}" type="video/mp4">
+                        {% trans 'Your browser does not support the video tag.' %}
+                    </video>
+                 </div>
+                {% if block.value.caption %}
+                    <div class="card__summary">
+                        {{ block.value.caption }}
+                    </div>
+                {% endif %}
+
+        </div>
+
+        {% endif %}
+    {% endfor %}
+    </div>
+
+</div>

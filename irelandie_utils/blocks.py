@@ -181,6 +181,15 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         choices=StoryBackground.choices,
         default=StoryBackground.LIGHT,
     )
+    button_link = blocks.StreamBlock(
+        [
+            ("button", SecondaryCallToAction())
+        ],
+        blank=True,
+        max_num=1,
+        min_num=0,
+        required=False,
+    )
     links = blocks.StreamBlock(
         [
             ("link", StoryLinkBlock()),
@@ -606,14 +615,40 @@ class ArticleCardBlock(blocks.StructBlock):
 
 
 class ArticleCardsBlock(blocks.StructBlock):
-    title = blocks.CharBlock()
-    summary = blocks.TextBlock()
+    title = blocks.CharBlock(required=False)
+    summary = blocks.TextBlock(required=False)
+    summary_richtext = AdvancedRichTextBlock(required=False)
+
     articles = blocks.StreamBlock([("article", ArticleCardBlock())])
 
     class Meta:
         icon = "list-ul"
         label = "Articles"
         template = "patterns/molecules/streamfield/blocks/article_cards.html"
+
+
+class StatBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    summary = blocks.RichTextBlock(
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul", "ol"],
+        required=False,
+    )
+
+    class Meta:
+        icon = "list-ul"
+        label = "Stat Block"
+        template = "patterns/molecules/streamfield/blocks/stat_block.html"
+
+
+class StatsBlock(blocks.StructBlock):
+    richtext = AdvancedRichTextBlock(required=False)
+
+    stats = blocks.StreamBlock([("stats", StatBlock())])
+
+    class Meta:
+        icon = "list-ul"
+        label = "Stats Block"
+        template = "patterns/molecules/streamfield/blocks/stats_block.html"
 
 
 class LinkCardBlock(blocks.StructBlock):
@@ -856,48 +891,48 @@ class FreeFormBlocksBase(blocks.StreamBlock):
 
 
 class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
-    icon = blocks.ChoiceBlock(
-        choices=(
-            ("", "Choose an icon (optional)"),
-            ("authentication", "Authentication"),
-            ("citizenship", "Citizenship"),
-            ("closure-dates", "Closure Dates"),
-            ("consular-fees", "Consular Fees"),
-            ("contact-phone", "Contact Phone"),
-            ("contact-mail", "Contact Mail"),
-            ("family", "Family"),
-            ("government-building", "Government Building"),
-            ("how-we-can-help", "How We Can Help"),
-            ("information", "Information"),
-            ("invest", "Invest"),
-            ("jobs", "Jobs"),
-            ("link", "Link"),
-            ("live", "Live"),
-            ("location", "Location"),
-            ("marriage", "Marriage"),
-            ("money", "Money"),
-            ("new-to", "New To"),
-            ("news", "News"),
-            ("notice", "Notice"),
-            ("opening-hours", "Opening Hours"),
-            ("passport", "Passport"),
-            ("plane", "Plane"),
-            ("services", "Services"),
-            ("study", "Study"),
-            ("ticket", "Ticket"),
-            ("trade", "Trade"),
-            ("trade2", "Trade2"),
-            ("travel", "Travel"),
-            ("visas", "Visas"),
-            ("working-holiday", "Working Holiday"),
-        ),
-        required=False,
-    )
-    image = ImageChooserBlock(required=False)
-    image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_(ALT_IMAGE),
-    )
+    # icon = blocks.ChoiceBlock(
+    #     choices=(
+    #         ("", "Choose an icon (optional)"),
+    #         ("authentication", "Authentication"),
+    #         ("citizenship", "Citizenship"),
+    #         ("closure-dates", "Closure Dates"),
+    #         ("consular-fees", "Consular Fees"),
+    #         ("contact-phone", "Contact Phone"),
+    #         ("contact-mail", "Contact Mail"),
+    #         ("family", "Family"),
+    #         ("government-building", "Government Building"),
+    #         ("how-we-can-help", "How We Can Help"),
+    #         ("information", "Information"),
+    #         ("invest", "Invest"),
+    #         ("jobs", "Jobs"),
+    #         ("link", "Link"),
+    #         ("live", "Live"),
+    #         ("location", "Location"),
+    #         ("marriage", "Marriage"),
+    #         ("money", "Money"),
+    #         ("new-to", "New To"),
+    #         ("news", "News"),
+    #         ("notice", "Notice"),
+    #         ("opening-hours", "Opening Hours"),
+    #         ("passport", "Passport"),
+    #         ("plane", "Plane"),
+    #         ("services", "Services"),
+    #         ("study", "Study"),
+    #         ("ticket", "Ticket"),
+    #         ("trade", "Trade"),
+    #         ("trade2", "Trade2"),
+    #         ("travel", "Travel"),
+    #         ("visas", "Visas"),
+    #         ("working-holiday", "Working Holiday"),
+    #     ),
+    #     required=False,
+    # )
+    # image = ImageChooserBlock(required=False)
+    # image_alt = blocks.CharBlock(
+    #     required=False,
+    #     help_text=_(ALT_IMAGE),
+    # )
     title = blocks.CharBlock()
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -908,7 +943,6 @@ class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 
     class Meta:
         label = "Related Content"
-        template = "patterns/molecules/streamfield/blocks/related_content.html"
 
 
 class TocBlocks(blocks.StreamBlock):
@@ -929,6 +963,7 @@ class GeneralContentBlocks(blocks.StreamBlock):
     youtube_video = YoutubeVideoBlock(group="HTML")
     accordion = AccordionBlock(group="Base")
     logos = LogoCardsBlock(group="Base")
+    stats_block = StatsBlock(group="Base")
 
 
 class TocBlock(blocks.StructBlock):
@@ -1050,48 +1085,48 @@ class PersonSocialBlock(blocks.StructBlock):
 
 
 class LinkBoxBlock(blocks.StructBlock):
-    icon = blocks.ChoiceBlock(
-        choices=(
-            ("", "Choose an icon (optional)"),
-            ("authentication", "Authentication"),
-            ("citizenship", "Citizenship"),
-            ("closure-dates", "Closure Dates"),
-            ("consular-fees", "Consular Fees"),
-            ("contact-phone", "Contact Phone"),
-            ("contact-mail", "Contact Mail"),
-            ("family", "Family"),
-            ("government-building", "Government Building"),
-            ("how-we-can-help", "How We Can Help"),
-            ("information", "Information"),
-            ("invest", "Invest"),
-            ("jobs", "Jobs"),
-            ("link", "Link"),
-            ("live", "Live"),
-            ("location", "Location"),
-            ("marriage", "Marriage"),
-            ("money", "Money"),
-            ("new-to", "New To"),
-            ("news", "News"),
-            ("notice", "Notice"),
-            ("opening-hours", "Opening Hours"),
-            ("passport", "Passport"),
-            ("plane", "Plane"),
-            ("services", "Services"),
-            ("study", "Study"),
-            ("ticket", "Ticket"),
-            ("trade", "Trade"),
-            ("trade2", "Trade2"),
-            ("travel", "Travel"),
-            ("visas", "Visas"),
-            ("working-holiday", "Working Holiday"),
-        ),
-        required=False,
-    )
-    image = ImageChooserBlock(required=False)
-    image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_(ALT_IMAGE),
-    )
+    # icon = blocks.ChoiceBlock(
+    #     choices=(
+    #         ("", "Choose an icon (optional)"),
+    #         ("authentication", "Authentication"),
+    #         ("citizenship", "Citizenship"),
+    #         ("closure-dates", "Closure Dates"),
+    #         ("consular-fees", "Consular Fees"),
+    #         ("contact-phone", "Contact Phone"),
+    #         ("contact-mail", "Contact Mail"),
+    #         ("family", "Family"),
+    #         ("government-building", "Government Building"),
+    #         ("how-we-can-help", "How We Can Help"),
+    #         ("information", "Information"),
+    #         ("invest", "Invest"),
+    #         ("jobs", "Jobs"),
+    #         ("link", "Link"),
+    #         ("live", "Live"),
+    #         ("location", "Location"),
+    #         ("marriage", "Marriage"),
+    #         ("money", "Money"),
+    #         ("new-to", "New To"),
+    #         ("news", "News"),
+    #         ("notice", "Notice"),
+    #         ("opening-hours", "Opening Hours"),
+    #         ("passport", "Passport"),
+    #         ("plane", "Plane"),
+    #         ("services", "Services"),
+    #         ("study", "Study"),
+    #         ("ticket", "Ticket"),
+    #         ("trade", "Trade"),
+    #         ("trade2", "Trade2"),
+    #         ("travel", "Travel"),
+    #         ("visas", "Visas"),
+    #         ("working-holiday", "Working Holiday"),
+    #     ),
+    #     required=False,
+    # )
+    # image = ImageChooserBlock(required=False)
+    # image_alt = blocks.CharBlock(
+    #     required=False,
+    #     help_text=_(ALT_IMAGE),
+    # )
     heading = blocks.CharBlock()
     introduction = blocks.RichTextBlock(required=False)
     page = blocks.PageChooserBlock(required=False)
@@ -1216,6 +1251,29 @@ class GenericHeroBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/generic_hero.html"
 
 
+class VideoBlock(blocks.StructBlock):
+    video = CustomVideoChooserBlock()
+    video_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_VID),
+    )
+    caption = blocks.CharBlock(required=False)
+
+
+class MultimediaRowBlock(blocks.StructBlock):
+    richtext = AdvancedRichTextBlock(required=False)
+    multimedia = blocks.StreamBlock(
+        [
+            ("link_card", LinkCardBlock()),
+            ("video", VideoBlock())
+        ]
+    )
+
+    class Meta:
+        label = "Multimedia Row"
+        template = "patterns/molecules/streamfield/blocks/multimedia_block.html"
+
+
 class FreeFormBlocks(FreeFormBlocksBase):
     rich_text = RichTextBlock(group="Base")
     rich_text_advanced = AdvancedRichTextBlock(group="Base")
@@ -1236,3 +1294,5 @@ class FreeFormBlocks(FreeFormBlocksBase):
         group="HTML",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
+    stats_block = StatsBlock(group="Base")
+    multimedia_row = MultimediaRowBlock(group="Base")

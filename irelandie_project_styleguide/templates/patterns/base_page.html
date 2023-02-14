@@ -121,7 +121,9 @@
 {% block extra_js %}
 
     {% if page.web_bot_script %}
-    {{ page.web_bot_script|safe }}
+        {{ page.web_bot_script|safe }}
+    {% elif mission_web_bot %}
+        {{ mission_web_bot|safe }}
     {% endif %}
 
     {% if page.webchat_script %}

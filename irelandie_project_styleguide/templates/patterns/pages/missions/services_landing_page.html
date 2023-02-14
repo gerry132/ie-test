@@ -24,31 +24,29 @@
 
     {% block main %}
         <!-- Body -->
-<div class="section--master {% if page.generic_hero %} section section--padding {% endif %}">
-        {% if page.rich_text %}
-            <div class="wrapper wrapper--large--toc">
-                {% include_block page.rich_text %}
-            </div>
-        {% endif %}
-            <div class="wrapper--large--toc">
-                    {% include_block page.body with default_image=default_image %}
+<div class="{% if page.generic_hero %} section section--padding {% endif %} wrapper wrapper--large--toc">
+            {% if page.rich_text %}
+                    {% include_block page.rich_text %}
+                {% endif %}
+</div>
+<div class="section--master">
+            <div id="{% if page.related_content %}link-box_wrapper{% endif %}" class="wrapper--large--toc">
+                    {% include_block page.body %}
                     <div class="link-box__related-content">
                     {% if page.related_content %}
-                        <h4 class="header--related-content">Related content</h4>
-                            {% for p in page.related_content %}
-                            <div style="padding-bottom: 20px;">
-                                {% include_block p with default_image=default_image%}
-                            </div>
+                        <h4 class="header--related-content">Related Content</h4>
+                        {% for p in page.related_content %}
+                            <a href="{{p.value.page.url}}"><h2 class="toc-contents">{{p.value.title}}</h2></a>
                         {% endfor %}
                     {% endif %}
                     </div>
-            </div>
+        </div>
         {% if page.additional_rich_text %}
             <div class="wrapper wrapper--large--toc" style="padding-top:40px;">
                 {% include_block page.additional_rich_text %}
             </div>
         {% endif %}
     </div>
-{% if not page.generic_hero %} <div style="padding-bottom: 40px;"></div> {% endif %}
+<div style="padding-bottom: 40px;"></div>
     {% endblock %}
 {% endblock %}
