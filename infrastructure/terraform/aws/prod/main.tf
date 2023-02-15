@@ -674,10 +674,6 @@ resource "aws_lb_target_group" "default_admin" {
 # SSL Certificates
 # -----------------------------------------------------------------------------
 
-data "aws_acm_certificate" "ireland_ie_import" {
-    domain = "www.ireland.ie"
-}
-
 
 resource "aws_acm_certificate" "project" {
   domain_name                 = local.project_domain
