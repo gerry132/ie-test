@@ -1,6 +1,12 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% load util_tags i18n %}
+<style>
+
+.mute__hidden{
+    display: none;
+}
+</style>
 {% for block in page.generic_hero %}
  <div class="mini-hero__container">
     {% if block.value.hero_image %}
@@ -14,17 +20,37 @@
                             </div>
                         {% endif %}
                     {% elif block.value.hero_video %}
+                    <div class="mini-hero__video_container" data-video-container>
                         {% if block.value.hero_image_alignment == 'left' %}
-                            <video class="mini-hero__video_left" aria-label="{{ block.value.hero_video.title  }}" title="{{ block.value.hero_video.title  }}" loop data-video controls>
+                            <video id="myVideo" class="mini-hero__video_left" aria-label="{{ block.value.hero_video.title  }}" title="{{ block.value.hero_video.title  }}" autoplay muted loop data-video>
                                 <source src="{{ block.value.hero_video.url }}" type="video/mp4">
                                     {% trans 'Your browser does not support the video tag.' %}
                             </video>
+                            <div class="mute__icon">
+                                 <button onclick="toggleMute();" class="mini-hero__mute mini-hero__mute--left" type="button">Mute/Unmute</button>
+                                 <button onclick="toggleMute();" class="mini-hero__unmute mini-hero__unmute--left" type="button">Mute/Unmute</button>
+                            </div>
+                            <button class="mini-hero__playVideo mini-hero__playVideo--left hero__video-control-toggle" class="hero__video-control-toggle" aria-label="{% trans 'Toggle video playback' %}" data-video-toggle>
+                                {% include "patterns/atoms/icons/icon.html" with name="play" classname="hero__video-control-icon hero__video-control-icon--play" %}
+                                {% include "patterns/atoms/icons/icon.html" with name="pause" classname="hero__video-control-icon hero__video-control-icon--pause" %}
+                            </button>
+
                         {% else %}
-                            <video class="mini-hero__video" aria-label="{{ block.value.hero_video.title  }}" title="{{block.value.hero_video.title  }}" loop data-video controls>
+                            <video id="myVideo" class="mini-hero__video" aria-label="{{ block.value.hero_video.title  }}" title="{{block.value.hero_video.title  }}" autoplay muted loop data-video>
                                 <source src="{{ block.value.hero_video.url }}" type="video/mp4">
                                     {% trans 'Your browser does not support the video tag.' %}
                             </video>
+                             <div class="mute__icon">
+                                 <button onclick="toggleMute();" class="mini-hero__mute mini-hero__mute--right" type="button">Mute/Unmute</button>
+                                 <button onclick="toggleMute();" class="mini-hero__unmute mini-hero__unmute--right" type="button">Mute/Unmute</button>
+                             </div>
+
+                            <button class="mini-hero__playVideo mini-hero__playVideo--right hero__video-control-toggle" aria-label="{% trans 'Toggle video playback' %}" data-video-toggle>
+                                {% include "patterns/atoms/icons/icon.html" with name="play" classname="hero__video-control-icon hero__video-control-icon--play" %}
+                                {% include "patterns/atoms/icons/icon.html" with name="pause" classname="hero__video-control-icon hero__video-control-icon--pause" %}
+                            </button>
                          {% endif %}
+                    </div>
 
                     {% endif %}
         <div class="{% if block.value.hero_image_alignment == 'left' %}mini-hero__content_left{% else %}
@@ -47,5 +73,32 @@
 
 {% endfor %}
 
+<script>
+    const muteIconDiv = document.querySelector(".mute__icon");
+    const muteIcon = document.querySelector(".mini-hero__mute");
+    const unmuteIconRight = document.querySelector(".mini-hero__unmute--right");
+     const unmuteIconLeft = document.querySelector(".mini-hero__unmute--left");
+    muteIconDiv.addEventListener('click', () => {
+      muteIcon.classList.toggle('mute__hidden')
+    });
+    muteIconDiv.addEventListener('click', () => {
+      unmuteIconRight.classList.toggle('mini-hero__unmute__active__right')
+    });
+    muteIconDiv.addEventListener('click', () => {
+      unmuteIconLeft.classList.toggle('mini-hero__unmute__active__left')
+    });
 
+    function toggleMute() {
+
+        var myvideo=document.getElementById("myVideo")
+
+        if(myvideo.muted){
+            myvideo.muted = false;
+        } else {
+            myvideo.muted = true;
+        }
+
+        }
+
+</script>
 

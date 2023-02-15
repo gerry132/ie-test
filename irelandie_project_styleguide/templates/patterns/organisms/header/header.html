@@ -6,7 +6,6 @@
 
 {% get_current_language as language_code %}
 
-
 <style>
 .breadcrumbs__hidden{
     display: none;
@@ -138,12 +137,15 @@
                                 <select name="language" id="language-switcher"
                                         onchange="this.form.submit()"
                                         class="language-switcher">
-                                    {% for code, name in local_languages %}
-                                        {% if code == 'ga' or code == 'en' %}
-                                        <option value="{{ code }}"{% if code == language_code %} selected{% endif %}>
-                                            {{ name }}
-                                        </option>
-                                        {% endif %}
+                                    {% get_language_info for LANGUAGE_CODE as current_lang %}
+                                     <option value="{{ current_lang.code }}"{% if current_lang == language_code %} selected{% endif %}>
+                                            {{ current_lang.name_local }}
+                                     </option>
+                                    {% for translation in page.get_translations.live %}
+                                        {% get_language_info for translation.locale.language_code as lang %}
+                                            <option value="{{ lang.code }}">
+                                                    {{ lang.name_local }}
+                                             </option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -266,10 +268,15 @@
                                     <select name="language" id="language-switcher"
                                             onchange="this.form.submit()"
                                             class="language-switcher">
-                                        {% for code, name in local_languages %}
-                                            <option value="{{ code }}"{% if code == language_code %} selected{% endif %}>
-                                                {{ name }}
-                                            </option>
+                                        {% get_language_info for LANGUAGE_CODE as current_lang %}
+                                         <option value="{{ current_lang.code }}"{% if current_lang == language_code %} selected{% endif %}>
+                                                {{ current_lang.name_local }}
+                                         </option>
+                                        {% for translation in page.get_translations.live %}
+                                            {% get_language_info for translation.locale.language_code as lang %}
+                                                <option value="{{ lang.code }}">
+                                                        {{ lang.name_local }}
+                                                 </option>
                                         {% endfor %}
                                     </select>
                                 </div>
