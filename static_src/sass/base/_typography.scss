@@ -13,7 +13,7 @@ html {
     :: to its default value, usually `inherit`) in all other font mixins.
 */
 @mixin heading-text() {
-    font-family: $font--primary;
+    font-family: 'Inter';
     font-style: inherit;
     font-weight: inherit;
 }
