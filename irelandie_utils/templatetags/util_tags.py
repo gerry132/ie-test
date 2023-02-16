@@ -140,3 +140,22 @@ def favicon_child(page):
                 return h.favicon
 
     return False
+
+
+@register.simple_tag(
+    takes_context=True
+)
+def verify_path(context):
+    request = context['request']
+
+    if 'localhost' in request.get_host():
+        return {'content': False, 'host': 'localhost'}
+    content_url_map = {
+        'content.ireland.ie': 'ireland.ie',
+        'content.uat.ireland.ie': 'uat.ireland.ie',
+        'content.preprod.ireland.ie': 'preprod.ireland.ie'
+    }
+
+    if request.get_host() in content_url_map.keys():
+        return {'content': True,
+                'host': content_url_map[request.get_host()]}
