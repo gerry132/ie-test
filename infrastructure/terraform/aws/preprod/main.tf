@@ -69,33 +69,9 @@ locals {
       description = "Gerry Mcbride - OGCIO"
       cidr_blocks = ["52.49.120.79/32", "37.228.233.241/32", "95.44.14.48/32"]
     },
-    elijah_dev = {
-      description = "Elijah - Sidero"
-      cidr_blocks  = ["102.89.41.118/32"]
-    },
     deekshana_dev = {
       description = "Deekshana - Sidero"
       cidr_blocks  = ["80.233.32.241/32", "80.233.40.241/32"]
-    },
-    kleverson_dev = {
-      description = "Kleverson Morais - OGCIO"
-      cidr_blocks = ["176.61.106.140/32"]
-    },
-    nick_dev = {
-      description = "Nick Moreton - Torchbox"
-      cidr_blocks = ["217.35.72.151/32"]
-    },
-    mel_dev = {
-      description = "Melissa Joy - Torchbox"
-      cidr_blocks = ["78.32.251.194/32", "82.16.132.142/32"]
-    },
-    jane_dev = {
-      description = "Jane Hughes - Torchbox"
-      cidr_blocks = ["82.5.195.241/32"]
-    },
-    chris_dev = {
-      description = "Chris Shaw - Torchbox"
-      cidr_blocks = ["81.106.63.209/32"]
     }
   }
 }
