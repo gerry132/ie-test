@@ -149,7 +149,7 @@ def verify_path(context):
     request = context['request']
 
     if 'localhost' in request.get_host():
-        return {'content': True, 'host': 'localhost'}
+        return {'content': False, 'host': 'localhost'}
     content_url_map = {
         'content.ireland.ie': 'ireland.ie',
         'content.uat.ireland.ie': 'uat.ireland.ie',
