@@ -21,6 +21,9 @@ class CustomMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
         if request.user.is_authenticated:
             response = self.add_logout_expiry(response)
+        elif 'logout' in request.get_raw_uri():
+            login_expire_at = datetime.now() - timedelta(minutes=1)
+            response.set_cookie('logout_at', login_expire_at)
         return response
 
     def process_exception(self, request, exception):
