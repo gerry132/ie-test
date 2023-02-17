@@ -11,7 +11,10 @@ class CustomMiddleware(MiddlewareMixin):
 
         response = self.get_response(request)
 
-        # Code that is executed in each request after the view is called
+        if 'logout' in request.get_raw_uri():
+            login_expire_at = datetime.now() - timedelta(minutes=1)
+            response.set_cookie('logout_at', login_expire_at)
+            response.set_cookie('user_logged_in', False)
         return response
 
     def process_view(self, request, view_func, view_args, view_kwargs):
@@ -21,9 +24,8 @@ class CustomMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
         if request.user.is_authenticated:
             response = self.add_logout_expiry(response)
-        elif 'logout' in request.get_raw_uri():
-            login_expire_at = datetime.now() - timedelta(minutes=1)
-            response.set_cookie('logout_at', login_expire_at)
+            response.set_cookie('user_logged_in', True)
+
         return response
 
     def process_exception(self, request, exception):

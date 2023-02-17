@@ -39,6 +39,7 @@ function logout() {
           return true
         },
         error: function() {
+          console.log(1234)
           return false
         }
       });
@@ -47,6 +48,7 @@ function logout() {
 $("#alert-wrapper").css({ 'zoom': 0.8, 'opacity':0 }).animate({ 'zoom': 1, 'opacity':1 },100)
 
 let start_date = getCookie('logout_at');
+let logged_in = getCookie('user_logged_in');
 
 function showRemaining() {
     let start_date = getCookie('logout_at');
@@ -66,7 +68,9 @@ function showRemaining() {
 
     if (distance < 0) {
         clearInterval(timer);
-        logout();
+        if (logged_in) {
+            logout();
+        }
         return;
     }
     let seconds = Math.floor((distance % _minute) / _second);
