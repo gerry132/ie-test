@@ -13,7 +13,6 @@ from irelandie_navigation.blocks import LinkBlock, NoticeBarWithMessageLink
 from irelandie_pages.models import FreeFormPageBase
 from irelandie_news.models import NewsPage
 from irelandie_utils import blocks
-from irelandie_utils.utils import get_root_info
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage
 
 
@@ -110,7 +109,13 @@ class DestinationPage(HeroPage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         pages = self.get_ancestors()
-        context, root_found = get_root_info(context, pages)
+        root_found = False
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['default_image'] = missions.default_image
+                    root_found = True
         if not root_found:
             f = HomePage.objects.all()[:1].get()
             context['default_image'] = f.default_image
@@ -461,7 +466,12 @@ class ServiceContent(BasePage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         pages = self.get_ancestors()
-        context, root_found = get_root_info(context, pages)
+        root_found = False
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['default_image'] = missions.default_image
         if not root_found:
             f = HomePage.objects.all()[:1].get()
             context['default_image'] = f.default_image
@@ -542,7 +552,12 @@ class NoticePage(BasePage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         pages = self.get_ancestors()
-        context, root_found = get_root_info(context, pages)
+        root_found = False
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['default_image'] = missions.default_image
         if not root_found:
             f = HomePage.objects.all()[:1].get()
             context['default_image'] = f.default_image
@@ -606,7 +621,12 @@ class ServicesLandingPage(BasePage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         pages = self.get_ancestors()
-        context, root_found = get_root_info(context, pages)
+        root_found = False
+        for p in pages:
+            if p.content_type.name == 'mission page':
+                missions = MissionPage.objects.live().get(id=p.id)
+                if missions.root_page:
+                    context['default_image'] = missions.default_image
         if not root_found:
             f = HomePage.objects.all()[:1].get()
             context['default_image'] = f.default_image
