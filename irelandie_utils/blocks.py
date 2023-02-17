@@ -13,6 +13,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import VideoChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 from irelandie_home.blocks import SecondaryCallToAction
+from wagtail.embeds.blocks import EmbedBlock
 
 from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment
 
@@ -1252,12 +1253,29 @@ class GenericHeroBlock(blocks.StructBlock):
 
 
 class VideoBlock(blocks.StructBlock):
-    video = CustomVideoChooserBlock()
+    youtube_or_vimeo_embed = EmbedBlock(required=False)
+    video = CustomVideoChooserBlock(required=False)
     video_alt = blocks.CharBlock(
         required=True,
         help_text=_(ALT_VID),
     )
-    caption = blocks.CharBlock(required=False)
+    title = blocks.CharBlock()
+    summary = blocks.TextBlock()
+
+    def clean(self, value):
+        errors = {}
+        values = [value["youtube_or_vimeo_embed"], value["video"]]
+        # Set only a Page OR a URL
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a youtube_or_vimeo_embed or set a custom_video."
+
+            errors["youtube_or_vimeo_embed"] = ErrorList([message])
+            errors["video"] = ErrorList([message])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
 
 
 class MultimediaRowBlock(blocks.StructBlock):
@@ -1271,6 +1289,7 @@ class MultimediaRowBlock(blocks.StructBlock):
 
     class Meta:
         label = "Multimedia Row"
+        value_class = YoutubeLinkValue
         template = "patterns/molecules/streamfield/blocks/multimedia_block.html"
 
 
