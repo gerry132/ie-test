@@ -16,7 +16,7 @@
     background-color: #ECE8E6;
     }
 </style>
-<div class="wrapper wrapper--large wrapper--padding">
+<div class="wrapper wrapper--large wrapper--padding" style="padding-bottom:20px;">
     <div class="intro" style="max-width:1024px;">
         <div class="intro__description">{% include_block value.richtext %}</div>
     </div>
@@ -27,9 +27,9 @@
             <a href="{% if block.value.page.url %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}" class="card">
                 <div class="multimedia__card__image-container">
                     {% if block.value.image_alt %}
-                        {% image block.value.image fill-400x200 alt=block.value.image_alt class="card__image" %}
+                        {% image block.value.image fill-400x200 alt=block.value.image_alt class="multimedia__card__image" %}
                     {% else %}
-                        {% image block.value.image fill-400x200 alt=block.value.image.alt_default class="card__image" %}
+                        {% image block.value.image fill-400x200 alt=block.value.image.alt_default class="multimedia__card__image" %}
                     {% endif %}
                 </div>
 
@@ -48,15 +48,15 @@
         <div class="card">
 
              <div class="multimedia__card__image-container" style="position:relative;">
-                 <div style="display:none;" id="{{ block.value.video_alt }}">
+                 <div style="display:none;" id="{{ block.value.title|cut:' ' }}__{{ block.value.video_alt }}">
                         <video class="lg-video-object lg-html5" controls controlsList="nodownload" preload="none">
-                            <source src="{{ block.value.video.url }}" poster="benefits-of-coding.jpg" type="video/mp4">
+                            <source src="{{ block.value.video.url }}" type="video/mp4">
                              Your browser does not support HTML5 video.
                         </video>
                  </div>
-                 <div id="lightgallery_{{ forloop.counter }}">
+                 <div class="lightgallery">
                             {% if block.value.video %}
-                            <div data-html="#{{ block.value.video_alt }}">
+                            <div data-html="#{{ block.value.title|cut:' ' }}__{{ block.value.video_alt }}">
                                 <button class="multimedia__video-control-button" aria-label="{% trans 'Toggle video playback' %}">
                                     {% include "patterns/atoms/icons/icon.html" with name="play" classname="multimedia__video-control-button-icon multimedia__video-control-button-icon--play" %}
                                 </button>
@@ -102,8 +102,7 @@
 
 
 <script>
-for(var i=1; i<=3; ++i){
-  lightGallery(document.getElementById('lightgallery_'+i));
-}
-           lightGallery(document.getElementById('lightgallery'));
+ document.querySelectorAll('.lightgallery').forEach(function(menu) {
+            lightGallery(menu);
+        });
 </script>
