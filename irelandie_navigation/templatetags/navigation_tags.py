@@ -108,6 +108,8 @@ def has_root_override(context, page, header=True):
     for p in pages:
         if p.content_type.name == 'mission page':
             m = MissionPage.objects.get(id=p.id)
+        elif p.content_type.name == 'Free Form Page':
+            m = FreeFormPage.objects.get(id=p.id)
             if m.root_page:
                 if header:
                     return m.custom_header
