@@ -78,7 +78,6 @@ class HomePage(FreeFormPageBase):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        from irelandie_missions.models import MissionPage
         pages = self.get_ancestors()
         context, root_found = get_root_info(context, pages)
         if not root_found:
