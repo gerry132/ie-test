@@ -21,10 +21,11 @@
         <div class="intro__description">{% include_block value.richtext %}</div>
     </div>
 
-    <div class="{% if value.multimedia|length > 2 %}featured-blocks featured-blocks--three{% else %}featured-blocks featured-blocks--two{% endif %}">
+    <div class="{% if value.multimedia|length > 2 %}featured-blocks-flex featured-blocks-flex--three{% else %}featured-blocks-flex featured-blocks-flex--two{% endif %}">
         {% for block in value.multimedia %}
         {% if block.block_type == 'link_card' %}
-            <a href="{% if block.value.page.url %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}" class="card">
+            <a href="{% if block.value.page.url %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}"
+               class="multimedia__card{% if value.multimedia|length > 2 %} multimedia__card--three{% else %} multimedia__card--two{% endif %}">
                 <div class="multimedia__card__image-container">
                     {% if block.value.image_alt %}
                         {% image block.value.image fill-400x200 alt=block.value.image_alt class="multimedia__card__image" %}
@@ -33,7 +34,7 @@
                     {% endif %}
                 </div>
 
-                <div class="{% if value.multimedia|length < 3 %}multimedia__card__content--two{% endif %} multimedia__card__content">
+                <div class="multimedia__card__content">
                     <h3 class="multimedia__card__title">
                         {{ block.value.title }}
                     </h3>
@@ -45,7 +46,7 @@
             </a>
         {% else %}
 
-        <div class="card">
+        <div class="multimedia__card{% if value.multimedia|length > 2 %} multimedia__card--three{% else %} multimedia__card--two{% endif %}">
 
              <div class="multimedia__card__image-container" style="position:relative;">
                  <div style="display:none;" id="{{ block.value.title|cut:' ' }}__{{ block.value.video_alt }}">
