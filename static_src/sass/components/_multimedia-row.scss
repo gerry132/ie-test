@@ -70,6 +70,22 @@
         transform: scale(1);
         transition: transform $transition;
     }
+    &__card{
+    display: block;
+    border-radius: 16px;
+    box-shadow: 0 5px 12px rgb(0 0 0 / 15%);
+    background-color: #fff;
+    border: 1px solid transparent;
+    overflow: hidden;
+    max-width: 500px;
+    transition: box-shadow .25s ease-out;
+        &--two{
+           flex: 0 1 480px;
+        }
+        &--three{
+            flex: 0 1 380px;
+        }
+    }
     &__card__image-container {
     position: relative;
 	width: 100%;
@@ -78,25 +94,14 @@
     }
     &__card__content {
         padding: 20px;
-        &--two{
-        @media only screen and (max-width: 1024px){
-            padding: 20px;
-            margin: auto;
-            width: 80%;
-        }
-    }
     }
     &__card__title{
-     font-weight: 700;
-    font-size: 32px;
-    line-height: 40px;
 
     font-family: 'Inter';
     }
     &__card__summary{
         font-weight: 400;
         color: #292929;
-        font-family: Sofia Pro;
     }
 
 
