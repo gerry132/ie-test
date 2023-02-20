@@ -12,11 +12,11 @@
     {% if block.value.hero_image %}
                         {% if block.value.hero_image_alignment == 'left' %}
                             <div class="mini-hero__image_left">
-                                {% image block.value.hero_image original class="image mini-hero__image_left" %}
+                                {% image block.value.hero_image fill-960x540-c100 class="image mini-hero__image_left" %}
                             </div>
                         {% else %}
                             <div class="mini-hero__image">
-                                {% image block.value.hero_image original class="image mini-hero__image" %}
+                                {% image block.value.hero_image fill-960x540-c100 class="image mini-hero__image" %}
                             </div>
                         {% endif %}
                     {% elif block.value.hero_video %}
@@ -59,7 +59,8 @@
 
                     {% if block.value.hero_title %}
                         {% title_length block.value.hero_title as title_length %}
-                            <div class="{% if title_length > 25 %}mini-hero__title_length{% endif %}">
+                            <div class="{% if title_length > 25 and title_length < 50 %}mini-hero__title_length
+                            {% elif title_length > 50 %}mini-hero__title_very_big{% endif %}">
                                 {{ block.value.hero_title }}
                             </div>
                     {% endif %}
