@@ -23,7 +23,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        padding: 20px 30px;
+        padding: 20px 10px;
 
         @include media-query(large) {
             justify-content: space-evenly;
@@ -244,6 +244,7 @@
 
 .mobile {
     &__logo {
+        padding-right: 10px;
         @include media-query(large) {
             display: none;
         }
