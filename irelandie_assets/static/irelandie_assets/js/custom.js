@@ -63,6 +63,8 @@ function showRemaining() {
                             now.getUTCDate(), now.getUTCHours(),
                             now.getUTCMinutes(), now.getUTCSeconds());
     let distance = end.getTime() - now_utc;
+    console.log(now)
+    console.log(now_utc)
     console.log(distance)
 
     if (distance/1000 < 60) {
