@@ -9,6 +9,8 @@ else
     exit 1
 fi
 
+python3 manage.py fixtree --full
+
 init_username="system_admin"
 init_password="password1234!"
 
