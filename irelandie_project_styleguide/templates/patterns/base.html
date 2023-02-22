@@ -41,14 +41,14 @@
     </head>
     {% verify_path as path_info %}
     {% if path_info.content %}
-        <div id="warning-url" class="warning-url" style="background-color: yellow; border-left: 20px solid red;">
-            <div style="text-align: centre; padding-left: 50px;
-            padding-bottom: 25px;">
-                <h1>WARNING: {{ request.get_raw_uri }} is not a publicly accesible link. Do not share.</h1>
-                <h1>The publicly shareable link is <a href="//{{path_info.host}}{{request.path}}">{{path_info.host}}{{request.path}}</a></h1>
-                <button class="close" onclick="document.getElementById('warning-url').style.display = 'none'">CLOSE</button>
-            </div>
+    <div id="warning-url" class="warning-url" style="background-color: yellow; border-left: 20px solid red;">
+        <div style="text-align: centre; padding-left: 150px;
+        padding-bottom: 25px;">
+            <h3>WARNING: {{ request.get_raw_uri }} is not a publicly accesible link. Do not share.</h3>
+            <h3>The publicly shareable link is <a href="//{{path_info.host}}{{request.path}}">{{path_info.host}}{{request.path}}</a></h3>
+            <button class="close" onclick="document.getElementById('warning-url').style.display = 'none'">CLOSE</button>
         </div>
+    </div>
     {% endif %}
     <body class="{% block body_class %}template-{{ page.get_verbose_name|slugify }}{% endblock %}">
         {% block body_top %}{% endblock %}
