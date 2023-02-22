@@ -13,8 +13,8 @@ class CustomMiddleware(MiddlewareMixin):
 
         # Code that is executed in each request after the view is called
         if 'logout' in request.get_raw_uri():
-            login_expire_at = datetime.now() - timedelta(minutes=1)
-            response.set_cookie('logout_at', login_expire_at)
+            login_expire_at = datetime.utcnow() - timedelta(minutes=1)
+            response.set_cookie('logout_at', login_expire_at.isoformat() + 'Z')
             response.set_cookie('user_logged_in', False)
         return response
 
@@ -33,5 +33,5 @@ class CustomMiddleware(MiddlewareMixin):
 
     def add_logout_expiry(self, response):
         login_expire_at = datetime.utcnow() + timedelta(hours=1)
-        response.set_cookie('logout_at', login_expire_at)
+        response.set_cookie('logout_at', login_expire_at.isoformat() + 'Z')
         return response
