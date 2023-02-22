@@ -39,7 +39,6 @@ function logout() {
           return true
         },
         error: function() {
-          console.log(1234)
           return false
         }
       });
@@ -60,7 +59,11 @@ function showRemaining() {
     let _day = _hour * 24;
     let timer;
     let now = new Date();
-    let distance = end.getTime() - now.getTime();
+    let now_utc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(),
+                            now.getUTCDate(), now.getUTCHours(),
+                            now.getUTCMinutes(), now.getUTCSeconds());
+    let distance = end.getTime() - now_utc;
+    console.log(distance)
 
     if (distance/1000 < 60) {
         document.getElementById('alert-wrapper').style.display = 'block';
