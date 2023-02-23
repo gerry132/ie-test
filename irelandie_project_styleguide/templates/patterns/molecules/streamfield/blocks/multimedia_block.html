@@ -3,27 +3,38 @@
 {% load static %}
 {% load util_tags %}
 {% load i18n %}
+{% load wagtailembeds_tags %}
 <style>
+.no-button{
+ pointer-events: none; /* Disable any user interaction at all */
+}
 
+.lg-backdrop{
+    background-color: #ECE8E6;
+}
+.lg-toolbar {
+    background-color: #ECE8E6;
+    }
 </style>
-<div class="wrapper wrapper--large wrapper--padding">
+<div class="wrapper wrapper--large wrapper--padding" style="padding-bottom:20px;">
     <div class="intro" style="max-width:1024px;">
         <div class="intro__description">{% include_block value.richtext %}</div>
     </div>
 
-    <div class="{% if value.multimedia|length > 2 %}featured-blocks featured-blocks--three{% else %}featured-blocks featured-blocks--two{% endif %}">
+    <div class="{% if value.multimedia|length > 2 %}featured-blocks-flex featured-blocks-flex--three{% else %}featured-blocks-flex featured-blocks-flex--two{% endif %}">
         {% for block in value.multimedia %}
         {% if block.block_type == 'link_card' %}
-            <a href="{% if block.value.page.url %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}" class="card">
+            <a href="{% if block.value.page.url %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}"
+               class="multimedia__card{% if value.multimedia|length > 2 %} multimedia__card--three{% else %} multimedia__card--two{% endif %}">
                 <div class="multimedia__card__image-container">
                     {% if block.value.image_alt %}
-                        {% image block.value.image fill-400x200 alt=block.value.image_alt class="card__image" %}
+                        {% image block.value.image fill-400x200 alt=block.value.image_alt class="multimedia__card__image" %}
                     {% else %}
-                        {% image block.value.image fill-400x200 alt=block.value.image.alt_default class="card__image" %}
+                        {% image block.value.image fill-400x200 alt=block.value.image.alt_default class="multimedia__card__image" %}
                     {% endif %}
                 </div>
 
-                <div class="{% if value.multimedia|length < 3 %}multimedia__card__content--two{% endif %} multimedia__card__content">
+                <div class="multimedia__card__content">
                     <h3 class="multimedia__card__title">
                         {{ block.value.title }}
                     </h3>
@@ -34,24 +45,53 @@
                 </div>
             </a>
         {% else %}
-        <div class="multimedia__video-flex" data-multimedia-container>
-             <div style="position:relative;">
-                    <button class="multimedia__video-control-button" aria-label="{% trans 'Toggle video playback' %}" data-multimedia-toggle>
-                        {% include "patterns/atoms/icons/icon.html" with name="play" classname="multimedia__video-control-button-icon multimedia__video-control-button-icon--play" %}
-                        {% include "patterns/atoms/icons/icon.html" with name="pause" classname="multimedia__video-control-button-icon multimedia__video-control-button-icon--pause" %}
-                    </button>
 
-                    <video class="multimedia__video--block" aria-label="{{ block.value.title }}" title="{{ block.value.title }}" loop data-video controls data-multimedia style="{% if value.multimedia|length > 2 and block.value.caption|length > 34 %}
-                    min-height: 380px;{% elif block.value.caption %}min-height: 420px;{% else %}min-height: 475px;{% endif %}">
-                        <source src="{{ block.value.video.url }}" type="video/mp4">
-                        {% trans 'Your browser does not support the video tag.' %}
-                    </video>
+        <div class="multimedia__card{% if value.multimedia|length > 2 %} multimedia__card--three{% else %} multimedia__card--two{% endif %}">
+
+             <div class="multimedia__card__image-container" style="position:relative;">
+                 <div style="display:none;" id="{{ block.value.title|cut:' ' }}__{{ block.value.video_alt }}">
+                        <video class="lg-video-object lg-html5" controls controlsList="nodownload" preload="none">
+                            <source src="{{ block.value.video.url }}" type="video/mp4">
+                             Your browser does not support HTML5 video.
+                        </video>
                  </div>
-                {% if block.value.caption %}
-                    <div class="card__summary">
-                        {{ block.value.caption }}
-                    </div>
-                {% endif %}
+                 <div class="lightgallery">
+                            {% if block.value.video %}
+                            <div data-html="#{{ block.value.title|cut:' ' }}__{{ block.value.video_alt }}">
+                                <button class="multimedia__video-control-button" aria-label="{% trans 'Toggle video playback' %}">
+                                    {% include "patterns/atoms/icons/icon.html" with name="play" classname="multimedia__video-control-button-icon multimedia__video-control-button-icon--play" %}
+                                </button>
+                                <video class="multimedia__video--block" aria-label="{{ block.value.title }}" title="{{ block.value.title }}" loop data-video data-multimedia >
+                                    <source src="{{ block.value.video.url }}" type="video/mp4">
+                                    {% trans 'Your browser does not support the video tag.' %}
+                                </video>
+                            </div>
+                            {% else %}
+                                    {% with block.value.youtube_or_vimeo_embed.url as regular_url %}
+                                    {% get_embed_url_with_parameters regular_url as embed_url %}
+                                           {% if embed_url is None %}
+                                               {% embed regular_url %}
+                                           {% else %}
+                                                <a href="{{ regular_url }}" >
+                                                    <button class="multimedia__video-control-button" aria-label="{% trans 'Toggle video playback' %}">
+                                                       {% include "patterns/atoms/icons/icon.html" with name="play" classname="multimedia__video-control-button-icon multimedia__video-control-button-icon--play" %}
+                                                    </button>
+                                                     <iframe class="multimedia__video--block no-button" src="{{ embed_url }}" frameborder="0" allowfullscreen></iframe>
+                                                </a>
+                                           {% endif %}
+                                    {% endwith %}
+                            {% endif %}
+                 </div>
+                 </div>
+                <div class="{% if value.multimedia|length < 3 %}multimedia__card__content--two{% endif %} multimedia__card__content">
+                    <h3 class="multimedia__card__title">
+                        {{ block.value.title }}
+                    </h3>
+
+                    <p class="multimedia__card__summary">
+                        {{ block.value.summary }}
+                    </p>
+                </div>
 
         </div>
 
@@ -60,3 +100,10 @@
     </div>
 
 </div>
+
+
+<script>
+ document.querySelectorAll('.lightgallery').forEach(function(menu) {
+            lightGallery(menu);
+        });
+</script>

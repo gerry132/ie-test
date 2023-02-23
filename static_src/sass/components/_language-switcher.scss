@@ -11,7 +11,10 @@
     appearance: none;
     vertical-align: middle;
     border: 0;
-    padding-right: 26px;
+    padding-right: 22px;
+    @include media-query(max-medium){
+        @include font-size(xxs);
+    }
 
     option {
         color: $color--default;

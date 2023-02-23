@@ -2,12 +2,8 @@
     $root: &;
     &__container{
         position: relative;
-        height: 420px;
-         @media only screen and (min-width: 560px) and (max-width: 823px){
-            height: 445px;
-        }
-        @media only screen and (max-width: 560px){
-            height: 380px;
+        @media only screen and (min-width: 824px){
+            height: 420px;
         }
     }
     &__content_left{
@@ -32,11 +28,12 @@
             justify-content: center;
             flex-direction: column;
             @media screen and (min-width: 823px){
-                height:266px;
-
+                min-height:266px;
             }
 
         @media screen and (max-width: 823px){
+            display: inline-block;
+            position: unset;
             margin-left: 10%;
             margin-top: -8%;
             max-width: 80%;
@@ -63,6 +60,15 @@
 
         }
     }
+    &__title_very_big{
+        font-size: 45px;
+        line-height: 52px;
+            @media screen and (max-width: 1230px){
+                font-size: 28px;
+                line-height: 34px;
+
+            }
+    }
         &__title_length{
             font-size: 45px;
             line-height: 52px;
@@ -74,7 +80,7 @@
         }
 
     &__subtitle{
-        font-family: 'Inter';
+        font-family: $font--primary;
         font-style: normal;
         font-weight: 400;
         font-size: 20px;
@@ -91,8 +97,9 @@
     &__image_left{
         max-height: 360px;
         width: 100%;
+        object-fit: cover;
         @media screen and (min-width: 823px){
-            display: block;
+            display: inline-block;
             float: left;
             margin-bottom: 0;
             margin-right: 0;
@@ -105,11 +112,12 @@
         max-height: 360px;
         width: 100%;
         min-height:300px;
+        object-fit: cover;
         @media screen and (max-width: 565px){
             min-height: 260px;
         }
         @media screen and (min-width: 823px){
-            display: block;
+            display: inline-block;
             float: right;
             margin-bottom: 0;
             margin-right: 0;
@@ -123,7 +131,7 @@
         width: 100%;
         object-fit: fill;
         @media screen and (min-width: 823px){
-            display: block;
+            display: inline-block;
             float: left;
             margin-bottom: 0;
             margin-right: 0;
@@ -137,7 +145,7 @@
         width: 100%;
         object-fit: fill;
         @media screen and (min-width: 823px){
-            display: block;
+            display: inline-block;
             float: right;
             margin-bottom: 0;
             margin-right: 0;

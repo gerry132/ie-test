@@ -8,11 +8,23 @@
 
 }
 .toc-contents {
-    font-family: 'Inter';
+    font-family: $font--primary;
     font-style: normal;
-    font-size: 18px;
+    font-size: 20px;
     line-height: 22px;
     text-decoration: underline;
+    font-weight: 500;
+
+}
+.toc-contents-number{
+    display: flex;
+    gap: 5px;
+    flex-direction: row;
+    color: #004d44;
+    font-family: $font--primary;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 22px;
     font-weight: 500;
 
 }
@@ -70,10 +82,10 @@
     padding-bottom: 30px;
 }
 .back_to_top{
-    font-family: 'Inter';
+    font-family: $font--primary;
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 17px;
     text-decoration-line: underline;
 

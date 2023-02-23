@@ -104,10 +104,19 @@ def has_root_override(context, page, header=True):
         return False
 
     pages = page.get_ancestors()
-
+    if page.content_type.name == 'mission page' or page.content_type.name == 'Free Form Page':
+        if page.root_page:
+            return False
     for p in pages:
         if p.content_type.name == 'mission page':
             m = MissionPage.objects.get(id=p.id)
+            if m.root_page:
+                if header:
+                    return m.custom_header
+                else:
+                    return m.custom_footer
+        elif p.content_type.name == 'Free Form Page':
+            m = FreeFormPage.objects.get(id=p.id)
             if m.root_page:
                 if header:
                     return m.custom_header

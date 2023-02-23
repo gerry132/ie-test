@@ -47,6 +47,14 @@ function logout() {
 $("#alert-wrapper").css({ 'zoom': 0.8, 'opacity':0 }).animate({ 'zoom': 1, 'opacity':1 },100)
 
 let start_date = getCookie('logout_at');
+let logged_in = getCookie('user_logged_in');
+
+function returnUtcObj(date) {
+    let now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(),
+    date.getUTCDate(), date.getUTCHours(),
+    date.getUTCMinutes(), date.getUTCSeconds());
+    return now_utc;
+}
 
 function showRemaining() {
     let start_date = getCookie('logout_at');
@@ -57,8 +65,13 @@ function showRemaining() {
     let _hour = _minute * 60;
     let _day = _hour * 24;
     let timer;
-    let now = new Date();
-    let distance = end.getTime() - now.getTime();
+    let date = new Date();
+    let now_utc = returnUtcObj(date);
+    let end_utc = returnUtcObj(end);
+    let new_d = new Date(now_utc);
+    let new_e = new Date(end_utc)
+
+    let distance = new_e - new_d;
 
     if (distance/1000 < 60) {
         document.getElementById('alert-wrapper').style.display = 'block';
@@ -66,7 +79,9 @@ function showRemaining() {
 
     if (distance < 0) {
         clearInterval(timer);
-        logout();
+        if (logged_in) {
+            logout();
+        }
         return;
     }
     let seconds = Math.floor((distance % _minute) / _second);

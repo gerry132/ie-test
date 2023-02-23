@@ -64,41 +64,17 @@ locals {
       description = "DFA WiFi IP address"
       cidr_blocks = ["80.169.58.154/32"]
     },
-    rachel_dev = {
-      description = "Rachel Mannion - OGCIO"
-      cidr_blocks = ["139.162.182.140/32"]
-    },
     reinaldo_dev = {
       description = "Reinaldo Sanches - OGCIO"
       cidr_blocks = ["172.105.95.186/32", "89.101.167.251/32"]
-    },
-    keith_po = {
-      description = "Keith Costello - OGCIO"
-      cidr_blocks = ["37.228.203.132/32"]
     },
     gerry_dev = {
       description = "Gerry Mcbride - OGCIO"
       cidr_blocks = ["52.49.120.79/32", "37.228.234.245/32"]
     },
-    kleverson_dev = {
-      description = "Kleverson Morais - OGCIO"
-      cidr_blocks = ["176.61.106.140/32"]
-    },
-    nick_dev = {
-      description = "Nick Moreton - Torchbox"
-      cidr_blocks = ["217.35.72.151/32"]
-    },
-    mel_dev = {
-      description = "Melissa Joy - Torchbox"
-      cidr_blocks = ["78.32.251.194/32", "82.16.132.142/32"]
-    },
-    jane_dev = {
-      description = "Jane Hughes - Torchbox"
-      cidr_blocks = ["82.5.195.241/32"]
-    },
-    chris_dev = {
-      description = "Chris Shaw - Torchbox"
-      cidr_blocks = ["81.106.63.209/32"]
+    deekshana_dev = {
+      description = "Deekshana - Sidero"
+      cidr_blocks  = ["80.233.32.241/32", "80.233.40.241/32"]
     }
   }
 }

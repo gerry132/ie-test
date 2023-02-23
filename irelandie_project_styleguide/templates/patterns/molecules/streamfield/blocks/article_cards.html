@@ -10,7 +10,8 @@
     {% endif %}
 </div>
 
-<div class="article-cards featured-blocks featured-blocks--four">
+<div class="article-cards featured-blocks {% if value.articles|length > 3 %}featured-blocks--four
+{% elif value.articles|length > 2 %}featured-blocks--three{% else %}featured-blocks--two{% endif %}">
     {% for article in value.articles %}
         {% include_block article %}
     {% endfor %}

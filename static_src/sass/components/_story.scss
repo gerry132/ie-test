@@ -200,13 +200,15 @@
     }
 
     &__copy {
+        font-size: 17px;
         @include media-query(large) {
             max-width: 560px;
         }
 
         .rich-text {
-            @include font-size(s);
-            font-family: $font--primary;
+           font-size: 17px;
+           font-size: 1.063rem;
+           font-family: $font--primary;
         }
     }
 

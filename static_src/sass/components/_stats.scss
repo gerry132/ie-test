@@ -12,17 +12,16 @@
 
     }
     &__title{
-        font-family: 'FS Kim';
+        font-family: 'Georgia';
         font-style: normal;
         font-weight: 700;
-        font-size: 99px;
+        font-size: 80px;
         line-height: 120%;
         @media only screen and (max-width: 416px){
-            font-size: 80px;
+            font-size: 60px;
         }
     }
     &__summary{
-        font-family: 'Lato';
         font-style: normal;
         font-weight: 400;
         font-size: 26px;
