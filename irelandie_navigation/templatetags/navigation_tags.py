@@ -105,6 +105,10 @@ def has_root_override(context, page, header=True):
 
     pages = page.get_ancestors()
 
+    if 'mission page' or 'Free Form Page' in page.content_type:
+
+        if page.root_page:
+            return False 
     for p in pages:
         if p.content_type.name == 'mission page':
             m = MissionPage.objects.get(id=p.id)
@@ -271,11 +275,11 @@ def custom_footer_settings(context, page):
         link_page = custom_footer.page or None
         link_url = custom_footer.url or None
         logo_alt = custom_footer.logo_alt or site_settings.site_logo_alt
-        twitter_handle = custom_footer.twitter_handle or footer_social_media.twitter_handle
-        facebook_app_id = custom_footer.facebook_app_id or footer_social_media.facebook_app_id
-        youtube_user = custom_footer.youtube_user or footer_social_media.youtube_user
-        linkedin_profile = custom_footer.linkedin_profile or footer_social_media.linkedin_profile
-        instagram_user = custom_footer.instagram_user or footer_social_media.instagram_user
+        twitter_handle = None
+        facebook_app_id = None
+        youtube_user = None
+        linkedin_profile = None
+        instagram_user = None
         show_social_media = any(
             [
                 twitter_handle,
@@ -294,11 +298,11 @@ def custom_footer_settings(context, page):
         logo = site_settings.site_logo
         mobile_logo = site_settings.mobile_logo
         logo_alt = site_settings.site_logo_alt
-        twitter_handle = footer_navigation.twitter_handle or footer_social_media.twitter_handle
-        facebook_app_id = footer_navigation.facebook_app_id or footer_social_media.facebook_app_id
-        youtube_user = footer_navigation.youtube_user or footer_social_media.youtube_user
-        linkedin_profile = footer_navigation.linkedin_profile or footer_social_media.linkedin_profile
-        instagram_user = footer_navigation.instagram_user or footer_social_media.instagram_user
+        twitter_handle = None
+        facebook_app_id = None
+        youtube_user = None
+        linkedin_profile = None
+        instagram_user = None
         link_url = None
         link_page = None
         show_social_media = any(
