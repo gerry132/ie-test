@@ -13,7 +13,7 @@
     border: 0;
     padding-right: 22px;
     @include media-query(max-medium){
-    font-size: 17px;
+        @include font-size(xxs);
     }
 
     option {
