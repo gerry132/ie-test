@@ -104,7 +104,10 @@ def has_root_override(context, page, header=True):
         return False
 
     pages = page.get_ancestors()
+    if 'mission page' or 'Free Form Page' in page.content_type:
 
+        if page.root_page:
+            return False
     for p in pages:
         if p.content_type.name == 'mission page':
             m = MissionPage.objects.get(id=p.id)
