@@ -40,7 +40,7 @@
     <!-- OneTrust Cookies Consent Notice end for ireland.ie -->
     </head>
     {% verify_path as path_info %}
-    {% if not path_info.content %}
+    {% if path_info.content %}
     <div id="warning-url" class="warning-url" style="  position: -webkit-sticky; position: fixed; z-index: 999999999999999999; top: 0; background-color: yellow; border-left: 20px solid red;">
         <div style="text-align: centre; padding-left: 150px;
         padding-bottom: 25px;">
