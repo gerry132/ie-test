@@ -73,7 +73,10 @@ class SiteSettings(BaseSetting, ClusterableModel):
         blank=True,
         help_text=_("Iframe code for Google My Maps."),
     )
-
+    nav_banner_warning_text = models.TextField(
+        blank=True,
+        help_text=_("Text for warning banner on CMS preview pages."),
+    )
     panels = [
         MultiFieldPanel([
             FieldPanel("favicon"),
@@ -81,6 +84,7 @@ class SiteSettings(BaseSetting, ClusterableModel):
             FieldPanel("mobile_logo"),
             FieldPanel("site_logo_alt"),
             FieldPanel("google_my_map"),
+            FieldPanel("nav_banner_warning_text"),
         ], heading="Site Logo"),
     ]
 

@@ -40,13 +40,11 @@
     <!-- OneTrust Cookies Consent Notice end for ireland.ie -->
     </head>
     {% verify_path as path_info %}
-    {% if path_info.content %}
-    <div id="warning-url" class="warning-url" style="background-color: yellow; border-left: 20px solid red;">
+    {% if not path_info.content %}
+    <div id="warning-url" class="warning-url" style="  position: -webkit-sticky; position: sticky; top: 0; background-color: yellow; border-left: 20px solid red;">
         <div style="text-align: centre; padding-left: 150px;
         padding-bottom: 25px;">
-            <h3>WARNING: {{ request.get_raw_uri }} is not a publicly accesible link. Do not share.</h3>
-            <h3>The publicly shareable link is <a href="//{{path_info.host}}{{request.path}}">{{path_info.host}}{{request.path}}</a></h3>
-            <button class="close" onclick="document.getElementById('warning-url').style.display = 'none'">CLOSE</button>
+            <h3>{{settings.irelandie_navigation.SiteSettings.nav_banner_warning_text}}<h3>
         </div>
     </div>
     {% endif %}
