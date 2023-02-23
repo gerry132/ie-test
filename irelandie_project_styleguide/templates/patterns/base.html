@@ -41,13 +41,15 @@
     </head>
     {% verify_path as path_info %}
     {% if path_info.content %}
-    <div id="warning-url" class="warning-url" style="  position: -webkit-sticky; position: fixed; z-index: 999999999999999999; top: 0; background-color: yellow; border-left: 20px solid red;">
-        <div style="text-align: centre; padding-left: 150px;
-        padding-bottom: 25px;">
-            <h3>{{settings.irelandie_navigation.SiteSettings.nav_banner_warning_text}}<h3>
+    <div id="warning-url" class="warning-url" style="min-width: 10000px; position: -webkit-sticky; position: fixed; z-index: 999999999999999999; top: 0; background-color: yellow; border-left: 20px solid red;">
+        <div style="text-align: centre; padding-left: 150px; display: flex;
+        padding-bottom: 25px;    padding-top: 25px;">
+        <div class="base-img"></div>
+            <h3 style="padding-top: 25px;">{{settings.irelandie_navigation.SiteSettings.nav_banner_warning_text}}<h3>
         </div>
     </div>
     {% endif %}
+
     <body class="{% block body_class %}template-{{ page.get_verbose_name|slugify }}{% endblock %}">
         {% block body_top %}{% endblock %}
 
