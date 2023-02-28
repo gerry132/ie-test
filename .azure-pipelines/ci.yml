@@ -64,7 +64,7 @@ stages:
       env:
         AWS_ACCESS_KEY_ID: $(aws_access_key)
         AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
-        DEBUG: $(DEBUG)
+        DEBUG: $(debug)
 
 - stage: deploy
   displayName: Deploy
