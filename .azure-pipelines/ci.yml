@@ -59,7 +59,7 @@ stages:
     - script: |
         cat .azure-pipelines/.env_pipeline > app/.env
         export USE_S3=1
-        export DEBUG=$(debug)
+        export DEBUG=true
         python manage.py collectstatic --noinput
       displayName: Upload Static Files to S3
       env:
