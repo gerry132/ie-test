@@ -12,7 +12,7 @@
         display: flex;
         align-items: center;
         @include media-query(large) {
-            margin: 5px 5px 0 15px;
+            margin: 5px 5px 0 100px;
         }
     }
 

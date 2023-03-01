@@ -77,6 +77,7 @@
             @include media-query(large) {
                 display: flex;
                 width: 100%;
+                justify-content: center;
 
                 #{$root}--condensed & {
                     display: none;
