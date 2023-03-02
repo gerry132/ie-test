@@ -11,10 +11,8 @@
     &__links {
         display: flex;
         align-items: center;
-        justify-content: space-between;
         @include media-query(large) {
             margin: 5px 5px 0 15px;
-            width: 700px;
         }
     }
 
@@ -42,7 +40,7 @@
             font-weight: $weight--normal;
             text-align: left;
             border-bottom: 0;
-            margin: 0 10px;
+            margin: 0 20px;
 
         }
 
