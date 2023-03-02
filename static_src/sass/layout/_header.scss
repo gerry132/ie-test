@@ -73,16 +73,16 @@
     &__menus {
         &--desktop {
             display: none;
-            @media screen and (min-width: 1440px) {
+            @media screen and (min-width: 1441px) {
                 #{$root}--override & {
                     justify-content: center;
                     margin: 0 150px 0 20px;
                 }
             }
-            @media screen and (min-width: 1023px) and (max-width: 1439px){
+            @media screen and (min-width: 1023px) and (max-width: 1440px){
                 #{$root}--override & {
                     justify-content: center;
-                    margin: 0 15px 0 30px;
+                    margin: 0 100px 0 20px;
                 }
             }
 
