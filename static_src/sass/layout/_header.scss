@@ -73,6 +73,18 @@
     &__menus {
         &--desktop {
             display: none;
+            @media screen and (min-width: 1440px) {
+                #{$root}--override & {
+                    justify-content: flex-start;
+                    margin: 0 200px 0 100px;
+                }
+            }
+            @media screen and (min-width: 1023px) and (max-width: 1439px){
+                #{$root}--override & {
+                    justify-content: center;
+                    margin: 0 15px 0 30px;
+                }
+            }
 
             @include media-query(large) {
                 display: flex;
@@ -83,9 +95,7 @@
                     display: none;
                 }
 
-                #{$root}--override & {
-                    justify-content: center;
-                }
+
             }
 
         }
