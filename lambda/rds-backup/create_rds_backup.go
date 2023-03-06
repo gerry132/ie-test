@@ -21,17 +21,7 @@ func RDS_CreateDBSnapshot_shared() (response *string) {
 		DBInstanceIdentifier: aws.String(os.Getenv("DB_NAME")),
 		DBSnapshotIdentifier: aws.String(dbSnapshotName),
 	}
-	log.Println(12234)
-	log.Println(12234)
-	log.Println(12234)
-	log.Println(12234)
-	log.Println(12234)
-	log.Println(12234)
-	log.Println(12234)
-	log.Println(12234)
-	log.Println(12234)
-	log.Println(12234)
-	log.Println(12234)
+
 	result, err := svc.CreateDBSnapshot(input)
 
 	if err != nil {
