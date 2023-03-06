@@ -18,7 +18,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	var shared bool
 	log.Println(backup_created_name)
 	if backup_created_name != nil {
-		shared = rds_backup.RDS_ModifyDBSnapshotAttribute("a2023-03-06")
+		shared = rds_backup.RDS_ModifyDBSnapshotAttribute(*backup_created_name)
 	} else {
 		shared = false
 	}
