@@ -73,6 +73,17 @@
     &__menus {
         &--desktop {
             display: none;
+            @media only screen and (max-width: 1160px) {
+                #{$root}--override & {
+                    justify-content: center;
+                }
+            }
+             @media only screen and (min-width: 1161px){
+                 #{$root}--override & {
+                    justify-content: center;
+                }
+             }
+
 
             @include media-query(large) {
                 display: flex;
@@ -83,9 +94,7 @@
                     display: none;
                 }
 
-                #{$root}--override & {
-                    justify-content: center;
-                }
+
             }
 
         }
@@ -120,9 +129,15 @@
 
     &__logo {
         max-width: initial;
-        #{$root}--condensed & {
-            margin-left: 50%;
-            transform: translateX(-50%);
+
+        @include media-query(large){
+            #{$root}--condensed & {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
         }
     }
 

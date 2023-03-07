@@ -1260,7 +1260,7 @@ class VideoBlock(blocks.StructBlock):
         help_text=_(ALT_VID),
     )
     title = blocks.CharBlock()
-    summary = blocks.TextBlock()
+    summary = blocks.TextBlock(required=False)
 
     def clean(self, value):
         errors = {}
