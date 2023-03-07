@@ -1,0 +1,27 @@
+.warning-url{
+    $root: &;
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: 999999999999999999;
+    top: 0;
+    background-color: yellow;
+    border-left: 20px solid red;
+
+    &__flex{
+        text-align: centre;
+        display: flex;
+        padding: 25px 150px;
+        gap: 18px;
+        justify-content: center;
+    }
+    &__text{
+        font-weight: 700;
+        font-size: 30px;
+    }
+    &__url{
+         margin-top: -20px;
+         font-size: 18px;
+         text-decoration: underline;
+    }
+}
+
