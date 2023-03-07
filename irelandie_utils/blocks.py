@@ -146,7 +146,15 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        context["link_url"] = value["url"] or value["page"].url
+        try:
+            # A block may not have a page or url field
+            if value["url"]:
+                context["link_url"] = value["url"]
+            elif value["page"]:
+                context["link_url"] = value["page"].url
+
+        except KeyError:
+            context["link_url"] = None
         return context
 
     class Meta:
@@ -611,7 +619,15 @@ class ArticleCardBlock(blocks.StructBlock):
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        context["link_url"] = value["url"] or value["page"].url
+        try:
+            # A block may not have a page or url field
+            if value["url"]:
+                context["link_url"] = value["url"]
+            elif value["page"]:
+                context["link_url"] = value["page"].url
+
+        except KeyError:
+            context["link_url"] = None
         return context
 
 
@@ -693,7 +709,15 @@ class LinkCardBlock(blocks.StructBlock):
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        context["link_url"] = value["url"] or value["page"].url
+        try:
+            # A block may not have a page or url field
+            if value["url"]:
+                context["link_url"] = value["url"]
+            elif value["page"]:
+                context["link_url"] = value["page"].url
+
+        except KeyError:
+            context["link_url"] = None
         return context
 
 
@@ -1163,7 +1187,14 @@ class LinkBoxBlock(blocks.StructBlock):
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        context["link_url"] = value["url"] or value["page"].url
+        try:
+            # A block may not have a page or url field
+            if value["url"]:
+                context["link_url"] = value["url"]
+            elif value["page"]:
+                context["link_url"] = value["page"].url
+        except KeyError:
+            context["link_url"] = None
         return context
 
 
@@ -1211,7 +1242,15 @@ class LinkButtonBlock(blocks.StructBlock):
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        context["link_url"] = value["url"] or value["page"].url
+        try:
+            # A block may not have a page or url field
+            if value["url"]:
+                context["link_url"] = value["url"]
+            elif value["page"]:
+                context["link_url"] = value["page"].url
+
+        except KeyError:
+            context["link_url"] = None
         return context
 
 
