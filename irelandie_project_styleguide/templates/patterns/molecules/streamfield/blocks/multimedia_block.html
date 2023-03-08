@@ -23,7 +23,7 @@
         </div>
     {% endif %}
 
-    <div style="{% if not value.richtext.heading and not value.richtext.rich_text %}margin: unset;{% endif %}"
+    <div style="margin: unset;"
          class="{% if value.multimedia|length > 2 %}featured-blocks-flex featured-blocks-flex--three{% else %}featured-blocks-flex featured-blocks-flex--two{% endif %}">
         {% for block in value.multimedia %}
         {% if block.block_type == 'link_card' %}
