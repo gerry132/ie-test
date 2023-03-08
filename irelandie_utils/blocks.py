@@ -675,7 +675,7 @@ class LinkCardBlock(blocks.StructBlock):
         help_text=_(ALT_IMAGE),
     )
     title = blocks.CharBlock()
-    summary = blocks.TextBlock()
+    summary = blocks.TextBlock(required=False)
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
         label="URL",
