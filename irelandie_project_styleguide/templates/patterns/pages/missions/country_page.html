@@ -21,7 +21,7 @@
             </div>
         </div>
         {% elif block.block_type == 'advanced_rich_text_snippet' %}
-        <div style="padding-bottom: unset;" class="section section--padding">
+        <div class="section section--padding">
             <div class="wrapper wrapper--padding">
                 {% for elem in block.value.AdvancedRichtext.advanced_rich_text %}
                      {% include_block elem %}
@@ -56,7 +56,7 @@
             </div>
         </div>
     {% elif block.block_type == 'advanced_rich_text_snippet' %}
-        <div style="padding-bottom: unset;" class="section section--padding">
+        <div class="section section--padding">
             <div class="wrapper wrapper--padding">
                 {% for elem in block.value.AdvancedRichtext.advanced_rich_text %}
                      {% include_block elem %}
