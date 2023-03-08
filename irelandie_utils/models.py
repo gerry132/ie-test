@@ -403,7 +403,6 @@ class AdvancedRichtextSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, 
         ],
         blank=True,
         null=True,
-        max_num=1,
     )
     _revisions = GenericRelation("wagtailcore.Revision", related_query_name="advancedrichtextsnippet")
     panels = [
