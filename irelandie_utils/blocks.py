@@ -1354,3 +1354,11 @@ class FreeFormBlocks(FreeFormBlocksBase):
     )
     stats_block = StatsBlock(group="Base")
     multimedia_row = MultimediaRowBlock(group="Base")
+
+
+class AdvancedRichtextSnippetBlock(blocks.StructBlock):
+    AdvancedRichtext = SnippetChooserBlock(target_model="utils.AdvancedRichtextSnippet")
+
+    class Meta:
+        label = "AdvancedRichtextSnippet"
+        template = "patterns/molecules/streamfield/blocks/advanced_richtext_block.html"
