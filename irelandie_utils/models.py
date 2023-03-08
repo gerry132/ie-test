@@ -394,7 +394,7 @@ class AdvancedRichtextSnippetTag(TaggedItemBase):
 
 @register_snippet
 class AdvancedRichtextSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
-                           models.Model):
+                              models.Model):
     tags = TaggableManager(through=AdvancedRichtextSnippetTag, blank=True)
     title = models.CharField(max_length=255)
     advanced_rich_text = StreamField(
@@ -405,7 +405,7 @@ class AdvancedRichtextSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, 
         null=True,
         max_num=1,
     )
-    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="privacypolicysnippet")
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="advancedrichtextsnippet")
     panels = [
         FieldPanel("title"),
         FieldPanel("advanced_rich_text"),
