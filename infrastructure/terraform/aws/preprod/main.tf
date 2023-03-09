@@ -946,7 +946,7 @@ module "database" {
 
 
 locals {
-    db_master_url   = "postgres://${module.database.db_username}:${data.aws_ssm_parameter.random_db_password.value}@${module.database.address}:${module.database.db_port}/${module.database.db_name}"
+    db_master_url   = data.aws_ssm_parameter.master_url.value
 }
 
 
@@ -1147,6 +1147,10 @@ data "aws_ssm_parameter" "random_secret_key" {
   depends_on = [
     aws_ssm_parameter.random_secret_key
   ]
+}
+
+data "aws_ssm_parameter" "master_url" {
+  name = "master_url"
 }
 
 
