@@ -33,7 +33,7 @@ def get_root_info(context, pages):
     root_found = False
     for p in pages:
         if p.content_type.name in page_map.keys():
-            missions = page_map[p.content_type.name].objects.live().get(id=p.id)
+            missions = page_map[p.content_type.name].objects.get(id=p.id)
             if missions.root_page:
                 context['default_image'] = missions.default_image
                 context['mission_web_bot'] = missions.web_bot_script

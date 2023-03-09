@@ -125,7 +125,7 @@ def has_root_override(context, page, header=True):
 
     for p in pages:
         if p.content_type.name == 'Free Form Page':
-            f = FreeFormPage.objects.live().get(id=p.id)
+            f = FreeFormPage.objects.get(id=p.id)
             if f.root_page:
                 if header:
                     return f.custom_header

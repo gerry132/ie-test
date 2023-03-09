@@ -41,10 +41,13 @@
     </head>
     {% verify_path as path_info %}
     {% if path_info.content %}
-    <div id="warning-url" class="warning-url" style="position: -webkit-sticky; position: inline; position: sticky; z-index: 999999999999999999; top: 0; background-color: yellow; border-left: 20px solid red;">
-        <div style="text-align: centre; display: flex; padding: 25px 150px;">
-        <div class="base-img"></div>
-            <h3 style="padding-top: 25px; font-size: 30px;">{{settings.irelandie_navigation.SiteSettings.nav_banner_warning_text}} The publicly shareable link is <a href="//{{path_info.host}}{{request.path}}">{{path_info.host}}{{request.path}}</a></h3>
+    <div id="warning-url" class="warning-url">
+        <div class="warning-url__flex">
+            <div class="base-img"></div>
+            <div>
+                <h3 class="warning-url__text">{{settings.irelandie_navigation.SiteSettings.nav_banner_warning_text}} </h3>
+                <div class="warning-url__url">The publicly shareable link is <a style="text-decoration: underline;" href="//{{path_info.host}}{{request.path}}">{{path_info.host}}{{request.path}}</a></div>
+            </div>
         </div>
     </div>
     {% endif %}

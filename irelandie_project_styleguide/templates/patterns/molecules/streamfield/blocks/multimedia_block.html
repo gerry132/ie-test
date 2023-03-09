@@ -17,11 +17,14 @@
     }
 </style>
 <div class="wrapper wrapper--large wrapper--padding" style="padding-bottom:20px;">
-    <div class="intro" style="max-width:1024px;">
-        <div class="intro__description">{% include_block value.richtext %}</div>
-    </div>
+    {% if value.richtext.heading or value.richtext.rich_text %}
+        <div class="intro" style="max-width:1024px;">
+            <div class="intro__description">{% include_block value.richtext %}</div>
+        </div>
+    {% endif %}
 
-    <div class="{% if value.multimedia|length > 2 %}featured-blocks-flex featured-blocks-flex--three{% else %}featured-blocks-flex featured-blocks-flex--two{% endif %}">
+    <div style="margin: unset;"
+         class="{% if value.multimedia|length > 2 %}featured-blocks-flex featured-blocks-flex--three{% else %}featured-blocks-flex featured-blocks-flex--two{% endif %}">
         {% for block in value.multimedia %}
         {% if block.block_type == 'link_card' %}
             <a href="{% if block.value.page.url %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}"
