@@ -43,18 +43,7 @@ getNewsArticles();
     {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
 {% endif %}
 {% has_root_override page header=True as override %}
-{% if not page.generic_hero %}
-        <div id="main-header" class="section section--padding section--white {% if not override and page.get_ancestors|length > 2 %} section--padding_without_hero{% endif %}">
-                    <div class="wrapper wrapper--large wrapper--padding content--padding">
-                        <div class="intro--toc">
-                            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
-                            {% if page.description %}
-                                <p class="intro__description">{{ page.description }}</p>
-                            {% endif %}
-                        </div>
-                    </div>
-        </div>
-{% endif %}
+
 
 <div id="main-header" class="section section--padding section--white section--toc">
     <div id="wrapper" class="wrapper--large--toc">
@@ -62,11 +51,10 @@ getNewsArticles();
             <div class="wrapper wrapper--padding">
                 <div class="intro--toc">
                     <div class="container">
-                        {% if not page.description %}
-                            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
-                        {% else %}
-                            <h2 class="story__heading heading--2">{{ page.description }}</h2>
-                        {% endif %}
+                        <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                            {% if page.description %}
+                                <p class="hero__introduction">{{ page.description }}</p>
+                            {% endif %}
                     </div>
                 </div>
                 <div class="wrapper--padding related-content--mobile">
