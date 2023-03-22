@@ -247,6 +247,8 @@
     &__image-credit_wrapper{
             overflow: hidden;
             position: relative;
+            max-height: 450px;
+            min-height: 400px;
     }
     &__image-credit{
         background: rgba(236, 232, 230, 0.85);
