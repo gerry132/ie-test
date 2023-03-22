@@ -2,19 +2,22 @@
     $root: &;
     &__grid{
             display: flex;
-            flex-direction: column;
             gap: 20px;
             justify-content: center;
-        @supports (display: grid) {
-            display: grid;
-            grid-gap: 20px;
-            grid-template-columns: repeat(auto-fit,minmax(calc(33.33% - 30px),340px));
-            justify-content: center;
-        }
+            @include media-query(max-large){
+            flex-direction: column;
+         }
     }
     &__border{
             border-left: 2px solid #A39161;
             padding-left: 20px;
+            @include media-query(medium){
+            width: 430px;
+            align-self: center;
+         }
+            @include media-query(large){
+            flex-basis: calc(33.33% - 30px);
+         }
 
     }
     &__title{
