@@ -644,6 +644,7 @@ class HeroPage(BasePage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    hero_image_credit = models.CharField(blank=True, max_length=255)
     alt_text = models.CharField(blank=True,
                                 null=True,
                                 max_length=255,
@@ -709,6 +710,7 @@ class HeroPage(BasePage):
             FieldPanel("hero_image", classname="col6"),
             MediaChooserPanel("hero_video", media_type="video", classname="col6"),
         ], "Hero Media"),
+        FieldPanel("hero_image_credit"),
         FieldPanel("hero_title"),
         FieldPanel("alt_text"),
         FieldPanel("summary"),
@@ -752,6 +754,7 @@ class ArticlePage(BasePage):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    hero_image_credit = models.CharField(blank=True, null=True, max_length=255)
 
     body = StreamField(ArticleStoryBlock(), blank=True)
 
@@ -772,6 +775,7 @@ class ArticlePage(BasePage):
         MultiFieldPanel(
             [
                 FieldPanel("hero_image"),
+                FieldPanel("hero_image_credit"),
                 MediaChooserPanel("hero_video", media_type="video"),
             ],
             "hero",
@@ -851,6 +855,7 @@ class MinimalArticlePage(BasePage):
                                 null=True,
                                 max_length=255,
                                 help_text=ALT_HELP_TEXT)
+    hero_image_credit = models.CharField(blank=True, null=True, max_length=255)
     caption = models.CharField(blank=True,
                                null=True,
                                max_length=255, )
@@ -872,6 +877,7 @@ class MinimalArticlePage(BasePage):
             [
                 FieldPanel("hero_image", heading="Featured Image"),
                 FieldPanel("alt_text"),
+                FieldPanel("hero_image_credit"),
                 FieldPanel("caption"),
             ],
             "hero",

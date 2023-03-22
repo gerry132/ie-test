@@ -11,12 +11,18 @@
  <div class="mini-hero__container">
     {% if block.value.hero_image %}
                         {% if block.value.hero_image_alignment == 'left' %}
-                            <div class="mini-hero__image_left">
+                            <div class="mini-hero__image_left mini-hero__image_width">
                                 {% image block.value.hero_image fill-960x540-c100 class="image mini-hero__image_left" %}
+                                {% if block.value.hero_image_credit %}
+                                    <div class="mini-hero__image-credit_left">{{ block.value.hero_image_credit }}</div>
+                                {% endif %}
                             </div>
                         {% else %}
-                            <div class="mini-hero__image">
+                            <div class="mini-hero__image mini-hero__image_width">
                                 {% image block.value.hero_image fill-960x540-c100 class="image mini-hero__image" %}
+                                {% if block.value.hero_image_credit %}
+                                    <div class="mini-hero__image-credit">{{ block.value.hero_image_credit }}</div>
+                                {% endif %}
                             </div>
                         {% endif %}
                     {% elif block.value.hero_video %}

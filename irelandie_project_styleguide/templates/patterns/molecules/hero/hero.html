@@ -72,3 +72,8 @@
         </div>
     </div>
 </div>
+        {% if page.hero_image_credit %}
+            <div class="hero__image_credit">
+              <div class="hero__image_credit_text">{{ page.hero_image_credit }}</div>
+            </div>
+        {% endif %}
