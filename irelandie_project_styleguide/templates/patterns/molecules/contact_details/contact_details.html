@@ -3,15 +3,24 @@
 
     <h3>{{elem.value.heading}}</h3>
     <div style="cursor: pointer;" onclick="window.open('{{elem.value.map_link}}', '_blank').focus();">
-    {% if elem.value.address_line_1 %}
+    {% if elem.value.address_line_1 or elem.value.address_line_2 or elem.value.address_line_3 or elem.value.address_line_4 or elem.value.post_code %}
         <address style="font-style: normal;">
-            {{elem.value.address_line_1}} <br/>
-            {{elem.value.address_line_2}} <br/>
-            {{elem.value.address_line_3}} <br/>
+            {% if elem.value.address_line_1 %}
+                {{elem.value.address_line_1}} <br/>
+            {% endif %}
+            {% if elem.value.address_line_2 %}
+                {{elem.value.address_line_2}} <br/>
+            {% endif %}
+            {% if elem.value.address_line_3 %}
+                {{elem.value.address_line_3}} <br/>
+            {% endif %}
             {% if elem.value.address_line_4 %}
                 {{elem.value.address_line_4}} <br/>
             {% endif %}
-            {{elem.value.post_code}} <br/>
+            {% if elem.value.post_code %}
+                {{elem.value.post_code}} <br/>
+            {% endif %}
+
     </address>
     {% endif %}
 </div>
