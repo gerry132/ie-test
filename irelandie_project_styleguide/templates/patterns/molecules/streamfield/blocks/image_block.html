@@ -13,7 +13,7 @@
             {% else %}
                 <div class="{% if value.image_credit %}story__image-credit_wrapper{% endif %}">
                     {% if value.image_credit %}
-                          <span class="story__image-credit">{{ block.value.image_credit }}</span>
+                          <span class="story__image-credit">{{ value.image_credit }}</span>
                     {% endif %}
                     {% image value.image width-1000 class="image image-block__image" loading="lazy" alt=value.image_alt %}
                 </div>
