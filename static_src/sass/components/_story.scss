@@ -247,8 +247,14 @@
     &__image-credit_wrapper{
             overflow: hidden;
             position: relative;
-            max-height: 450px;
-            min-height: 400px;
+            @media only screen and (min-width: 460px){
+                width: 460px;
+            }
+            @media only screen and (min-width: 1023px){
+                max-height: 450px;
+                min-height: 400px;
+            }
+
     }
     &__image-credit{
         background: rgba(236, 232, 230, 0.85);
