@@ -4,14 +4,14 @@
     <figure class="image-block">
         {% if value.image_alt %}
             {% if not value.caption %}
-                <div style="{% if value.image_credit %}overflow: hidden; position: relative;{% endif %}">
+                <div class="{% if value.image_credit %}image-block__credit_wrapper{% endif %}">
                     {% if value.image_credit %}
-                          <span style="border-radius: 20px 0 14px 14px;" class="story__image-credit">{{ value.image_credit }}</span>
+                          <span style="border-radius: 20px 0 14px 0px;" class="story__image-credit">{{ value.image_credit }}</span>
                     {% endif %}
                     {% image value.image width-1000 class="image image-block__image_border" loading="lazy" alt=value.image_alt %}
                 </div>
             {% else %}
-                <div style="{% if value.image_credit %}overflow: hidden; position: relative;{% endif %}">
+                <div class="{% if value.image_credit %}image-block__credit_wrapper{% endif %}">
                     {% if value.image_credit %}
                           <span class="story__image-credit">{{ value.image_credit }}</span>
                     {% endif %}
@@ -19,7 +19,7 @@
                 </div>
             {% endif %}
         {% else %}
-            <div style="{% if value.image_credit %}overflow: hidden; position: relative;{% endif %}">
+            <div class="{% if value.image_credit %}image-block__credit_wrapper{% endif %}">
                     {% if value.image_credit %}
                           <span class="story__image-credit">{{ block.value.image_credit }}</span>
                     {% endif %}
