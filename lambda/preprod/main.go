@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	rds_create "restore-from-snapshot/rds-restore"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -16,10 +17,9 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		StatusCode: 200,
 	}
 
-	//snapArn := rds_create.GetMostRecentSnapshot()
-	//log.Println(*snapArn)
-	//	dbName := rds_create.RestoreDBInstanceFromDBSnapshot(*snapArn)
-	//	rds_create.SaveNewUrl(dbName)
-	rds_create.Runner()
+	snapArn := rds_create.GetMostRecentSnapshot()
+	log.Println(*snapArn)
+	dbName := rds_create.RestoreDBInstanceFromDBSnapshot(*snapArn)
+	rds_create.SaveNewUrl(dbName)
 	return response, nil
 }
