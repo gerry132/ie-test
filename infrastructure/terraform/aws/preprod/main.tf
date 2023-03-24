@@ -954,6 +954,12 @@ locals {
 # Cache
 # -----------------------------------------------------------------------------
 
+resource "aws_db_subnet_group" "db_clone" {
+  name       = "db-clone-${local.environment_name}-subnet-group"
+  subnet_ids = module.network.public_subnet_ids
+}
+
+
 resource "aws_elasticache_subnet_group" "redis" {
   name       = "redis-${local.environment_name}-subnet-group"
   subnet_ids = module.network.public_subnet_ids
