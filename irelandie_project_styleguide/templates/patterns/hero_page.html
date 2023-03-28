@@ -20,17 +20,16 @@
     {% elif page.generic_hero %}
         {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
     {% elif FreeFormPage %}
-        {% has_root_override page header=True as override %}
-    <div class="section section--padding section--white {% if not override and page.get_ancestors|length > 2 %} section--padding_without_hero{% endif %}">
-        <div class="wrapper wrapper--large wrapper--padding">
-                <h1 class="hero__title">
-                    {{ page.title }}
-                </h1>
-                {% if page.description or page.introduction or page.secondary_title %}
-                <div class="hero__introduction"><p>{% firstof page.description page.introduction page.secondary_title %}</p></div>
-                {% endif %}
+        <div class="section section--padding section--white">
+                    <div class="wrapper wrapper--large wrapper--padding">
+                        <div class="intro--toc">
+                            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                            {% if page.secondary_title %}
+                                <h2 class="secondary-title">{{ page.secondary_title }}</h2>
+                             {% endif %}
+                        </div>
+                    </div>
         </div>
-    </div>
     {% else %}
         <div class="section section--padding_hero section--grey">
             <div class="wrapper wrapper--large wrapper--padding">

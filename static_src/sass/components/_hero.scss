@@ -230,4 +230,21 @@
             }
         }
     }
+    &__image_credit{
+        display: flex;
+        justify-content: flex-end;
+    }
+    &__image_credit_text{
+        background: #ECE8E6;
+        border-radius: 0px 0px 0px 20px;
+        font-size: 15px;
+        line-height: 18px;
+        color: #292929;
+        transform: matrix(1, 0, 0.01, 1, 0, 0);
+        padding: 8px 16px;
+        opacity: 1;
+        @include media-query(max-small) {
+            max-width: 300px;
+        }
+    }
 }

@@ -12,9 +12,19 @@
         <div class="story__container">
             {% if value.image %}
             {% if value.image_alt %}
+            <div class="{% if value.image_credit %}story__image-credit_wrapper{% endif %}">
+                {% if value.image_credit %}
+                      <span class="story__image-credit">{{ value.image_credit }}</span>
+                {% endif %}
                 {% image value.image fill-460x450-c100 alt=value.image_alt class="story__image" %}
+            </div>
             {% else %}
+            <div class="{% if value.image_credit %}story__image-credit_wrapper{% endif %}">
+                {% if value.image_credit %}
+                      <span class="story__image-credit">{{ value.image_credit }}</span>
+                {% endif %}
                 {% image value.image fill-460x450-c100 alt=value.image.alt_default class="story__image" %}
+            </div>
             {% endif %}
             {% elif value.video %}
                     <video class="story__video-block" aria-label="{{ value.title }}" title="{{ value.title }}" loop data-video controls>

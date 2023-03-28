@@ -4,12 +4,27 @@
     <figure class="image-block">
         {% if value.image_alt %}
             {% if not value.caption %}
-                {% image value.image width-1000 class="image image-block__image_border" loading="lazy" alt=value.image_alt %}
+                <div class="{% if value.image_credit %}image-block__credit_wrapper{% endif %}">
+                    {% if value.image_credit %}
+                          <span style="border-radius: 20px 0 14px 0px;" class="story__image-credit">{{ value.image_credit }}</span>
+                    {% endif %}
+                    {% image value.image width-1000 class="image image-block__image_border" loading="lazy" alt=value.image_alt %}
+                </div>
             {% else %}
-                {% image value.image width-1000 class="image image-block__image" loading="lazy" alt=value.image_alt %}
+                <div class="{% if value.image_credit %}image-block__credit_wrapper{% endif %}">
+                    {% if value.image_credit %}
+                          <span class="story__image-credit">{{ value.image_credit }}</span>
+                    {% endif %}
+                    {% image value.image width-1000 class="image image-block__image" loading="lazy" alt=value.image_alt %}
+                </div>
             {% endif %}
         {% else %}
+            <div class="{% if value.image_credit %}image-block__credit_wrapper{% endif %}">
+                    {% if value.image_credit %}
+                          <span class="story__image-credit">{{ value.image_credit }}</span>
+                    {% endif %}
             {% image value.image width-1000 class="image image-block__image" loading="lazy" alt=value.image.alt_default %}
+            </div>
         {% endif %}
         {% if value.caption %}
             <figcaption class="image-block__caption">

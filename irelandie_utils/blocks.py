@@ -167,6 +167,7 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         required=False,
         help_text=_(ALT_IMAGE),
     )
+    image_credit = blocks.CharBlock(required=False, max_length=255)
     video = VideoChooserBlock(required=False)
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -352,6 +353,7 @@ class ImageBlock(blocks.StructBlock):
         required=True,
         help_text=_(ALT_IMAGE),
     )
+    image_credit = blocks.CharBlock(required=False, max_length=255)
     caption = blocks.CharBlock(required=False)
 
     class Meta:
@@ -1261,6 +1263,7 @@ class GenericHeroBlock(blocks.StructBlock):
         default=StoryAlignment.RIGHT,
     )
     hero_image = ImageChooserBlock(required=False)
+    hero_image_credit = blocks.CharBlock(required=False, max_length=255)
     hero_video = VideoChooserBlock(required=False)
     background_color = blocks.CharBlock(required=False, default='#E7E5E1')
     hero_title = blocks.CharBlock(required=True, max_length=120)

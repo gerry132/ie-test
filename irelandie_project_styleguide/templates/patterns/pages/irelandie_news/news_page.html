@@ -25,17 +25,32 @@
                 </div>
                 {% endif %}
             </div>
-            <div class="streamfield">
+            <div class="wrapper wrapper--padding streamfield">
             <figure class="image-block">
                 {% if page.alt_text %}
                     {% if not page.caption %}
+                <div class="{% if page.hero_image_credit %}image-block__credit_wrapper{% endif %}">
+                    {% if page.hero_image_credit %}
+                          <span style="border-radius: 20px 0 14px 0px;" class="story__image-credit">{{ page.hero_image_credit }}</span>
+                    {% endif %}
                         {% image page.hero_image width-1000 class="image image-block__image_border" loading="lazy" alt=page.alt_text %}
+                </div>
                     {% else %}
+                    <div class="{% if page.hero_image_credit %}image-block__credit_wrapper{% endif %}">
+                    {% if page.hero_image_credit %}
+                          <span class="story__image-credit">{{ page.hero_image_credit }}</span>
+                    {% endif %}
                         {% image page.hero_image width-1000 class="image image-block__image" loading="lazy" alt=page.alt_text %}
+                    </div>
                     {% endif %}
                 {% else %}
+                <div class="{% if page.hero_image_credit %}image-block__credit_wrapper{% endif %}">
+                    {% if page.hero_image_credit %}
+                          <span class="story__image-credit">{{ page.hero_image_credit }}</span>
+                    {% endif %}
                     {% image page.hero_image width-1000 class="image image-block__image" loading="lazy" alt=value.hero_image.alt_default %}
-                {% endif %}
+                </div>
+                    {% endif %}
                 {% if page.caption %}
                     <figcaption class="image-block__caption">
                         {{ page.caption }}
