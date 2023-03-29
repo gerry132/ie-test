@@ -808,7 +808,7 @@ class ArticleStoryBlock(blocks.StreamBlock):
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
     role = RoleBlock(group="HTML")
-    table = TableBlock(group="HTML")
+    table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
     video = CustomVideoChooserBlockAlt(group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
 
@@ -820,7 +820,7 @@ class MinimalArticleStoryBlock(blocks.StreamBlock):
     document = DocumentBlock(group="Base")
 
     logos = LogoCardsBlock(group="Module")
-    table = TableBlock(group="Module")
+    table = TableBlock(table_options={'renderer': 'html'}, group="Module")
     youtube_video = YoutubeVideoBlock(group="Module")
 
 
@@ -883,7 +883,7 @@ class AccordionBlock(blocks.StructBlock):
                          ),
                         ("additional", blocks.StreamBlock([
                             ("map", MapBlock()),
-                            ("table", TableBlock(group="table")),
+                            ("table", TableBlock(table_options={'renderer': 'html'}, group="table")),
                             ("document", DocumentBlock(required=False)),
                             ("youtube", YoutubeVideoBlock(group="HTML")),
                             ("contact_details",
@@ -975,7 +975,7 @@ class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 class TocBlocks(blocks.StreamBlock):
     rich_text = AdvancedRichTextBlock(group="Base")
     document = DocumentBlock(group="Base")
-    table = TableBlock(group="HTML")
+    table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
 
 
 class GeneralContentBlocks(blocks.StreamBlock):
@@ -986,7 +986,7 @@ class GeneralContentBlocks(blocks.StreamBlock):
         group="HTML",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
-    table = TableBlock(group="HTML")
+    table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
     accordion = AccordionBlock(group="Base")
     logos = LogoCardsBlock(group="Base")
@@ -1350,7 +1350,7 @@ class FreeFormBlocks(FreeFormBlocksBase):
     link_card = LinkCardsBlock()
     link_button = LinkButtonBlock()
     link_box = LinkBoxesBlock()
-    table = TableBlock(group="HTML")
+    table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
     html = blocks.RawHTMLBlock(
         group="HTML",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
