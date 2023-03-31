@@ -30,6 +30,8 @@
         <div class="wrapper wrapper--large  content--padding">
             {% include_block subblock %}
         </div>
+    {% elif block.block_type == 'story_photo_gallery' %}
+        {% include_block block %}
     {% else %}
         <div class="wrapper wrapper--large  content--padding">
             {% include_block subblock %}
