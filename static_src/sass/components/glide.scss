@@ -60,11 +60,25 @@
     background: #A39161;
     border: 2px solid #000;
 }
+@media only screen and (max-width:480px){
+    .slider-arrow--left {
+    left: 10px;
+}
+}
+@media only screen and (min-width:481px){
 .slider-arrow--left {
     left: 25px;
 }
+}
+@media only screen and (max-width:480px){
+    .slider-arrow--right {
+    right: 10px;
+}
+}
+@media only screen and (min-width:481px){
 .slider-arrow--right {
     right: 25px;
+}
 }
 .carousel__next span,.carousel__prev span{
     position:absolute;

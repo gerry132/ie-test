@@ -11,18 +11,40 @@ class Carousel {
 
         this.carousel = new Glide(node, {
             type: 'carousel',
+            width: 500,
             startAt: 0,
-            perView: 2,
-            peek: 100,
+            perView: 3,
+            gap: 40,
+            peek: {
+                before: 300,
+                after: 0,
+              },
             hoverpause: true, // keep this for accessibility if using autoplay
             breakpoints: {
+                1440: {
+                  perView: 2,
+                  peek: {
+                        before: 250,
+                        after: 0,
+                      },
+                },
+                1024: {
+                  perView: 2,
+                  peek: {
+                        before: 150,
+                        after: 0,
+                      },
+                },
                 800: {
+                  gap: 20,
                   perView: 1,
+                  peek: 100,
                   focusAt: 'center',
                 },
                 480: {
+                  gap: 10,
                   perView: 1,
-                  peek: 0,
+                  peek: 30,
                 }
             },
         });
