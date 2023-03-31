@@ -106,7 +106,7 @@ func RestoreDBInstanceFromDBSnapshot(snapshot string) *string {
 	input := &rds.RestoreDBInstanceFromDBSnapshotInput{
 		DBInstanceIdentifier: aws.String(dbName),
 		DBSnapshotIdentifier: aws.String(snapshot),
-		DBSubnetGroupName:    aws.String("preprod-db-db-subnet-group"),
+		DBSubnetGroupName:    aws.String("db-clone-preprod-subnet-group"),
 		VpcSecurityGroupIds:  s,
 	}
 
