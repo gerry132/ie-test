@@ -1,0 +1,51 @@
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+<style>
+    .rich-text{max-width: 800px;}
+</style>
+
+<div style="padding-top: 40px;">
+    {% if value.richtext %}
+    {% include_block value.richtext %}
+    {% endif %}
+</div>
+<div aria-label="Carousel" class="glide carousel glide--ltr glide--carousel glide--swipeable" data-carousel
+     data-mdb-interval="false" data-slidetotal>
+    <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+            {% for story_photo_gallery in value.story_photo_gallery %}
+            <li aria-label="Carousel slide" class="glide__slide" tab-index="0">
+                <div class="carousel-slide">
+                    {% image story_photo_gallery.value.image fill-500x500 as my_image %}
+                    <div class="carousel-slide__image" style="background-image:url('{{ my_image.url }}')">
+                        <div
+                            class="carousel-slide__content{% if story_photo_gallery.value.button_link %} carousel-slide__content_transform{% endif %}">
+                            <h4 class="t t--h2 carousel-slide__title">{{ story_photo_gallery.value.heading }}</h4>
+                            <div class="t t--caption-small carousel-slide__attribution">
+                                {{ story_photo_gallery.value.rich_text_summary|richtext }}
+                            </div>
+                            {% if story_photo_gallery.value.button_link %}
+                            <div class="carousel-slide__additional-content">
+                                   <span class="rich-text button--primary">
+                                            {% for button in story_photo_gallery.value.button_link %}
+                                                {% if button.value.page %}
+                                                        <a class="button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
+                                                    {% else %}
+                                                        <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
+                                                    {% endif %}
+                                            {% endfor %}
+                                   </span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div data-glide-el="controls">
+        <button class=" slider-arrow slider-arrow--left" data-glide-dir="<">‹</button>
+        <button class=" slider-arrow slider-arrow--right" data-glide-dir=">">›</button>
+    </div>
+</div>
+
