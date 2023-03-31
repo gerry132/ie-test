@@ -794,6 +794,34 @@ class ContactBlock(blocks.StructBlock):
     email = blocks.RichTextBlock(blank=True, required=False)
 
 
+class StoryPhotoGalleryBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=True)
+    heading = blocks.CharBlock(required=True)
+    rich_text_summary = blocks.RichTextBlock(required=False)
+    button_link = blocks.StreamBlock(
+        [
+            ("button", SecondaryCallToAction())
+        ],
+        blank=True,
+        max_num=1,
+        min_num=0,
+        required=False,
+    )
+
+    class Meta:
+        label = "Story Photo Gallery"
+
+
+class StoryPhotoGalleriesBlock(blocks.StructBlock):
+    richtext = AdvancedRichTextBlock(required=False)
+    story_photo_gallery = blocks.StreamBlock([("story_photo_gallery", StoryPhotoGalleryBlock())])
+
+    class Meta:
+        icon = "list-ul"
+        label = "Story Photo Gallery"
+        template = "patterns/molecules/streamfield/blocks/story_photo_galleries_block.html"
+
+
 class ArticleStoryBlock(blocks.StreamBlock):
     rich_text = RichTextBlock(group="Base")
     rich_text_advanced = AdvancedRichTextBlock(group="Base")
@@ -822,6 +850,7 @@ class MinimalArticleStoryBlock(blocks.StreamBlock):
     logos = LogoCardsBlock(group="Module")
     table = TableBlock(table_options={'renderer': 'html'}, group="Module")
     youtube_video = YoutubeVideoBlock(group="Module")
+    story_photo_gallery = StoryPhotoGalleriesBlock(group="Base")
 
 
 class PinnedStoriesBlock(blocks.StructBlock):
@@ -909,6 +938,7 @@ class FreeFormBlocksBase(blocks.StreamBlock):
         ],
         template="patterns/molecules/pinned-stories/pinned_stories.html", group="Module"
     )
+    story_photo_gallery = StoryPhotoGalleriesBlock(group="Base")
     stories = StoryBlock(group="Module")
 
     video = CustomVideoChooserBlockAlt(group="HTML")
@@ -991,6 +1021,7 @@ class GeneralContentBlocks(blocks.StreamBlock):
     accordion = AccordionBlock(group="Base")
     logos = LogoCardsBlock(group="Base")
     stats_block = StatsBlock(group="Base")
+    story_photo_gallery = StoryPhotoGalleriesBlock(group="Base")
 
 
 class TocBlock(blocks.StructBlock):

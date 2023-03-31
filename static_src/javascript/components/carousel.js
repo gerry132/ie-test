@@ -12,15 +12,18 @@ class Carousel {
         this.carousel = new Glide(node, {
             type: 'carousel',
             startAt: 0,
-            perView: 3,
+            perView: 2,
             peek: 100,
-            autoplay: 2000,
             hoverpause: true, // keep this for accessibility if using autoplay
             breakpoints: {
-                768: {
-                    perView: 1,
-                    peek: 0,
+                800: {
+                  perView: 1,
+                  focusAt: 'center',
                 },
+                480: {
+                  perView: 1,
+                  peek: 0,
+                }
             },
         });
 
@@ -59,22 +62,8 @@ class Carousel {
         });
     }
 
-    // Sets a live region. This will announce which slide is showing to screen readers when previous / next buttons clicked
-    setLiveRegion() {
-        const controls = this.node.querySelector('[data-glide-el="controls"]');
-        const liveregion = document.createElement('div');
-        liveregion.setAttribute('aria-live', 'polite');
-        liveregion.setAttribute('aria-atomic', 'true');
-        liveregion.setAttribute('class', 'carousel__liveregion');
-        liveregion.setAttribute('data-liveregion', true);
-        controls.appendChild(liveregion);
-    }
 
-    // Update the live region that announces the next slide.
-    updateLiveRegion() {
-        const slideLabel = `Item ${this.carousel.index} of ${this.slideTotal}`;
-        this.node.querySelector('[data-liveregion]').textContent = slideLabel;
-    }
+
 }
 
 export default Carousel;
