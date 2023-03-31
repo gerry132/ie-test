@@ -29,13 +29,11 @@ class Carousel {
 
         this.carousel.mount();
         this.bindEvents();
-        this.setLiveRegion();
     }
 
     bindEvents() {
         this.carousel.on('move.after', () => {
             this.updateAriaRoles();
-            this.updateLiveRegion();
         });
     }
 

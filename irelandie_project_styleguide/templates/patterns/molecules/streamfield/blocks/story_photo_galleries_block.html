@@ -15,7 +15,7 @@
             {% for story_photo_gallery in value.story_photo_gallery %}
                 <li class="glide__slide" aria-label="Carousel slide" tab-index="0">
                 <div class="carousel-slide">
-                    {% image story_photo_gallery.value.image width-650 as my_image %}
+                    {% image story_photo_gallery.value.image fill-500x500 as my_image %}
 
                     <div class="carousel-slide__image" style="background-image:url('{{ my_image.url }}')">
                         <div class="carousel-slide__content{% if story_photo_gallery.value.button_link %} carousel-slide__content_transform{% endif %}">
@@ -50,7 +50,8 @@
         </ul>
     </div>
     <div data-glide-el="controls">
-                            <button class=" btn carousel__prev" data-glide-dir="<"><span>Previous</span></button>
-                            <button class=" btn carousel__next" data-glide-dir=">"><span>Next</span></button>
+                            <button class=" slider-arrow slider-arrow--left" data-glide-dir="<">‹</button>
+                            <button class=" slider-arrow slider-arrow--right" data-glide-dir=">">›</button>
+</div>
 </div>
 
