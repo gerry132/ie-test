@@ -1294,6 +1294,10 @@ class GenericHeroBlock(blocks.StructBlock):
         default=StoryAlignment.RIGHT,
     )
     hero_image = ImageChooserBlock(required=False)
+    hero_image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_IMAGE),
+    )
     hero_image_credit = blocks.CharBlock(required=False, max_length=255)
     hero_video = VideoChooserBlock(required=False)
     background_color = blocks.CharBlock(required=False, default='#E7E5E1')
