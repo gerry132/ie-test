@@ -796,7 +796,11 @@ class ContactBlock(blocks.StructBlock):
 
 class StoryPhotoGalleryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
-    heading = blocks.CharBlock(required=True)
+    image_alt = blocks.CharBlock(
+            required=False,
+            help_text=_(ALT_IMAGE),
+        )
+    heading = blocks.CharBlock(required=False)
     rich_text_summary = blocks.RichTextBlock(required=False)
     button_link = blocks.StreamBlock(
         [
@@ -1295,7 +1299,7 @@ class GenericHeroBlock(blocks.StructBlock):
     )
     hero_image = ImageChooserBlock(required=False)
     hero_image_alt = blocks.CharBlock(
-        required=False,
+        required=True,
         help_text=_(ALT_IMAGE),
     )
     hero_image_credit = blocks.CharBlock(required=False, max_length=255)

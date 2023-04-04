@@ -24,7 +24,7 @@
     {% elif block.block_type == 'html' or block.block_type == 'youtube_video' %}
         {% include_block block %}
     {% elif block.block_type == 'logos' %}
-        <div class="wrapper wrapper--large wrapper--padding" style="padding-bottom:40px;">
+        <div class="wrapper wrapper--large wrapper--padding" style="padding-bottom:20px;">
                 {% include_block block %}
         </div>
     {% elif block.block_type == 'accordion' %}
@@ -34,7 +34,7 @@
             </div>
         </div>
     {% elif block.block_type == 'rich_text_advanced' %}
-<div style="padding-top: 30px;">
+<div class="wrapper wrapper--padding" style="padding-top: 30px;">
         {% include_block block %}
 </div>
     {% elif block.block_type == 'link_box' %}

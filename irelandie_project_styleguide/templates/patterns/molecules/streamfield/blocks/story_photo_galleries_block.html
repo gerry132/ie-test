@@ -1,10 +1,7 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
-<style>
-    .rich-text{max-width: 800px;}
-</style>
 
     {% if value.richtext %}
-<div style="padding-top: 30px;">
+<div class="wrapper wrapper--padding" style="padding-top: 30px;">
         {% include_block value.richtext %}
 </div>
     {% endif %}
@@ -16,7 +13,7 @@
             <li aria-label="Carousel slide" class="glide__slide" tab-index="0">
                 <div class="carousel-slide">
                     {% image story_photo_gallery.value.image fill-500x500 as my_image %}
-                    <div class="carousel-slide__image" style="background-image:url('{{ my_image.url }}')">
+                    <div class="carousel-slide__image" aria-label="{{ story_photo_gallery.value.image_alt }}" style="background-image:url('{{ my_image.url }}')">
                         <div
                             class="carousel-slide__content{% if story_photo_gallery.value.button_link %} carousel-slide__content_transform{% endif %}">
                             <h4 class="t t--h2 carousel-slide__title">{{ story_photo_gallery.value.heading }}</h4>
