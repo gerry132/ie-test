@@ -28,6 +28,7 @@ locals {
   app_aws_username              = "UAT_APP_USER"
   project_domain                = "content.uat.ireland.ie"
   domain_ireland_ie             = "uat.ireland.ie"
+  africa_day_domain             = "africaday.uat.ireland.ie"
   project_name                  = "g2g"
   region                        = "eu-west-1"
   # DB
@@ -691,6 +692,18 @@ resource "aws_acm_certificate" "ireland_ie_content_admin" {
   }
 }
 
+resource "aws_acm_certificate" "africa_day" {
+    domain_name               = local.africa_day_domain
+    subject_alternative_names = [
+        "www.${local.africa_day_domain}"
+    ]
+    validation_method         = "DNS"
+
+    lifecycle {
+        create_before_destroy = true
+    }
+}
+
 # -----------------------------------------------------------------------------
 # Loadbalancer listeners and rules
 # -----------------------------------------------------------------------------
@@ -885,6 +898,23 @@ resource "aws_lb_listener_rule" "ireland_ie_443" {
   }
 }
 
+resource "aws_lb_listener_rule" "africa_day" {
+    listener_arn = aws_lb_listener.public_sites_443.arn
+    priority = 7
+
+    action {
+        type = "redirect"
+        redirect {
+            host = "www.${local.domain_ireland_ie}/africa-day"
+            status_code = "301"
+        }
+    }
+    condition {
+        host_header {
+            values = [local.africa_day_domain, "www.${local.africa_day_domain}"]
+        }
+    }
+}
 
 # -----------------------------------------------------------------------------
 # Listener certificates
@@ -900,6 +930,10 @@ resource "aws_lb_listener_certificate" "admin_ireland_ie_certificate" {
   certificate_arn = aws_acm_certificate.ireland_ie_content_admin.arn
 }
 
+resource "aws_lb_listener_certificate" "africa_day_certificate" {
+    listener_arn    = aws_lb_listener.public_sites_443.arn
+    certificate_arn = aws_acm_certificate.africa_day.arn
+}
 
 # -----------------------------------------------------------------------------
 # Database
