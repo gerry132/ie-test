@@ -880,13 +880,14 @@ resource "aws_lb_listener_rule" "ireland_ie_443" {
 
 resource "aws_lb_listener_rule" "africa_day" {
     listener_arn = aws_lb_listener.public_sites_443.arn
-    priority = 7
+    priority = 9
 
     action {
         type = "redirect"
         redirect {
-            host = "www.${local.domain_ireland_ie}/africa-day"
-            status_code = "301"
+            host = "www.${local.domain_ireland_ie}"
+            path = "/africa-day"
+            status_code = "HTTP_301"
         }
     }
     condition {
