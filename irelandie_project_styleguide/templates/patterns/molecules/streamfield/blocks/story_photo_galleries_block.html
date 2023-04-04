@@ -14,6 +14,7 @@
                 <div class="carousel-slide">
                     {% image story_photo_gallery.value.image fill-500x500 as my_image %}
                     <div class="carousel-slide__image" aria-label="{{ story_photo_gallery.value.image_alt }}" style="background-image:url('{{ my_image.url }}')">
+                        {% if story_photo_gallery.value.heading or story_photo_gallery.value.rich_text_summary or story_photo_gallery.value.button_link %}
                         <div
                             class="carousel-slide__content{% if story_photo_gallery.value.button_link %} carousel-slide__content_transform{% endif %}">
                             <h4 class="t t--h2 carousel-slide__title">{{ story_photo_gallery.value.heading }}</h4>
@@ -34,6 +35,7 @@
                             </div>
                             {% endif %}
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </li>

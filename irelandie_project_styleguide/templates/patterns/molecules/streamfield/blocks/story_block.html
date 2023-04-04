@@ -5,46 +5,49 @@
     .story__image{
         border-radius: unset;
     }
+
 </style>
 {% get_unique_ref as ref %}
-<div class="story{% if value.background == 'dark' %} story--dark{% endif %}{% if value.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
+<div
+    class="story{% if value.background == 'dark' %} story--dark{% endif %}{% if value.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
     <div class="wrapper wrapper--large">
         <div class="story__container">
             {% if value.image %}
             {% if value.image_alt %}
             <div class="{% if value.image_credit %}story__image-credit_wrapper{% endif %}">
                 {% if value.image_credit %}
-                      <span class="story__image-credit">{{ value.image_credit }}</span>
+                <span class="story__image-credit">{{ value.image_credit }}</span>
                 {% endif %}
                 {% image value.image fill-460x450-c100 alt=value.image_alt class="story__image" %}
             </div>
             {% else %}
             <div class="{% if value.image_credit %}story__image-credit_wrapper{% endif %}">
                 {% if value.image_credit %}
-                      <span class="story__image-credit">{{ value.image_credit }}</span>
+                <span class="story__image-credit">{{ value.image_credit }}</span>
                 {% endif %}
                 {% image value.image fill-460x450-c100 alt=value.image.alt_default class="story__image" %}
             </div>
             {% endif %}
             {% elif value.video %}
-                    <video class="story__video-block" aria-label="{{ value.title }}" title="{{ value.title }}" loop data-video controls>
-                        <source src="{{ value.video.url }}" type="video/mp4">
-                        {% trans 'Your browser does not support the video tag.' %}
-                    </video>
+            <video aria-label="{{ value.title }}" class="story__video-block" controls data-video loop
+                   title="{{ value.title }}">
+                <source src="{{ value.video.url }}" type="video/mp4">
+                {% trans 'Your browser does not support the video tag.' %}
+            </video>
             {% endif %}
             <div class="story__content">
                 <div class="story__copy">
                     {% if value.primary_title %}
-                        <div style="margin-top:-1em;">
-                            <p>{{ value.primary_title }}</p>
-                        </div>
+                    <div style="margin-top:-1em;">
+                        <p>{{ value.primary_title }}</p>
+                    </div>
                     {% endif %}
                     {% if link_url %}
-                        <a href="{{ link_url }}">
-                            <h3 class="story__heading heading--2">{{ value.title }}</h3>
-                        </a>
-                    {% else %}
+                    <a href="{{ link_url }}">
                         <h3 class="story__heading heading--2">{{ value.title }}</h3>
+                    </a>
+                    {% else %}
+                    <h3 class="story__heading heading--2">{{ value.title }}</h3>
                     {% endif %}
                     <div class="rich-text">
                         {{ value.summary }}
@@ -53,10 +56,10 @@
                     {% for button in value.button_link %}
                     <div class="rich-text">
                         <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
-                                {% if button.value.page %}
-                                <a class="button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
+                            {% if button.value.page %}
+                            <a class="button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
                             {% else %}
-                                <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
+                            <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
                             {% endif %}
                         </div>
                     </div>
@@ -64,137 +67,138 @@
                     {% endif %}
 
 
-
-                {% comment %}
+                    {% comment %}
                     TODO: BE - add in optional CTA field
 
-                    <a href="/" aria-label="{% trans 'Find out more about Ireland' %}">Join us in Ireland</a>
-                {% endcomment %}
+                    <a aria-label="{% trans 'Find out more about Ireland' %}" href="/">Join us in Ireland</a>
+                    {% endcomment %}
                 </div>
 
                 {% if value.links %}
-                    {% if value.links|length > 2 %}
-                    <div class="story-links">
-                        <div class="your-class story-links__container">
-                          <div class="slider slider-mobile">
+                {% if value.links|length > 2 %}
+                <div class="story-links">
+                    <div class="your-class story-links__container">
+                        <div class="slider slider-mobile">
                             {% for link in value.links %}
-                            <div id="last" class="slide-mobile-{{ref}} slide-mobile" style="width: 100%;">
-                              <div class="story-links">
-                                  <div class="your-class story-links__container">
-                                          {% include_block link %}
-                                  </div>
-                                  </div>
+                            <div class="slide-mobile-{{ref}} slide-mobile" id="last" style="width: 100%;">
+                                <div class="story-links">
+                                    <div class="your-class story-links__container">
+                                        {% include_block link %}
+                                    </div>
+                                </div>
                             </div>
                             {% endfor %}
-                          </div>
-                            <div class="slider slider-desktop">
+                        </div>
+                        <div class="slider slider-desktop">
 
-                              {% for link in value.links %}
-                                {% if forloop.counter|divisibleby:2 %}
-                                          {% include_block link %}
-                            </div>
+                            {% for link in value.links %}
+                            {% if forloop.counter|divisibleby:2 %}
+                            {% include_block link %}
                         </div>
                     </div>
-                                {% else %}
-                                {% with next_element=value.links|next:forloop.counter0 %}
-                                    {% if next_element %}
-                                      <div id="next" class="slide-{{ref}} slide">
-                                          <div class="story-links">
-                                              <div class="your-class story-links__container">
-                                                      {{link}}
-                                    {% else %}
-                                    <div id="last" class="slide-{{ref}} slide" style="width: 100%;">
-                                      <div class="story-links">
-                                          <div class="your-class story-links__container">
-                                                  {% include_block link %}
-                                          </div>
-                                          </div>
+                </div>
+                {% else %}
+                {% with next_element=value.links|next:forloop.counter0 %}
+                {% if next_element %}
+                <div class="slide-{{ref}} slide" id="next">
+                    <div class="story-links">
+                        <div class="your-class story-links__container">
+                            {{link}}
+                            {% else %}
+                            <div class="slide-{{ref}} slide" id="last" style="width: 100%;">
+                                <div class="story-links">
+                                    <div class="your-class story-links__container">
+                                        {% include_block link %}
                                     </div>
-                                    {% endif %}
-                                  {% endwith %}
-                                {% endif %}
-                        {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endwith %}
+                            {% endif %}
+                            {% endfor %}
                         </div>
                         {% else %}
                         <div class="story-links">
                             <div class="your-class story-links__container">
-                                    {% for link in value.links %}
-                                        {% include_block link %}
-                                    {% endfor %}
+                                {% for link in value.links %}
+                                {% include_block link %}
+                                {% endfor %}
+                            </div>
                         </div>
+                        {% endif %}
+                        {% endif %}
                     </div>
+                    {% if value.links|length > 2 %}
+                    <button class="btn btn-next-{{ref}} btn-next"></button>
+                    <button class="btn btn-prev-{{ref}} btn-prev">
+                    </button>
                     {% endif %}
-                {% endif %}
+                </div>
             </div>
-            {% if value.links|length > 2 %}
-              <button class="btn btn-next-{{ref}} btn-next">  </button>
-                          <button class="btn btn-prev-{{ref}} btn-prev">
-                          </button>
-            {% endif %}
-                                      </div>
         </div>
     </div>
 </div>
-{% if value.links|length >= 2 %}
-<script>
-function readySlides(mobile) {
-  console.log(mobile);
-  let slides;
-  let transNum;
-  if(mobile) {
-    slides = document.querySelectorAll(".slide-mobile-{{ref}}");
-    transNum = 100;
-  } else {
-    slides = document.querySelectorAll(".slide-{{ref}}");
-    transNum = 100;
-  }
+    {% if value.links|length >= 2 %}
+    <script>
+        function readySlides(mobile) {
+          console.log(mobile);
+          let slides;
+          let transNum;
+          if(mobile) {
+            slides = document.querySelectorAll(".slide-mobile-{{ref}}");
+            transNum = 100;
+          } else {
+            slides = document.querySelectorAll(".slide-{{ref}}");
+            transNum = 100;
+          }
 
-  slides.forEach((slide, indx) => {
-    slide.style.transform = `translateX(${indx * transNum}%)`;
-  });
-  // select next slide button
-  const nextSlide = document.querySelector(".btn-next-{{ref}}");
-  // current slide counter
-  let curSlide = 0;
-  // maximum number of slides
-  let maxSlide = slides.length - 1;
+          slides.forEach((slide, indx) => {
+            slide.style.transform = `translateX(${indx * transNum}%)`;
+          });
+          // select next slide button
+          const nextSlide = document.querySelector(".btn-next-{{ref}}");
+          // current slide counter
+          let curSlide = 0;
+          // maximum number of slides
+          let maxSlide = slides.length - 1;
 
-  // add event listener and navigation functionality
-  nextSlide.addEventListener("click", function () {
-    // check if current slide is the last and reset current slide
-    console.log(12345);
-    if (curSlide === maxSlide) {
-      curSlide = 0;
-    } else {
-      curSlide++;
-    }
+          // add event listener and navigation functionality
+          nextSlide.addEventListener("click", function () {
+            // check if current slide is the last and reset current slide
+            console.log(12345);
+            if (curSlide === maxSlide) {
+              curSlide = 0;
+            } else {
+              curSlide++;
+            }
 
-    //   move slide by -100%
-    slides.forEach((slide, indx) => {
-      slide.style.transform = `translateX(${transNum * (indx - curSlide)}%)`;
-    });
-  });
+            //   move slide by -100%
+            slides.forEach((slide, indx) => {
+              slide.style.transform = `translateX(${transNum * (indx - curSlide)}%)`;
+            });
+          });
 
-  // select next slide button
-  const prevSlide = document.querySelector(".btn-prev-{{ref}}");
+          // select next slide button
+          const prevSlide = document.querySelector(".btn-prev-{{ref}}");
 
-  // add event listener and navigation functionality
-  prevSlide.addEventListener("click", function () {
-    // check if current slide is the first and reset current slide to last
-    if (curSlide === 0) {
-      curSlide = maxSlide;
-    } else {
-      curSlide--;
-    }
+          // add event listener and navigation functionality
+          prevSlide.addEventListener("click", function () {
+            // check if current slide is the first and reset current slide to last
+            if (curSlide === 0) {
+              curSlide = maxSlide;
+            } else {
+              curSlide--;
+            }
 
-    //   move slide by 100%
-    slides.forEach((slide, indx) => {
-      slide.style.transform = `translateX(${transNum * (indx - curSlide)}%)`;
-    });
-  });
-}
+            //   move slide by 100%
+            slides.forEach((slide, indx) => {
+              slide.style.transform = `translateX(${transNum * (indx - curSlide)}%)`;
+            });
+          });
+        }
 
-readySlides(false);
-readySlides(true);
-</script>
-{% endif %}
+        readySlides(false);
+        readySlides(true);
+
+    </script>
+    {% endif %}

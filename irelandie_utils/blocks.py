@@ -797,7 +797,7 @@ class ContactBlock(blocks.StructBlock):
 class StoryPhotoGalleryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
-            required=False,
+            required=True,
             help_text=_(ALT_IMAGE),
         )
     heading = blocks.CharBlock(required=False)
