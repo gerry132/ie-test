@@ -159,5 +159,3 @@ def verify_path(context):
     if request.get_host() in content_url_map.keys():
         return {'content': True,
                 'host': content_url_map[request.get_host()]}
-
-
