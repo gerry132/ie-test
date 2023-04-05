@@ -15,6 +15,7 @@
 .lg-toolbar {
     background-color: #ECE8E6;
     }
+
 </style>
 <div class="wrapper wrapper--large wrapper--padding" style="padding-bottom:20px;">
     {% if value.richtext.heading or value.richtext.rich_text %}
@@ -23,85 +24,72 @@
         </div>
     {% endif %}
 
-    <div style="margin: unset;"
-         class="{% if value.multimedia|length > 2 %}featured-blocks-flex featured-blocks-flex--three{% else %}featured-blocks-flex featured-blocks-flex--two{% endif %}">
+    <div class="{% if value.multimedia|length > 2 %}featured-blocks-flex featured-blocks-flex--three{% else %}featured-blocks-flex featured-blocks-flex--two{% endif %}" style="margin: unset;">
         {% for block in value.multimedia %}
-        {% if block.block_type == 'link_card' %}
-            <a href="{% if block.value.page.url %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}"
-               class="multimedia__card{% if value.multimedia|length > 2 %} multimedia__card--three{% else %} multimedia__card--two{% endif %}">
-                <div class="multimedia__card__image-container">
-                    {% if block.value.image_alt %}
-                        {% image block.value.image fill-400x200 alt=block.value.image_alt class="multimedia__card__image" %}
-                    {% else %}
-                        {% image block.value.image fill-400x200 alt=block.value.image.alt_default class="multimedia__card__image" %}
-                    {% endif %}
-                </div>
+            {% if block.block_type == 'link_card' %}
+                <a class="multimedia__card{% if value.multimedia|length > 2 %} multimedia__card--three{% else %} multimedia__card--two{% endif %}"
+                   href="{% if block.value.page.url %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}">
+                    <div class="multimedia__card__image-container">
+                        {% if block.value.image_alt %}
+                            {% image block.value.image fill-400x200 alt=block.value.image_alt class="multimedia__card__image" %}
+                        {% else %}
+                            {% image block.value.image fill-400x200 alt=block.value.image.alt_default class="multimedia__card__image" %}
+                        {% endif %}
+                    </div>
 
-                <div class="multimedia__card__content">
-                    <h3 class="multimedia__card__title">
-                        {{ block.value.title }}
-                    </h3>
+                    <div class="multimedia__card__content">
+                        <h3 class="multimedia__card__title">
+                            {{ block.value.title }}
+                        </h3>
 
-                    <p class="multimedia__card__summary">
-                        {{ block.value.summary }}
-                    </p>
-                </div>
-            </a>
-        {% else %}
-
-        <div class="multimedia__card{% if value.multimedia|length > 2 %} multimedia__card--three{% else %} multimedia__card--two{% endif %}">
-
-             <div class="multimedia__card__image-container" style="position:relative;">
-                 <div style="display:none;" id="{{ block.value.title|cut:' ' }}__{{ block.value.video_alt }}">
-                        <video class="lg-video-object lg-html5" controls controlsList="nodownload" preload="none">
-                            <source src="{{ block.value.video.url }}" type="video/mp4">
-                             Your browser does not support HTML5 video.
-                        </video>
-                 </div>
-                 <div class="lightgallery">
+                        <p class="multimedia__card__summary">
+                            {{ block.value.summary }}
+                        </p>
+                    </div>
+                </a>
+            {% else %}
+                <div class="multimedia__card{% if value.multimedia|length > 2 %} multimedia__card--three{% else %} multimedia__card--two{% endif %}">
+                    <div class="multimedia__card__image-container" style="position:relative;">
+                        <div id="{{ block.value.title|cut:' ' }}__{{ block.value.video_alt }}" style="display:none;">
+                            <video class="lg-video-object lg-html5" controls controlsList="nodownload" preload="none">
+                                <source src="{{ block.value.video.url }}" type="video/mp4">
+                                Your browser does not support HTML5 video.
+                            </video>
+                        </div>
+                        <div class="lightgallery">
                             {% if block.value.video %}
                             <div data-html="#{{ block.value.title|cut:' ' }}__{{ block.value.video_alt }}">
-                                <button class="multimedia__video-control-button" aria-label="{% trans 'Toggle video playback' %}">
+                                <button aria-label="{% trans 'Toggle video playback' %}" class="multimedia__video-control-button">
                                     {% include "patterns/atoms/icons/icon.html" with name="play" classname="multimedia__video-control-button-icon multimedia__video-control-button-icon--play" %}
                                 </button>
-                                <video class="multimedia__video--block" aria-label="{{ block.value.title }}" title="{{ block.value.title }}" loop data-video data-multimedia >
+                                <video aria-label="{{ block.value.title }}" class="multimedia__video--block" data-multimedia data-video loop title="{{ block.value.title }}">
                                     <source src="{{ block.value.video.url }}" type="video/mp4">
                                     {% trans 'Your browser does not support the video tag.' %}
                                 </video>
                             </div>
                             {% else %}
-                                    {% with block.value.youtube_or_vimeo_embed.url as regular_url %}
-                                    {% get_embed_url_with_parameters regular_url as embed_url %}
-                                           {% if embed_url is None %}
-                                               {% embed regular_url %}
-                                           {% else %}
-                                                <a href="{{ regular_url }}" >
-                                                    <button class="multimedia__video-control-button" aria-label="{% trans 'Toggle video playback' %}">
-                                                       {% include "patterns/atoms/icons/icon.html" with name="play" classname="multimedia__video-control-button-icon multimedia__video-control-button-icon--play" %}
-                                                    </button>
-                                                     <iframe class="multimedia__video--block no-button" src="{{ embed_url }}" frameborder="0" allowfullscreen></iframe>
-                                                </a>
-                                           {% endif %}
-                                    {% endwith %}
+                            <a href="{{ block.value.youtube_or_vimeo_embed }}">
+                                <button aria-label="{% trans 'Toggle video playback' %}" class="multimedia__video-control-button">
+                                    {% include "patterns/atoms/icons/icon.html" with name="play" classname="multimedia__video-control-button-icon multimedia__video-control-button-icon--play" %}
+                                </button>
+                                <iframe allowfullscreen class="multimedia__video--block no-button" frameborder="0" src="{{ block.value.embedding_url }}"></iframe>
+                            </a>
                             {% endif %}
-                 </div>
-                 </div>
-                <div class="{% if value.multimedia|length < 3 %}multimedia__card__content--two{% endif %} multimedia__card__content">
-                    <h3 class="multimedia__card__title">
-                        {{ block.value.title }}
-                    </h3>
+                        </div>
+                    </div>
+                    <div class="{% if value.multimedia|length < 3 %}multimedia__card__content--two{% endif %} multimedia__card__content">
+                        <h3 class="multimedia__card__title">
+                            {{ block.value.title }}
+                        </h3>
 
-                    <p class="multimedia__card__summary">
-                        {{ block.value.summary }}
-                    </p>
+                        <p class="multimedia__card__summary">
+                            {{ block.value.summary }}
+                        </p>
+                    </div>
                 </div>
-
-        </div>
-
-        {% endif %}
-    {% endfor %}
+            {% endif %}
+        {% endfor %}
     </div>
-
 </div>
 
 
@@ -109,4 +97,5 @@
  document.querySelectorAll('.lightgallery').forEach(function(menu) {
             lightGallery(menu);
         });
+
 </script>

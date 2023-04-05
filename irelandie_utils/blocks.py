@@ -797,9 +797,9 @@ class ContactBlock(blocks.StructBlock):
 class StoryPhotoGalleryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
-            required=True,
-            help_text=_(ALT_IMAGE),
-        )
+        required=True,
+        help_text=_(ALT_IMAGE),
+    )
     heading = blocks.CharBlock(required=False)
     rich_text_summary = blocks.RichTextBlock(required=False)
     button_link = blocks.StreamBlock(
@@ -1333,8 +1333,32 @@ class GenericHeroBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/generic_hero.html"
 
 
+class YoutubeVimeoLinkValue(blocks.StructValue):
+    def embedding_url(self):
+
+        url = self.get("youtube_or_vimeo_embed", None)
+        if url is None:
+            return None
+        if "/embed/" in url:
+            return url
+        if 'youtube.com' in url or 'youtu.be' in url:
+            pattern = r"^(http(s)?:\/\/)?(www\.)?((youtu)(be)?)?"
+            pattern += r"(\.(com)|\.(be))?(\/)(watch\?v=)?|(\&.+)?"
+
+            video_id = re.sub(pattern, "", url)
+            video_id = re.sub(r"(&list.+)|((\s)$)", "", video_id)
+
+            return f"https://www.youtube.com/embed/{video_id}"
+        if 'vimeo.com' in url:
+            embed_url = url.replace('vimeo.com', 'player.vimeo.com/video')
+            embed_url_with_parameters = embed_url + '?controls=0'
+            return embed_url_with_parameters
+        else:
+            return None
+
+
 class VideoBlock(blocks.StructBlock):
-    youtube_or_vimeo_embed = EmbedBlock(required=False)
+    youtube_or_vimeo_embed = blocks.CharBlock(required=False)
     video = CustomVideoChooserBlock(required=False)
     video_alt = blocks.CharBlock(
         required=True,
@@ -1358,6 +1382,9 @@ class VideoBlock(blocks.StructBlock):
 
         return super().clean(value)
 
+    class Meta:
+        value_class = YoutubeVimeoLinkValue
+
 
 class MultimediaRowBlock(blocks.StructBlock):
     richtext = AdvancedRichTextBlock(required=False)
@@ -1370,7 +1397,6 @@ class MultimediaRowBlock(blocks.StructBlock):
 
     class Meta:
         label = "Multimedia Row"
-        value_class = YoutubeLinkValue
         template = "patterns/molecules/streamfield/blocks/multimedia_block.html"
 
 
