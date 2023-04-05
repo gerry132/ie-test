@@ -13,7 +13,6 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import VideoChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 from irelandie_home.blocks import SecondaryCallToAction
-from wagtail.embeds.blocks import EmbedBlock
 
 from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment
 
