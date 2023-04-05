@@ -669,7 +669,6 @@ resource "aws_lb_target_group" "default_admin" {
   #}
 #}
 
-
 resource "aws_acm_certificate" "ireland_ie_content" {
   domain_name                 = "preprod.ireland.ie"
   subject_alternative_names = [
@@ -882,7 +881,6 @@ resource "aws_lb_listener_rule" "ireland_ie_443" {
     }
   }
 }
-
 
 # -----------------------------------------------------------------------------
 # Listener certificates
