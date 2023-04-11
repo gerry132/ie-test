@@ -28,6 +28,7 @@ locals {
   app_aws_username              = "PROD_APP_USER"
   project_domain                = "content.ireland.ie"
   domain_ireland_ie             = "ireland.ie"
+  africa_day_domain             = "africaday.ie"
   project_name                  = "ireland-ie"
   region                        = "eu-west-1"
   # DB
@@ -671,6 +672,18 @@ resource "aws_acm_certificate" "ireland_ie_ssl" {
   lifecycle {
     create_before_destroy   = true
   }
+}
+
+resource "aws_acm_certificate" "africa_day" {
+    domain_name               = local.africa_day_domain
+    subject_alternative_names = [
+        "www.${local.africa_day_domain}"
+    ]
+    validation_method         = "DNS"
+
+    lifecycle {
+        create_before_destroy = true
+    }
 }
 
 # -----------------------------------------------------------------------------

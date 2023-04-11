@@ -66,6 +66,30 @@ stages:
         AWS_ACCESS_KEY_ID: $(aws_access_key)
         AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
 
+- stage: terraform
+  displayName: Terraform
+  jobs:
+    - job: runTerraform
+      steps:
+        - checkout: self
+          submodules: true
+          persistCredentials: true
+
+        - task: Bash@3
+          displayName: Run Terraform
+          inputs:
+            targetType: inline
+            script: |
+              cd infrastructure/terraform/aws/$(env)/
+              terraform init -input=false -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY"
+              terraform apply -input=false -auto-approve
+              cd ../../../..
+            failOnStderr: true
+          env:
+            AWS_ACCESS_KEY_ID: $(aws_access_key)
+            AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
+            AWS_DEFAULT_REGION: $(aws_region)
+
 - stage: deploy
   displayName: Deploy
   jobs:
@@ -74,21 +98,6 @@ stages:
     - checkout: self
       submodules: true
       persistCredentials: true
-
-    - task: Bash@3
-      displayName: Run Terraform
-      inputs:
-        targetType: inline
-        script: |
-          cd infrastructure/terraform/aws/$(env)/
-          terraform init -input=false -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY"
-          terraform apply -input=false -auto-approve
-          cd ../../../..
-        failOnStderr: true
-      env:
-        AWS_ACCESS_KEY_ID: $(aws_access_key)
-        AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
-        AWS_DEFAULT_REGION: $(aws_region)
 
     - task: Bash@3
       displayName: Build and Push Image
