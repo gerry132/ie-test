@@ -38,58 +38,87 @@ function getNewsArticles(year=null) {
 }
 
 getNewsArticles();
+
 </script>
 {% if page.generic_hero %}
-    {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+{% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+<div class="section--master">
+    <div class="wrapper--large--toc" style="padding-bottom: 40px;">
+        <div class="wrapper--padding related-content--mobile">
+            <h3 class="intro__title">Select year:</h3>
+            <select class="searchBarNews" id="news-list" onchange="getNewsArticles(this.value); " style="width: 100%;">
+                <option value="all">All</option>
+                {% for p in page.get_years %}
+                <option value="{{p}}">{{p}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="wrapper--large--toc" id="link-box_wrapper">
+        <div class="link-box__main">
+            <div style="padding-bottom: 20px;">
+                <div id="news--wrapper" style="padding-bottom: 10%"></div>
+                {% include "patterns/molecules/pagination/pagination.html" with paginator_page=related_articles %}
+            </div>
+        </div>
+        <div class="related-content">
+            <h3 class="intro__title">Select year:</h3>
+            <select class="searchBarNews" id="news-list-mobile" onchange="getNewsArticles(this.value); " style="width: 100%;">
+                <option value="all">All</option>
+                {% for p in page.get_years %}
+                <option value="{{p}}">{{p}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>
 {% endif %}
-{% has_root_override page header=True as override %}
 
-
-<div id="main-header" class="section section--padding section--white section--toc">
-    <div id="wrapper" class="wrapper--large--toc">
+{% if not page.generic_hero %}
+<div class="section section--padding section--white section--toc" id="main-header">
+    <div class="wrapper--large--toc" id="wrapper">
         <div id="left">
             <div class="wrapper wrapper--padding">
                 <div class="intro--toc">
-                    <div class="container">
-                        <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
-                            {% if page.description %}
-                                <p class="hero__introduction">{{ page.description }}</p>
-                            {% endif %}
-                    </div>
+                    <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                    {% if page.description %}
+                    <p class="hero__introduction">{{ page.description }}</p>
+                    {% endif %}
                 </div>
                 <div class="wrapper--padding related-content--mobile">
                     <h3 class="intro__title">Select year:</h3>
-                    <select id="news-list" class="searchBarNews" style="width: 100%;" onchange="getNewsArticles(this.value); ">
-                            <option value="all">All</option>
-                            {% for p in page.get_years %}
-                                <option value="{{p}}">{{p}}</option>
-                            {% endfor %}
-                        </select>
+                    <select class="searchBarNews" id="news-list" onchange="getNewsArticles(this.value); " style="width: 100%;">
+                        <option value="all">All</option>
+                        {% for p in page.get_years %}
+                        <option value="{{p}}">{{p}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
         </div>
         <div id="right">
             <div class="related-content">
                 <h3 class="intro__title">Select year:</h3>
-                <select id="news-list-mobile" class="searchBarNews" style="width: 100%;" onchange="getNewsArticles(this.value); ">
-                        <option value="all">All</option>
-                        {% for p in page.get_years %}
-                            <option value="{{p}}">{{p}}</option>
-                        {% endfor %}
-                    </select>
+                <select class="searchBarNews" id="news-list-mobile" onchange="getNewsArticles(this.value); " style="width: 100%;">
+                    <option value="all">All</option>
+                    {% for p in page.get_years %}
+                    <option value="{{p}}">{{p}}</option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
-      </div>
+    </div>
 </div>
 <div class="section--master">
-   <div class="section section--white">
-    <div class="wrapper wrapper--large--toc wrapper--padding">
-        <div style="padding-bottom: 20px;">
-            <div id="news--wrapper" style="padding-bottom: 10%"></div>
-            {% include "patterns/molecules/pagination/pagination.html" with paginator_page=related_articles %}
+    <div class="section section--white">
+        <div class="wrapper wrapper--large--toc wrapper--padding">
+            <div style="padding-bottom: 20px;">
+                <div id="news--wrapper" style="padding-bottom: 10%"></div>
+                {% include "patterns/molecules/pagination/pagination.html" with paginator_page=related_articles %}
+            </div>
         </div>
-    {% endblock %}
+    </div>
 </div>
-</div>
-</div>
+{% endif %}
+{% endblock %}
 
