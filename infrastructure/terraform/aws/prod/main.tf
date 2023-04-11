@@ -878,6 +878,24 @@ resource "aws_lb_listener_rule" "ireland_ie_443" {
   }
 }
 
+resource "aws_lb_listener_rule" "africa_day" {
+    listener_arn = aws_lb_listener.public_sites_443.arn
+    priority = 9
+
+    action {
+        type = "redirect"
+        redirect {
+            host = "www.${local.domain_ireland_ie}"
+            path = "/africa-day"
+            status_code = "HTTP_301"
+        }
+    }
+    condition {
+        host_header {
+            values = [local.africa_day_domain, "www.${local.africa_day_domain}"]
+        }
+    }
+}
 # -----------------------------------------------------------------------------
 # Listener certificates
 # -----------------------------------------------------------------------------
@@ -892,6 +910,10 @@ resource "aws_lb_listener_certificate" "admin_ireland_ie_certificate" {
   certificate_arn = aws_acm_certificate.project.arn
 }
 
+resource "aws_lb_listener_certificate" "africa_day_certificate" {
+    listener_arn    = aws_lb_listener.public_sites_443.arn
+    certificate_arn = aws_acm_certificate.africa_day.arn
+}
 
 # -----------------------------------------------------------------------------
 # Database
