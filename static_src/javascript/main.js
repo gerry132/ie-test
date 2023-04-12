@@ -55,7 +55,15 @@ function closeMobileMenu() {
             menu.classList.remove('is-visible');
         });
 }
+/* image-credit */
+let iicons = document.querySelectorAll('.story__button-image-credit');
+let imagecredits = document.querySelectorAll('.story__image-credit');
 
+for (let i = 0; i < iicons.length; i++) {
+    iicons[i].addEventListener('click', function() {
+        imagecredits[i].classList.toggle('visible');
+    });
+}
 document.addEventListener('DOMContentLoaded', () => {
     /* eslint-disable no-restricted-syntax, no-new */
 

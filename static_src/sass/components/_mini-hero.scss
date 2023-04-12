@@ -295,6 +295,44 @@
             opacity: 1;
         }
 	}
+	&__image-credit_mobile{
+        background: rgba(236, 232, 230, 0.85);
+        border-radius: 0px 0px 0px 20px;
+        font-size: 15px;
+        line-height: 18px;
+        padding: 8px 16px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        opacity: 0;
+        display: inline-block;
+        color: #292929;
+        z-index: 1;
+        transition: opacity .25s ease-out;
+        pointer-events: none;
+    @media only screen and (min-width: 823px){
+        display: none;
+        }
+    }
+    &__image-credit_mobile.visible{
+        opacity: 0.85;
+        pointer-events: auto;
+        padding-right: 35px;
+    }
+    &__button-image-credit{
+        @media only screen and (max-width: 822px){
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            background: none;
+            border: unset;
+            z-index: 2;
+        }
+        @media only screen and (min-width: 823px){
+            display: none;
+        }
+    }
 
 }
 
