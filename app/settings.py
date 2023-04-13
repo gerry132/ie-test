@@ -27,12 +27,12 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 DEBUG_TOOLBAR = os.environ.get("DEBUG_TOOLBAR", "0") in TRUE
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'os.environ["SECRET_KEY"]'
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "0") in TRUE
 
-ALLOWED_HOSTS = '*'
+ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
 # Application definition
 
@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "irelandie_press_releases",
     "irelandie_publications",
     "irelandie_speeches",
+    "irelandie_story",
     "irelandie_site_information",
     "irelandie_forms",
     #
@@ -301,7 +302,7 @@ REST_FRAMEWORK = {
     )
 }
 # https://pypi.org/project/django-cors-headers/
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = os.environ.get("CORS_ALLOW_ALL_ORIGINS", False) in TRUE
 if CORS_ALLOW_ALL_ORIGINS is False:
     CORS_ALLOWED_ORIGINS = os.environ["CORS_ALLOWED_ORIGINS"].split(",")
 
