@@ -95,7 +95,6 @@ def has_secondary_nav(context):
     return bool(get_nav_for_locale(SecondaryNavigation, locale))
 
 
-
 @register.simple_tag(
     takes_context=True
 )
