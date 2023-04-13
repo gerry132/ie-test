@@ -19,7 +19,6 @@ class StoryPage(HeroPage):
         max_num=1,
     )
 
-
     introduction = models.TextField(blank=True)
     body = StreamField(StoryPageBlock(), blank=True)
 
