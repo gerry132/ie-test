@@ -37,4 +37,5 @@ class StoryPageBlock(blocks.StreamBlock):
     stats_block = StatsBlock(group="Base")
     multimedia_row = MultimediaRowBlock(group="Base")
     logo_cards = LogoCardsBlock(group="Module")
+
     articles = ArticleCardsBlock(group="Module")
