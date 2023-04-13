@@ -428,7 +428,7 @@ class PlaceBlock(blocks.PageChooserBlock):
 
 class RichTextBlock(blocks.RichTextBlock):
     class Meta:
-        label = "RichTextBlock"
+        label = "DO-NOT-USE"
         template = "patterns/molecules/streamfield/blocks/paragraph_block.html"
 
 
