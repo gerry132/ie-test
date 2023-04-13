@@ -15,6 +15,7 @@ import Accordion from './components/accordion';
 /* endfeature */
 /* feature:use_frontend_component_carousel */
 import Carousel from './components/carousel';
+import Timeline from './components/timeline';
 /* endfeature */
 /* feature:use_frontend_component_progress_bar */
 import ProgressBar from './components/progress-bar';
@@ -129,5 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
         MultimediaToggle.selector(),
     )) {
         new MultimediaToggle(multimediatoggle);
+    }
+
+    for (const carousel of document.querySelectorAll(Timeline.selector())) {
+        new Timeline(carousel);
     }
 });

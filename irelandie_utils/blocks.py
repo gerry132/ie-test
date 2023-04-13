@@ -793,6 +793,25 @@ class ContactBlock(blocks.StructBlock):
     email = blocks.RichTextBlock(blank=True, required=False)
 
 
+class TimelinePhotoBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=True)
+    rich_text_summary = blocks.RichTextBlock(required=True)
+    date = blocks.TextBlock(required=True)
+
+    class Meta:
+        label = "Timeline Photo Gallery"
+
+
+class TimelinePhotoGalleriesBlock(blocks.StructBlock):
+    richtext = AdvancedRichTextBlock(required=False)
+    story_photo_gallery = blocks.StreamBlock([("timeline_photo_gallery", TimelinePhotoBlock())])
+
+    class Meta:
+        icon = "list-ul"
+        label = "Timeline Photo Gallery"
+        template = "patterns/molecules/streamfield/blocks/timeline_block.html"
+
+
 class StoryPhotoGalleryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
@@ -854,6 +873,7 @@ class MinimalArticleStoryBlock(blocks.StreamBlock):
     table = TableBlock(table_options={'renderer': 'html'}, group="Module")
     youtube_video = YoutubeVideoBlock(group="Module")
     story_photo_gallery = StoryPhotoGalleriesBlock(group="Base")
+    timeline_photo_gallery = TimelinePhotoGalleriesBlock(group="Base")
 
 
 class PinnedStoriesBlock(blocks.StructBlock):
@@ -942,6 +962,7 @@ class FreeFormBlocksBase(blocks.StreamBlock):
         template="patterns/molecules/pinned-stories/pinned_stories.html", group="Module"
     )
     story_photo_gallery = StoryPhotoGalleriesBlock(group="Base")
+    timeline_photo_gallery = TimelinePhotoGalleriesBlock(group="Base")
     stories = StoryBlock(group="Module")
 
     video = CustomVideoChooserBlockAlt(group="HTML")
@@ -1025,6 +1046,7 @@ class GeneralContentBlocks(blocks.StreamBlock):
     logos = LogoCardsBlock(group="Base")
     stats_block = StatsBlock(group="Base")
     story_photo_gallery = StoryPhotoGalleriesBlock(group="Base")
+    timeline_photo_gallery = TimelinePhotoGalleriesBlock(group="Base")
 
 
 class TocBlock(blocks.StructBlock):
