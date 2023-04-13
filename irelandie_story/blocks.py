@@ -17,6 +17,7 @@ from irelandie_utils.blocks import (
 
 from wagtail import blocks
 
+
 class StoryPageBlock(blocks.StreamBlock):
     rich_text = AdvancedRichTextBlock(group="Base")
     image = ImageBlock(group="Base")
@@ -37,4 +38,5 @@ class StoryPageBlock(blocks.StreamBlock):
     stats_block = StatsBlock(group="Base")
     multimedia_row = MultimediaRowBlock(group="Base")
     logo_cards = LogoCardsBlock(group="Module")
+
     articles = ArticleCardsBlock(group="Module")
