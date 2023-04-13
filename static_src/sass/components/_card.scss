@@ -1,7 +1,6 @@
 .card {
     $root: &;
     display: block;
-    border-radius: $border-radius;
     box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
     background-color: $color--white;
     // Transparent border, so cards are visible in high-contrast mode with no background.
