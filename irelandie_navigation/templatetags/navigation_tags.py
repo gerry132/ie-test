@@ -102,36 +102,21 @@ def has_root_override(context, page, header=True):
     if isinstance(page, int) or isinstance(page, str):
         # accounts for search
         return False
-
+    page_map = {
+        'mission page': MissionPage,
+        'Free Form Page': FreeFormPage
+    }
     pages = page.get_ancestors()
     if page.content_type.name == 'mission page' or page.content_type.name == 'Free Form Page':
         if page.root_page:
             return False
-    for p in pages:
-        if p.content_type.name == 'mission page':
-            m = MissionPage.objects.get(id=p.id)
-            if m.root_page:
-                if header:
-                    return m.custom_header
-                else:
-                    return m.custom_footer
-        elif p.content_type.name == 'Free Form Page':
-            m = FreeFormPage.objects.get(id=p.id)
-            if m.root_page:
-                if header:
-                    return m.custom_header
-                else:
-                    return m.custom_footer
-
-    for p in pages:
-        if p.content_type.name == 'Free Form Page':
-            f = FreeFormPage.objects.get(id=p.id)
-            if f.root_page:
-                if header:
-                    return f.custom_header
-                else:
-                    return f.custom_footer
-
+    for p in pages.reverse():
+        m = page_map[p.content_type.name].objects.get(id=p.id)
+        if m.root_page:
+            if header:
+                return m.custom_header
+            else:
+                return m.custom_footer
     return False
 
 
