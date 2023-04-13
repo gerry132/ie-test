@@ -1,0 +1,54 @@
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+<style>
+    .rich-text{max-width: 800px;}
+    @media screen and (max-width: 500px) {
+        .wrapper { overflow-x: hidden;}
+    }
+    hr{
+        background-color: rgb(243, 192, 192);
+        border-top: 3px dotted rgb(10, 53, 245);
+        height: 3px;
+        min-width: 5000px;
+        margin-left: -1000px;
+        position: absolute;
+        top: 49%;
+    }
+</style>
+
+<div style="padding-top: 40px;">
+</div>
+
+<div aria-label="Timeline" class="glide timeline glide--ltr glide--carousel glide--swipeable" data-timeline
+     data-mdb-interval="false" data-slidetotal>
+     <hr/>
+    <div class="timeline__track" data-glide-el="track">
+        <ul class="glide__slides timeline__slides" style="z-index: 0" >
+            {% for story_photo_gallery in value.story_photo_gallery %} 
+                <li aria-label="Timeline slide" id="{{forloop.counter}}" class="glide__slide" tab-index="0">
+                <div class="tab_container">
+                <div class="header_container">
+                            <h3 id="date_field">{{story_photo_gallery.value.date}}</h3>
+                        </div>
+                    </div>
+                <div class="timeline-slide" >
+                    <div class="timeline_card">
+                        <div class="timeline_card__image-container">
+                            {% image story_photo_gallery.value.image fill-400x200 class="timeline_card__image"%}
+                        </div>
+
+                        <div class="timeline_card__content">
+                            <p class="timeline_card__summary">
+                                {{ story_photo_gallery.value.rich_text_summary|richtext }}
+                            </p>
+                        </div>
+                    </div>                    
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div data-glide-el="controls">
+        <button class="slider-arrow slider-arrow--left" data-glide-dir="<">‹</button>
+        <button class="slider-arrow slider-arrow--right" data-glide-dir=">">›</button>
+    </div>
+</div>
