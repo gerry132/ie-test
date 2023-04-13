@@ -160,7 +160,7 @@ class NewsPage(MinimalArticlePage):
 class NewsLandingPage(BasePage):
     template = "patterns/pages/irelandie_news/news_landing_page.html"
     subpage_types = [
-        'NewsPageIndex',
+        'NewsPageIndex', 'irelandie_missions.GeneralContentPage',
     ]
     generic_hero = StreamField(
         [

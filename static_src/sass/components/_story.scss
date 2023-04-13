@@ -271,6 +271,7 @@
         z-index: 1;
         transition: opacity .25s ease-out;
         pointer-events: none;
+        word-break: break-word;
     @media only screen and (min-width: 823px){
         background: rgba(236, 232, 230, 0.85);
         border-radius: 20px 0px 0px 0px;
@@ -288,12 +289,12 @@
     &__image-credit.visible{
         opacity: 0.85;
         pointer-events: auto;
-        padding-right: 35px;
+        padding-right: 45px;
     }
     &__button-image-credit{
         @media only screen and (max-width: 822px){
             position: absolute;
-            bottom: -3px;
+            bottom: 0;
             right: 0;
             cursor: pointer;
             background: none;
