@@ -18,6 +18,7 @@ class StoryPage(HeroPage):
         min_num=0,
         max_num=1,
     )
+
     introduction = models.TextField(blank=True)
     body = StreamField(StoryPageBlock(), blank=True)
 
@@ -34,6 +35,5 @@ class StoryPage(HeroPage):
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
-
     class Meta:
-        verbose_name = "Story story page"
+        verbose_name = "Story page"
