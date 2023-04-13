@@ -20,7 +20,9 @@
                 {% endif %}
             </div>
             {% if page.expire_at %}
+            <div class="rich-text">
                 <p>Closing date: {% format_date page.expire_at %}</p>
+            </div>
             {% endif %}
              {% for block in page.body %}
                 {% if block.block_type == 'document' %}

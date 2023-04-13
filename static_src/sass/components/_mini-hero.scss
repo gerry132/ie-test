@@ -310,6 +310,7 @@
         z-index: 1;
         transition: opacity .25s ease-out;
         pointer-events: none;
+        word-break: break-word;
     @media only screen and (min-width: 823px){
         display: none;
         }
@@ -317,12 +318,12 @@
     &__image-credit_mobile.visible{
         opacity: 0.85;
         pointer-events: auto;
-        padding-right: 35px;
+        padding-right: 45px;
     }
     &__button-image-credit{
         @media only screen and (max-width: 822px){
             position: absolute;
-            top: 0;
+            top: 1px;
             right: 0;
             cursor: pointer;
             background: none;
