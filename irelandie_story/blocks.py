@@ -17,6 +17,7 @@ from irelandie_utils.blocks import (
 
 from wagtail import blocks
 
+
 class StoryPageBlock(blocks.StreamBlock):
     rich_text = AdvancedRichTextBlock(group="Base")
     image = ImageBlock(group="Base")
