@@ -12,14 +12,14 @@
                             </button>
                           <div class="story__image-credit">{{ value.image_credit }}</div>
                     {% endif %}
-                    {% image value.image width-1000 class="image image-block__image" loading="lazy" alt=value.image_alt %}
+                    {% image value.image width-1000 class="image" loading="lazy" alt=value.image_alt %}
                 </div>
         {% else %}
             <div class="{% if value.image_credit %}image-block__credit_wrapper{% endif %}">
                     {% if value.image_credit %}
                           <span class="story__image-credit">{{ value.image_credit }}</span>
                     {% endif %}
-            {% image value.image width-1000 class="image image-block__image" loading="lazy" alt=value.image.alt_default %}
+            {% image value.image width-1000 class="image" loading="lazy" alt=value.image.alt_default %}
             </div>
         {% endif %}
         {% if value.caption %}

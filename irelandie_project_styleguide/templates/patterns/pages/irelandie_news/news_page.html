@@ -37,7 +37,7 @@ Responsive hero images
                 </button>
                 <div class="story__image-credit">{{ page.hero_image_credit }}</div>
                 {% endif %}
-                {% image page.hero_image width-1000 class="image image-block__image" loading="lazy" alt=page.alt_text %}
+                {% image page.hero_image width-1000 class="image" loading="lazy" alt=page.alt_text %}
             </div>
             {% else %}
             <div class="{% if page.hero_image_credit %}image-block__credit_wrapper{% endif %}">
@@ -49,7 +49,7 @@ Responsive hero images
                 </button>
                 <div class="story__image-credit">{{ page.hero_image_credit }}</div>
                 {% endif %}
-                {% image page.hero_image width-1000 class="image image-block__image" loading="lazy" alt=value.hero_image.alt_default %}
+                {% image page.hero_image width-1000 class="image" loading="lazy" alt=value.hero_image.alt_default %}
             </div>
             {% endif %}
             {% if page.caption %}
