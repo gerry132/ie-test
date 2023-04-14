@@ -13,6 +13,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import VideoChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 from irelandie_home.blocks import SecondaryCallToAction
+from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 
 from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment
 
@@ -878,6 +879,14 @@ class MinimalArticleStoryBlock(blocks.StreamBlock):
 
     logos = LogoCardsBlock(group="Module")
     table = TableBlock(table_options={'renderer': 'html'}, group="Module")
+    advanced_table_block = TypedTableBlock([
+        ('text', blocks.CharBlock()),
+        ('numeric', blocks.FloatBlock()),
+        ('rich_text', blocks.RichTextBlock(
+            features=["h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "bold", "italic", "link", "document-link", "ul",
+                      "ol", "image", "embed", ])),
+        ('image', ImageChooserBlock())
+    ], group="Module")
     youtube_video = YoutubeVideoBlock(group="Module")
     story_photo_gallery = StoryPhotoGalleriesBlock(group="Base")
     timeline_photo_gallery = TimelinePhotoGalleriesBlock(group="Base")
@@ -1037,6 +1046,14 @@ class TocBlocks(blocks.StreamBlock):
     rich_text = AdvancedRichTextBlock(group="Base")
     document = DocumentBlock(group="Base")
     table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
+    advanced_table_block = TypedTableBlock([
+        ('text', blocks.CharBlock()),
+        ('numeric', blocks.FloatBlock()),
+        ('rich_text', blocks.RichTextBlock(
+            features=["h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "bold", "italic", "link", "document-link", "ul",
+                      "ol", "image", "embed", ])),
+        ('image', ImageChooserBlock())
+    ], group="HTML")
 
 
 class GeneralContentBlocks(blocks.StreamBlock):
@@ -1048,6 +1065,14 @@ class GeneralContentBlocks(blocks.StreamBlock):
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
     table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
+    advanced_table_block = TypedTableBlock([
+        ('text', blocks.CharBlock()),
+        ('numeric', blocks.FloatBlock()),
+        ('rich_text', blocks.RichTextBlock(
+            features=["h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "bold", "italic", "link", "document-link", "ul",
+                      "ol", "image", "embed", ])),
+        ('image', ImageChooserBlock())
+    ], group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
     accordion = AccordionBlock(group="Base")
     logos = LogoCardsBlock(group="Base")
@@ -1444,6 +1469,14 @@ class FreeFormBlocks(FreeFormBlocksBase):
     link_button = LinkButtonBlock()
     link_box = LinkBoxesBlock()
     table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
+    advanced_table_block = TypedTableBlock([
+        ('text', blocks.CharBlock()),
+        ('numeric', blocks.FloatBlock()),
+        ('rich_text', blocks.RichTextBlock(
+            features=["h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "bold", "italic", "link", "document-link", "ul",
+                      "ol", "image", "embed", ])),
+        ('image', ImageChooserBlock())
+    ], group="HTML")
     html = blocks.RawHTMLBlock(
         group="HTML",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",

@@ -88,6 +88,7 @@ INSTALLED_APPS = [
     "wagtail",
     "wagtailaccessibility",
     "wagtailmedia",
+    "wagtail.contrib.typed_table_block",
     "wagtail.api.v2",
     "captcha",
     "wagtailcaptcha",

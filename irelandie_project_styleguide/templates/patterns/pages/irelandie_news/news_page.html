@@ -75,7 +75,7 @@ Responsive hero images
         </figure>
     </div>
     {% for block in page.body %}
-    {% if block.block_type == 'table' %}
+    {% if block.block_type == 'table' or block.block_type == 'advanced_table_block' %}
     <div class="wrapper wrapper--small wrapper--padding">
         {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}
     </div>
