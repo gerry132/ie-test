@@ -181,8 +181,8 @@ class JobContentPage(BasePage):
         FieldPanel("subtitle", permission="access_admin"),
         MultiFieldPanel(
             [
-                HelpPanel(content='help_text', template='patterns/molecules'
-                                                        '/streamfield/help_text_scheduled_publishing.html', heading='', classname=''),
+                HelpPanel(content='help_text', template='patterns/molecules/streamfield/'
+                          'help_text_scheduled_publishing.html', heading='', classname=''),
                 FieldPanel('go_live_at'),
                 FieldPanel('expire_at'),
             ],
