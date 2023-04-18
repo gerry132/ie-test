@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.utils.functional import cached_property
-from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel, HelpPanel
 from wagtail.fields import StreamField, RichTextField
 from wagtail import blocks as wagtail_blocks
 
@@ -181,6 +181,8 @@ class JobContentPage(BasePage):
         FieldPanel("subtitle", permission="access_admin"),
         MultiFieldPanel(
             [
+                HelpPanel(content='help_text', template='patterns/molecules'
+                                                        '/streamfield/help_text_scheduled_publishing.html', heading='', classname=''),
                 FieldPanel('go_live_at'),
                 FieldPanel('expire_at'),
             ],
