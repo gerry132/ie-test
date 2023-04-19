@@ -803,6 +803,7 @@ class ContactBlock(blocks.StructBlock):
 
 class TimelinePhotoBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
+    alt_text = blocks.TextBlock(required=True)
     rich_text_summary = blocks.RichTextBlock(required=True)
     date = blocks.TextBlock(required=True)
 

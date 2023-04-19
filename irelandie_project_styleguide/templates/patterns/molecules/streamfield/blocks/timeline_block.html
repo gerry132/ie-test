@@ -15,9 +15,12 @@
     }
 </style>
 
-<div style="padding-top: 40px;">
-</div>
 
+{% if value.richtext %}
+<div class="wrapper wrapper--padding" style="padding-top: 30px;">
+        {% include_block value.richtext %}
+</div>
+{% endif %}
 <div aria-label="Timeline" class="glide timeline glide--ltr glide--carousel glide--swipeable" data-timeline
      data-mdb-interval="false" data-slidetotal>
      <hr/>
