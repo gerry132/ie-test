@@ -23,10 +23,10 @@
     &__image-container {
         overflow: hidden;
         position: relative;
-        height: 60%;
+        height: 300px;
 
         @include media-query(medium) {
-            height: 200px;
+            height: 300px;
         }
 
     }
