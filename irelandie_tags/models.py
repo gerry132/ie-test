@@ -10,6 +10,22 @@ from wagtail.admin.panels import FieldPanel
 from wagtail import blocks
 
 
+class TagListPage(BasePage):
+    subpage_types = [
+        'TagPage'
+    ]
+
+    parent_page_types = [
+        'HomepagePage'
+    ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        tag_pages = self.get_children().specific()
+        context['tags'] = tag_pages
+        return context
+
+
 class TagPage(BasePage):
     tag_label = models.TextField(blank=True)
     destination_tag = StreamField(
