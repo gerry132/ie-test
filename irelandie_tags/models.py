@@ -2,11 +2,10 @@
 from django.db import models
 from django.forms import ValidationError
 from irelandie_utils.models import BasePage
-from irelandie_utils.blocks import GenericHeroBlock
 from irelandie_missions.models import DestinationPage
 
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList
+from wagtail.admin.panels import FieldPanel
 
 from wagtail import blocks
 
