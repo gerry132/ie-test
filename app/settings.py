@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     "irelandie_speeches",
     "irelandie_story",
     "irelandie_site_information",
+    "irelandie_tags",
     "irelandie_forms",
     #
     "wagtail_localize",
