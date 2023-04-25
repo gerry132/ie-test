@@ -79,7 +79,7 @@
     &__video-block {
     position: relative;
     margin: 20px auto;
-    border-radius: $border-radius;
+
     min-width: 30%;
     max-width: 100%;
     object-fit: cover;
@@ -95,7 +95,7 @@
     position: relative;
     margin: 20px auto;
     flex: 1 1 30%;
-    border-radius: $border-radius;
+
     min-width: 30%;
     max-width: 100%;
     object-fit: fill;
@@ -110,7 +110,7 @@
     position: relative;
     margin: 20px auto;
     flex: 1 1 30%;
-    border-radius: $border-radius;
+
     min-width: 30%;
     max-width: 100%;
     object-fit: fill;
@@ -122,12 +122,12 @@
 
     }
     &__image_person {
-        border-radius: $border-radius;
+
         margin: 20px auto;
         }
 
     &__image {
-        border-radius: $border-radius;
+
         object-fit: cover;
         align-self: center;
 
@@ -265,8 +265,44 @@
         position: absolute;
         bottom: 0;
         right: 0;
+        opacity: 0;
+        display: inline-block;
+        color: #292929;
+        z-index: 1;
+        transition: opacity .25s ease-out;
+        pointer-events: none;
+        word-break: break-word;
+    @media only screen and (min-width: 823px){
+        background: rgba(236, 232, 230, 0.85);
+        border-radius: 20px 0px 0px 0px;
+        font-size: 15px;
+        line-height: 18px;
+        padding: 8px 16px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
         opacity: 0.85;
         display: inline-block;
         color: #292929;
+        }
+    }
+    &__image-credit.visible{
+        opacity: 0.85;
+        pointer-events: auto;
+        padding-right: 45px;
+    }
+    &__button-image-credit{
+        @media only screen and (max-width: 822px){
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            cursor: pointer;
+            background: none;
+            border: unset;
+            z-index: 2;
+        }
+        @media only screen and (min-width: 823px){
+            display: none;
+        }
     }
 }

@@ -13,7 +13,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import VideoChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 from irelandie_home.blocks import SecondaryCallToAction
-from wagtail.embeds.blocks import EmbedBlock
+from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 
 from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment
 
@@ -213,11 +213,18 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         errors = {}
         person_image = value.get('image')
         video = value.get('video')
+        image = value.get('image')
+        image_alt = value.get('image_alt')
 
         if not (bool(person_image) ^ bool(video)):
             msg = "You can't choose both an image and a video. Choose an image or a video"
             errors['image'] = ErrorList([msg])
             errors['video'] = ErrorList([msg])
+
+        if image and not image_alt:
+            msg = "You can't have an image without alt text."
+            errors['image'] = ErrorList([msg])
+            errors['image_alt'] = ErrorList([msg])
 
         if not (bool(person_image) | bool(video)):
             msg = "You have to choose either an image or a video."
@@ -429,7 +436,7 @@ class PlaceBlock(blocks.PageChooserBlock):
 
 class RichTextBlock(blocks.RichTextBlock):
     class Meta:
-        label = "RichTextBlock"
+        label = "DO-NOT-USE"
         template = "patterns/molecules/streamfield/blocks/paragraph_block.html"
 
 
@@ -794,6 +801,58 @@ class ContactBlock(blocks.StructBlock):
     email = blocks.RichTextBlock(blank=True, required=False)
 
 
+class TimelinePhotoBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=True)
+    alt_text = blocks.TextBlock(required=True)
+    rich_text_summary = blocks.RichTextBlock(required=True)
+    date = blocks.TextBlock(required=True)
+
+    class Meta:
+        label = "Timeline Photo Gallery"
+
+
+class TimelinePhotoGalleriesBlock(blocks.StructBlock):
+    richtext = AdvancedRichTextBlock(required=False)
+    story_photo_gallery = blocks.StreamBlock([("timeline_photo_gallery", TimelinePhotoBlock())])
+
+    class Meta:
+        icon = "list-ul"
+        label = "Timeline Photo Gallery"
+        template = "patterns/molecules/streamfield/blocks/timeline_block.html"
+
+
+class StoryPhotoGalleryBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=True)
+    image_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_IMAGE),
+    )
+    heading = blocks.CharBlock(required=False)
+    rich_text_summary = blocks.RichTextBlock(required=False)
+    button_link = blocks.StreamBlock(
+        [
+            ("button", SecondaryCallToAction())
+        ],
+        blank=True,
+        max_num=1,
+        min_num=0,
+        required=False,
+    )
+
+    class Meta:
+        label = "Story Photo Gallery"
+
+
+class StoryPhotoGalleriesBlock(blocks.StructBlock):
+    richtext = AdvancedRichTextBlock(required=False)
+    story_photo_gallery = blocks.StreamBlock([("story_photo_gallery", StoryPhotoGalleryBlock())])
+
+    class Meta:
+        icon = "list-ul"
+        label = "Story Photo Gallery"
+        template = "patterns/molecules/streamfield/blocks/story_photo_galleries_block.html"
+
+
 class ArticleStoryBlock(blocks.StreamBlock):
     rich_text = RichTextBlock(group="Base")
     rich_text_advanced = AdvancedRichTextBlock(group="Base")
@@ -808,7 +867,7 @@ class ArticleStoryBlock(blocks.StreamBlock):
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
     role = RoleBlock(group="HTML")
-    table = TableBlock(group="HTML")
+    table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
     video = CustomVideoChooserBlockAlt(group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
 
@@ -820,8 +879,18 @@ class MinimalArticleStoryBlock(blocks.StreamBlock):
     document = DocumentBlock(group="Base")
 
     logos = LogoCardsBlock(group="Module")
-    table = TableBlock(group="Module")
+    table = TableBlock(table_options={'renderer': 'html'}, group="Module")
+    advanced_table_block = TypedTableBlock([
+        ('text', blocks.CharBlock()),
+        ('numeric', blocks.FloatBlock()),
+        ('rich_text', blocks.RichTextBlock(
+            features=["h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "bold", "italic", "link", "document-link", "ul",
+                      "ol", "image", "embed", ])),
+        ('image', ImageChooserBlock())
+    ], group="Module")
     youtube_video = YoutubeVideoBlock(group="Module")
+    story_photo_gallery = StoryPhotoGalleriesBlock(group="Base")
+    timeline_photo_gallery = TimelinePhotoGalleriesBlock(group="Base")
 
 
 class PinnedStoriesBlock(blocks.StructBlock):
@@ -883,7 +952,7 @@ class AccordionBlock(blocks.StructBlock):
                          ),
                         ("additional", blocks.StreamBlock([
                             ("map", MapBlock()),
-                            ("table", TableBlock(group="table")),
+                            ("table", TableBlock(table_options={'renderer': 'html'}, group="table")),
                             ("document", DocumentBlock(required=False)),
                             ("youtube", YoutubeVideoBlock(group="HTML")),
                             ("contact_details",
@@ -909,6 +978,8 @@ class FreeFormBlocksBase(blocks.StreamBlock):
         ],
         template="patterns/molecules/pinned-stories/pinned_stories.html", group="Module"
     )
+    story_photo_gallery = StoryPhotoGalleriesBlock(group="Base")
+    timeline_photo_gallery = TimelinePhotoGalleriesBlock(group="Base")
     stories = StoryBlock(group="Module")
 
     video = CustomVideoChooserBlockAlt(group="HTML")
@@ -975,7 +1046,15 @@ class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 class TocBlocks(blocks.StreamBlock):
     rich_text = AdvancedRichTextBlock(group="Base")
     document = DocumentBlock(group="Base")
-    table = TableBlock(group="HTML")
+    table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
+    advanced_table_block = TypedTableBlock([
+        ('text', blocks.CharBlock()),
+        ('numeric', blocks.FloatBlock()),
+        ('rich_text', blocks.RichTextBlock(
+            features=["h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "bold", "italic", "link", "document-link", "ul",
+                      "ol", "image", "embed", ])),
+        ('image', ImageChooserBlock())
+    ], group="HTML")
 
 
 class GeneralContentBlocks(blocks.StreamBlock):
@@ -986,11 +1065,21 @@ class GeneralContentBlocks(blocks.StreamBlock):
         group="HTML",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
-    table = TableBlock(group="HTML")
+    table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
+    advanced_table_block = TypedTableBlock([
+        ('text', blocks.CharBlock()),
+        ('numeric', blocks.FloatBlock()),
+        ('rich_text', blocks.RichTextBlock(
+            features=["h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "bold", "italic", "link", "document-link", "ul",
+                      "ol", "image", "embed", ])),
+        ('image', ImageChooserBlock())
+    ], group="HTML")
     youtube_video = YoutubeVideoBlock(group="HTML")
     accordion = AccordionBlock(group="Base")
     logos = LogoCardsBlock(group="Base")
     stats_block = StatsBlock(group="Base")
+    story_photo_gallery = StoryPhotoGalleriesBlock(group="Base")
+    timeline_photo_gallery = TimelinePhotoGalleriesBlock(group="Base")
 
 
 class TocBlock(blocks.StructBlock):
@@ -1263,6 +1352,10 @@ class GenericHeroBlock(blocks.StructBlock):
         default=StoryAlignment.RIGHT,
     )
     hero_image = ImageChooserBlock(required=False)
+    hero_image_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_IMAGE),
+    )
     hero_image_credit = blocks.CharBlock(required=False, max_length=255)
     hero_video = VideoChooserBlock(required=False)
     background_color = blocks.CharBlock(required=False, default='#E7E5E1')
@@ -1294,8 +1387,32 @@ class GenericHeroBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/generic_hero.html"
 
 
+class YoutubeVimeoLinkValue(blocks.StructValue):
+    def embedding_url(self):
+
+        url = self.get("youtube_or_vimeo_embed", None)
+        if url is None:
+            return None
+        if "/embed/" in url:
+            return url
+        if 'youtube.com' in url or 'youtu.be' in url:
+            pattern = r"^(http(s)?:\/\/)?(www\.)?((youtu)(be)?)?"
+            pattern += r"(\.(com)|\.(be))?(\/)(watch\?v=)?|(\&.+)?"
+
+            video_id = re.sub(pattern, "", url)
+            video_id = re.sub(r"(&list.+)|((\s)$)", "", video_id)
+
+            return f"https://www.youtube.com/embed/{video_id}"
+        if 'vimeo.com' in url:
+            embed_url = url.replace('vimeo.com', 'player.vimeo.com/video')
+            embed_url_with_parameters = embed_url + '?controls=0'
+            return embed_url_with_parameters
+        else:
+            return None
+
+
 class VideoBlock(blocks.StructBlock):
-    youtube_or_vimeo_embed = EmbedBlock(required=False)
+    youtube_or_vimeo_embed = blocks.CharBlock(required=False)
     video = CustomVideoChooserBlock(required=False)
     video_alt = blocks.CharBlock(
         required=True,
@@ -1319,6 +1436,9 @@ class VideoBlock(blocks.StructBlock):
 
         return super().clean(value)
 
+    class Meta:
+        value_class = YoutubeVimeoLinkValue
+
 
 class MultimediaRowBlock(blocks.StructBlock):
     richtext = AdvancedRichTextBlock(required=False)
@@ -1331,7 +1451,6 @@ class MultimediaRowBlock(blocks.StructBlock):
 
     class Meta:
         label = "Multimedia Row"
-        value_class = YoutubeLinkValue
         template = "patterns/molecules/streamfield/blocks/multimedia_block.html"
 
 
@@ -1350,7 +1469,15 @@ class FreeFormBlocks(FreeFormBlocksBase):
     link_card = LinkCardsBlock()
     link_button = LinkButtonBlock()
     link_box = LinkBoxesBlock()
-    table = TableBlock(group="HTML")
+    table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
+    advanced_table_block = TypedTableBlock([
+        ('text', blocks.CharBlock()),
+        ('numeric', blocks.FloatBlock()),
+        ('rich_text', blocks.RichTextBlock(
+            features=["h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "bold", "italic", "link", "document-link", "ul",
+                      "ol", "image", "embed", ])),
+        ('image', ImageChooserBlock())
+    ], group="HTML")
     html = blocks.RawHTMLBlock(
         group="HTML",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",

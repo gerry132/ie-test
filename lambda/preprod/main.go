@@ -20,7 +20,6 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	snapArn := rds_create.GetMostRecentSnapshot()
 	log.Println(*snapArn)
 	dbName := rds_create.RestoreDBInstanceFromDBSnapshot(*snapArn)
-	log.Println(dbName)
 	rds_create.SaveNewUrl(dbName)
 	return response, nil
 }

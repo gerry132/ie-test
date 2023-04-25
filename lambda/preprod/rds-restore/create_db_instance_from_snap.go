@@ -76,9 +76,22 @@ func GetMostRecentSnapshot() *string {
 		return nil
 	}
 	var last *string
+	var lastCreated time.Time
 	for _, snapshot := range snapshots.DBSnapshots {
 		if *snapshot.DBInstanceIdentifier == "prod-db-postgres" && *snapshot.SnapshotType == "shared" {
-			last = snapshot.DBSnapshotIdentifier
+			log.Println("DB DB DB DBD B")
+			if lastCreated.IsZero() {
+				lastCreated = *snapshot.SnapshotCreateTime
+				last = snapshot.DBSnapshotIdentifier
+			} else {
+				if lastCreated.Before(*snapshot.SnapshotCreateTime) {
+					lastCreated = *snapshot.SnapshotCreateTime
+					last = snapshot.DBSnapshotIdentifier
+				}
+			}
+			log.Println(snapshot.SnapshotCreateTime)
+			log.Println(*last)
+			log.Println("DB DB DB DBD B")
 		}
 	}
 	return last
@@ -88,12 +101,17 @@ func RestoreDBInstanceFromDBSnapshot(snapshot string) *string {
 	svc := rds.New(session.New())
 	currentTime := time.Now()
 	dbName := "a" + currentTime.Format("2006-01-02")
+	var s []*string
+	s = append(s, aws.String("sg-0447ea8351a9c68cc"))
 	input := &rds.RestoreDBInstanceFromDBSnapshotInput{
 		DBInstanceIdentifier: aws.String(dbName),
 		DBSnapshotIdentifier: aws.String(snapshot),
+		DBSubnetGroupName:    aws.String("db-clone-preprod-subnet-group"),
+		VpcSecurityGroupIds:  s,
 	}
 
 	result, err := svc.RestoreDBInstanceFromDBSnapshot(input)
+	log.Println(result)
 	if err != nil {
 		if aerr, ok := err.(awserr.Error); ok {
 			switch aerr.Code() {
@@ -168,6 +186,23 @@ func RestoreDBInstanceFromDBSnapshot(snapshot string) *string {
 		log.Println("INCREASING THRESHOLD")
 
 	}
-	log.Println(result)
+	inputPlace := &rds.DescribeDBInstancesInput{}
+	dbList, err := svc.DescribeDBInstances(inputPlace)
+
+	for _, db := range dbList.DBInstances {
+		if *db.DBInstanceIdentifier != dbName {
+			log.Println("DELETE")
+			log.Println("DELETE")
+			log.Println(*db.DBInstanceIdentifier)
+			dbInstance := &rds.DeleteDBInstanceInput{
+				DBInstanceIdentifier: *&db.DBInstanceIdentifier,
+				SkipFinalSnapshot:    aws.Bool(true),
+			}
+			del, err := svc.DeleteDBInstance(dbInstance)
+			log.Println(del)
+			log.Println(err)
+		}
+	}
+
 	return &dbName
 }

@@ -11,28 +11,51 @@ class Carousel {
 
         this.carousel = new Glide(node, {
             type: 'carousel',
+            width: 500,
             startAt: 0,
             perView: 3,
-            peek: 100,
-            autoplay: 2000,
+            gap: 40,
+            peek: {
+                before: 300,
+                after: 0,
+              },
             hoverpause: true, // keep this for accessibility if using autoplay
             breakpoints: {
-                768: {
-                    perView: 1,
-                    peek: 0,
+                1440: {
+                  perView: 2,
+                  peek: {
+                        before: 250,
+                        after: 0,
+                      },
                 },
+                1024: {
+                  perView: 2,
+                  peek: {
+                        before: 150,
+                        after: 0,
+                      },
+                },
+                800: {
+                  gap: 20,
+                  perView: 1,
+                  peek: 100,
+                  focusAt: 'center',
+                },
+                480: {
+                  gap: 10,
+                  perView: 1,
+                  peek: 30,
+                }
             },
         });
 
         this.carousel.mount();
         this.bindEvents();
-        this.setLiveRegion();
     }
 
     bindEvents() {
         this.carousel.on('move.after', () => {
             this.updateAriaRoles();
-            this.updateLiveRegion();
         });
     }
 
@@ -59,22 +82,8 @@ class Carousel {
         });
     }
 
-    // Sets a live region. This will announce which slide is showing to screen readers when previous / next buttons clicked
-    setLiveRegion() {
-        const controls = this.node.querySelector('[data-glide-el="controls"]');
-        const liveregion = document.createElement('div');
-        liveregion.setAttribute('aria-live', 'polite');
-        liveregion.setAttribute('aria-atomic', 'true');
-        liveregion.setAttribute('class', 'carousel__liveregion');
-        liveregion.setAttribute('data-liveregion', true);
-        controls.appendChild(liveregion);
-    }
 
-    // Update the live region that announces the next slide.
-    updateLiveRegion() {
-        const slideLabel = `Item ${this.carousel.index} of ${this.slideTotal}`;
-        this.node.querySelector('[data-liveregion]').textContent = slideLabel;
-    }
+
 }
 
 export default Carousel;

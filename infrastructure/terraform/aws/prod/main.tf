@@ -30,6 +30,7 @@ locals {
   domain_ireland_ie             = "ireland.ie"
   africa_day_domain             = "africaday.ie"
   project_name                  = "ireland-ie"
+  africa_day_domain             = "africaday.ie"
   region                        = "eu-west-1"
   # DB
   db_instance_class             = "db.m6g.large"
@@ -75,7 +76,7 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.37.9/32", "80.233.45.9/32"]
+      cidr_blocks  = ["80.233.36.118/32", "80.233.44.118/32"]
     }
   }
 }

@@ -4,195 +4,198 @@
 {% load util_tags %}
 {% load i18n %}
 
-			<div class="story{% if value.background == 'dark' %} story--dark{% endif %} ">
-<div class="wrapper wrapper--padding">
-                     {% image value.embassy_logo width-460 class="story__logo" %}
-					<div class="story__container1">
-                        <div class="story__image_margin">
+<div class="story{% if value.background == 'dark' %} story--dark{% endif %} ">
+    <div class="wrapper wrapper--padding">
+        {% image value.embassy_logo width-460 class="story__logo" %}
+        <div class="story__container1">
+            <div class="story__image_margin">
 
-                        <h3 class="story__heading heading--2">{{ value.name }}</h3>
-                            {{ value.person_title }}
-                        {% image value.person_image width-460 class=" story__image_person" %}
-                        {% if value.video and value.person_social_feed %}
-                                <video class="story__video-block_person_additional_social_feed" aria-label="{{ value.title }}" title="{{ value.title }}" loop data-video controls>
-                                    <source src="{{ value.video.url }}" type="video/mp4">
-                                    {% trans 'Your browser does not support the video tag.' %}
+                <h3 class="story__heading heading--2">{{ value.name }}</h3>
+                {{ value.person_title }}
+                {% image value.person_image width-460 class=" story__image_person" %}
+                {% if value.video and value.person_social_feed %}
+                <video aria-label="{{ value.title }}" class="story__video-block_person_additional_social_feed" controls data-video loop title="{{ value.title }}">
+                    <source src="{{ value.video.url }}" type="video/mp4">
+                    {% trans 'Your browser does not support the video tag.' %}
 
-                                </video>
-                            {% elif value.video %}
-                            <video class="story__video-block_person" aria-label="{{ value.title }}" title="{{ value.title }}" loop data-video controls>
-                                    <source src="{{ value.video.url }}" type="video/mp4">
-                                    {% trans 'Your browser does not support the video tag.' %}
+                </video>
+                {% elif value.video %}
+                <video aria-label="{{ value.title }}" class="story__video-block_person" controls data-video loop title="{{ value.title }}">
+                    <source src="{{ value.video.url }}" type="video/mp4">
+                    {% trans 'Your browser does not support the video tag.' %}
 
-                                </video>
+                </video>
+                {% endif %}
+                {% if value.person_social_feed %}
+                <div class="story__additional_social_feed">
+                    {{ value.person_social_feed }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="story__alignm story__content ">
+                <div class="story__copy1">
+
+                    {% if value.contact_details or value.opening_hours or value.closure_dates or value.emergency_contact_details %}
+
+                    <div class="rich-text">
+                        <h3 class="story__heading heading--2">Contact Details</h3>
+                        {% if value.contact_details %}
+                        {% include "patterns/molecules/contact_details/contact_details.html" with contact_details=value.contact_details %}
                         {% endif %}
-                             {% if value.person_social_feed %}
-                                <div class="story__additional_social_feed">
-                                {{ value.person_social_feed }}
+                        {% if value.opening_hours %}
+                        {{ value.opening_hours|richtext }}
+                        {% endif %}
+
+                        {% if value.closure_dates %}
+                        {{ value.closure_dates|richtext }}
+                        {% endif %}
+
+                        {% if value.emergency_contact_details %}
+                        {{ value.emergency_contact_details|richtext }}
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% if value.links %}
+                {% if value.links|length > 2 %}
+                <div class="story-links__width story-links">
+                    <div class="your-class story-links__container">
+                        <div class="slider slider-mobile">
+                            {% for link in value.links %}
+                            <div class="slide-mobile1" id="last1" style="width: 100%;">
+                                <div class="story-links story-links__width">
+                                    <div class="your-class story-links__container">
+                                        {% include_block link %}
+                                    </div>
                                 </div>
-                            {% endif %}
-                        </div>
-
-                        <div class="story__alignm story__content ">
-                            <div class="story__copy1">
-
-                                {% if value.contact_details or value.opening_hours or value.closure_dates or value.emergency_contact_details %}
-
-									<div class="rich-text">
-                                        <h3 class="story__heading heading--2">Contact Details</h3>
-                                            {% if value.contact_details %}
-                                                {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=value.contact_details %}
-                                            {% endif %}
-                                            {% if value.opening_hours %}
-                                                {{ value.opening_hours|richtext }}
-                                            {% endif %}
-
-                                            {% if value.closure_dates %}
-                                                {{ value.closure_dates|richtext }}
-                                            {% endif %}
-
-                                            {% if value.emergency_contact_details %}
-                                                {{ value.emergency_contact_details|richtext }}
-                                            {% endif %}
-                                        </div>
-                                    {% endif %}
                             </div>
-                            {% if value.links %}
-                                {% if value.links|length > 2 %}
-                                    <div class="story-links__width story-links">
-                                        <div class="your-class story-links__container">
-                                            <div class="slider slider-mobile">
-                                                {% for link in value.links %}
-                                                    <div id="last1" class="slide-mobile1" style="width: 100%;">
-                                                        <div class="story-links story-links__width">
-                                                            <div class="your-class story-links__container">
-                                                                  {% include_block link %}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                {% endfor %}
+                            {% endfor %}
 
-                                            </div>
-                                            <div class="slider slider-desktop">
-                                                {% for link in value.links %}
-                                                    {% if forloop.counter|divisibleby:2 %}
-                                                              {% include_block link %}
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% else %}
-                                {% with next_element=value.links|next:forloop.counter0 %}
-                                {% if next_element %}
-                                    <div id="next1" class="slide1">
-                                        <div class="story-links story-links__width">
-                                            <div class="your-class story-links__container">
-                                                {{link}}
-                                                {% else %}
-                                                    <div id="last1" class="slide1" style="width: 100%;">
-                                                        <div class="story-links story-links__width">
-                                                            <div class="your-class story-links__container">
-                                                                      {% include_block link %}
-                                                              </div>
-                                                        </div>
-                                                    </div>
-                                                {% endif %}
-                                                {% endwith %}
-                                                {% endif %}
-                                                {% endfor %}
-                                            </div>
-                                            {% else %}
-                                            <div class="story-links story-links__width">
-                                                <div class="your-class story-links__container">
-                                                {% for link in value.links %}
-                                                    {% include_block link %}
-                                                {% endfor %}
-                                                </div>
-                                            </div>
-                                            {% endif %}
-                                            {% endif %}
-                                        </div>
-                        {% if value.links|length > 2 %}
-									<button class="btn btn-next1"></button>
-									<button class="btn btn-prev1"></button>
-                        {% endif %}
-                                        {% if value.links|length < 3 %}
-                                            <div class="story__width_right ">
-                                            {% for socialfeed in value.social_feed %}
-                                            {% if socialfeed.value.twitter_username %}
-                                                    <div class="wrapper wrapping--padding">
-                                                        <div class="twitter-embed">
-                                                        {% if socialfeed.value.twitter_title %}
-                                                            <h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
-                                                        {% endif %}
-                                                            {% if socialfeed.value.additional_social_feed %}
-                                                                <a class="twitter-timeline" data-width="100% !important" data-height=580 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
-                                                                            Tweets by {{ socialfeed.value.twitter_username }}
-                                                                </a>
-                                                                {% else %}
-                                                                <a class="twitter-timeline" data-width="100% !important" data-height=560 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
-                                                                            Tweets by {{ socialfeed.value.twitter_username }}
-                                                                </a>
-                                                                {% endif %}
-                                                        </div>
-                                                    </div>
-                                            {% endif %}
-
-                                            {% if socialfeed.value.additional_social_feed %}
-                                                <div class="story__additional_social_feed">
-                                                {{ socialfeed.value.additional_social_feed }}
-                                            {% endif %}
-                                            </div>
-                                                {% endfor %}
-                                            </div>
-                                        {% endif %}
-                                    </div>
                         </div>
-                        {% if value.links|length > 2 %}
-                            <div class="story__width_right ">
-                                {% for socialfeed in value.social_feed %}
-                                {% if socialfeed.value.twitter_username %}
-                                <div class="wrapper wrapping--padding">
-                                    <div class="twitter-embed">
-                                            {% if socialfeed.value.twitter_title %}
-                                                <h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
-                                            {% endif %}
-                                        {% if socialfeed.value.additional_social_feed %}
-                                        <a class="twitter-timeline" data-width="100% !important" data-height=580 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
-                                                    Tweets by {{ socialfeed.value.twitter_username }}
-                                        </a>
-                                        {% else %}
-                                        <a class="twitter-timeline" data-width="100% !important" data-height=560 href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
-                                                    Tweets by {{ socialfeed.value.twitter_username }}
-                                        </a>
-                                        {% endif %}
+                        <div class="slider slider-desktop">
+                            {% for link in value.links %}
+                            {% if forloop.counter|divisibleby:2 %}
+                            {% include_block link %}
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                {% with next_element=value.links|next:forloop.counter0 %}
+                {% if next_element %}
+                <div class="slide1" id="next1">
+                    <div class="story-links story-links__width">
+                        <div class="your-class story-links__container">
+                            {{ link }}
+                            {% else %}
+                            <div class="slide1" id="last1" style="width: 100%;">
+                                <div class="story-links story-links__width">
+                                    <div class="your-class story-links__container">
+                                        {% include_block link %}
                                     </div>
                                 </div>
-                                {% endif %}
-
-                                {% if socialfeed.value.additional_social_feed %}
-                                <div class="story__additional_social_feed">
-                                    {{ socialfeed.value.additional_social_feed }}
-                                {% endif %}
-                                </div>
+                            </div>
+                            {% endif %}
+                            {% endwith %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="story-links story-links__width">
+                            <div class="your-class story-links__container">
+                                {% for link in value.links %}
+                                {% include_block link %}
                                 {% endfor %}
                             </div>
-                         {% endif %}
+                        </div>
+                        {% endif %}
+                        {% endif %}
                     </div>
+                    {% if value.links|length > 2 %}
+                    <button class="btn btn-next1"></button>
+                    <button class="btn btn-prev1"></button>
+                    {% endif %}
+                    {% if value.links|length < 3 %}
+                    <div class="story__width_right ">
+                        {% for socialfeed in value.social_feed %}
+                        {% if socialfeed.value.twitter_username %}
+                        <div class="wrapper wrapping--padding">
+                            <div class="twitter-embed">
+                                {% if socialfeed.value.twitter_title %}
+                                <h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
+                                {% endif %}
+                                {% if socialfeed.value.additional_social_feed %}
+                                <a class="twitter-timeline" data-height=580 data-width="100% !important"
+                                   href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                    Tweets by {{ socialfeed.value.twitter_username }}
+                                </a>
+                                {% else %}
+                                <a class="twitter-timeline" data-height=560 data-width="100% !important"
+                                   href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                    Tweets by {{ socialfeed.value.twitter_username }}
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
 
-
+                        {% if socialfeed.value.additional_social_feed %}
+                        <div class="story__additional_social_feed">
+                            {{ socialfeed.value.additional_social_feed }}
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
             </div>
+            {% if value.links|length > 2 %}
+            <div class="story__width_right ">
+                {% for socialfeed in value.social_feed %}
+                {% if socialfeed.value.twitter_username %}
+                <div class="wrapper wrapping--padding">
+                    <div class="twitter-embed">
+                        {% if socialfeed.value.twitter_title %}
+                        <h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
+                        {% endif %}
+                        {% if socialfeed.value.additional_social_feed %}
+                        <a class="twitter-timeline" data-height=580 data-width="100% !important"
+                           href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                            Tweets by {{ socialfeed.value.twitter_username }}
+                        </a>
+                        {% else %}
+                        <a class="twitter-timeline" data-height=560 data-width="100% !important"
+                           href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                            Tweets by {{ socialfeed.value.twitter_username }}
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if socialfeed.value.additional_social_feed %}
+                <div class="story__additional_social_feed">
+                    {{ socialfeed.value.additional_social_feed }}
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+
+    </div>
 </div>
 {% block extra_js %}
 {% for socialfeed in value.social_feed %}
-    {% if socialfeed.value.twitter_username %}
+{% if socialfeed.value.twitter_username %}
 
-	<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    {% endif %}
+<script async charset="utf-8" src="https://platform.twitter.com/widgets.js"></script>
+{% endif %}
 {% endfor %}
 
 
-
-	<script>
+<script>
 function readySlides1(mobile) {
   console.log(mobile);
   let slides1;
@@ -251,6 +254,7 @@ function readySlides1(mobile) {
 
 readySlides1(false);
 readySlides1(true);
+
 </script>
 
 

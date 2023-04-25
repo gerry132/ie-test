@@ -24,9 +24,9 @@
         <!-- Body -->
 <div class="section--master {% if page.generic_hero %} section section--padding {% endif %}">
             {% for block in page.body %}
-                {% if block.block_type == 'heading' or block.block_type == 'rich_text' or block.block_type == 'image' or block.block_type == 'document' or block.block_type == 'table' %}
+                {% if block.block_type == 'heading' or block.block_type == 'rich_text' or block.block_type == 'image' or block.block_type == 'document' or block.block_type == 'table' or block.block_type == 'advanced_table_block' %}
 
-                    {% if block.block_type == 'table' %}
+                    {% if block.block_type == 'table' or block.block_type == 'advanced_table_block' %}
                         <div class="wrapper wrapper--small wrapper--padding">
                             {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}
                         </div>
@@ -49,6 +49,8 @@
                         {% include_block block %}
                     </div>
                 </div>
+            {% elif block.block_type == 'story_photo_gallery' %}
+                {% include_block block %}
             {% else %}
                 <div class="wrapper wrapper--large wrapper--padding">
                     {% include_block block %}

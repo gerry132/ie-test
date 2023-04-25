@@ -1,0 +1,56 @@
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+<style>
+    .rich-text{max-width: 800px;}
+    @media screen and (max-width: 500px) {
+        .wrapper { overflow-x: hidden;}
+    }
+    hr{
+        border-top: 3px dotted #004D44;
+        height: 3px;
+        min-width: 5000px;
+        margin-left: -1000px;
+        position: absolute;
+        top: 49%;
+    }
+</style>
+
+
+{% if value.richtext %}
+<div class="wrapper wrapper--padding" style="padding-top: 30px;">
+        {% include_block value.richtext %}
+</div>
+{% endif %}
+<div aria-label="Timeline" class="glide timeline glide--ltr glide--carousel glide--swipeable" data-timeline
+     data-mdb-interval="false" data-slidetotal>
+     <hr/>
+    <div class="timeline__track" data-glide-el="track">
+        <ul class="glide__slides timeline__slides" style="z-index: 0" >
+            {% for story_photo_gallery in value.story_photo_gallery %} 
+                <li aria-label="Timeline slide" id="{{forloop.counter}}" class="glide__slide" tab-index="0">
+                <div class="tab_container">
+                <div class="header_container">
+                            <h3 id="date_field">{{story_photo_gallery.value.date}}</h3>
+                        </div>
+                    </div>
+                <div class="timeline-slide" >
+                    <div class="timeline_card">
+                        <div class="timeline_card__image-container">
+                            {% image story_photo_gallery.value.image fill-400x200 class="timeline_card__image" alt=story_photo_gallery.value.alt_text%}
+                        </div>
+
+                        <div class="timeline_card__content">
+                            <p class="timeline_card__summary">
+                                {{ story_photo_gallery.value.rich_text_summary|richtext }}
+                            </p>
+                        </div>
+                    </div>                    
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div data-glide-el="controls">
+        <button class="slider-arrow slider-arrow--left" data-glide-dir="<">‹</button>
+        <button class="slider-arrow slider-arrow--right" data-glide-dir=">">›</button>
+    </div>
+</div>

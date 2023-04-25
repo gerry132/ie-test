@@ -4,10 +4,11 @@
 {% load util_tags %}
 {% load i18n %}
 
+{% if value.summary_richtext.content.heading or value.summary_richtext.content.rich_text %}
 <div class="intro" style="max-width:1024px;">
     <div class="intro__description">{% include_block value.summary_richtext.content %}</div>
 </div>
-
+{% endif %}
 <div class="logo-cards featured-blocks featured-blocks--four">
     {% for card in value.cards %}
         {% include_block card %}

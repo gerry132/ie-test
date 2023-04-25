@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "irelandie_press_releases",
     "irelandie_publications",
     "irelandie_speeches",
+    "irelandie_story",
     "irelandie_site_information",
     "irelandie_forms",
     #
@@ -87,6 +88,7 @@ INSTALLED_APPS = [
     "wagtail",
     "wagtailaccessibility",
     "wagtailmedia",
+    "wagtail.contrib.typed_table_block",
     "wagtail.api.v2",
     "captcha",
     "wagtailcaptcha",

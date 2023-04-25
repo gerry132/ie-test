@@ -71,7 +71,7 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.37.9/32", "80.233.45.9/32"]
+      cidr_blocks  = ["80.233.36.118/32", "80.233.44.118/32"]
     }
   }
 }
@@ -669,7 +669,6 @@ resource "aws_lb_target_group" "default_admin" {
   #}
 #}
 
-
 resource "aws_acm_certificate" "ireland_ie_content" {
   domain_name                 = "preprod.ireland.ie"
   subject_alternative_names = [
@@ -883,7 +882,6 @@ resource "aws_lb_listener_rule" "ireland_ie_443" {
   }
 }
 
-
 # -----------------------------------------------------------------------------
 # Listener certificates
 # -----------------------------------------------------------------------------
@@ -930,21 +928,6 @@ data "aws_ssm_parameter" "random_db_password" {
   ]
 }
 
-# Database
-
-module "database" {
-  source                = "github.com/ogcio/terraform-aws-db-instance-postgres-12-4"
-  db_name               = "${local.environment_name}_ireland_ie"
-  db_username           = "${local.environment_name}_ireland_ie_username"
-  db_password           = data.aws_ssm_parameter.random_db_password.value
-  db_instance_class     = local.db_instance_class
-  db_engine_version     = local.db_engine_version
-  name                  = "${local.environment_name}-db"
-  subnets               = module.network.public_subnet_ids
-  security_group_ids    = [aws_security_group.db.id]
-}
-
-
 locals {
     db_master_url   = data.aws_ssm_parameter.master_url.value
 }
@@ -953,6 +936,12 @@ locals {
 # -----------------------------------------------------------------------------
 # Cache
 # -----------------------------------------------------------------------------
+
+resource "aws_db_subnet_group" "db_clone" {
+  name       = "db-clone-${local.environment_name}-subnet-group"
+  subnet_ids = module.network.public_subnet_ids
+}
+
 
 resource "aws_elasticache_subnet_group" "redis" {
   name       = "redis-${local.environment_name}-subnet-group"
