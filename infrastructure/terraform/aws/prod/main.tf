@@ -30,6 +30,7 @@ locals {
   domain_ireland_ie             = "ireland.ie"
   africa_day_domain             = "africaday.ie"
   project_name                  = "ireland-ie"
+
   africa_day_domain             = "africaday.ie"
   region                        = "eu-west-1"
   # DB
