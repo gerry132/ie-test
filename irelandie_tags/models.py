@@ -3,6 +3,9 @@ from django.db import models
 from django.forms import ValidationError
 from irelandie_utils.models import BasePage
 from irelandie_missions.models import DestinationPage
+from irelandie_utils.blocks import StatsBlock, GenericHeroBlock
+
+from .blocks import TagLandingBlock
 
 from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel
@@ -55,3 +58,35 @@ class TagPage(BasePage):
                     ),
                 }
             )
+
+
+class TagLandingPage(BasePage):
+    generic_hero = StreamField(
+        [
+            ("generic_hero", GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+    body = StreamField(
+        [
+            ("content", TagLandingBlock())
+        ],
+        blank=True
+    )
+
+    stats_block = StreamField(
+        [
+            ("content", StatsBlock())
+        ],
+        blank=True,
+        max_num=2
+    )
+
+    content_panels = BasePage.content_panels + [
+        FieldPanel("generic_hero",  heading="Mini Hero Block"),
+        FieldPanel("body"),
+        FieldPanel("stats_block")
+    ]
