@@ -7,7 +7,7 @@ from irelandie_utils.blocks import StatsBlock, GenericHeroBlock
 from .blocks import TagLandingBlock
 
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel
+from wagtail.admin.panels import FieldPanel, InlinePanel
 
 
 class TagListPage(BasePage):
@@ -64,6 +64,7 @@ class TagLandingPage(BasePage):
         FieldPanel("generic_hero",  heading="Mini Hero Block"),
         FieldPanel("body"),
         FieldPanel("stats_block"),
+        InlinePanel('page_related_tags', max_num=1, label="Tag"),
     ]
 
     def get_context(self, request, *args, **kwargs):
