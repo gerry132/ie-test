@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.forms import ValidationError
 from irelandie_utils.models import BasePage
-from irelandie_missions.models import DestinationPage
+
 from irelandie_utils.blocks import StatsBlock, GenericHeroBlock
 
 from .blocks import TagLandingBlock
 
 from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel
-
-from wagtail import blocks
 
 
 class TagListPage(BasePage):
@@ -31,36 +28,14 @@ class TagListPage(BasePage):
 
 class TagPage(BasePage):
     tag_label = models.TextField(blank=True)
-    destination_tag = StreamField(
-        [
-         ("destination_tag", blocks.PageChooserBlock(required=False, page_type=DestinationPage)),
-        ],
-        blank=True,
-        null=True,
-        min_num=0,
-        max_num=1,
-    )
+
     content_panels = BasePage.content_panels + [
         FieldPanel("tag_label"),
-        FieldPanel("destination_tag"),
     ]
-
-    def clean(self):
-
-        if self.tag_label and self.destination_tag:
-            raise ValidationError(
-                {
-                    "tag_label": ValidationError(
-                        "You must specify a tag label or a destination tag. You can't use both."
-                    ),
-                    "destination_tag": ValidationError(
-                        "You must specify a tag label or a destination tag. You can't use both."
-                    ),
-                }
-            )
 
 
 class TagLandingPage(BasePage):
+    template = "patterns/pages/irelandie_pages/free_form_page.html"
     generic_hero = StreamField(
         [
             ("generic_hero", GenericHeroBlock()),
@@ -88,5 +63,15 @@ class TagLandingPage(BasePage):
     content_panels = BasePage.content_panels + [
         FieldPanel("generic_hero",  heading="Mini Hero Block"),
         FieldPanel("body"),
-        FieldPanel("stats_block")
+        FieldPanel("stats_block"),
     ]
+
+    def get_context(self, request, *args, **kwargs):
+        #from irelandie_pages.models import FreeFormPage
+        tags = TagPage.objects.live()
+        context = super().get_context(request, *args, **kwargs)
+        context['tags'] = tags
+        #obj = TagPage.objects.get(pk=7)
+        #f = FreeFormPage.objects.live().filter(page_related_tags__page=obj)
+        #print(f)
+        return context

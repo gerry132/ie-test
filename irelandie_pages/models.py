@@ -4,12 +4,14 @@ from django.forms import ValidationError
 from django.utils.functional import cached_property
 
 from wagtail.fields import StreamField
-from wagtail.admin.panels import TabbedInterface, ObjectList, FieldPanel, MultiFieldPanel
+from wagtail.admin.panels import TabbedInterface, ObjectList, FieldPanel, MultiFieldPanel, InlinePanel
 
 from irelandie_news.models import NewsPage
 
 from irelandie_utils.models import HeroPage
 from irelandie_utils.blocks import FreeFormBlocks, ImageBlock, GenericHeroBlock
+from irelandie_tags.models import TagPage
+from wagtail.blocks import PageChooserBlock
 from irelandie_navigation.blocks import NoticeBarWithMessageLink
 from wagtail.images import get_image_model_string
 
@@ -74,6 +76,12 @@ class FreeFormPage(FreeFormPageBase):
         min_num=0,
         max_num=1,
     )
+    tags = StreamField(
+        [
+            ("tags", PageChooserBlock(required=False, page_type=TagPage))
+        ],
+        null=True
+    )
     default_image = StreamField(
         [
             ("default_image", ImageBlock()),
@@ -95,6 +103,8 @@ class FreeFormPage(FreeFormPageBase):
                 FieldPanel("twitter_title"),
                 FieldPanel("twitter_feed"),
             ], heading="Twitter feed"),
+            FieldPanel("tags"),
+            InlinePanel('page_related_tags', label="Related category tags"),
         ]
     )
 
