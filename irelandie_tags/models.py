@@ -16,7 +16,7 @@ class TagListPage(BasePage):
     ]
 
     parent_page_types = [
-        'HomepagePage'
+        'irelandie_home.HomePage'
     ]
 
     def get_context(self, request, *args, **kwargs):
