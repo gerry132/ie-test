@@ -67,11 +67,11 @@ class TagLandingPage(BasePage):
     ]
 
     def get_context(self, request, *args, **kwargs):
-        #from irelandie_pages.models import FreeFormPage
+        # from irelandie_pages.models import FreeFormPage
         tags = TagPage.objects.live()
         context = super().get_context(request, *args, **kwargs)
         context['tags'] = tags
-        #obj = TagPage.objects.get(pk=7)
-        #f = FreeFormPage.objects.live().filter(page_related_tags__page=obj)
-        #print(f)
+        # obj = TagPage.objects.get(pk=7)
+        # f = FreeFormPage.objects.live().filter(page_related_tags__page=obj)
+        # print(f)
         return context

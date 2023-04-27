@@ -140,7 +140,6 @@ class PageRelatedPage(Orderable):
     panels = [PageChooserPanel("page")]
 
 
-
 # Related pages
 class PageRelatedTags(Orderable):
     parent = ParentalKey(Page, related_name="page_related_tags")
@@ -151,6 +150,7 @@ class PageRelatedTags(Orderable):
     )
 
     panels = [PageChooserPanel("page")]
+
 
 # Generic social fields abstract class to add social image/text to any new content type easily.
 class SocialFields(models.Model):
