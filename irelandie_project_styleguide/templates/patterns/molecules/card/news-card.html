@@ -21,6 +21,10 @@ Example:
             {% else %}
                 {% image card.hero_image fill-500x300 alt=card.image.alt_default class="card__image" %}
             {% endif %}
+        {% elif card.generic_hero %}
+            {% for block in card.generic_hero %}
+                {% image block.value.hero_image fill-500x300 class="card__image"  alt=card.image_alt %}
+            {% endfor %}
         {% else %}
                 {% for default_image in default_image %}
                     {% image default_image.value.image fill-500x300 class="card__image"  alt=default_image.image_alt %}

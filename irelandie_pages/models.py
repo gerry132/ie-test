@@ -39,7 +39,7 @@ class FreeFormPageBase(HeroPage):
 
 class FreeFormPage(FreeFormPageBase):
     template = "patterns/pages/irelandie_pages/free_form_page.html"
-
+    subtitle = models.TextField(blank=True)
     root_page = models.BooleanField(default=True)
     generic_hero = StreamField(
         [
@@ -91,21 +91,24 @@ class FreeFormPage(FreeFormPageBase):
         min_num=0,
         max_num=1,
     )
-    content_panels = [FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block")] + (
-        FreeFormPageBase.content_panels +
-        [
-            FieldPanel("featured_news"),
-            MultiFieldPanel([
-                FieldPanel("notice_bar"),
-            ], heading="Noticebar settings"
-            ),
-            MultiFieldPanel([
-                FieldPanel("twitter_title"),
-                FieldPanel("twitter_feed"),
-            ], heading="Twitter feed"),
-            InlinePanel('page_related_tags', label="Related category tags"),
-        ]
-    )
+    content_panels = [FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block")] + [
+        FieldPanel("subtitle", help_text="This will not appear on the page, but will be automatically pulled through "
+                                         "to appear alongside the title on link boxes in other areas of the site, "
+                                         "linking to this page.")] + (
+                         FreeFormPageBase.content_panels +
+                         [
+                             FieldPanel("featured_news"),
+                             MultiFieldPanel([
+                                 FieldPanel("notice_bar"),
+                             ], heading="Noticebar settings"
+                             ),
+                             MultiFieldPanel([
+                                 FieldPanel("twitter_title"),
+                                 FieldPanel("twitter_feed"),
+                             ], heading="Twitter feed"),
+                             InlinePanel('page_related_tags', label="Related category tags"),
+                         ]
+                     )
 
     settings_panels = (
         [

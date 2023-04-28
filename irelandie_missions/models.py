@@ -826,6 +826,7 @@ class EmbassyPage(FreeFormPageBase):
 
 class GeneralContentPage(HeroPage):
     template = "patterns/pages/missions/general_content_page.html"
+    subtitle = models.TextField(blank=True)
     generic_hero = StreamField(
         [
             ("generic_hero", blocks.GenericHeroBlock()),
@@ -839,6 +840,9 @@ class GeneralContentPage(HeroPage):
     body = StreamField(blocks.GeneralContentBlocks(), blank=True)
 
     content_panels = HeroPage.content_panels + [
+        FieldPanel("subtitle", help_text="This will not appear on the page, but will be automatically pulled through "
+                                         "to appear alongside the title on link boxes in other areas of the site, "
+                                         "linking to this page."),
         FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("introduction"),
         FieldPanel("body"),
