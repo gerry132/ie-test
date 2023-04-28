@@ -768,12 +768,6 @@ class HeroPage(BasePage):
     ])
 
 
-class TaggablePage(HeroPage):
-    content_panels = HeroPage.content_panels + [
-        InlinePanel('page_related_tags', label="Related category tags"),
-    ]
-
-
 class ArticlePage(BasePage):
     introduction = models.TextField(blank=True)
 
