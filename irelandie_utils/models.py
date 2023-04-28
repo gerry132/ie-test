@@ -7,6 +7,7 @@ from django.utils.functional import cached_property
 from modelcluster.fields import ParentalKey
 from wagtail.admin.panels import (
     FieldPanel,
+    InlinePanel,
     MultiFieldPanel,
     PageChooserPanel,
     FieldRowPanel,
@@ -765,6 +766,12 @@ class HeroPage(BasePage):
         ObjectList(BasePage.promote_panels, heading='Promote'),
         ObjectList(BasePage.settings_panels, heading='Settings', classname="settings"),
     ])
+
+
+class TaggablePage(HeroPage):
+    content_panels = HeroPage.content_panels + [
+        InlinePanel('page_related_tags', label="Related category tags"),
+    ]
 
 
 class ArticlePage(BasePage):

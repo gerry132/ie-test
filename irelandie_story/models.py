@@ -4,7 +4,7 @@ from irelandie_utils.models import HeroPage
 from irelandie_utils.blocks import GenericHeroBlock
 from .blocks import StoryPageBlock
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList
+from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, InlinePanel
 
 
 class StoryPage(HeroPage):
@@ -26,6 +26,7 @@ class StoryPage(HeroPage):
         FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("introduction"),
         FieldPanel("body"),
+        InlinePanel('page_related_tags', label="Related category tags"),
     ]
 
     edit_handler = TabbedInterface([
