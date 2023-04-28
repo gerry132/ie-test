@@ -9,6 +9,9 @@ from .blocks import TagLandingBlock
 from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel, InlinePanel
 
+from itertools import chain
+from operator import attrgetter
+
 
 class TagListPage(BasePage):
     subpage_types = [
@@ -64,15 +67,31 @@ class TagLandingPage(BasePage):
         FieldPanel("generic_hero",  heading="Mini Hero Block"),
         FieldPanel("body"),
         FieldPanel("stats_block"),
-        InlinePanel('page_related_tags', max_num=1, label="Tag"),
+        InlinePanel('page_related_tags', min_num=1, max_num=1, label="Tag"),
     ]
 
     def get_context(self, request, *args, **kwargs):
-        # from irelandie_pages.models import FreeFormPage
-        tags = TagPage.objects.live()
+        """
+        In the context we run 3 queries to
+        return the most recently published
+        story objects.
+        """
+        from irelandie_pages.models import FreeFormPage
+        from irelandie_story.models import StoryPage
+        from irelandie_missions.models import GeneralContentPage
+
+        tag = self.related_tags[0]
+
         context = super().get_context(request, *args, **kwargs)
-        context['tags'] = tags
-        # obj = TagPage.objects.get(pk=7)
-        # f = FreeFormPage.objects.live().filter(page_related_tags__page=obj)
-        # print(f)
+
+        freeform = FreeFormPage.objects.live().filter(page_related_tags__page=tag)
+        stories = StoryPage.objects.live().filter(page_related_tags__page=tag)
+        general_content = GeneralContentPage.objects.live().filter(page_related_tags__page=tag)
+
+        results = sorted(
+            chain(stories, freeform, general_content),
+            key=attrgetter('last_published_at')
+        )
+
+        context['stories'] = results
         return context

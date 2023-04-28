@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.utils.functional import cached_property
-from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel, HelpPanel
+from wagtail.admin.panels import InlinePanel, FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel, HelpPanel
 from wagtail.fields import StreamField, RichTextField
 from wagtail import blocks as wagtail_blocks
 
@@ -842,6 +842,7 @@ class GeneralContentPage(HeroPage):
         FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("introduction"),
         FieldPanel("body"),
+        InlinePanel('page_related_tags', label="Related category tags"),
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),

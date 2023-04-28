@@ -103,7 +103,6 @@ class FreeFormPage(FreeFormPageBase):
                 FieldPanel("twitter_title"),
                 FieldPanel("twitter_feed"),
             ], heading="Twitter feed"),
-            FieldPanel("tags"),
             InlinePanel('page_related_tags', label="Related category tags"),
         ]
     )
