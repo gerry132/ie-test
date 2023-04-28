@@ -7,7 +7,6 @@ from django.utils.functional import cached_property
 from modelcluster.fields import ParentalKey
 from wagtail.admin.panels import (
     FieldPanel,
-    InlinePanel,
     MultiFieldPanel,
     PageChooserPanel,
     FieldRowPanel,
