@@ -3,7 +3,6 @@ from functools import cached_property
 
 from django.db import models
 
-from irelandie_story.models import StoryPage
 from irelandie_utils.models import BasePage
 
 from irelandie_utils.blocks import GenericHeroBlock, StatTagBlock
