@@ -35,6 +35,9 @@ class TagListPage(BasePage):
 
 
 class TagPage(BasePage):
+    parent_page_types = [
+        'TagListPage'
+    ]
     tag_label = models.TextField(blank=True)
 
     content_panels = BasePage.content_panels + [
@@ -85,14 +88,14 @@ class TagLandingPage(BasePage):
 
         context = super().get_context(request, *args, **kwargs)
 
-        freeform = FreeFormPage.objects.live().filter(page_related_tags__page=tag)
-        stories = StoryPage.objects.live().filter(page_related_tags__page=tag)
-        general_content = GeneralContentPage.objects.live().filter(page_related_tags__page=tag)
+        freeform = FreeFormPage.objects.live().filter(page_related_tags__page=tag).distinct()
+        stories = StoryPage.objects.live().filter(page_related_tags__page=tag).distinct()
+        general_content = GeneralContentPage.objects.live().filter(page_related_tags__page=tag).distinct()
 
         results = sorted(
             chain(stories, freeform, general_content),
             key=attrgetter('last_published_at')
-        )
+        )[:9]
         pages = self.get_ancestors()
         context, root_found = get_root_info(context, pages)
         if not root_found:

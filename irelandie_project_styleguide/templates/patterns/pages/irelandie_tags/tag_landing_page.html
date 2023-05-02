@@ -87,7 +87,7 @@
                     </div>
                     <div class="card__content">
                         <ul class="slide__tags">
-                            {% for tags in card.related_tags %}
+                            {% for tags in card.related_tags|slice:"0:3" %}
                                 <li class="slide__tag-item">{{ tags }}</li>
                             {% endfor %}
                         </ul>
@@ -123,7 +123,7 @@
                 </div>
                 <div class="card__content">
                      <ul class="slide__tags">
-                            {% for tags in card.related_tags %}
+                            {% for tags in card.related_tags|slice:"0:3" %}
                                 <li class="slide__tag-item">{{ tags }}</li>
                             {% endfor %}
                         </ul>
