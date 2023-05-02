@@ -653,6 +653,15 @@ class ArticleCardsBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/article_cards.html"
 
 
+class StatTagBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    summary = blocks.RichTextBlock(
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul", "ol"],
+        required=False,
+    )
+    hexcolor = blocks.CharBlock(max_length=7, default='#EDECE5', required=False)
+
+
 class StatBlock(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     summary = blocks.RichTextBlock(

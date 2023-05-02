@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
+from functools import cached_property
+
 from django.db import models
+
+from irelandie_story.models import StoryPage
 from irelandie_utils.models import BasePage
 
-from irelandie_utils.blocks import StatsBlock, GenericHeroBlock
+from irelandie_utils.blocks import GenericHeroBlock, StatTagBlock
+from irelandie_utils.utils import get_root_info
 
 from .blocks import TagLandingBlock
 
@@ -38,7 +43,7 @@ class TagPage(BasePage):
 
 
 class TagLandingPage(BasePage):
-    template = "patterns/pages/irelandie_pages/free_form_page.html"
+    template = "patterns/pages/irelandie_tags/tag_landing_page.html"
     generic_hero = StreamField(
         [
             ("generic_hero", GenericHeroBlock()),
@@ -48,23 +53,18 @@ class TagLandingPage(BasePage):
         min_num=0,
         max_num=1,
     )
-    body = StreamField(
-        [
-            ("content", TagLandingBlock())
-        ],
-        blank=True
-    )
+    body = StreamField(TagLandingBlock(), blank=True)
 
     stats_block = StreamField(
         [
-            ("content", StatsBlock())
+            ("content", StatTagBlock())
         ],
         blank=True,
         max_num=2
     )
 
     content_panels = BasePage.content_panels + [
-        FieldPanel("generic_hero",  heading="Mini Hero Block"),
+        FieldPanel("generic_hero", heading="Mini Hero Block"),
         FieldPanel("body"),
         FieldPanel("stats_block"),
         InlinePanel('page_related_tags', min_num=1, max_num=1, label="Tag"),
@@ -79,6 +79,7 @@ class TagLandingPage(BasePage):
         from irelandie_pages.models import FreeFormPage
         from irelandie_story.models import StoryPage
         from irelandie_missions.models import GeneralContentPage
+        from irelandie_home.models import HomePage
 
         tag = self.related_tags[0]
 
@@ -92,6 +93,21 @@ class TagLandingPage(BasePage):
             chain(stories, freeform, general_content),
             key=attrgetter('last_published_at')
         )
+        pages = self.get_ancestors()
+        context, root_found = get_root_info(context, pages)
+        if not root_found:
+            f = HomePage.objects.all()[:1].get()
+            context['default_image'] = f.default_image
 
         context['stories'] = results
         return context
+
+    @cached_property
+    def get_storytag(self):
+        return (StoryPage.objects.all()
+                )
+
+    @cached_property
+    def get_root_index(self):
+        if self.get_first_child():
+            return self.get_first_child().url
