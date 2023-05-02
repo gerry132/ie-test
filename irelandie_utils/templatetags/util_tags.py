@@ -116,7 +116,7 @@ def count_toc(page):
 
 @register.simple_tag
 def lists(stories, stats):
-    list_stories = list(stories)
+    list_stories = stories
     n = len(list_stories)
     list_stats = list(stats)
     return list_stories[0:2] + list_stats + list_stories[2:n]
