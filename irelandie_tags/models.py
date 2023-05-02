@@ -90,12 +90,12 @@ class TagLandingPage(BasePage):
         freeform = FreeFormPage.objects.live().filter(page_related_tags__page=tag).distinct()
         stories = StoryPage.objects.live().filter(page_related_tags__page=tag).distinct()
         general_content = GeneralContentPage.objects.live().filter(page_related_tags__page=tag).distinct()
-
+        print(freeform, stories)
         results = sorted(
             chain(stories, freeform, general_content),
             key=attrgetter('last_published_at')
         )[:9]
-        print(results)
+
         context['stories'] = results
         pages = self.get_ancestors()
         context, root_found = get_root_info(context, pages)
