@@ -87,9 +87,10 @@ class TagLandingPage(BasePage):
 
         context = super().get_context(request, *args, **kwargs)
 
-        freeform = FreeFormPage.objects.live().filter(page_related_tags__page=tag).distinct()
-        stories = StoryPage.objects.live().filter(page_related_tags__page=tag).distinct()
-        general_content = GeneralContentPage.objects.live().filter(page_related_tags__page=tag).distinct()
+        freeform = FreeFormPage.objects.live().filter(locale=self.locale, page_related_tags__page=tag).specific()
+        stories = StoryPage.objects.live().filter(locale=self.locale, page_related_tags__page=tag).specific()
+        general_content = GeneralContentPage.objects.live().filter(
+            locale=self.locale, page_related_tags__page=tag).specific()
         print(freeform, stories)
         results = sorted(
             chain(stories, freeform, general_content),
