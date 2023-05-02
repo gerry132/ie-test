@@ -96,19 +96,14 @@ class TagLandingPage(BasePage):
             chain(stories, freeform, general_content),
             key=attrgetter('last_published_at')
         )[:9]
+        print(results)
+        context['stories'] = results
         pages = self.get_ancestors()
         context, root_found = get_root_info(context, pages)
         if not root_found:
             f = HomePage.objects.all()[:1].get()
             context['default_image'] = f.default_image
-
-        context['stories'] = results
         return context
-
-    @cached_property
-    def get_storytag(self):
-        return (StoryPage.objects.all()
-                )
 
     @cached_property
     def get_root_index(self):
