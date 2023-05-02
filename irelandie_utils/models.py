@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy as _
 from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
