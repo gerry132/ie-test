@@ -144,6 +144,10 @@ class FormPage(HoneypotMixin, BasePage):
 
     def get_mapped_value(self, topic):
         for p in self.email_map:
+            print(111111111111111111)
+            print(topic)
+            print(self.email_map)
+            print(111111111111111111)
             if p.value.get('description') == topic:
                 return p.value.get('email')
 
