@@ -182,7 +182,9 @@ class FormPage(HoneypotMixin, BasePage):
                 addresses = [x.strip() for x in self.get_mapped_value(self.topic).split(',')]
             else:
                 addresses = [x.strip() for x in self.to_address.split(',')]
-
+            print(subject)
+            print(addresses)
+            print(self.from_address)
             send_mail(subject, self.render_email(self.form), addresses, self.from_address, )
         return context
 
