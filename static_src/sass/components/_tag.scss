@@ -1,0 +1,72 @@
+.tag {
+    $root: &;
+    &__card__title{
+        font-size: 32px;
+        line-height: 39px;
+    }
+    &__card__summary{
+        font-size: 20px;
+        line-height: 24px;
+    }
+    &__stats{
+        padding: 30px;
+    }
+     &__vertical-line{
+      border-left: 1px solid black;
+      padding-left: 20px;
+    }
+    &__slide{
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            padding-bottom: 10px;
+            flex-wrap: wrap;
+    }
+    &__slide-item{
+            background-color: #E7E5E1;
+            padding: 1px 10px;
+    }
+     &__link-box{
+        display: flex;
+        padding: 20px;
+        position: relative;
+    }
+    &__image {
+        position: relative;
+        object-fit: cover;
+        width: 147px;
+        height: 131px;
+        transform: scale(1);
+        transition: transform $transition;
+        @media only screen and (max-width: 599px) {
+            display: none;
+        }
+    }
+    &__line {
+    height: 0;
+    margin-top: unset;
+    border-bottom: .25px solid #ccc;
+    }
+    &__content{
+        padding: 20px;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        color: #292929;
+        padding: 0 20px;
+    @media only screen and (max-width: 599px){
+        padding: 0;
+    }
+    }
+
+}
+    .grid-item {
+        width: calc(33.33% - 30px);
+        margin-bottom: 20px;
+    }
+    @media only screen and (min-width: 599px) and (max-width: 1023px) {
+        .grid-item { width: 48%; margin-bottom: 20px; }
+    }
+    @media only screen and (max-width: 599px){
+        .grid-item { width: 100%; margin-bottom: 20px; }
+    }

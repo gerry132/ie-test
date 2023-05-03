@@ -659,7 +659,8 @@ class StatTagBlock(blocks.StructBlock):
         features=["h3", "blockquote", "bold", "link", "document-link", "ul", "ol"],
         required=False,
     )
-    hexcolor = blocks.CharBlock(max_length=7, default='#EDECE5', required=False)
+    background_color = blocks.CharBlock(max_length=7, default='#EDECE5', required=False)
+    text_color = blocks.CharBlock(max_length=7, default='#292929', required=False)
 
 
 class StatBlock(blocks.StructBlock):

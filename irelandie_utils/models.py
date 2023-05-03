@@ -873,6 +873,9 @@ class ArticlePage(BasePage):
 
 class MinimalArticlePage(BasePage):
     introduction = models.TextField(blank=True)
+    subtitle = models.TextField(blank=True, help_text="This will not appear on the page, but will be automatically "
+                                                      "pulled through to appear alongside the title on link boxes "
+                                                      "in other areas of the site, linking to this page.")
 
     hero_image = models.ForeignKey(
         IMAGE_MODEL,
@@ -902,6 +905,7 @@ class MinimalArticlePage(BasePage):
 
     content_panels = Page.content_panels + [
         FieldPanel("introduction"),
+        FieldPanel("subtitle"),
 
         MultiFieldPanel(
             [

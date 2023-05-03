@@ -4,163 +4,156 @@
 {% load util_tags static navigation_tags %}
 
 {% block content %}
-<style>
-    .grid-item { width: 400px; margin-bottom: 20px; }
-    .stats{
-        padding: 30px;
-    }
-     .vertical-line{
-      border-left: 1px solid black;
-      padding-left: 20px;
-    }
-    .slide__tags{
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-            padding-bottom: 10px;
-    }
-    .slide__tag-item{
-            background-color: #E7E5E1;
-            padding: 1px 10px;
-    }
-</style>
-{% if page.generic_hero %}
-    {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
-{% endif %}
-{% if not page.generic_hero %}
-        <div id="main-header" class="section section--padding section--white">
-                    <div class="wrapper wrapper--large wrapper--padding content--padding">
-                        <div class="intro--toc">
-                            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
-                            {% if page.description %}
-                                <p class="intro__description">{{ page.description }}</p>
-                            {% endif %}
-                        </div>
-                    </div>
-        </div>
-{% endif %}
-{% block main %}
-    <div class="wrapper wrapper--large wrapper--padding">
-        {% include_block page.body %}
-    </div>
- <div class="section section--padding ">
-<div class="wrapper wrapper--large wrapper--padding">
-     {% if page.stats_block|length == 2 %}
-{% lists stories page.stats_block as counts %}
-<div class="grid_masonry">
-    {% for card in counts %}
-            {% if forloop.counter == 3 or forloop.counter == 4 %}
-                <div class="grid-item">
-                    <div class="box" style="{% if card.value.hexcolor %}background-color: {{card.value.hexcolor}};{% endif %}">
-                        <div class="stats">
-                            <div class="vertical-line">
-                            <h2 class="stats__title">
-                                {{ card.value.heading }}
-                            </h2>
-
-                            <div class="stats__summary">
-                                {{ card.value.summary|richtext }}
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% else %}
-                <div class="grid-item">
-                <a href="{{ card.url }}" class="card{% if large %} card--large{% endif %}{% if not card.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
-                    <div class="card__image-container">
-                    {% if card.hero_image %}
-                        {% if card.image_alt %}
-                            {% image card.hero_image fill-500x300 class="card__image"  alt=card.image_alt %}
-                        {% else %}
-                            {% image card.hero_image fill-500x300 alt=card.image.alt_default class="card__image" %}
-                        {% endif %}
-                    {% elif card.generic_hero %}
-                        {% for block in card.generic_hero %}
-                            {% image block.value.hero_image fill-500x300 class="card__image"  alt=card.image_alt %}
-                        {% endfor %}
-                    {% else %}
-                            {% for default_image in default_image %}
-                                {% image default_image.value.image fill-500x300 class="card__image"  alt=default_image.image_alt %}
-                            {% endfor %}
+    <style>
+    @media only screen and (max-width: 1024px){
+        .story__content {
+            padding: 20px 0;
+        }
+        .story__container {
+            padding: unset;
+        }
+     }
+    </style>
+    {% if page.generic_hero %}
+        {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+    {% endif %}
+    {% if not page.generic_hero %}
+        <div class="section section--padding section--white" id="main-header">
+            <div class="wrapper wrapper--large wrapper--padding content--padding">
+                <div class="intro--toc">
+                    <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                    {% if page.description %}
+                    <p class="intro__description">{{ page.description }}</p>
                     {% endif %}
-                    </div>
-                    <div class="card__content">
-                        <ul class="slide__tags">
-                            {% for tags in card.related_tags|slice:"0:3" %}
-                                <li class="slide__tag-item">{{ tags }}</li>
-                            {% endfor %}
-                        </ul>
-                        <h3 class="card__title">{{ card.title }}</h3>
-                        <p class="card__summary">{{ card.subtitle }}</p>
-                    </div>
-                </a>
                 </div>
-            {% endif %}
-    {% endfor %}
-        {% else %}
-    <div class="grid_masonry">
-    {% for card in stories %}
-
-            <div class="grid-item">
-            <a href="{{ card.url }}" class="card{% if large %} card--large{% endif %}{% if not card.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
-                <div class="card__image-container">
-                {% if card.hero_image %}
-                    {% if card.image_alt %}
-                        {% image card.hero_image fill-500x300 class="card__image"  alt=card.image_alt %}
-                    {% else %}
-                        {% image card.hero_image fill-500x300 alt=card.image.alt_default class="card__image" %}
-                    {% endif %}
-                {% elif card.generic_hero %}
-                    {% for block in card.generic_hero %}
-                        {% image block.value.hero_image fill-500x300 class="card__image"  alt=card.image_alt %}
-                    {% endfor %}
-                {% else %}
-                        {% for default_image in default_image %}
-                            {% image default_image.value.image fill-500x300 class="card__image"  alt=default_image.image_alt %}
-                        {% endfor %}
-                {% endif %}
-                </div>
-                <div class="card__content">
-                     <ul class="slide__tags">
-                            {% for tags in card.related_tags|slice:"0:3" %}
-                                <li class="slide__tag-item">{{ tags }}</li>
-                            {% endfor %}
-                        </ul>
-                    <h3 class="card__title">{{ card.title }}</h3>
-                    <p class="card__summary">{{ card.subtitle }}</p>
-                </div>
-            </a>
             </div>
-
-
-    {% endfor %}
-        </div>
-     {% endif %}
-
-</div>
-</div>
-    {% if page.get_root_index %}
-        <div class="wrapper wrapper--large link-button__container">
-            <button class="link-button__button" onClick="window.location.href='{{ page.get_root_index }}';">
-                Read all news
-            </button>
         </div>
     {% endif %}
- </div>
-{% endblock %}
-
-
+    {% block main %}
+        {% for body in page.body %}
+            <div class="wrapper wrapper--large wrapper--padding">
+                {% include_block body %}
+            </div>
+        {% endfor %}
+        <div class="section section--padding ">
+            <div class="wrapper wrapper--large wrapper--padding">
+                {% if page.stats_block|length == 2 %}
+                    {% lists stories page.stats_block as counts %}
+                    <div class="grid_masonry">
+                        {% for card in counts %}
+                            {% if forloop.counter == 3 or forloop.counter == 4 %}
+                            <div class="grid-item">
+                                <div class="box"
+                                     style="{% if card.value.background_color %}background-color: {{card.value.background_color}};{% endif %}">
+                                    <div class="tag__stats">
+                                        <div class="tag__vertical-line">
+                                            <h2 class="stats__title" style="{% if card.value.text_color %}color: {{card.value.text_color}};{% endif %}">
+                                                {{ card.value.heading }}
+                                            </h2>
+                                            <div class="stats__summary" style="{% if card.value.text_color %}color: {{card.value.text_color}};{% endif %}">
+                                                {{ card.value.summary|richtext }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="grid-item">
+                                <a class="card" href="{{ card.url }}">
+                                    <div class="card__image-container">
+                                        {% if card.hero_image %}
+                                            {% if card.image_alt %}
+                                                {% image card.hero_image fill-500x300 class="card__image" alt=card.image_alt %}
+                                            {% else %}
+                                                {% image card.hero_image fill-500x300 alt=card.image.alt_default class="card__image" %}
+                                            {% endif %}
+                                        {% elif card.generic_hero %}
+                                            {% for block in card.generic_hero %}
+                                                {% image block.value.hero_image fill-500x300 class="card__image" alt=card.image_alt %}
+                                            {% endfor %}
+                                        {% else %}
+                                            {% for default_image in default_image %}
+                                                {% image default_image.value.image fill-500x300 class="card__image" alt=default_image.image_alt %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="card__content">
+                                        <ul class="tag__slide">
+                                            <li class="tag__slide-item">{{ tag_first }}</li>
+                                            {% for tags in card.related_tags|slice:":3" %}
+                                                {% if tags != tag_first %}
+                                                    <li class="tag__slide-item">{{ tags }}</li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                        <h3 class="tag__card__title">{{ card.title }}</h3>
+                                        <p class="tag__card__summary">{{ card.subtitle }}</p>
+                                    </div>
+                                </a>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <div class="grid_masonry">
+                            {% for card in stories %}
+                                <div class="grid-item">
+                                    <a class="card" href="{{ card.url }}">
+                                        <div class="card__image-container">
+                                            {% if card.hero_image %}
+                                                {% if card.image_alt %}
+                                                    {% image card.hero_image fill-500x300 class="card__image" alt=card.image_alt %}
+                                                {% else %}
+                                                    {% image card.hero_image fill-500x300 alt=card.image.alt_default class="card__image" %}
+                                                {% endif %}
+                                            {% elif card.generic_hero %}
+                                                {% for block in card.generic_hero %}
+                                                    {% image block.value.hero_image fill-500x300 class="card__image" alt=card.image_alt %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {% for default_image in default_image %}
+                                                    {% image default_image.value.image fill-500x300 class="card__image" alt=default_image.image_alt %}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                        <div class="card__content">
+                                            <ul class="tag__slide">
+                                                <li class="tag__slide-item">{{ tag_first }}</li>
+                                                {% for tags in card.related_tags|slice:":3" %}
+                                                    {% if tags != tag_first %}
+                                                        <li class="tag__slide-item">{{ tags }}</li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                            <h3 class="tag__card__title">{{ card.title }}</h3>
+                                            <p class="tag__card__summary">{{ card.subtitle }}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% if page.get_root_index %}
+            <div class="wrapper wrapper--large link-button__container">
+                <button class="link-button__button" onClick="window.location.href='{{ page.get_root_index }}';">
+                    Read all stories
+                </button>
+            </div>
+            {% endif %}
+        </div>
+    {% endblock %}
 {% endblock %}
 {% block extra_js %}
-<script>
-    var elem = document.querySelector('.grid_masonry');
-    var msnry = new Masonry( elem, {
-  itemSelector: '.grid-item',
-  columnWidth: 400,
-  gutter: 20,
-  horizontalOrder: true
-});
-</script>
+    <script>
+        var elem = document.querySelector('.grid_masonry');
+        var msnry = new Masonry( elem, {
+      itemSelector: '.grid-item',
+      gutter: 20,
+      horizontalOrder: true,
+      percentPosition: true,
+    });
+
+    </script>
 {% endblock %}
 

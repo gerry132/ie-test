@@ -1,0 +1,67 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags i18n %}
+{% load wagtailimages_tags %}
+{% load util_tags static navigation_tags %}
+
+{% block content %}
+    {% if page.generic_hero %}
+        {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+    {% endif %}
+    {% if not page.generic_hero %}
+        <div class="section section--padding section--white" id="main-header">
+            <div class="wrapper wrapper--large wrapper--padding content--padding">
+                <div class="intro--toc">
+                    <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                    {% if page.description %}
+                    <p class="intro__description">{{ page.description }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% block main %}
+        <div class="section section--padding section--white">
+            <div class="wrapper wrapper--large wrapper--padding">
+                <div class="tag__line"></div>
+                {% for card in stories %}
+                <div class="tag__link-box">
+                    {% if card.hero_image %}
+                        {% if card.image_alt %}
+                            {% image card.hero_image fill-500x300 class="tag__image" alt=card.image_alt %}
+                        {% else %}
+                            {% image card.hero_image fill-500x300 alt=card.image.alt_default class="tag__image" %}
+                        {% endif %}
+                    {% elif card.generic_hero %}
+                        {% for block in card.generic_hero %}
+                            {% image block.value.hero_image fill-500x300 class="tag__image" alt=card.image_alt %}
+                        {% endfor %}
+                    {% else %}
+                        {% for default_image in default_image %}
+                            {% image default_image.value.image fill-500x300 class="tag__image" alt=default_image.image_alt %}
+                        {% endfor %}
+                    {% endif %}
+                    <div class="tag__content">
+                        <div class="link-box__container">
+                            <ul class="tag__slide">
+                                <li class="tag__slide-item">{{ tag_first }}</li>
+                                {% for tags in card.related_tags|slice:":3" %}
+                                    {% if tags != tag_first %}
+                                        <li class="tag__slide-item">{{ tags }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                            <h3 class="link-box__heading heading--3">{{ card.title }}</h3>
+                            <div class="link-box__subtitle">
+                                {{ card.subtitle|richtext }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tag__line"></div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+
