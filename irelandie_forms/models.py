@@ -182,9 +182,11 @@ class FormPage(HoneypotMixin, BasePage):
             submitted_date_str = date.today().strftime('%x')
             subject = f"{self.subject} - {submitted_date_str}"
             if 'topic' in request.POST:
+                print('here')
                 self.topic = request.POST['topic']
                 addresses = [x.strip() for x in self.get_mapped_value(self.topic).split(',')]
             else:
+                print('no here')
                 addresses = [x.strip() for x in self.to_address.split(',')]
             print(subject)
             print(addresses)
