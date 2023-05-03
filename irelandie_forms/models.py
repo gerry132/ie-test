@@ -144,10 +144,6 @@ class FormPage(HoneypotMixin, BasePage):
 
     def get_mapped_value(self, topic):
         for p in self.email_map:
-            print(111111111111111111)
-            print(topic)
-            print(self.email_map)
-            print(111111111111111111)
             if p.value.get('description') == topic:
                 return p.value.get('email')
 
@@ -182,15 +178,11 @@ class FormPage(HoneypotMixin, BasePage):
             submitted_date_str = date.today().strftime('%x')
             subject = f"{self.subject} - {submitted_date_str}"
             if 'topic' in request.POST:
-                print('here')
                 self.topic = request.POST['topic']
                 addresses = [x.strip() for x in self.get_mapped_value(self.topic).split(',')]
             else:
-                print('no here')
                 addresses = [x.strip() for x in self.to_address.split(',')]
-            print(subject)
-            print(addresses)
-            print(self.from_address)
+
             send_mail(subject, self.render_email(self.form), addresses, self.from_address, )
         return context
 
