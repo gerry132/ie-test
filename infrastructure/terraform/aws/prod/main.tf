@@ -28,9 +28,9 @@ locals {
   app_aws_username              = "PROD_APP_USER"
   project_domain                = "content.ireland.ie"
   domain_ireland_ie             = "ireland.ie"
+  africa_day_domain             = "africaday.ie"
   project_name                  = "ireland-ie"
 
-  africa_day_domain             = "africaday.ie"
   region                        = "eu-west-1"
   # DB
   db_instance_class             = "db.m6g.large"
