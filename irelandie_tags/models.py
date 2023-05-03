@@ -45,6 +45,9 @@ class TagPage(BasePage):
 
 
 class TagLandingPage(BasePage):
+    subpage_types = [
+        'TagIndexPage'
+    ]
     template = "patterns/pages/irelandie_tags/tag_landing_page.html"
     generic_hero = StreamField(
         [
@@ -91,13 +94,14 @@ class TagLandingPage(BasePage):
         stories = StoryPage.objects.live().filter(locale=self.locale, page_related_tags__page=tag).specific()
         general_content = GeneralContentPage.objects.live().filter(
             locale=self.locale, page_related_tags__page=tag).specific()
-        print(freeform, stories)
+
         results = sorted(
             chain(stories, freeform, general_content),
             key=attrgetter('last_published_at')
         )[:9]
 
         context['stories'] = results
+        context['tag_first'] = tag
         pages = self.get_ancestors()
         context, root_found = get_root_info(context, pages)
         if not root_found:
@@ -109,3 +113,52 @@ class TagLandingPage(BasePage):
     def get_root_index(self):
         if self.get_first_child():
             return self.get_first_child().url
+
+
+class TagIndexPage(BasePage):
+    parent_page_types = [
+        'TagLandingPage'
+    ]
+    template = "patterns/pages/irelandie_tags/tag_index_page.html"
+    generic_hero = StreamField(
+        [
+            ("generic_hero", GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+    content_panels = BasePage.content_panels + [
+        FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
+    ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        from irelandie_home.models import HomePage
+        parent = self.get_parent().specific
+        page_related_tags = parent.related_tags[0]
+        from irelandie_pages.models import FreeFormPage
+        from irelandie_story.models import StoryPage
+        from irelandie_missions.models import GeneralContentPage
+
+        freeform = FreeFormPage.objects.live().filter(
+            locale=self.locale, page_related_tags__page=page_related_tags).specific()
+        stories = StoryPage.objects.live().filter(
+            locale=self.locale, page_related_tags__page=page_related_tags).specific()
+        general_content = GeneralContentPage.objects.live().filter(
+            locale=self.locale, page_related_tags__page=page_related_tags).specific()
+        results = sorted(
+            chain(stories, freeform, general_content),
+            key=attrgetter('last_published_at')
+        )
+
+        context['stories'] = results
+        context['tag_first'] = page_related_tags
+        pages = self.get_ancestors()
+        context, root_found = get_root_info(context, pages)
+        if not root_found:
+            f = HomePage.objects.all()[:1].get()
+            context['default_image'] = f.default_image
+
+        return context
