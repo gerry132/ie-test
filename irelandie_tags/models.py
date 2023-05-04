@@ -18,22 +18,6 @@ from itertools import chain
 from operator import attrgetter
 
 
-class TagListPage(BasePage):
-    subpage_types = [
-        'TagPage'
-    ]
-
-    parent_page_types = [
-        'irelandie_home.HomePage'
-    ]
-
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        tag_pages = self.get_children().specific()
-        context['tags'] = tag_pages
-        return context
-
-
 class TagPage(BasePage):
     parent_page_types = [
         'TagListPage'
@@ -46,10 +30,10 @@ class TagPage(BasePage):
     ]
 
     def clean(self):
-        if self.page_related_pages and self.tag_label:
+        if self.related_destinations and self.tag_label:
             raise ValidationError(
                 {
-                    "page_related_pages": ValidationError(
+                    "page_related_destinations": ValidationError(
                         "A tag can be either a destination tag or a category tag."
                     ),
                     "tag_label": ValidationError(
@@ -128,6 +112,23 @@ class TagLandingPage(BasePage):
     def get_root_index(self):
         if self.get_first_child():
             return self.get_first_child().url
+
+
+class TagListPage(BasePage):
+    template = "patterns/pages/tags/list.html"
+    subpage_types = [
+        'TagPage'
+    ]
+
+    parent_page_types = [
+        'irelandie_home.HomePage'
+    ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        tag_pages = TagLandingPage.objects.live().filter(locale=self.locale)
+        context['tags'] = tag_pages
+        return context
 
 
 class TagIndexPage(BasePage):
