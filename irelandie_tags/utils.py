@@ -1,6 +1,5 @@
 from itertools import chain
 from operator import attrgetter
-from irelandie_utils.utils import get_root_info
 
 
 def get_tagged_items(self, tag):

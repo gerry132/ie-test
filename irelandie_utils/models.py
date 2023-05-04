@@ -606,7 +606,6 @@ class BasePage(SocialFields, ListingFields, Page):
         index.SearchField("listing_summary"),
     ]
 
-
     @cached_property
     def related_destinations(self) -> PageQuerySet:
         """
