@@ -152,6 +152,17 @@ class PageRelatedTags(Orderable):
     panels = [PageChooserPanel("page")]
 
 
+class PageRelatedDestinations(Orderable):
+    parent = ParentalKey(Page, related_name="page_related_destinations")
+    page = models.ForeignKey(
+        "irelandie_missions.DestinationPage",
+        on_delete=models.CASCADE,
+        related_name="+",
+    )
+
+    panels = [PageChooserPanel("page")]
+
+
 # Generic social fields abstract class to add social image/text to any new content type easily.
 class SocialFields(models.Model):
     social_image = models.ForeignKey(
