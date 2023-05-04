@@ -10,12 +10,10 @@ from irelandie_utils.blocks import GenericHeroBlock, StatTagBlock
 from irelandie_utils.utils import get_root_info
 
 from .blocks import TagLandingBlock
+from .utils import get_tagged_items
 
 from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel, InlinePanel
-
-from itertools import chain
-from operator import attrgetter
 
 
 class TagPage(BasePage):
@@ -80,24 +78,13 @@ class TagLandingPage(BasePage):
         return the most recently published
         story objects.
         """
-        from irelandie_pages.models import FreeFormPage
-        from irelandie_story.models import StoryPage
-        from irelandie_missions.models import GeneralContentPage
         from irelandie_home.models import HomePage
 
         tag = self.related_tags[0]
 
         context = super().get_context(request, *args, **kwargs)
 
-        freeform = FreeFormPage.objects.live().filter(locale=self.locale, page_related_tags__page=tag).specific()
-        stories = StoryPage.objects.live().filter(locale=self.locale, page_related_tags__page=tag).specific()
-        general_content = GeneralContentPage.objects.live().filter(
-            locale=self.locale, page_related_tags__page=tag).specific()
-
-        results = sorted(
-            chain(stories, freeform, general_content),
-            key=attrgetter('last_published_at')
-        )[:9]
+        results = get_tagged_items(self, tag)[:9]
 
         context['stories'] = results
         context['tag_first'] = tag
@@ -152,22 +139,10 @@ class TagIndexPage(BasePage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         from irelandie_home.models import HomePage
+
         parent = self.get_parent().specific
         page_related_tags = parent.related_tags[0]
-        from irelandie_pages.models import FreeFormPage
-        from irelandie_story.models import StoryPage
-        from irelandie_missions.models import GeneralContentPage
-
-        freeform = FreeFormPage.objects.live().filter(
-            locale=self.locale, page_related_tags__page=page_related_tags).specific()
-        stories = StoryPage.objects.live().filter(
-            locale=self.locale, page_related_tags__page=page_related_tags).specific()
-        general_content = GeneralContentPage.objects.live().filter(
-            locale=self.locale, page_related_tags__page=page_related_tags).specific()
-        results = sorted(
-            chain(stories, freeform, general_content),
-            key=attrgetter('last_published_at')
-        )
+        results = get_tagged_items(self, tag)
 
         context['stories'] = results
         context['tag_first'] = page_related_tags

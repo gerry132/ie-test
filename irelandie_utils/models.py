@@ -606,6 +606,25 @@ class BasePage(SocialFields, ListingFields, Page):
         index.SearchField("listing_summary"),
     ]
 
+
+    @cached_property
+    def related_destinations(self) -> PageQuerySet:
+        """
+        Return a `PageQuerySet` of items related to this page via the
+        `PageRelatedPage` through model, and are suitable for display.
+        The result is ordered to match that specified by editors using
+        the 'page_related_pages' `InlinePanel`.
+        """
+
+        # NOTE: avoiding values_list() here for compatibility with preview
+        # See: https://github.com/wagtail/django-modelcluster/issues/30
+        ordered_page_pks = tuple(item.page_id for item in self.page_related_destinations.all())
+        return order_by_pk_position(
+            Page.objects.live().public().specific(),
+            pks=ordered_page_pks,
+            exclude_non_matches=True,
+        )
+
     @cached_property
     def related_tags(self) -> PageQuerySet:
         """
