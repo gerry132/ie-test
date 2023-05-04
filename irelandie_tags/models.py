@@ -2,6 +2,7 @@
 from functools import cached_property
 
 from django.db import models
+from django.forms import ValidationError
 
 from irelandie_utils.models import BasePage
 
@@ -41,7 +42,21 @@ class TagPage(BasePage):
 
     content_panels = BasePage.content_panels + [
         FieldPanel("tag_label"),
+        InlinePanel('page_related_destinations', label="Destination", max_num=1),
     ]
+
+    def clean(self):
+        if self.page_related_pages and self.tag_label:
+            raise ValidationError(
+                {
+                    "page_related_pages": ValidationError(
+                        "A tag can be either a destination tag or a category tag."
+                    ),
+                    "tag_label": ValidationError(
+                        "A tag can be either a destination tag or a category tag."
+                    ),
+                }
+            )
 
 
 class TagLandingPage(BasePage):
