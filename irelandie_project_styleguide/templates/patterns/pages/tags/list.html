@@ -1,0 +1,27 @@
+{% extends "patterns/base_page.html" %}
+{% load static wagtailcore_tags wagtailsearchpromotions_tags i18n %}
+
+{% block body_class %}template-searchresults{% endblock %}
+     
+
+{% block content %}
+
+    <div class="section section--padding section--grey">
+        <div class="wrapper wrapper--large wrapper--padding">
+            <div class="search-results">
+
+                <ul>
+                    {% for result in tags %}
+                        <li>
+                            {% include "patterns/molecules/search-result/search-result.html" with result=result.specific %}
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+            {% include "patterns/molecules/pagination/pagination.html" with paginator_page=search_results %}
+        </div>
+    </div>
+
+{% endblock %}
