@@ -142,7 +142,7 @@ class TagIndexPage(BasePage):
 
         parent = self.get_parent().specific
         page_related_tags = parent.related_tags[0]
-        results = get_tagged_items(self, tag)
+        results = get_tagged_items(self, page_related_tags)
 
         context['stories'] = results
         context['tag_first'] = page_related_tags
