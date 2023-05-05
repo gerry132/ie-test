@@ -849,7 +849,7 @@ class GeneralContentPage(HeroPage):
         FieldPanel("introduction"),
         FieldPanel("body"),
         InlinePanel('page_related_tags', label="Related category tags"),
-        InlinePanel('page_related_destinations', label="Related destination"),
+        InlinePanel('page_related_destination_tags', label="Related destination"),
 
     ]
     edit_handler = TabbedInterface([
