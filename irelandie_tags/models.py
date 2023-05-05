@@ -24,21 +24,18 @@ class TagPage(BasePage):
 
     content_panels = BasePage.content_panels + [
         FieldPanel("tag_label"),
-        InlinePanel('page_related_destinations', label="Destination", max_num=1),
     ]
 
-    def clean(self):
-        if self.related_destinations and self.tag_label:
-            raise ValidationError(
-                {
-                    "page_related_destinations": ValidationError(
-                        "A tag can be either a destination tag or a category tag."
-                    ),
-                    "tag_label": ValidationError(
-                        "A tag can be either a destination tag or a category tag."
-                    ),
-                }
-            )
+
+class DestinationTagPage(BasePage):
+    parent_page_types = [
+        'TagListPage'
+    ]
+    tag_label = models.TextField(blank=True)
+
+    content_panels = BasePage.content_panels + [
+        InlinePanel('page_related_destinations', label="Destination", max_num=1),
+    ]
 
 
 class TagLandingPage(BasePage):
