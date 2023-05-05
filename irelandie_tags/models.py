@@ -10,7 +10,7 @@ from irelandie_utils.blocks import GenericHeroBlock, StatTagBlock
 from irelandie_utils.utils import get_root_info
 
 from .blocks import TagLandingBlock
-from .utils import get_tagged_items
+from .utils import get_tagged_items, get_destination
 
 from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel, InlinePanel
@@ -83,7 +83,7 @@ class TagLandingPage(BasePage):
         tag = self.related_tags[0]
 
         context = super().get_context(request, *args, **kwargs)
-
+        context['destination_title'] = get_destination(tag)
         results = get_tagged_items(self, tag)[:9]
 
         context['stories'] = results
