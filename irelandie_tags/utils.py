@@ -4,6 +4,14 @@ from operator import attrgetter
 from django.db.models import Q
 
 
+def get_destination(tag):
+    if len(tag.related_destinations) != 0:
+        dest = tag.related_destinations[0]
+    else:
+        dest = None
+    return dest
+
+
 def get_tagged_items(self, tag):
     """
     Get tagged items, chain and return results.
