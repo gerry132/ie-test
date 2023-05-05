@@ -1,8 +1,6 @@
 from itertools import chain
 from operator import attrgetter
 
-from django.db.models import Q
-
 
 def get_tagged_items(self, tag):
     """
@@ -18,7 +16,7 @@ def get_tagged_items(self, tag):
         page_related_tags__page=tag, locale=self.locale).specific().distinct()
     general_content = GeneralContentPage.objects.live().filter(
         page_related_tags__page=tag, locale=self.locale).specific().distinct()
-    
+
     results = sorted(
         chain(stories, freeform, general_content),
         key=attrgetter('last_published_at')
