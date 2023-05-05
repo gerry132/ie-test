@@ -902,9 +902,9 @@ class ArticlePage(BasePage):
 
 class MinimalArticlePage(BasePage):
     introduction = models.TextField(blank=True)
-    subtitle = models.TextField(blank=True, help_text="This will not appear on the page, but will be automatically "
-                                                      "pulled through to appear alongside the title on link boxes "
-                                                      "in other areas of the site, linking to this page.")
+    subtitle = models.TextField(blank=True, help_text="Please include a brief description of this page/article. This "
+                                                      "will not appear live on the page, but will appear publicly as "
+                                                      "a subtitle in other areas of the site that link to this page.")
 
     hero_image = models.ForeignKey(
         IMAGE_MODEL,

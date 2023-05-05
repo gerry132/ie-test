@@ -1,0 +1,48 @@
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+
+<a href="{{ value.page.url }}" class="card">
+    <div class="card__image-container">
+         {% if value.image %}
+            {% if value.image_alt %}
+                {% image value.image fill-400x200 alt=value.image_alt class="card__image" %}
+            {% else %}
+                {% image value.image fill-400x200 alt=value.image.alt_default class="card__image" %}
+            {% endif %}
+        {% else %}
+            {% for block in default_image %}
+                {% image block.value.image fill-400x200 class="card__image" %}
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="card__content">
+        <ul class="tag__slide">
+            {% if related_destinations|length == 2 %}
+                {% for tags_category in related_tags|slice:":1" %}
+                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                {% endfor %}
+                {% for tags in related_destinations|slice:":2" %}
+                       <li class="tag__slide-item">{{ tags }}</li>
+                {% endfor %}
+            {% else %}
+                {% for tags_category in related_tags|slice:":2" %}
+                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                {% endfor %}
+                {% for tags in related_destinations|slice:":1" %}
+                    <li class="tag__slide-item">{{ tags }}</li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+        <h3 class="card__title">
+            {{ value.title }}
+        </h3>
+
+        <p class="card__summary">
+            {{ value.summary }}
+        </p>
+
+        <span class="card__link">
+            {{ value.link_text }}
+        </span>
+    </div>
+</a>

@@ -65,6 +65,7 @@ class DestinationPage(HeroPage):
             ("youtube_video", blocks.YoutubeVideoBlock()),
             ("video", blocks.CustomVideoChooserBlockAlt()),
             ("link_cards", blocks.LinkCardsBlock()),
+            ("Featured_tagged_stories", blocks.FeaturedTaggedStoriesBlock()),
             ("logo_cards", blocks.LogoCardsBlock()),
             ("html", wagtail_blocks.RawHTMLBlock(
                 template="patterns/molecules/streamfield/blocks/raw_html_block.html",
@@ -95,6 +96,7 @@ class DestinationPage(HeroPage):
             ("youtube_video", blocks.YoutubeVideoBlock()),
             ("video", blocks.CustomVideoChooserBlockAlt()),
             ("link_cards", blocks.LinkCardsBlock()),
+            ("Featured_tagged_stories", blocks.FeaturedTaggedStoriesBlock()),
             ("logo_cards", blocks.LogoCardsBlock()),
             ("html", wagtail_blocks.RawHTMLBlock(
                 template="patterns/molecules/streamfield/blocks/raw_html_block.html",
@@ -840,14 +842,14 @@ class GeneralContentPage(HeroPage):
     body = StreamField(blocks.GeneralContentBlocks(), blank=True)
 
     content_panels = HeroPage.content_panels + [
-        FieldPanel("subtitle", help_text="This will not appear on the page, but will be automatically pulled through "
-                                         "to appear alongside the title on link boxes in other areas of the site, "
-                                         "linking to this page."),
+        FieldPanel("subtitle", help_text="Please include a brief description of this page/article. This will not "
+                                         "appear live on the page, but will appear publicly as a subtitle in other "
+                                         "areas of the site that link to this page."),
         FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("introduction"),
         FieldPanel("body"),
         InlinePanel('page_related_tags', label="Related category tags"),
-        InlinePanel('page_related_destinations', label="Related destination", max_num=1),
+        InlinePanel('page_related_destinations', label="Related destination"),
 
     ]
     edit_handler = TabbedInterface([
