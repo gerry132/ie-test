@@ -100,7 +100,8 @@ class TagLandingPage(BasePage):
 class TagListPage(BasePage):
     template = "patterns/pages/tags/list.html"
     subpage_types = [
-        'TagPage'
+        'TagPage',
+        'DestinationTagPage'
     ]
 
     parent_page_types = [
