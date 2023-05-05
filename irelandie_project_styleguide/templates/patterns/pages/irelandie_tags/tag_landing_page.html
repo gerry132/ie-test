@@ -62,29 +62,37 @@
                                 <a class="card" href="{{ card.url }}">
                                     <div class="card__image-container">
                                         {% if card.hero_image %}
-                                            {% if card.image_alt %}
-                                                {% image card.hero_image fill-500x300 class="card__image" alt=card.image_alt %}
+                                            {% if card.alt_text %}
+                                                {% image card.hero_image fill-500x300 class="card__image" alt=card.alt_text %}
                                             {% else %}
                                                 {% image card.hero_image fill-500x300 alt=card.image.alt_default class="card__image" %}
                                             {% endif %}
                                         {% elif card.generic_hero %}
                                             {% for block in card.generic_hero %}
-                                                {% image block.value.hero_image fill-500x300 class="card__image" alt=card.image_alt %}
+                                                {% image block.value.hero_image fill-500x300 class="card__image" alt=block.value.hero_image_alt %}
                                             {% endfor %}
                                         {% else %}
                                             {% for default_image in default_image %}
-                                                {% image default_image.value.image fill-500x300 class="card__image" alt=default_image.image_alt %}
+                                                {% image default_image.value.image fill-500x300 class="card__image" alt=default_image.value.image_alt %}
                                             {% endfor %}
                                         {% endif %}
                                     </div>
                                     <div class="card__content">
                                         <ul class="tag__slide">
-                                            <li class="tag__slide-item">{{ tag_first }}</li>
-                                            {% for tags in card.related_tags|slice:":3" %}
-                                                {% if tags != tag_first %}
+                                            <li class="tag__slide-item">{{ tag_first.specific.tag_label }}</li>
+                                            {% if card.related_destinations|length == 2 %}
+                                                {% for tags in card.related_destinations|slice:":2" %}
                                                     <li class="tag__slide-item">{{ tags }}</li>
+                                                {% endfor %}
+                                            {% else %}
+                                                {% get_category_tag tag_first card.related_tags as tag_category %}
+                                                {% if tag_category != None %}
+                                                    <li class="tag__slide-item">{{ tag_category.specific.tag_label }}</li>
                                                 {% endif %}
-                                            {% endfor %}
+                                                {% for tags in card.related_destinations|slice:":1" %}
+                                                    <li class="tag__slide-item">{{ tags }}</li>
+                                                {% endfor %}
+                                            {% endif %}
                                         </ul>
                                         <h3 class="tag__card__title">{{ card.title }}</h3>
                                         <p class="tag__card__summary">{{ card.subtitle }}</p>
@@ -100,29 +108,37 @@
                                     <a class="card" href="{{ card.url }}">
                                         <div class="card__image-container">
                                             {% if card.hero_image %}
-                                                {% if card.image_alt %}
-                                                    {% image card.hero_image fill-500x300 class="card__image" alt=card.image_alt %}
+                                                {% if card.alt_text %}
+                                                    {% image card.hero_image fill-500x300 class="card__image" alt=card.alt_text %}
                                                 {% else %}
                                                     {% image card.hero_image fill-500x300 alt=card.image.alt_default class="card__image" %}
                                                 {% endif %}
                                             {% elif card.generic_hero %}
                                                 {% for block in card.generic_hero %}
-                                                    {% image block.value.hero_image fill-500x300 class="card__image" alt=card.image_alt %}
+                                                    {% image block.value.hero_image fill-500x300 class="card__image" alt=block.value.hero_image_alt %}
                                                 {% endfor %}
                                             {% else %}
                                                 {% for default_image in default_image %}
-                                                    {% image default_image.value.image fill-500x300 class="card__image" alt=default_image.image_alt %}
+                                                    {% image default_image.value.image fill-500x300 class="card__image" alt=default_image.value.image_alt %}
                                                 {% endfor %}
                                             {% endif %}
                                         </div>
                                         <div class="card__content">
                                             <ul class="tag__slide">
-                                                <li class="tag__slide-item">{{ tag_first }}</li>
-                                                {% for tags in card.related_tags|slice:":3" %}
-                                                    {% if tags != tag_first %}
+                                                <li class="tag__slide-item">{{ tag_first.specific.tag_label }}</li>
+                                                {% if card.related_destinations|length == 2 %}
+                                                    {% for tags in card.related_destinations|slice:":2" %}
                                                         <li class="tag__slide-item">{{ tags }}</li>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    {% get_category_tag tag_first card.related_tags as tag_category %}
+                                                    {% if tag_category != None %}
+                                                        <li class="tag__slide-item">{{ tag_category.specific.tag_label }}</li>
                                                     {% endif %}
-                                                {% endfor %}
+                                                    {% for tags in card.related_destinations|slice:":1" %}
+                                                        <li class="tag__slide-item">{{ tags }}</li>
+                                                    {% endfor %}
+                                                {% endif %}
                                             </ul>
                                             <h3 class="tag__card__title">{{ card.title }}</h3>
                                             <p class="tag__card__summary">{{ card.subtitle }}</p>
