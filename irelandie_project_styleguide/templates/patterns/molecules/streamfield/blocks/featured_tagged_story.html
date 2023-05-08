@@ -17,19 +17,23 @@
 
     <div class="card__content">
         <ul class="tag__slide">
-            {% if related_destinations|length == 2 %}
+            {% if related_destination_tags|length >= 2 %}
                 {% for tags_category in related_tags|slice:":1" %}
                         <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
                 {% endfor %}
-                {% for tags in related_destinations|slice:":2" %}
-                       <li class="tag__slide-item">{{ tags }}</li>
+                {% for tags in related_destination_tags|slice:":2" %}
+                       <li class="tag__slide-item">{{ tags.specific.title }}</li>
                 {% endfor %}
-            {% else %}
+            {% elif related_destination_tags|length == 1 %}
                 {% for tags_category in related_tags|slice:":2" %}
                         <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
                 {% endfor %}
-                {% for tags in related_destinations|slice:":1" %}
-                    <li class="tag__slide-item">{{ tags }}</li>
+                {% for tags in related_destination_tags|slice:":1" %}
+                    <li class="tag__slide-item">{{ tags.specific.title }}</li>
+                {% endfor %}
+            {% else %}
+                {% for tags_category in related_tags|slice:":3" %}
+                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
                 {% endfor %}
             {% endif %}
         </ul>

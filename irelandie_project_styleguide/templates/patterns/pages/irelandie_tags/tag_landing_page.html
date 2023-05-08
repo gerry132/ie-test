@@ -80,19 +80,30 @@
                                     <div class="card__content">
                                         <ul class="tag__slide">
                                             <li class="tag__slide-item">{{ tag_first.specific.tag_label }}</li>
-                                            {% if card.related_destinations|length == 2 %}
-                                                {% for tags in card.related_destinations|slice:":2" %}
-                                                    <li class="tag__slide-item">{{ tags }}</li>
-                                                {% endfor %}
-                                            {% else %}
-                                                {% get_category_tag tag_first card.related_tags as tag_category %}
-                                                {% if tag_category != None %}
-                                                    <li class="tag__slide-item">{{ tag_category.specific.tag_label }}</li>
+                                                {% if card.related_destination_tags|length >= 2 %}
+                                                    {% for tags in card.related_destination_tags|slice:":2" %}
+                                                        <li class="tag__slide-item">{{ tags.specific.title }}</li>
+                                                    {% endfor %}
+                                                {% elif card.related_destination_tags|length == 0 and card.related_tags|length >= 3 %}
+                                                    {% get_category_tag tag_first card.related_tags as tag_category %}
+                                                    {% for tags in tag_category %}
+                                                        <li class="tag__slide-item">{{ tags.specific.tag_label }}</li>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    {% get_category_tag tag_first card.related_tags as tag_category %}
+                                                    {% if tag_category|length > 1 %}
+                                                        {% for tags in tag_category|slice:":1" %}
+                                                            <li class="tag__slide-item">{{ tags.specific.tag_label }}</li>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        {% if tag_category %}
+                                                            <li class="tag__slide-item">{{ tag_category.specific.tag_label }}</li>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                    {% for tags in card.related_destination_tags|slice:":1" %}
+                                                        <li class="tag__slide-item">{{ tags.specific.title }}</li>
+                                                    {% endfor %}
                                                 {% endif %}
-                                                {% for tags in card.related_destinations|slice:":1" %}
-                                                    <li class="tag__slide-item">{{ tags }}</li>
-                                                {% endfor %}
-                                            {% endif %}
                                         </ul>
                                         <h3 class="tag__card__title">{{ card.title }}</h3>
                                         <p class="tag__card__summary">{{ card.subtitle }}</p>
@@ -126,17 +137,28 @@
                                         <div class="card__content">
                                             <ul class="tag__slide">
                                                 <li class="tag__slide-item">{{ tag_first.specific.tag_label }}</li>
-                                                {% if card.related_destinations|length == 2 %}
-                                                    {% for tags in card.related_destinations|slice:":2" %}
-                                                        <li class="tag__slide-item">{{ tags }}</li>
+                                                {% if card.related_destination_tags|length >= 2 %}
+                                                    {% for tags in card.related_destination_tags|slice:":2" %}
+                                                        <li class="tag__slide-item">{{ tags.specific.title }}</li>
+                                                    {% endfor %}
+                                                {% elif card.related_destination_tags|length == 0 and card.related_tags|length >= 3 %}
+                                                    {% get_category_tag tag_first card.related_tags as tag_category %}
+                                                    {% for tags in tag_category %}
+                                                        <li class="tag__slide-item">{{ tags.specific.tag_label }}</li>
                                                     {% endfor %}
                                                 {% else %}
                                                     {% get_category_tag tag_first card.related_tags as tag_category %}
-                                                    {% if tag_category != None %}
-                                                        <li class="tag__slide-item">{{ tag_category.specific.tag_label }}</li>
+                                                    {% if tag_category|length > 1 %}
+                                                        {% for tags in tag_category|slice:":1" %}
+                                                            <li class="tag__slide-item">{{ tags.specific.tag_label }}</li>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        {% if tag_category %}
+                                                            <li class="tag__slide-item">{{ tag_category.specific.tag_label }}</li>
+                                                        {% endif %}
                                                     {% endif %}
-                                                    {% for tags in card.related_destinations|slice:":1" %}
-                                                        <li class="tag__slide-item">{{ tags }}</li>
+                                                    {% for tags in card.related_destination_tags|slice:":1" %}
+                                                        <li class="tag__slide-item">{{ tags.specific.title }}</li>
                                                     {% endfor %}
                                                 {% endif %}
                                             </ul>
