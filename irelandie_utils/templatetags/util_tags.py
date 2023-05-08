@@ -152,15 +152,6 @@ def favicon_child(page):
 
 @register.simple_tag
 def get_category_tag(selected_tag, tags):
-    for tag in tags:
-        if tag == selected_tag:
-            continue
-        else:
-            return tag
-
-
-@register.simple_tag
-def get_category_tag(selected_tag, tags):
     counter = 0
     tagging = []
     for tag in tags:
