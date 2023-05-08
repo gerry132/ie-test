@@ -41,5 +41,18 @@ class StoryPage(HeroPage):
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        from irelandie_tags.models import TagLandingPage
+        tag = self.related_tags
+        tagging_links = []
+        for tags in tag:
+            tag_landing = TagLandingPage.objects.live().filter(
+                page_related_tags__page=tags).specific().distinct()
+            for tag_land in tag_landing:
+                tagging_links.append(list((tags, tag_land)))
+        context["tagging_links"] = tagging_links
+        return context
+
     class Meta:
         verbose_name = "Story page"
