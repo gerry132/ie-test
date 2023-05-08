@@ -159,6 +159,22 @@ def get_category_tag(selected_tag, tags):
             return tag
 
 
+@register.simple_tag
+def get_category_tag(selected_tag, tags):
+    counter = 0
+    tagging = []
+    for tag in tags:
+        if tag == selected_tag:
+            continue
+        elif len(tags) == 2:
+            return tag
+        else:
+            counter += 1
+            tagging.append(tag)
+            if counter == 2:
+                return tagging
+
+
 @register.simple_tag(
     takes_context=True
 )

@@ -107,7 +107,7 @@ class FreeFormPage(FreeFormPageBase):
                                  FieldPanel("twitter_feed"),
                              ], heading="Twitter feed"),
                              InlinePanel('page_related_tags', label="Related category tags"),
-                             InlinePanel('page_related_destinations', label="Related destination", max_num=2),
+                             InlinePanel('page_related_destination_tags', label="Related destination"),
                          ]
                      )
 

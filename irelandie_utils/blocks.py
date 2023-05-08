@@ -1480,7 +1480,7 @@ class FeaturedTaggedStoryBlock(blocks.StructBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
         context["related_tags"] = value["page"].specific.related_tags
-        context["related_destinations"] = value["page"].specific.related_destinations
+        context["related_destination_tags"] = value["page"].specific.related_destination_tags
         return context
 
     class Meta:
