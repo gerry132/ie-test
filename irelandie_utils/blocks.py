@@ -1472,14 +1472,23 @@ class FeaturedTaggedStoryBlock(blocks.StructBlock):
     )
     title = blocks.CharBlock(required=True)
     summary = blocks.TextBlock(required=False)
-    page = blocks.PageChooserBlock(required=False)
+    page = blocks.PageChooserBlock(required=False, page_type=["irelandie_pages.FreeFormPage",
+                                   "irelandie_story.StoryPage", "irelandie_missions.GeneralContentPage"])
     link_text = blocks.CharBlock(
         max_length=32, blank=True, required=False, default="Read Story", help_text='Call To Action Text'
     )
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        context["related_tags"] = value["page"].specific.related_tags
+        from irelandie_tags.models import TagLandingPage
+        tag = value["page"].specific.related_tags
+        tagging_links = []
+        for tags in tag:
+            tag_landing = TagLandingPage.objects.live().filter(
+                page_related_tags__page=tags).specific().distinct()
+            for tag_land in tag_landing:
+                tagging_links.append(list((tags, tag_land)))
+        context["tagging_links"] = tagging_links
         context["related_destination_tags"] = value["page"].specific.related_destination_tags
         return context
 

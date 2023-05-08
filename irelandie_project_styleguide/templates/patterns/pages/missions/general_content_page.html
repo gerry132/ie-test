@@ -57,6 +57,16 @@
                 </div>
             {% endif %}
         {% endfor %}
+    <div class="wrapper wrapper--large wrapper--padding">
+         <ul class="tag__slide">
+            {% for tags_category, tag_links in tagging_links %}
+                <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_category.specific.tag_label }}</a></li>
+            {% endfor %}
+            {% for tags in page.related_destination_tags %}
+                <li class="tag__slide-item">{{ tags.specific.title }}</li>
+            {% endfor %}
+         </ul>
+    </div>
 </div>
 {% endblock %}
     {% endblock %}

@@ -1,6 +1,7 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 
-<a href="{{ value.page.url }}" class="card">
+<div class="card">
+<a href="{{ value.page.url }}" >
     <div class="card__image-container">
          {% if value.image %}
             {% if value.image_alt %}
@@ -14,39 +15,42 @@
             {% endfor %}
         {% endif %}
     </div>
+</a>
 
     <div class="card__content">
         <ul class="tag__slide">
             {% if related_destination_tags|length >= 2 %}
-                {% for tags_category in related_tags|slice:":1" %}
-                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                {% for tags_category, tag_links in tagging_links|slice:":1" %}
+                    <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_category.specific.tag_label }}</a></li>
                 {% endfor %}
                 {% for tags in related_destination_tags|slice:":2" %}
-                       <li class="tag__slide-item">{{ tags.specific.title }}</li>
+                    <li class="tag__slide-item">{{ tags.specific.title }}</li>
                 {% endfor %}
             {% elif related_destination_tags|length == 1 %}
-                {% for tags_category in related_tags|slice:":2" %}
-                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                {% for tags_category, tag_links in tagging_links|slice:":2" %}
+                        <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_category.specific.tag_label }}</a></li>
                 {% endfor %}
                 {% for tags in related_destination_tags|slice:":1" %}
                     <li class="tag__slide-item">{{ tags.specific.title }}</li>
                 {% endfor %}
             {% else %}
-                {% for tags_category in related_tags|slice:":3" %}
-                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                {% for tags_category, tag_links in tagging_links|slice:":3" %}
+                    <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_category.specific.tag_label }}</a></li>
                 {% endfor %}
             {% endif %}
         </ul>
-        <h3 class="card__title">
-            {{ value.title }}
-        </h3>
+        <a href="{{ value.page.url }}">
+            <h3 class="card__title">
+                {{ value.title }}
+            </h3>
 
-        <p class="card__summary">
-            {{ value.summary }}
-        </p>
+            <p class="card__summary">
+                {{ value.summary }}
+            </p>
 
-        <span class="card__link">
-            {{ value.link_text }}
-        </span>
+            <span class="card__link">
+                {{ value.link_text }}
+            </span>
+        </a>
     </div>
-</a>
+</div>
