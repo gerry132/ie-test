@@ -140,6 +140,40 @@ class PageRelatedPage(Orderable):
     panels = [PageChooserPanel("page")]
 
 
+# Related pages
+class PageRelatedTags(Orderable):
+    parent = ParentalKey(Page, related_name="page_related_tags")
+    page = models.ForeignKey(
+        "irelandie_tags.TagPage",
+        on_delete=models.CASCADE,
+        related_name="+",
+    )
+
+    panels = [PageChooserPanel("page")]
+
+
+class PageRelatedDestinationTags(Orderable):
+    parent = ParentalKey(Page, related_name="page_related_destination_tags")
+    page = models.ForeignKey(
+        "irelandie_tags.DestinationTagPage",
+        on_delete=models.CASCADE,
+        related_name="+",
+    )
+
+    panels = [PageChooserPanel("page")]
+
+
+class PageRelatedDestinations(Orderable):
+    parent = ParentalKey(Page, related_name="page_related_destinations")
+    page = models.ForeignKey(
+        "irelandie_missions.DestinationPage",
+        on_delete=models.CASCADE,
+        related_name="+",
+    )
+
+    panels = [PageChooserPanel("page")]
+
+
 # Generic social fields abstract class to add social image/text to any new content type easily.
 class SocialFields(models.Model):
     social_image = models.ForeignKey(
@@ -584,6 +618,60 @@ class BasePage(SocialFields, ListingFields, Page):
     ]
 
     @cached_property
+    def related_destination_tags(self) -> PageQuerySet:
+        """
+        Return a `PageQuerySet` of items related to this page via the
+        `PageRelatedPage` through model, and are suitable for display.
+        The result is ordered to match that specified by editors using
+        the 'page_related_pages' `InlinePanel`.
+        """
+
+        # NOTE: avoiding values_list() here for compatibility with preview
+        # See: https://github.com/wagtail/django-modelcluster/issues/30
+        ordered_page_pks = tuple(item.page_id for item in self.page_related_destination_tags.all())
+        return order_by_pk_position(
+            Page.objects.live().public().specific(),
+            pks=ordered_page_pks,
+            exclude_non_matches=True,
+        )
+
+    @cached_property
+    def related_destinations(self) -> PageQuerySet:
+        """
+        Return a `PageQuerySet` of items related to this page via the
+        `PageRelatedPage` through model, and are suitable for display.
+        The result is ordered to match that specified by editors using
+        the 'page_related_pages' `InlinePanel`.
+        """
+
+        # NOTE: avoiding values_list() here for compatibility with preview
+        # See: https://github.com/wagtail/django-modelcluster/issues/30
+        ordered_page_pks = tuple(item.page_id for item in self.page_related_destinations.all())
+        return order_by_pk_position(
+            Page.objects.live().public().specific(),
+            pks=ordered_page_pks,
+            exclude_non_matches=True,
+        )
+
+    @cached_property
+    def related_tags(self) -> PageQuerySet:
+        """
+        Return a `PageQuerySet` of items related to this page via the
+        `PageRelatedPage` through model, and are suitable for display.
+        The result is ordered to match that specified by editors using
+        the 'page_related_pages' `InlinePanel`.
+        """
+
+        # NOTE: avoiding values_list() here for compatibility with preview
+        # See: https://github.com/wagtail/django-modelcluster/issues/30
+        ordered_page_pks = tuple(item.page_id for item in self.page_related_tags.all())
+        return order_by_pk_position(
+            Page.objects.live().public().specific(),
+            pks=ordered_page_pks,
+            exclude_non_matches=True,
+        )
+
+    @cached_property
     def related_pages(self) -> PageQuerySet:
         """
         Return a `PageQuerySet` of items related to this page via the
@@ -843,6 +931,9 @@ class ArticlePage(BasePage):
 
 class MinimalArticlePage(BasePage):
     introduction = models.TextField(blank=True)
+    subtitle = models.TextField(blank=True, help_text="Please include a brief description of this page/article. This "
+                                                      "will not appear live on the page, but will appear publicly as "
+                                                      "a subtitle in other areas of the site that link to this page.")
 
     hero_image = models.ForeignKey(
         IMAGE_MODEL,
@@ -872,6 +963,7 @@ class MinimalArticlePage(BasePage):
 
     content_panels = Page.content_panels + [
         FieldPanel("introduction"),
+        FieldPanel("subtitle"),
 
         MultiFieldPanel(
             [

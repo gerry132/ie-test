@@ -115,6 +115,14 @@ def count_toc(page):
 
 
 @register.simple_tag
+def lists(stories, stats):
+    list_stories = stories
+    n = len(list_stories)
+    list_stats = list(stats)
+    return list_stories[0:2] + list_stats + list_stories[2:n]
+
+
+@register.simple_tag
 def favicon_child(page):
     if isinstance(page, int) or isinstance(page, str):
         # accounts for search
@@ -140,6 +148,40 @@ def favicon_child(page):
                 return h.favicon
 
     return False
+
+
+@register.simple_tag
+def get_category_tag(selected_tag, tags):
+    counter = 0
+    tagging = []
+    for tag in tags:
+        if tag == selected_tag:
+            continue
+        elif len(tags) == 2:
+            return tag
+        else:
+            counter += 1
+            tagging.append(tag)
+            if counter == 2:
+                return tagging
+
+
+@register.simple_tag
+def get_tag_links(tag, page):
+    from irelandie_tags.models import TagLandingPage
+    tagging_links = []
+    tags_no_links = []
+    tag_land = None
+    for tags in tag:
+        tag_landing = TagLandingPage.objects.live().filter(
+            page_related_tags__page=tags, locale=page.locale).specific().distinct()
+        for tag_land in tag_landing:
+            tagging_links.append(list((tag_land.related_tags[0], tag_land.url)))
+        if tag_land and tags == tag_land.related_tags[0]:
+            continue
+        else:
+            tags_no_links.append(tags)
+    return tagging_links, tags_no_links
 
 
 @register.simple_tag(

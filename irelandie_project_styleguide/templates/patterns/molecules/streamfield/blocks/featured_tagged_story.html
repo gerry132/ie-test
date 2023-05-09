@@ -1,0 +1,78 @@
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+
+<div class="card">
+<a href="{{ value.page.url }}" >
+    <div class="card__image-container">
+         {% if value.image %}
+            {% if value.image_alt %}
+                {% image value.image fill-400x200 alt=value.image_alt class="card__image" %}
+            {% else %}
+                {% image value.image fill-400x200 alt=value.image.alt_default class="card__image" %}
+            {% endif %}
+        {% else %}
+            {% for block in default_image %}
+                {% image block.value.image fill-400x200 class="card__image" %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</a>
+
+    <div class="card__content">
+        <ul class="tag__slide">
+            {% if related_destination_tags|length >= 2 %}
+                {% for tags_category, tag_links in tagging_links|slice:":1" %}
+                    <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                {% endfor %}
+                {% for tags in related_destination_tags|slice:":2" %}
+                    <li class="tag__slide-item">{{ tags.specific.title }}</li>
+                {% endfor %}
+            {% elif related_destination_tags|length == 1 %}
+                {% for tags_category, tag_links in tagging_links|slice:":2" %}
+                        <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                {% endfor %}
+                {% if tagging_links|length == 0 %}
+                    {% for tags_category in tags_no_links|slice:":2" %}
+                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                    {% endfor %}
+                {% elif tagging_links|length <= 1 %}
+                    {% for tags_category in tags_no_links|slice:":1" %}
+                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                    {% endfor %}
+                {% endif %}
+                {% for tags in related_destination_tags|slice:":1" %}
+                    <li class="tag__slide-item">{{ tags.specific.title }}</li>
+                {% endfor %}
+            {% else %}
+                {% for tags_category, tag_links in tagging_links|slice:":3" %}
+                    <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                {% endfor %}
+                {% if tagging_links|length == 0 %}
+                    {% for tags_category in tags_no_links|slice:":3" %}
+                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                    {% endfor %}
+                {% elif tagging_links|length == 1 %}
+                    {% for tags_category in tags_no_links|slice:":2" %}
+                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                    {% endfor %}
+                {% else %}
+                    {% for tags_category in tags_no_links|slice:":1" %}
+                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+        </ul>
+        <a href="{{ value.page.url }}">
+            <h3 class="card__title">
+                {{ value.title }}
+            </h3>
+
+            <p class="card__summary">
+                {{ value.summary }}
+            </p>
+
+            <span class="card__link">
+                {{ value.link_text }}
+            </span>
+        </a>
+    </div>
+</div>

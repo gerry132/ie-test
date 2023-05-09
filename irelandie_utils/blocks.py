@@ -653,6 +653,16 @@ class ArticleCardsBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/article_cards.html"
 
 
+class StatTagBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    summary = blocks.RichTextBlock(
+        features=["h3", "blockquote", "bold", "link", "document-link", "ul", "ol"],
+        required=False,
+    )
+    background_color = blocks.CharBlock(max_length=7, default='#EDECE5', required=False)
+    text_color = blocks.CharBlock(max_length=7, default='#292929', required=False)
+
+
 class StatBlock(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     summary = blocks.RichTextBlock(
@@ -1454,6 +1464,49 @@ class MultimediaRowBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/multimedia_block.html"
 
 
+class FeaturedTaggedStoryBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=True)
+    image_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_IMAGE),
+    )
+    title = blocks.CharBlock(required=True)
+    summary = blocks.TextBlock(required=False)
+    page = blocks.PageChooserBlock(required=False, page_type=["irelandie_pages.FreeFormPage",
+                                   "irelandie_story.StoryPage", "irelandie_missions.GeneralContentPage"])
+    link_text = blocks.CharBlock(
+        max_length=32, blank=True, required=False, default="Read Story", help_text='Call To Action Text'
+    )
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        from irelandie_utils.templatetags.util_tags import get_tag_links
+        tag = value["page"].specific.related_tags
+        tagging_links = get_tag_links(tag, value["page"])[0]
+        tags_no_links = get_tag_links(tag, value["page"])[1]
+        context["tagging_links"] = tagging_links
+        context["tags_no_links"] = tags_no_links
+        context["related_destination_tags"] = value["page"].specific.related_destination_tags
+        return context
+
+    class Meta:
+        icon = "list-ol"
+        label = "Featured Tagged Story"
+        template = "patterns/molecules/streamfield/blocks/featured_tagged_story.html"
+
+
+class FeaturedTaggedStoriesBlock(blocks.StructBlock):
+    title = blocks.CharBlock(required=False)
+    summary = blocks.RichTextBlock(required=False)
+
+    taggedStories = blocks.StreamBlock([("TaggedStories", FeaturedTaggedStoryBlock())])
+
+    class Meta:
+        icon = "list-ul"
+        label = "Featured Tagged Stories"
+        template = "patterns/molecules/streamfield/blocks/featured_tagged_stories.html"
+
+
 class FreeFormBlocks(FreeFormBlocksBase):
     rich_text = RichTextBlock(group="Base")
     rich_text_advanced = AdvancedRichTextBlock(group="Base")
@@ -1465,6 +1518,7 @@ class FreeFormBlocks(FreeFormBlocksBase):
     embassy_story = EmbassyStory(group="Module")
     featured_articles = FeaturedArticlesBlock(group="Module")
     featured_story = FeaturedStoryBlock(group="Module")
+    Featured_tagged_story = FeaturedTaggedStoriesBlock(group="Module")
     logos = LogoCardsBlock(group="Module")
     link_card = LinkCardsBlock()
     link_button = LinkButtonBlock()

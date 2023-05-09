@@ -1,7 +1,7 @@
 terraform {
   required_version = ">=1.1"
   required_providers {
-    aws         = ">=4.0.0"
+    aws         = "4.65.0"
     random      = ">=3.1.0"
     template    = ">=2.2.0"
   }
@@ -72,7 +72,7 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.36.118/32", "80.233.44.118/32"]
+      cidr_blocks  = ["80.233.41.35/32", "80.233.33.35/32"]
     },
   }
 }
