@@ -166,6 +166,24 @@ def get_category_tag(selected_tag, tags):
                 return tagging
 
 
+@register.simple_tag
+def get_tag_links(tag, page):
+    from irelandie_tags.models import TagLandingPage
+    tagging_links = []
+    tags_no_links = []
+    tag_land = None
+    for tags in tag:
+        tag_landing = TagLandingPage.objects.live().filter(
+            page_related_tags__page=tags, locale=page.locale).specific().distinct()
+        for tag_land in tag_landing:
+            tagging_links.append(list((tag_land.related_tags[0], tag_land.url)))
+        if tag_land and tags == tag_land.related_tags[0]:
+            continue
+        else:
+            tags_no_links.append(tags)
+    return tagging_links, tags_no_links
+
+
 @register.simple_tag(
     takes_context=True
 )

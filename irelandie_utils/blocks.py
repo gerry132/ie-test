@@ -1480,15 +1480,12 @@ class FeaturedTaggedStoryBlock(blocks.StructBlock):
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        from irelandie_tags.models import TagLandingPage
+        from irelandie_utils.templatetags.util_tags import get_tag_links
         tag = value["page"].specific.related_tags
-        tagging_links = []
-        for tags in tag:
-            tag_landing = TagLandingPage.objects.live().filter(
-                page_related_tags__page=tags).specific().distinct()
-            for tag_land in tag_landing:
-                tagging_links.append(list((tags, tag_land)))
+        tagging_links = get_tag_links(tag, value["page"])[0]
+        tags_no_links = get_tag_links(tag, value["page"])[1]
         context["tagging_links"] = tagging_links
+        context["tags_no_links"] = tags_no_links
         context["related_destination_tags"] = value["page"].specific.related_destination_tags
         return context
 
