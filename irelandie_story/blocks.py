@@ -7,12 +7,11 @@ from irelandie_utils.blocks import (
     StatsBlock,
     StoryPhotoGalleriesBlock,
     TimelinePhotoGalleriesBlock,
-    FeaturedStoryBlock,
     LinkCardsBlock,
     MultimediaRowBlock,
     LogoCardsBlock,
     ArticleCardsBlock,
-    DocumentBlock, FeaturedTaggedStoriesBlock
+    DocumentBlock, FeaturedTaggedStoriesBlock, StoryBlock
 )
 
 from wagtail import blocks
@@ -33,7 +32,7 @@ class StoryPageBlock(blocks.StreamBlock):
     stats_block = StatsBlock(group="Base")
     story_photo_gallery = StoryPhotoGalleriesBlock(group="Base")
     timeline_photo_gallery = TimelinePhotoGalleriesBlock(group="Base")
-    two_column_feature = FeaturedStoryBlock(group="Module")
+    two_column_feature = StoryBlock(group="Module")
     link_cards = LinkCardsBlock(group="Module")
     Featured_tagged_story = FeaturedTaggedStoriesBlock(group="Module")
     stats_block = StatsBlock(group="Base")
