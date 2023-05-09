@@ -45,6 +45,8 @@
         </div>
     {% elif block.block_type == 'story_photo_gallery' %}
         {% include_block block %}
+    {% elif block.block_type == 'person' %}
+         {% include "patterns/snippets/peoplesnippet.html" with object=block.value.person %}
     {% else %}
         <div style="padding-bottom: 30px;" class="wrapper wrapper--large wrapper--padding">
             {% include_block block %}
