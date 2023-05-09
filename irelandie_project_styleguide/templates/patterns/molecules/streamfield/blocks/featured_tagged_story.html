@@ -21,22 +21,44 @@
         <ul class="tag__slide">
             {% if related_destination_tags|length >= 2 %}
                 {% for tags_category, tag_links in tagging_links|slice:":1" %}
-                    <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_category.specific.tag_label }}</a></li>
+                    <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
                 {% endfor %}
                 {% for tags in related_destination_tags|slice:":2" %}
                     <li class="tag__slide-item">{{ tags.specific.title }}</li>
                 {% endfor %}
             {% elif related_destination_tags|length == 1 %}
                 {% for tags_category, tag_links in tagging_links|slice:":2" %}
-                        <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_category.specific.tag_label }}</a></li>
+                        <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
                 {% endfor %}
+                {% if tagging_links|length == 0 %}
+                    {% for tags_category in tags_no_links|slice:":2" %}
+                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                    {% endfor %}
+                {% elif tagging_links|length <= 1 %}
+                    {% for tags_category in tags_no_links|slice:":1" %}
+                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                    {% endfor %}
+                {% endif %}
                 {% for tags in related_destination_tags|slice:":1" %}
                     <li class="tag__slide-item">{{ tags.specific.title }}</li>
                 {% endfor %}
             {% else %}
                 {% for tags_category, tag_links in tagging_links|slice:":3" %}
-                    <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_category.specific.tag_label }}</a></li>
+                    <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
                 {% endfor %}
+                {% if tagging_links|length == 0 %}
+                    {% for tags_category in tags_no_links|slice:":3" %}
+                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                    {% endfor %}
+                {% elif tagging_links|length == 1 %}
+                    {% for tags_category in tags_no_links|slice:":2" %}
+                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                    {% endfor %}
+                {% else %}
+                    {% for tags_category in tags_no_links|slice:":1" %}
+                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                    {% endfor %}
+                {% endif %}
             {% endif %}
         </ul>
         <a href="{{ value.page.url }}">

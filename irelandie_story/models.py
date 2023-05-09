@@ -43,15 +43,12 @@ class StoryPage(HeroPage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        from irelandie_tags.models import TagLandingPage
+        from irelandie_utils.templatetags.util_tags import get_tag_links
         tag = self.related_tags
-        tagging_links = []
-        for tags in tag:
-            tag_landing = TagLandingPage.objects.live().filter(
-                page_related_tags__page=tags).specific().distinct()
-            for tag_land in tag_landing:
-                tagging_links.append(list((tags, tag_land)))
+        tagging_links = get_tag_links(tag, self)[0]
+        tags_no_links = get_tag_links(tag, self)[1]
         context["tagging_links"] = tagging_links
+        context["tags_no_links"] = tags_no_links
         return context
 
     class Meta:
