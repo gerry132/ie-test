@@ -16,8 +16,8 @@
             {% for tags_category in tags_no_links %}
                 <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
             {% endfor %}
-            {% for tags in page.related_destination_tags %}
-                <li class="tag__slide-item">{{ tags.specific.title }}</li>
+            {% for tags_destination, tag_links in destination_tag_links %}
+                <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
             {% endfor %}
          </ul>
     </div>

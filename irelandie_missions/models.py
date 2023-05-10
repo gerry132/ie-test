@@ -861,6 +861,9 @@ class GeneralContentPage(HeroPage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         from irelandie_utils.templatetags.util_tags import get_tag_links
+        from irelandie_utils.templatetags.util_tags import get_destination_tag_links
+        destination_tags = self.related_destination_tags
+        context["destination_tag_links"] = get_destination_tag_links(destination_tags)
         tag = self.related_tags
         tagging_links = get_tag_links(tag, self)[0]
         tags_no_links = get_tag_links(tag, self)[1]

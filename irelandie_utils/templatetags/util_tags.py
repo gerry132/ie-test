@@ -184,6 +184,14 @@ def get_tag_links(tag, page):
     return tagging_links, tags_no_links
 
 
+@register.simple_tag
+def get_destination_tag_links(tag):
+    tagging_links = []
+    for tags in tag:
+        tagging_links.append(list((tags, tags.related_destinations[0])))
+    return tagging_links
+
+
 @register.simple_tag(
     takes_context=True
 )
