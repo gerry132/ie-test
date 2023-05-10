@@ -24,7 +24,8 @@
             <div class="wrapper wrapper--large wrapper--padding">
                 <div class="tag__line"></div>
                 {% for card in stories %}
-                <a class="tag__link-box" href="{{ card.url }}">
+                <div class="tag__link-box" >
+                    <a href="{{ card.url }}">
                     {% if card.hero_image %}
                         {% if card.alt_text %}
                             {% image card.hero_image fill-500x300 class="tag__image" alt=card.alt_text %}
@@ -40,13 +41,15 @@
                             {% image default_image.value.image fill-500x300 class="tag__image" alt=default_image.value.image_alt %}
                         {% endfor %}
                     {% endif %}
+                    </a>
                     <div class="tag__content">
                         <div class="link-box__container">
                             <ul class="tag__slide">
                                 <li class="tag__slide-item">{{ tag_first.specific.tag_label }}</li>
+                                {% get_destination_tag_links card.related_destination_tags as tag_destination_links %}
                                 {% if card.related_destination_tags|length >= 2 %}
-                                    {% for tags in card.related_destination_tags|slice:":2" %}
-                                        <li class="tag__slide-item">{{ tags.specific.title }}</li>
+                                    {% for tags_destination, tag_links in tag_destination_links|slice:":2" %}
+                                        <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
                                     {% endfor %}
                                 {% elif card.related_destination_tags|length == 0 and card.related_tags|length >= 3 %}
                                     {% get_category_tag tag_first card.related_tags as tag_category %}
@@ -64,18 +67,20 @@
                                             <li class="tag__slide-item">{{ tag_category.specific.tag_label }}</li>
                                         {% endif %}
                                     {% endif %}
-                                    {% for tags in card.related_destination_tags|slice:":1" %}
-                                        <li class="tag__slide-item">{{ tags.specific.title }}</li>
+                                    {% for tags_destination, tag_links in tag_destination_links|slice:":1" %}
+                                        <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
                                     {% endfor %}
                                 {% endif %}
                             </ul>
-                            <h3 class="link-box__heading heading--3">{{ card.title }}</h3>
-                            <div class="link-box__subtitle">
-                                {{ card.subtitle|richtext }}
-                            </div>
+                            <a href="{{ card.url }}">
+                                <h3 class="link-box__heading heading--3">{{ card.title }}</h3>
+                                <div class="link-box__subtitle">
+                                    {{ card.subtitle|richtext }}
+                                </div>
+                            </a>
                         </div>
                     </div>
-                </a>
+                </div>
                 <div class="tag__line"></div>
                 {% endfor %}
             </div>
