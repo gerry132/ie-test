@@ -82,9 +82,10 @@
                                     <div class="card__content">
                                         <ul class="tag__slide">
                                             <li class="tag__slide-item"><a href="{{ request.get_full_path }}">{{ tag_first.specific.tag_label }}</a></li>
+                                            {% get_destination_tag_links card.related_destination_tags as tag_destination_links %}
                                                 {% if card.related_destination_tags|length >= 2 %}
-                                                    {% for tags in card.related_destination_tags|slice:":2" %}
-                                                        <li class="tag__slide-item">{{ tags.specific.title }}</li>
+                                                    {% for tags_destination, tag_links in tag_destination_links|slice:":2" %}
+                                                       <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
                                                     {% endfor %}
                                                 {% elif card.related_destination_tags|length == 0 and card.related_tags|length >= 3 %}
                                                     {% get_category_tag tag_first card.related_tags as tag_category %}
@@ -102,8 +103,8 @@
                                                             <li class="tag__slide-item">{{ tag_category.specific.tag_label }}</li>
                                                         {% endif %}
                                                     {% endif %}
-                                                    {% for tags in card.related_destination_tags|slice:":1" %}
-                                                        <li class="tag__slide-item">{{ tags.specific.title }}</li>
+                                                    {% for tags_destination, tag_links in tag_destination_links|slice:":1" %}
+                                                       <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
                                                     {% endfor %}
                                                 {% endif %}
                                         </ul>
