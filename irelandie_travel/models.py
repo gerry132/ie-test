@@ -37,7 +37,7 @@ class TravelCountryPage(BasePage):
          blank=True,
          null=True
      )
-    
+
     outer_body = StreamField(
         [
             ('information', InformationBlock()),
