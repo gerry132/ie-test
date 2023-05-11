@@ -5,7 +5,7 @@ from irelandie_utils.constants import TravelCautionLevel, TravelRegions
 
 
 class TravelCountryPageBlock(GeneralContentBlocks):
-    title = blocks.CharBlock(blank=False)
+    pass
 
 
 class InformationBlock(blocks.StreamBlock):
