@@ -10,8 +10,26 @@
 
     <div style="padding-bottom: 30px;" class="featured-blocks featured-blocks--three">
         {% for article in value.taggedStories %}
+        {% if article.block_type == 'Stats_block' %}
+            <div class="card box" style="{% if article.value.background_color %}background-color: {{article.value.background_color}};{% endif %}display: flex;
+    align-items: center;">
+                                    <div class="tag__stats">
+                                        <div class="tag__vertical-line">
+                                            <h2 class="stats__title" style="{% if article.value.text_color %}color: {{article.value.text_color}};{% endif %}">
+                                                {{ article.value.heading }}
+                                            </h2>
+                                            <div class="stats__summary" style="{% if article.value.text_color %}color: {{article.value.text_color}};{% endif %}">
+                                                {{ article.value.summary|richtext }}
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+        {% elif article.block_type == 'TaggedStories' %}
             {% include_block article %}
+        {% endif %}
+
         {% endfor %}
+
     </div>
 
 </div>
