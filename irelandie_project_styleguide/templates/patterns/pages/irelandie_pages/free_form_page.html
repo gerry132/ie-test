@@ -8,19 +8,6 @@
         {% include "patterns/molecules/streamfield/blocks/twitter_embed.html" with value=page.twitter_feed title=page.twitter_title %}
     </div>
     {% endif %}
-    <div class="wrapper wrapper--large wrapper--padding">
-         <ul class="tag__slide">
-            {% for tags_category, tag_links in tagging_links %}
-                <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
-            {% endfor %}
-            {% for tags_category in tags_no_links %}
-                <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
-            {% endfor %}
-            {% for tags_destination, tag_links in destination_tag_links %}
-                <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
-            {% endfor %}
-         </ul>
-    </div>
 {% endblock %}
 
 {% block extra_js %}

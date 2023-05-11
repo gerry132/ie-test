@@ -1,4 +1,4 @@
-{% load wagtailcore_tags wagtailimages_tags i18n %}
+{% load wagtailcore_tags wagtailimages_tags i18n irelandie_assets_tags %}
 <style>
     @media only screen and (min-width: 823px){
         .hero__mobile{
@@ -68,6 +68,22 @@
                     {% pageurl page.link_page as href %}
                     <a href="{{ href }}" class="hero__button button">{{ page.link_text }}</a>
                 {% endif %}
+            {% check_page_type page.content_type 'Free Form Page' as FreeFormPage %}
+            {% check_page_type page.content_type 'Story page' as StoryPage %}
+            {% if FreeFormPage or StoryPage %}
+                 <ul class="tag__slide">
+                    {% for tags_category, tag_links in tagging_links %}
+                        <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                    {% endfor %}
+                    {% for tags_category in tags_no_links %}
+                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                    {% endfor %}
+                    {% for tags_destination, tag_links in destination_tag_links %}
+                        <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
+                    {% endfor %}
+                 </ul>
+            {% endif %}
+
                 {% if page.search_bar %}
                 <div style="max-width:500px;">
                     {% include "patterns/atoms/hero_search/hero_search.html" %}
