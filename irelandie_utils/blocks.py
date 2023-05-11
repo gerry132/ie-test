@@ -1459,7 +1459,10 @@ class FeaturedTaggedStoriesBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=False)
     summary = blocks.RichTextBlock(required=False)
 
-    taggedStories = blocks.StreamBlock([("TaggedStories", FeaturedTaggedStoryBlock())])
+    taggedStories = blocks.StreamBlock([
+        ("TaggedStories", FeaturedTaggedStoryBlock()),
+        ("Stats_block", StatTagBlock())
+    ])
 
     class Meta:
         icon = "list-ul"
