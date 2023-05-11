@@ -4,7 +4,7 @@
 {% load static %}
 {% block content %}
 {% if page.generic_hero %}
-    {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+    {% include "patterns/molecules/hero/hybrid_hero.html" with page=page tagging_links=tagging_links destination_tag_links=destination_tag_links tags_no_links=tags_no_links %}
 {% endif %}
 {% has_root_override page header=True as override %}
 {% if not page.generic_hero %}
@@ -16,6 +16,17 @@
                                 <p class="hero__introduction">{{ page.description }}</p>
                             {% endif %}
                         </div>
+                        <ul class="tag__slide" style="margin-left: 3%;">
+                            {% for tags_category, tag_links in tagging_links %}
+                                <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                            {% endfor %}
+                            {% for tags_category in tags_no_links %}
+                                <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                            {% endfor %}
+                            {% for tags_destination, tag_links in destination_tag_links %}
+                                <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
+                            {% endfor %}
+                         </ul>
                     </div>
         </div>
 {% endif %}
@@ -23,6 +34,7 @@
 {% block main %}
         <!-- Body -->
 <div class="section--master {% if page.generic_hero %} section section--padding {% endif %}">
+    {{ page.page_type }}
             {% for block in page.body %}
                 {% if block.block_type == 'heading' or block.block_type == 'rich_text' or block.block_type == 'image' or block.block_type == 'document' or block.block_type == 'table' or block.block_type == 'advanced_table_block' %}
 
@@ -57,19 +69,6 @@
                 </div>
             {% endif %}
         {% endfor %}
-    <div class="wrapper wrapper--large wrapper--padding">
-         <ul class="tag__slide">
-            {% for tags_category, tag_links in tagging_links %}
-                <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
-            {% endfor %}
-            {% for tags_category in tags_no_links %}
-                <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
-            {% endfor %}
-            {% for tags_destination, tag_links in destination_tag_links %}
-                <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
-            {% endfor %}
-         </ul>
-    </div>
 </div>
 {% endblock %}
     {% endblock %}

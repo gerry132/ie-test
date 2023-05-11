@@ -185,6 +185,31 @@ def get_tag_links(tag, page):
 
 
 @register.simple_tag
+def get_category_tag_links(selected_tag, tag, page):
+    from irelandie_tags.models import TagLandingPage
+    tagging_links = []
+    for tags in tag:
+        if tags == selected_tag:
+            continue
+        else:
+            tag_landing = TagLandingPage.objects.live().filter(
+                page_related_tags__page=tags, locale=page.locale).specific().distinct()
+            for tag_land in tag_landing:
+                tagging_links.append(list((tag_land.related_tags[0], tag_land.url)))
+    return tagging_links
+
+
+@register.simple_tag
+def get_category_tag_no_links(selected_tag, tag):
+    tags_links = []
+    tags_all = list(tag)
+    for tag_links in selected_tag:
+        tags_links.append(tag_links[0])
+    new_list = list(set(tags_all).difference(tags_links))
+    return new_list
+
+
+@register.simple_tag
 def get_destination_tag_links(tag):
     tagging_links = []
     for tags in tag:
