@@ -1,4 +1,3 @@
-from django.db import models
 from irelandie_utils.blocks import AdvancedRichTextBlock
 
 from irelandie_utils.models import BasePage
