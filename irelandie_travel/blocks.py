@@ -4,8 +4,9 @@ from wagtail import blocks
 from irelandie_utils.constants import TravelCautionLevel, TravelRegions
 
 
-class TravelCountryPageBlock(GeneralContentBlocks):
+class TravelCountryPageBlock(blocks.StructBlock):
     title = blocks.CharBlock(blank=False)
+    general_contents = GeneralContentBlocks()
 
 
 class InformationBlock(blocks.StreamBlock):
