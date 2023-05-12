@@ -5,22 +5,22 @@
 
 {% has_root_override page header=True as override %}
 
-{% if not page.generic_hero %}
-        <div id="main-header" class="section section--padding section--white">
-                    <div class="wrapper wrapper--large wrapper--padding content--padding">
-                        <div class="intro--toc">
-                            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
-                            {% if page.subtitle %}
-                                <p class="intro__description">{{ page.subtitle }}</p>
-                            {% endif %}
+{% block content %}
+    {% block main %}
+            <div id="main-header" class="section section--padding section--white">
+                        <div class="wrapper wrapper--large wrapper--padding content--padding">
+                            <div class="intro--toc">
+                                <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                                {% if page.subtitle %}
+                                    <p class="intro__description">{{ page.subtitle }}</p>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
+            </div>
+        <div class="section section--padding">
+            <div class="wrapper wrapper--large wrapper--padding">
+                {% include_block page.body %}
+            </div>
         </div>
-{% endif %}
-{% block main %}
-<div class="section section--padding">
-    <div class="wrapper wrapper--large wrapper--padding">
-        {% include_block page.body %}
-    </div>
-</div>
+    {% endblock %}
 {% endblock %}

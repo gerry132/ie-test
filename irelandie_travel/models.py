@@ -1,4 +1,5 @@
 from django.db import models
+from irelandie_utils.blocks import AdvancedRichTextBlock
 
 from irelandie_utils.models import BasePage
 
@@ -14,9 +15,14 @@ class TravelIndexPage(BasePage):
 
 class TravelCountryPage(BasePage):
     template = "patterns/pages/irelandie_travel/travel_country.html"
-    subtitle = models.CharField(max_length=100,
-                                null=True,
-                                blank=True)
+    subtitle = StreamField(
+        [
+            ('subtitle', AdvancedRichTextBlock())
+        ],
+        max_num=1,
+        null=True,
+        blank=False
+    )
 
     region = StreamField(
         [
