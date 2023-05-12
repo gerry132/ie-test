@@ -209,3 +209,34 @@ def verify_path(context):
     if request.get_host() in content_url_map.keys():
         return {'content': True,
                 'host': content_url_map[request.get_host()]}
+
+
+@register.simple_tag
+def get_travel_warning_by_locale(warning, locale):
+    warning_map = {
+        "normal precations/gnáth-réamhchúraimí": {
+            "English": "Normal Precations",
+            "Irish": "Gnáth-Réamhchúraimí"
+        },
+        "high degree of caution/bí an-chúramach": {
+            "English": "High Degree of Caution",
+            "Irish": "Bí an-chúramach",
+        },
+        "avoid non-essential travel/seachain taisteal neamhriachtanach": {
+            "English": "Avoid Non-Essential Travel",
+            "Irish": "Seachain Taisteal Neamhriachtanach",
+        },
+        "do not travel/ná taistil', 'do not travel/ná taistil": {
+            "English": "Do Not Travel",
+            "Irish": "Ná Taistil",
+        }
+    }
+
+    print(type(warning))
+    reg = re.compile(r'<dd>.*<\/dd>')
+    res = re.search(reg, str(warning))
+    if res:
+        res = res.group(0).strip(r'<d>|</d>')
+        return warning_map[res][str(locale)]
+    #print(res.group(0))
+    #return tagging_links
