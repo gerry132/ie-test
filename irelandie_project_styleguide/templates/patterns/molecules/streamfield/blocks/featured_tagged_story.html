@@ -18,6 +18,19 @@
 </a>
 
     <div class="card__content">
+        <a href="{{ value.page.url }}">
+            <h3 class="tag__card__title">
+                {{ value.title }}
+            </h3>
+
+            <p class="tag__card__summary">
+                {{ value.summary }}
+            </p>
+
+            <span class="card__link" style="padding-bottom: 10px;">
+                {{ value.link_text }}
+            </span>
+        </a>
         <ul class="tag__slide">
             {% if destination_tag_links|length >= 2 %}
                 {% for tags_category, tag_links in tagging_links|slice:":1" %}
@@ -72,18 +85,5 @@
                 {% endif %}
             {% endif %}
         </ul>
-        <a href="{{ value.page.url }}">
-            <h3 class="tag__card__title">
-                {{ value.title }}
-            </h3>
-
-            <p class="tag__card__summary">
-                {{ value.summary }}
-            </p>
-
-            <span class="card__link">
-                {{ value.link_text }}
-            </span>
-        </a>
     </div>
 </div>
