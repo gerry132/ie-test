@@ -28,6 +28,10 @@
                 {% endfor %}
             </div>
         </div>
+        {% elif block.block_type == 'Featured_tagged_stories' %}
+            <div class="wrapper wrapper--large wrapper--padding">
+                    {% include_block block %}
+            </div>
         {% else %}
             {% include_block block %}
         {% endif %}
@@ -63,6 +67,10 @@
                 {% endfor %}
             </div>
         </div>
+    {% elif block.block_type == 'Featured_tagged_stories' %}
+            <div class="wrapper wrapper--large wrapper--padding">
+                    {% include_block block %}
+            </div>
     {% else %}
         {% include_block block %}
     {% endif %}
