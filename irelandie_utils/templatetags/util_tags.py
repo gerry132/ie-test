@@ -232,11 +232,8 @@ def get_travel_warning_by_locale(warning, locale):
         }
     }
 
-    print(type(warning))
     reg = re.compile(r'<dd>.*<\/dd>')
     res = re.search(reg, str(warning))
     if res:
         res = res.group(0).strip(r'<d>|</d>')
         return warning_map[res][str(locale)]
-    #print(res.group(0))
-    #return tagging_links
