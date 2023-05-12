@@ -30,7 +30,7 @@
 
         <div class="accordion__container">
             {% for accordion in value.accordions %}
-                <div class="accordion" data-accordion>
+                <div class="accordion" id="question-{{ forloop.counter }}--ref" data-accordion>
                     <h2 class="accordion__header">
                         <div
                             id="question-{{ forloop.counter }}"

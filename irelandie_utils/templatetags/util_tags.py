@@ -237,3 +237,8 @@ def get_travel_warning_by_locale(warning, locale):
     if res:
         res = res.group(0).strip(r'<d>|</d>')
         return warning_map[res][str(locale)]
+
+
+@register.simple_tag
+def printbl(block):
+    print(block.value)

@@ -2,8 +2,9 @@ from irelandie_utils.blocks import AdvancedRichTextBlock
 
 from irelandie_utils.models import BasePage
 
-from .blocks import TravelCautionBlock, TravelCountryPageBlock, ButtonBlock, InformationBlock, TravelRegionBlock
+from .blocks import TravelCautionBlock, ButtonBlock, InformationBlock, TravelRegionBlock
 
+from irelandie_utils.blocks import AccordionBlock
 from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel
 
@@ -42,12 +43,12 @@ class TravelCountryPage(BasePage):
     )
 
     body = StreamField(
-         [
-             ('travel', TravelCountryPageBlock()),
-         ],
-         blank=True,
-         null=True
-     )
+        [
+            ("accordions", AccordionBlock()),
+        ],
+        blank=True,
+        null=True,
+    )
 
     outer_body = StreamField(
         [
