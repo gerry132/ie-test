@@ -18,10 +18,25 @@
                         </div>
                         {% include "patterns/pages/irelandie_travel/greyed_alert.html" with page=page heading="Security Status" %}
             </div>
+            {% include "patterns/pages/irelandie_travel/toc.html" with page=page %}
         <div class="section section--padding">
             <div class="wrapper wrapper--large wrapper--padding">
                 {% include_block page.body %}
             </div>
+        </div>
+        <div class="section section--padding">
+                {% for b in page.outer_body %}
+                <div class="wrapper wrapper--large wrapper--padding">
+                    <div class="wrapper wrapper--large wrapper--padding">
+                        <div class="wrapper wrapper--large travel-wrapper--grey">
+                            <div class="travel-warning--contain">
+                               {{b.value}}
+                            </div>
+                        </div>
+                </div>
+                </div>
+                                    
+                {% endfor %} 
         </div>
     {% endblock %}
 {% endblock %}
