@@ -1313,6 +1313,15 @@ class LinkButtonBlock(blocks.StructBlock):
         return context
 
 
+class LinkButtonsBlock(blocks.StructBlock):
+    link_buttons = blocks.StreamBlock([("link_button", LinkButtonBlock())])
+
+    class Meta:
+        icon = "list-ul"
+        label = "Link Buttons"
+        template = "patterns/molecules/link_button/link_buttons.html"
+
+
 class GenericHeroBlock(blocks.StructBlock):
     hero_image_alignment = blocks.ChoiceBlock(
         required=True,
@@ -1431,7 +1440,8 @@ class FeaturedTaggedStoryBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=True)
     summary = blocks.TextBlock(required=False)
     page = blocks.PageChooserBlock(required=False, page_type=["irelandie_pages.FreeFormPage",
-                                   "irelandie_story.StoryPage", "irelandie_missions.GeneralContentPage"])
+                                                              "irelandie_story.StoryPage",
+                                                              "irelandie_missions.GeneralContentPage"])
     link_text = blocks.CharBlock(
         max_length=32, blank=True, required=False, default="Read Story", help_text='Call To Action Text'
     )
@@ -1484,7 +1494,7 @@ class FreeFormBlocks(FreeFormBlocksBase):
     Featured_tagged_story = FeaturedTaggedStoriesBlock(group="Module")
     logos = LogoCardsBlock(group="Module")
     link_card = LinkCardsBlock()
-    link_button = LinkButtonBlock()
+    link_button = LinkButtonsBlock()
     link_box = LinkBoxesBlock()
     table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
     advanced_table_block = TypedTableBlock([

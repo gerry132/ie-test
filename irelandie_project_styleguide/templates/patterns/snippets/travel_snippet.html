@@ -1,0 +1,10 @@
+{% load wagtailcore_tags wagtailimages_tags static i18n %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+<div class="wrapper wrapper--large wrapping--padding">
+    {% for block_snippets in object.body %}
+        {% include_block block_snippets %}
+    {% endfor %}
+</div>
+
+

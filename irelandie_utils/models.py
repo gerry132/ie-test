@@ -29,7 +29,7 @@ from irelandie_utils.blocks import (
     ArticleStoryBlock,
     AdvancedRichTextBlock,
     AccordionBlock,
-    ContactBlock, MinimalArticleStoryBlock, GeneralContentBlocks
+    ContactBlock, MinimalArticleStoryBlock, GeneralContentBlocks, ImageBlock, LinkButtonsBlock
 )
 from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.query import order_by_pk_position
@@ -1255,6 +1255,46 @@ class Marriage(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, 
 
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/general_block_snippet.html"
+
+    @property
+    def revisions(self):
+        return self._revisions
+
+    def __str__(self):
+        return self.title
+
+
+class TravelSnippetTag(TaggedItemBase):
+    content_object = ParentalKey('utils.TravelSnippet', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
+@register_snippet
+class TravelSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+    tags = TaggableManager(through=TravelSnippetTag, blank=True)
+    title = models.CharField(max_length=255)
+    body = StreamField(
+        [
+            ("advanced_rich_text",  AdvancedRichTextBlock()),
+            ("link_buttons", LinkButtonsBlock()),
+            ("image", ImageBlock()),
+        ],
+        blank=True
+    )
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="travelsnippet")
+    panels = [
+        FieldPanel("title"),
+        FieldPanel("body"),
+        FieldPanel('tags'),
+        PublishingPanel(),
+    ]
+
+    search_fields = [
+        index.SearchField("title", partial_match=True),
+    ]
+
+    def get_preview_template(self, request, mode_name):
+        return "patterns/snippets/travel_snippet.html"
 
     @property
     def revisions(self):
