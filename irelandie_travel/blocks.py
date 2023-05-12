@@ -1,3 +1,4 @@
+from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_utils.blocks import GeneralContentBlocks, AdvancedRichTextBlock, LinkButtonBlock, ImageChooserBlock
 from wagtail import blocks
 
@@ -6,11 +7,23 @@ from irelandie_utils.constants import TravelCautionLevel, TravelRegions
 
 class TravelCountryPageBlock(blocks.StructBlock):
     title = blocks.CharBlock(blank=False)
-    general_contents = GeneralContentBlocks()
+    general_contents = GeneralContentBlocks(blank=True)
+
+
+class AlteredAvancedRichTextBlock(AdvancedRichTextBlock):
+    button_links = blocks.StreamBlock(
+        [
+            ("button", SecondaryCallToAction())
+        ],
+        blank=True,
+        min_num=0,
+        required=False,
+    )
 
 
 class InformationBlock(blocks.StreamBlock):
-    richtext = AdvancedRichTextBlock()
+
+    richtext = AlteredAvancedRichTextBlock()
 
 
 class ButtonBlock(blocks.StreamBlock):
