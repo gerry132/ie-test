@@ -1,0 +1,12 @@
+{% load static navigation_tags util_tags %}
+<div class="wrapper wrapper--large wrapper--padding">
+    <div class="wrapper wrapper--large wrapper--padding">
+        <div class="wrapper wrapper--large toc-table">
+            {% for block in page.body %}
+                {% for val in block.value.accordions %}
+                    <div class="toc-contents-number wrapper--padding">-<a href="#question-{{ forloop.counter }}"><h2 class="toc-contents"> {{val.value.title}}</h2></a></div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

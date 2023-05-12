@@ -1,12 +1,8 @@
 from irelandie_home.blocks import SecondaryCallToAction
-from irelandie_utils.blocks import AccordionBlock, AdvancedRichTextBlock, LinkButtonBlock, ImageChooserBlock
+from irelandie_utils.blocks import AdvancedRichTextBlock, LinkButtonBlock, ImageChooserBlock
 from wagtail import blocks
 
 from irelandie_utils.constants import TravelCautionLevel, TravelRegions
-
-
-class TravelCountryPageBlock(blocks.StructBlock):
-    general_contents = AccordionBlock(blank=True)
 
 
 class AlteredAvancedRichTextBlock(AdvancedRichTextBlock):
