@@ -1,7 +1,7 @@
 {% extends "patterns/base_page.html" %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
-{% load static navigation_tags %}
+{% load static navigation_tags util_tags %}
 
 {% has_root_override page header=True as override %}
 
@@ -12,10 +12,11 @@
                             <div class="intro--toc">
                                 <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
                                 {% if page.subtitle %}
-                                    <p class="intro__description">{{ page.subtitle|richtext }}</p>
+                                    <p class="intro__description">{{ page.subtitle }}</p>
                                 {% endif %}
                             </div>
                         </div>
+                        {% include "patterns/pages/irelandie_travel/greyed_alert.html" with page=page heading="Security Status" %}
             </div>
         <div class="section section--padding">
             <div class="wrapper wrapper--large wrapper--padding">
