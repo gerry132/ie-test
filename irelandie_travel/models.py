@@ -1,12 +1,13 @@
 from irelandie_utils.blocks import AdvancedRichTextBlock
 
 from irelandie_utils.models import BasePage
+from wagtail.fields import StreamField
+from wagtail.admin.panels import FieldPanel
+from wagtail.snippets.blocks import SnippetChooserBlock
 
 from .blocks import TravelCautionBlock, ButtonBlock, InformationBlock, TravelRegionBlock
 
 from irelandie_utils.blocks import AccordionBlock
-from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel
 
 
 class TravelIndexPage(BasePage):
@@ -54,6 +55,7 @@ class TravelCountryPage(BasePage):
         [
             ('information', InformationBlock()),
             ('button', ButtonBlock()),
+            ("travel_snippet", SnippetChooserBlock(target_model="utils.TravelSnippet"))
         ],
         blank=True,
         null=True
