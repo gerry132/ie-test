@@ -5,7 +5,7 @@ from wagtail import blocks
 from irelandie_utils.constants import TravelCautionLevel, TravelRegions
 
 
-class TravelCountryPageBlock(blocks.StructBlock):
+class TravelCountryPageBlock(blocks.StreamBlock):
     general_contents = AccordionBlock(blank=True)
 
 

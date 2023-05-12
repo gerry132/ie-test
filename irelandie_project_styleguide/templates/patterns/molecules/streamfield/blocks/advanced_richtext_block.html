@@ -31,7 +31,7 @@
             <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
                 {% for button in value.button_links %}    
                 {% if button.value.page %}
-                        <a class="button_text" href="{{ button.value.page.url }}">{ button.value.message }}</a>
+                        <a class="button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
                     {% else %}
                         <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
                     {% endif %}

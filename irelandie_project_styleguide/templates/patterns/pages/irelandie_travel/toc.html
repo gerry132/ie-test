@@ -1,0 +1,9 @@
+<div class="wrapper wrapper--large wrapper--padding">
+    <div class="wrapper wrapper--large wrapper--padding">
+        <div class="wrapper wrapper--large toc-table">
+            {% for block in page.body %}
+                <div class="toc-contents-number wrapper--padding">-<a href="#{{block.value.title}}"><h2 class="toc-contents"> {{block.value.title}}</h2></a></div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
