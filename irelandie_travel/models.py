@@ -1,8 +1,10 @@
-from irelandie_utils.blocks import AdvancedRichTextBlock
+# -*- coding: utf-8 -*-
+from django.db import models
+from irelandie_utils.blocks import AdvancedRichTextBlock, LinkBoxesBlock, LinkCardsBlock
 
 from irelandie_utils.models import BasePage
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from .blocks import TravelCautionBlock, ButtonBlock, InformationBlock, TravelRegionBlock
@@ -71,4 +73,29 @@ class TravelCountryPage(BasePage):
 
 
 class TravelLandingPage(BasePage):
-    pass
+    template = "patterns/pages/irelandie_travel/travel_landing.html"
+    body = StreamField(
+        [
+            ("advanced_rich_text", AdvancedRichTextBlock()),
+            ("link_buttons", LinkBoxesBlock()),
+            ("image", LinkCardsBlock()),
+        ],
+        blank=True
+    )
+    advanced_rich_text = StreamField(
+        [
+            ("advanced_rich_text", AdvancedRichTextBlock()),
+        ],
+        blank=True
+    )
+    twitter_title = models.CharField(max_length=50, blank=True)
+
+    twitter_username = models.CharField(max_length=100, blank=True)
+    content_panels = BasePage.content_panels + [
+        FieldPanel('body'),
+        FieldPanel('advanced_rich_text'),
+        MultiFieldPanel([
+            FieldPanel("twitter_title"),
+            FieldPanel("twitter_username"),
+        ], heading="Twitter feed"),
+    ]

@@ -27,11 +27,11 @@
                 {{ value.summary }}
             </p>
 
-            <span class="card__link" style="padding-bottom: 10px;">
+            <span class="card__link">
                 {{ value.link_text }}
             </span>
         </a>
-        <ul class="tag__slide">
+        <ul class="tag__slide" style="{% if value.link_text %} padding-top: 10px; {% endif %}">
             {% if destination_tag_links|length >= 2 %}
                 {% for tags_category, tag_links in tagging_links|slice:":1" %}
                     <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
