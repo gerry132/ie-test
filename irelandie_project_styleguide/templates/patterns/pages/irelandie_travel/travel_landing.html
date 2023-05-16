@@ -3,82 +3,165 @@
 {% load wagtailimages_tags %}
 {% load static navigation_tags %}
 {% block content %}
-    {% block main %}
-            <div id="main-header" class="section section--padding section--white">
-                        <div class="wrapper wrapper--large wrapper--padding content--padding">
-                            <div class="intro--toc">
-                                <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
-                                {% if page.subtitle %}
-                                    <p class="intro__description">{{ page.subtitle|richtext }}</p>
-                                {% endif %}
-                            </div>
-                        </div>
-            </div>
-        {% for block in page.body %}
-            {% if block.block_type == 'link_buttons' %}
-               <div class="wrapper wrapper--large wrapper--padding">
-                    {% include_block block %}
-                </div>
-            {% elif block.block_type == 'advanced_rich_text' %}
-                <div class="wrapper wrapper--large wrapper--padding">
-                    {% include_block block %}
-                </div>
-            {% else %}
-                    {% include_block block %}
-            {% endif %}
-        {% endfor %}
- <div class="wrapper wrapper--large wrapper--padding">
-     {% if page.advanced_rich_text %}
-<div class="travel-landing" style="padding-bottom: 30px;">
-    <div class="travel-landing--richtext">
-         {% for block in page.advanced_rich_text %}
-         <div class="travel-landing--rich-text" {% if block.value.section_id %} id="{{block.value.section_id}}" {% endif %}>
-             <div style="padding: 20px;">
-             {% if block.value.heading %}
-                <h2 class="travel-landing--story__heading heading--2">{{ block.value.heading }}</h2>
-             {% endif %}
-             {% if block.value.rich_text %}
-               <div class="rich-text travel-landing--summary"> {{ block.value.rich_text }}</div>
-             {% endif %}
-             {% if block.value.button_link %}
-                 {% for button in block.value.button_link %}
-                 <div class="rich-text wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
-                     {% if button.value.page %}
-                        <a class="adv-summary button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
-                     {% else %}
-                        <a class="adv-summary button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
-                     {% endif %}
-                 </div>
-                 {% endfor %}
-             {% endif %}
-                 </div>
-         </div>
+<style>
+    .card__image-container {
+    height: 200px;
+    }
+    @media only screen and (max-width: 599px) {
+    .card__image {
+                object-fit: initial;
+            }
+    }
+     @media only screen and (min-width: 699px){
+    .link-box__main {
+        max-width: 100%;
+    }
+    }
+    @media only screen and (min-width: 599px){
+        @supports (display:grid){
+            .featured-blocks--three {
+                grid-template-columns: repeat(auto-fit,minmax(calc(33.33% - 14px),366px));
+            }
+        }
+    }
+    .featured-blocks {
+                margin: 0;
+    }
 
-        {% endfor %}
+</style>
+{% block main %}
+<div class="section section--padding section--white" id="main-header" style="padding-bottom: 0px;">
+    <div class="wrapper wrapper--large wrapper--padding content--padding">
+        <div class="intro--toc">
+            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+            {% if page.subtitle %}
+            <p class="intro__description">{{ page.subtitle|richtext }}</p>
+            {% endif %}
+        </div>
     </div>
-    <div class="travel-landing--twitter">
-        {% if page.twitter_title %}
-            <h3 id="twitter-heading" class="travel-landing--story__heading heading--2"><a href="https://twitter.com/{{ page.twitter_username }}">
-                {{ page.twitter_title }}</a></h3>
-        {% endif %}
-        <a class="twitter-timeline" data-width="100% !important"
-                                       href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
-        </a>
-    </div>
-    </div>
-     {% else %}
-     <div style="padding-bottom: 30px;">
-         {% if page.twitter_title %}
-            <h3 class="travel-landing--story__heading heading--2"><a href="https://twitter.com/{{ page.twitter_username }}">
-            {{ page.twitter_title }}</a></h3>
-         {% endif %}
-        <a class="twitter-timeline" data-height=580 data-width="100% !important"
-                                       href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
-        </a>
-     </div>
-     {% endif %}
 </div>
-    {% endblock %}
+<div class="wrapper wrapper--large wrapper--padding">
+{% for block in page.body %}
+{% if block.block_type == 'link_buttons' %}
+<div style="padding-bottom: 30px;">
+    {% include_block block %}
+</div>
+{% elif block.block_type == 'advanced_rich_text' %}
+
+    {% include_block block %}
+
+{% else %}
+<div class="section section--padding padding">
+
+        {% if block.value.link_cards|length > 2 %}
+        <div class="article-cards featured-blocks featured-blocks--three">
+            {% for link_card in block.value.link_cards %}
+            <a class="card" href="{{ link_url }}">
+                <div class="card__image-container">
+                    {% if link_card.value.image_alt %}
+                    {% image link_card.value.image fill-400x200 alt=value.image_alt class="card__image" %}
+                    {% else %}
+                    {% image link_card.value.image fill-400x200 alt=value.image.alt_default class="card__image" %}
+                    {% endif %}
+                </div>
+
+                <div class="card__content">
+                    <h3 class="card__title">
+                        {{ link_card.value.title }}
+                    </h3>
+
+                    <p class="card__summary">
+                        {{ link_card.value.summary }}
+                    </p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="article-cards featured-blocks featured-blocks--two">
+            {% for link_card in block.value.link_cards %}
+            <a class="card" href="{{ link_url }}">
+                <div class="card__image-container">
+                    {% if block.value.image_alt %}
+                    {% image link_card.value.image fill-400x200 alt=value.image_alt class="card__image" %}
+                    {% else %}
+                    {% image link_card.value.image fill-400x200 alt=value.image.alt_default class="card__image" %}
+                    {% endif %}
+                </div>
+
+                <div class="card__content">
+                    <h3 class="card__title">
+                        {{ link_card.value.title }}
+                    </h3>
+
+                    <p class="card__summary">
+                        {{ link_card.value.summary }}
+                    </p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+
+</div>
+{% endif %}
+{% endfor %}
+</div>
+<div class="wrapper wrapper--large wrapper--padding">
+    {% if page.advanced_rich_text %}
+    <div class="travel-landing" style="padding-bottom: 30px;">
+        <div class="travel-landing--richtext">
+            {% for block in page.advanced_rich_text %}
+            <div %} %} block.value.section_id class="travel-landing--rich-text" endif id="{{block.value.section_id}}" if
+                 {% {%>
+                <div style="padding: 20px;">
+                    {% if block.value.heading %}
+                    <h2 class="travel-landing--story__heading heading--2">{{ block.value.heading }}</h2>
+                    {% endif %}
+                    {% if block.value.rich_text %}
+                    <div class="rich-text travel-landing--summary"> {{ block.value.rich_text }}</div>
+                    {% endif %}
+                    {% if block.value.button_link %}
+                    {% for button in block.value.button_link %}
+                    <div class="rich-text wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
+                        {% if button.value.page %}
+                        <a class="adv-summary button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
+                        {% else %}
+                        <a class="adv-summary button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+        <div class="travel-landing--twitter">
+            {% if page.twitter_title %}
+            <h3 class="travel-landing--story__heading heading--2" id="twitter-heading"><a
+                href="https://twitter.com/{{ page.twitter_username }}">
+                {{ page.twitter_title }}</a></h3>
+            {% endif %}
+            <a class="twitter-timeline" data-width="100% !important"
+               href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
+            </a>
+        </div>
+    </div>
+    {% else %}
+    <div style="padding-bottom: 30px;">
+        {% if page.twitter_title %}
+        <h3 class="travel-landing--story__heading heading--2"><a href="https://twitter.com/{{ page.twitter_username }}">
+            {{ page.twitter_title }}</a></h3>
+        {% endif %}
+        <a class="twitter-timeline" data-height=580 data-width="100% !important"
+           href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
 {% endblock %}
 {% block extra_js %}
 <script>
@@ -91,8 +174,9 @@
         var twitterHeight = elemHeight;
     }
     document.getElementsByClassName('twitter-timeline')[0].setAttribute("data-height", twitterHeight);
+
 </script>
-    <script async charset="utf-8" src="https://platform.twitter.com/widgets.js"></script>
+<script async charset="utf-8" src="https://platform.twitter.com/widgets.js"></script>
 
 {% endblock %}
 

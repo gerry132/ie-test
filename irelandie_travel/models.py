@@ -78,7 +78,7 @@ class TravelLandingPage(BasePage):
         [
             ("advanced_rich_text", AdvancedRichTextBlock()),
             ("link_buttons", LinkBoxesBlock()),
-            ("image", LinkCardsBlock()),
+            ("link_cards", LinkCardsBlock()),
         ],
         blank=True
     )
