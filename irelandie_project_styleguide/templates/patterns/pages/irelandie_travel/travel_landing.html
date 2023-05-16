@@ -83,19 +83,19 @@
             <a class="card" href="{{ link_url }}">
                 <div class="card__image-container">
                     {% if block.value.image_alt %}
-                    {% image block.value.image fill-400x200 alt=value.image_alt class="card__image" %}
+                    {% image link_card.value.image fill-400x200 alt=value.image_alt class="card__image" %}
                     {% else %}
-                    {% image block.value.image fill-400x200 alt=value.image.alt_default class="card__image" %}
+                    {% image link_card.value.image fill-400x200 alt=value.image.alt_default class="card__image" %}
                     {% endif %}
                 </div>
 
                 <div class="card__content">
                     <h3 class="card__title">
-                        {{ block.value.title }}
+                        {{ link_card.value.title }}
                     </h3>
 
                     <p class="card__summary">
-                        {{ block.value.summary }}
+                        {{ link_card.value.summary }}
                     </p>
                 </div>
             </a>
