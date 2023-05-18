@@ -9,12 +9,12 @@
     {% block main %}
             <div id="main-header" class="section section--padding section--white">
                         <div class="wrapper wrapper--large wrapper--padding content--padding">
-                            <div class="intro--toc">
                                 <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
-                                {% if page.subtitle %}
-                                    <p class="intro__description">{{ page.subtitle }}</p>
+                            {% if page.subtitle %}
+                                    {% include_block page.subtitle %}
                                 {% endif %}
-                            </div>
+                            <p class="update-text">Still current at: {% todays_date %}</p>
+                            <p class="update-text">Updated on: {% format_date page.last_published_at %}</p>
                         </div>
                         {% include "patterns/pages/irelandie_travel/greyed_alert.html" with page=page heading="Security Status" %}
             </div>
