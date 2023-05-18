@@ -7,6 +7,8 @@ from irelandie_missions.models import MissionPage
 from irelandie_pages.models import FreeFormPage
 from irelandie_utils.models import SocialMediaSettings
 
+from datetime import datetime
+
 import re
 
 import uuid
@@ -43,7 +45,12 @@ def next(list_val, current_index):
 
 @register.simple_tag
 def return_date_from_datetime(date_obj):
-    return date_obj.strftime("%b. %d, %Y")
+    return date_obj.strftime("%b %d %Y")
+
+
+@register.simple_tag
+def todays_date():
+    return return_date_from_datetime(datetime.today())
 
 
 @register.simple_tag
@@ -87,6 +94,8 @@ def get_mega_menu_length(menus):
 
 @register.simple_tag
 def format_date(date):
+    if isinstance(date, str):
+        return datetime.strptime(date, '%d %B %Y')
     return date.strftime('%d %B %Y')
 
 

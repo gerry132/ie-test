@@ -20,7 +20,8 @@ class TravelCountryPage(BasePage):
     template = "patterns/pages/irelandie_travel/travel_country.html"
     subtitle = StreamField(
         [
-            ('subtitle', AdvancedRichTextBlock())
+            ('subtitle', AdvancedRichTextBlock()),
+            ("travel_snippet", SnippetChooserBlock(target_model="utils.TravelSnippet"))
         ],
         max_num=1,
         null=True,
