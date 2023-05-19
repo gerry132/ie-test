@@ -23,6 +23,7 @@ class TravelRegions(models.TextChoices):
     SOUTH_AMERICA = 'south america', 'South America'
     SUB_SAHARAN_AFRICA = 'sub-suharan africa', 'Sub-Saharan Africa'
     CARIBBEAN = 'caribbean', 'Caribbean'
+    EUROPE = 'europe', 'Europe'
 
 
 class TravelCautionLevel(models.TextChoices):
