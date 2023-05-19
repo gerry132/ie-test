@@ -15,6 +15,7 @@ import Accordion from './components/accordion';
 /* endfeature */
 /* feature:use_frontend_component_carousel */
 import Carousel from './components/carousel';
+import MegaMenu from './components/mega_menu';
 import Timeline from './components/timeline';
 /* endfeature */
 /* feature:use_frontend_component_progress_bar */
@@ -71,6 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
     /* feature:use_frontend_component_accordion */
     for (const accordion of document.querySelectorAll(Accordion.selector())) {
         new Accordion(accordion);
+    }
+    for (const mega_menu of document.querySelectorAll(MegaMenu.selector())) {
+        new MegaMenu(mega_menu);
     }
     /* endfeature */
     /* feature:use_frontend_component_carousel */

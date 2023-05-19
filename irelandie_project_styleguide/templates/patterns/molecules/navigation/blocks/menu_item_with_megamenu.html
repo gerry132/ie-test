@@ -1,41 +1,115 @@
-{% load wagtailcore_tags navigation_tags util_tags i18n %}
-<div class="mega_menu" data-mobile-mega-menu>
-<a class="primary-nav__link" href="{{ link_url }}">
-   {{ link_title }}
-{% if link.value.mega_menu %}
-        <span class="mega_menu__icon">
-            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="mega_menu__icon" %}
-        </span>
-{% endif %}
-</a>
-{% if link.value.mega_menu %}
-    {% get_mega_menu_length link.value.mega_menu as length %}
-    <div class="mega_menu-content menu">
-       <div style="padding-left:50px;font-weight: 700;">{{ link_title }}</div>
-        <div class="{% if length == 3 %}mega_menu-content_col3{% elif length <= 6 %}mega_menu-content_col2
-    {% else %}mega_menu-content_col{% endif %}">
-        {% for link in value.mega_menu %}
+{% load wagtailcore_tags wagtailimages_tags navigation_tags util_tags i18n %}
 
-            <a class="{% if length == 3 or length > 6 %}grid_item{% else %}grid_items{% endif %}" href="{{ link.value.page.url }}">
-                  {% if link.value.title %}
-                    {{ link.value.title }}
-                  {% else %}
-                    {{ link.value.page.title }}
-              {% endif %}</a>
-
-
-        {% endfor %}
-    </div>
+{% if value.mega_menu %}
+<div class="mega_menu" data-mega-menu data-mobile-mega-menu>
+    <div aria-expanded="false" class="mega_menu_dropbtn" data-mega-menu-question>
+        {{ link_title }}
+        {% if value.mega_menu %}
+        {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="mega_menu__icon" %}
+        {% endif %}
     </div>
 
-    {% endif %}
+    <div aria-hidden="true" class="mega_menu_dropdown-content" data-mega-menu-answer id="myDropdown">
+        <div class="wrapper wrapper--large">
+
+            <hr style="border: 1px solid #F2F2F2;">
+            <div style="background-image: linear-gradient(#fefefd , #f5f5f3); padding: 20px;">
+                {% for link in value.mega_menu %}
+                <h1 class="mega_menu__title">{{ link.value.heading }}</h1>
+                <div>{{ link.value.sub_text }}</div>
+
+                {% if link.value.image %}
+                <div class="mega_menu_col3">
+                    <div id="left_mega__menu" style="flex: 1 0 70%;">
+                        {% endif %}
+                        <div
+                            class="{% if link.value.image or link.value.richtext|length == 2 %}mega_menu-content_col2
+                {% elif link.value.mega_menu_links|length == 3 or link.value.richtext|length == 3 %}mega_menu-content_col3
+                {% elif link.value.mega_menu_links|length <= 6 %}mega_menu-content_col2
+                {% else %}mega_menu-content_col{% endif %} section section--padding">
+                            {% for block in link.value.mega_menu_links %}
+                            <a class="{% if link.value.image or link.value.richtext|length == 2 %}grid_items{% elif link.value.mega_menu_links|length == 3 or link.value.mega_menu_links|length > 6 or link.value.richtext|length == 3 %}grid_item{% else %}grid_items{% endif %}"
+                               href="{{ block.value.page.url }}">
+                                {% if block.value.title %}
+                                {{ block.value.title }}
+                                {% else %}
+                                {{ block.value.page.title }}
+                                {% endif %}
+                            </a>
+                            {% endfor %}
+
+                        </div>
+                        <div class="rich-text_blocks ">
+                            {% for block in link.value.richtext %}
+                            {% if block.block_type == 'advanced_rich_text' %}
+                            <div class="rich-text_1 rich-text" {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
+                                {% if block.value.heading %}
+                                <h2 class="travel-landing--story__heading heading--2">{{ block.value.heading }}</h2>
+                                {% endif %}
+                                {% if block.value.rich_text %}
+                                <div class="travel-landing--summary"> {{ block.value.rich_text }}</div>
+                                {% endif %}
+                                {% if block.value.button_link %}
+                                <div class="wrapper wrapper--large">
+                                    {% for button in block.value.button_link %}
+                                    {% if button.value.page %}
+                                    <a class="travel-landing--summary button_text" href="{{ button.value.page.url }}">
+                                        {{ button.value.message }}</a>
+                                    {% else %}
+                                    <a class="travel-landing--summary button_text" href="{{ button.value.url }}">
+                                        {{ button.value.message }}</a>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% else %}
+                            <div class="rich_text_image">
+                                <a href="{% if block.value.page %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}">
+                                    {% image block.value.image fill-400x200 alt=block.value.image_alt class="image" %}</a>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% if link.value.image %}
+                    </div>
+                    {% for block in link.value.image %}
+                        <figure class="image-block">
+                            {% if block.value.image_alt %}
+                            <div class="{% if block.value.image_credit %}image-block__credit_wrapper{% endif %}">
+                                {% if block.value.image_credit %}
+                                <div class="story__image-credit">{{ block.value.image_credit }}</div>
+                                {% endif %}
+                                {% image block.value.image width-1000 id="image_container" class="image_container" loading="lazy" alt=block.value.image_alt %}
+                            </div>
+                            {% else %}
+                            <div class="{% if block.value.image_credit %}image-block__credit_wrapper{% endif %}">
+                                {% if block.value.image_credit %}
+                                <span class="story__image-credit">{{ block.value.image_credit }}</span>
+                                {% endif %}
+                                {% image block.value.image width-1000 class="image_container" loading="lazy" alt=block.value.image.alt_default %}
+                            </div>
+                            {% endif %}
+                            {% if block.value.caption %}
+                            <figcaption class="image-block__caption">
+                                {{ block.value.caption }}
+                            </figcaption>
+                            {% endif %}
+                        </figure>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
 
 </div>
-<a class="sub-nav-hidden {{ nav_type }}__link" {% if has_children %}data-open-subnav{% endif %} href="{{ link_url }}" {% if has_children %}aria-haspopup="true" aria-expanded="false"{% endif %}>
+{% else %}
+<a class="primary-nav__link" data-mobile-mega-menu href="{{ link_url }}">
     {{ link_title }}
-    {% if has_children %}
-        <span class="{{ nav_type }}__icon">
-            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="primary-nav__svg" %}
-        </span>
-    {% endif %}
 </a>
+{% endif %}
