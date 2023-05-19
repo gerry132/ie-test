@@ -86,10 +86,8 @@ def get_content_length(page):
 
 @register.simple_tag
 def get_mega_menu_length(menus):
-    counter = 0
-    for block in menus:
-        counter += 1
-    return counter
+    print(menus)
+    return len(menus)
 
 
 @register.simple_tag

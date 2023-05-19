@@ -108,6 +108,7 @@ INSTALLED_APPS = [
     "irelandie_project_styleguide.apps.ProjectStyleguideConfig",
     "rest_framework",
     "corsheaders",
+    "wagtail.contrib.simple_translation",
 ]
 
 if DEBUG_TOOLBAR is True:

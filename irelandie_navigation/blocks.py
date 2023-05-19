@@ -3,7 +3,10 @@
 from django.utils.translation import gettext_lazy as _
 
 from wagtail import blocks
-from irelandie_utils.blocks import BaseBlockLinkValidation, BaseBlockLinkContext
+from wagtail.images.blocks import ImageChooserBlock
+
+from irelandie_utils.blocks import BaseBlockLinkValidation, BaseBlockLinkContext, AdvancedRichTextBlock, ImageBlock, \
+    ALT_IMAGE
 
 
 class LinkBlock(BaseBlockLinkContext):
@@ -16,6 +19,49 @@ class LinkBlock(BaseBlockLinkContext):
         template = ("patterns/molecules/navigation/blocks/menu_item.html",)
 
 
+class MegaMenu(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    sub_text = blocks.CharBlock(required=False)
+    mega_menu_links = blocks.StreamBlock([
+        ("mega_menu", LinkBlock()),
+    ],
+        required=False, )
+    richtext = blocks.StreamBlock([
+        ("advanced_rich_text", AdvancedRichTextBlock()),
+        (
+            "image_rich_text",
+            blocks.StructBlock(
+                [
+                    ("image", ImageChooserBlock(required=True)),
+                    ("image_alt", blocks.CharBlock(
+                        required=True,
+                        help_text=_(ALT_IMAGE),
+                    )),
+                    ("page", blocks.PageChooserBlock(required=False)),
+                    ("url", blocks.URLBlock(
+                        label="URL",
+                        required=False,
+                        help_text="An external link.",
+                    )),
+                ],
+                icon="link",
+            ),
+        ),
+    ],
+        required=False,
+        blank=True,
+        max_num=3,
+        min_num=0, )
+    image = blocks.StreamBlock([
+        ("image", ImageBlock()),
+    ],
+        required=False,
+        blank=True,
+        max_num=1,
+        min_num=0,
+    )
+
+
 class LinkBlockExtendedwithMegaMenu(LinkBlock, BaseBlockLinkContext, BaseBlockLinkValidation):
     # This is a custom block that extends the LinkBlock and adds a url field.
     # This is used in PrimaryNavigation() & FooterNavigation()
@@ -24,8 +70,10 @@ class LinkBlockExtendedwithMegaMenu(LinkBlock, BaseBlockLinkContext, BaseBlockLi
         required=False,
         help_text="An external link.",
     )
-    mega_menu = blocks.StreamBlock([("mega_menu", LinkBlock())],
-                                   required=False, )
+    mega_menu = blocks.StreamBlock([("mega_menu", MegaMenu())],
+                                   required=False, blank=True,
+                                   max_num=1,
+                                   min_num=0, )
 
     class Meta:
         template = ("patterns/molecules/navigation/blocks/menu_item_with_megamenu.html",)
