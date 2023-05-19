@@ -20,20 +20,23 @@
   gap: 1rem;
   align-items: stretch;
   flex-wrap: wrap;
+  @media only screen and (max-width: 599px){
+    gap: 2rem;
+  }
 }
 .travel-landing--richtext{
         align-self: stretch;
         display: flex;
         flex-direction: column;
         gap: 20px;
-        flex: 1;
+        flex: 1 1 250px;
         justify-content: space-between;
         order: -1;
 }
 
 .travel-landing--twitter{
         align-self: stretch;
-        flex: 1;
+        flex: 1 1 250px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
