@@ -11,8 +11,14 @@
                         <div class="wrapper wrapper--large wrapper--padding content--padding">
                                 <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
                             {% if page.subtitle %}
-                                    {% include_block page.subtitle %}
-                                {% endif %}
+                                    {% for s in page.subtitle %}
+                                        {% if s.block_type == 'travel_snippet' %}
+                                            {% include  "patterns/snippets/travel_snippet.html" with object=s.value %}
+                                        {% else %}
+                                            {% include_block s %}
+                                        {% endif %} 
+                                    {% endfor %}
+                            {% endif %}
                             <p class="update-text">Still current at: {% todays_date %}</p>
                             <p class="update-text">Updated on: {% format_date page.last_published_at %}</p>
                         </div>
@@ -24,13 +30,17 @@
                 {% include_block page.body %}
             </div>
         </div>
-        <div class="section section--padding">
+        <div class="section">
                 {% for b in page.outer_body %}
                 <div class="wrapper wrapper--large wrapper--padding">
                     <div class="wrapper wrapper--large wrapper--padding">
-                        <div class="wrapper wrapper--large travel-wrapper--grey">
+                        <div class="wrapper wrapper--large travel-wrapper--grey grey--snippet">
                             <div class="travel-warning--contain">
-                               {{b.value}}
+                                {% if b.block_type == 'travel_snippet' %}
+                                    {% include  "patterns/snippets/travel_snippet.html" with object=b.value %}
+                                {% else %}
+                                    {{b.value}}
+                                {% endif %} 
                             </div>
                         </div>
                 </div>
