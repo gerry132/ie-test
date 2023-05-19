@@ -1,6 +1,5 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 
-<div class="wrapper wrapper--large wrapper--padding">
     {% if value.title or value.summary %}
     <div class="intro" style="max-width:1024px;">
         <h2 class="intro__title">{{ value.title }}</h2>
@@ -8,10 +7,44 @@
     </div>
     {% endif %}
 
-    <div style="padding-bottom: 30px;" class="featured-blocks featured-blocks--three">
-        {% for article in value.taggedStories %}
-            {% include_block article %}
-        {% endfor %}
-    </div>
 
-</div>
+        <div class="grid_masonry">
+        {% for article in value.taggedStories %}
+        {% if article.block_type == 'Stats_block' %}
+            <div class="grid-item">
+            <div class="box" style="{% if article.value.background_color %}background-color: {{article.value.background_color}};{% endif %}">
+                <div class="tag__stats">
+                    <div class="tag__vertical-line">
+                        <h2 class="stats__title"
+                            style="{% if article.value.text_color %}color: {{article.value.text_color}};{% endif %}">
+                            {{ article.value.heading }}
+                        </h2>
+                        <div class="stats__summary"
+                             style="{% if article.value.text_color %}color: {{article.value.text_color}};{% endif %}">
+                            {{ article.value.summary|richtext }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        {% elif article.block_type == 'TaggedStories' %}
+            <div class="grid-item">
+                {% include_block article %}
+            </div>
+        {% endif %}
+
+        {% endfor %}
+        </div>
+
+
+
+<script>
+        var elem = document.querySelector('.grid_masonry');
+        var masnry = new Masonry( elem, {
+      itemSelector: '.grid-item',
+      gutter: 20,
+      horizontalOrder: true,
+      percentPosition: true,
+    });
+
+    </script>

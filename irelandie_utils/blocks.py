@@ -999,48 +999,6 @@ class FreeFormBlocksBase(blocks.StreamBlock):
 
 
 class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
-    # icon = blocks.ChoiceBlock(
-    #     choices=(
-    #         ("", "Choose an icon (optional)"),
-    #         ("authentication", "Authentication"),
-    #         ("citizenship", "Citizenship"),
-    #         ("closure-dates", "Closure Dates"),
-    #         ("consular-fees", "Consular Fees"),
-    #         ("contact-phone", "Contact Phone"),
-    #         ("contact-mail", "Contact Mail"),
-    #         ("family", "Family"),
-    #         ("government-building", "Government Building"),
-    #         ("how-we-can-help", "How We Can Help"),
-    #         ("information", "Information"),
-    #         ("invest", "Invest"),
-    #         ("jobs", "Jobs"),
-    #         ("link", "Link"),
-    #         ("live", "Live"),
-    #         ("location", "Location"),
-    #         ("marriage", "Marriage"),
-    #         ("money", "Money"),
-    #         ("new-to", "New To"),
-    #         ("news", "News"),
-    #         ("notice", "Notice"),
-    #         ("opening-hours", "Opening Hours"),
-    #         ("passport", "Passport"),
-    #         ("plane", "Plane"),
-    #         ("services", "Services"),
-    #         ("study", "Study"),
-    #         ("ticket", "Ticket"),
-    #         ("trade", "Trade"),
-    #         ("trade2", "Trade2"),
-    #         ("travel", "Travel"),
-    #         ("visas", "Visas"),
-    #         ("working-holiday", "Working Holiday"),
-    #     ),
-    #     required=False,
-    # )
-    # image = ImageChooserBlock(required=False)
-    # image_alt = blocks.CharBlock(
-    #     required=False,
-    #     help_text=_(ALT_IMAGE),
-    # )
     title = blocks.CharBlock()
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -1355,6 +1313,15 @@ class LinkButtonBlock(blocks.StructBlock):
         return context
 
 
+class LinkButtonsBlock(blocks.StructBlock):
+    link_buttons = blocks.StreamBlock([("link_button", LinkButtonBlock())])
+
+    class Meta:
+        icon = "list-ul"
+        label = "Link Buttons"
+        template = "patterns/molecules/link_button/link_buttons.html"
+
+
 class GenericHeroBlock(blocks.StructBlock):
     hero_image_alignment = blocks.ChoiceBlock(
         required=True,
@@ -1473,7 +1440,8 @@ class FeaturedTaggedStoryBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=True)
     summary = blocks.TextBlock(required=False)
     page = blocks.PageChooserBlock(required=False, page_type=["irelandie_pages.FreeFormPage",
-                                   "irelandie_story.StoryPage", "irelandie_missions.GeneralContentPage"])
+                                                              "irelandie_story.StoryPage",
+                                                              "irelandie_missions.GeneralContentPage"])
     link_text = blocks.CharBlock(
         max_length=32, blank=True, required=False, default="Read Story", help_text='Call To Action Text'
     )
@@ -1481,12 +1449,14 @@ class FeaturedTaggedStoryBlock(blocks.StructBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
         from irelandie_utils.templatetags.util_tags import get_tag_links
+        from irelandie_utils.templatetags.util_tags import get_destination_tag_links
+        destination_tags = value["page"].specific.related_destination_tags
+        context["destination_tag_links"] = get_destination_tag_links(destination_tags)
         tag = value["page"].specific.related_tags
         tagging_links = get_tag_links(tag, value["page"])[0]
         tags_no_links = get_tag_links(tag, value["page"])[1]
         context["tagging_links"] = tagging_links
         context["tags_no_links"] = tags_no_links
-        context["related_destination_tags"] = value["page"].specific.related_destination_tags
         return context
 
     class Meta:
@@ -1499,7 +1469,10 @@ class FeaturedTaggedStoriesBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=False)
     summary = blocks.RichTextBlock(required=False)
 
-    taggedStories = blocks.StreamBlock([("TaggedStories", FeaturedTaggedStoryBlock())])
+    taggedStories = blocks.StreamBlock([
+        ("TaggedStories", FeaturedTaggedStoryBlock()),
+        ("Stats_block", StatTagBlock())
+    ])
 
     class Meta:
         icon = "list-ul"
@@ -1521,7 +1494,7 @@ class FreeFormBlocks(FreeFormBlocksBase):
     Featured_tagged_story = FeaturedTaggedStoriesBlock(group="Module")
     logos = LogoCardsBlock(group="Module")
     link_card = LinkCardsBlock()
-    link_button = LinkButtonBlock()
+    link_button = LinkButtonsBlock()
     link_box = LinkBoxesBlock()
     table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
     advanced_table_block = TypedTableBlock([

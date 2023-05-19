@@ -1,7 +1,8 @@
 {% load wagtailcore_tags %}
-<div class="link-box__main">
-    <div class="section section-padding"></div>
-    {% for link_box in value.link_boxes %}
-        {% include_block link_box %}
-    {% endfor %}
+<div class="section section-padding">
+    <div class="link-box__main">
+        {% for link_box in value.link_boxes %}
+            {% include_block link_box %}
+        {% endfor %}
+    </div>
 </div>

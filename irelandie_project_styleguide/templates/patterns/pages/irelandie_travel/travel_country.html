@@ -1,0 +1,47 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load static navigation_tags util_tags %}
+
+{% has_root_override page header=True as override %}
+
+{% block content %}
+    {% block main %}
+            <div id="main-header" class="section section--padding section--white">
+                        <div class="wrapper wrapper--large wrapper--padding content--padding">
+                                <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                            {% if page.subtitle %}
+                                    {% include_block page.subtitle %}
+                                {% endif %}
+                            <p class="update-text">Still current at: {% todays_date %}</p>
+                            <p class="update-text">Updated on: {% format_date page.last_published_at %}</p>
+                        </div>
+                        {% include "patterns/pages/irelandie_travel/greyed_alert.html" with page=page heading="Security Status" %}
+            </div>
+            {% include "patterns/pages/irelandie_travel/toc.html" with page=page %}
+        <div class="section section--padding">
+            <div class="wrapper wrapper--large wrapper--padding">
+                {% include_block page.body %}
+            </div>
+        </div>
+        <div class="section section--padding">
+                {% for b in page.outer_body %}
+                <div class="wrapper wrapper--large wrapper--padding">
+                    <div class="wrapper wrapper--large wrapper--padding">
+                        <div class="wrapper wrapper--large travel-wrapper--grey">
+                            <div class="travel-warning--contain">
+                               {{b.value}}
+                            </div>
+                        </div>
+                </div>
+                </div>
+                                    
+                {% endfor %} 
+        </div>
+    {% endblock %}
+
+<script>
+    document.getElementById('question-1').setAttribute("aria-expanded", true);
+    document.getElementById('question-1--ref').classList.add('is-open');
+</script>
+{% endblock %}

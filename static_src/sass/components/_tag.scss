@@ -7,6 +7,7 @@
     &__card__summary{
         font-size: 20px;
         line-height: 24px;
+        color: #292929;
     }
     &__stats{
         padding: 30px;
@@ -23,8 +24,11 @@
             flex-wrap: wrap;
     }
     &__slide-item{
-            background-color: #E7E5E1;
+            background-color: #EDECE5;
             padding: 1px 10px;
+            color: #292929;
+            font-size: 20px;
+            line-height: 24px;
     }
     &__slide-item a{
         color: #292929;

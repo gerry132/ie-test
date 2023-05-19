@@ -1,0 +1,10 @@
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+
+    <div class="wrapper wrapper--large wrapper--padding">
+        <div class="link-button__grid-container">
+            {% for link_buttons in value.link_buttons %}
+                {% include_block link_buttons %}
+            {% endfor %}
+        </div>
+    </div>
+

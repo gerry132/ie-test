@@ -12,7 +12,7 @@
 </style>
 <div class="accordions">
     <div class="wrapper wrapper--large">
-        <div style="max-width: 1024px;">
+        <div>
             {% if value.title %}
             <h2 class="heading--2 accordions__title">
                 {{ value.title }}
@@ -30,7 +30,7 @@
 
         <div class="accordion__container">
             {% for accordion in value.accordions %}
-                <div class="accordion" data-accordion>
+                <div class="accordion" id="{{ accordion.value.title }}" data-accordion>
                     <h2 class="accordion__header">
                         <div
                             id="question-{{ forloop.counter }}"

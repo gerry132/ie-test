@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     "irelandie_story",
     "irelandie_site_information",
     "irelandie_tags",
+    "irelandie_travel",
     "irelandie_forms",
     #
     "wagtail_localize",
@@ -107,6 +108,7 @@ INSTALLED_APPS = [
     "irelandie_project_styleguide.apps.ProjectStyleguideConfig",
     "rest_framework",
     "corsheaders",
+    "wagtail.contrib.simple_translation",
 ]
 
 if DEBUG_TOOLBAR is True:
