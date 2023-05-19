@@ -54,7 +54,6 @@ class MobileSubMenu {
         var header_extended = document.querySelector('.header__menu--extended').offsetHeight;
         var sub_nav_header = this.subnav.offsetHeight;
         var height_4 = header_primary+header_extended+sub_nav_header;
-        console.log(height_4);
         this.subnav.style.height = height_4+'px';
     }
 }

@@ -85,12 +85,6 @@ def get_content_length(page):
 
 
 @register.simple_tag
-def get_mega_menu_length(menus):
-    print(menus)
-    return len(menus)
-
-
-@register.simple_tag
 def format_date(date):
     if isinstance(date, str):
         return datetime.strptime(date, '%d %B %Y')
