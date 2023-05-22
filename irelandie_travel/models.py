@@ -23,7 +23,6 @@ class TravelCountryPage(BasePage):
             ('subtitle', AdvancedRichTextBlock()),
             ("travel_snippet", SnippetChooserBlock(target_model="utils.TravelSnippet"))
         ],
-        max_num=1,
         null=True,
         blank=False
     )
@@ -39,7 +38,7 @@ class TravelCountryPage(BasePage):
 
     travel_caution_level = StreamField(
         [
-            ('travel_caution_level', TravelCautionBlock())
+            ('security_status', TravelCautionBlock())
         ],
         max_num=1,
         null=True,
@@ -67,7 +66,7 @@ class TravelCountryPage(BasePage):
     content_panels = BasePage.content_panels + [
         FieldPanel('subtitle'),
         FieldPanel('region'),
-        FieldPanel('travel_caution_level'),
+        FieldPanel('travel_caution_level', heading="Security Status"),
         FieldPanel('body'),
         FieldPanel('outer_body'),
     ]

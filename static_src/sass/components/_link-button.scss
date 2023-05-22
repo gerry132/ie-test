@@ -6,7 +6,7 @@
     overflow: hidden;
     background-color: #004D46;
     position: relative;
-    height: 40px;
+
 
     @include media-query(medium) {
         max-width: 400px;
@@ -37,6 +37,7 @@
        font-weight: 700;
        font-size: 22px;
        line-height: 27px;
+       margin: 0;
 
        color: #FFFFFF;
    }

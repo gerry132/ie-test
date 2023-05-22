@@ -27,8 +27,8 @@ class TravelRegions(models.TextChoices):
 
 
 class TravelCautionLevel(models.TextChoices):
-    NORMAL_PRECAUTIONS = 'normal precations/' \
-        'gnáth-réamhchúraimí', 'normal precations/Gnáth-réamhchúraimí'
+    NORMAL_PRECAUTIONS = 'normal precautions/' \
+        'gnáth-réamhchúraimí', 'normal precautions/Gnáth-réamhchúraimí'
     HIGH_DEGREE_OF_CAUTION = 'high degree of caution/' \
         'bí an-chúramach', 'High Degree of Caution/Bí an-chúramach'
     AVOID_NON_ESSENTIAL_TRAVEL = 'avoid non-essential travel/seachain' \

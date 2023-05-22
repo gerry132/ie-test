@@ -120,9 +120,13 @@
         color: #000;
     }
 }
+.header--condensed .primary-nav__link[aria-current="page"]{
+    color: #000;
+}
 .primary-nav__link[aria-current="page"] {
     @include media-query(max-large){
         border-bottom: unset;
+        color: #000;
     }
       color: lighten($color--secondary, 20%);
       border-bottom: 1px solid $color--secondary;
@@ -145,7 +149,6 @@
      $root: &;
      &.is-visible {
           display: flex;
-          color: #000;
      }
 }
 

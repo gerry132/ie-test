@@ -18,7 +18,7 @@ class AlteredAvancedRichTextBlock(AdvancedRichTextBlock):
 
 class InformationBlock(blocks.StreamBlock):
 
-    richtext = AlteredAvancedRichTextBlock()
+    richtext = AdvancedRichTextBlock()
 
 
 class ButtonBlock(blocks.StreamBlock):

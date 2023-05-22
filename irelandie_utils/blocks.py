@@ -962,6 +962,7 @@ class AccordionBlock(blocks.StructBlock):
                          ),
                         ("additional", blocks.StreamBlock([
                             ("map", MapBlock()),
+                            ("advanced_rich_text", AdvancedRichTextBlock()),
                             ("table", TableBlock(table_options={'renderer': 'html'}, group="table")),
                             ("document", DocumentBlock(required=False)),
                             ("youtube", YoutubeVideoBlock(group="HTML")),
