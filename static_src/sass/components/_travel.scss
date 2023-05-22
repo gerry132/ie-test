@@ -6,6 +6,9 @@
     margin-bottom: 33px !important;
 }
 .travel-warning--contain {
+    @media only screen and (max-width: 599px){
+        padding: 15px;
+    }
     padding: 30px;
 }
 .update-text {
@@ -47,14 +50,6 @@
 .travel-landing--rich-text{
     background: #EDECE5;
 }
-.travel-landing--story__heading{
-    font-size: 28px;
-    line-height: 34px;
-}
-.travel-landing--summary{
-    font-size: 20px;
-line-height: 24px;
-}
 
 .travel-landing:before {
 @media only screen and (min-width: 599px){
@@ -62,3 +57,27 @@ line-height: 24px;
     border: 1px solid #d3d3d3;
 }
 }
+.travel_country_security{
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 34px;
+
+    color: #004D44;
+}
+.travel_country_subtitle .rich-text{
+    max-width: 1280px;
+    margin: 0 auto;
+}
+.travel-warning--contain .rich-text, .accordion__content .rich-text{
+    font-size: 20px;
+    margin: unset;
+}
+.travel-warning--contain .story__heading, .accordion__content .story__heading, .travel-landing--story__heading{
+    font-size: 28px;
+    line-height: 34px;
+}
+.travel-warning--contain .link-button__title, .travel-landing--summary{
+    font-size: 20px;
+    line-height: 24px;
+}
+

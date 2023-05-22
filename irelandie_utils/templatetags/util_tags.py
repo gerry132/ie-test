@@ -240,8 +240,8 @@ def verify_path(context):
 @register.simple_tag
 def get_travel_warning_by_locale(warning, locale):
     warning_map = {
-        "normal precations/gnáth-réamhchúraimí": {
-            "English": "Normal Precations",
+        "normal precautions/gnáth-réamhchúraimí": {
+            "English": "Normal Precautions",
             "Irish": "Gnáth-Réamhchúraimí"
         },
         "high degree of caution/bí an-chúramach": {

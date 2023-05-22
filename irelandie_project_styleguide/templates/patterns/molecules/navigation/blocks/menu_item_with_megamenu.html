@@ -1,7 +1,7 @@
 {% load wagtailcore_tags wagtailimages_tags navigation_tags util_tags i18n %}
 
 {% if value.mega_menu %}
-<div class="mega_menu" data-mega-menu data-mobile-mega-menu>
+<div class="{{ nav_type }}__link mega_menu" data-mega-menu data-mobile-mega-menu>
     <div aria-expanded="false" class="mega_menu_dropbtn" data-mega-menu-question>
         {{ link_title }}
         {% if value.mega_menu %}
@@ -16,7 +16,7 @@
             <div style="background-image: linear-gradient(#fefefd , #f5f5f3); padding: 20px;">
                 {% for link in value.mega_menu %}
                 <h1 class="mega_menu__title">{{ link.value.heading }}</h1>
-                <div>{{ link.value.sub_text }}</div>
+                <div class="mega_menu__subtitle">{{ link.value.sub_text }}</div>
 
                 {% if link.value.image %}
                 <div class="mega_menu_col3">
