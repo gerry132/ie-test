@@ -1337,3 +1337,30 @@ resource "aws_appautoscaling_policy" "cpu" {
     }
   }
 }
+
+# -----------------------------------------------------------------------------
+# Sidero MSP Monitoring
+# -----------------------------------------------------------------------------
+
+### Cloudwatch HIGH - Postgres DB free space - prod-db-postgres ###
+resource "aws_cloudwatch_log_group" "rds_logs" {
+  name = "/aws/rds/instance/${var.prod-db-postgres}/error/postgresql.log"
+    tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+resource "aws_cloudwatch_metric_filter" "rds_free_space" {
+  name           = "rds-free-space"
+  pattern        = "{ $.engine = \"postgres\" && $.severity = \"ERROR\" }"
+  log_group_name = aws_cloudwatch_log_group.rds_logs.name
+
+  metric_transformation {
+    name      = "FreeStorageSpace"
+    namespace = "AWS/RDS"
+    value     = "[$.free_storage_space,UNITS]"
+  }
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
