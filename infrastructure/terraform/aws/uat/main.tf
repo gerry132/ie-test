@@ -1344,23 +1344,39 @@ resource "aws_appautoscaling_policy" "cpu" {
 
 ### Cloudwatch HIGH - Postgres DB free space - prod-db-postgres ###
 resource "aws_cloudwatch_log_group" "rds_logs" {
-  name = "/aws/rds/instance/${var.prod-db-postgres}/error/postgresql.log"
+  name = "/aws/rds/instance/prod-db-postgres/error/postgresql.log"
     tags = {
     "Sidero_MSP" : "true"
   }
 }
 
-resource "aws_cloudwatch_metric_filter" "rds_free_space" {
+resource "aws_cloudwatch_log_metric_filter" "rds_free_space" {
   name           = "rds-free-space"
   pattern        = "{ $.engine = \"postgres\" && $.severity = \"ERROR\" }"
   log_group_name = aws_cloudwatch_log_group.rds_logs.name
-
   metric_transformation {
     name      = "FreeStorageSpace"
-    namespace = "AWS/RDS"
-    value     = "[$.free_storage_space,UNITS]"
+    namespace = "Sidero_MSP"
+    value     = "20"
+  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "rds_free_space_alarm" {
+  alarm_name          = "prod-db-postgres-free-space-alarm"
+  comparison_operator = "LessThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "FreeStorageSpace"
+  namespace           = "Sidero_MSP"
+  period              = "300"
+  statistic           = "Minimum"
+  threshold           = "21474836480"
+  alarm_description   = "Alarm when free storage space falls below 20GB"
+  dimensions = {
+    # Actual DB instance required name below
+    DBInstanceIdentifier = "prod-db-postgres"
   }
   tags = {
     "Sidero_MSP" : "true"
   }
 }
+
