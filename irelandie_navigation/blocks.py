@@ -19,17 +19,31 @@ class LinkBlock(BaseBlockLinkContext):
         template = ("patterns/molecules/navigation/blocks/menu_item.html",)
 
 
-class MegaMenu(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    sub_text = blocks.CharBlock(required=False)
+class LinkBlockWithURL(BaseBlockLinkContext):
+    page = blocks.PageChooserBlock(required=False)
+    title = blocks.CharBlock(
+        help_text=_("Leave blank to use the page's own title"), required=False
+    )
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
+
+
+class MegaMenuContent(blocks.StructBlock):
     mega_menu_links = blocks.StreamBlock([
-        ("mega_menu", LinkBlock()),
+        ("mega_menu_links", LinkBlockWithURL()),
     ],
-        required=False, )
-    richtext = blocks.StreamBlock([
+        required=False,
+        blank=True,
+        max_num=5,
+        min_num=0,
+    )
+    richtext_and_images = blocks.StreamBlock([
         ("advanced_rich_text", AdvancedRichTextBlock()),
         (
-            "image_rich_text",
+            "image_with_links",
             blocks.StructBlock(
                 [
                     ("image", ImageChooserBlock(required=True)),
@@ -50,9 +64,34 @@ class MegaMenu(blocks.StructBlock):
     ],
         required=False,
         blank=True,
-        max_num=3,
+        max_num=1,
         min_num=0, )
-    image = blocks.StreamBlock([
+
+    class Meta:
+        template = ("patterns/molecules/navigation/blocks/megamenu_contents.html",)
+
+
+class MegaMenu(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    sub_text = blocks.CharBlock(required=False)
+    column_1 = blocks.StreamBlock([
+        ("column_1_contents", MegaMenuContent()),
+    ],
+        required=False,
+        blank=True,
+        max_num=1,
+        min_num=0,
+    )
+    column_2 = blocks.StreamBlock([
+        ("column_2_contents", MegaMenuContent()),
+    ],
+        required=False,
+        blank=True,
+        max_num=1,
+        min_num=0,
+    )
+    column_3 = blocks.StreamBlock([
+        ("column_3_contents", MegaMenuContent()),
         ("image", ImageBlock()),
     ],
         required=False,

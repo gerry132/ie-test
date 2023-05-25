@@ -31,12 +31,32 @@
                             {% endcomment %}
                             <li class="sub-nav__item sub-nav__link" style="font-weight: 600;">{{ link.value.title }}</li>
                             {% for links in link.value.mega_menu %}
-                             {% for child in links.value.mega_menu_links %}
+                            {% for column_1 in links.value.column_1 %}
+                             {% for child in column_1.value.mega_menu_links %}
                                 <li class="sub-nav__item sub-nav__item--secondary">
-                                    <a class="sub-nav__link" href="{{ child.value.page.url }}">
+                                    <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
                                         {{ child.value.title }}
                                     </a>
                                 </li>
+                            {% endfor %}
+                            {% endfor %}
+                            {% for column_2 in links.value.column_2 %}
+                             {% for child in column_2.value.mega_menu_links %}
+                                <li class="sub-nav__item sub-nav__item--secondary">
+                                    <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                        {{ child.value.title }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            {% endfor %}
+                            {% for column_3 in links.value.column_3 %}
+                             {% for child in column_3.value.mega_menu_links %}
+                                <li class="sub-nav__item sub-nav__item--secondary">
+                                    <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                        {{ child.value.title }}
+                                    </a>
+                                </li>
+                            {% endfor %}
                             {% endfor %}
                             {% endfor %}
                         </ul>
@@ -76,12 +96,32 @@
                             {% endcomment %}
                             <li class="sub-nav__item sub-nav__link" style="font-weight: 600;">{{ link.value.title }}</li>
                             {% for links in link.value.mega_menu %}
-                             {% for child in links.value.mega_menu_links %}
+                            {% for column_1 in links.value.column_1 %}
+                             {% for child in column_1.value.mega_menu_links %}
                                 <li class="sub-nav__item sub-nav__item--secondary">
-                                    <a class="sub-nav__link" href="{{ child.value.page.url }}">
+                                    <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
                                         {{ child.value.title }}
                                     </a>
                                 </li>
+                            {% endfor %}
+                            {% endfor %}
+                            {% for column_2 in links.value.column_2 %}
+                             {% for child in column_2.value.mega_menu_links %}
+                                <li class="sub-nav__item sub-nav__item--secondary">
+                                    <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                        {{ child.value.title }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            {% endfor %}
+                            {% for column_3 in links.value.column_3 %}
+                             {% for child in column_3.value.mega_menu_links %}
+                                <li class="sub-nav__item sub-nav__item--secondary">
+                                    <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                        {{ child.value.title }}
+                                    </a>
+                                </li>
+                            {% endfor %}
                             {% endfor %}
                             {% endfor %}
                         </ul>
