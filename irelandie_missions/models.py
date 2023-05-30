@@ -15,6 +15,7 @@ from irelandie_news.models import NewsPage
 from irelandie_utils import blocks
 from irelandie_utils.utils import get_root_info
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage
+from wagtail.snippets.blocks import SnippetChooserBlock
 
 
 class CountryGroupPageIndex(BasePage):
@@ -184,7 +185,8 @@ class JobContentPage(BasePage):
         MultiFieldPanel(
             [
                 HelpPanel(content='help_text', template='patterns/molecules/streamfield/'
-                          'help_text_scheduled_publishing.html', heading='', classname=''),
+                                                        'help_text_scheduled_publishing.html', heading='',
+                          classname=''),
                 FieldPanel('go_live_at'),
                 FieldPanel('expire_at'),
             ],
@@ -824,6 +826,29 @@ class EmbassyPage(FreeFormPageBase):
 
     class Meta:
         verbose_name = "Embassy Page"
+
+
+class EmbassyIndexPage(BasePage):
+    template = "patterns/pages/missions/embassy_index_page.html"
+    subtitle = StreamField(
+        [
+            ('subtitle', blocks.AdvancedRichTextBlock()),
+            ("embassy_snippet", SnippetChooserBlock(target_model="utils.EmbassySnippet"))
+        ],
+        null=True,
+        blank=False
+    )
+    body = StreamField(
+        [
+         ("accordions", blocks.AccordionEmbassyBlock())],
+        blank=True,
+        null=True,
+    )
+
+    content_panels = BasePage.content_panels + [
+        FieldPanel('subtitle'),
+        FieldPanel('body'),
+    ]
 
 
 class GeneralContentPage(HeroPage):
