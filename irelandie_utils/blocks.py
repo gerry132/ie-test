@@ -774,6 +774,7 @@ class FeaturedArticlesBlock(blocks.StructBlock):
 
 
 class ContactBlock(blocks.StructBlock):
+    section_id = blocks.CharBlock(required=False)
     heading = blocks.CharBlock(max_length=255, required=False)
     address_line_1 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
     address_line_2 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
@@ -809,6 +810,7 @@ class ContactBlock(blocks.StructBlock):
     alt_telephone = blocks.CharBlock(max_length=30, blank=True, required=False)
     fax_number = blocks.CharBlock(max_length=50, blank=True, required=False)
     email = blocks.RichTextBlock(blank=True, required=False)
+    mission_website = blocks.RichTextBlock(blank=True, required=False)
 
 
 class TimelinePhotoBlock(blocks.StructBlock):
@@ -980,6 +982,54 @@ class AccordionBlock(blocks.StructBlock):
         icon = "collapse-down"
         label = "Accordion"
         template = "patterns/molecules/accordion/accordion.html"
+
+
+class AccordionEmbassyBlock(blocks.StructBlock):
+    title = blocks.CharBlock(required=False)
+    accordions = blocks.StreamBlock(
+        [
+            (
+                "accordion",
+                blocks.StructBlock(
+                    [
+                        ("title", blocks.CharBlock()),
+                        (
+                            "content",
+                            blocks.RichTextBlock(
+                                features=[
+                                    "h1",
+                                    "h2",
+                                    "h3",
+                                    "h4",
+                                    "h5",
+                                    "h6",
+                                    "blockquote",
+                                    "bold",
+                                    "link",
+                                    "document-link",
+                                    "ul",
+                                    "image",
+                                ], required=False,
+                            ),
+                        ),
+                        ("additional", blocks.StreamBlock([
+                            ("map", MapBlock()),
+                            ("advanced_rich_text", AdvancedRichTextBlock()),
+                            ("contact_details",
+                             SnippetChooserBlock(target_model="utils.ContactSnippet")),
+                            ("embassy_snippet", SnippetChooserBlock(target_model="utils.EmbassySnippet"))
+                        ], required=False)
+                         ),
+                    ]
+                ),
+            )
+        ]
+    )
+
+    class Meta:
+        icon = "collapse-down"
+        label = "Accordion"
+        template = "patterns/molecules/accordion/accordion_embassy.html"
 
 
 class FreeFormBlocksBase(blocks.StreamBlock):
