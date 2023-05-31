@@ -1342,31 +1342,31 @@ resource "aws_appautoscaling_policy" "cpu" {
 # Sidero MSP Monitoring
 # -----------------------------------------------------------------------------
 
-### Cloudwatch HIGH - Postgres DB free space - prod-db-postgres ###
-resource "aws_cloudwatch_log_group" "rds_logs" {
-  name = "/aws/rds/instance/uat-db-postgres/error/postgresql.log"
-    tags = {
-    "Sidero_MSP" : "true"
-  }
-}
+### Cloudwatch HIGH - Postgres DB free space - uat-db-postgres ###
+# resource "aws_cloudwatch_log_group" "rds_logs" {
+ # name = "/aws/rds/instance/uat-db-postgres/error/postgresql.log"
+ #   tags = {
+ #   "Sidero_MSP" : "true"
+ # }
+#}
 
-resource "aws_cloudwatch_log_metric_filter" "rds_free_space" {
-  name           = "rds-free-space"
-  pattern        = "{ $.engine = \"postgres\" && $.severity = \"ERROR\" }"
-  log_group_name = aws_cloudwatch_log_group.rds_logs.name
-  metric_transformation {
-    name      = "FreeStorageSpace"
-    namespace = "Sidero_MSP/RDS"
-    value     = "20"
-  }
-}
+# resource "aws_cloudwatch_log_metric_filter" "rds_free_space" {
+#  name           = "rds-free-space"
+#  pattern        = "{ $.engine = \"postgres\" && $.severity = \"ERROR\" }"
+#  log_group_name = aws_cloudwatch_log_group.rds_logs.name
+#  metric_transformation {
+#    name      = "FreeStorageSpace"
+#    namespace = "Sidero_MSP/RDS"
+#    value     = "20"
+#  }
+#}
 
 resource "aws_cloudwatch_metric_alarm" "rds_free_space_alarm" {
   alarm_name          = "uat-db-postgres-free-space-alarm"
   comparison_operator = "LessThanOrEqualToThreshold"
   evaluation_periods  = "1"
   metric_name         = "FreeStorageSpace"
-  namespace           = "Sidero_MSP/RDS"
+  namespace           = "AWS/RDS"
   period              = "300"
   statistic           = "Minimum"
   threshold           = "21474836480"
@@ -1379,3 +1379,81 @@ resource "aws_cloudwatch_metric_alarm" "rds_free_space_alarm" {
     "Sidero_MSP" : "true"
   }
 }
+
+### Cloudwatch HIGH - Postgres DB CPU Utlization - uat-db-postgres ###
+resource "aws_cloudwatch_metric_alarm" "rds_cpu_alarm" {
+  alarm_name          = "rds-cpu-utilization-alarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "3"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/RDS"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = "80"
+  alarm_description   = "Alarm when CPU utilization exceeds 80%"
+  dimensions = {
+    DBInstanceIdentifier = "uat-db-postgres"
+  }
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+### Cloudwatch HIGH - ECS CPU Utilization - UAT-ireland-ie
+resource "aws_cloudwatch_metric_alarm" "ecs_cpu_alarm" {
+  alarm_name          = "ecs-cpu-utilization-alarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "3"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/ECS"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = "90"
+  alarm_description   = "Alarm when CPU utilization exceeds 90%"
+  dimensions = {
+    ClusterName = "uat-g2g"
+  }
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+### Cloudwatch HIGH - ECS Memory Utilization - UAT-ireland-ie
+resource "aws_cloudwatch_metric_alarm" "ecs_memory_alarm" {
+  alarm_name          = "ecs-memory-utilization-alarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "3"
+  metric_name         = "MemoryUtilization"
+  namespace           = "AWS/ECS"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = "90"
+  alarm_description   = "Alarm when memory utilization exceeds 90%"
+  dimensions = {
+    ClusterName = "uat-g2g"
+  }
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+### Cloudwatch LOW - Application ELB Connection Errors - UAT
+resource "aws_cloudwatch_metric_alarm" "alb_connection_errors" {
+  alarm_name          = "elb-UAT-alb-connection-errors-alarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "3"
+  metric_name         = "HTTPCode_Target_5XX_Count"
+  namespace           = "AWS/ApplicationELB"
+  period              = "300"
+  statistic           = "Sum"
+  threshold           = "10"
+  alarm_description   = "Alarm when the number of HTTP 5XX response codes exceeds 10 for 3 consecutive periods"
+  dimensions = {
+    LoadBalancer = "app/uat-g2g/3e434df452426d2b"
+  }
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+# Above ready to test
