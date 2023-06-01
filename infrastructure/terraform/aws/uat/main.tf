@@ -1603,7 +1603,7 @@ resource "aws_sns_topic" "low_priority_alert" {
 }
 
 ### Eventbridge rule - high_priority_alert
-resource "aws_cloudwatch_event_rule" "high_priority_alert" {
+#resource "aws_cloudwatch_event_rule" "high_priority_alert" {
   name        = "high_priority_alert"
   description = "Uses pattern matching of Cloudwatch events to trigger events"
   event_pattern = jsonencode({
@@ -1622,57 +1622,59 @@ resource "aws_cloudwatch_event_rule" "high_priority_alert" {
   })
 
   # SNS target for notifications
+  ###  Error: Unsupported block type 'target' below ###  to be fixed gjdarcy 01/06/23
+
   target {
     arn = aws_sns_topic.high_priority_alert.arn
     id  = "high_priority_alert"
   }
-}
+#}
 
-resource "aws_sns_topic_subscription" "high_priority_alert" {
-  topic_arn = aws_sns_topic.high_priority_alert.arn
-  protocol  = "sqs"
-  endpoint  = "arn:aws:cloudwatch:eu-west-1:100350071169:high_priority_alert"
+#resource "aws_sns_topic_subscription" "high_priority_alert" {
+#  topic_arn = aws_sns_topic.high_priority_alert.arn
+#  protocol  = "sqs"
+#  endpoint  = "arn:aws:cloudwatch:eu-west-1:100350071169:high_priority_alert"
 
   # Allow the EventBridge rule to publish messages to the SNS topic
-  source_arn = aws_cloudwatch_event_rule.high_priority_alert.arn
-}
+  # source_arn = aws_cloudwatch_event_rule.high_priority_alert.arn
+#}
 
 
 ### Eventbridge rule - low_priority_alert
-resource "aws_cloudwatch_event_rule" "low_priority_alert" {
-  name        = "low_priority_alert"
-  description = "Uses pattern matching of Cloudwatch events to trigger events"
-  event_pattern = jsonencode({
-    source      = ["aws.cloudwatch"]
-    detail_type = ["CloudWatch Alarm State Change"]
-    detail      = {
-      state = ["ALARM"]
-    }
-    resources   = [
-      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:elb-UAT-alb-connection-errors-alarm",
-      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:net-lb-connection-errors-alarm",
-      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:elasticache-cpu-alarm",
-      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:elasticache-memory-alarm",
-      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:s3-ireland-ie-infrastructure-5xx-errors-alarm",
-      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:s3-ireland-ie-infrastructure-4xx-errors-alarm"
-    ]
-  })
+# resource "aws_cloudwatch_event_rule" "low_priority_alert" {
+ # name        = "low_priority_alert"
+# description = "Uses pattern matching of Cloudwatch events to trigger events"
+#  event_pattern = jsonencode({
+#    source      = ["aws.cloudwatch"]
+#    detail_type = ["CloudWatch Alarm State Change"]
+#    detail      = {
+#      state = ["ALARM"]
+#    }
+#    resources   = [
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:elb-UAT-alb-connection-errors-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:net-lb-connection-errors-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:elasticache-cpu-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:elasticache-memory-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:s3-ireland-ie-infrastructure-5xx-errors-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:s3-ireland-ie-infrastructure-4xx-errors-alarm"
+ #   ]
+ # })
 
   # SNS target for notifications
-  target {
-    arn = aws_sns_topic.low_priority_alert.arn
-    id  = "low_priority_alert"
-  }
-}
+  #target {
+  #  arn = aws_sns_topic.low_priority_alert.arn
+  #  id  = "low_priority_alert"
+  #}
+#}
 
-resource "aws_sns_topic_subscription" "low_priority_alert" {
-  topic_arn = aws_sns_topic.low_priority_alert.arn
-  protocol  = "sqs"
-  endpoint  = "arn:aws:cloudwatch:eu-west-1:100350071169:low_priority_alert"
+#resource "aws_sns_topic_subscription" "low_priority_alert" {
+#  topic_arn = aws_sns_topic.low_priority_alert.arn
+#  protocol  = "sqs"
+#  endpoint  = "arn:aws:cloudwatch:eu-west-1:100350071169:low_priority_alert"
 
   # Allow the EventBridge rule to publish messages to the SNS topic
-  source_arn = aws_cloudwatch_event_rule.low_priority_alert.arn
-}
+  #  source_arn = aws_cloudwatch_event_rule.low_priority_alert.arn
+#}
 
 # -----------------------------------------------------------------------------
 # Sidero MSP Monitoring Ends
