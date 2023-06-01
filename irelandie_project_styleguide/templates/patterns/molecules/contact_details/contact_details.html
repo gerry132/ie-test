@@ -1,48 +1,48 @@
 {% load irelandie_assets_tags %}
 <div style="font-size: 20px;">
 {% for elem in contact_details.body %}
-<div {% if elem.value.section_id %} id="{{elem.value.section_id}}" {% endif %}>
-    <h3>{{elem.value.heading}}</h3>
-    <div style="cursor: pointer;" onclick="window.open('{{elem.value.map_link}}', '_blank').focus();">
-    {% if elem.value.address_line_1 or elem.value.address_line_2 or elem.value.address_line_3 or elem.value.address_line_4 or elem.value.post_code %}
-        <address style="font-style: normal;">
-            {% if elem.value.address_line_1 %}
-                {{elem.value.address_line_1}} <br/>
+    <div {% if elem.value.section_id %} id="{{elem.value.section_id}}" {% endif %}>
+        <h3>{{elem.value.heading}}</h3>
+        <div style="cursor: pointer;" onclick="window.open('{{elem.value.map_link}}', '_blank').focus();">
+            {% if elem.value.address_line_1 or elem.value.address_line_2 or elem.value.address_line_3 or elem.value.address_line_4 or elem.value.post_code %}
+                <address style="font-style: normal;">
+                    {% if elem.value.address_line_1 %}
+                        {{elem.value.address_line_1}} <br/>
+                    {% endif %}
+                    {% if elem.value.address_line_2 %}
+                        {{elem.value.address_line_2}} <br/>
+                    {% endif %}
+                    {% if elem.value.address_line_3 %}
+                        {{elem.value.address_line_3}} <br/>
+                    {% endif %}
+                    {% if elem.value.address_line_4 %}
+                        {{elem.value.address_line_4}} <br/>
+                    {% endif %}
+                    {% if elem.value.post_code %}
+                        {{elem.value.post_code}} <br/>
+                    {% endif %}
+                </address>
             {% endif %}
-            {% if elem.value.address_line_2 %}
-                {{elem.value.address_line_2}} <br/>
-            {% endif %}
-            {% if elem.value.address_line_3 %}
-                {{elem.value.address_line_3}} <br/>
-            {% endif %}
-            {% if elem.value.address_line_4 %}
-                {{elem.value.address_line_4}} <br/>
-            {% endif %}
-            {% if elem.value.post_code %}
-                {{elem.value.post_code}} <br/>
-            {% endif %}
-
-    </address>
-    {% endif %}
-</div>
-    {% if elem.value.international_code %}
-        <div><a href="tel:{{elem.value.international_code}}{{elem.value.telephone}}">Tel: {{elem.value.international_code}} {{elem.value.telephone}}</a></div>
-    {% endif %}
-    {% if elem.value.alt_international_code and elem.value.alt_telephone%}
-        <div><a href="tel:{{elem.value.alt_international_code}}{{elem.value.alt_telephone}}">Alt tel: {{elem.value.alt_international_code}} {{elem.value.alt_telephone}}</a></div>
-    {% endif %}
-    {% if elem.value.fax_number %}
-    <p>Fax: {{elem.value.fax_number}}</p>
-    {% endif %}
-    <div class="rich-text">
-        {{elem.value.email}}
+        </div>
+        {% if elem.value.international_code %}
+            <div><a href="tel:{{elem.value.international_code}}{{elem.value.telephone}}">Tel: {{elem.value.international_code}} {{elem.value.telephone}}</a></div>
+        {% endif %}
+        {% if elem.value.alt_international_code and elem.value.alt_telephone%}
+            <div><a href="tel:{{elem.value.alt_international_code}}{{elem.value.alt_telephone}}">Alt tel: {{elem.value.alt_international_code}} {{elem.value.alt_telephone}}</a></div>
+        {% endif %}
+        {% if elem.value.fax_number %}
+        <p>Fax: {{elem.value.fax_number}}</p>
+        {% endif %}
+        <div class="rich-text">
+            {{elem.value.email}}
+        </div>
+        {% check_page_type page.content_type 'embassy index page' as EmbassyIndexPage %}
+        {% if EmbassyIndexPage and elem.value.mission_website %}
+        <div class="rich-text">
+            {{elem.value.mission_website}}
+        </div>
+        {% endif %}
     </div>
-    {% check_page_type page.content_type 'embassy index page' as EmbassyIndexPage %}
-    {% if EmbassyIndexPage and elem.value.mission_website %}
-    <div class="rich-text">
-        {{elem.value.mission_website}}
-    </div>
-    {% endif %}
 {% endfor %}
-</div>
+
 </div>
