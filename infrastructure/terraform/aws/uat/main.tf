@@ -1582,7 +1582,7 @@ resource "aws_cloudwatch_metric_alarm" "expired_certificates" {
   }
 }
 
-resource "aws_acm_certificate" "uat.ireland.ie" {
+resource "aws_acm_certificate" "dns_check_uat_ireland_ie" {
   domain_name       = "uat.ireland.ie"
   validation_method = "DNS"
   tags = {
