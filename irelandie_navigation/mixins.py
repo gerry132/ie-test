@@ -19,6 +19,9 @@ class SocialMediaFieldsMixin(models.Model):
     instagram_user = models.CharField(
         max_length=255, blank=True, help_text="Your Instagram username."
     )
+    weibo_user = models.CharField(
+        max_length=255, blank=True, help_text="Your Weibo username."
+    )
 
     class Meta:
         abstract = True

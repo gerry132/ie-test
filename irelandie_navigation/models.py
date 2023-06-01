@@ -354,6 +354,7 @@ class CustomFooter(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
         FieldPanel("youtube_user"),
         FieldPanel("linkedin_profile"),
         FieldPanel("instagram_user"),
+        FieldPanel("weibo_user"),
         FieldPanel("navigation"),
         FieldPanel("links"),
         FieldPanel('tags'),

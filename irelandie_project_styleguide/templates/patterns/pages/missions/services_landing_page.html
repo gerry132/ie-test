@@ -5,7 +5,9 @@
 
 {% block content %}
  <!-- Main -->
-
+    <div class="notice-bar notice-bar-services">
+            {% include_block page.notice_bar_services %}
+    </div>
     {% if page.generic_hero %}
         {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
     {% endif %}

@@ -632,6 +632,15 @@ class ServicesLandingPage(BasePage):
         min_num=0,
         max_num=1,
     )
+    notice_bar_services = StreamField(
+        [
+            ("noticebar", NoticeBarWithMessageLink()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
 
     rich_text = StreamField(
         [
@@ -679,6 +688,7 @@ class ServicesLandingPage(BasePage):
 
     content_panels = BasePage.content_panels + [
         FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
+        FieldPanel("notice_bar_services", heading="Noticebar settings"),
         FieldPanel("rich_text", heading="Advanced Richtext", permission="access_admin"),
         FieldPanel("body", permission="access_admin"),
         FieldPanel("additional_rich_text", heading="Advanced Richtext", permission="access_admin"),
