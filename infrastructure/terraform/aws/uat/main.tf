@@ -1593,41 +1593,43 @@ resource "aws_acm_certificate" "dns_check_uat_ireland_ie" {
 ### Create SNS topics - OGCIO may then add emails and phone numbers to these topics
 
 # high priority SNS topic
-resource "aws_sns_topic" "high_priority_alert" {
-  name = "high_priority_alert"
-}
+# resource "aws_sns_topic" "high_priority_alert" {
+#  name = "high_priority_alert"
+#}
 
 # low priority SNS topic
-resource "aws_sns_topic" "low_priority_alert" {
-  name = "low_priority_alert"
-}
+#resource "aws_sns_topic" "low_priority_alert" {
+#  name = "low_priority_alert"
+#}
 
 ### Eventbridge rule - high_priority_alert
 #resource "aws_cloudwatch_event_rule" "high_priority_alert" {
-  name        = "high_priority_alert"
-  description = "Uses pattern matching of Cloudwatch events to trigger events"
-  event_pattern = jsonencode({
-    source      = ["aws.cloudwatch"]
-    detail_type = ["CloudWatch Alarm State Change"]
-    detail      = {
-      state = ["ALARM"]
-    }
-    resources   = [
-      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:uat-db-postgres-free-space-alarm",
-      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:rds-cpu-utilization-alarm",
-      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:ecs-cpu-utilization-alarm",
-      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:ecs-memory-utilization-alarm",
-      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:expiration_of_certificate_uat.ireland.ie"
-    ]
-  })
+#  name        = "high_priority_alert"
+#  description = "Uses pattern matching of Cloudwatch events to trigger events"
+#  event_pattern = jsonencode({
+#    source      = ["aws.cloudwatch"]
+#    detail_type = ["CloudWatch Alarm State Change"]
+#    detail      = {
+#      state = ["ALARM"]
+#    }
+#    resources   = [
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:uat-db-postgres-free-space-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:rds-cpu-utilization-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:ecs-cpu-utilization-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:ecs-memory-utilization-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:expiration_of_certificate_uat.ireland.ie"
+#    ]
+ # })
+
 
   # SNS target for notifications
   ###  Error: Unsupported block type 'target' below ###  to be fixed gjdarcy 01/06/23
 
-  target {
-    arn = aws_sns_topic.high_priority_alert.arn
-    id  = "high_priority_alert"
-  }
+
+  #target {
+  #  arn = aws_sns_topic.high_priority_alert.arn
+  #  id  = "high_priority_alert"
+  #}
 #}
 
 #resource "aws_sns_topic_subscription" "high_priority_alert" {
