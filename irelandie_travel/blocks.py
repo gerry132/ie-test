@@ -2,12 +2,9 @@ from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_utils.blocks import AdvancedRichTextBlock, LinkButtonBlock, ImageChooserBlock
 from wagtail import blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
-from django.db import models
 
 
 from irelandie_utils.constants import TravelCautionLevel, TravelRegions
-
-
 
 
 class AlteredAvancedRichTextBlock(AdvancedRichTextBlock):
