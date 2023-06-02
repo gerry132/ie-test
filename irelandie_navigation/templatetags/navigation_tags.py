@@ -269,6 +269,7 @@ def custom_footer_settings(context, page):
         youtube_user = custom_footer.youtube_user or footer_social_media.youtube_user
         linkedin_profile = custom_footer.linkedin_profile or footer_social_media.linkedin_profile
         instagram_user = custom_footer.instagram_user or footer_social_media.instagram_user
+        weibo_user = custom_footer.weibo_user
         show_social_media = any(
             [
                 twitter_handle,
@@ -276,6 +277,7 @@ def custom_footer_settings(context, page):
                 youtube_user,
                 linkedin_profile,
                 instagram_user,
+                weibo_user,
             ]
         )
         navigation = custom_footer.navigation
@@ -292,6 +294,7 @@ def custom_footer_settings(context, page):
         youtube_user = footer_navigation.youtube_user or footer_social_media.youtube_user
         linkedin_profile = footer_navigation.linkedin_profile or footer_social_media.linkedin_profile
         instagram_user = footer_navigation.instagram_user or footer_social_media.instagram_user
+        weibo_user = None
         link_url = None
         link_page = None
         show_social_media = any(
@@ -321,6 +324,7 @@ def custom_footer_settings(context, page):
         "youtube_user": youtube_user,
         "linkedin_profile": linkedin_profile,
         "instagram_user": instagram_user,
+        "weibo_user": weibo_user,
         "show_social_media": show_social_media,
         "navigation": navigation,
         "links": links,

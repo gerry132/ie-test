@@ -1,0 +1,92 @@
+    .accordion_embassy{
+        display: flex;
+        gap: 40px;
+        max-width: 780px;
+        @media only screen and (max-width: 599px) {
+            gap: 10px;
+        }
+    }
+    .embassy_accordion__icon{
+        width: 12px;
+        height: 12px;
+        transition: fill .25s ease-out;
+        fill: #fff;
+    }
+    .embassy_accordion__title {
+    font-size: 22px;
+    line-height: 26px;
+    letter-spacing: -1.35px;
+    margin: 0;
+    padding: 0 20px;
+    font-weight: 400;
+    }
+
+    .embassy_accordion__container {
+        width: 100%;
+        min-width: 230px;
+    }
+    .embassy_accordion__button {
+        padding : 10px;
+        background-color: transparent;
+        border: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: color .2s ease;
+        text-decoration: none;
+        width: 100%;
+    }
+    .embassy_accordion__button:hover {
+    cursor: pointer;
+    }
+    .embassy_accordion__btn_content{
+        width: 26px;
+        height: 26px;
+        padding:7px;
+        border: none;
+        border-radius: 60%;
+        cursor: pointer;
+        background: #a39062;
+        flex-shrink: 0;
+        align-self: center;
+        margin-right: 30px;
+    }
+
+    .embassy_accordions__title {
+        color: #000000;
+        font-size: 48px;
+        line-height: 58px;
+        font-weight: 700;
+        max-width: 790px;
+        width: 50px;
+    }
+
+    .a-z-listing__filter__label__text{
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24px;
+        padding-bottom: 10px;
+
+        color: #000000;
+    }
+    .input__label__text{
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 24px;
+
+        color: #000000;
+    }
+    @media screen and (min-width: 599px){
+    .a-z-listing__filter__input{
+        width: 50%;
+        }
+    }
+    .a-z-listing__filter__input{
+        background: #EDECE5;
+        border: none;
+    }
+    .a-z__item--hidden__text{
+        display: none;
+    }

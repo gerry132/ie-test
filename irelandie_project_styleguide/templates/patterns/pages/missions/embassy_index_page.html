@@ -1,0 +1,53 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load static navigation_tags util_tags i18n %}
+
+
+{% block content %}
+{% block main %}
+<div class="section section--padding section--white" id="main-header">
+    <div class="wrapper wrapper--large wrapper--padding">
+        <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+        {% if page.subtitle %}
+        <div class="travel_country_subtitle">
+            {% for s in page.subtitle %}
+            {% if s.block_type == 'embassy_snippet' %}
+            {% include "patterns/snippets/advancedrichtextsnippet.html" with object=s.value %}
+            {% else %}
+            {% include_block s %}
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="a-z-listing__filter__label__text">Type country name:</div>
+        <input id="myInput" class="a-z-listing__filter__input" type="text">
+        <div class="a-z-listing__filters__clear-all">
+            <a class="input__label__text">
+                <svg style="margin: 10px 5px;" width="15" height="17" viewBox="0 0 15 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.7404 0.396471C13.2286 -0.132152 14.0201 -0.132162 14.5083 0.396471C14.9964 0.925094 14.9964 1.78217 14.5083 2.3108L9.20495 8.05377L14.5083 13.7968C14.9964 14.3254 14.9964 15.1825 14.5083 15.7111C14.0201 16.2398 13.2286 16.2398 12.7404 15.7111L7.43715 9.96814L2.13389 15.7111C1.64573 16.2397 0.85427 16.2397 0.36612 15.7111C-0.12204 15.1825 -0.12204 14.3253 0.36612 13.7968L5.66935 8.05377L0.36612 2.31085C-0.12203 1.78222 -0.12203 0.925147 0.36612 0.396514C0.85428 -0.132109 1.64573 -0.132109 2.13389 0.396514L7.43715 6.13951L12.7404 0.396471Z" fill="#FF0000"/>
+                </svg>
+                Clear filter</a>
+        </div>
+        <div class="section section--padding ">
+            <div class="wrapper wrapper--large travel-toc-table" style="padding: 20px 0 0 20px;">
+                <div class="a-z-listing__filter__label__text">Jump to:</div>
+                <div style="display: flex;gap: 10px;flex-wrap: wrap;padding-right: 20px; ">
+                    {% for block in page.body %}
+                    <div class="toc-contents-number"><a href="#{{ block.value.title }}"><h2 class="toc-contents">
+                        {{block.value.title}}</h2></a></div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="section section--padding ">
+                {% include_block page.body %}
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}
+{% endblock %}
