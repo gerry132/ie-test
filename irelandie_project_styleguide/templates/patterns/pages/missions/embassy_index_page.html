@@ -32,7 +32,7 @@
         <div class="section section--padding ">
             <div class="wrapper wrapper--large travel-toc-table" style="padding: 20px 0 0 20px;">
                 <div class="a-z-listing__filter__label__text">Jump to:</div>
-                <div style="display: flex; gap: 10px; ">
+                <div style="display: flex;gap: 10px;flex-wrap: wrap;padding-right: 20px; ">
                     {% for block in page.body %}
                     <div class="toc-contents-number"><a href="#{{ block.value.title }}"><h2 class="toc-contents">
                         {{block.value.title}}</h2></a></div>
