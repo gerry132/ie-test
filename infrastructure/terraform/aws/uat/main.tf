@@ -1621,8 +1621,10 @@ resource "aws_acm_certificate" "dns_check_uat_ireland_ie" {
 #    ]
  # })
 
+
   # SNS target for notifications
   ###  Error: Unsupported block type 'target' below ###  to be fixed gjdarcy 01/06/23
+
 
   #target {
   #  arn = aws_sns_topic.high_priority_alert.arn
