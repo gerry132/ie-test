@@ -5,7 +5,6 @@
 .grey--snippet {
     margin-bottom: 33px !important;
 }
-
 .travel-warning--contain {
     @media only screen and (max-width: 599px){
         padding: 20px;
@@ -81,5 +80,137 @@
 .travel-warning--contain .link-button__title, .travel-landing--summary{
     font-size: 20px;
     line-height: 24px;
+}
+
+.travel-landing--summary{
+    color: #292929;
+}
+
+.a-z-listing__alphabet {
+    padding-left: 26px;
+    padding-top: 1px;
+    width: 1240px;
+    height: 117px;
+    left: 122px;
+    background-color: rgba(0, 77, 70, 0.1);
+
+    @include media-query(v-small) {
+        width: 100%;
+    }
+    @include media-query(small) {
+        width: 100%;
+    }
+}
+
+
+.a-z-listing__alphabet_letters {
+    padding-left: 0;
+    list-style: none;
+    margin-left: -5px;
+    margin-bottom: 0;
+}
+.a-z-listing__alphabet_letters > li {
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.search-bar--travel-index {
+    height: 39px;
+    background: #EDECE5;
+    @include media-query(large) {
+        width: 603px !important;
+    }
+    @include media-query(v-small) {
+        width: 100%;
+    }
+    @include media-query(small) {
+        width: 100%;
+    }
+}
+
+.form--heading {
+    font-family: Lato;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0px;
+    text-align: left;
+}
+
+.form--input {
+    height: 39px;
+    left: 118px;
+    border-radius: 0px;
+    background: #EDECE5;
+    @include media-query(large) {
+        width: 603px !important;
+    }
+    @include media-query(v-small) {
+        width: 100%;
+    }
+    @include media-query(small) {
+        width: 100%;
+    }
+}
+
+.form--elem {
+    padding-bottom: 48px;
+}
+
+.travel-index-letter {
+    font-weight: 400;
+    font-size: 2.25rem;
+    margin-bottom: 12px;
+    margin-bottom: 0.75rem;
+    color: #565656
+}
+
+.country-listing {
+    color: #323232;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 32px;
+}
+
+.form-clear {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.form--contain {
+    padding-top: 26px;
+    display: flex;
+}
+
+.vector--container {
+    padding: 5px;
+}
+
+.container--quick--link {
+    display: grid;
+    padding-bottom: 48px;
+}
+
+.container--quick--link--box {
+    width: 136px;
+    height: 147px;
+    background: #EDECE5;
+    margin-right: 11px;
+}
+
+.quick--link--text {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #004D44;
 }
 
