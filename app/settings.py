@@ -34,6 +34,9 @@ DEBUG = os.environ.get("DEBUG", "0") in TRUE
 
 ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
+# to disable the check
+DATA_UPLOAD_MAX_NUMBER_FIELDS = None
+
 # Application definition
 
 INSTALLED_APPS = [
