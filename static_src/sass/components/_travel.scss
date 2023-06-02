@@ -90,7 +90,7 @@
     padding-left: 26px;
     padding-top: 1px;
     width: 1240px;
-    height: 117px;
+    min-height: 117px;
     left: 122px;
     background-color: rgba(0, 77, 70, 0.1);
 
@@ -115,6 +115,7 @@
     padding-right: 5px;
     text-decoration: underline;
     text-underline-offset: 2px;
+    font-size: 20px;
 }
 
 .search-bar--travel-index {
