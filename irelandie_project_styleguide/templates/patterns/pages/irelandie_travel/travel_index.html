@@ -20,13 +20,13 @@
 <div class="section section--padding section--white">
     <div class="wrapper wrapper--large wrapper--padding content--padding">
         {% include "patterns/pages/irelandie_travel/molecules/quicklinks.html" with page=page %}
-        {% include "patterns/pages/irelandie_travel/molecules/search_forms.html" with travel_pages=travel_pages %}
         <div class="form--contain" onclick="clearAllFilters()">
             <div class="vector--container">
                 <div class="close_vector"></div>
             </div>
             <div class="filter-text"><h3 class="form-clear">Clear all filters</h3></div>
         </div>
+        {% include "patterns/pages/irelandie_travel/molecules/search_forms.html" with travel_pages=travel_pages %}
     </div>
 </div>
 <div class="alpha_container article-cards featured-blocks featured-blocks--three--travel">
