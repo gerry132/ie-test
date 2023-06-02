@@ -1,0 +1,274 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags %}
+{% load static navigation_tags util_tags %}
+{% block content %}
+
+
+{% block main %}
+<div class="section section--padding section--white" id="main-header" style="padding-bottom: 0px;">
+    <div class="wrapper wrapper--large wrapper--padding content--padding">
+        <div class="intro--toc">
+            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+            {% if page.subtitle %}
+                <p class="intro__description">{{ page.subtitle|richtext }}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<style>
+.a-z-listing__alphabet {
+    padding-left: 26px;
+    padding-top: 1px;
+    width: 1240px;
+    height: 117px;
+    left: 122px;
+    background-color: rgba(0, 77, 70, 0.1);
+}
+
+
+.a-z-listing__alphabet_letters {
+    padding-left: 0;
+    list-style: none;
+    margin-left: -5px;
+    margin-bottom: 0;
+}
+.a-z-listing__alphabet_letters > li {
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.search-bar--travel-index {
+    width: 603px;
+    height: 39px;
+    background: #EDECE5;
+}
+
+.form--heading {
+    font-family: Lato;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0px;
+    text-align: left;
+}
+
+.form--input {
+    height: 39px;
+    width: 603px;
+    left: 118px;
+    border-radius: 0px;
+    background: #EDECE5;
+}
+
+.form--elem {
+    padding-bottom: 48px;
+}
+
+.travel-index-letter {
+    font-weight: 400;
+    font-size: 2.25rem;
+    margin-bottom: 12px;
+    margin-bottom: 0.75rem;
+    color: #565656
+}
+
+.country-listing {
+    color: #323232;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 32px;
+}
+
+.form-clear {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.form--contain {
+    padding-top: 26px;
+    display: flex;
+}
+
+.vector--container {
+    padding: 5px;
+}
+
+.container--quick--link {
+    display: grid;
+    padding-bottom: 48px;
+}
+
+.container--quick--link--box {
+    width: 136px;
+    height: 147px;
+    background: #EDECE5;
+    margin-right: 11px;
+}
+
+.quick--link--text {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #004D44;
+}
+
+</style>
+
+<div class="section section--padding section--white">
+    <div class="wrapper wrapper--large wrapper--padding content--padding">
+        {% include "patterns/pages/irelandie_travel/molecules/quicklinks.html" with page=page %}
+        <div class="form--elem">
+        <h2 class="form--heading">Choose country:</h2>
+        <select class="search-bar--travel-index" onchange="location = this.value; ">
+            <option value="" name="popular_page" selected disabled hidden>-- Choose country --</option>
+            {% for key, value in travel_pages.items %}
+                      {% for p in value %}
+                        <option value="{{p.url}}">{{p}}</option>
+                
+                        {% endfor %}
+                {% endfor %}
+            </select>
+            </div>
+            <div class="form--elem">
+            <h2 class="form--heading">Type country name:</h2>
+            
+            <input class="form--input" type="text" id="cname" name="cname">
+        </div>
+        <div class="form--elem">
+            <h2 class="form--heading">Choose region:</h2>
+            <select class="search-bar--travel-index" id="region-selector">
+                <option value="All" name="popular_page" selected>All</option>
+                            <option value="Asia and Oceania">Asia and Oceania</option>
+                            <option value="Caribbean">Caribbean</option>
+                            <option value="Europe">Europe</option>
+                            <option value="Middle East and North Africa">Middle East and North Africa</option>
+                            <option value="North and Central America">North and Central America</option>
+                            <option value="South America">South America</option>
+                            <option value="Sub-Saharan Africa">Sub-Saharan Africa</option>
+                </select>
+                </div>
+        <div class="a-z-listing__alphabet">
+            <p><span class="a-z-listing__filter__label__text">Jump to</span></p>
+            <ul class="a-z-listing__alphabet_letters">
+                <li class="a-z-listing__alphabet_letter"><a href="#A">A</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="B">B</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="C">C</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="D">D</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="E">E</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="F">F</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="G">G</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="H">H</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="I">I</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="J">J</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="K">K</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="L">L</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="M">M</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="N">N</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="O">O</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="P">P</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="Q">Q</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="R">R</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="S">S</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="T">T</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="U">U</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="V">V</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="W">W</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="X">X</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="Y">Y</a></li>
+                <li class="a-z-listing__alphabet_letter"><a href="Z">Z</a></li>
+            </ul>
+        </div>
+        <div class="form--contain" onclick="clearAllFilters()">
+            <div class="vector--container">
+                <div class="close_vector"></div>
+            </div>
+            <div class="filter-text"><h3 class="form-clear">Clear all filters</h3></div>
+        </div>
+    </div>
+</div>
+<div class="alpha_container article-cards featured-blocks featured-blocks--three--travel">
+    {% for letter, value in travel_pages.items %}
+    <div class="card__image-container--travel">
+        <h3 id="{{letter}}" class="travel-index-letter">{{letter}}</h3>
+        <ul>
+            {% for v in value %}
+                {% get_page_region v as region %}
+                <a href="{{v.url}}"><li class="country-listing" region="{{region}}" id="{{v}}">{{ v }}</li></a>
+            {% endfor %}
+        </ul> 
+    </div>
+    {% endfor %} 
+</div>
+
+<div class="section section--padding section--white">
+    <div class="wrapper wrapper--large wrapper--padding content--padding"> 
+        {% for b in page.body %}
+                <div class="{% if b.value.apply_color %}travel-wrapper--grey{% endif %} grey--snippet">
+                    <div class="travel-warning--contain">
+
+                        {% for val in b.value.travel %}
+                            {% if val.block_type == 'travel_snippet' %}
+                                {% include  "patterns/snippets/travel_snippet.html" with object=b.value %}
+                            {% else %}
+                                {{val}}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script>
+const collection = document.getElementsByClassName("country-listing");
+const source = document.getElementById('cname');
+const selectOptions = document.getElementById('region-selector');
+
+let countryArray = [];
+
+function clearAllFilters() {
+    source.value = '';
+    selectOptions.value = 'All';
+    inputHandler();
+}
+
+const inputHandler = function() {
+    let region = selectOptions.value.toUpperCase();
+    let targetText = source.value;
+    for(let x = 0; x < collection.length; x++) {
+        console.log(targetText);
+        if(
+            (!collection[x].id.toUpperCase().includes(targetText.toUpperCase())&& targetText != '') || 
+            (region !== collection[x].getAttribute('region').toUpperCase() && region !== 'ALL')
+        ) {
+
+            collection[x].style.display = 'none';
+        } else {
+            collection[x].style.display = 'block';
+        }
+    }
+}
+
+
+for (let x = 0; x < collection.length; x++) {
+    countryArray.push(collection[x].id);
+}
+
+
+source.addEventListener('input', inputHandler);
+selectOptions.addEventListener('change', inputHandler);
+</script>
+<!-- USER FILTERS -->
+
+<!-- A-Z COMPONENT -->
+{% endblock %}

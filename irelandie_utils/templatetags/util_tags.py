@@ -263,3 +263,14 @@ def get_travel_warning_by_locale(warning, locale):
     if res:
         res = res.group(0).strip(r'<d>|</d>')
         return warning_map[res][str(locale)]
+
+
+@register.simple_tag
+def get_page_region(page):
+    return page.region.raw_data[0]['value']['region']
+
+
+@register.simple_tag
+def printer(a):
+    for p in a:
+        print(p.block_type)

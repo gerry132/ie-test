@@ -39,7 +39,15 @@
             height: 200px;
         }
     }
+    &__image-travel {
+        height: auto;
+        overflow: hidden;
+        position: relative;
 
+        @include media-query(medium) {
+            height: auto;
+        }
+    }
     &__image {
         position: relative;
         object-fit: cover;

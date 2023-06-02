@@ -1,6 +1,8 @@
 from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_utils.blocks import AdvancedRichTextBlock, LinkButtonBlock, ImageChooserBlock
 from wagtail import blocks
+from wagtail.snippets.blocks import SnippetChooserBlock
+
 
 from irelandie_utils.constants import TravelCautionLevel, TravelRegions
 
@@ -40,3 +42,13 @@ class TravelRegionBlock(blocks.StructBlock):
         choices=TravelRegions.choices,
         default=TravelRegions.ASIA_AND_OCEANIA,
     )
+
+
+class TravelIndexOuterBlock(blocks.StreamBlock):
+    rich_text = AdvancedRichTextBlock()
+    travel_snippet = SnippetChooserBlock(target_model="utils.TravelSnippet")
+
+
+class TravelIndexOuterBlockBool(blocks.StructBlock):
+    travel = TravelIndexOuterBlock()
+    apply_color = blocks.BooleanBlock(required=False)
