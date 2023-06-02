@@ -23,6 +23,7 @@
 
     .embassy_accordion__container {
         width: 100%;
+        min-width: 230px;
     }
     .embassy_accordion__button {
         padding : 10px;
@@ -57,6 +58,7 @@
         line-height: 58px;
         font-weight: 700;
         max-width: 790px;
+        width: 50px;
     }
 
     .a-z-listing__filter__label__text{
