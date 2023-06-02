@@ -146,7 +146,7 @@ class TravelIndexPage(BasePage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        travel_pages = TravelCountryPage.objects.all().order_by('title')
+        travel_pages = TravelCountryPage.objects.filter(locale=self.locale).live().order_by('title')
         alpha_map = {
             'A': [], 'B': [], 'C': [],
             'D': [], 'E': [], 'F': [],
