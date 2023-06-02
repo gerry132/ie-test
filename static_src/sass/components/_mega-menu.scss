@@ -1,6 +1,7 @@
 
 .mega_menu:hover .primary-nav__link, .mega_menu__subtitle {
     color: #000000;
+    font-size: 24px;
 }
 
 .grid_item:hover {
@@ -16,6 +17,7 @@
     text-decoration-thickness: 4px;
     text-decoration-style: solid;
     font-weight: 700;
+    font-size: 24px;
 }
 
 .mega_menu_dropdown-content {
@@ -117,4 +119,13 @@ margin: 0;
 .col_items {
   width:100%;
   flex-shrink: 1;
+}
+.mega_menu_rich-text--summary{
+    color: #292929;
+    font-size: 16px;
+    line-height: 140%;
+}
+.mega_menu_rich-text--heading{
+    font-size: 20px;
+    line-height: 140%;
 }

@@ -12,6 +12,7 @@ import MultimediaToggle from './components/multimedia-toggle';
 
 /* feature:use_frontend_component_accordion */
 import Accordion from './components/accordion';
+import EmbassyTextFilter from './components/embassy_text_filter';
 /* endfeature */
 /* feature:use_frontend_component_carousel */
 import Carousel from './components/carousel';
@@ -72,6 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
     /* feature:use_frontend_component_accordion */
     for (const accordion of document.querySelectorAll(Accordion.selector())) {
         new Accordion(accordion);
+    }
+    for (const embassy_text_filter of document.querySelectorAll(EmbassyTextFilter.selector())) {
+        new EmbassyTextFilter(embassy_text_filter);
     }
     for (const mega_menu of document.querySelectorAll(MegaMenu.selector())) {
         new MegaMenu(mega_menu);

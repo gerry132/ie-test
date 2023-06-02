@@ -20,19 +20,19 @@
     {% if block.block_type == 'advanced_rich_text' %}
     <div class="rich_text_mega_menu rich-text" {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
         {% if block.value.heading %}
-        <h2 class="travel-landing--story__heading heading--2" style="margin-bottom: 0;">{{ block.value.heading }}</h2>
+        <h2 class="mega_menu_rich-text--heading heading--2" style="margin-bottom: 0;">{{ block.value.heading }}</h2>
         {% endif %}
         {% if block.value.rich_text %}
-        <div class="travel-landing--summary"> {{ block.value.rich_text }}</div>
+        <div class="mega_menu_rich-text--summary"> {{ block.value.rich_text }}</div>
         {% endif %}
         {% if block.value.button_link %}
         <div class="wrapper wrapper--large">
             {% for button in block.value.button_link %}
             {% if button.value.page %}
-            <a class="travel-landing--summary button_text" href="{{ button.value.page.url }}">
+            <a class="mega_menu_rich-text--summary button_text" href="{{ button.value.page.url }}">
                 {{ button.value.message }}</a>
             {% else %}
-            <a class="travel-landing--summary button_text" href="{{ button.value.url }}">
+            <a class="mega_menu_rich-text--summary button_text" href="{{ button.value.url }}">
                 {{ button.value.message }}</a>
             {% endif %}
             {% endfor %}

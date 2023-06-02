@@ -16,21 +16,39 @@ class MegaMenu {
         this.image_caption = this.accordion.querySelector('.image-block__caption');
         this.tallest = 0;
         this.tallest_richtext = 0;
+        window.addEventListener('click', (event) =>  {
+            if (event.target != this.accordion) {
+              this.close_all_dropdowns();
+            }
+          });
         this.bindEvents();
+    }
+    close_all_dropdowns(){
+        var questions = document.querySelectorAll(
+            '[data-mega-menu-question]',
+        );
+        var openMenus = document.querySelectorAll('.mega_menu.is-open');
+        openMenus.forEach(openMenu => {
+          openMenu.classList.remove('is-open');
+        });
+
+        var answers = document.querySelectorAll('[data-mega-menu-answer]');
+        questions.forEach(question => {
+            question.setAttribute('aria-expanded', 'false');
+        });
+        answers.forEach(answer => {
+          answer.setAttribute('aria-hidden', 'true');
+        });
     }
 
     bindEvents() {
         this.question.addEventListener('click', (e) => {
+
+            let open = !this.accordion.classList.contains('is-open');
             e.preventDefault();
-            let open = this.accordion.classList.contains('is-open');
-            this.accordion.classList.toggle('is-open');
-
-            if (open) {
-                this.question.setAttribute('aria-expanded', 'false');
-                this.answer.setAttribute('aria-hidden', 'true');
-                open = false;
-
-            } else {
+                this.close_all_dropdowns();
+                if(open){
+                this.accordion.classList.add('is-open');
                 this.question.setAttribute('aria-expanded', 'true');
                 this.answer.setAttribute('aria-hidden', 'false');
                 open = true;
@@ -68,9 +86,11 @@ class MegaMenu {
                             this.image_Height[i].style.height = 20+this.tallest+this.tallest_richtext+'px';
                         }
                     }
-                }
+                   }
+                e.stopPropagation();
         });
     }
+
 }
 
 export default MegaMenu;

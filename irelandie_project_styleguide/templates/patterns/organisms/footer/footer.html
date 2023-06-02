@@ -33,7 +33,7 @@
             {% endif %}
             </a>
 
-            {% if custom_footer.youtube_user or custom_footer.linkedin_profile or custom_footer.facebook_app_id or custom_footer.twitter_handle or custom_footer.instagram_user%}
+            {% if custom_footer.youtube_user or custom_footer.linkedin_profile or custom_footer.facebook_app_id or custom_footer.twitter_handle or custom_footer.instagram_user or custom_footer.weibo_user %}
             <div class="footer__social-links">
                 <p class="footer__heading">{% trans 'Follow us' %}</p>
 
@@ -64,6 +64,12 @@
                 {% if custom_footer.instagram_user %}
                     <a href="https://instagram.com/{{ custom_footer.instagram_user }}" class="footer__social-link" aria-label="{% trans 'Find us on Instagram' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="instagram" classname="footer__social-icon" %}
+                    </a>
+                {% endif %}
+
+                {% if custom_footer.weibo_user %}
+                    <a href="https://www.weibo.com/{{ custom_footer.weibo_user }}" class="footer__social-link" aria-label="{% trans 'Find us on Weibo' %}">
+                        {% include "patterns/atoms/icons/icon.html" with name="weibo" classname="footer__social-icon" %}
                     </a>
                 {% endif %}
             </div>
