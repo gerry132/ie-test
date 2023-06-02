@@ -1,0 +1,61 @@
+<div class="form--elem">
+    <h2 class="form--heading">Choose country:</h2>
+    <select class="search-bar--travel-index" onchange="location = this.value; ">
+        <option value="" name="popular_page" selected disabled hidden>-- Choose country --</option>
+        {% for key, value in travel_pages.items %}
+                  {% for p in value %}
+                    <option value="{{p.url}}">{{p}}</option>
+            
+                    {% endfor %}
+            {% endfor %}
+        </select>
+        </div>
+        <div class="form--elem">
+        <h2 class="form--heading">Type country name:</h2>
+        
+        <input class="form--input" type="text" id="cname" name="cname">
+    </div>
+    <div class="form--elem">
+        <h2 class="form--heading">Choose region:</h2>
+        <select class="search-bar--travel-index" id="region-selector">
+            <option value="All" name="popular_page" selected>All</option>
+                        <option value="Asia and Oceania">Asia and Oceania</option>
+                        <option value="Caribbean">Caribbean</option>
+                        <option value="Europe">Europe</option>
+                        <option value="Middle East and North Africa">Middle East and North Africa</option>
+                        <option value="North and Central America">North and Central America</option>
+                        <option value="South America">South America</option>
+                        <option value="Sub-Saharan Africa">Sub-Saharan Africa</option>
+            </select>
+            </div>
+    <div class="a-z-listing__alphabet">
+        <p><span class="a-z-listing__filter__label__text">Jump to</span></p>
+        <ul class="a-z-listing__alphabet_letters">
+            <li class="a-z-listing__alphabet_letter"><a href="#A">A</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="B">B</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="C">C</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="D">D</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="E">E</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="F">F</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="G">G</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="H">H</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="I">I</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="J">J</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="K">K</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="L">L</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="M">M</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="N">N</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="O">O</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="P">P</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="Q">Q</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="R">R</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="S">S</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="T">T</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="U">U</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="V">V</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="W">W</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="X">X</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="Y">Y</a></li>
+            <li class="a-z-listing__alphabet_letter"><a href="Z">Z</a></li>
+        </ul>
+    </div>
