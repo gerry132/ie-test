@@ -252,16 +252,16 @@ def get_travel_warning_by_locale(warning, locale):
             "English": "Avoid Non-Essential Travel",
             "Irish": "Seachain Taisteal Neamhriachtanach",
         },
-        "do not travel/ná taistil', 'do not travel/ná taistil": {
+        "do not travel/ná taistil": {
             "English": "Do Not Travel",
             "Irish": "Ná Taistil",
-        }
+        },
     }
 
     reg = re.compile(r'<dd>.*<\/dd>')
     res = re.search(reg, str(warning))
     if res:
-        res = res.group(0).strip(r'<d>|</d>')
+        res = re.sub(r'<.*?>', '', res.group(0))
         return warning_map[res][str(locale)]
 
 

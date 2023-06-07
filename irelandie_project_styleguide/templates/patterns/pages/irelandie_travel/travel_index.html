@@ -40,18 +40,17 @@
 <div class="section section--padding section--white">
     <div class="wrapper wrapper--large wrapper--padding content--padding">
         {% for b in page.body %}
+        {% for val in b.value.travel %}
                 <div class="{% if b.value.apply_color %}travel-wrapper--grey{% endif %} grey--snippet">
                     <div class="travel-warning--contain">
-
-                        {% for val in b.value.travel %}
                             {% if val.block_type == 'travel_snippet' %}
-                                {% include  "patterns/snippets/travel_snippet.html" with object=b.value %}
+                                {% include  "patterns/snippets/travel_snippet.html" with object=val.value %}
                             {% else %}
                                 {{val}}
                             {% endif %}
-                        {% endfor %}
                     </div>
-        </div>
+                </div>
+        {% endfor %}
         {% endfor %}
     </div>
 </div>
