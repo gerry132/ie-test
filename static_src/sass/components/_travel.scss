@@ -4,6 +4,9 @@
 
 .grey--snippet {
     margin-bottom: 33px !important;
+    @media only screen and (max-width: 1024px){
+        margin-right: 20px;
+    }
 }
 .travel-warning--contain {
     @media only screen and (max-width: 599px){
@@ -94,10 +97,10 @@
     background-color: rgba(0, 77, 70, 0.1);
 
     @include media-query(v-small) {
-        width: 97%;
+        width: 100%;
     }
     @include media-query(small) {
-        width: 97%;
+        width: 100%;
     }
 }
 
@@ -168,14 +171,14 @@
     font-size: 2.25rem;
     margin-bottom: 12px;
     margin-bottom: 0.75rem;
-    color: #565656
+    color: #292929;
 }
 
 .country-listing {
-    color: #323232;
     font-size: 20px;
     font-weight: 600;
     line-height: 32px;
+    color: #004d44;
 }
 
 .form-clear {
@@ -184,11 +187,13 @@
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
+    color: #292929;
 }
 
 .form--contain {
     padding-bottom: 26px;
     display: flex;
+    cursor: pointer;
 }
 
 .vector--container {
@@ -196,8 +201,13 @@
 }
 
 .container--quick--link {
-    display: grid;
+    display: flex;
     padding-bottom: 30px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
 }
 
 .container--quick--link--box {
@@ -205,6 +215,9 @@
     height: 147px;
     background: #EDECE5;
     margin-right: 11px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .quick--link--text {

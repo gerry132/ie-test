@@ -21,16 +21,18 @@ class TravelRegions(models.TextChoices):
     MIDDLE_EAST_AND_NORTH_AFRICA = 'middle east and north africa', 'Middle East and North Africa'
     NORTH_AND_CENTRAL_AMERICA = 'north and central america', 'North and Central America'
     SOUTH_AMERICA = 'south america', 'South America'
-    SUB_SAHARAN_AFRICA = 'sub-suharan africa', 'Sub-Saharan Africa'
+    SUB_SAHARAN_AFRICA = 'sub-saharan africa', 'Sub-Saharan Africa'
     CARIBBEAN = 'caribbean', 'Caribbean'
     EUROPE = 'europe', 'Europe'
 
 
 class TravelCautionLevel(models.TextChoices):
     NORMAL_PRECAUTIONS = 'normal precautions/' \
-        'gnáth-réamhchúraimí', 'normal precautions/Gnáth-réamhchúraimí'
+                         'gnáth-réamhchúraimí', 'normal precautions/Gnáth-réamhchúraimí'
     HIGH_DEGREE_OF_CAUTION = 'high degree of caution/' \
-        'bí an-chúramach', 'High Degree of Caution/Bí an-chúramach'
-    AVOID_NON_ESSENTIAL_TRAVEL = 'avoid non-essential travel/seachain' \
-        'taisteal neamhriachtanach', 'Avoid Non-Essential Travel/Seachain Taisteal Neamhriachtanach'
-    DO_NOT_TRAVEL = 'do not travel/ná taistil', 'do not travel/Ná Taistil'
+                             'bí an-chúramach', 'High Degree of Caution/Bí an-chúramach'
+    AVOID_NON_ESSENTIAL_TRAVEL = 'avoid non-essential travel/' \
+                                 'seachain taisteal neamhriachtanach', 'Avoid Non-Essential Travel/Seachain Taisteal ' \
+                                                                       'Neamhriachtanach'
+    DO_NOT_TRAVEL = 'do not travel/' \
+                    'ná taistil', 'do not travel/Ná Taistil'

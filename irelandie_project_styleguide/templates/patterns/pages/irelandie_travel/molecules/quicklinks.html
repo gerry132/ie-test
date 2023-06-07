@@ -1,12 +1,10 @@
-<div class="container--quick--link featured-blocks--eight">
+<div class="container--quick--link">
     {% for link in page.quick_links %}
     <a href="{{link.value.url}}">
         <div class="container--quick--link--box">
-            <div style="text-align: center; padding-top: 40%;">
                 <h3 class="quick--link--text">
                     {{link.value}}
                 </h3>
-            </div>
     </div>
     </a>
     {% endfor %}
