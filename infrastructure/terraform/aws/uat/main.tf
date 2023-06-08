@@ -1512,8 +1512,8 @@ resource "aws_cloudwatch_metric_alarm" "elasticache_memory_alarm" {
   namespace           = "AWS/ElastiCache"
   period              = "300"
   statistic           = "Average"
-  threshold           = "70"
-  alarm_description   = "Alarm when memory utilization exceeds 70% for 3 consecutive periods"
+  threshold           = "8200000"
+  alarm_description   = "Alarm when memory utilization exceeds 8MB for 3 consecutive periods"
   dimensions = {
     CacheClusterId = "redis-uat"
   }
