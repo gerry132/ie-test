@@ -109,17 +109,9 @@
                     grid-row-gap: 0px;
                     grid-row-gap: 20px;
                     }
-                @include media-query(small) {
-                    display: grid;
-                    grid-template-columns: repeat(2,41%);
-                    grid-template-rows: 1fr;
-                    grid-column-gap: 6px;
-                    grid-row-gap: 0px;
-                    grid-row-gap: 20px;
-                    }
                 @include media-query(medium) {
                     display: grid;
-                    grid-template-columns: repeat(8, 1fr);
+                    grid-template-columns: repeat(4, 1fr);
                     grid-template-rows: 1fr;
                     grid-column-gap: 6px;
                     grid-row-gap: 0px;
@@ -128,7 +120,7 @@
 
                 @include media-query(large){
                     display: grid;
-                    grid-template-columns: repeat(16, 1fr);
+                    grid-template-columns: repeat(8, 1fr);
                     grid-template-rows: 1fr;
                     grid-column-gap: 6px;
                     grid-row-gap: 0px;
