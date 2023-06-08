@@ -71,12 +71,28 @@
 
         color: #000000;
     }
+    .travel-buttons-country {
+    display: table;
+    position: relative;
+    width: 100%;
+    float: left;
+    padding: 0.2rem;
+    margin: 0.2rem;
+    min-height: 147px;
+    text-align: center;
+    background: #edece5;
+    }
     .input__label__text{
         font-weight: 400;
         font-size: 20px;
         line-height: 24px;
 
         color: #000000;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        padding-top: 10px;
     }
     @media screen and (min-width: 599px){
     .a-z-listing__filter__input{
