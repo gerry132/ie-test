@@ -25,12 +25,12 @@
 <div class="wrapper wrapper--large" style="padding-top: 20px;">
 <div class="alpha_container article-cards featured-blocks featured-blocks--three--travel" style="justify-content: unset; ">
     {% for letter, value in travel_pages.items %}
-    <div class="card__image-container--travel">
+    <div class="card__image-container--travel" id="{{letter}}-contain">
         <h3 id="{{letter}}" class="travel-index-letter">{{letter}}</h3>
-        <ul>
+        <ul id="ul-{{letter}}">
             {% for v in value %}
                 {% get_page_region v as region %}
-                <a href="{{v.url}}"><li class="country-listing" region="{{region}}" id="{{v}}">{{ v }}</li></a>
+                <a href="{{v.url}}"><li style="display: block;" class="country-listing" region="{{region}}" id="{{v}}">{{ v }}</li></a>
             {% endfor %}
         </ul>
     </div>
@@ -68,11 +68,42 @@ function clearAllFilters() {
     inputHandler();
 }
 
+function showHideColumnsInit() {
+    const alpha = 'ABCDEFGHIJKILMNOPQRSTUVWXYZ';
+
+    for (let i = 0; i < alpha.length; i++) {
+        let elem = document.getElementById('ul-' + alpha[i]);
+        let elems = elem.getElementsByTagName('li');
+        let container = document.getElementById(alpha[i] + '-contain');
+        if (elems.length == 0) {
+            container.style.display = 'none';
+        }
+    }
+}
+
+function showHideByFilter() {
+    const alpha = 'ABCDEFGHIJKILMNOPQRSTUVWXYZ';
+    for (let i = 0; i < alpha.length; i++) {
+        let elem = document.getElementById('ul-' + alpha[i]);
+        let elems = elem.getElementsByTagName('li');
+        let container = document.getElementById(alpha[i] + '-contain');
+        let show = false;
+
+        for (let p = 0; p < elems.length; p++) {
+            if(elems[p].style.display === 'block') {
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+            }
+        }
+
+    }
+}
+
 const inputHandler = function() {
     let region = selectOptions.value.toUpperCase();
     let targetText = source.value;
     for(let x = 0; x < collection.length; x++) {
-        console.log(targetText);
         if(
             (!collection[x].id.toUpperCase().includes(targetText.toUpperCase())&& targetText != '') ||
             (region !== collection[x].getAttribute('region').toUpperCase() && region !== 'ALL')
@@ -83,6 +114,7 @@ const inputHandler = function() {
             collection[x].style.display = 'block';
         }
     }
+    showHideByFilter();
 }
 
 
@@ -93,6 +125,7 @@ for (let x = 0; x < collection.length; x++) {
 
 source.addEventListener('input', inputHandler);
 selectOptions.addEventListener('change', inputHandler);
+showHideColumnsInit();
 </script>
 <!-- USER FILTERS -->
 
