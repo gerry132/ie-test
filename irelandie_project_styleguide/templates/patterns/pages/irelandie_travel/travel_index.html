@@ -90,11 +90,17 @@ function showHideByFilter() {
         let show = false;
 
         for (let p = 0; p < elems.length; p++) {
+            console.log(elems[p])
             if(elems[p].style.display === 'block') {
                 container.style.display = 'block';
-            } else {
-                container.style.display = 'none';
+                show = true;
             }
+        }
+
+        if (show) {
+            container.style.display = 'block';
+        } else {
+            container.style.display = 'none';
         }
 
     }
@@ -108,7 +114,6 @@ const inputHandler = function() {
             (!collection[x].id.toUpperCase().includes(targetText.toUpperCase())&& targetText != '') ||
             (region !== collection[x].getAttribute('region').toUpperCase() && region !== 'ALL')
         ) {
-
             collection[x].style.display = 'none';
         } else {
             collection[x].style.display = 'block';
