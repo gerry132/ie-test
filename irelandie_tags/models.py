@@ -86,13 +86,7 @@ class TagLandingPage(BasePage):
         context['tag_first'] = tag
         pages = self.get_ancestors()
         context, root_found = get_root_info(context, pages)
-        print("context")
-        print("context")
-        print("context")
-        print(context)
-        print("context")
-        print("context")
-        print("context")
+
         if not root_found:
             f = HomePage.objects.all()[:1].get()
             context['default_image'] = f.default_image
