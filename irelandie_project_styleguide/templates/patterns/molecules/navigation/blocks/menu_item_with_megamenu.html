@@ -1,41 +1,75 @@
-{% load wagtailcore_tags navigation_tags util_tags i18n %}
-<div class="mega_menu" data-mobile-mega-menu>
-<a class="primary-nav__link" href="{{ link_url }}">
-   {{ link_title }}
-{% if link.value.mega_menu %}
-        <span class="mega_menu__icon">
-            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="mega_menu__icon" %}
-        </span>
-{% endif %}
-</a>
-{% if link.value.mega_menu %}
-    {% get_mega_menu_length link.value.mega_menu as length %}
-    <div class="mega_menu-content menu">
-       <div style="padding-left:50px;font-weight: 700;">{{ link_title }}</div>
-        <div class="{% if length == 3 %}mega_menu-content_col3{% elif length <= 6 %}mega_menu-content_col2
-    {% else %}mega_menu-content_col{% endif %}">
-        {% for link in value.mega_menu %}
+{% load wagtailcore_tags wagtailimages_tags navigation_tags util_tags i18n %}
 
-            <a class="{% if length == 3 or length > 6 %}grid_item{% else %}grid_items{% endif %}" href="{{ link.value.page.url }}">
-                  {% if link.value.title %}
-                    {{ link.value.title }}
-                  {% else %}
-                    {{ link.value.page.title }}
-              {% endif %}</a>
-
-
-        {% endfor %}
-    </div>
+{% if value.mega_menu %}
+<div class="{{ nav_type }}__link mega_menu" data-mega-menu data-mobile-mega-menu>
+    <div aria-expanded="false" class="mega_menu_dropbtn" data-mega-menu-question>
+        {{ link_title }}
+        {% if value.mega_menu %}
+        {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="mega_menu__icon" %}
+        {% endif %}
     </div>
 
-    {% endif %}
+    <div aria-hidden="true" class="mega_menu_dropdown-content" data-mega-menu-answer id="myDropdown">
+        <div class="wrapper wrapper--large">
+            <div style="padding: 20px;">
+                <hr style="border: 1px solid #F2F2F2;">
+                {% for link in value.mega_menu %}
+                <h1 class="mega_menu__title">{{ link.value.heading }}</h1>
+                <div class="mega_menu__subtitle">{{ link.value.sub_text }}</div>
+                <div class="col-container">
+                    <div class="col_items">
+                        {% for links in link.value.column_1 %}
+                        {% include_block links with links=links col='col_1' %}
+                        {% endfor %}
+                    </div>
+
+                    <div class="col_items">
+                        {% for links in link.value.column_2 %}
+                        {% include_block links with links=links col='col_2' %}
+                        {% endfor %}
+                    </div>
+                    {% if link.value.column_3 %}
+                    <div class="col_items">
+                        {% for links in link.value.column_3 %}
+                        {% if links.value.mega_menu_links %}
+                        {% include_block links with links=links col='col_3' %}
+                        {% else %}
+                        <figure class="image-block">
+                            {% if links.value.image_alt %}
+                            <div class="{% if links.value.image_credit %}image-block__credit_wrapper{% endif %}">
+                                {% if links.value.image_credit %}
+                                <div class="story__image-credit">{{ links.value.image_credit }}</div>
+                                {% endif %}
+                                {% image links.value.image width-1000 id="image_container" class="image_container" loading="lazy" alt=links.value.image_alt %}
+                            </div>
+                            {% else %}
+                            <div class="{% if links.value.image_credit %}image-block__credit_wrapper{% endif %}">
+                                {% if links.value.image_credit %}
+                                    <span class="story__image-credit">{{ links.value.image_credit }}</span>
+                                {% endif %}
+                                {% image links.value.image width-1000 class="image_container" loading="lazy" alt=links.value.image.alt_default %}
+                            </div>
+                            {% endif %}
+                            {% if links.value.caption %}
+                            <figcaption class="image-block__caption">
+                                {{ links.value.caption }}
+                            </figcaption>
+                            {% endif %}
+                        </figure>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
 
 </div>
-<a class="sub-nav-hidden {{ nav_type }}__link" {% if has_children %}data-open-subnav{% endif %} href="{{ link_url }}" {% if has_children %}aria-haspopup="true" aria-expanded="false"{% endif %}>
+{% else %}
+<a class="{{ nav_type }}__link" data-mobile-mega-menu href="{{ link_url }}">
     {{ link_title }}
-    {% if has_children %}
-        <span class="{{ nav_type }}__icon">
-            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="primary-nav__svg" %}
-        </span>
-    {% endif %}
 </a>
+{% endif %}

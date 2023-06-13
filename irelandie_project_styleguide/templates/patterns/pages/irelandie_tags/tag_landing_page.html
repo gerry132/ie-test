@@ -59,7 +59,8 @@
                             </div>
                             {% else %}
                             <div class="grid-item">
-                                <a class="card" href="{{ card.url }}">
+                                <div class="card">
+                                    <a href="{{ card.url }}">
                                     <div class="card__image-container">
                                         {% if card.hero_image %}
                                             {% if card.alt_text %}
@@ -77,21 +78,45 @@
                                             {% endfor %}
                                         {% endif %}
                                     </div>
+                                        </a>
                                     <div class="card__content">
+                                        <a href="{{ card.url }}">
+                                            <h3 class="tag__card__title">{{ card.title }}</h3>
+                                            <p class="tag__card__summary">{{ card.subtitle }}</p>
+                                        </a>
                                         <ul class="tag__slide">
-                                            <li class="tag__slide-item">{{ tag_first.specific.tag_label }}</li>
+                                            <li class="tag__slide-item"><a href="{{ request.get_full_path }}">{{ tag_first.specific.tag_label }}</a></li>
+                                            {% get_destination_tag_links card.related_destination_tags as tag_destination_links %}
+                                            {% get_category_tag tag_first card.related_tags as tag_category %}
+                                            {% get_category_tag_links tag_first card.related_tags self as tag_category_links %}
                                                 {% if card.related_destination_tags|length >= 2 %}
-                                                    {% for tags in card.related_destination_tags|slice:":2" %}
-                                                        <li class="tag__slide-item">{{ tags.specific.title }}</li>
+                                                    {% for tags_destination, tag_links in tag_destination_links|slice:":2" %}
+                                                       <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
                                                     {% endfor %}
                                                 {% elif card.related_destination_tags|length == 0 and card.related_tags|length >= 3 %}
-                                                    {% get_category_tag tag_first card.related_tags as tag_category %}
-                                                    {% for tags in tag_category %}
-                                                        <li class="tag__slide-item">{{ tags.specific.tag_label }}</li>
-                                                    {% endfor %}
+                                                    {% get_category_tag_no_links tag_category_links tag_category as tag_category_no_link %}
+                                                    {% if tag_category_links|length > 1  %}
+                                                        {% for tags_category, tag_links in tag_category_links|slice:":2" %}
+                                                            <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                                                        {% endfor %}
+                                                    {% elif tag_category_links|length == 1 or tag_category_no_link >= 1 %}
+                                                        {% for tags_category, tag_links in tag_category_links|slice:":1" %}
+                                                            <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                                                        {% endfor %}
+                                                        {% for tags_category in tag_category_no_link|slice:":1" %}
+                                                            <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        {% for tags_category in tag_category_no_link|slice:":2" %}
+                                                            <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                                                        {% endfor %}
+                                                    {% endif %}
                                                 {% else %}
-                                                    {% get_category_tag tag_first card.related_tags as tag_category %}
-                                                    {% if tag_category|length > 1 %}
+                                                    {% if tag_category_links|length >= 1 %}
+                                                        {% for tags_category, tag_links in tag_category_links|slice:":1" %}
+                                                            <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                                                        {% endfor %}
+                                                    {% elif tag_category|length > 1 %}
                                                         {% for tags in tag_category|slice:":1" %}
                                                             <li class="tag__slide-item">{{ tags.specific.tag_label }}</li>
                                                         {% endfor %}
@@ -100,15 +125,13 @@
                                                             <li class="tag__slide-item">{{ tag_category.specific.tag_label }}</li>
                                                         {% endif %}
                                                     {% endif %}
-                                                    {% for tags in card.related_destination_tags|slice:":1" %}
-                                                        <li class="tag__slide-item">{{ tags.specific.title }}</li>
+                                                    {% for tags_destination, tag_links in tag_destination_links|slice:":1" %}
+                                                       <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
                                                     {% endfor %}
                                                 {% endif %}
                                         </ul>
-                                        <h3 class="tag__card__title">{{ card.title }}</h3>
-                                        <p class="tag__card__summary">{{ card.subtitle }}</p>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                             {% endif %}
                         {% endfor %}
@@ -116,7 +139,8 @@
                         <div class="grid_masonry">
                             {% for card in stories %}
                                 <div class="grid-item">
-                                    <a class="card" href="{{ card.url }}">
+                                    <div class="card">
+                                        <a href="{{ card.url }}">
                                         <div class="card__image-container">
                                             {% if card.hero_image %}
                                                 {% if card.alt_text %}
@@ -134,21 +158,45 @@
                                                 {% endfor %}
                                             {% endif %}
                                         </div>
+                                            </a>
                                         <div class="card__content">
+                                            <a href="{{ card.url }}">
+                                                <h3 class="tag__card__title">{{ card.title }}</h3>
+                                                <p class="tag__card__summary">{{ card.subtitle }}</p>
+                                            </a>
                                             <ul class="tag__slide">
-                                                <li class="tag__slide-item">{{ tag_first.specific.tag_label }}</li>
+                                            <li class="tag__slide-item"><a href="{{ request.get_full_path }}">{{ tag_first.specific.tag_label }}</a></li>
+                                            {% get_destination_tag_links card.related_destination_tags as tag_destination_links %}
+                                            {% get_category_tag tag_first card.related_tags as tag_category %}
+                                            {% get_category_tag_links tag_first card.related_tags self as tag_category_links %}
                                                 {% if card.related_destination_tags|length >= 2 %}
-                                                    {% for tags in card.related_destination_tags|slice:":2" %}
-                                                        <li class="tag__slide-item">{{ tags.specific.title }}</li>
+                                                    {% for tags_destination, tag_links in tag_destination_links|slice:":2" %}
+                                                       <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
                                                     {% endfor %}
                                                 {% elif card.related_destination_tags|length == 0 and card.related_tags|length >= 3 %}
-                                                    {% get_category_tag tag_first card.related_tags as tag_category %}
-                                                    {% for tags in tag_category %}
-                                                        <li class="tag__slide-item">{{ tags.specific.tag_label }}</li>
-                                                    {% endfor %}
+                                                    {% get_category_tag_no_links tag_category_links tag_category as tag_category_no_link %}
+                                                    {% if tag_category_links|length > 1  %}
+                                                        {% for tags_category, tag_links in tag_category_links|slice:":2" %}
+                                                            <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                                                        {% endfor %}
+                                                    {% elif tag_category_links|length == 1 or tag_category_no_link >= 1 %}
+                                                        {% for tags_category, tag_links in tag_category_links|slice:":1" %}
+                                                            <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                                                        {% endfor %}
+                                                        {% for tags_category in tag_category_no_link|slice:":1" %}
+                                                            <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        {% for tags_category in tag_category_no_link|slice:":2" %}
+                                                            <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                                                        {% endfor %}
+                                                    {% endif %}
                                                 {% else %}
-                                                    {% get_category_tag tag_first card.related_tags as tag_category %}
-                                                    {% if tag_category|length > 1 %}
+                                                    {% if tag_category_links|length >= 1 %}
+                                                        {% for tags_category, tag_links in tag_category_links|slice:":1" %}
+                                                            <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                                                        {% endfor %}
+                                                    {% elif tag_category|length > 1 %}
                                                         {% for tags in tag_category|slice:":1" %}
                                                             <li class="tag__slide-item">{{ tags.specific.tag_label }}</li>
                                                         {% endfor %}
@@ -157,15 +205,13 @@
                                                             <li class="tag__slide-item">{{ tag_category.specific.tag_label }}</li>
                                                         {% endif %}
                                                     {% endif %}
-                                                    {% for tags in card.related_destination_tags|slice:":1" %}
-                                                        <li class="tag__slide-item">{{ tags.specific.title }}</li>
+                                                    {% for tags_destination, tag_links in tag_destination_links|slice:":1" %}
+                                                       <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
                                                     {% endfor %}
                                                 {% endif %}
-                                            </ul>
-                                            <h3 class="tag__card__title">{{ card.title }}</h3>
-                                            <p class="tag__card__summary">{{ card.subtitle }}</p>
+                                        </ul>
                                         </div>
-                                    </a>
+                                    </div>
                                 </div>
                             {% endfor %}
                         </div>

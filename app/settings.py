@@ -34,6 +34,9 @@ DEBUG = os.environ.get("DEBUG", "0") in TRUE
 
 ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
+# to disable the check
+DATA_UPLOAD_MAX_NUMBER_FIELDS = None
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -66,6 +69,7 @@ INSTALLED_APPS = [
     "irelandie_story",
     "irelandie_site_information",
     "irelandie_tags",
+    "irelandie_travel",
     "irelandie_forms",
     #
     "wagtail_localize",
@@ -107,6 +111,7 @@ INSTALLED_APPS = [
     "irelandie_project_styleguide.apps.ProjectStyleguideConfig",
     "rest_framework",
     "corsheaders",
+    "wagtail.contrib.simple_translation",
 ]
 
 if DEBUG_TOOLBAR is True:
@@ -147,8 +152,13 @@ TEMPLATES = [
             os.path.join(BASE_DIR, "templates"),
             "templates",
         ],
-        "APP_DIRS": True,
         "OPTIONS": {
+            'loaders': [
+                ('django.template.loaders.cached.Loader', [
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+                ]),
+            ],
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",

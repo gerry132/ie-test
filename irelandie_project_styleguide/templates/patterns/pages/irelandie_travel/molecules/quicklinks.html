@@ -1,0 +1,9 @@
+<div class="container--quick--link featured-blocks--eight ">
+    {% for link in page.quick_links %}
+    <a href="{{link.value.url}}" class="travel-buttons-country">
+                <h3 class="quick--link--text">
+                    {{link.value}}
+                </h3>
+    </a>
+    {% endfor %}
+</div>

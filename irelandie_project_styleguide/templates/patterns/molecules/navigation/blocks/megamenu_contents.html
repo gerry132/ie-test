@@ -1,0 +1,49 @@
+{% load wagtailcore_tags wagtailimages_tags navigation_tags util_tags i18n %}
+
+<ul class="mega_menu_nav" style="{% if col == 'col_2' or col == 'col_3' %}border-left: 1px solid #292929; padding-left: 50px;{% endif %}">
+    {% for block in links.value.mega_menu_links %}
+    <li class="mega_menu_nav__item">
+        <a class="grid_item"
+           href="{% if block.value.page %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}">
+            {% if block.value.title %}
+            {{ block.value.title }}
+            {% else %}
+            {{ block.value.page.title }}
+            {% endif %}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+<div class="rich-text_blocks">
+    {% for block in links.value.richtext_and_images %}
+    {% if block.block_type == 'advanced_rich_text' %}
+    <div class="rich_text_mega_menu rich-text" {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
+        {% if block.value.heading %}
+        <h2 class="mega_menu_rich-text--heading heading--2" style="margin-bottom: 0;">{{ block.value.heading }}</h2>
+        {% endif %}
+        {% if block.value.rich_text %}
+        <div class="mega_menu_rich-text--summary"> {{ block.value.rich_text }}</div>
+        {% endif %}
+        {% if block.value.button_link %}
+        <div class="wrapper wrapper--large">
+            {% for button in block.value.button_link %}
+            {% if button.value.page %}
+            <a class="mega_menu_rich-text--summary button_text" href="{{ button.value.page.url }}">
+                {{ button.value.message }}</a>
+            {% else %}
+            <a class="mega_menu_rich-text--summary button_text" href="{{ button.value.url }}">
+                {{ button.value.message }}</a>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="rich_text_image">
+        <a href="{% if block.value.page %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}">
+            {% image block.value.image fill-400x200 alt=block.value.image_alt class="image_withlinks" %}</a>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>

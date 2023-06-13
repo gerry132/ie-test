@@ -1,0 +1,131 @@
+
+.mega_menu:hover .primary-nav__link, .mega_menu__subtitle {
+    color: #000000;
+    font-size: 24px;
+}
+
+.grid_item:hover {
+
+  text-decoration: underline;
+  text-decoration-color: #292929;
+}
+
+.grid_item {
+  color: #000000;
+  text-decoration: underline;
+  text-decoration-color: #90FF5C;
+    text-decoration-thickness: 4px;
+    text-decoration-style: solid;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.mega_menu_dropdown-content {
+    display: none;
+    cursor: default;
+    background-image: linear-gradient(#fefefd , #f5f5f3);
+    position: absolute;
+    padding: 30px 0;
+    max-width: 1280px;
+    margin: auto;
+    left: 0;
+    right: 0;
+    margin-top: 30px;
+    }
+.mega_menu_dropbtn {
+  cursor: pointer;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mega_menu.is-open .mega_menu_dropdown-content {
+    display: block;
+}
+.mega_menu__title{
+font-size: 48px;
+line-height: 140%;
+color: #004D44;
+margin: 0;
+}
+.mega_menu.is-open .mega_menu__icon {
+    transform: rotate(180deg);
+}
+.mega_menu.is-hidden {
+   display: none;
+}
+.primary-nav__link.is-hidden {
+   display: none;
+}
+.mega_menu__icon{
+    stroke: #90FF5C;
+    color: #fff;
+}
+.rich_text_mega_menu {
+    background: #FFFFFF;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.rich-text_blocks{
+        margin-top: 20px;
+}
+.rich_text_image{
+            margin-left: unset;
+            margin-right: auto;
+            min-width: 400px;
+}
+.custom-nav__link.mega_menu.is-hidden{
+    @media only screen and (min-width: 1024px){
+        display: inline-block;
+    }
+
+}
+.custom-nav__link.mega_menu.is-open{
+    @media only screen and (min-width: 1023px){
+        display: inline-block;
+        color: unset;
+        border-bottom: 1px solid #fff;
+    }
+}
+.primary-nav__link.mega_menu.is-open{
+    @media only screen and (min-width: 1023px){
+        border-bottom: 1px solid #fff;
+    }
+}
+.mega_menu_nav {
+        display: block;
+    width: 100%;
+    margin-right: 15px;
+    }
+.mega_menu_nav__item{
+    width: 100%;
+    text-align: left;
+    font-weight: 400;
+    }
+
+.col-container {
+  display:flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+.col_items {
+  width:100%;
+  flex-shrink: 1;
+}
+.mega_menu_rich-text--summary{
+    color: #292929;
+    font-size: 16px;
+    line-height: 140%;
+}
+.mega_menu_rich-text--heading{
+    font-size: 20px;
+    line-height: 140%;
+}

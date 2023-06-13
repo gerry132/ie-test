@@ -40,6 +40,7 @@
             padding: 20px;
             width: 80%;
             min-height: 150px;
+            max-height: unset;
         }
 
 
@@ -338,3 +339,8 @@
 }
 
 
+.close_vector {
+    background-image: url('../images/cssBackgrounds/close_vector.png');
+    width: 15px;
+    height: 16px;
+}

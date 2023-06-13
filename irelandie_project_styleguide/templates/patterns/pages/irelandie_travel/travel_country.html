@@ -1,0 +1,57 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load static navigation_tags util_tags %}
+
+{% has_root_override page header=True as override %}
+
+{% block content %}
+    {% block main %}
+            <div id="main-header" class="section section--padding section--white">
+                        <div class="wrapper wrapper--large wrapper--padding">
+                                <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                            {% if page.subtitle %}
+                            <div class="travel_country_subtitle">
+                                    {% for s in page.subtitle %}
+                                        {% if s.block_type == 'travel_snippet' %}
+                                            {% include  "patterns/snippets/travel_snippet.html" with object=s.value %}
+                                        {% else %}
+                                            {% include_block s %}
+                                        {% endif %}
+                                    {% endfor %}
+                            </div>
+                            {% endif %}
+                            <div class="update-text">Still current at: {% todays_date %}</div>
+                            <div class="update-text" style="margin: 0 0 1rem;">Updated on: {% format_date page.last_published_at %}</div>
+                        </div>
+                        {% include "patterns/pages/irelandie_travel/greyed_alert.html" with page=page heading="Security Status" %}
+            </div>
+            {% include "patterns/pages/irelandie_travel/toc.html" with page=page %}
+        <div class="section section--padding">
+            <div class="wrapper wrapper--large wrapper--padding">
+                {% include_block page.body %}
+            </div>
+        </div>
+        <div class="section">
+                {% for b in page.outer_body %}
+                <div class="wrapper wrapper--large wrapper--padding">
+                        <div class="travel-wrapper--grey grey--snippet">
+                            <div class="travel-warning--contain">
+                                {% if b.block_type == 'travel_snippet' %}
+                                    {% include  "patterns/snippets/travel_snippet.html" with object=b.value %}
+                                {% else %}
+                                    {{b.value}}
+                                {% endif %}
+                            </div>
+                        </div>
+                </div>
+
+                {% endfor %}
+        </div>
+    {% endblock %}
+
+<script>
+    document.getElementById('question-1').setAttribute("aria-expanded", true);
+    document.querySelector("[accordian='1']").classList.add('is-open');
+</script>
+{% endblock %}

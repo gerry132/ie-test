@@ -1,0 +1,137 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags %}
+{% load static navigation_tags util_tags %}
+{% block content %}
+
+
+{% block main %}
+<div class="section section--padding section--white" id="main-header" style="padding-bottom: 0px;">
+    <div class="wrapper wrapper--large wrapper--padding ">
+            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+            {% if page.subtitle %}
+                <div class="travel_country_subtitle">{{ page.subtitle }}</div>
+            {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+
+    <div class="wrapper wrapper--large wrapper--padding">
+        {% include "patterns/pages/irelandie_travel/molecules/quicklinks.html" with page=page %}
+    </div>
+    <div class="wrapper wrapper--large wrapper--padding content--padding">
+        {% include "patterns/pages/irelandie_travel/molecules/search_forms.html" with travel_pages=travel_pages %}
+    </div>
+<div class="wrapper wrapper--large" style="padding-top: 20px;">
+<div class="alpha_container article-cards featured-blocks featured-blocks--three--travel" style="justify-content: unset; ">
+    {% for letter, value in travel_pages.items %}
+    <div class="card__image-container--travel" id="{{letter}}-contain">
+        <h3 id="{{letter}}" class="travel-index-letter">{{letter}}</h3>
+        <ul id="ul-{{letter}}">
+            {% for v in value %}
+                {% get_page_region v as region %}
+                <a href="{{v.url}}"><li style="display: block;" class="country-listing" region="{{region}}" id="{{v}}">{{ v }}</li></a>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+</div>
+</div>
+
+<div class="section section--padding section--white">
+    <div class="wrapper wrapper--large wrapper--padding content--padding">
+        {% for b in page.body %}
+        {% for val in b.value.travel %}
+                <div class="{% if b.value.apply_color %}travel-wrapper--grey{% endif %} grey--snippet">
+                    <div class="travel-warning--contain">
+                            {% if val.block_type == 'travel_snippet' %}
+                                {% include  "patterns/snippets/travel_snippet.html" with object=val.value %}
+                            {% else %}
+                                {{val}}
+                            {% endif %}
+                    </div>
+                </div>
+        {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+<script>
+const collection = document.getElementsByClassName("country-listing");
+const source = document.getElementById('cname');
+const selectOptions = document.getElementById('region-selector');
+
+let countryArray = [];
+
+function clearAllFilters() {
+    source.value = '';
+    selectOptions.value = 'All';
+    inputHandler();
+}
+
+function showHideColumnsInit() {
+    const alpha = 'ABCDEFGHIJKILMNOPQRSTUVWXYZ';
+
+    for (let i = 0; i < alpha.length; i++) {
+        let elem = document.getElementById('ul-' + alpha[i]);
+        let elems = elem.getElementsByTagName('li');
+        let container = document.getElementById(alpha[i] + '-contain');
+        if (elems.length == 0) {
+            container.style.display = 'none';
+        }
+    }
+}
+
+function showHideByFilter() {
+    const alpha = 'ABCDEFGHIJKILMNOPQRSTUVWXYZ';
+    for (let i = 0; i < alpha.length; i++) {
+        let elem = document.getElementById('ul-' + alpha[i]);
+        let elems = elem.getElementsByTagName('li');
+        let container = document.getElementById(alpha[i] + '-contain');
+        let show = false;
+
+        for (let p = 0; p < elems.length; p++) {
+            if(elems[p].style.display === 'block') {
+                container.style.display = 'block';
+                show = true;
+            }
+        }
+
+        if (show) {
+            container.style.display = 'block';
+        } else {
+            container.style.display = 'none';
+        }
+
+    }
+}
+
+const inputHandler = function() {
+    let region = selectOptions.value.toUpperCase();
+    let targetText = source.value;
+    for(let x = 0; x < collection.length; x++) {
+        if(
+            (!collection[x].id.toUpperCase().includes(targetText.toUpperCase())&& targetText != '') ||
+            (region !== collection[x].getAttribute('region').toUpperCase() && region !== 'ALL')
+        ) {
+            collection[x].style.display = 'none';
+        } else {
+            collection[x].style.display = 'block';
+        }
+    }
+    showHideByFilter();
+}
+
+
+for (let x = 0; x < collection.length; x++) {
+    countryArray.push(collection[x].id);
+}
+
+
+source.addEventListener('input', inputHandler);
+selectOptions.addEventListener('change', inputHandler);
+showHideColumnsInit();
+</script>
+<!-- USER FILTERS -->
+
+<!-- A-Z COMPONENT -->
+{% endblock %}

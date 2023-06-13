@@ -1,8 +1,8 @@
-{% load wagtailcore_tags static %}
+{% load wagtailcore_tags static irelandie_assets_tags %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 <div style="font-size: 20px;">
 {% for elem in object.body %}
-
+<div {% if elem.value.section_id %} id="{{elem.value.section_id}}" {% endif %}>
     <h3>{{elem.value.heading}}</h3>
     <div style="cursor: pointer;" onclick="window.open('{{elem.value.map_link}}', '_blank').focus();">
     {% if elem.value.address_line_1 or elem.value.address_line_2 or elem.value.address_line_3 or elem.value.address_line_4 or elem.value.post_code %}
@@ -34,6 +34,15 @@
     {% if elem.value.fax_number %}
     <p>Fax: {{elem.value.fax_number}}</p>
     {% endif %}
+    <div class="rich-text">
     {{elem.value.email}}
+    </div>
+    {% if elem.value.mission_website %}
+        <div class="rich-text">
+            {{elem.value.mission_website}}
+        </div>
+    {% endif %}
+    </div>
 {% endfor %}
+
 </div>

@@ -774,6 +774,7 @@ class FeaturedArticlesBlock(blocks.StructBlock):
 
 
 class ContactBlock(blocks.StructBlock):
+    section_id = blocks.CharBlock(required=False)
     heading = blocks.CharBlock(max_length=255, required=False)
     address_line_1 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
     address_line_2 = blocks.CharBlock(max_length=255, blank=True, null=True, required=False)
@@ -809,6 +810,7 @@ class ContactBlock(blocks.StructBlock):
     alt_telephone = blocks.CharBlock(max_length=30, blank=True, required=False)
     fax_number = blocks.CharBlock(max_length=50, blank=True, required=False)
     email = blocks.RichTextBlock(blank=True, required=False)
+    mission_website = blocks.RichTextBlock(blank=True, required=False)
 
 
 class TimelinePhotoBlock(blocks.StructBlock):
@@ -962,6 +964,7 @@ class AccordionBlock(blocks.StructBlock):
                          ),
                         ("additional", blocks.StreamBlock([
                             ("map", MapBlock()),
+                            ("advanced_rich_text", AdvancedRichTextBlock()),
                             ("table", TableBlock(table_options={'renderer': 'html'}, group="table")),
                             ("document", DocumentBlock(required=False)),
                             ("youtube", YoutubeVideoBlock(group="HTML")),
@@ -979,6 +982,54 @@ class AccordionBlock(blocks.StructBlock):
         icon = "collapse-down"
         label = "Accordion"
         template = "patterns/molecules/accordion/accordion.html"
+
+
+class AccordionEmbassyBlock(blocks.StructBlock):
+    title = blocks.CharBlock(required=False)
+    accordions = blocks.StreamBlock(
+        [
+            (
+                "accordion",
+                blocks.StructBlock(
+                    [
+                        ("title", blocks.CharBlock()),
+                        (
+                            "content",
+                            blocks.RichTextBlock(
+                                features=[
+                                    "h1",
+                                    "h2",
+                                    "h3",
+                                    "h4",
+                                    "h5",
+                                    "h6",
+                                    "blockquote",
+                                    "bold",
+                                    "link",
+                                    "document-link",
+                                    "ul",
+                                    "image",
+                                ], required=False,
+                            ),
+                        ),
+                        ("additional", blocks.StreamBlock([
+                            ("map", MapBlock()),
+                            ("advanced_rich_text", AdvancedRichTextBlock()),
+                            ("contact_details",
+                             SnippetChooserBlock(target_model="utils.ContactSnippet")),
+                            ("embassy_snippet", SnippetChooserBlock(target_model="utils.EmbassySnippet"))
+                        ], required=False)
+                         ),
+                    ]
+                ),
+            )
+        ]
+    )
+
+    class Meta:
+        icon = "collapse-down"
+        label = "Accordion"
+        template = "patterns/molecules/accordion/accordion_embassy.html"
 
 
 class FreeFormBlocksBase(blocks.StreamBlock):
@@ -999,48 +1050,6 @@ class FreeFormBlocksBase(blocks.StreamBlock):
 
 
 class RelatedContentBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
-    # icon = blocks.ChoiceBlock(
-    #     choices=(
-    #         ("", "Choose an icon (optional)"),
-    #         ("authentication", "Authentication"),
-    #         ("citizenship", "Citizenship"),
-    #         ("closure-dates", "Closure Dates"),
-    #         ("consular-fees", "Consular Fees"),
-    #         ("contact-phone", "Contact Phone"),
-    #         ("contact-mail", "Contact Mail"),
-    #         ("family", "Family"),
-    #         ("government-building", "Government Building"),
-    #         ("how-we-can-help", "How We Can Help"),
-    #         ("information", "Information"),
-    #         ("invest", "Invest"),
-    #         ("jobs", "Jobs"),
-    #         ("link", "Link"),
-    #         ("live", "Live"),
-    #         ("location", "Location"),
-    #         ("marriage", "Marriage"),
-    #         ("money", "Money"),
-    #         ("new-to", "New To"),
-    #         ("news", "News"),
-    #         ("notice", "Notice"),
-    #         ("opening-hours", "Opening Hours"),
-    #         ("passport", "Passport"),
-    #         ("plane", "Plane"),
-    #         ("services", "Services"),
-    #         ("study", "Study"),
-    #         ("ticket", "Ticket"),
-    #         ("trade", "Trade"),
-    #         ("trade2", "Trade2"),
-    #         ("travel", "Travel"),
-    #         ("visas", "Visas"),
-    #         ("working-holiday", "Working Holiday"),
-    #     ),
-    #     required=False,
-    # )
-    # image = ImageChooserBlock(required=False)
-    # image_alt = blocks.CharBlock(
-    #     required=False,
-    #     help_text=_(ALT_IMAGE),
-    # )
     title = blocks.CharBlock()
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -1355,6 +1364,15 @@ class LinkButtonBlock(blocks.StructBlock):
         return context
 
 
+class LinkButtonsBlock(blocks.StructBlock):
+    link_buttons = blocks.StreamBlock([("link_button", LinkButtonBlock())])
+
+    class Meta:
+        icon = "list-ul"
+        label = "Link Buttons"
+        template = "patterns/molecules/link_button/link_buttons.html"
+
+
 class GenericHeroBlock(blocks.StructBlock):
     hero_image_alignment = blocks.ChoiceBlock(
         required=True,
@@ -1473,7 +1491,8 @@ class FeaturedTaggedStoryBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=True)
     summary = blocks.TextBlock(required=False)
     page = blocks.PageChooserBlock(required=False, page_type=["irelandie_pages.FreeFormPage",
-                                   "irelandie_story.StoryPage", "irelandie_missions.GeneralContentPage"])
+                                                              "irelandie_story.StoryPage",
+                                                              "irelandie_missions.GeneralContentPage"])
     link_text = blocks.CharBlock(
         max_length=32, blank=True, required=False, default="Read Story", help_text='Call To Action Text'
     )
@@ -1481,12 +1500,14 @@ class FeaturedTaggedStoryBlock(blocks.StructBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
         from irelandie_utils.templatetags.util_tags import get_tag_links
+        from irelandie_utils.templatetags.util_tags import get_destination_tag_links
+        destination_tags = value["page"].specific.related_destination_tags
+        context["destination_tag_links"] = get_destination_tag_links(destination_tags)
         tag = value["page"].specific.related_tags
         tagging_links = get_tag_links(tag, value["page"])[0]
         tags_no_links = get_tag_links(tag, value["page"])[1]
         context["tagging_links"] = tagging_links
         context["tags_no_links"] = tags_no_links
-        context["related_destination_tags"] = value["page"].specific.related_destination_tags
         return context
 
     class Meta:
@@ -1499,7 +1520,10 @@ class FeaturedTaggedStoriesBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=False)
     summary = blocks.RichTextBlock(required=False)
 
-    taggedStories = blocks.StreamBlock([("TaggedStories", FeaturedTaggedStoryBlock())])
+    taggedStories = blocks.StreamBlock([
+        ("TaggedStories", FeaturedTaggedStoryBlock()),
+        ("Stats_block", StatTagBlock())
+    ])
 
     class Meta:
         icon = "list-ul"
@@ -1521,7 +1545,7 @@ class FreeFormBlocks(FreeFormBlocksBase):
     Featured_tagged_story = FeaturedTaggedStoriesBlock(group="Module")
     logos = LogoCardsBlock(group="Module")
     link_card = LinkCardsBlock()
-    link_button = LinkButtonBlock()
+    link_button = LinkButtonsBlock()
     link_box = LinkBoxesBlock()
     table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
     advanced_table_block = TypedTableBlock([

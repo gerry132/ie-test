@@ -1,0 +1,68 @@
+{% load util_tags wagtailcore_tags irelandie_assets_tags %}
+<div class="accordions">
+    <div class="wrapper wrapper--large">
+        <div class="accordion_embassy" id="{{ value.title }}">
+            {% if value.title %}
+            <h4 class="heading--2 embassy_accordions__title">
+                {{ value.title }}
+            </h4>
+            {% endif %}
+
+        <div class="embassy_accordion__container">
+            {% for accordion in value.accordions %}
+                <div class="accordion" id="{{ accordion.value.title }}" accordian="{{ forloop.counter }}" data-accordion>
+                    <h2 class="accordion__header">
+                        <div
+                            id="question-{{ forloop.counter }}"
+                            class="embassy_accordion__button"
+                            data-accordion-question
+                            aria-controls="answer-{{ forloop.counter }}"
+                            aria-expanded="false">
+                            <span class="embassy_accordion__title">
+                                {{ accordion.value.title }}
+                            </span>
+                            <button class="embassy_accordion__btn_content ">
+                                <svg class="icon--arrow embassy_accordion__icon accordion__icon" aria-label="expand" aria-hidden="true" focusable="false">
+                                    <use xlink:href="#arrow" href="#arrow"></use>
+                                </svg>
+                            </button>
+
+                        </div>
+                    </h2>
+                    <div
+                        id="answer-{{ forloop.counter }}"
+                        data-accordion-answer
+                        class="accordion__content"
+                        aria-labelledby="question-{{ forloop.counter }}"
+                        aria-hidden="true">
+
+                        <div class="rich-text" style="font-size:20px;">
+                        {{ accordion.value.content }}
+                        </div>
+
+                        {% if accordion.value.additional %}
+                            {% for additional in accordion.value.additional %}
+                                {% if additional.block_type == 'contact_details' %}
+                                    {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=additional.value %}
+
+                                {% elif additional.block_type == 'map' %}
+                                    {% if additional.value.width %}
+                                        {% new_width additional.value.iframe additional.value.width as IFRAME %}
+                                        {{IFRAME|safe}}
+                                    {% else %}
+                                        {{additional.value.iframe}}
+                                    {% endif %}
+                                {% elif additional.block_type == 'embassy_snippet' %}
+                                    {% include "patterns/snippets/advancedrichtextsnippet.html" with object=additional.value %}
+                                {% else %}
+                                    {% include_block additional %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+</div>

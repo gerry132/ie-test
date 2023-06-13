@@ -15,6 +15,7 @@ from irelandie_news.models import NewsPage
 from irelandie_utils import blocks
 from irelandie_utils.utils import get_root_info
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage
+from wagtail.snippets.blocks import SnippetChooserBlock
 
 
 class CountryGroupPageIndex(BasePage):
@@ -184,7 +185,8 @@ class JobContentPage(BasePage):
         MultiFieldPanel(
             [
                 HelpPanel(content='help_text', template='patterns/molecules/streamfield/'
-                          'help_text_scheduled_publishing.html', heading='', classname=''),
+                                                        'help_text_scheduled_publishing.html', heading='',
+                          classname=''),
                 FieldPanel('go_live_at'),
                 FieldPanel('expire_at'),
             ],
@@ -630,6 +632,15 @@ class ServicesLandingPage(BasePage):
         min_num=0,
         max_num=1,
     )
+    notice_bar_services = StreamField(
+        [
+            ("noticebar", NoticeBarWithMessageLink()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
 
     rich_text = StreamField(
         [
@@ -677,6 +688,7 @@ class ServicesLandingPage(BasePage):
 
     content_panels = BasePage.content_panels + [
         FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
+        FieldPanel("notice_bar_services", heading="Noticebar settings"),
         FieldPanel("rich_text", heading="Advanced Richtext", permission="access_admin"),
         FieldPanel("body", permission="access_admin"),
         FieldPanel("additional_rich_text", heading="Advanced Richtext", permission="access_admin"),
@@ -826,6 +838,29 @@ class EmbassyPage(FreeFormPageBase):
         verbose_name = "Embassy Page"
 
 
+class EmbassyIndexPage(BasePage):
+    template = "patterns/pages/missions/embassy_index_page.html"
+    subtitle = StreamField(
+        [
+            ('subtitle', blocks.AdvancedRichTextBlock()),
+            ("embassy_snippet", SnippetChooserBlock(target_model="utils.EmbassySnippet"))
+        ],
+        null=True,
+        blank=False
+    )
+    body = StreamField(
+        [
+         ("accordions", blocks.AccordionEmbassyBlock())],
+        blank=True,
+        null=True,
+    )
+
+    content_panels = BasePage.content_panels + [
+        FieldPanel('subtitle'),
+        FieldPanel('body'),
+    ]
+
+
 class GeneralContentPage(HeroPage):
     template = "patterns/pages/missions/general_content_page.html"
     subtitle = models.TextField(blank=True)
@@ -861,6 +896,9 @@ class GeneralContentPage(HeroPage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         from irelandie_utils.templatetags.util_tags import get_tag_links
+        from irelandie_utils.templatetags.util_tags import get_destination_tag_links
+        destination_tags = self.related_destination_tags
+        context["destination_tag_links"] = get_destination_tag_links(destination_tags)
         tag = self.related_tags
         tagging_links = get_tag_links(tag, self)[0]
         tags_no_links = get_tag_links(tag, self)[1]

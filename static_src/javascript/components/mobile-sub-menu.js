@@ -31,21 +31,30 @@ class MobileSubMenu {
 
     bindEventListeners() {
         // Open submenu
-        this.node.addEventListener('click', (e) => {
+        if (window.innerWidth < 1024){
+            this.node.addEventListener('click', (e) => {
             e.preventDefault();
             this.open();
         });
+
+
         // Click back button to close it
         this.backLink.addEventListener('click', (e) => {
             e.preventDefault();
             this.subnav.classList.remove('is-visible');
             this.node.setAttribute('aria-expanded', 'false');
         });
+        }
     }
 
     open() {
         this.subnav.classList.add('is-visible');
         this.node.setAttribute('aria-expanded', 'true');
+        var header_primary = document.querySelector('.header__menu--primary').offsetHeight;
+        var header_extended = document.querySelector('.header__menu--extended').offsetHeight;
+        var sub_nav_header = this.subnav.offsetHeight;
+        var height_4 = header_primary+header_extended+sub_nav_header;
+        this.subnav.style.height = height_4+'px';
     }
 }
 

@@ -1,0 +1,51 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load static navigation_tags util_tags i18n %}
+
+
+{% block content %}
+{% block main %}
+<div class="section section--padding section--white" id="main-header">
+    <div class="wrapper wrapper--large wrapper--padding">
+        <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+        {% if page.subtitle %}
+        <div class="travel_country_subtitle">
+            {% for s in page.subtitle %}
+            {% if s.block_type == 'embassy_snippet' %}
+            {% include "patterns/snippets/advancedrichtextsnippet.html" with object=s.value %}
+            {% else %}
+            {% include_block s %}
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="a-z-listing__filter__label__text">Type country name:</div>
+        <input id="myInput" class="form--input" type="text">
+        <div class="a-z-listing__filters__clear-all">
+            <a class="input__label__text">
+                <div class="close_vector"></div>
+                Clear filter</a>
+        </div>
+        <div class="section section--padding ">
+            <div class="wrapper wrapper--large travel-toc-table" style="padding: 20px 0 0 20px;">
+                <div class="a-z-listing__filter__label__text">Jump to:</div>
+                <div style="display: flex;gap: 10px;flex-wrap: wrap;padding-right: 20px; ">
+                    {% for block in page.body %}
+                    <div class="toc-contents-number"><a href="#{{ block.value.title }}"><h2 class="toc-contents">
+                        {{block.value.title}}</h2></a></div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="section section--padding ">
+                {% include_block page.body %}
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}
+{% endblock %}

@@ -28,15 +28,15 @@
         {{ value.rich_text }}
     {% endif %}
         {% if value.button_link %}
-        {% for button in value.button_link %}
             <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
-                    {% if button.value.page %}
+                {% for button in value.button_link %}
+                {% if button.value.page %}
                         <a class="button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
                     {% else %}
                         <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
                     {% endif %}
-            </div>
-        {% endfor %}
+                    {% endfor %}
+                </div>
         {% endif %}
     {% endif %}
 </div>

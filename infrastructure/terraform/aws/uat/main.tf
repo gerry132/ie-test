@@ -72,8 +72,12 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.41.35/32", "80.233.33.35/32"]
+      cidr_blocks  = ["80.233.62.212/32", "80.233.54.212/32"]
     },
+    joe_dev = {
+      description = "Joe D - Sidero"
+      cidr_blocks  = ["54.195.145.43/32"]
+    }
   }
 }
 
@@ -1333,3 +1337,351 @@ resource "aws_appautoscaling_policy" "cpu" {
     }
   }
 }
+
+##################################
+# ORIGINAL CODE ENDS - UNTOUCHED #
+##################################
+
+#############################################
+### NEW SIDERO MSP MONITORING CODE BEGINS ###
+#############################################
+
+### INSTRUCTIONS FOR SUBSCRIBING TO MONITORING ALERTS ###
+# This code may be provided to OGCIO teams to add to add monitoring of uat.reland.ie AWS resources for testing prior to production.
+# This will enable monitoring of relevant AWS resources related to www.uat.ireland.ie and will create two new SNS Topics which can be subscribed to.
+# SNS Topic Names:
+# "high_priority_alert"
+# "low_priority_alert"
+# You can find SNS from your AWS Console by searching for "SNS"
+# How to subscribe email addresses to be notified of alarms:
+# https://docs.aws.amazon.com/sns/latest/dg/sns-email-notifications.html
+# How to add phone numbers for notification via text message:
+# https://docs.aws.amazon.com/sns/latest/dg/sms_manage.html
+
+# The following resources will be deployed and configured:
+#	• New Cloudwatch alarms:
+#		○ RDS Postgres DB - CPU and Free Strorage Space
+#		○ ECS Cluster - CPU and RAM high > 5 mins
+#		○ App ELBs - >10 target connection errors within 15 minutes
+#		○ ElastiCache - CPU and RAM
+#		○ S3 buckets - 4xx and 5xx errors
+#	• Two new Eventbridge rules which pattern match for the new Cloudwatch alarms and trigger the appropriate Lamda function
+#	• Eventbridge rule for certs in AWS Certificate Manager that are nearing expiry
+#########################################################################################################################################
+
+### Cloudwatch HIGH - Postgres DB free space - uat-db-postgres ###
+resource "aws_cloudwatch_metric_alarm" "rds_free_space_alarm" {
+  alarm_name          = "uat-db-postgres-free-space-alarm"
+  comparison_operator = "LessThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "FreeStorageSpace"
+  namespace           = "AWS/RDS"
+  period              = "300"
+  statistic           = "Minimum"
+  threshold           = "21474836480"
+  alarm_description   = "Alarm when free storage space falls below 20GB"
+  dimensions = {
+    # Actual DB instance required name below
+    DBInstanceIdentifier = "uat-db-postgres"
+  }
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+### Cloudwatch HIGH - Postgres DB CPU Utlization - uat-db-postgres ###
+resource "aws_cloudwatch_metric_alarm" "rds_cpu_alarm" {
+  alarm_name          = "rds-cpu-utilization-alarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "3"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/RDS"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = "80"
+  alarm_description   = "Alarm when CPU utilization exceeds 80%"
+  dimensions = {
+    DBInstanceIdentifier = "uat-db-postgres"
+  }
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+### Cloudwatch HIGH - ECS CPU Utilization - UAT-ireland-ie
+resource "aws_cloudwatch_metric_alarm" "ecs_cpu_alarm" {
+  alarm_name          = "ecs-cpu-utilization-alarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "3"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/ECS"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = "90"
+  alarm_description   = "Alarm when CPU utilization exceeds 90%"
+  dimensions = {
+    ClusterName = "uat-g2g"
+  }
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+### Cloudwatch HIGH - ECS Memory Utilization - UAT-ireland-ie
+resource "aws_cloudwatch_metric_alarm" "ecs_memory_alarm" {
+  alarm_name          = "ecs-memory-utilization-alarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "3"
+  metric_name         = "MemoryUtilization"
+  namespace           = "AWS/ECS"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = "90"
+  alarm_description   = "Alarm when memory utilization exceeds 90%"
+  dimensions = {
+    ClusterName = "uat-g2g"
+  }
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+### Cloudwatch LOW - Application ELB Connection Errors - UAT
+resource "aws_cloudwatch_metric_alarm" "alb_connection_errors" {
+  alarm_name          = "elb-UAT-alb-connection-errors-alarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "3"
+  metric_name         = "HTTPCode_Target_5XX_Count"
+  namespace           = "AWS/ApplicationELB"
+  period              = "300"
+  statistic           = "Sum"
+  threshold           = "10"
+  alarm_description   = "Alarm when the number of HTTP 5XX response codes exceeds 10 for 3 consecutive periods"
+  dimensions = {
+    LoadBalancer = "app/uat-g2g/3e434df452426d2b"
+  }
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+### Cloudwatch LOW - Network ELB Connection Errors - net-lb
+resource "aws_cloudwatch_metric_alarm" "nlb_connection_errors" {
+  alarm_name          = "net-lb-connection-errors-alarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "3"
+  metric_name         = "TCP_Client_Reset_Count"
+  namespace           = "AWS/NetworkELB"
+  period              = "300"
+  statistic           = "Sum"
+  threshold           = "10"
+  alarm_description   = "Alarm when the number of TCP client reset connections exceeds 10 for 3 consecutive periods"
+  dimensions = {
+    LoadBalancer = "/net/net-lb/7a66026594941f75"
+  }
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+### Cloudwatch LOW - Elasticache CPU Utilization - redis-uat
+resource "aws_cloudwatch_metric_alarm" "elasticache_cpu_alarm" {
+  alarm_name          = "elasticache-cpu-alarm"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = "3"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/ElastiCache"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = "80"
+  alarm_description   = "Alarm when CPU utilization exceeds 80% for 3 consecutive periods"
+  dimensions = {
+    CacheClusterId = "redis-uat"
+  }
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+### Cloudwatch LOW - Elasticache Memory Utilization - redis-uat
+resource "aws_cloudwatch_metric_alarm" "elasticache_memory_alarm" {
+  alarm_name          = "elasticache-memory-alarm"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = "3"
+  metric_name         = "BytesUsedForCache"
+  namespace           = "AWS/ElastiCache"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = "8200000"
+  alarm_description   = "Alarm when memory utilization exceeds 8MB for 3 consecutive periods"
+  dimensions = {
+    CacheClusterId = "redis-uat"
+  }
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+# In UAT we need only test one of each S3 Cloudwatch resource
+# We will test for 4xx and 5xx errors on UAT bucket: ireland-ie-infrastructure
+
+### Cloudwatch LOW - S3 4xx_errors - ireland-ie-infrastructure
+resource "aws_cloudwatch_metric_alarm" "s3_4xx_errors" {
+  alarm_name          = "s3-ireland-ie-infrastructure-4xx-errors-alarm"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = "3"
+  metric_name         = "4xxErrorRate"
+  namespace           = "AWS/S3"
+  period              = "300"
+  statistic           = "Sum"
+  threshold           = "10"
+  alarm_description   = "Alarm when 4xx error >10 for 3 consecutive periods"
+  dimensions = {
+    BucketName = "ireland-ie-infrastructure"
+  }
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+### Cloudwatch LOW - S3 5xx_errors - ireland-ie-infrastructure
+resource "aws_cloudwatch_metric_alarm" "s3_5xx_errors" {
+  alarm_name          = "s3-ireland-ie-infrastructure-5xx-errors-alarm"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = "3"
+  metric_name         = "5xxErrorRate"
+  namespace           = "AWS/S3"
+  period              = "300"
+  statistic           = "Sum"
+  threshold           = "10"
+  alarm_description   = "Alarm when 5xx error rate exceeds >10 for 3 consecutive periods"
+  dimensions = {
+    BucketName = "ireland-ie-infrastructure"
+  }
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+### Cloudwatch HIGH - Expiring or Expired certificates - uat.ireland.ie
+resource "aws_cloudwatch_metric_alarm" "expired_certificates" {
+  alarm_name          = "expiration_of_certificate_uat.ireland.ie"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "CertificateExpirationDate"
+  namespace           = "AWS/ACM"
+  period              = "86400"
+  statistic           = "Minimum"
+  threshold           = "0"
+  alarm_description   = "This metric monitor expiring or expired certificates"
+  dimensions = {
+    CertificateArn = "$${aws:acm:eu-west-1:100350071169:certificate/e32fde64-da13-489b-99f7-f50efee99e31}"
+  }
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+resource "aws_acm_certificate" "dns_check_uat_ireland_ie" {
+  domain_name       = "uat.ireland.ie"
+  validation_method = "DNS"
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+
+### Create SNS topics - OGCIO may then add emails and phone numbers to these topics
+
+# high priority SNS topic
+# resource "aws_sns_topic" "high_priority_alert" {
+#  name = "high_priority_alert"
+#}
+
+# low priority SNS topic
+#resource "aws_sns_topic" "low_priority_alert" {
+#  name = "low_priority_alert"
+#}
+
+### Eventbridge rule - high_priority_alert
+#resource "aws_cloudwatch_event_rule" "high_priority_alert" {
+#  name        = "high_priority_alert"
+#  description = "Uses pattern matching of Cloudwatch events to trigger events"
+#  event_pattern = jsonencode({
+#    source      = ["aws.cloudwatch"]
+#    detail_type = ["CloudWatch Alarm State Change"]
+#    detail      = {
+#      state = ["ALARM"]
+#    }
+#    resources   = [
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:uat-db-postgres-free-space-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:rds-cpu-utilization-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:ecs-cpu-utilization-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:ecs-memory-utilization-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:expiration_of_certificate_uat.ireland.ie"
+#    ]
+ # })
+
+
+  # SNS target for notifications
+  ###  Error: Unsupported block type 'target' below ###  to be fixed gjdarcy 01/06/23
+
+
+  #target {
+  #  arn = aws_sns_topic.high_priority_alert.arn
+  #  id  = "high_priority_alert"
+  #}
+#}
+
+#resource "aws_sns_topic_subscription" "high_priority_alert" {
+#  topic_arn = aws_sns_topic.high_priority_alert.arn
+#  protocol  = "sqs"
+#  endpoint  = "arn:aws:cloudwatch:eu-west-1:100350071169:high_priority_alert"
+
+  # Allow the EventBridge rule to publish messages to the SNS topic
+  # source_arn = aws_cloudwatch_event_rule.high_priority_alert.arn
+#}
+
+
+### Eventbridge rule - low_priority_alert
+# resource "aws_cloudwatch_event_rule" "low_priority_alert" {
+ # name        = "low_priority_alert"
+# description = "Uses pattern matching of Cloudwatch events to trigger events"
+#  event_pattern = jsonencode({
+#    source      = ["aws.cloudwatch"]
+#    detail_type = ["CloudWatch Alarm State Change"]
+#    detail      = {
+#      state = ["ALARM"]
+#    }
+#    resources   = [
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:elb-UAT-alb-connection-errors-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:net-lb-connection-errors-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:elasticache-cpu-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:elasticache-memory-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:s3-ireland-ie-infrastructure-5xx-errors-alarm",
+#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:s3-ireland-ie-infrastructure-4xx-errors-alarm"
+ #   ]
+ # })
+
+  # SNS target for notifications
+  #target {
+  #  arn = aws_sns_topic.low_priority_alert.arn
+  #  id  = "low_priority_alert"
+  #}
+#}
+
+#resource "aws_sns_topic_subscription" "low_priority_alert" {
+#  topic_arn = aws_sns_topic.low_priority_alert.arn
+#  protocol  = "sqs"
+#  endpoint  = "arn:aws:cloudwatch:eu-west-1:100350071169:low_priority_alert"
+
+  # Allow the EventBridge rule to publish messages to the SNS topic
+  #  source_arn = aws_cloudwatch_event_rule.low_priority_alert.arn
+#}
+
+# -----------------------------------------------------------------------------
+# Sidero MSP Monitoring Ends
+# -----------------------------------------------------------------------------
+
+#################
+# NEW CODE ENDS #
+#################
