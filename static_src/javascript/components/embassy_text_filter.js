@@ -1,10 +1,10 @@
 class EmbassyTextFilter {
     static selector() {
-        return '[data-accordion]';
+        return '[data-accordion-embassy]';
     }
 
     constructor(node) {
-        this.accordion = document.querySelectorAll("[data-accordion]");
+        this.accordion = document.querySelectorAll("[data-accordion-embassy]");
         this.input = document.getElementById("myInput");
         this.collectionref = document.querySelectorAll(".accordion_embassy");
         this.bindEvents();
