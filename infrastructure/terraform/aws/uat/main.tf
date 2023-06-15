@@ -1565,7 +1565,7 @@ resource "aws_cloudwatch_metric_alarm" "s3-ireland-ie-infrastructure-5xx-errors-
 }
 
 ### Cloudwatch HIGH - Expiring or Expired certificates - uat.ireland.ie
-resource "aws_cloudwatch_metric_alarm" "expiration_of_certificate_uat.ireland.ie" {
+resource "aws_cloudwatch_metric_alarm" "expiration_of_certificate_uat_ireland_ie" {
   alarm_name          = "expiration_of_certificate_uat.ireland.ie"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
