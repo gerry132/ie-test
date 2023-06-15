@@ -21,8 +21,10 @@
                                     {% endfor %}
                             </div>
                             {% endif %}
-                            <div class="update-text">Still current at: {% todays_date %}</div>
-                            <div class="update-text" style="margin: 0 0 1rem;">Updated on: {% format_date page.last_published_at %}</div>
+                            {% if page.locale.language_code == 'en' %}
+                                <div class="update-text">Still current at: {% todays_date %} </div>
+                                <div class="update-text" style="margin: 0 0 1rem;">Updated on: {% format_date page.last_published_at %}</div>
+                            {% endif %}
                         </div>
                         {% include "patterns/pages/irelandie_travel/greyed_alert.html" with page=page heading="Security Status" %}
             </div>
