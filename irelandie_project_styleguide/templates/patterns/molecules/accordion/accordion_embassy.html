@@ -10,7 +10,7 @@
 
         <div class="embassy_accordion__container">
             {% for accordion in value.accordions %}
-                <div class="accordion" id="{{ accordion.value.title }}" accordian="{{ forloop.counter }}" data-accordion>
+                <div class="accordion" id="{{ accordion.value.title }}" accordian="{{ forloop.counter }}" data-accordion data-accordion-embassy>
                     <h2 class="accordion__header">
                         <div
                             id="question-{{ forloop.counter }}"
@@ -21,7 +21,7 @@
                             <span class="embassy_accordion__title">
                                 {{ accordion.value.title }}
                             </span>
-                            <button class="embassy_accordion__btn_content ">
+                            <button class="embassy_accordion__btn_content " aria-label="{{ value.accordions_button_alt }}">
                                 <svg class="icon--arrow embassy_accordion__icon accordion__icon" aria-label="expand" aria-hidden="true" focusable="false">
                                     <use xlink:href="#arrow" href="#arrow"></use>
                                 </svg>
