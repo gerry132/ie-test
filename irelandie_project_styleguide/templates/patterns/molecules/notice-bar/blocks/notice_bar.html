@@ -6,15 +6,54 @@
         top: 1px;
         position: relative;
     }
+
+
 </style>
 {% if value.enable %}
-<a href="{{ link_url }}" class="alert-message notice-bar--extended">
-    <svg class="notice-svg" width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M16.375 8.5C16.375 12.8492 12.8492 16.375 8.5 16.375C4.15076 16.375 0.625 12.8492 0.625 8.5C0.625 4.15076 4.15076 0.625 8.5 0.625C12.8492 0.625 16.375 4.15076 16.375 8.5ZM9.375 5C9.375 5.48325 8.98325 5.875 8.5 5.875C8.01675 5.875 7.625 5.48325 7.625 5C7.625 4.51675 8.01675 4.125 8.5 4.125C8.98325 4.125 9.375 4.51675 9.375 5ZM9.5 12.875V7.625H7.5V12.875H9.5Z" fill="white"/>
-    </svg>
-    {{ link_title }}
-    <svg class="notice-svg" width="16" height="11" viewBox="0 0 16 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M14.1667 5.50001L14.8031 4.86361L15.4395 5.50001L14.8031 6.13641L14.1667 5.50001ZM1.66667 6.40001C1.16962 6.40001 0.766672 5.99707 0.766672 5.50001C0.766672 5.00295 1.16962 4.60001 1.66667 4.60001V6.40001ZM10.6364 0.696947L14.8031 4.86361L13.5303 6.13641L9.36361 1.96974L10.6364 0.696947ZM14.8031 6.13641L10.6364 10.3031L9.36361 9.03028L13.5303 4.86361L14.8031 6.13641ZM14.1667 6.40001H1.66667V4.60001H14.1667V6.40001Z" fill="white"/>
-    </svg>
-</a>
+
+<div class="notice-bar--extended">
+    <div class="wrapper wrapper--small">
+        {% if value.notice_icon == 'information' %}
+        <div class="informationDivider">
+            <div class="notice__icon">
+                <svg aria-hidden="true" aria-label="emergency-icon">
+                    <use href="#notice-emergency"></use>
+                </svg>
+            </div>
+        </div>
+        {% elif value.notice_icon == 'emergency' %}
+        <div class="emergencyDivider">
+            <div class="notice__icon">
+                <svg aria-hidden="true" aria-label="information-icon">
+                    <use href="#notice-information"></use>
+                </svg>
+            </div>
+        </div>
+         {% endif %}
+        <div class="notice-bar--contents">
+            <div class="notice__title"> {{ value.title }}</div>
+            <div class="notice__rich_text">{{ value.rich_text|richtext }}</div>
+            {% if value.button %}
+                {% for button in value.button %}
+                    {% if button.value.page %}
+                    <a class="notice_button" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
+                    {% else %}
+                    <a class="notice_button" href="{{ button.value.url }}">{{ button.value.message }}</a>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% if value.links %}
+                {% for link in value.links %}
+                <a class="notice_link" href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}">{{ link.value.title }}
+                    <svg class="notice_link_arrow" fill="none" height="14" viewBox="0 0 20 14" width="20" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M18.1333 6.99996L18.9465 6.18679L19.7597 6.99996L18.9465 7.81313L18.1333 6.99996ZM2.13333 8.14996C1.4982 8.14996 0.983332 7.63509 0.983332 6.99996C0.983332 6.36483 1.4982 5.84996 2.13333 5.84996V8.14996ZM13.6132 0.853453L18.9465 6.18679L17.3202 7.81313L11.9868 2.4798L13.6132 0.853453ZM18.9465 7.81313L13.6132 13.1465L11.9868 11.5201L17.3202 6.18679L18.9465 7.81313ZM18.1333 8.14996H2.13333V5.84996H18.1333V8.14996Z"
+                            fill="#004D44"/>
+                    </svg>
+                </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endif %}

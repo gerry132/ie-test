@@ -4,9 +4,11 @@ from django.utils.translation import gettext_lazy as _
 
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
+from irelandie_home.blocks import SecondaryCallToAction
 
 from irelandie_utils.blocks import BaseBlockLinkValidation, BaseBlockLinkContext, AdvancedRichTextBlock, ImageBlock, \
     ALT_IMAGE
+from irelandie_utils.constants import NoticeIcon
 
 
 class LinkBlock(BaseBlockLinkContext):
@@ -151,11 +153,33 @@ class SecondaryNavLinkColumnWithHeader(blocks.StructBlock):
         template = ("patterns/molecules/navigation/blocks/secondary_nav_column.html",)
 
 
-class NoticeBarWithMessageLink(LinkBlockExtended):
-    title = blocks.CharBlock(
-        help_text=_("Leave blank to use the page's own title as a message"),
+class NoticeBarWithMessageLink(blocks.StructBlock):
+    notice_icon = blocks.ChoiceBlock(
         required=False,
-        max_length=80,
+        choices=NoticeIcon.choices,
+        default=NoticeIcon.CHOOSE_AN_ICON,
+    )
+    title = blocks.CharBlock(
+        required=False,
+        max_length=75,
+    )
+    rich_text = blocks.RichTextBlock(required=False, max_length=200)
+    button = blocks.StreamBlock(
+        [
+            ("button", SecondaryCallToAction())
+        ],
+        blank=True,
+        max_num=1,
+        min_num=0,
+        required=False,
+    )
+    links = blocks.StreamBlock([
+        ("links", LinkBlockWithURL()),
+    ],
+        required=False,
+        blank=True,
+        max_num=1,
+        min_num=0,
     )
 
     enable = blocks.BooleanBlock(
