@@ -4,14 +4,20 @@
     z-index: 1;
 }
 .notice-bar--extended {
-    background-color: #007368;
-    display: flex;
+    background-color: #FFFFFF;
     width: 100%;
-    height: 35px;
     position: relative;
     color: #fff;
+    padding: 10px;
+}
+.notice-bar--contents{
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    padding-left: 30px;
+
 }
 .notice-bar__hidden {
       display: none;
@@ -25,23 +31,83 @@
     }
 }
 
-.alert-message {
-    font-family: $font--primary;
-    font-style: normal;
+.notice_link{
     font-weight: 400;
-    font-size: 16px;
-    line-height: 28px;
-    text-align: center;
+    font-size: 18px;
+    line-height: 22px;
     text-decoration-line: underline;
-    color: #FFFFFF;
+    text-align: left;
 
-    @include media-query(max-medium) {
-        font-size: 12px !important;
-        line-height: 15px;
+    color: #004D44;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+.notice_button {
+    background-color: #004d46;
+    color: #fff;
+    display: inline-block;
+    font-weight: 400;
+    font-family: Lato;
+    background-image: none;
+    border-radius: 20px;
+    font-size: 20px;
+    border: 0;
+    box-shadow: none;
+    padding: 5px 10px;
+    transition: background-color .25s ease-out;
+}
+.notice__icon{
+    position: absolute;
+    top: 20%;
+    background: white;
+    padding-top: 4px;
+    width: 20px;
+    height: 28px;
+}
+.informationDivider {
+        position: absolute;
+        height: 100%;
+        top: 0;
+            &:before {
+                content: '';
+                position: absolute;
+                border: 2px solid #004D44;
+                width: 2px;
+                height: 100%;
+                left: 8px;
+                top: 0;
+            }
     }
+.emergencyDivider {
+        position: absolute;
+        height: 100%;
+        top: 0;
+            &:before {
+                content: '';
+                position: absolute;
+                border: 2px solid #FFCF1C;
+                width: 2px;
+                height: 100%;
+                left: 8px;
+                top: 0;
+            }
+    }
+.notice__title{
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
 
-    &:visited, &:hover, &:active {
-        text-decoration-line: underline;
-        color: #FFFFFF;
+    color: #000000;
+    text-align: left;
     }
+.notice_link_arrow{
+    flex-shrink: 0;
+}
+.notice__rich_text{
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #000000;
+    text-align: left;
 }

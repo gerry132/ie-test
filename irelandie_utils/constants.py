@@ -36,3 +36,9 @@ class TravelCautionLevel(models.TextChoices):
                                                                        'Neamhriachtanach'
     DO_NOT_TRAVEL = 'do not travel/' \
                     'ná taistil', 'do not travel/Ná Taistil'
+
+
+class NoticeIcon(models.TextChoices):
+    CHOOSE_AN_ICON = '', 'Choose an icon'
+    EMERGENCY = 'emergency', 'Emergency'
+    INFORMATION = 'information', 'Information'
