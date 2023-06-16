@@ -9,6 +9,9 @@ from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_utils.blocks import BaseBlockLinkValidation, BaseBlockLinkContext, AdvancedRichTextBlock, ImageBlock, \
     ALT_IMAGE
 from irelandie_utils.constants import NoticeIcon
+from django.forms.utils import ErrorList
+from wagtail.blocks.struct_block import StructBlockValidationError
+from django.core.exceptions import ValidationError
 
 
 class LinkBlock(BaseBlockLinkContext):
@@ -153,6 +156,37 @@ class SecondaryNavLinkColumnWithHeader(blocks.StructBlock):
         template = ("patterns/molecules/navigation/blocks/secondary_nav_column.html",)
 
 
+class NoticeBarLinkBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label="Subtitle", required=False, max_length=200,
+                             help_text=_("200 characters max limit"))
+    page = blocks.PageChooserBlock(required=False, help_text="The link selected or inputted "
+                                                             "below will transform the subtitle"
+                                                             " entered above into a hyperlink")
+    url = blocks.URLBlock(required=False, help_text="The link selected or inputted "
+                                                    "below will transform the subtitle"
+                                                    " entered above into a hyperlink")
+
+    def clean(self, value):
+        errors = {}
+        # Set only a Page OR a URL
+        if value["url"] and value["page"]:
+            message = "Please choose a page or set a URL."
+
+            errors["page"] = ErrorList([message])
+            errors["url"] = ErrorList([message])
+
+        # A URL must have title
+        if value["url"] and not value["title"]:
+            errors["title"] = ErrorList(["Please set a title for the URL"])
+        if value["page"] and not value["title"]:
+            errors["title"] = ErrorList(["Please set a title for the Page"])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+
 class NoticeBarWithMessageLink(blocks.StructBlock):
     notice_icon = blocks.ChoiceBlock(
         required=False,
@@ -162,8 +196,16 @@ class NoticeBarWithMessageLink(blocks.StructBlock):
     title = blocks.CharBlock(
         required=False,
         max_length=75,
+        help_text=_("75 characters max limit"),
     )
-    rich_text = blocks.RichTextBlock(required=False, max_length=200)
+    subtitle = blocks.StreamBlock([
+        ("subtitle", NoticeBarLinkBlock()),
+    ],
+        required=False,
+        blank=True,
+        max_num=1,
+        min_num=0,
+    )
     button = blocks.StreamBlock(
         [
             ("button", SecondaryCallToAction())
@@ -172,14 +214,6 @@ class NoticeBarWithMessageLink(blocks.StructBlock):
         max_num=1,
         min_num=0,
         required=False,
-    )
-    links = blocks.StreamBlock([
-        ("links", LinkBlockWithURL()),
-    ],
-        required=False,
-        blank=True,
-        max_num=1,
-        min_num=0,
     )
 
     enable = blocks.BooleanBlock(
