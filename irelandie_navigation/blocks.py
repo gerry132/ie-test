@@ -159,10 +159,10 @@ class NoticeBarLinkBlock(blocks.StructBlock):
     title = blocks.CharBlock(label="Subtitle", required=False, max_length=200,
                              help_text=_("200 characters max limit"))
     page = blocks.PageChooserBlock(required=False, help_text="The link selected or inputted "
-                                                             "below will transform the subtitle"
+                                                             "here will transform the subtitle"
                                                              " entered above into a hyperlink")
     url = blocks.URLBlock(required=False, help_text="The link selected or inputted "
-                                                    "below will transform the subtitle"
+                                                    "here will transform the subtitle"
                                                     " entered above into a hyperlink")
 
     def clean(self, value):
