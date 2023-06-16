@@ -11,7 +11,6 @@ from irelandie_utils.blocks import BaseBlockLinkValidation, BaseBlockLinkContext
 from irelandie_utils.constants import NoticeIcon
 from django.forms.utils import ErrorList
 from wagtail.blocks.struct_block import StructBlockValidationError
-from django.core.exceptions import ValidationError
 
 
 class LinkBlock(BaseBlockLinkContext):
