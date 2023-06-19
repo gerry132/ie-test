@@ -1,10 +1,11 @@
 {% load wagtailcore_tags %}
 <div class="wrapper wrapper--large wrapper--padding" style="padding-bottom: 20px;">
-<div class="intro" style="max-width:1024px;margin-bottom: 0;">
-        <div class="intro__description">{% include_block value.richtext %}</div>
-</div>
 
-<div class="stats__grid">
+        <div class="intro__description">
+            {% include_block value.richtext %}
+        </div>
+
+<div class="stats__grid wrapper wrapper--large wrapper--padding">
     {% for stats in value.stats %}
     <div class="stats__border">
         {% include_block stats %}
