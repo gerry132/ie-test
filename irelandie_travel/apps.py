@@ -8,4 +8,6 @@ class IrelandieTravelConfig(AppConfig):
     def ready(self) -> None:
         from .signals import update_translation_status
 
+        signal_list = [update_translation_status]
+        print(signal_list)
         return super().ready()
