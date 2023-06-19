@@ -14,10 +14,6 @@ from .blocks import TravelCautionBlock, ButtonBlock, InformationBlock, TravelReg
 from irelandie_utils.blocks import AccordionBlock
 
 
-from django.dispatch import receiver
-from wagtail.core.signals import page_published
-
-
 class TravelCountryPage(BasePage):
     template = "patterns/pages/irelandie_travel/travel_country.html"
     subtitle = StreamField(
@@ -72,15 +68,6 @@ class TravelCountryPage(BasePage):
         FieldPanel('body'),
         FieldPanel('outer_body'),
     ]
-
-    @receiver(page_published)
-    def do_stuff_on_page_published(instance, **kwargs):
-        """
-        Add signal to update travel restrictions.
-        """
-        for i in instance.get_translations():
-            i.travel_caution_level = instance.travel_caution_level
-            i.save()
 
 
 class TravelLandingPage(BasePage):
