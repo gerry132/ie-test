@@ -201,6 +201,10 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         min_num=0,
         required=False,
     )
+    links_button_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_BUTTON),
+    )
     links = blocks.StreamBlock(
         [
             ("link", StoryLinkBlock()),
