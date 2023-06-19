@@ -13,7 +13,7 @@
 .notice-bar--contents{
     display: flex;
     align-items: flex-start;
-    gap: 5px;
+    gap: 10px;
     flex-direction: column;
     justify-content: center;
     padding-left: 30px;
@@ -42,6 +42,7 @@
     display: flex;
     gap: 6px;
     align-items: center;
+    padding-top: 8px;
 }
 .notice_link_subtitle{
     font-weight: 400;
@@ -53,6 +54,7 @@
     display: flex;
     gap: 6px;
     align-items: center;
+    padding-top: 8px;
 }
 .notice_button {
     background-color: #004d46;
@@ -65,7 +67,7 @@
     font-size: 20px;
     border: 0;
     box-shadow: none;
-    padding: 5px 10px;
+    padding: 5px 15px;
     transition: background-color .25s ease-out;
     &:hover {
         cursor: pointer;
