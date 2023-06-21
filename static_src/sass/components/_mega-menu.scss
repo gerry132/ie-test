@@ -25,12 +25,11 @@
     cursor: default;
     background-image: linear-gradient(#fefefd , #f5f5f3);
     position: absolute;
-    padding: 30px 0;
     max-width: 1280px;
     margin: auto;
     left: 0;
     right: 0;
-    margin-top: 30px;
+    margin-top: 40px;
     }
 .mega_menu_dropbtn {
   cursor: pointer;
@@ -47,6 +46,7 @@
 }
 .mega_menu.is-open .mega_menu_dropdown-content {
     display: block;
+    z-index: 2;
 }
 .mega_menu__title{
 font-size: 48px;

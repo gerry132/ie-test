@@ -72,7 +72,7 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.62.212/32", "80.233.54.212/32"]
+      cidr_blocks  = ["80.233.49.56/32", "80.233.57.56/32"]
     },
     joe_dev = {
       description = "Joe D - Sidero"
@@ -1338,6 +1338,7 @@ resource "aws_appautoscaling_policy" "cpu" {
   }
 }
 
+
 ##################################
 # ORIGINAL CODE ENDS - UNTOUCHED #
 ##################################
@@ -1370,8 +1371,8 @@ resource "aws_appautoscaling_policy" "cpu" {
 #########################################################################################################################################
 
 ### Cloudwatch HIGH - Postgres DB free space - uat-db-postgres ###
-resource "aws_cloudwatch_metric_alarm" "rds_free_space_alarm" {
-  alarm_name          = "uat-db-postgres-free-space-alarm"
+resource "aws_cloudwatch_metric_alarm" "uat-db-postgres-free-space-alarm-below-20GB" {
+  alarm_name          = "uat-db-postgres-free-space-alarm-below-20GB"
   comparison_operator = "LessThanOrEqualToThreshold"
   evaluation_periods  = "1"
   metric_name         = "FreeStorageSpace"
@@ -1390,8 +1391,8 @@ resource "aws_cloudwatch_metric_alarm" "rds_free_space_alarm" {
 }
 
 ### Cloudwatch HIGH - Postgres DB CPU Utlization - uat-db-postgres ###
-resource "aws_cloudwatch_metric_alarm" "rds_cpu_alarm" {
-  alarm_name          = "rds-cpu-utilization-alarm"
+resource "aws_cloudwatch_metric_alarm" "rds-cpu-utilization-above-80percent" {
+  alarm_name          = "rds-cpu-utilization-above-80percent"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "3"
   metric_name         = "CPUUtilization"
@@ -1409,8 +1410,8 @@ resource "aws_cloudwatch_metric_alarm" "rds_cpu_alarm" {
 }
 
 ### Cloudwatch HIGH - ECS CPU Utilization - UAT-ireland-ie
-resource "aws_cloudwatch_metric_alarm" "ecs_cpu_alarm" {
-  alarm_name          = "ecs-cpu-utilization-alarm"
+resource "aws_cloudwatch_metric_alarm" "ecs-cpu-utilization-above-90percent" {
+  alarm_name          = "ecs-cpu-utilization-above-90percent"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "3"
   metric_name         = "CPUUtilization"
@@ -1428,8 +1429,8 @@ resource "aws_cloudwatch_metric_alarm" "ecs_cpu_alarm" {
 }
 
 ### Cloudwatch HIGH - ECS Memory Utilization - UAT-ireland-ie
-resource "aws_cloudwatch_metric_alarm" "ecs_memory_alarm" {
-  alarm_name          = "ecs-memory-utilization-alarm"
+resource "aws_cloudwatch_metric_alarm" "ecs-memory-utilization-above-90percent" {
+  alarm_name          = "ecs-memory-utilization-above-90percent"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "3"
   metric_name         = "MemoryUtilization"
@@ -1447,8 +1448,8 @@ resource "aws_cloudwatch_metric_alarm" "ecs_memory_alarm" {
 }
 
 ### Cloudwatch LOW - Application ELB Connection Errors - UAT
-resource "aws_cloudwatch_metric_alarm" "alb_connection_errors" {
-  alarm_name          = "elb-UAT-alb-connection-errors-alarm"
+resource "aws_cloudwatch_metric_alarm" "elb-UAT-alb-multiple-5xx-errors" {
+  alarm_name          = "elb-UAT-alb-multiple-5xx-errors"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "3"
   metric_name         = "HTTPCode_Target_5XX_Count"
@@ -1466,8 +1467,8 @@ resource "aws_cloudwatch_metric_alarm" "alb_connection_errors" {
 }
 
 ### Cloudwatch LOW - Network ELB Connection Errors - net-lb
-resource "aws_cloudwatch_metric_alarm" "nlb_connection_errors" {
-  alarm_name          = "net-lb-connection-errors-alarm"
+resource "aws_cloudwatch_metric_alarm" "net-lb-connection-multiple-TCP-reset-errors" {
+  alarm_name          = "net-lb-connection-multiple-TCP-reset-errors"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "3"
   metric_name         = "TCP_Client_Reset_Count"
@@ -1485,8 +1486,8 @@ resource "aws_cloudwatch_metric_alarm" "nlb_connection_errors" {
 }
 
 ### Cloudwatch LOW - Elasticache CPU Utilization - redis-uat
-resource "aws_cloudwatch_metric_alarm" "elasticache_cpu_alarm" {
-  alarm_name          = "elasticache-cpu-alarm"
+resource "aws_cloudwatch_metric_alarm" "elasticache-cpu-above-80percent" {
+  alarm_name          = "elasticache-cpu-above-80percent"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "3"
   metric_name         = "CPUUtilization"
@@ -1504,8 +1505,8 @@ resource "aws_cloudwatch_metric_alarm" "elasticache_cpu_alarm" {
 }
 
 ### Cloudwatch LOW - Elasticache Memory Utilization - redis-uat
-resource "aws_cloudwatch_metric_alarm" "elasticache_memory_alarm" {
-  alarm_name          = "elasticache-memory-alarm"
+resource "aws_cloudwatch_metric_alarm" "elasticache-memory-above-8MB" {
+  alarm_name          = "elasticache-memory-above-8MB"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "3"
   metric_name         = "BytesUsedForCache"
@@ -1526,7 +1527,7 @@ resource "aws_cloudwatch_metric_alarm" "elasticache_memory_alarm" {
 # We will test for 4xx and 5xx errors on UAT bucket: ireland-ie-infrastructure
 
 ### Cloudwatch LOW - S3 4xx_errors - ireland-ie-infrastructure
-resource "aws_cloudwatch_metric_alarm" "s3_4xx_errors" {
+resource "aws_cloudwatch_metric_alarm" "s3-ireland-ie-infrastructure-4xx-errors-alarm" {
   alarm_name          = "s3-ireland-ie-infrastructure-4xx-errors-alarm"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "3"
@@ -1545,7 +1546,7 @@ resource "aws_cloudwatch_metric_alarm" "s3_4xx_errors" {
 }
 
 ### Cloudwatch LOW - S3 5xx_errors - ireland-ie-infrastructure
-resource "aws_cloudwatch_metric_alarm" "s3_5xx_errors" {
+resource "aws_cloudwatch_metric_alarm" "s3-ireland-ie-infrastructure-5xx-errors-alarm" {
   alarm_name          = "s3-ireland-ie-infrastructure-5xx-errors-alarm"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "3"
@@ -1564,7 +1565,7 @@ resource "aws_cloudwatch_metric_alarm" "s3_5xx_errors" {
 }
 
 ### Cloudwatch HIGH - Expiring or Expired certificates - uat.ireland.ie
-resource "aws_cloudwatch_metric_alarm" "expired_certificates" {
+resource "aws_cloudwatch_metric_alarm" "expiration_of_certificate_uat_ireland_ie" {
   alarm_name          = "expiration_of_certificate_uat.ireland.ie"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
@@ -1590,93 +1591,24 @@ resource "aws_acm_certificate" "dns_check_uat_ireland_ie" {
   }
 }
 
-### Create SNS topics - OGCIO may then add emails and phone numbers to these topics
-
-# high priority SNS topic
-# resource "aws_sns_topic" "high_priority_alert" {
-#  name = "high_priority_alert"
-#}
-
+### Create SNS topics - OGCIO may then add emails and phone numbers to these topics #########
+## high priority SNS topic
+resource "aws_sns_topic" "high_priority_alert" {
+  name = "high_priority_alert"
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+##
 # low priority SNS topic
-#resource "aws_sns_topic" "low_priority_alert" {
-#  name = "low_priority_alert"
-#}
-
-### Eventbridge rule - high_priority_alert
-#resource "aws_cloudwatch_event_rule" "high_priority_alert" {
-#  name        = "high_priority_alert"
-#  description = "Uses pattern matching of Cloudwatch events to trigger events"
-#  event_pattern = jsonencode({
-#    source      = ["aws.cloudwatch"]
-#    detail_type = ["CloudWatch Alarm State Change"]
-#    detail      = {
-#      state = ["ALARM"]
-#    }
-#    resources   = [
-#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:uat-db-postgres-free-space-alarm",
-#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:rds-cpu-utilization-alarm",
-#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:ecs-cpu-utilization-alarm",
-#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:ecs-memory-utilization-alarm",
-#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:expiration_of_certificate_uat.ireland.ie"
-#    ]
- # })
-
-
-  # SNS target for notifications
-  ###  Error: Unsupported block type 'target' below ###  to be fixed gjdarcy 01/06/23
-
-
-  #target {
-  #  arn = aws_sns_topic.high_priority_alert.arn
-  #  id  = "high_priority_alert"
-  #}
-#}
-
-#resource "aws_sns_topic_subscription" "high_priority_alert" {
-#  topic_arn = aws_sns_topic.high_priority_alert.arn
-#  protocol  = "sqs"
-#  endpoint  = "arn:aws:cloudwatch:eu-west-1:100350071169:high_priority_alert"
-
-  # Allow the EventBridge rule to publish messages to the SNS topic
-  # source_arn = aws_cloudwatch_event_rule.high_priority_alert.arn
-#}
-
-
-### Eventbridge rule - low_priority_alert
-# resource "aws_cloudwatch_event_rule" "low_priority_alert" {
- # name        = "low_priority_alert"
-# description = "Uses pattern matching of Cloudwatch events to trigger events"
-#  event_pattern = jsonencode({
-#    source      = ["aws.cloudwatch"]
-#    detail_type = ["CloudWatch Alarm State Change"]
-#    detail      = {
-#      state = ["ALARM"]
-#    }
-#    resources   = [
-#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:elb-UAT-alb-connection-errors-alarm",
-#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:net-lb-connection-errors-alarm",
-#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:elasticache-cpu-alarm",
-#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:elasticache-memory-alarm",
-#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:s3-ireland-ie-infrastructure-5xx-errors-alarm",
-#      "arn:aws:cloudwatch:eu-west-1:100350071169:alarm:s3-ireland-ie-infrastructure-4xx-errors-alarm"
- #   ]
- # })
-
-  # SNS target for notifications
-  #target {
-  #  arn = aws_sns_topic.low_priority_alert.arn
-  #  id  = "low_priority_alert"
-  #}
-#}
-
-#resource "aws_sns_topic_subscription" "low_priority_alert" {
-#  topic_arn = aws_sns_topic.low_priority_alert.arn
-#  protocol  = "sqs"
-#  endpoint  = "arn:aws:cloudwatch:eu-west-1:100350071169:low_priority_alert"
-
-  # Allow the EventBridge rule to publish messages to the SNS topic
-  #  source_arn = aws_cloudwatch_event_rule.low_priority_alert.arn
-#}
+resource "aws_sns_topic" "low_priority_alert" {
+  name = "low_priority_alert"
+  tags = {
+    "Sidero_MSP" : "true"
+  }
+}
+##
+##############################################################################################
 
 # -----------------------------------------------------------------------------
 # Sidero MSP Monitoring Ends

@@ -25,6 +25,7 @@ ALT_HELP_TEXT = """A short one-sentence literal description
 ALT_VID = ALT_HELP_TEXT % 'video'
 ALT_IMAGE = ALT_HELP_TEXT % 'image'
 ALT_ICON = ALT_HELP_TEXT % 'icon'
+ALT_BUTTON = ALT_HELP_TEXT % 'button'
 
 
 class BaseBlockLinkValidation(blocks.StructBlock):
@@ -199,6 +200,10 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         max_num=1,
         min_num=0,
         required=False,
+    )
+    links_button_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_BUTTON),
     )
     links = blocks.StreamBlock(
         [
@@ -927,6 +932,10 @@ class AccordionBlock(blocks.StructBlock):
         required=False,
     )
     summary_richtext = AdvancedRichTextBlock(required=False)
+    accordions_button_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_BUTTON),
+    )
     accordions = blocks.StreamBlock(
         [
             (
@@ -986,6 +995,10 @@ class AccordionBlock(blocks.StructBlock):
 
 class AccordionEmbassyBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=False)
+    accordions_button_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_BUTTON),
+    )
     accordions = blocks.StreamBlock(
         [
             (
@@ -1324,6 +1337,10 @@ class LinkButtonBlock(blocks.StructBlock):
         label="URL",
         required=False,
         help_text="An external link.",
+    )
+    link_button_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_BUTTON),
     )
 
     class Meta:

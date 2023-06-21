@@ -45,8 +45,9 @@ class Search {
 
             // toggle search dropdown
             this.searchDropdown.classList.remove(this.activeClass);
-
-            this.noticeBar.classList.remove('notice-bar--extended__search-is-active');
+            if (this.noticeBar !== null){
+                this.noticeBar.classList.remove('notice-bar--extended__search-is-active');
+            }
         });
     }
 
@@ -64,7 +65,9 @@ class Search {
 
         // focus the input
         this.searchInput.focus();
-        this.noticeBar.classList.toggle('notice-bar--extended__search-is-active');
+        if (this.noticeBar !== null) {
+            this.noticeBar.classList.toggle('notice-bar--extended__search-is-active');
+        }
     }
 }
 
