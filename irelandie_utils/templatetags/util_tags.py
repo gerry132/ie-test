@@ -274,3 +274,22 @@ def get_page_region(page):
 def printer(a):
     for p in a:
         print(p.block_type)
+
+
+@register.simple_tag(
+    takes_context=True
+)
+def beta_element_tag(context, page):
+    if isinstance(page, int) or isinstance(page, str):
+        # accounts for search
+        return False
+    page_map = {
+        'mission page': MissionPage,
+    }
+    pages = page.get_ancestors()
+    for p in pages.reverse():
+        if p.content_type.name == 'mission page':
+            m = page_map[p.content_type.name].objects.get(id=p.id)
+            if m.beta_element:
+                return m.beta_element
+    return False

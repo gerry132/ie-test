@@ -1,7 +1,7 @@
 {% extends "patterns/base_page.html" %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
-{% load static navigation_tags %}
+{% load static navigation_tags util_tags %}
 
 {% block content %}
 {% if page.generic_hero %}
@@ -25,6 +25,10 @@
     <div class="wrapper wrapper--large wrapper--padding">
         {% include_block page.body %}
     </div>
+    {% beta_element_tag page as beta_tag %}
+    {% if beta_tag %}
+            {% include "patterns/snippets/betasnippet.html" with object=beta_tag %}
+    {% endif %}
 </div>
 
 {% endblock %}

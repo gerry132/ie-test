@@ -1,7 +1,7 @@
 {% extends "patterns/base_page.html" %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
-{% load static navigation_tags %}
+{% load static navigation_tags util_tags %}
 {% load i18n %}
 
 {% block content %}
@@ -87,6 +87,10 @@
                 Read all news
             </button>
         </div>
+        {% endif %}
+        {% beta_element_tag page as beta_tag %}
+        {% if beta_tag %}
+                {% include "patterns/snippets/betasnippet.html" with object=beta_tag %}
         {% endif %}
     {% endblock %}
 {% endblock %}

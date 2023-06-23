@@ -14,9 +14,9 @@
     <div class="wrapper wrapper--large wrapper--padding">
         {% include_block page.body %}
     </div>
-
-
-
+    {% if page.beta_element %}
+        {% include "patterns/snippets/betasnippet.html" with object=page.beta_element %}
+    {% endif %}
 
 {% endblock %}
 

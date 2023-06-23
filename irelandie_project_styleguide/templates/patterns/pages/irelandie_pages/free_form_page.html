@@ -1,5 +1,5 @@
 {% extends "patterns/hero_page.html" %}
-{% load wagtailcore_tags wagtailimages_tags static %}
+{% load util_tags wagtailcore_tags wagtailimages_tags static %}
 
 {% block main %}
     {% include "patterns/molecules/freeform-components/freeform_components.html" with default_image=page.default_image  %}
@@ -7,6 +7,10 @@
     <div style="text-align: -webkit-center;">
         {% include "patterns/molecules/streamfield/blocks/twitter_embed.html" with value=page.twitter_feed title=page.twitter_title %}
     </div>
+    {% endif %}
+    {% beta_element_tag page as beta_tag %}
+    {% if beta_tag %}
+            {% include "patterns/snippets/betasnippet.html" with object=beta_tag %}
     {% endif %}
 {% endblock %}
 
