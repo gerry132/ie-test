@@ -1354,7 +1354,8 @@ class BetaSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexe
                   models.Model):
     tags = TaggableManager(through=BetaSnippetTag, blank=True)
     title = models.CharField(max_length=255)
-    rich_text = RichTextField(features=["h3", "h4", "h5", "bold", "italic", "link", "document-link"], blank=True, null=True)
+    rich_text = RichTextField(features=["h3", "h4", "h5", "bold", "italic", "link", "document-link"],
+                              blank=True, null=True)
     _revisions = GenericRelation("wagtailcore.Revision", related_query_name="betasnippet")
     panels = [
         FieldPanel("title"),
