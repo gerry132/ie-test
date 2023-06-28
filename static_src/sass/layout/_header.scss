@@ -86,9 +86,10 @@
 
 
             @include media-query(large) {
-                display: flex;
+                display: block;
                 width: 100%;
-                justify-content: center;
+                max-width: 1280px;
+                margin: 0 auto;
 
                 #{$root}--condensed & {
                     display: none;
