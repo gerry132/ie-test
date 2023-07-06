@@ -1,4 +1,14 @@
 .custom-nav {
+@include media-query(large) {
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    margin: 0;
+    z-index: 2;
+    }
 
 
     &__wrapper {
@@ -10,8 +20,10 @@
     }
 
     &__links {
-        display: flex;
-        align-items: center;
+        margin-left: 25px;
+        @media screen and (max-width: 1190px) and (min-width: 1023px) {
+            margin-left: 175px;
+        }
     }
 
     &__item {
@@ -34,11 +46,12 @@
         }
 
         @include media-query(large) {
+            display: inline-block;
             width: auto;
             font-weight: $weight--normal;
             text-align: left;
             border-bottom: 0;
-            margin: 0 20px;
+            margin: 0 15px;
 
         }
 

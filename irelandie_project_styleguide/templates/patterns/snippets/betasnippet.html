@@ -1,0 +1,38 @@
+{% load wagtailcore_tags static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<style>
+    .label-beta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    background-color: #004D44;
+    width: 55px;
+    height: 30px;
+}
+.label {
+    padding: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+
+}
+.beta-banner {
+    display: flex;
+    align-items: center;
+}
+.beta-banner .rich-text {
+    font-size: 16px;
+    margin-left: unset;
+    margin-right: unset;
+}
+</style>
+<div class="wrapper wrapper--large wrapper--padding">
+<div class="beta-banner">
+    <div class="label label-beta">BETA</div>
+    <div class="rich-text">
+        {{ object.rich_text|richtext }}
+    </div>
+</div>
+</div>

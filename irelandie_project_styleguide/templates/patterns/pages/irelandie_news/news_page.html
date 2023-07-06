@@ -1,5 +1,5 @@
 {% extends "patterns/base_page.html" %}
-{% load wagtailcore_tags wagtailimages_tags static i18n %}
+{% load wagtailcore_tags wagtailimages_tags util_tags static i18n %}
 
 {% block content %}
 
@@ -91,6 +91,10 @@ Responsive hero images
 
 <!-- related_articles -->
 {% include "patterns/molecules/related-articles/related-articles.html" with articles=page.related_articles default_image=default_image %}
+{% beta_element_tag page as beta_tag %}
+    {% if beta_tag %}
+            {% include "patterns/snippets/betasnippet.html" with object=beta_tag %}
+    {% endif %}
 
 {% endblock %}
 {% endblock %}

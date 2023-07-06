@@ -1,7 +1,7 @@
 {% extends "patterns/hero_page.html" %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
-{% load static %}
+{% load static util_tags %}
 
 {% block content %}
  <!-- Main -->
@@ -49,6 +49,10 @@
             </div>
         {% endif %}
     </div>
+{% beta_element_tag page as beta_tag %}
+{% if beta_tag %}
+        {% include "patterns/snippets/betasnippet.html" with object=beta_tag %}
+{% endif %}
 <div style="padding-bottom: 40px;"></div>
     {% endblock %}
 {% endblock %}

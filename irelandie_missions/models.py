@@ -108,6 +108,13 @@ class DestinationPage(HeroPage):
         blank=True,
         null=True,
     )
+    beta_element = models.ForeignKey(
+        'utils.BetaSnippet',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     content_panels = HeroPage.content_panels + [
         FieldPanel("region"),
@@ -116,6 +123,14 @@ class DestinationPage(HeroPage):
         FieldPanel("logo_cards", heading="Logo Cards"),
         FieldPanel("body"),
     ]
+
+    settings_panels = (
+        [
+            FieldPanel("beta_element", permission="access_admin"),
+        ] +
+        HeroPage.settings_panels
+
+    )
 
     @cached_property
     def related_articles(self):
@@ -149,7 +164,7 @@ class DestinationPage(HeroPage):
         ObjectList(content_panels, heading='Content'),
         ObjectList(HeroPage.hero_panel, heading='Hero'),
         ObjectList(HeroPage.promote_panels, heading='Promote'),
-        ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
+        ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
 
@@ -363,6 +378,13 @@ class MissionPage(HeroPage):
         blank=True,
         null=True,
     )
+    beta_element = models.ForeignKey(
+        'utils.BetaSnippet',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     content_panels = HeroPage.content_panels + [
         MultiFieldPanel([
@@ -398,6 +420,7 @@ class MissionPage(HeroPage):
         [
             FieldPanel("root_page", permission="access_admin"),
             FieldPanel("favicon", permission="access_admin"),
+            FieldPanel("beta_element", permission="access_admin"),
             FieldPanel("default_image", permission="access_admin"),
         ] +
         HeroPage.settings_panels

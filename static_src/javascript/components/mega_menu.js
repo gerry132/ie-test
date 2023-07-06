@@ -43,6 +43,10 @@ class MegaMenu {
 
     bindEvents() {
         this.question.addEventListener('click', (e) => {
+        let imageHeight = document.querySelector('.header-large .header__logo-wrapper');
+        if(imageHeight && imageHeight.clientHeight < 75 ){
+            this.answer.style.marginTop = 30 + "px";
+        }
 
             let open = !this.accordion.classList.contains('is-open');
             e.preventDefault();
