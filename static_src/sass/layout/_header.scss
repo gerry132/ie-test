@@ -37,6 +37,7 @@
     }
 
     &__menu-items {
+        z-index: 150;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -143,6 +144,7 @@
     }
 
     &__logo-wrapper {
+        z-index: 150;
         @include media-query(v-small-min) {
             #{$root}--condensed & {
                 margin: 0 auto;
