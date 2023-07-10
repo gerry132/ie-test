@@ -77,8 +77,8 @@
 
                     {% if block.value.hero_title %}
                         {% title_length block.value.hero_title as title_length %}
-                            <div class="{% if title_length > 25 and title_length < 50 %}mini-hero__title_length
-                            {% elif title_length > 50 %}mini-hero__title_very_big{% endif %}">
+                            <div class="{% if title_length > 25 and title_length < 50 and block.value.subtitle|length < 140 %}mini-hero__title_length
+                            {% elif title_length > 50 or block.value.subtitle|length > 140 %}mini-hero__title_very_big{% endif %}">
                                 {{ block.value.hero_title }}
                             </div>
                     {% endif %}
