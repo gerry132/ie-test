@@ -69,7 +69,7 @@
                             {% trans 'Your browser does not support the video tag.' %}
                         </video>
                     {% else %}
-                        <iframe title="Youtube video" width="100%" height="550" src="{{ block.value.embedding_url }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        <iframe title="{{ block.value.title }}" width="100%" height="550" src="{{ block.value.embedding_url }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         frameborder="0" allowfullscreen></iframe>
                     {% endif %}
                 </div>
