@@ -57,13 +57,20 @@
                 </div>
             {% elif block.block_type == 'video' %}
                 <div class="wrapper wrapper--large wrapper--padding">
+                    {% if block.value.title or block.value.summary %}
+                        <div class="intro" style="max-width:1024px;">
+                            <h2 class="intro__title">{{ block.value.title }}</h2>
+                            <div class="intro__description">{{ block.value.summary }}</div>
+                        </div>
+                    {% endif %}
                     {% if block.value.video %}
-                        <video aria-label="{{ block.value.title }}" controls data-video loop title="{{ block.value.title }}">
+                        <video aria-label="{{ block.value.video_alt }}" controls data-video loop title="{{ block.value.title }}">
                             <source src="{{ block.value.video.url }}" type="video/mp4">
                             {% trans 'Your browser does not support the video tag.' %}
                         </video>
                     {% else %}
-                    <iframe width="100%" height="550" src="{{ block.value.youtube_or_vimeo_embed }}" frameborder="0" allowfullscreen=""></iframe>
+                        <iframe title="{{ block.value.title }}" width="100%" height="550" src="{{ block.value.embedding_url }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        frameborder="0" allowfullscreen></iframe>
                     {% endif %}
                 </div>
             {% elif block.block_type == 'accordion' %}
