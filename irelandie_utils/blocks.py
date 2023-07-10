@@ -1450,7 +1450,7 @@ class YoutubeVimeoLinkValue(blocks.StructValue):
             return f"https://www.youtube.com/embed/{video_id}"
         if 'vimeo.com' in url:
             embed_url = url.replace('vimeo.com', 'player.vimeo.com/video')
-            embed_url_with_parameters = embed_url + '?controls=0'
+            embed_url_with_parameters = embed_url
             return embed_url_with_parameters
         else:
             return None
@@ -1469,7 +1469,7 @@ class VideoBlock(blocks.StructBlock):
     def clean(self, value):
         errors = {}
         values = [value["youtube_or_vimeo_embed"], value["video"]]
-        # Set only a Page OR a URL
+        # Set only a youtube_or_vimeo_embed OR a custom_video
         if sum(value is not None and value != "" for value in values) != 1:
             message = "Please choose only a youtube_or_vimeo_embed or set a custom_video."
 
