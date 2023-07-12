@@ -1700,6 +1700,9 @@ blockquote {
     }
 }
 .footerlinks-nav__link {
+    display: contents;
+    height: 48px;
+    width: 48px;
     border-bottom: 1px solid transparent;
     transition: color, border 0.25s ease-out;
     color: #fff;
@@ -1744,9 +1747,6 @@ blockquote {
     }
 }
 .footercolumn-nav__link {
-    display: contents;
-    height: 48px;
-    width: 48px;
     border-bottom: 1px solid transparent;
     transition: color, border 0.25s ease-out;
     color: #fff;
