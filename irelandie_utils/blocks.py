@@ -1518,7 +1518,13 @@ class FeaturedTaggedStoryBlock(blocks.StructBlock):
         context = super().get_context(value, parent_context=parent_context)
         from irelandie_utils.templatetags.util_tags import get_tag_links
         from irelandie_utils.templatetags.util_tags import get_destination_tag_links
-        destination_tags = value["page"].specific.related_destination_tags
+
+        try:
+            destination_tags = value["page"].specific.related_destination_tags
+        except Exception as e:
+            print(e)
+            destination_tags = None
+
         context["destination_tag_links"] = get_destination_tag_links(destination_tags)
         tag = value["page"].specific.related_tags
         tagging_links = get_tag_links(tag, value["page"])[0]
