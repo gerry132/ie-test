@@ -115,8 +115,9 @@
     min-width: 30%;
     max-width: 100%;
     object-fit: fill;
+    aspect-ratio: 1 / 1;
     @include media-query(medium){
-        max-height: 580px;
+        max-height: 550px;
         min-height: 400px;
 
     }
@@ -306,4 +307,14 @@
             display: none;
         }
     }
+}
+.twitter-embed_link{
+    color: #004D44;
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-decoration-line: underline;
+
 }
