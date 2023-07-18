@@ -454,7 +454,7 @@ class AdvancedRichTextBlock(blocks.StructBlock):
     )
     heading = blocks.CharBlock(required=False)
     rich_text = blocks.RichTextBlock(
-        features=["h3", "blockquote", "bold", "link", "document-link", "ul", "ol"], required=False,
+        features=["h2", "h3", "h4", "blockquote", "bold", "link", "document-link", "ul", "ol"], required=False,
     )
     button_link = blocks.StreamBlock(
         [
@@ -1450,7 +1450,7 @@ class YoutubeVimeoLinkValue(blocks.StructValue):
             return f"https://www.youtube.com/embed/{video_id}"
         if 'vimeo.com' in url:
             embed_url = url.replace('vimeo.com', 'player.vimeo.com/video')
-            embed_url_with_parameters = embed_url + '?controls=0'
+            embed_url_with_parameters = embed_url
             return embed_url_with_parameters
         else:
             return None
@@ -1469,7 +1469,7 @@ class VideoBlock(blocks.StructBlock):
     def clean(self, value):
         errors = {}
         values = [value["youtube_or_vimeo_embed"], value["video"]]
-        # Set only a Page OR a URL
+        # Set only a youtube_or_vimeo_embed OR a custom_video
         if sum(value is not None and value != "" for value in values) != 1:
             message = "Please choose only a youtube_or_vimeo_embed or set a custom_video."
 
@@ -1518,7 +1518,13 @@ class FeaturedTaggedStoryBlock(blocks.StructBlock):
         context = super().get_context(value, parent_context=parent_context)
         from irelandie_utils.templatetags.util_tags import get_tag_links
         from irelandie_utils.templatetags.util_tags import get_destination_tag_links
-        destination_tags = value["page"].specific.related_destination_tags
+
+        try:
+            destination_tags = value["page"].specific.related_destination_tags
+        except Exception as e:
+            print(e)
+            destination_tags = None
+
         context["destination_tag_links"] = get_destination_tag_links(destination_tags)
         tag = value["page"].specific.related_tags
         tagging_links = get_tag_links(tag, value["page"])[0]

@@ -124,6 +124,11 @@
                                 {% if socialfeed.value.twitter_title %}
                                 <h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
                                 {% endif %}
+                                <div style="margin-bottom: 20px; line-height: 19px;">
+                                    <a class="twitter-embed_link" href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                        Keep up to date with the latest tweets from {{ socialfeed.value.twitter_username }}
+                                    </a>
+                                </div>
                                 {% if socialfeed.value.additional_social_feed %}
                                 <a class="twitter-timeline" data-height=580 data-width="100% !important"
                                    href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
@@ -158,6 +163,11 @@
                         {% if socialfeed.value.twitter_title %}
                         <h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
                         {% endif %}
+                        <div style="margin-bottom: 20px; line-height: 19px;">
+                                    <a class="twitter-embed_link" href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                        Keep up to date with the latest tweets from {{ socialfeed.value.twitter_username }}
+                                    </a>
+                        </div>
                         {% if socialfeed.value.additional_social_feed %}
                         <a class="twitter-timeline" data-height=580 data-width="100% !important"
                            href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">

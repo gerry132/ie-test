@@ -68,11 +68,11 @@ locals {
     },
     gerry_dev = {
       description = "Gerry Mcbride - OGCIO"
-      cidr_blocks = ["52.49.120.79/32", "37.228.234.207/32", "95.44.14.48/32"]
+      cidr_blocks = ["52.49.120.79/32", "37.228.234.219/32", "95.44.14.48/32"]
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.43.32/32", "80.233.35.32/32"]
+      cidr_blocks  = ["117.97.133.33/32", "80.233.35.32/32"]
     },
     joe_dev = {
       description = "Joe D - Sidero"

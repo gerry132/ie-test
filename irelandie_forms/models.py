@@ -63,6 +63,7 @@ class NeverSaveFormSubmission(AbstractFormSubmission):
 
 class EmailMapBlock(blocks.StructBlock):
     description = blocks.CharBlock(required=True)
+    subject = blocks.CharBlock(required=False)
     email = blocks.CharBlock(required=True)
 
 
@@ -142,10 +143,10 @@ class FormPage(HoneypotMixin, BasePage):
         ]
     )
 
-    def get_mapped_value(self, topic):
+    def get_mapped_value(self, topic, item_type='email'):
         for p in self.email_map:
             if p.value.get('description') == topic:
-                return p.value.get('email')
+                return p.value.get(item_type)
 
     def serve(self, request, *args, **kwargs):
         if request.method == "POST":
@@ -180,9 +181,12 @@ class FormPage(HoneypotMixin, BasePage):
             if 'topic' in request.POST:
                 self.topic = request.POST['topic']
                 addresses = [x.strip() for x in self.get_mapped_value(self.topic).split(',')]
+                subject_item = self.get_mapped_value(self.topic, 'subject')
             else:
                 addresses = [x.strip() for x in self.to_address.split(',')]
 
+            if subject_item:
+                subject = subject_item
             send_mail(subject, self.render_email(self.form), addresses, self.from_address, )
         return context
 
