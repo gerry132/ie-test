@@ -1023,7 +1023,9 @@ class MinimalArticlePage(BasePage):
         ),
         FieldPanel("publication_date"),
         FieldPanel("body"),
-        FieldPanel("related_articles_active", heading="Featured News Checkbox"),
+        FieldPanel("related_articles_active", heading="Featured News Checkbox",
+                   help_text="Checking this box will feature this news item on your "
+                   "main news page."),
         FieldPanel("featured_home", heading="Featured Home",
                    help_text="Checking this box will feature this news item on your mission/microsite "
                    "homepage if pinned stories are enabled.")
