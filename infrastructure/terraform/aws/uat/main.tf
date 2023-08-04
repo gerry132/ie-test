@@ -1610,7 +1610,7 @@ resource "aws_cloudwatch_event_target" "high_priority_alert" {
 }
 
 ### Applies IAM policy for SNS permissions for high_priority_alert
-resource "aws_sns_topic_policy" "default" {
+resource "aws_sns_topic_policy" "sns_topic_policy_high" {
   arn    = aws_sns_topic.high_priority_alert.arn
   policy = data.aws_iam_policy_document.sns_topic_policy_high.json
 }
@@ -1660,7 +1660,7 @@ resource "aws_cloudwatch_event_target" "low_priority_alert" {
 }
 
 ### Applies IAM policy for SNS permissions for low_priority_alert
-resource "aws_sns_topic_policy" "default" {
+resource "aws_sns_topic_policy" "sns_topic_policy_low" {
   arn    = aws_sns_topic.low_priority_alert.arn
   policy = data.aws_iam_policy_document.sns_topic_policy_low.json
 }
