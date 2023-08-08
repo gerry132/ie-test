@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+from urllib.parse import urlparse
 
 from django.forms.utils import ErrorList
 from django.core.validators import RegexValidator
@@ -16,6 +17,8 @@ from irelandie_home.blocks import SecondaryCallToAction
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 
 from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment
+
+from django.core.exceptions import ValidationError
 
 ALT_HELP_TEXT = """A short one-sentence literal description
                     of the %s is
@@ -1163,6 +1166,21 @@ class SocialFieldBlock(blocks.StructBlock):
         min_num=0,
         required=False,
     )
+
+    def clean(self, value):
+        errors = {}
+        result = value.get('twitter_username')
+        obj = urlparse(result)
+
+        if obj.hostname == 'twitter.com':
+            msg = (f'Only add the social media handle here, e.g. if the full link is https://{obj.hostname}/myprofile, '
+                   f'type myprofile into this box.')
+            errors['twitter_username'] = ErrorList([msg])
+
+        if errors:
+            raise StructBlockValidationError(block_errors=errors)
+
+        return super().clean(value)
 
 
 class PersonSocialBlock(blocks.StructBlock):
