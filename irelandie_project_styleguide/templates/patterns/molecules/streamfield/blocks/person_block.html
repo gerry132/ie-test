@@ -39,7 +39,7 @@
                     {% if value.contact_details or value.opening_hours or value.closure_dates or value.emergency_contact_details %}
 
                     <div class="rich-text">
-                        <h3 class="story__heading heading--2">Contact Details</h3>
+                        <h3 class="story__heading heading--2">{% translate "Contact Details" %}</h3>
                         {% if value.contact_details %}
                         {% include "patterns/molecules/contact_details/contact_details.html" with contact_details=value.contact_details %}
                         {% endif %}
@@ -126,7 +126,7 @@
                                 {% endif %}
                                 <div style="margin-bottom: 20px; line-height: 19px;">
                                     <a class="twitter-embed_link" href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
-                                        Keep up to date with the latest tweets from {{ socialfeed.value.twitter_username }}
+                                        {% blocktranslate %}Keep up to date with the latest tweets from {{ socialfeed.value.twitter_username }}{% endblocktranslate %}
                                     </a>
                                 </div>
                                 {% if socialfeed.value.additional_social_feed %}
@@ -165,7 +165,7 @@
                         {% endif %}
                         <div style="margin-bottom: 20px; line-height: 19px;">
                                     <a class="twitter-embed_link" href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
-                                        Keep up to date with the latest tweets from {{ socialfeed.value.twitter_username }}
+                                        {% blocktranslate %}Keep up to date with the latest tweets from {{ socialfeed.value.twitter_username }}{% endblocktranslate %}
                                     </a>
                         </div>
                         {% if socialfeed.value.additional_social_feed %}
