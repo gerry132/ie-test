@@ -1343,9 +1343,11 @@ resource "aws_appautoscaling_policy" "cpu" {
 # ORIGINAL CODE ENDS - UNTOUCHED #
 ##################################
 
-#############################################
-### NEW SIDERO MSP MONITORING CODE BEGINS ###
-#############################################
+#########################################
+### SIDERO MSP MONITORING CODE BEGINS ###
+#########################################
+
+### UAT CODE ###
 
 ### INSTRUCTIONS FOR SUBSCRIBING TO MONITORING ALERTS ###
 # This code may be provided to OGCIO teams to add to add monitoring of uat.reland.ie AWS resources for testing prior to production.
@@ -1366,9 +1368,7 @@ resource "aws_appautoscaling_policy" "cpu" {
 #		○ App ELBs - >10 target connection errors within 15 minutes
 #		○ ElastiCache - CPU and RAM
 #		○ S3 buckets - 4xx and 5xx errors
-#	• Two new Eventbridge rules which pattern match for the new Cloudwatch alarms and trigger the appropriate Lamda function
-#	• Eventbridge rule for certs in AWS Certificate Manager that are nearing expiry
-#########################################################################################################################################
+#########################################################################
 
 ### Cloudwatch HIGH - Postgres DB free space - uat-db-postgres ###
 resource "aws_cloudwatch_metric_alarm" "uat-db-postgres-free-space-alarm-below-20GB" {
@@ -1563,33 +1563,7 @@ resource "aws_cloudwatch_metric_alarm" "s3-ireland-ie-infrastructure-5xx-errors-
     "Sidero_MSP" : "true"
   }
 }
-
-### Cloudwatch HIGH - Expiring or Expired certificates - uat.ireland.ie
-resource "aws_cloudwatch_metric_alarm" "expiration_of_certificate_uat_ireland_ie" {
-  alarm_name          = "expiration_of_certificate_uat.ireland.ie"
-  comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = "1"
-  metric_name         = "CertificateExpirationDate"
-  namespace           = "AWS/ACM"
-  period              = "86400"
-  statistic           = "Minimum"
-  threshold           = "0"
-  alarm_description   = "This metric monitor expiring or expired certificates"
-  dimensions = {
-    CertificateArn = "$${aws:acm:eu-west-1:100350071169:certificate/e32fde64-da13-489b-99f7-f50efee99e31}"
-  }
-  tags = {
-    "Sidero_MSP" : "true"
-  }
-}
-
-resource "aws_acm_certificate" "dns_check_uat_ireland_ie" {
-  domain_name       = "uat.ireland.ie"
-  validation_method = "DNS"
-  tags = {
-    "Sidero_MSP" : "true"
-  }
-}
+#############################################################################################
 
 ### Create SNS topics - OGCIO may then add emails and phone numbers to these topics #########
 ## high priority SNS topic
@@ -1599,21 +1573,113 @@ resource "aws_sns_topic" "high_priority_alert" {
     "Sidero_MSP" : "true"
   }
 }
-##
-# low priority SNS topic
+## low priority SNS topic
 resource "aws_sns_topic" "low_priority_alert" {
   name = "low_priority_alert"
   tags = {
     "Sidero_MSP" : "true"
   }
 }
-##
 ##############################################################################################
 
-# -----------------------------------------------------------------------------
-# Sidero MSP Monitoring Ends
-# -----------------------------------------------------------------------------
+### Eventbridge rules - high_priority_alert (used to be called cloudwatch events) ############
+resource "aws_cloudwatch_event_rule" "high_priority_alert" {
+  name          = "high_priority_alert"
+  description   = "Triggers SNS topic high_priority_alert to alert subscribed users"
+  event_pattern = jsonencode({
+    "source": ["aws.cloudwatch"],
+    "detail-type": ["CloudWatch Alarm State Change"],
+    "detail": {
+      "state": {
+        "value": ["ALARM"]
+      }
+    },
+    "resources": [aws_cloudwatch_metric_alarm.uat-db-postgres-free-space-alarm-below-20GB.arn,
+      aws_cloudwatch_metric_alarm.rds-cpu-utilization-above-80percent.arn,
+      aws_cloudwatch_metric_alarm.ecs-cpu-utilization-above-90percent.arn,
+      aws_cloudwatch_metric_alarm.ecs-memory-utilization-above-90percent.arn
+    ]
+  })
+}
 
-#################
-# NEW CODE ENDS #
-#################
+## Define the event target - trigger SNS
+resource "aws_cloudwatch_event_target" "high_priority_alert" {
+  rule      = aws_cloudwatch_event_rule.high_priority_alert.name
+  target_id = "high_priority_alert"
+  arn       = aws_sns_topic.high_priority_alert.arn
+}
+
+### Applies IAM policy for SNS permissions for high_priority_alert
+resource "aws_sns_topic_policy" "sns_topic_policy_high" {
+  arn    = aws_sns_topic.high_priority_alert.arn
+  policy = data.aws_iam_policy_document.sns_topic_policy_high.json
+}
+
+data "aws_iam_policy_document" "sns_topic_policy_high" {
+  statement {
+    effect  = "Allow"
+    actions = ["SNS:Publish"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["events.amazonaws.com"]
+    }
+    resources = [
+      aws_sns_topic.high_priority_alert.arn
+    ]
+  }
+}
+
+### Eventbridge rules - low_priority_alert (used to be called cloudwatch events) ############
+resource "aws_cloudwatch_event_rule" "low_priority_alert" {
+  name          = "low_priority_alert"
+  description   = "Triggers SNS topic low_priority_alert to alert subscribed users"
+  event_pattern = jsonencode({
+    "source": ["aws.cloudwatch"],
+    "detail-type": ["CloudWatch Alarm State Change"],
+    "detail": {
+      "state": {
+        "value": ["ALARM"]
+      }
+    },
+    "resources": [aws_cloudwatch_metric_alarm.elb-UAT-alb-multiple-5xx-errors.arn,
+      aws_cloudwatch_metric_alarm.net-lb-connection-multiple-TCP-reset-errors.arn,
+      aws_cloudwatch_metric_alarm.elasticache-cpu-above-80percent.arn,
+      aws_cloudwatch_metric_alarm.elasticache-memory-above-8MB.arn,
+      aws_cloudwatch_metric_alarm.s3-ireland-ie-infrastructure-4xx-errors-alarm.arn,
+      aws_cloudwatch_metric_alarm.s3-ireland-ie-infrastructure-5xx-errors-alarm.arn
+    ]
+  })
+}
+
+## Define the event target - trigger SNS
+resource "aws_cloudwatch_event_target" "low_priority_alert" {
+  rule      = aws_cloudwatch_event_rule.low_priority_alert.name
+  target_id = "low_priority_alert"
+  arn       = aws_sns_topic.low_priority_alert.arn
+}
+
+### Applies IAM policy for SNS permissions for low_priority_alert
+resource "aws_sns_topic_policy" "sns_topic_policy_low" {
+  arn    = aws_sns_topic.low_priority_alert.arn
+  policy = data.aws_iam_policy_document.sns_topic_policy_low.json
+}
+
+data "aws_iam_policy_document" "sns_topic_policy_low" {
+  statement {
+    effect  = "Allow"
+    actions = ["SNS:Publish"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["events.amazonaws.com"]
+    }
+    resources = [
+      aws_sns_topic.low_priority_alert.arn
+    ]
+  }
+}
+
+#######################################
+### SIDERO MSP MONITORING CODE ENDS ###
+#######################################

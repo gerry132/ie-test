@@ -884,6 +884,7 @@ class ArticleStoryBlock(blocks.StreamBlock):
         group="HTML",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
+
     role = RoleBlock(group="HTML")
     table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
     video = CustomVideoChooserBlockAlt(group="HTML")
@@ -895,7 +896,10 @@ class MinimalArticleStoryBlock(blocks.StreamBlock):
     rich_text_advanced = AdvancedRichTextBlock(group="Base")
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
-
+    html = blocks.RawHTMLBlock(
+        group="HTML",
+        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
+    )
     logos = LogoCardsBlock(group="Module")
     table = TableBlock(table_options={'renderer': 'html'}, group="Module")
     advanced_table_block = TypedTableBlock([
