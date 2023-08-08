@@ -18,8 +18,6 @@ from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 
 from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment
 
-from django.core.exceptions import ValidationError
-
 ALT_HELP_TEXT = """A short one-sentence literal description
                     of the %s is
                     required to make the page accessible to the
