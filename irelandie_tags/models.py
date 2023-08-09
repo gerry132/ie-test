@@ -25,6 +25,12 @@ class TagPage(BasePage):
         FieldPanel("tag_label"),
     ]
 
+    @classmethod
+    def get_indexed_objects(cls):
+        """
+        Exclude objects from indices
+        """
+        return None
 
 class DestinationTagPage(BasePage):
     parent_page_types = [
