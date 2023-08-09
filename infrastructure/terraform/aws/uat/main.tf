@@ -34,6 +34,7 @@ locals {
   # DB
   db_instance_class             = "db.m6g.large"
   db_engine_version             = "13.11"
+  allow_major_version_upgrade   = true
   # CACHE
   cache_instance_class          = "cache.t3.medium"
   # ECS
