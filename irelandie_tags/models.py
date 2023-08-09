@@ -25,6 +25,7 @@ class TagPage(BasePage):
         FieldPanel("tag_label"),
     ]
 
+
     @classmethod
     def get_indexed_objects(cls):
         """
