@@ -1,0 +1,575 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-04 11:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: accview_non_admin/views.py:85 passwordreset/panels.py:17
+#: passwordreset/views.py:34
+msgid "Profile"
+msgstr ""
+
+#: accview_non_admin/views.py:87 accview_non_admin/views.py:161
+msgid "Notifications"
+msgstr ""
+
+#: accview_non_admin/views.py:145
+msgid "Name and Email"
+msgstr ""
+
+#: accview_non_admin/views.py:152
+msgid "Profile picture"
+msgstr ""
+
+#: accview_non_admin/views.py:179
+msgid "Locale"
+msgstr ""
+
+#: accview_non_admin/views.py:193 passwordreset/panels.py:71
+msgid "Password"
+msgstr ""
+
+#: accview_non_admin/views.py:275
+msgid "Your account settings have been changed successfully!"
+msgstr ""
+
+#: accview_non_admin/views.py:395
+msgid "You have been successfully logged out."
+msgstr ""
+
+#: custompasswordvalidators/case_mix.py:11
+#: custompasswordvalidators/case_mix.py:17
+msgid "The password must a mixture of uppercase and lowercase letters."
+msgstr ""
+
+#: custompasswordvalidators/entirely_letters.py:11
+msgid "The password must contain numbers as well as letters."
+msgstr ""
+
+#: custompasswordvalidators/entirely_letters.py:17
+msgid "Your password must contain numbers as well as letters."
+msgstr ""
+
+#: custompasswordvalidators/symbols.py:11
+#: custompasswordvalidators/symbols.py:18
+msgid ""
+"Your password must contain at least 1 symbol: ()[]{}|\\`~!@#$%^&*_-+=;:'\\\","
+"<>./?"
+msgstr ""
+
+#: irelandie_admin/templates/partials/country_filter.html:4
+msgid "Country"
+msgstr ""
+
+#: irelandie_admin/templates/wagtailadmin/pages/search.html:3
+#: irelandie_admin/templates/wagtailadmin/pages/search.html:27
+#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:159
+#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:182
+#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:291
+#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:312
+#: irelandie_project_styleguide/templates/patterns/pages/search/search.html:10
+msgid "Search"
+msgstr ""
+
+#: irelandie_admin/templates/wagtailadmin/pages/search.html:33
+msgid "Select all pages in listing"
+msgstr ""
+
+#: irelandie_admin/templates/wagtailadmin/pages/search_results.html:5
+#, python-format
+msgid ""
+"\n"
+"                There is one matching page\n"
+"            "
+msgid_plural ""
+"\n"
+"                There are %(counter)s matching pages\n"
+"            "
+msgstr[0] ""
+msgstr[1] ""
+
+#: irelandie_admin/templates/wagtailadmin/pages/search_results.html:16
+msgid "Page types"
+msgstr ""
+
+#: irelandie_admin/templates/wagtailadmin/pages/search_results.html:19
+#: irelandie_admin/templates/wagtailadmin/pages/search_results.html:21
+msgid "All"
+msgstr ""
+
+#: irelandie_admin/templates/wagtailadmin/pages/search_results.html:43
+#, python-format
+msgid "Sorry, no pages match <em>%(query_string)s</em>"
+msgstr ""
+
+#: irelandie_admin/templates/wagtailadmin/pages/search_results.html:48
+msgid "Enter a search term above"
+msgstr ""
+
+#: irelandie_forms/models.py:38
+msgid "Date Input (HTML 5)"
+msgstr ""
+
+#: irelandie_forms/models.py:39
+msgid "Date/Time Input (HTML 5)"
+msgstr ""
+
+#: irelandie_navigation/blocks.py:19 irelandie_navigation/blocks.py:29
+msgid "Leave blank to use the page's own title"
+msgstr ""
+
+#: irelandie_navigation/blocks.py:140 irelandie_navigation/blocks.py:150
+msgid "Leave blank if no header required."
+msgstr ""
+
+#: irelandie_navigation/blocks.py:160
+msgid "200 characters max limit"
+msgstr ""
+
+#: irelandie_navigation/blocks.py:198
+msgid "75 characters max limit"
+msgstr ""
+
+#: irelandie_navigation/models.py:68 irelandie_navigation/models.py:337
+#: irelandie_navigation/models.py:450
+msgid "Logo Alt text"
+msgstr ""
+
+#: irelandie_navigation/models.py:74
+msgid "Iframe code for Google My Maps."
+msgstr ""
+
+#: irelandie_navigation/models.py:78
+msgid "Text for warning banner on CMS preview pages."
+msgstr ""
+
+#: irelandie_navigation/models.py:108 irelandie_navigation/models.py:167
+#: irelandie_navigation/models.py:243
+msgid "Language"
+msgstr ""
+
+#: irelandie_navigation/models.py:114 irelandie_navigation/models.py:431
+msgid "Links"
+msgstr ""
+
+#: irelandie_navigation/models.py:125 irelandie_navigation/models.py:147
+#: irelandie_navigation/models.py:148
+msgid "Primary Navigation"
+msgstr ""
+
+#: irelandie_navigation/models.py:173 irelandie_navigation/models.py:249
+#: irelandie_navigation/models.py:312
+msgid "Columns"
+msgstr ""
+
+#: irelandie_navigation/models.py:178 irelandie_navigation/models.py:317
+msgid "Single list of elements at the base of the page."
+msgstr ""
+
+#: irelandie_navigation/models.py:183
+msgid "email address"
+msgstr ""
+
+#: irelandie_navigation/models.py:196 irelandie_navigation/models.py:223
+#: irelandie_navigation/models.py:224
+msgid "Footer Navigation"
+msgstr ""
+
+#: irelandie_navigation/models.py:260 irelandie_navigation/models.py:282
+#: irelandie_navigation/models.py:283
+msgid "Secondary Navigation"
+msgstr ""
+
+#: irelandie_navigation/models.py:302 irelandie_navigation/models.py:414
+msgid "Name"
+msgstr ""
+
+#: irelandie_navigation/models.py:394
+msgid "Custom Footer"
+msgstr ""
+
+#: irelandie_navigation/models.py:395
+msgid "Custom Footers"
+msgstr ""
+
+#: irelandie_navigation/models.py:421
+msgid "URL"
+msgstr ""
+
+#: irelandie_navigation/models.py:499
+msgid "Custom Header"
+msgstr ""
+
+#: irelandie_navigation/models.py:500
+msgid "Custom Headers"
+msgstr ""
+
+#: irelandie_people/models.py:56 irelandie_utils/models.py:305
+msgid "Image Alt text"
+msgstr ""
+
+#: irelandie_people/models.py:57 irelandie_utils/models.py:236
+#: irelandie_utils/models.py:306
+msgid "The alt text shown for accessibility: https://axesslab.com/alt-texts/"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/base_page.html:91
+#: irelandie_project_styleguide/templates/patterns/molecules/skip-link/skip-link.html:4
+msgid "Skip to main content"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/card/card.html:34
+msgid "Read story"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/card/news-card.html:45
+#: irelandie_project_styleguide/templates/patterns/molecules/related-articles/related-articles.html:43
+#: irelandie_project_styleguide/templates/patterns/molecules/topics/featured_article.html:34
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_landing_page.html:75
+msgid "Read more"
+msgstr "続きを読む"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:47
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:45
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:59
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/multimedia_block.html:67
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:19
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:25
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_block.html:45
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/video_block.html:7
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/video_block_alt.html:7
+#: irelandie_project_styleguide/templates/patterns/pages/missions/general_content_page.html:69
+msgid "Your browser does not support the video tag."
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:95
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:51
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:66
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/multimedia_block.html:62
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/multimedia_block.html:72
+msgid "Toggle video playback"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/breadcrumbs.html:19
+msgid "Home"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/custom_primary_navigation.html:3
+msgid "Secondary navigation"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/footerlinks.html:3
+msgid "Footer links"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:2
+msgid "Primary navigation"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:26
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:92
+msgid "Back"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/secondarynav.html:2
+msgid "Extended primary navigation"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/sidebar.html:6
+msgid "In this section"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/pagination/index-pagination.html:4
+#: irelandie_project_styleguide/templates/patterns/molecules/pagination/pagination.html:4
+msgid "Pagination"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/pagination/index-pagination.html:9
+msgid "Goto previous page"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/pagination/index-pagination.html:16
+msgid "Previous"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/pagination/index-pagination.html:26
+msgid "Goto next page"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/pagination/index-pagination.html:33
+msgid "Next"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/pagination/pagination.html:8
+msgid "Go to previous page"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/pagination/pagination.html:15
+#, python-format
+msgid ""
+" Current Page, Page %(paginator_page.number)s of "
+"%(paginator_page.paginator.num_pages)s pages "
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/pagination/pagination.html:22
+msgid "Go to next page"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/related-articles/related-articles.html:8
+msgid "You may also be interested in these articles"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/search/search.html:7
+#: irelandie_project_styleguide/templates/patterns/pages/search/search.html:20
+msgid "Search this website"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/search/search.html:8
+#: irelandie_project_styleguide/templates/patterns/pages/search/search.html:22
+msgid "Submit Search"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:9
+msgid "Share this page"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:17
+msgid "Share this page on Twitter"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:17
+msgid "Share on Twitter"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:24
+msgid "Share this page on LinkedIn"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:24
+msgid "Share on LinkedIn"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:32
+msgid "Share this page on Facebook"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:32
+msgid "Share on Facebook"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/slide/slide.html:6
+msgid "A link to somewhere else. This could surround the whole slide."
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:42
+msgid "Contact Details"
+msgstr "お問い合わせ"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:129
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:168
+#, python-format
+msgid ""
+"Keep up to date with the latest tweets from "
+"%(socialfeed.value.twitter_username)s"
+msgstr "新のツイートをチェックしてください"
+"%(socialfeed.value.twitter_username)s"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/twitter_embed.html:6
+#: irelandie_project_styleguide/templates/patterns/snippets/twitterembedsnippet.html:7
+msgid "Follow our"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/video-modal/video-modal.html:4
+msgid "Open video"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/molecules/video-modal/video-modal.html:6
+msgid "Close"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:38
+msgid "Follow us"
+msgstr "フォローする"
+
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:41
+msgid "Find us on Youtube"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:47
+msgid "Connect on Linkedin"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:53
+msgid "Find us on Facebook"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:59
+msgid "Follow us on Twitter"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:65
+msgid "Find us on Instagram"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:71
+msgid "Find us on Weibo"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:89
+msgid "Copyright"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:89
+msgid "All rights reserved"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:140
+#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:272
+msgid "Select default language"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:170
+#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:302
+msgid "Mobile menu toggle"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/pages/defender/lockout.html:8
+msgid "Your account has been locked"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/pages/defender/lockout.html:25
+msgid "Account locked: too many login attempts."
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/pages/defender/lockout.html:27
+msgid "Contact an admin to unlock your account."
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/pages/defender/lockout.html:29
+#, python-format
+msgid ""
+"Please try again in '%(cooloff_time_minutes|floatformat)s' "
+"minute'%(cooloff_time_minutes|pluralize)s'."
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/pages/errors/500.html:8
+msgid "Server error"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/pages/errors/500.html:29
+msgid "Something went wrong"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/pages/errors/500.html:30
+msgid ""
+"We&rsquo;re sorry! Our server is acting up right now. Please try again soon."
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/pages/errors/500.html:31
+msgid "Internal Server Error (500)"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/pages/forms/example_form.html:11
+#: irelandie_project_styleguide/templates/patterns/pages/forms/form_page.html:69
+msgid ""
+"There were some errors with your form. Please amend the fields highlighted "
+"below."
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/pages/forms/example_form.html:31
+#: irelandie_project_styleguide/templates/patterns/pages/forms/form_page.html:78
+msgid "Submit"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/pages/forms/form_page.html:51
+msgid "Choose Topic"
+msgstr "お問い合わせの種類"
+
+#: irelandie_project_styleguide/templates/patterns/pages/forms/form_page_landing.html:4
+#: irelandie_project_styleguide/templates/patterns/pages/forms/form_page_landing.html:11
+msgid "Thank you"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_job/job_index.html:44
+msgid "There are currently no vacancies."
+msgstr "現在、求人はありません。"
+
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_index.html:48
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_index.html:65
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_index.html:89
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_index.html:101
+msgid "Select year:"
+msgstr "年を選択："
+
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_landing_page.html:88
+msgid "Read all news"
+msgstr "すべてのニュースを読む"
+
+#: irelandie_project_styleguide/templates/patterns/pages/missions/services_landing_page.html:39
+#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:218
+msgid "Related content"
+msgstr "関連情報"
+
+#: irelandie_project_styleguide/templates/patterns/pages/search/search.html:8
+msgid "Search results for"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/pages/search/search.html:46
+msgid "Results"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/pages/search/search.html:59
+msgid "No results found."
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:145
+#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:163
+#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:201
+msgid "Back to top"
+msgstr "トップに戻る"
+
+#: irelandie_project_styleguide/templates/patterns/pages/wagtail/password_required.html:5
+#: irelandie_project_styleguide/templates/patterns/pages/wagtail/password_required.html:10
+msgid "Password required"
+msgstr ""
+
+#: irelandie_project_styleguide/templates/patterns/pages/wagtail/password_required.html:12
+msgid "Please enter the password to proceed."
+msgstr ""
+
+#: irelandie_utils/blocks.py:525
+msgid ""
+"Slido iframe code. Ensure that the code you add here is only Slido provided "
+"code."
+msgstr ""
+
+#: irelandie_utils/models.py:213
+msgid "Listing Image Alt text"
+msgstr ""
+
+#: passwordreset/templates/passwordreset/index.html:4
+#: passwordreset/templates/passwordreset/index.html:6
+msgid "Account"
+msgstr ""
+
+#: passwordreset/templates/passwordreset/index.html:17
+msgid "More actions"
+msgstr ""
+
+#: passwordreset/views.py:83
+msgid "Your password has been updated successfully!"
+msgstr ""

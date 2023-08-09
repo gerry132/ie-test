@@ -13,6 +13,9 @@ from .blocks import TravelCautionBlock, ButtonBlock, InformationBlock, TravelReg
 
 from irelandie_utils.blocks import AccordionBlock
 
+from django.core.exceptions import ValidationError
+from urllib.parse import urlparse
+
 
 class TravelCountryPage(BasePage):
     template = "patterns/pages/irelandie_travel/travel_country.html"
@@ -70,6 +73,15 @@ class TravelCountryPage(BasePage):
     ]
 
 
+def validate_hostname(value):
+    if not value:
+        return  # Required error is done the field
+    obj = urlparse(value)
+    if obj.hostname == 'twitter.com':
+        raise ValidationError(f'Only add the social media handle here, e.g. if the full link is '
+                              f'https://{obj.hostname}/myprofile, type myprofile into this box.')
+
+
 class TravelLandingPage(BasePage):
     template = "patterns/pages/irelandie_travel/travel_landing.html"
     body = StreamField(
@@ -88,7 +100,7 @@ class TravelLandingPage(BasePage):
     )
     twitter_title = models.CharField(max_length=50, blank=True)
 
-    twitter_username = models.CharField(max_length=100, blank=True)
+    twitter_username = models.CharField(max_length=100, blank=True, validators=[validate_hostname])
     content_panels = BasePage.content_panels + [
         FieldPanel('body'),
         FieldPanel('advanced_rich_text'),
@@ -116,8 +128,8 @@ class TravelIndexPage(BasePage):
                 page_type=[
                     "irelandie_travel.TravelCountryPage",
                     "irelandie_travel.TravelLandingPage"
-                    ]
-                )
+                ]
+            )
              ),
         ],
         null=True,
