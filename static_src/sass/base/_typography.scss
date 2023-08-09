@@ -79,7 +79,7 @@ h2,
     font-weight: $weight--bold;
 
     @include media-query(medium) {
-        @include font-size(xl);
+        @include font-size(xl1);
         line-height: 58px;
     }
 }
