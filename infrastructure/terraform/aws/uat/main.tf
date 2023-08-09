@@ -33,7 +33,7 @@ locals {
   region                        = "eu-west-1"
   # DB
   db_instance_class             = "db.m6g.large"
-  db_engine_version             = "12.8"
+  db_engine_version             = "13.11"
   # CACHE
   cache_instance_class          = "cache.t3.medium"
   # ECS
@@ -943,6 +943,29 @@ resource "aws_lb_listener_certificate" "africa_day_certificate" {
 # -----------------------------------------------------------------------------
 # Database
 # -----------------------------------------------------------------------------
+
+
+resource "aws_opensearch_domain" "opensearch" {
+  domain_name = local.environment_name
+  engine_version = "OpenSearch_2.7"
+
+  cluster_config {
+      instance_count = 3
+      instance_type = "t3.small.search"
+      zone_awareness_enabled = true
+      zone_awareness_config {
+        availability_zone_count = 3
+      }
+  }
+  ebs_options {
+      ebs_enabled = true
+      volume_size = 10
+  }
+  vpc_options {
+    subnet_ids = local.module.network.public_subnet_ids
+    security_group_ids = [aws_security_group.db.id]
+  }
+}
 
 # Random db password
 
