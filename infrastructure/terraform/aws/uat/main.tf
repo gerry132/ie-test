@@ -34,7 +34,7 @@ locals {
   # DB
   db_instance_class             = "db.m6g.large"
   db_engine_version             = "13.11"
-  allow_major_version_upgrade   = true
+  
   # CACHE
   cache_instance_class          = "cache.t3.medium"
   # ECS
@@ -1004,6 +1004,7 @@ module "database" {
   db_password           = data.aws_ssm_parameter.random_db_password.value
   db_instance_class     = local.db_instance_class
   db_engine_version     = local.db_engine_version
+  allow_major_version_upgrade   = true
   name                  = "${local.environment_name}-db"
   subnets               = module.network.public_subnet_ids
   security_group_ids    = [aws_security_group.db.id]
