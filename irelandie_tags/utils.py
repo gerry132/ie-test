@@ -26,6 +26,5 @@ def get_tagged_items(self, tag):
         key=attrgetter('published'),
         reverse=True
     )
-    print(stories)
 
     return results
