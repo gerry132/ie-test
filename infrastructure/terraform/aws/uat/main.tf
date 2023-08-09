@@ -962,7 +962,7 @@ resource "aws_opensearch_domain" "opensearch" {
       volume_size = 10
   }
   vpc_options {
-    subnet_ids = local.module.network.public_subnet_ids
+    subnet_ids = module.network.public_subnet_ids
     security_group_ids = [aws_security_group.db.id]
   }
 }
