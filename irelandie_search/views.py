@@ -5,6 +5,7 @@ from django.template.response import TemplateResponse
 from django.utils.cache import add_never_cache_headers, patch_cache_control
 
 from irelandie_missions.models import MissionPage
+from irelandie_tags.models import TagPage 
 
 from wagtail.models import Page, Site
 from wagtail.search.models import Query
@@ -26,6 +27,7 @@ def search(request):
         search_results = (
             Page.objects.live().public()
             .descendant_of(root_page)
+            .not_exact_type(TagPage)
             .search(search_query, operator="and", partial_match=True)
         )
         query = Query.get(search_query)
