@@ -5,7 +5,7 @@ from django.template.response import TemplateResponse
 from django.utils.cache import add_never_cache_headers, patch_cache_control
 
 from irelandie_missions.models import MissionPage
-from irelandie_tags.models import TagPage 
+from irelandie_tags.models import TagPage
 
 from wagtail.models import Page, Site
 from wagtail.search.models import Query
