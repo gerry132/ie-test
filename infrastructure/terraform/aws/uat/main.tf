@@ -945,56 +945,6 @@ resource "aws_lb_listener_certificate" "africa_day_certificate" {
 # -----------------------------------------------------------------------------
 
 
-resource "aws_opensearch_domain" "opensearch" {
-  domain_name = local.environment_name
-  engine_version = "OpenSearch_2.7"
-
-  cluster_config {
-      instance_count = 3
-      instance_type = "t3.small.search"
-      zone_awareness_enabled = true
-      zone_awareness_config {
-        availability_zone_count = 3
-      }
-  }
-  ebs_options {
-      ebs_enabled = true
-      volume_size = 10
-  }
-  vpc_options {
-    subnet_ids = module.network.public_subnet_ids
-    security_group_ids = [aws_security_group.opensearch_security_group.id]
-  }
-}
-
-
-
-resource "aws_security_group" "opensearch_security_group" {
-  name        = "${local.environment_name}-sg-opensearch"
-  vpc_id      = module.network.vpc_id
-  description = "Allow inbound HTTP traffic"
-
-  ingress {
-    description = "HTTP from VPC"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-
-    cidr_blocks = [
-      "0.0.0.0/0",
-    ]
-  }
-}
-
-resource "aws_security_group_rule" "allow_opensearch_ingress_vpn" {
-  type                     = "ingress"
-  from_port                = 443
-  to_port                  = 443
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.opensearch_security_group.id
-  description              = "Allow connections from AWS VPN"
-}
-
 # Random db password
 
 resource "random_string" "random_db_password" {
