@@ -113,6 +113,8 @@ stages:
         AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
         AWS_REGION: $(aws_region)
         DEBUG: $(debug)
+        OPENSEARCH_KEY: $(opensearch_key)
+        OPENSEARCH_SECRET: $(opensearch_secret)
         AWS_ACCOUNT_ID: $(aws_account_id)
         IMAGE_NAME: $(image_name)
         IMAGE_TAG: $(image_tag)
