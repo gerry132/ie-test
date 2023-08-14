@@ -7,8 +7,6 @@ from django.utils.cache import add_never_cache_headers, patch_cache_control
 from irelandie_missions.models import MissionPage
 
 from wagtail.models import Page, Site
-from wagtail.search.models import Query
-
 from irelandie_utils.cache import get_default_cache_control_kwargs
 
 from wagtail.search.backends import get_search_backend
@@ -29,9 +27,17 @@ def search(request):
         s = get_search_backend()
 
         if 'opensearch' in s.settings['settings'].keys():
-            search_results = s.search(Fuzzy(search_query), Page, partial_match=False)
+            search_results = (
+                Page.objects.live().public()
+                    .descendant_of(root_page)
+                    .search(Fuzzy(search_query), Page, partial_match=False)
+            )
         else:
-            search_results = s.search(search_query, Page, partial_match=True)
+            search_results = (
+                Page.objects.live().public()
+                    .descendant_of(root_page)
+                    .search(search_query, operator="and", partial_match=True)
+            )
     else:
         search_results = Page.objects.none()
     # Pagination
