@@ -26,7 +26,7 @@ def search(request):
     if search_query:
         s = get_search_backend()
 
-        if 'opensearch' in s.settings['settings'].keys():
+        if hasattr(s, 'settings'):
             search_results = (
                 Page.objects.live().public()
                     .descendant_of(root_page)
