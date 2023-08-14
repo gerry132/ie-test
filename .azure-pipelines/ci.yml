@@ -107,12 +107,6 @@ stages:
       inputs:
         targetType: inline
         script: |
-          echo $OPENSEARCH_KEY;
-          echo $OPENSEARCH_KEY;
-          echo $OPENSEARCH_KEY;
-          echo $OPENSEARCH_KEY;
-          echo $OPENSEARCH_KEY;
-          exit 1;
           aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
           docker build . -t "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
           docker push "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
