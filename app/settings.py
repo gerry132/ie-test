@@ -377,6 +377,8 @@ AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
 AWS_SES_REGION_NAME = os.environ.get("AWS_REGION", "eu-west-1")
 AWS_SES_REGION_ENDPOINT = os.environ.get("EMAIL_HOST")
+OPENSEARCH_KEY = os.environ.get("OPENSEARCH_KEY")
+OPENSEARCH_SECRET = os.environ.get("OPENSEARCH_SECRET")
 
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
 if USE_S3 is True:
@@ -403,10 +405,9 @@ WAGTAILIMAGES_FEATURE_DETECTION_ENABLED = False
 WAGTAILDOCS_DOCUMENT_MODEL = "irelandie_documents.CustomDocument"
 
 
-if False:
+if OPENSEARCH_KEY and OPENSEARCH_SECRET:
     from elasticsearch import RequestsHttpConnection
     from requests_aws4auth import AWS4Auth
-
 
     WAGTAILSEARCH_BACKENDS = {
         'default': {
@@ -418,7 +419,8 @@ if False:
                 'port': 443,
                 'use_ssl': True,
                 'verify_certs': True,
-                }],
+                'http_auth': AWS4Auth(OPENSEARCH_KEY, OPENSEARCH_SECRET, 'eu-west-1', 'es'),
+            }],
             'OPTIONS': {
                 'connection_class': RequestsHttpConnection,
             },
