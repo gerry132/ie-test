@@ -29,6 +29,14 @@
                 "value": "${SETTINGS_AWS_SECRET_ACCESS_KEY}"
             },
             {
+                "name": "OPENSEARCH_SECRET",
+                "value": "${SETTINGS_OPENSEARCH_SECRET}"
+            },
+                        {
+                "name": "OPENSEARCH_KEY",
+                "value": "${SETTINGS_OPENSEARCH_KEY}"
+            },
+            {
                 "name": "AWS_ACCESS_KEY_ID",
                 "value": "${SETTINGS_AWS_ACCESS_KEY_ID}"
             },
