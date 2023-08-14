@@ -426,6 +426,7 @@ if OPENSEARCH_KEY and OPENSEARCH_SECRET:
             },
             'INDEX_SETTINGS': {
                 'settings': {
+                    'opensearch': True,
                     'index': {
                         'number_of_shards': 1,
                     },
@@ -436,10 +437,10 @@ if OPENSEARCH_KEY and OPENSEARCH_SECRET:
                             }
                         }
                     },
-                "max_ngram_diff" : "50",    
+                    "max_ngram_diff": "50",
                 }
                 }
-                
+
         }
     }
 else:
