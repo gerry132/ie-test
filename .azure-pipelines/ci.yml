@@ -63,6 +63,9 @@ stages:
         python manage.py collectstatic --noinput
       displayName: Upload Static Files to S3
       env:
+        DEBUG: $(debug)
+        OPENSEARCH_KEY: $(opensearch_key)
+        OPENSEARCH_SECRET: $(opensearch_secret)
         AWS_ACCESS_KEY_ID: $(aws_access_key)
         AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
 
