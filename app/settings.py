@@ -427,6 +427,7 @@ if OPENSEARCH_KEY and OPENSEARCH_SECRET:
             'INDEX_SETTINGS': {
                 'settings': {
                     'opensearch': True,
+
                     'index': {
                         'number_of_shards': 1,
                     },
