@@ -98,6 +98,33 @@ resource "aws_ssm_parameter" "DOCKER_IMAGE_URL" {
   }
 }
 
+
+resource "aws_ssm_parameter" "OPENSEARCH_KEY" {
+  name        = "${local.environment_name}_OPENSEARCH_KEY"
+  description = "For use in Codebuild buildspec - ${local.environment_name}"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
+
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
+
+resource "aws_ssm_parameter" "OPENSEARCH_SECRET" {
+  name        = "${local.environment_name}_OPENSEARCH_SECRET"
+  description = "For use in Codebuild buildspec - ${local.environment_name}"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
+
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
+
 resource "aws_ssm_parameter" "AWS_SECRET_ACCESS_KEY" {
   name        = "${local.environment_name}_AWS_SECRET_ACCESS_KEY"
   description = "For use in Codebuild buildspec - ${local.environment_name}"
@@ -976,7 +1003,6 @@ resource "aws_opensearch_domain" "opensearch" {
   }
   advanced_security_options {
       enabled                        = true
-      internal_user_database_enabled = true
       master_user_options {
         master_user_arn = aws_iam_user.opensearch.arn
       }
@@ -1294,6 +1320,8 @@ locals {
   SETTINGS_ALLOWED_HOSTS            = join(", ", ["*"])
   SETTINGS_AWS_ACCESS_KEY_ID        = aws_ssm_parameter.AWS_ACCESS_KEY_ID.value
   SETTINGS_AWS_SECRET_ACCESS_KEY    = aws_ssm_parameter.AWS_SECRET_ACCESS_KEY.value
+  SETTINGS_OPENSEARCH_SECRET        = aws_ssm_parameter.OPENSEARCH_KEY.value
+  SETTINGS_OPENSEARCH_KEY           = aws_ssm_parameter.OPENSEARCH_KEY.value
   SETTINGS_AWS_STATIC_BUCKET_NAME   = aws_s3_bucket.assets.id
   SETTINGS_BASE_URL                 = "http://www.${local.project_domain}"
   SETTINGS_CACHE_ADDRESS            = local.cache_address
@@ -1327,6 +1355,8 @@ data "template_file" "task_definition" {
     SETTINGS_DEBUG                      = local.SETTINGS_DEBUG
     SETTINGS_DEBUG_TOOLBAR              = local.SETTINGS_DEBUG_TOOLBAR
     SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
+    SETTINGS_OPENSEARCH_KEY             = local.SETTINGS_OPENSEARCH_KEY
+    SETTINGS_OPENSEARCH_SECRET          = local.SETTINGS_OPENSEARCH_SECRET
     SETTINGS_USE_CACHE                  = local.SETTINGS_USE_CACHE
     SETTINGS_USE_S3                     = local.SETTINGS_USE_S3
     SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
