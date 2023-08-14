@@ -402,9 +402,8 @@ print(debug_on)
 print(debug_on)
 print(debug_on)
 print(debug_on)
-print(OPENSEARCH_KEY)
-print(OPENSEARCH_SECRET)
-
+for name, value in os.environ.items():
+    print("{0}: {1}".format(name, value))
 print(debug_on)
 print(debug_on)
 print(debug_on)
