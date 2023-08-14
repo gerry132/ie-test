@@ -5,12 +5,14 @@ from django.template.response import TemplateResponse
 from django.utils.cache import add_never_cache_headers, patch_cache_control
 
 from irelandie_missions.models import MissionPage
-from irelandie_tags.models import TagPage
 
 from wagtail.models import Page, Site
 from wagtail.search.models import Query
 
 from irelandie_utils.cache import get_default_cache_control_kwargs
+
+from wagtail.search.backends import get_search_backend
+from wagtail.search.query import Fuzzy
 
 
 def search(request):
@@ -24,19 +26,14 @@ def search(request):
         root_page = MissionPage.objects.live().get(id=origin)
 
     if search_query:
-        search_results = (
-            Page.objects.live().public()
-            .descendant_of(root_page)
-            .not_exact_type(TagPage)
-            .search(search_query, operator="and", partial_match=True)
-        )
-        query = Query.get(search_query)
+        s = get_search_backend()
 
-        # Record hit
-        query.add_hit()
+        if 'opensearch' in s.settings['settings'].keys():
+            search_results = s.search(Fuzzy(search_query), Page, partial_match=False)
+        else:
+            search_results = s.search(search_query, Page, partial_match=True)
     else:
         search_results = Page.objects.none()
-
     # Pagination
     paginator = Paginator(search_results, settings.DEFAULT_PER_PAGE)
     try:
