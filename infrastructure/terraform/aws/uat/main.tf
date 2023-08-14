@@ -945,29 +945,45 @@ resource "aws_lb_listener_certificate" "africa_day_certificate" {
 # -----------------------------------------------------------------------------
 
 
-#resource "aws_opensearch_domain" "opensearch" {
-#  domain_name = local.environment_name
-#  engine_version = "OpenSearch_2.7"
-#
-#  cluster_config {
-#      instance_count = 3
-#      instance_type = "t3.small.search"
-#      zone_awareness_enabled = true
-#      zone_awareness_config {
-#        availability_zone_count = 3
-#      }
-#  }
-#  ebs_options {
-#      ebs_enabled = true
-#      volume_size = 10
-#  }
-#  vpc_options {
-#    subnet_ids = local.module.network.public_subnet_ids
-#    security_group_ids = [aws_security_group.db.id]
-#  }
-#}
+resource "aws_opensearch_domain" "opensearch" {
+  domain_name = local.environment_name
+  engine_version = "OpenSearch_2.7"
 
-# Random db password
+  cluster_config {
+      instance_count = 3
+      instance_type = "t3.small.search"
+      zone_awareness_enabled = true
+      zone_awareness_config {
+        availability_zone_count = 3
+      }
+  }
+  ebs_options {
+      ebs_enabled = true
+      volume_size = 10
+  }
+
+  encrypt_at_rest {
+    enabled = true
+  }
+
+  node_to_node_encryption {
+    enabled = true
+  }
+
+  domain_endpoint_options {
+    enforce_https = true
+    tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
+  }
+  advanced_security_options {
+      enabled                        = true
+      internal_user_database_enabled = true
+      master_user_options {
+        master_user_arn = aws_iam_user.opensearch.arn
+      }
+    }
+
+}
+
 
 resource "random_string" "random_db_password" {
   length           = 30
@@ -1100,6 +1116,33 @@ resource "aws_iam_user_policy" "app_aws_user" {
 EOF
 }
 
+
+resource "aws_iam_user" "opensearch" {
+  name = "opensearch_${local.app_aws_username}"
+}
+
+resource "aws_iam_access_key" "opensearch" {
+  user = aws_iam_user.opensearch.name
+}
+
+resource "aws_iam_user_policy" "opensearch_aws_user" {
+  name = "opensearch-${local.project_name}-policy"
+  user = "opensearch_${local.app_aws_username}"
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect":"Allow",
+       "Action":[
+          "es:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
 
 # -----------------------------------------------------------------------------
 # ECR

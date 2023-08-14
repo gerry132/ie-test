@@ -30,7 +30,12 @@ DEBUG_TOOLBAR = os.environ.get("DEBUG_TOOLBAR", "0") in TRUE
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "0") in TRUE
+debug_on = os.environ.get("DEBUG")
+
+if debug_on == '0':
+    DEBUG = True
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
@@ -372,6 +377,8 @@ AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
 AWS_SES_REGION_NAME = os.environ.get("AWS_REGION", "eu-west-1")
 AWS_SES_REGION_ENDPOINT = os.environ.get("EMAIL_HOST")
+OPENSEARCH_KEY = os.environ.get("OPENSEARCH_KEY")
+OPENSEARCH_SECRET = os.environ.get("OPENSEARCH_SECRET")
 
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
 if USE_S3 is True:
@@ -397,7 +404,48 @@ WAGTAILIMAGES_IMAGE_MODEL = "irelandie_images.CustomImage"
 WAGTAILIMAGES_FEATURE_DETECTION_ENABLED = False
 WAGTAILDOCS_DOCUMENT_MODEL = "irelandie_documents.CustomDocument"
 
-WAGTAILSEARCH_BACKENDS = {"default": {"BACKEND": "wagtail.search.backends.database"}}
+
+if OPENSEARCH_KEY and OPENSEARCH_SECRET:
+    from elasticsearch import RequestsHttpConnection
+    from requests_aws4auth import AWS4Auth
+
+    WAGTAILSEARCH_BACKENDS = {
+        'default': {
+            'BACKEND': 'wagtail.search.backends.elasticsearch7',
+            'INDEX': 'wagtail',
+            'TIMEOUT': 30,
+            'HOSTS': [{
+                'host': 'search-uat-emwi4lvgcdvyoz6yfrxzrkvpai.eu-west-1.es.amazonaws.com',
+                'port': 443,
+                'use_ssl': True,
+                'verify_certs': True,
+                'http_auth': AWS4Auth(OPENSEARCH_KEY, OPENSEARCH_SECRET, 'eu-west-1', 'es'),
+            }],
+            'OPTIONS': {
+                'connection_class': RequestsHttpConnection,
+            },
+            'INDEX_SETTINGS': {
+                'settings': {
+                    'opensearch': True,
+
+                    'index': {
+                        'number_of_shards': 1,
+                    },
+                    'analysis': {
+                        'analyzer': {
+                            'default': {
+                                'type': 'italian'
+                            }
+                        }
+                    },
+                    "max_ngram_diff": "50",
+                }
+                }
+
+        }
+    }
+else:
+    WAGTAILSEARCH_BACKENDS = {"default": {"BACKEND": "wagtail.search.backends.database"}}
 
 # Default size of the pagination used on the front-end.
 DEFAULT_PER_PAGE = 10
