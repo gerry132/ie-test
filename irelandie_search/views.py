@@ -30,7 +30,7 @@ def search(request):
             search_results = (
                 Page.objects.live().public()
                     .descendant_of(root_page)
-                    .search(Fuzzy(search_query), Page, partial_match=False)
+                    .search(Fuzzy(search_query), partial_match=False)
             )
         else:
             search_results = (
