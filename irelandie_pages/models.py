@@ -97,7 +97,9 @@ class FreeFormPage(FreeFormPageBase):
                                          "areas of the site that link to this page.")] + (
                          FreeFormPageBase.content_panels +
                          [
-                             FieldPanel("featured_news"),
+                             FieldPanel("featured_news",
+                                        help_text="Checking this box will feature this news item on your "
+                                        "main news page."),
                              MultiFieldPanel([
                                  FieldPanel("notice_bar"),
                              ], heading="Noticebar settings"

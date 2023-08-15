@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+from urllib.parse import urlparse
 
 from django.forms.utils import ErrorList
 from django.core.validators import RegexValidator
@@ -883,6 +884,7 @@ class ArticleStoryBlock(blocks.StreamBlock):
         group="HTML",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
+
     role = RoleBlock(group="HTML")
     table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
     video = CustomVideoChooserBlockAlt(group="HTML")
@@ -894,7 +896,10 @@ class MinimalArticleStoryBlock(blocks.StreamBlock):
     rich_text_advanced = AdvancedRichTextBlock(group="Base")
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
-
+    html = blocks.RawHTMLBlock(
+        group="HTML",
+        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
+    )
     logos = LogoCardsBlock(group="Module")
     table = TableBlock(table_options={'renderer': 'html'}, group="Module")
     advanced_table_block = TypedTableBlock([
@@ -1163,6 +1168,21 @@ class SocialFieldBlock(blocks.StructBlock):
         min_num=0,
         required=False,
     )
+
+    def clean(self, value):
+        errors = {}
+        result = value.get('twitter_username')
+        obj = urlparse(result)
+
+        if obj.hostname == 'twitter.com':
+            msg = (f'Only add the social media handle here, e.g. if the full link is https://{obj.hostname}/myprofile, '
+                   f'type myprofile into this box.')
+            errors['twitter_username'] = ErrorList([msg])
+
+        if errors:
+            raise StructBlockValidationError(block_errors=errors)
+
+        return super().clean(value)
 
 
 class PersonSocialBlock(blocks.StructBlock):

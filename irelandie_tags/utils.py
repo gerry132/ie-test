@@ -1,5 +1,6 @@
 from itertools import chain
 from operator import attrgetter
+from django.db.models import F
 
 
 def get_tagged_items(self, tag):
@@ -11,15 +12,19 @@ def get_tagged_items(self, tag):
     from irelandie_missions.models import GeneralContentPage
 
     freeform = FreeFormPage.objects.live().filter(
-        page_related_tags__page=tag, locale=self.locale).specific().distinct()
+        page_related_tags__page=tag, locale=self.locale).specific().distinct().annotate(
+        published=F('last_published_at'))
     stories = StoryPage.objects.live().filter(
-        page_related_tags__page=tag, locale=self.locale).specific().distinct()
+        page_related_tags__page=tag, locale=self.locale).specific().distinct().annotate(
+        published=F('last_published_at'))
     general_content = GeneralContentPage.objects.live().filter(
-        page_related_tags__page=tag, locale=self.locale).specific().distinct()
+        page_related_tags__page=tag, locale=self.locale).specific().distinct().annotate(
+        published=F('last_published_at'))
 
     results = sorted(
         chain(stories, freeform, general_content),
-        key=attrgetter('last_published_at')
+        key=attrgetter('published'),
+        reverse=True
     )
 
     return results

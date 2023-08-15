@@ -71,7 +71,7 @@
 
                                     {% if article %}
                                         <span class="card__link">
-                                            {% trans 'Read more' %}
+                                            {% translate "Read more" %}
                                         </span>
                                     {% endif %}
                                 </div>
@@ -84,7 +84,7 @@
         {% if page.get_root_index %}
         <div class="wrapper wrapper--large link-button__container">
             <button class="link-button__button" onClick="window.location.href='{{ page.get_root_index }}';">
-                Read all news
+                {% translate "Read all news" %}
             </button>
         </div>
         {% endif %}
