@@ -80,6 +80,45 @@ locals {
 # Values to fill after running terraform is ran, used for codebuild and secrets
 # -----------------------------------------------------------------------------
 
+#resource "aws_ssm_parameter" "OPENSEARCH_ENDPOINT" {
+#  name        = "${local.environment_name}_OPENSEARCH_ENDPOINT"
+#  description = "For use in Codebuild buildspec - ${local.environment_name}"
+#  type        = "SecureString"
+#  value       = "CHANGE-ME"
+
+#  lifecycle {
+#    ignore_changes = [
+#      value,
+#    ]
+#  }
+#}
+
+#resource "aws_ssm_parameter" "OPENSEARCH_KEY" {
+#  name        = "${local.environment_name}_OPENSEARCH_KEY"
+#  description = "For use in Codebuild buildspec - ${local.environment_name}"
+#  type        = "SecureString"
+#  value       = "CHANGE-ME"
+
+#  lifecycle {
+#    ignore_changes = [
+#      value,
+#    ]
+#  }
+#}
+
+#resource "aws_ssm_parameter" "OPENSEARCH_SECRET" {
+#  name        = "${local.environment_name}_OPENSEARCH_SECRET"
+#  description = "For use in Codebuild buildspec - ${local.environment_name}"
+#  type        = "SecureString"
+#  value       = "CHANGE-ME"
+
+#  lifecycle {
+#    ignore_changes = [
+#      value,
+#    ]
+#  }
+#}
+
 resource "aws_ssm_parameter" "DOCKER_IMAGE_URL" {
   name        = "${local.environment_name}_DOCKER_IMAGE_URL"
   description = "For use in Codebuild buildspec - ${local.environment_name}"
@@ -1180,6 +1219,12 @@ locals {
   SETTINGS_ALLOWED_HOSTS            = join(", ", ["*"])
   SETTINGS_AWS_ACCESS_KEY_ID        = aws_ssm_parameter.AWS_ACCESS_KEY_ID.value
   SETTINGS_AWS_SECRET_ACCESS_KEY    = aws_ssm_parameter.AWS_SECRET_ACCESS_KEY.value
+  #SETTINGS_OPENSEARCH_SECRET        = aws_ssm_parameter.OPENSEARCH_SECRET.value
+  #SETTINGS_OPENSEARCH_ENDPOINT      = aws_ssm_parameter.OPENSEARCH_ENDPOINT.value
+  #SETTINGS_OPENSEARCH_KEY           = aws_ssm_parameter.OPENSEARCH_KEY.value
+  SETTINGS_OPENSEARCH_SECRET        = null
+  SETTINGS_OPENSEARCH_ENDPOINT      = null
+  SETTINGS_OPENSEARCH_KEY           = null
   SETTINGS_AWS_STATIC_BUCKET_NAME   = aws_s3_bucket.assets.id
   SETTINGS_BASE_URL                 = "http://www.${local.project_domain}"
   SETTINGS_CACHE_ADDRESS            = local.cache_address
@@ -1207,6 +1252,9 @@ data "template_file" "task_definition" {
     SETTINGS_AWS_ACCESS_KEY_ID          = local.SETTINGS_AWS_ACCESS_KEY_ID
     SETTINGS_AWS_SECRET_ACCESS_KEY      = local.SETTINGS_AWS_SECRET_ACCESS_KEY
     SETTINGS_AWS_STATIC_BUCKET_NAME     = local.SETTINGS_AWS_STATIC_BUCKET_NAME
+    SETTINGS_OPENSEARCH_KEY             = local.SETTINGS_OPENSEARCH_KEY
+    SETTINGS_OPENSEARCH_SECRET          = local.SETTINGS_OPENSEARCH_SECRET
+    SETTINGS_OPENSEARCH_ENDPOINT        = local.SETTINGS_OPENSEARCH_ENDPOINT
     SETTINGS_BASE_URL                   = local.SETTINGS_BASE_URL
     SETTINGS_CACHE_ADDRESS              = local.SETTINGS_CACHE_ADDRESS
     SETTINGS_DATABASE_URL               = local.SETTINGS_DATABASE_URL
