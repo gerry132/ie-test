@@ -1222,9 +1222,9 @@ locals {
   #SETTINGS_OPENSEARCH_SECRET        = aws_ssm_parameter.OPENSEARCH_SECRET.value
   #SETTINGS_OPENSEARCH_ENDPOINT      = aws_ssm_parameter.OPENSEARCH_ENDPOINT.value
   #SETTINGS_OPENSEARCH_KEY           = aws_ssm_parameter.OPENSEARCH_KEY.value
-  SETTINGS_OPENSEARCH_SECRET        = null
-  SETTINGS_OPENSEARCH_ENDPOINT      = null
-  SETTINGS_OPENSEARCH_KEY           = null
+  SETTINGS_OPENSEARCH_SECRET        = "CHANGE"
+  SETTINGS_OPENSEARCH_ENDPOINT      = "CHANGE"
+  SETTINGS_OPENSEARCH_KEY           = "CHANGE"
   SETTINGS_AWS_STATIC_BUCKET_NAME   = aws_s3_bucket.assets.id
   SETTINGS_BASE_URL                 = "http://www.${local.project_domain}"
   SETTINGS_CACHE_ADDRESS            = local.cache_address
