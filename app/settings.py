@@ -380,53 +380,6 @@ AWS_SES_REGION_ENDPOINT = os.environ.get("EMAIL_HOST")
 OPENSEARCH_KEY = os.environ.get("OPENSEARCH_KEY")
 OPENSEARCH_SECRET = os.environ.get("OPENSEARCH_SECRET")
 
-
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-for name, value in os.environ.items():
-    print("{0}: {1}".format(name, value))
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-print(debug_on)
-
-
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
 if USE_S3 is True:
     INSTALLED_APPS = INSTALLED_APPS + ["storages", "wagtail_storages"]
@@ -473,8 +426,6 @@ if OPENSEARCH_KEY and OPENSEARCH_SECRET:
             },
             'INDEX_SETTINGS': {
                 'settings': {
-                    'opensearch': True,
-
                     'index': {
                         'number_of_shards': 1,
                     },
