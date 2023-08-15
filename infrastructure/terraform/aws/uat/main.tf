@@ -119,6 +119,11 @@ resource "aws_ssm_parameter" "OPENSEARCH_SECRET" {
   type        = "SecureString"
   value       = "CHANGE-ME"
 
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
 }
 
 resource "aws_ssm_parameter" "AWS_SECRET_ACCESS_KEY" {
