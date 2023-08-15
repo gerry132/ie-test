@@ -379,6 +379,7 @@ AWS_SES_REGION_NAME = os.environ.get("AWS_REGION", "eu-west-1")
 AWS_SES_REGION_ENDPOINT = os.environ.get("EMAIL_HOST")
 OPENSEARCH_KEY = os.environ.get("OPENSEARCH_KEY")
 OPENSEARCH_SECRET = os.environ.get("OPENSEARCH_SECRET")
+OPENSEARCH_ENDPOINT = os.environ.get("OPENSEARCH_ENDPOINT")
 
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
 if USE_S3 is True:
@@ -415,7 +416,7 @@ if OPENSEARCH_KEY and OPENSEARCH_SECRET:
             'INDEX': 'wagtail',
             'TIMEOUT': 30,
             'HOSTS': [{
-                'host': 'search-uat-emwi4lvgcdvyoz6yfrxzrkvpai.eu-west-1.es.amazonaws.com',
+                'host': OPENSEARCH_ENDPOINT,
                 'port': 443,
                 'use_ssl': True,
                 'verify_certs': True,

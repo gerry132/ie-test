@@ -98,7 +98,18 @@ resource "aws_ssm_parameter" "DOCKER_IMAGE_URL" {
   }
 }
 
+resource "aws_ssm_parameter" "OPENSEARCH_ENDPOINT" {
+  name        = "${local.environment_name}_OPENSEARCH_ENDPOINT"
+  description = "For use in Codebuild buildspec - ${local.environment_name}"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
 
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
 
 resource "aws_ssm_parameter" "OPENSEARCH_KEY" {
   name        = "${local.environment_name}_OPENSEARCH_KEY"
@@ -1322,6 +1333,7 @@ locals {
   SETTINGS_AWS_ACCESS_KEY_ID        = aws_ssm_parameter.AWS_ACCESS_KEY_ID.value
   SETTINGS_AWS_SECRET_ACCESS_KEY    = aws_ssm_parameter.AWS_SECRET_ACCESS_KEY.value
   SETTINGS_OPENSEARCH_SECRET        = aws_ssm_parameter.OPENSEARCH_SECRET.value
+  SETTINGS_OPENSEARCH_ENDPOINT      = aws_ssm_parameter.OPENSEARCH_ENDPOINT.value
   SETTINGS_OPENSEARCH_KEY           = aws_ssm_parameter.OPENSEARCH_KEY.value
   SETTINGS_AWS_STATIC_BUCKET_NAME   = aws_s3_bucket.assets.id
   SETTINGS_BASE_URL                 = "http://www.${local.project_domain}"
@@ -1358,6 +1370,7 @@ data "template_file" "task_definition" {
     SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
     SETTINGS_OPENSEARCH_KEY             = local.SETTINGS_OPENSEARCH_KEY
     SETTINGS_OPENSEARCH_SECRET          = local.SETTINGS_OPENSEARCH_SECRET
+    SETTINGS_OPENSEARCH_ENDPOINT        = local.SETTINGS_OPENSEARCH_ENDPOINT
     SETTINGS_USE_CACHE                  = local.SETTINGS_USE_CACHE
     SETTINGS_USE_S3                     = local.SETTINGS_USE_S3
     SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS

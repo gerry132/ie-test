@@ -29,6 +29,10 @@
                 "value": "${SETTINGS_AWS_SECRET_ACCESS_KEY}"
             },
             {
+                "name": "OPENSEARCH_ENDPOINT",
+                "value": "${SETTINGS_OPENSEARCH_ENDPOINT}"
+            },
+            {
                 "name": "OPENSEARCH_SECRET",
                 "value": "${SETTINGS_OPENSEARCH_SECRET}"
             },
