@@ -26,8 +26,10 @@ class TagPage(BasePage):
     ]
 
     search_fields = []
+
     def get_indexed_instance(self):
         return None
+
 
 class DestinationTagPage(BasePage):
     parent_page_types = [
