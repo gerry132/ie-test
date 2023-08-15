@@ -99,6 +99,7 @@ resource "aws_ssm_parameter" "DOCKER_IMAGE_URL" {
 }
 
 
+
 resource "aws_ssm_parameter" "OPENSEARCH_KEY" {
   name        = "${local.environment_name}_OPENSEARCH_KEY"
   description = "For use in Codebuild buildspec - ${local.environment_name}"
@@ -118,11 +119,6 @@ resource "aws_ssm_parameter" "OPENSEARCH_SECRET" {
   type        = "SecureString"
   value       = "CHANGE-ME"
 
-  lifecycle {
-    ignore_changes = [
-      value,
-    ]
-  }
 }
 
 resource "aws_ssm_parameter" "AWS_SECRET_ACCESS_KEY" {
@@ -1320,7 +1316,7 @@ locals {
   SETTINGS_ALLOWED_HOSTS            = join(", ", ["*"])
   SETTINGS_AWS_ACCESS_KEY_ID        = aws_ssm_parameter.AWS_ACCESS_KEY_ID.value
   SETTINGS_AWS_SECRET_ACCESS_KEY    = aws_ssm_parameter.AWS_SECRET_ACCESS_KEY.value
-  SETTINGS_OPENSEARCH_SECRET        = aws_ssm_parameter.OPENSEARCH_KEY.value
+  SETTINGS_OPENSEARCH_SECRET        = aws_ssm_parameter.OPENSEARCH_SECRET.value
   SETTINGS_OPENSEARCH_KEY           = aws_ssm_parameter.OPENSEARCH_KEY.value
   SETTINGS_AWS_STATIC_BUCKET_NAME   = aws_s3_bucket.assets.id
   SETTINGS_BASE_URL                 = "http://www.${local.project_domain}"
