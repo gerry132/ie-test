@@ -75,9 +75,11 @@
         {% include_block block %}
     {% endif %}
     {% endfor %}
-    {% if page.beta_element %}
-        {% include "patterns/snippets/betasnippet.html" with object=page.beta_element %}
-    {% endif %}
 
+{% endblock %}
+{% block betatag %}
+{% if page.beta_element %}
+        {% include "patterns/snippets/betasnippet.html" with object=page.beta_element %}
+{% endif %}
 {% endblock %}
 

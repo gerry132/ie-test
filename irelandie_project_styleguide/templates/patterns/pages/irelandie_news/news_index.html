@@ -117,12 +117,15 @@ getNewsArticles();
                 {% include "patterns/molecules/pagination/pagination.html" with paginator_page=related_articles %}
             </div>
         </div>
-        {% beta_element_tag page as beta_tag %}
-        {% if beta_tag %}
-                {% include "patterns/snippets/betasnippet.html" with object=beta_tag %}
-        {% endif %}
     </div>
 </div>
 {% endif %}
+{% endblock %}
+
+{% block betatag %}
+    {% beta_element_tag page as beta_tag %}
+    {% if beta_tag %}
+            {% include "patterns/snippets/betasnippet.html" with object=beta_tag %}
+    {% endif %}
 {% endblock %}
 
