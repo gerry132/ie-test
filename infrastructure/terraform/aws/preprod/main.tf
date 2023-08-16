@@ -80,44 +80,44 @@ locals {
 # Values to fill after running terraform is ran, used for codebuild and secrets
 # -----------------------------------------------------------------------------
 
-#resource "aws_ssm_parameter" "OPENSEARCH_ENDPOINT" {
-#  name        = "${local.environment_name}_OPENSEARCH_ENDPOINT"
-#  description = "For use in Codebuild buildspec - ${local.environment_name}"
-#  type        = "SecureString"
-#  value       = "CHANGE-ME"
+resource "aws_ssm_parameter" "OPENSEARCH_ENDPOINT" {
+  name        = "${local.environment_name}_OPENSEARCH_ENDPOINT"
+  description = "For use in Codebuild buildspec - ${local.environment_name}"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
 
-#  lifecycle {
-#    ignore_changes = [
-#      value,
-#    ]
-#  }
-#}
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
 
-#resource "aws_ssm_parameter" "OPENSEARCH_KEY" {
-#  name        = "${local.environment_name}_OPENSEARCH_KEY"
-#  description = "For use in Codebuild buildspec - ${local.environment_name}"
-#  type        = "SecureString"
-#  value       = "CHANGE-ME"
+resource "aws_ssm_parameter" "OPENSEARCH_KEY" {
+  name        = "${local.environment_name}_OPENSEARCH_KEY"
+  description = "For use in Codebuild buildspec - ${local.environment_name}"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
 
-#  lifecycle {
-#    ignore_changes = [
-#      value,
-#    ]
-#  }
-#}
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
 
-#resource "aws_ssm_parameter" "OPENSEARCH_SECRET" {
-#  name        = "${local.environment_name}_OPENSEARCH_SECRET"
-#  description = "For use in Codebuild buildspec - ${local.environment_name}"
-#  type        = "SecureString"
-#  value       = "CHANGE-ME"
+resource "aws_ssm_parameter" "OPENSEARCH_SECRET" {
+  name        = "${local.environment_name}_OPENSEARCH_SECRET"
+  description = "For use in Codebuild buildspec - ${local.environment_name}"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
 
-#  lifecycle {
-#    ignore_changes = [
-#      value,
-#    ]
-#  }
-#}
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
 
 resource "aws_ssm_parameter" "DOCKER_IMAGE_URL" {
   name        = "${local.environment_name}_DOCKER_IMAGE_URL"
@@ -940,6 +940,45 @@ resource "aws_lb_listener_certificate" "admin_ireland_ie_certificate" {
 # Database
 # -----------------------------------------------------------------------------
 
+resource "aws_opensearch_domain" "opensearch" {
+  domain_name = local.environment_name
+  engine_version = "OpenSearch_2.7"
+
+  cluster_config {
+      instance_count = 3
+      instance_type = "t3.small.search"
+      zone_awareness_enabled = true
+      zone_awareness_config {
+        availability_zone_count = 3
+      }
+  }
+  ebs_options {
+      ebs_enabled = true
+      volume_size = 10
+  }
+
+  encrypt_at_rest {
+    enabled = true
+  }
+
+  node_to_node_encryption {
+    enabled = true
+  }
+
+  domain_endpoint_options {
+    enforce_https = true
+    tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
+  }
+  advanced_security_options {
+      enabled                        = true
+      master_user_options {
+        master_user_arn = aws_iam_user.opensearch.arn
+      }
+    }
+
+}
+
+
 # Random db password
 
 resource "random_string" "random_db_password" {
@@ -1032,6 +1071,33 @@ resource "aws_cloudwatch_log_stream" "ecs" {
 # -----------------------------------------------------------------------------
 # App user
 # -----------------------------------------------------------------------------
+
+resource "aws_iam_user" "opensearch" {
+  name = "opensearch_${local.app_aws_username}"
+}
+
+resource "aws_iam_access_key" "opensearch" {
+  user = aws_iam_user.opensearch.name
+}
+
+resource "aws_iam_user_policy" "opensearch_aws_user" {
+  name = "opensearch-${local.project_name}-policy"
+  user = "opensearch_${local.app_aws_username}"
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect":"Allow",
+       "Action":[
+          "es:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
 
 resource "aws_iam_user" "default" {
   name = local.app_aws_username
