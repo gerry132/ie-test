@@ -1,0 +1,73 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags i18n %}
+{% load wagtailimages_tags %}
+{% load util_tags static navigation_tags %}
+
+{% block content %}
+<style>
+    .listings_event p{
+        display: inline;
+    }
+    .listings-box__heading {
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 32px;
+        line-height: normal;
+        color: #000;
+        margin-bottom: 5px;
+    }
+</style>
+    {% block main %}
+        <div class="section section--padding section--white">
+            <div class="wrapper wrapper--large wrapper--padding">
+                <div class="tag__link-box" >
+                    {% if page.image %}
+                        {% if page.image_alt %}
+                            {% image page.image fill-500x300 class="tag__image" alt=page.image_alt %}
+                        {% else %}
+                            {% image page.image fill-500x300 alt=card.image.alt_default class="tag__image" %}
+                        {% endif %}
+                    {% endif %}
+                    <div class="tag__content">
+                        <div class="link-box__container">
+                            <a href="{% if page.event_link_url %}{{ page.event_link_url }}{% else %}{% pageurl page.event_link_page as href %}{{ href }}{% endif %}">
+                                <h2 class="listings-box__heading heading--2">{{ page.event_title }}</h2>
+                            </a>
+                            <div class="tag__card__summary">
+                                {% if page.start_date and page.end_date %}
+                                    <b>Date:</b>
+                                    {% if page.start_date|date:"m" == page.end_date|date:"m" %}
+                                        {{ page.start_date|date:"j" }} - {{ page.end_date|date:"j F Y" }}
+                                    {% else %}
+                                        {{ page.start_date|date:"j F" }} - {{ page.end_date|date:"j F Y" }}
+                                    {% endif %}
+                                {% else %}
+                                    <b>Date:</b> {{ page.end_date|date:"j F Y" }}
+                                {% endif %}
+                                {% if page.venue %}
+                                    <div>
+                                        <b>Venue:</b> {{ page.venue }}
+                                    </div>
+                                {% endif %}
+                                {% if page.location %}
+                                    <div>
+                                        <b>Location:</b> {{ page.location }}
+                                    </div>
+                                {% endif %}
+                                {% if page.event_details %}
+                                    <div class="listings_event" style="display: inline;">
+                                        <b>Event: </b>{{ page.event_details|richtext }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+
