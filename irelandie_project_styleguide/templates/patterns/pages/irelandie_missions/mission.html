@@ -14,9 +14,6 @@
     <div class="wrapper wrapper--large wrapper--padding">
         {% include_block page.body %}
     </div>
-    {% if page.beta_element %}
-        {% include "patterns/snippets/betasnippet.html" with object=page.beta_element %}
-    {% endif %}
 
 {% endblock %}
 
@@ -30,6 +27,11 @@
 
     {% if page.webchat_script %}
     {{ page.webchat_script|safe }}
+{% endif %}
+{% endblock %}
+{% block betatag %}
+{% if page.beta_element %}
+        {% include "patterns/snippets/betasnippet.html" with object=page.beta_element %}
 {% endif %}
 {% endblock %}
 

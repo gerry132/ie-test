@@ -30,12 +30,7 @@ DEBUG_TOOLBAR = os.environ.get("DEBUG_TOOLBAR", "0") in TRUE
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-debug_on = os.environ.get("DEBUG")
-
-if debug_on == '0':
-    DEBUG = True
-else:
-    DEBUG = False
+DEBUG = os.environ.get("DEBUG", "0") in TRUE
 
 ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
@@ -63,6 +58,7 @@ INSTALLED_APPS = [
     "irelandie_contact_details",
     "irelandie_corporate_information",
     "irelandie_events",
+    "irelandie_listings",
     "irelandie_missions",
     "irelandie_news",
     "irelandie_pages",
@@ -405,7 +401,6 @@ WAGTAILIMAGES_IMAGE_MODEL = "irelandie_images.CustomImage"
 WAGTAILIMAGES_FEATURE_DETECTION_ENABLED = False
 WAGTAILDOCS_DOCUMENT_MODEL = "irelandie_documents.CustomDocument"
 
-
 if OPENSEARCH_KEY and OPENSEARCH_SECRET and OPENSEARCH_ENDPOINT != 'CHANGE':
     from elasticsearch import RequestsHttpConnection
     from requests_aws4auth import AWS4Auth
@@ -439,7 +434,7 @@ if OPENSEARCH_KEY and OPENSEARCH_SECRET and OPENSEARCH_ENDPOINT != 'CHANGE':
                     },
                     "max_ngram_diff": "50",
                 }
-                }
+            }
 
         }
     }
