@@ -1,0 +1,84 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags i18n %}
+{% load wagtailimages_tags %}
+{% load util_tags static navigation_tags %}
+
+{% block content %}
+<style>
+    .video-container {
+        width: 100%;
+        padding-top: 56.25%;
+        position: relative;
+    }
+    .video {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .listings-box__heading {
+        color: #000;
+        font-family: Inter;
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin-bottom: 0;
+    }
+    .listings_featured-freetext{
+        color: #000;
+        font-family: Inter;
+        font-size: 28px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+    .listings_featured-freetext p{
+        margin: 0rem;
+    }
+</style>
+{% block main %}
+<div class="section section--padding section--white">
+    <div class="wrapper wrapper--large wrapper--padding">
+        {% if page.video %}
+            <div class="video-container">
+                <video aria-label="{{ page.video_alt }}" class="video" controls data-video loop title="{{ page.event_title }}">
+                    <source src="{{ page.video.url }}" type="video/mp4">
+                    {% trans 'Your browser does not support the video tag.' %}
+                </video>
+            </div>
+        {% elif page.youtube_or_vimeo_embed %}
+            {% if 'vimeo.com' in page.youtube_or_vimeo_embed %}
+                <div class="video-container responsive-object">
+                    <iframe allowfullscreen frameborder="0" src="{{ page.embedding_url }}"
+                            title="{{ page.event_title }}"></iframe>
+                </div>
+            {% else %}
+                <div class="video-container responsive-object">
+                    <iframe
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                        frameborder="0"
+                        src="{{ page.embedding_url }}"
+                        title="{{ page.event_title }}">
+                    </iframe>
+                </div>
+            {% endif %}
+        {% else %}
+            {% image page.image fill-1600x900 class="image" alt=page.image_alt %}
+        {% endif %}
+        <div class="section section--padding section--white">
+            <a href="{% if page.event_link_page %}{% pageurl page.event_link_page as href %}{{ href }}{% else %}{{ page.event_link_url }}{% endif %}">
+                <h2 class="listings-box__heading heading--2">{{ page.event_title }}</h2>
+            </a>
+            {% if page.event_details %}
+            <div class="listings_featured-freetext">{{ page.event_details|richtext }}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% endblock %}
+
+
