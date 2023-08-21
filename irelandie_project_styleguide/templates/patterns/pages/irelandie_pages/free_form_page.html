@@ -8,10 +8,7 @@
         {% include "patterns/molecules/streamfield/blocks/twitter_embed.html" with value=page.twitter_feed title=page.twitter_title %}
     </div>
     {% endif %}
-    {% beta_element_tag page as beta_tag %}
-    {% if beta_tag %}
-            {% include "patterns/snippets/betasnippet.html" with object=beta_tag %}
-    {% endif %}
+
 {% endblock %}
 
 {% block extra_js %}
@@ -25,4 +22,11 @@
     {% if page.webchat_script %}
     {{ page.webchat_script|safe }}
 {% endif %}
+{% endblock %}
+
+{% block betatag %}
+    {% beta_element_tag page as beta_tag %}
+    {% if beta_tag %}
+            {% include "patterns/snippets/betasnippet.html" with object=beta_tag %}
+    {% endif %}
 {% endblock %}

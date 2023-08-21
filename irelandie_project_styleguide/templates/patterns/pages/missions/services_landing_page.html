@@ -50,10 +50,12 @@
             </div>
         {% endif %}
     </div>
-{% beta_element_tag page as beta_tag %}
-{% if beta_tag %}
-        {% include "patterns/snippets/betasnippet.html" with object=beta_tag %}
-{% endif %}
 <div style="padding-bottom: 40px;"></div>
     {% endblock %}
+{% endblock %}
+{% block betatag %}
+    {% beta_element_tag page as beta_tag %}
+    {% if beta_tag %}
+            {% include "patterns/snippets/betasnippet.html" with object=beta_tag %}
+    {% endif %}
 {% endblock %}
