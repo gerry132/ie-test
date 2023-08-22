@@ -10,8 +10,6 @@ import re
 from irelandie_utils import blocks
 from wagtail.models import Page
 
-from irelandie_utils.utils import get_model_info
-
 IMAGE_MODEL = get_image_model_string()
 ALT_HELP_TEXT = """A short one-sentence literal description
                     of the %s is
