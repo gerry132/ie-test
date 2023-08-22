@@ -1284,7 +1284,7 @@ data "template_file" "task_definition" {
     SETTINGS_BASE_URL                   = local.SETTINGS_BASE_URL
     SETTINGS_CACHE_ADDRESS              = local.SETTINGS_CACHE_ADDRESS
     SETTINGS_DATABASE_URL               = local.SETTINGS_DATABASE_URL
-    SETTINGS_DEBUG                      = 1
+    SETTINGS_DEBUG                      = local.SETTINGS_DEBUG
     SETTINGS_DEBUG_TOOLBAR              = local.SETTINGS_DEBUG_TOOLBAR
     SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
     SETTINGS_USE_CACHE                  = local.SETTINGS_USE_CACHE
