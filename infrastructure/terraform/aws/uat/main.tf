@@ -46,7 +46,7 @@ locals {
   task_memory                   = 2048  # min 2048
   # APP
   health_check_path             = "/health-check/"
-  SETTINGS_DEBUG                = 0
+  SETTINGS_DEBUG                = 1
   SETTINGS_DEBUG_TOOLBAR        = 0
   SETTINGS_USE_S3               = 1
   SETTINGS_USE_CACHE            = 1
@@ -72,7 +72,7 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.33.89/32", "80.233.41.89/32"]
+      cidr_blocks  = ["80.233.50.121/32", "80.233.58.121/32"]
     },
     joe_dev = {
       description = "Joe D - Sidero"
@@ -1344,7 +1344,6 @@ locals {
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
   SETTINGS_EMAIL_HOST               = "email.${local.region}.amazonaws.com"
   SETTINGS_DEFAULT_FROM_EMAIL       = aws_ssm_parameter.DEFAULT_FROM_EMAIL.value
-  SETTINGS_DEBUG                    = 1
 }
 
 data "template_file" "task_definition" {
