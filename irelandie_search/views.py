@@ -4,10 +4,11 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.template.response import TemplateResponse
 from django.utils.cache import add_never_cache_headers, patch_cache_control
 
+from irelandie_listings.models import ListingsContentPage
 from irelandie_missions.models import MissionPage
 
 from wagtail.models import Page, Site
-from irelandie_tags.models import TagPage
+from irelandie_tags.models import TagPage, DestinationTagPage
 from irelandie_utils.cache import get_default_cache_control_kwargs
 
 from wagtail.search.backends import get_search_backend
@@ -31,14 +32,14 @@ def search(request):
             search_results = (
                 Page.objects.live().public()
                     .descendant_of(root_page)
-                    .not_exact_type(TagPage)
+                    .not_exact_type(TagPage, ListingsContentPage, DestinationTagPage)
                     .search(Fuzzy(search_query), partial_match=False)
             )
         else:
             search_results = (
                 Page.objects.live().public()
                     .descendant_of(root_page)
-                    .not_exact_type(TagPage)
+                    .not_exact_type(TagPage, ListingsContentPage, DestinationTagPage)
                     .search(search_query, operator="and", partial_match=True)
             )
     else:

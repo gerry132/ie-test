@@ -225,10 +225,6 @@
                 </button>
             </div>
             {% endif %}
-            {% beta_element_tag page as beta_tag %}
-            {% if beta_tag %}
-                    {% include "patterns/snippets/betasnippet.html" with object=beta_tag %}
-            {% endif %}
         </div>
     {% endblock %}
 {% endblock %}
@@ -245,3 +241,9 @@
     </script>
 {% endblock %}
 
+{% block betatag %}
+    {% beta_element_tag page as beta_tag %}
+    {% if beta_tag %}
+            {% include "patterns/snippets/betasnippet.html" with object=beta_tag %}
+    {% endif %}
+{% endblock %}
