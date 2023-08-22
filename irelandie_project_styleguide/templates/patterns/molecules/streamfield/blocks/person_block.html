@@ -230,7 +230,7 @@ function readySlides1(mobile) {
   if (nextSlide1) {
   // add event listener and navigation functionality
   nextSlide1.addEventListener("click", function () {
-    
+
     // check if current slide is the last and reset current slide
     if (curSlide1 === maxSlide1) {
       curSlide1 = 0;
@@ -249,6 +249,7 @@ function readySlides1(mobile) {
   const prevSlide = document.querySelector(".btn-prev1");
 
   // add event listener and navigation functionality
+if (prevSlide) {
   prevSlide.addEventListener("click", function () {
     // check if current slide is the first and reset current slide to last
     if (curSlide1 === 0) {
@@ -262,6 +263,7 @@ function readySlides1(mobile) {
       slide1.style.transform = `translateX(${transNum1 * (index - curSlide1)}%)`;
     });
   });
+}
 }
 
 readySlides1(false);
