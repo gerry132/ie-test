@@ -46,7 +46,7 @@ locals {
   task_memory                   = 2048  # min 2048
   # APP
   health_check_path             = "/health-check/"
-  SETTINGS_DEBUG                = 1
+  SETTINGS_DEBUG                = 0
   SETTINGS_DEBUG_TOOLBAR        = 0
   SETTINGS_USE_S3               = 1
   SETTINGS_USE_CACHE            = 1
