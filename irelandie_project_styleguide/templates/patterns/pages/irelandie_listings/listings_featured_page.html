@@ -67,7 +67,7 @@
         {% else %}
             {% image page.image fill-1600x900 class="image" alt=page.image_alt %}
         {% endif %}
-        <div class="section section--padding section--white">
+        <div style="padding-top: 40px;">
             <a href="{% if page.event_link_page %}{% pageurl page.event_link_page as href %}{{ href }}{% else %}{{ page.event_link_url }}{% endif %}">
                 <h2 class="listings-box__heading heading--2">{{ page.event_title }}</h2>
             </a>

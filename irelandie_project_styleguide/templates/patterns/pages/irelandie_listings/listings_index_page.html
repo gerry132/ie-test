@@ -24,7 +24,9 @@
     {% block main %}
         <!-- Body -->
 {% if page.advanced_rich_text %}
+<div class="wrapper wrapper--large wrapper--padding">
     {% include_block page.advanced_rich_text %}
+</div>
 {% endif %}
 
 {% for listings in listings_featured_page %}
