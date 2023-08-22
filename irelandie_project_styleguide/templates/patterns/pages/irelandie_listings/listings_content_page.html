@@ -1,4 +1,4 @@
-{% extends "patterns/base_page.html" %}
+
 {% load wagtailcore_tags i18n %}
 {% load wagtailimages_tags %}
 {% load util_tags static navigation_tags %}
@@ -19,8 +19,9 @@
     }
 </style>
     {% block main %}
-        <div class="section section--padding section--white">
+        <div style="padding-top: 40px;">
             <div class="wrapper wrapper--large wrapper--padding">
+                <div class="link-box__line"></div>
                 <div class="tag__link-box" >
                     {% if page.image %}
                         {% if page.image_alt %}
@@ -36,14 +37,18 @@
                             </a>
                             <div class="tag__card__summary">
                                 {% if page.start_date and page.end_date %}
-                                    <b>Date:</b>
-                                    {% if page.start_date|date:"m" == page.end_date|date:"m" %}
-                                        {{ page.start_date|date:"j" }} - {{ page.end_date|date:"j F Y" }}
-                                    {% else %}
-                                        {{ page.start_date|date:"j F" }} - {{ page.end_date|date:"j F Y" }}
-                                    {% endif %}
+                                    <div>
+                                        <b>Date:</b>
+                                        {% if page.start_date|date:"m" == page.end_date|date:"m" %}
+                                            {{ page.start_date|date:"j" }} - {{ page.end_date|date:"j F Y" }}
+                                        {% else %}
+                                            {{ page.start_date|date:"j F" }} - {{ page.end_date|date:"j F Y" }}
+                                        {% endif %}
+                                    </div>
                                 {% else %}
-                                    <b>Date:</b> {{ page.end_date|date:"j F Y" }}
+                                    <div>
+                                        <b>Date:</b> {{ page.end_date|date:"j F Y" }}
+                                    </div>
                                 {% endif %}
                                 {% if page.venue %}
                                     <div>

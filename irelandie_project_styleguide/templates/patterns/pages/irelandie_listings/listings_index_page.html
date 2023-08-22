@@ -1,0 +1,45 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load static navigation_tags util_tags %}
+{% load i18n %}
+
+{% block content %}
+ <!-- Main -->
+
+
+{% if page.generic_hero %}
+    {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+{% endif %}
+{% if not page.generic_hero %}
+        <div id="main-header" class="section section--padding section--white">
+                    <div class="wrapper wrapper--large wrapper--padding content--padding">
+                        <div class="intro--toc">
+                            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                        </div>
+                    </div>
+        </div>
+{% endif %}
+
+    {% block main %}
+        <!-- Body -->
+{% if page.advanced_rich_text %}
+    {% include_block page.advanced_rich_text %}
+{% endif %}
+
+{% for listings in listings_featured_page %}
+    {% include "patterns/pages/irelandie_listings/listings_featured_page.html" with page=listings %}
+{% endfor %}
+
+{% for listing_content in listings_contents_page %}
+    {% include "patterns/pages/irelandie_listings/listings_content_page.html" with page=listing_content %}
+{% endfor %}
+
+{% if page.advanced_rich_text_and_logo_cards %}
+<div class="wrapper wrapper--large wrapper--padding">
+    {% include_block page.advanced_rich_text_and_logo_cards %}
+    </div>
+{% endif %}
+    {% endblock %}
+{% endblock %}
+
