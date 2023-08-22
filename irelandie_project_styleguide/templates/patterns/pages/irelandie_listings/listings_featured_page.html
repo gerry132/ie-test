@@ -2,7 +2,7 @@
 {% load wagtailcore_tags i18n %}
 {% load wagtailimages_tags %}
 {% load util_tags static navigation_tags %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 {% block content %}
 <style>
     .video-container {
@@ -39,7 +39,6 @@
     }
 </style>
 {% block main %}
-<div class="section section--padding section--white">
     <div class="wrapper wrapper--large wrapper--padding">
         {% if page.video %}
             <div class="video-container">
@@ -77,7 +76,6 @@
             {% endif %}
         </div>
     </div>
-</div>
 {% endblock %}
 {% endblock %}
 
