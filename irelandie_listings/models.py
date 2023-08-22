@@ -54,6 +54,26 @@ class ListingsContentPage(BasePage):
                                   blank=True, null=True, max_length=150, help_text="150 character limit")
 
     def clean(self):
+        if self.end_date < self.start_date:
+            raise ValidationError(
+                {
+                    "end_date": ValidationError(
+                        "End date should be greater than start date."
+                    ),
+                }
+            )
+
+        if not self.event_link_page and not self.event_link_url:
+            raise ValidationError(
+                {
+                    "event_link_page": ValidationError(
+                        "You must specify event_link_page or event_link_url."
+                    ),
+                    "event_link_url": ValidationError(
+                        "You must specify event_link_page or event_link_url."
+                    ),
+                }
+            )
 
         if self.event_link_page and self.event_link_url:
             raise ValidationError(
