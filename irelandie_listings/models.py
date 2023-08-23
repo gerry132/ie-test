@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from irelandie_utils.models import BasePage
-from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel, HelpPanel
+from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel, HelpPanel, InlinePanel
 from wagtailmedia.edit_handlers import MediaChooserPanel
 from django.core.exceptions import ValidationError
 from wagtail.images import get_image_model_string
-from wagtail.fields import RichTextField
+from wagtail.fields import RichTextField, StreamField
 import re
+from irelandie_utils import blocks
+from wagtail.models import Page
 
 IMAGE_MODEL = get_image_model_string()
 ALT_HELP_TEXT = """A short one-sentence literal description
@@ -383,3 +385,73 @@ class ListingsFeaturedPage(BasePage):
 
     def get_indexed_instance(self):
         return None
+
+
+class ListingsPageIndex(BasePage):
+    template = "patterns/pages/irelandie_listings/listings_index_page.html"
+    subpage_types = [
+        'ListingsContentPage',
+        'ListingsFeaturedPage'
+    ]
+    generic_hero = StreamField(
+        [
+            ("generic_hero", blocks.GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+    advanced_rich_text = StreamField(
+        [
+            ("advanced_rich_text", blocks.AdvancedRichTextBlock()),
+        ],
+        blank=True,
+        null=True,
+    )
+    advanced_rich_text_and_logo_cards = StreamField(
+        [
+            (
+                "rich_text_advanced",
+                blocks.AdvancedRichTextBlock(),
+            ),
+            (
+                "logo_cards",
+                blocks.LogoCardsBlock()
+            ),
+        ],
+        blank=True,
+        null=True,
+    )
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        from irelandie_utils.templatetags.util_tags import get_tag_links
+        from irelandie_utils.templatetags.util_tags import get_destination_tag_links
+        destination_tags = self.related_destination_tags
+        context["destination_tag_links"] = get_destination_tag_links(destination_tags)
+        tag = self.related_tags
+        tagging_links = get_tag_links(tag, self)[0]
+        tags_no_links = get_tag_links(tag, self)[1]
+        context["tagging_links"] = tagging_links
+        context["tags_no_links"] = tags_no_links
+        context['listings_featured_page'] = (
+            ListingsFeaturedPage.objects.child_of(self)
+            .public()
+            .live()
+            .specific()
+        )
+        from django.db.models import Case, When, DateField
+        context['listings_contents_page'] = ListingsContentPage.objects.public().live().annotate(
+            testing=Case(When(start_date__isnull=False, then='start_date'), default='end_date',
+                         output_field=DateField())).order_by('testing').specific()
+
+        return context
+
+    content_panels = Page.content_panels + [
+        FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
+        FieldPanel("advanced_rich_text"),
+        FieldPanel("advanced_rich_text_and_logo_cards"),
+        InlinePanel('page_related_tags', label="Related category tags"),
+        InlinePanel('page_related_destination_tags', label="Related destination"),
+    ]
