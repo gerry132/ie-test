@@ -56,7 +56,7 @@ class ListingsContentPage(BasePage):
                                   blank=True, null=True, max_length=150, help_text="150 character limit")
 
     def clean(self):
-        if self.end_date < self.start_date:
+        if self.start_date and self.end_date < self.start_date:
             raise ValidationError(
                 {
                     "end_date": ValidationError(
@@ -442,7 +442,7 @@ class ListingsPageIndex(BasePage):
             .specific()
         )
         from django.db.models import Case, When, DateField
-        context['listings_contents_page'] = ListingsContentPage.objects.public().live().annotate(
+        context['listings_contents_page'] = ListingsContentPage.objects.child_of(self).public().live().annotate(
             testing=Case(When(start_date__isnull=False, then='start_date'), default='end_date',
                          output_field=DateField())).order_by('testing').specific()
 
