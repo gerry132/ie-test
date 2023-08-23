@@ -56,7 +56,7 @@ class ListingsContentPage(BasePage):
                                   blank=True, null=True, max_length=150, help_text="150 character limit")
 
     def clean(self):
-        if self.end_date < self.start_date:
+        if self.start_date and self.end_date < self.start_date:
             raise ValidationError(
                 {
                     "end_date": ValidationError(
