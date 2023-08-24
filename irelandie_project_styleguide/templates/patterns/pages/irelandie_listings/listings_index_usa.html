@@ -36,7 +36,7 @@
     }
 </style>
  <script async>
-function getstate(state=null) {
+function getState(state=null) {
     let params = (new URL(document.location)).searchParams;
     let redirect = params.get("redirect");
 
@@ -66,7 +66,7 @@ function getstate(state=null) {
             }
     });
 }
-function getcity(city=null) {
+function getCity(city=null) {
     let params = (new URL(document.location)).searchParams;
     let redirect = params.get("redirect");
 
@@ -97,9 +97,9 @@ function getcity(city=null) {
     });
 }
 
-getcity();
+getCity();
 
-getstate();
+getState();
 
 </script>
 
@@ -141,7 +141,7 @@ getstate();
 <div class="wrapper wrapper--large wrapper--padding">
     <div class="filter">
      <h3 class="filter__title">{% translate "Filter by: " %}</h3>
-        <select class="listings_filter" id="city-list" onchange="getcity(this.value); ">
+        <select class="listings_filter" id="city-list" onchange="getCity(this.value); ">
                 <option value="city">City</option>
                 {% for p in page.get_city %}
                 <option value="{{p}}">{{p}}</option>
@@ -149,7 +149,7 @@ getstate();
         </select>
 
 
-        <select class="listings_filter" id="state-list" onchange="getstate(this.value); ">
+        <select class="listings_filter" id="state-list" onchange="getState(this.value); ">
                 <option value="state">State</option>
                 {% for p in page.get_state %}
                 <option value="{{p}}">{{p|upper}}</option>
