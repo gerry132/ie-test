@@ -89,8 +89,9 @@
             {% check_page_type page.content_type 'Story page' as StoryPage %}
             {% check_page_type page.content_type 'general content page' as GeneralContentPage %}
             {% check_page_type page.content_type 'Free Form Page' as FreeFormPage %}
-            {% check_page_type page.content_type 'listings page index' as ListingsPageIndex %}
-             {% if GeneralContentPage or StoryPage or FreeFormPage or ListingsPageIndex %}
+            {% check_page_type page.content_type 'Listings Index' as ListingsPageIndex %}
+            {% check_page_type page.content_type 'Listings Index USA' as ListingsPageIndexUSA %}
+             {% if GeneralContentPage or StoryPage or FreeFormPage or ListingsPageIndex or ListingsPageIndexUSA %}
          <ul class="tag__slide">
             {% for tags_category, tag_links in tagging_links %}
                 <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
