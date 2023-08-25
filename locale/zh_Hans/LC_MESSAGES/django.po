@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-04 12:12+0100\n"
+"POT-Creation-Date: 2023-08-25 09:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -252,6 +252,7 @@ msgstr "阅读更多"
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_block.html:45
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/video_block.html:7
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/video_block_alt.html:7
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_listings/listings_featured_page.html:47
 #: irelandie_project_styleguide/templates/patterns/pages/missions/general_content_page.html:69
 msgid "Your browser does not support the video tag."
 msgstr ""
@@ -381,12 +382,8 @@ msgstr "联系方式"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:129
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:168
-#, python-format
-msgid ""
-"Keep up to date with the latest tweets from "
-"%(socialfeed.value.twitter_username)s"
+msgid "Keep up to date with the latest tweets from"
 msgstr "及时了解最新推文"
-"%(socialfeed.value.twitter_username)s"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/twitter_embed.html:6
 #: irelandie_project_styleguide/templates/patterns/snippets/twitterembedsnippet.html:7
@@ -508,6 +505,10 @@ msgstr ""
 msgid "There are currently no vacancies."
 msgstr "暂无职位空缺。"
 
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_listings/listings_index_usa.html:143
+msgid "Filter by: "
+msgstr ""
+
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_index.html:48
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_index.html:65
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_index.html:89
@@ -519,7 +520,7 @@ msgstr "选择年份:"
 msgid "Read all news"
 msgstr "阅读全部新闻"
 
-#: irelandie_project_styleguide/templates/patterns/pages/missions/services_landing_page.html:39
+#: irelandie_project_styleguide/templates/patterns/pages/missions/services_landing_page.html:40
 #: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:218
 msgid "Related content"
 msgstr "相关内容"
@@ -551,7 +552,7 @@ msgstr ""
 msgid "Please enter the password to proceed."
 msgstr ""
 
-#: irelandie_utils/blocks.py:525
+#: irelandie_utils/blocks.py:526
 msgid ""
 "Slido iframe code. Ensure that the code you add here is only Slido provided "
 "code."

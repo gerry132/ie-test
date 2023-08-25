@@ -8,7 +8,7 @@
 <style>
     .listings_filter{
         background: #EBE9E1;
-        width: 280px;
+        width: 250px;
         height: 55px;
         border: none;
         color: #000;
@@ -30,7 +30,7 @@
     }
     .filter{
         display: flex;
-        gap: 20px;
+        gap: 15px;
         align-items: center;
         flex-wrap: wrap;
     }
@@ -147,7 +147,7 @@ getState();
                 <option value="{{p}}">{{p}}</option>
                 {% endfor %}
         </select>
-
+        <div class="filter__title">{% translate "OR" %}</div>
 
         <select class="listings_filter" id="state-list" onchange="getState(this.value); ">
                 <option value="state">State</option>
