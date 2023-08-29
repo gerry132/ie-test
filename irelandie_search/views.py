@@ -27,7 +27,18 @@ def search(request):
 
     if search_query:
         s = get_search_backend()
-
+        print(s)
+        print(s)
+        print(s)
+        print(s)
+        print(s)
+        print(s)
+        print(s)
+        print(s)
+        print(s)
+        print(s)
+        print(s)
+        print(s)
         if hasattr(s, 'settings'):
             search_results = (
                 Page.objects.live().public()

@@ -1019,7 +1019,20 @@ resource "aws_opensearch_domain" "opensearch" {
         master_user_arn = aws_iam_user.opensearch.arn
       }
     }
-
+    access_policies = jsonencode(
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": "es:*",
+          "Resource": "*"
+        }
+      ]
+    })
 }
 
 
