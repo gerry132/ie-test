@@ -72,7 +72,7 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.50.121/32", "80.233.58.121/32"]
+      cidr_blocks  = ["80.233.33.89/32", "80.233.41.89/32"]
     },
     joe_dev = {
       description = "Joe D - Sidero"
@@ -1019,7 +1019,20 @@ resource "aws_opensearch_domain" "opensearch" {
         master_user_arn = aws_iam_user.opensearch.arn
       }
     }
-
+    access_policies = jsonencode(
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": "es:*",
+          "Resource": "*"
+        }
+      ]
+    })
 }
 
 

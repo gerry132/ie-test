@@ -1,0 +1,170 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load static navigation_tags util_tags %}
+{% load i18n %}
+
+{% block content %}
+<style>
+    .listings_filter{
+        background: #EBE9E1;
+        width: 250px;
+        height: 55px;
+        border: none;
+        color: #000;
+        font-family: Inter;
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+
+    .filter__title{
+        color: #000;
+        font-family: Inter;
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin-bottom: 0;
+    }
+    .filter{
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+</style>
+ <script async>
+function getState(state=null) {
+    let params = (new URL(document.location)).searchParams;
+    let redirect = params.get("redirect");
+
+    if (redirect && state===null) {
+        state = params.get("state_r");
+    }
+    else if (state===null) {
+        state = null;
+    }
+    $.ajax({
+            url : '{{ current_site.full_url }}',
+            type : 'GET',
+            data : {
+                'state' : state
+            },
+            success : function(data) {
+                document.getElementById('state--wrapper').innerHTML = data;
+                if (state) {
+                    document.getElementById('state-list').value = state;
+                    document.getElementById('city-list').value = 'city';
+                } else {
+                    document.getElementById('state-list').value = 'state';
+                }
+            },
+            error : function(request,error)
+            {
+            }
+    });
+}
+function getCity(city=null) {
+    let params = (new URL(document.location)).searchParams;
+    let redirect = params.get("redirect");
+
+    if (redirect && city===null) {
+        city = params.get("city_r");
+    }
+    else if (city===null) {
+        city = null;
+    }
+    $.ajax({
+            url : '{{ current_site.full_url }}',
+            type : 'GET',
+            data : {
+                'city' : city
+            },
+            success : function(data) {
+                document.getElementById('state--wrapper').innerHTML = data;
+                if (city) {
+                    document.getElementById('city-list').value = city;
+                    document.getElementById('state-list').value = 'state';
+                } else {
+                    document.getElementById('city-list').value = 'city';
+                }
+            },
+            error : function(request,error)
+            {
+            }
+    });
+}
+
+getCity();
+
+getState();
+
+</script>
+
+
+{% if page.generic_hero %}
+    {% include "patterns/molecules/hero/hybrid_hero.html" with page=page tagging_links=tagging_links destination_tag_links=destination_tag_links tags_no_links=tags_no_links %}
+{% endif %}
+{% if not page.generic_hero %}
+        <div id="main-header" class="section section--padding section--white">
+                    <div class="wrapper wrapper--large wrapper--padding content--padding">
+                        <div class="intro--toc">
+                            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                        </div>
+                    </div>
+        </div>
+{% endif %}
+
+    {% block main %}
+        <!-- Body -->
+{% if page.advanced_rich_text %}
+<div class="wrapper wrapper--large wrapper--padding">
+    {% include_block page.advanced_rich_text %}
+</div>
+{% endif %}
+<div class="section section--padding rich-text__narrow">
+{% for listings in listings_featured_page %}
+    <div class="wrapper wrapper--large wrapper--padding">
+        <div class="link-box__line"></div>
+        <div style="padding: 20px 0;">
+            {% include "patterns/pages/irelandie_listings/listings_featured_page.html" with page=listings %}
+        </div>
+    </div>
+{% endfor %}
+<div style="padding: 20px 0;">
+    <div class="wrapper wrapper--large wrapper--padding">
+        <div class="link-box__line"></div>
+    </div>
+</div>
+<div class="wrapper wrapper--large wrapper--padding">
+    <div class="filter">
+     <h3 class="filter__title">{% translate "Filter by: " %}</h3>
+        <select class="listings_filter" id="city-list" onchange="getCity(this.value); ">
+                <option value="city">City</option>
+                {% for p in page.get_city %}
+                <option value="{{p}}">{{p}}</option>
+                {% endfor %}
+        </select>
+        <div class="filter__title">{% translate "OR" %}</div>
+
+        <select class="listings_filter" id="state-list" onchange="getState(this.value); ">
+                <option value="state">State</option>
+                {% for p in page.get_state %}
+                <option value="{{p}}">{{p|upper}}</option>
+                {% endfor %}
+        </select>
+     </div>
+</div>
+<div id="state--wrapper" ></div>
+
+{% if page.advanced_rich_text_and_logo_cards %}
+<div class="wrapper wrapper--large wrapper--padding">
+    {% include_block page.advanced_rich_text_and_logo_cards %}
+    </div>
+{% endif %}
+    {% endblock %}
+{% endblock %}
+
+</div>

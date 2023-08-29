@@ -1,8 +1,10 @@
-{% extends "patterns/base_page.html" %}
+
 {% load wagtailcore_tags i18n %}
 {% load wagtailimages_tags %}
 {% load util_tags static navigation_tags %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<script src="{% static 'js/main.js' %}"></script>
+{% include "patterns/atoms/sprites/sprites.html" %}
 {% block content %}
 <style>
     .listings_event p{
@@ -19,7 +21,6 @@
     }
 </style>
     {% block main %}
-        <div class="section section--padding section--white">
             <div class="wrapper wrapper--large wrapper--padding">
                 <div class="tag__link-box" >
                     {% if page.image %}
@@ -28,6 +29,8 @@
                         {% else %}
                             {% image page.image fill-500x300 alt=card.image.alt_default class="tag__image" %}
                         {% endif %}
+                     {% elif page.icon %}
+                        {% include "patterns/atoms/icons/icon.html" with name=page.icon classname="tag__image" alt=page.icon %}
                     {% endif %}
                     <div class="tag__content">
                         <div class="link-box__container">
@@ -36,14 +39,18 @@
                             </a>
                             <div class="tag__card__summary">
                                 {% if page.start_date and page.end_date %}
-                                    <b>Date:</b>
-                                    {% if page.start_date|date:"m" == page.end_date|date:"m" %}
-                                        {{ page.start_date|date:"j" }} - {{ page.end_date|date:"j F Y" }}
-                                    {% else %}
-                                        {{ page.start_date|date:"j F" }} - {{ page.end_date|date:"j F Y" }}
-                                    {% endif %}
+                                    <div>
+                                        <b>Date:</b>
+                                        {% if page.start_date|date:"m" == page.end_date|date:"m" %}
+                                            {{ page.start_date|date:"j" }} - {{ page.end_date|date:"j F Y" }}
+                                        {% else %}
+                                            {{ page.start_date|date:"j F" }} - {{ page.end_date|date:"j F Y" }}
+                                        {% endif %}
+                                    </div>
                                 {% else %}
-                                    <b>Date:</b> {{ page.end_date|date:"j F Y" }}
+                                    <div>
+                                        <b>Date:</b> {{ page.end_date|date:"j F Y" }}
+                                    </div>
                                 {% endif %}
                                 {% if page.venue %}
                                     <div>
@@ -53,6 +60,18 @@
                                 {% if page.location %}
                                     <div>
                                         <b>Location:</b> {{ page.location }}
+                                    </div>
+                                {% endif %}
+                                {% if page.city or page.state %}
+                                    <div>
+                                        <b>Location:</b>
+                                        {% if page.city and page.state %}
+                                            {{ page.city }}, {{ page.state|upper }}
+                                        {% elif page.city %}
+                                            {{ page.city }}
+                                         {% else %}
+                                            {{ page.state|upper }}
+                                         {% endif %}
                                     </div>
                                 {% endif %}
                                 {% if page.event_details %}
@@ -65,8 +84,8 @@
                         </div>
                     </div>
                 </div>
+                <div style="padding-top: 20px;" class="link-box__line"></div>
             </div>
-        </div>
     {% endblock %}
 {% endblock %}
 

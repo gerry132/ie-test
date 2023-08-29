@@ -1,0 +1,6 @@
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+{% load util_tags %}
+{{ test }}
+{% for listing_content in listings_contents_page %}
+    {% include "patterns/pages/irelandie_listings/listings_content_page.html" with page=listing_content %}
+{% endfor %}
