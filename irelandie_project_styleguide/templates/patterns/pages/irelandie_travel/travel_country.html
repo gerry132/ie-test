@@ -9,11 +9,7 @@
     {% block main %}
             <div id="main-header" class="section section--padding section--white">
                         <div class="wrapper wrapper--large wrapper--padding">
-                            {% if page.locale.language_code == 'ga' and page.title|slice:"0:2" == 'An' %}
-                                <h1 class="heading--1 toc--heading">{{ page.title|slice:"2:" }}</h1>
-                            {% else %}
                                 <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
-                            {% endif %}
                             {% if page.subtitle %}
                             <div class="travel_country_subtitle">
                                     {% for s in page.subtitle %}

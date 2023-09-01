@@ -9,7 +9,11 @@
                 >
                     {% include_block link with nav_type="primary-nav" %}
                     <a class="sub-nav-hidden primary-nav__link" {% if link.value.mega_menu %}data-open-subnav{% endif %} href="{{ link.value.page.url }}" {% if link.value.mega_menu %}aria-haspopup="true" aria-expanded="false"{% endif %}>
-                        {{ link.value.title }}
+                        {% if link.value.title %}
+                            {{ link.value.title }}
+                        {% else %}
+                            {{ link.value.page }}
+                        {% endif %}
                         {% if link.value.mega_menu %}
                             <span class="primary-nav__icon">
                                 {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="primary-nav__svg" %}
@@ -74,7 +78,11 @@
                 >
                     {% include_block link with nav_type="primary-nav" %}
                     <a class="sub-nav-hidden primary-nav__link" {% if link.value.mega_menu %}data-open-subnav{% endif %} href="{{ link.value.page.url }}" {% if link.value.mega_menu %}aria-haspopup="true" aria-expanded="false"{% endif %}>
-                        {{ link.value.title }}
+                        {% if link.value.title %}
+                            {{ link.value.title }}
+                        {% else %}
+                            {{ link.value.page }}
+                        {% endif %}
                         {% if link.value.mega_menu %}
                             <span class="primary-nav__icon">
                                 {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="primary-nav__svg" %}
