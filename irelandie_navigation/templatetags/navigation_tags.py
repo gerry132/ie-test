@@ -15,6 +15,7 @@ from irelandie_navigation.models import (
 
 from irelandie_missions.models import MissionPage
 from irelandie_pages.models import FreeFormPage
+from irelandie_travel.models import TravelLandingPage
 from irelandie_utils.models import SocialMediaSettings
 
 register = template.Library()
@@ -104,14 +105,15 @@ def has_root_override(context, page, header=True):
         return False
     page_map = {
         'mission page': MissionPage,
-        'Free Form Page': FreeFormPage
+        'Free Form Page': FreeFormPage,
+        'travel landing page': TravelLandingPage
     }
     pages = page.get_ancestors()
-    if page.content_type.name == 'mission page' or page.content_type.name == 'Free Form Page':
+    if page.content_type.name == 'mission page' or page.content_type.name == 'Free Form Page' or page.content_type.name == 'travel landing page':
         if page.root_page:
             return False
     for p in pages.reverse():
-        if p.content_type.name == 'mission page' or p.content_type.name == 'Free Form Page':
+        if p.content_type.name == 'mission page' or p.content_type.name == 'Free Form Page' or p.content_type.name == 'travel landing page':
             m = page_map[p.content_type.name].objects.get(id=p.id)
             if m.root_page:
                 if header:

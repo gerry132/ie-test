@@ -101,6 +101,7 @@ class TravelLandingPage(BasePage):
     twitter_title = models.CharField(max_length=50, blank=True)
 
     twitter_username = models.CharField(max_length=100, blank=True, validators=[validate_hostname])
+    root_page = models.BooleanField(default=True)
     content_panels = BasePage.content_panels + [
         FieldPanel('body'),
         FieldPanel('advanced_rich_text'),
@@ -109,6 +110,13 @@ class TravelLandingPage(BasePage):
             FieldPanel("twitter_username"),
         ], heading="Twitter feed"),
     ]
+    settings_panels = (
+        [
+            FieldPanel("root_page", permission="access_admin"),
+        ] +
+        BasePage.settings_panels
+
+    )
 
 
 class TravelIndexPage(BasePage):
