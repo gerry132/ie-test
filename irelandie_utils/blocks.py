@@ -1034,10 +1034,10 @@ class AccordionEmbassyBlock(blocks.StructBlock):
                             ("embassy_snippet", SnippetChooserBlock(target_model="utils.EmbassySnippet"))
                         ], required=False)
                          ),
-                    ]
+                    ], label=_("Accordion Tab")
                 ),
             )
-        ]
+        ], label=_("Accordion Tab")
     )
 
     class Meta:

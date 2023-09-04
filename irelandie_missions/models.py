@@ -873,7 +873,7 @@ class EmbassyIndexPage(BasePage):
     )
     body = StreamField(
         [
-         ("accordions", blocks.AccordionEmbassyBlock())],
+         ("accordions", blocks.AccordionEmbassyBlock(label="Accordion Block"))],
         blank=True,
         null=True,
     )
