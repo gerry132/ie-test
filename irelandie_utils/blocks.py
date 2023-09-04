@@ -982,15 +982,15 @@ class AccordionBlock(blocks.StructBlock):
                              SnippetChooserBlock(target_model="utils.ContactSnippet"))
                         ], required=False)
                          ),
-                    ]
+                    ], label=_("Accordion Tab")
                 ),
             )
-        ]
+        ], label=_("Accordion Tab")
     )
 
     class Meta:
         icon = "collapse-down"
-        label = "Accordion"
+        label = "Accordion Block"
         template = "patterns/molecules/accordion/accordion.html"
 
 

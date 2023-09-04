@@ -180,9 +180,12 @@ class TravelIndexPage(BasePage):
         }
 
         for page in travel_pages:
-            if self.locale.language_code == 'ga' and page.title[:2] == 'An' and page.title[3].islower():
+            if (self.locale.language_code == 'ga' and
+                    (page.title[:2] == 'An' or page.title[:2] == 'Na' or page.title[:2] == 'La')
+                    and page.title[3].islower()):
                 alpha_map[page.title[4]].append(page)
-            elif self.locale.language_code == 'ga' and page.title[:2] == 'An':
+            elif (self.locale.language_code == 'ga' and
+                    (page.title[:2] == 'An' or page.title[:2] == 'Na' or page.title[:2] == 'La')):
                 alpha_map[page.title[3]].append(page)
             else:
                 alpha_map[page.title[0]].append(page)
