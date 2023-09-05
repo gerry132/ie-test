@@ -1,11 +1,11 @@
+{% load static util_tags %}
 <div class="form--elem">
     <div class="a-z-listing__filter__label__text">Choose country:</div>
     <select class="search-bar--travel-index" onchange="location = this.value; ">
         <option value="" name="popular_page" selected disabled hidden>-- Choose country --</option>
         {% for key, value in travel_pages.items %}
                   {% for p in value %}
-                    <option value="{{p.url}}">{{p}}</option>
-
+                        <option value="{{p.url}}">{{p}}</option>
                     {% endfor %}
             {% endfor %}
         </select>
@@ -39,12 +39,11 @@
         <div class="a-z-listing__filter__label__text">Jump to</div>
         <ul class="a-z-listing__alphabet_letters">
             {% for letter, value in travel_pages.items %}
-                 {% for v in value %}
-                    {% ifchanged v|make_list|first %}
-                        <li class="a-z-listing__alphabet_letter"><a href="#{{ v|make_list|first }}">{{ v|make_list|first }}</a></li>
-                    {% endifchanged %}
-                 {% endfor %}
+            {% if value %}
+                <li class="a-z-listing__alphabet_letter"><a href="#{{ letter }}">{{ letter }}</a></li>
+            {% endif %}
             {% endfor %}
         </ul>
+
     </div>
 </div>

@@ -101,6 +101,7 @@ class TravelLandingPage(BasePage):
     twitter_title = models.CharField(max_length=50, blank=True)
 
     twitter_username = models.CharField(max_length=100, blank=True, validators=[validate_hostname])
+    root_page = models.BooleanField(default=True)
     content_panels = BasePage.content_panels + [
         FieldPanel('body'),
         FieldPanel('advanced_rich_text'),
@@ -109,6 +110,13 @@ class TravelLandingPage(BasePage):
             FieldPanel("twitter_username"),
         ], heading="Twitter feed"),
     ]
+    settings_panels = (
+        [
+            FieldPanel("root_page", permission="access_admin"),
+        ] +
+        BasePage.settings_panels
+
+    )
 
 
 class TravelIndexPage(BasePage):
@@ -172,7 +180,15 @@ class TravelIndexPage(BasePage):
         }
 
         for page in travel_pages:
-            alpha_map[page.title[0]].append(page)
+            page_prefix = page.title.split()
+            if (self.locale.language_code == 'ga' and len(page_prefix[0]) == 2 and
+                    (page_prefix[0] == 'An' or page_prefix[0] == 'Na' or page_prefix[0] == 'La')):
+                if page.title[3].islower():
+                    alpha_map[page.title[4]].append(page)
+                else:
+                    alpha_map[page.title[3]].append(page)
+            else:
+                alpha_map[page.title[0]].append(page)
 
         context['travel_pages'] = alpha_map
         return context
