@@ -57,7 +57,7 @@ def primarynav(context, page, override=None):
 
     navigation = get_nav_for_locale(PrimaryNavigation, locale)
     pages = page.get_ancestors()
- 
+
     context, root_found = get_root_info(context, pages)
 
     try:
