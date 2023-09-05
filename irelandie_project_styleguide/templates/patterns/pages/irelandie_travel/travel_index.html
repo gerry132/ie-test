@@ -30,14 +30,7 @@
         <ul id="ul-{{letter}}">
             {% for v in value %}
                 {% get_page_region v as region %}
-            {% with region_str=v|stringformat:"s" %}
-                    {% if page.locale.language_code == 'ga' and region_str|slice:"0:2" == 'An' %}
-                        <a href="{{v.url}}"><li style="display: block;" class="country-listing" region="{{region}}" id="{{v}}">{{ region_str|slice:"2:" }}</li></a>
-                    {% else %}
                         <a href="{{v.url}}"><li style="display: block;" class="country-listing" region="{{region}}" id="{{v}}">{{ v }}</li></a>
-                    {% endif %}
-            {% endwith %}
-
             {% endfor %}
         </ul>
     </div>

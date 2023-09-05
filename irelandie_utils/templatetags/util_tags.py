@@ -45,7 +45,7 @@ def next(list_val, current_index):
 
 @register.simple_tag
 def return_date_from_datetime(date_obj):
-    return date_obj.strftime("%d %b %Y")
+    return date_obj.strftime("%d %B %Y")
 
 
 @register.simple_tag

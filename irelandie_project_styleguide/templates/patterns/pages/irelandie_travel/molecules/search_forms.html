@@ -1,16 +1,11 @@
+{% load static util_tags %}
 <div class="form--elem">
     <div class="a-z-listing__filter__label__text">Choose country:</div>
     <select class="search-bar--travel-index" onchange="location = this.value; ">
         <option value="" name="popular_page" selected disabled hidden>-- Choose country --</option>
         {% for key, value in travel_pages.items %}
                   {% for p in value %}
-                    {% with region=p|stringformat:"s" %}
-                    {% if page.locale.language_code == 'ga' and region|slice:"0:2" == 'An' %}
-                        <option value="{{p.url}}">{{ region|slice:"3:" }}</option>
-                    {% else %}
                         <option value="{{p.url}}">{{p}}</option>
-                    {% endif %}
-        {% endwith %}
                     {% endfor %}
             {% endfor %}
         </select>
@@ -44,23 +39,11 @@
         <div class="a-z-listing__filter__label__text">Jump to</div>
         <ul class="a-z-listing__alphabet_letters">
             {% for letter, value in travel_pages.items %}
-                 {% for v in value %}
-            {% with region=v|stringformat:"s" %}
-                {% if page.locale.language_code == 'ga' and region|slice:"0:2" == 'An' %}
-                    {% with region_str=region|slice:"3:" %}
-                    {% ifchanged region_str|make_list|first %}
-                            <li class="a-z-listing__alphabet_letter"><a href="#{{ region_str|make_list|first }}">{{ region_str|make_list|first }}</a></li>
-                    {% endifchanged %}
-                    {% endwith %}
-                {% else %}
-                    {% ifchanged v|make_list|first %}
-                            <li class="a-z-listing__alphabet_letter"><a href="#{{ v|make_list|first }}">{{ v|make_list|first }}</a></li>
-                        {% endifchanged %}
-                    {% endif %}
-            {% endwith %}
-
-                 {% endfor %}
+            {% if value %}
+                <li class="a-z-listing__alphabet_letter"><a href="#{{ letter }}">{{ letter }}</a></li>
+            {% endif %}
             {% endfor %}
         </ul>
+
     </div>
 </div>

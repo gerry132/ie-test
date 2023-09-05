@@ -88,18 +88,18 @@
                                 <div class="wrapper wrapper--large toc-table">
                                 {% for block in page.admin_body1 %}
                                     {% if block.block_type == 'admin_contents' or block.block_type == 'contact_details' %}
-                                       <div class="toc-contents-number wrapper--padding">{{ forloop.counter }}.<a href="#{{block.value.title}}"><h2 class="toc-contents"> {{block.value.title}}</h2></a></div>
+                                       <div class="toc-contents-number wrapper--padding">—<a href="#{{block.value.title}}"><h2 class="toc-contents"> {{block.value.title}}</h2></a></div>
                                     {% endif %}
 
                                 {% endfor %}
                                 {% for block in page.body %}
                                     {% if block.block_type == 'content' %}
-                                    <div class="toc-contents-number wrapper--padding">{{ forloop.counter|add:admin_content_length }}.<a href="#{{block.value.title}}"><h2 class="toc-contents"> {{block.value.title}}</h2></a></div>
+                                    <div class="toc-contents-number wrapper--padding">—<a href="#{{block.value.title}}"><h2 class="toc-contents"> {{block.value.title}}</h2></a></div>
                                     {% endif %}
                                 {% endfor %}
                                 {% for block in page.admin_body2 %}
                                     {% if block.block_type == 'admin_content'  or block.block_type == 'contact_details'%}
-                                     <div class="toc-contents-number wrapper--padding">{{ forloop.counter|add:admin_content_length|add:content_length }}.<a href="#{{block.value.title}}"><h2 class="toc-contents"> {{block.value.title}}</h2></a></div>
+                                     <div class="toc-contents-number wrapper--padding">—<a href="#{{block.value.title}}"><h2 class="toc-contents"> {{block.value.title}}</h2></a></div>
                                     {% endif %}
                                 {% endfor %}
                                 </div>
