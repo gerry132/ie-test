@@ -43,7 +43,7 @@ def search(request):
                 search_term.count += 1
             except ObjectDoesNotExist:
                 print("Either the blog or entry doesn't exist.")
-                search_term = SearchTerm.objects.get(search_term=search_query, count=1)
+                search_term = SearchTerm(search_term=search_query, count=1)
             search_term.save()
         else:
             search_results = (
