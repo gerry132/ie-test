@@ -3,9 +3,12 @@ from django.conf import settings
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.template.response import TemplateResponse
 from django.utils.cache import add_never_cache_headers, patch_cache_control
+from django.core.exceptions import ObjectDoesNotExist
 
 from irelandie_listings.models import ListingsContentPage, ListingsFeaturedPage
 from irelandie_missions.models import MissionPage
+
+from .models import SearchTerm
 
 from wagtail.models import Page, Site
 from irelandie_tags.models import TagPage, DestinationTagPage
@@ -27,18 +30,7 @@ def search(request):
 
     if search_query:
         s = get_search_backend()
-        print(s)
-        print(s)
-        print(s)
-        print(s)
-        print(s)
-        print(s)
-        print(s)
-        print(s)
-        print(s)
-        print(s)
-        print(s)
-        print(s)
+
         if hasattr(s, 'settings'):
             search_results = (
                 Page.objects.live().public()
@@ -46,6 +38,13 @@ def search(request):
                     .not_exact_type(TagPage, ListingsContentPage, DestinationTagPage,  ListingsFeaturedPage)
                     .search(Fuzzy(search_query), partial_match=False)
             )
+            try:
+                search_term = SearchTerm.objects.get(search_term=search_query)
+                search_term.count += 1
+            except ObjectDoesNotExist:
+                print("Either the blog or entry doesn't exist.")
+                search_term = SearchTerm.objects.get(search_term=search_query, count=1)
+            search_term.save()
         else:
             search_results = (
                 Page.objects.live().public()
