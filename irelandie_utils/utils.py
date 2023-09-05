@@ -37,6 +37,6 @@ def get_root_info(context, pages):
             if missions.root_page:
                 context['default_image'] = missions.default_image
                 context['mission_web_bot'] = missions.web_bot_script
-                context['page'] = missions
+                context['root_page'] = missions
                 root_found = True
     return context, root_found

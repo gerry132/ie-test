@@ -62,7 +62,7 @@ def primarynav(context, page, override=None):
 
     try:
         if root_found:
-            custom_header = CustomHeader.objects.get(id=page.context['id'])
+            custom_header = CustomHeader.objects.get(id=context['root_page'].custom_header.id)
         else:
             custom_header = CustomHeader.objects.get(id=page.custom_header.id)
     except AttributeError:
