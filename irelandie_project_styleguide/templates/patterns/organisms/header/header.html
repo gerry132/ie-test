@@ -340,24 +340,6 @@
         link.setAttribute('aria-current', 'page')
       }
     })
-    const breadcrumbs = document.querySelector('.breadcrumb');
-    const toggle_desk = document.querySelector('.header__menu-toggle--desk');
-    const toggle_mob = document.querySelector('.header__menu-toggle--mobile');
-    const search_desk = document.querySelector('[data-toggle-search]');
-    const search_mob = document.querySelector('.header__search-toggle--mobile');
-
-    search_desk.addEventListener('click', () => {
-      breadcrumbs.classList.toggle('generic-hero__search-is-active')
-    });
-    search_mob.addEventListener('click', () => {
-      breadcrumbs.classList.toggle('generic-hero__search-is-active')
-    });
-    toggle_desk.addEventListener('click', () => {
-      breadcrumbs.classList.toggle('breadcrumbs__hidden')
-    });
-    toggle_mob.addEventListener('click', () => {
-      breadcrumbs.classList.toggle('breadcrumbs__hidden')
-    });
 
 
 </script>
