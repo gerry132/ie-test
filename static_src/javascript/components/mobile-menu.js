@@ -31,7 +31,9 @@ class MobileMenu {
         // Listen for when the search opens and close any open desktop menu dropdowns
         document.addEventListener('onSearchOpen', () => {
             this.node.classList.remove('is-open');
+            if (this.breadcrumb !== null) {
             this.breadcrumb.classList.remove('breadcrumbs__hidden');
+            }
             this.noticeBars.classList.remove('notice-bar__hidden');
             this.closeCb();
 
@@ -56,7 +58,9 @@ class MobileMenu {
         this.node.classList.add('is-open');
         this.node.setAttribute('aria-expanded', 'true');
         this.noticeBars.classList.add('notice-bar__hidden');
-        this.breadcrumb.classList.add('breadcrumbs__hidden');
+        if (this.breadcrumb !== null) {
+            this.breadcrumb.classList.add('breadcrumbs__hidden');
+        }
         this.openCb();
 
         this.state.open = true;
@@ -66,7 +70,9 @@ class MobileMenu {
         this.node.classList.remove('is-open');
         this.node.setAttribute('aria-expanded', 'false');
         this.noticeBars.classList.remove('notice-bar__hidden');
-        this.breadcrumb.classList.remove('breadcrumbs__hidden');
+        if (this.breadcrumb !== null) {
+            this.breadcrumb.classList.remove('breadcrumbs__hidden');
+        }
         this.closeCb();
 
         this.state.open = false;
