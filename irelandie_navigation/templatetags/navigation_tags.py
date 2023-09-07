@@ -54,11 +54,13 @@ def get_nav_for_locale(cls, locale):
 def primarynav(context, page, override=None):
     request = context["request"]
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
+    root_found = False
 
     navigation = get_nav_for_locale(PrimaryNavigation, locale)
-    pages = page.get_ancestors()
+    if not isinstance(page, int):
+        pages = page.get_ancestors()
 
-    context, root_found = get_root_info(context, pages)
+        context, root_found = get_root_info(context, pages)
 
     try:
         if root_found:
