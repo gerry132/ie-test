@@ -13,6 +13,7 @@ class Search {
             '[data-search-input]',
         );
         this.noticeBar = document.querySelector('.notice-bar--extended');
+        this.breadCrumbs = document.querySelector('.breadcrumb');
 
         // mobile menu selectors
         this.mobileMenu = document.querySelectorAll('[data-mobile-menu]');
@@ -43,6 +44,10 @@ class Search {
                 toggle.classList.remove(this.activeClass);
             });
 
+            if (this.breadCrumbs !== null) {
+                this.breadCrumbs.classList.remove('generic-hero__search-is-active');
+            }
+
             // toggle search dropdown
             this.searchDropdown.classList.remove(this.activeClass);
             if (this.noticeBar !== null){
@@ -62,6 +67,10 @@ class Search {
 
         // toggle search dropdown
         this.searchDropdown.classList.toggle(this.activeClass);
+
+        if (this.breadCrumbs !== null) {
+            this.breadCrumbs.classList.toggle('generic-hero__search-is-active');
+        }
 
         // focus the input
         this.searchInput.focus();

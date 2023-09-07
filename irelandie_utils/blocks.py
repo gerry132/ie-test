@@ -447,7 +447,7 @@ class AdvancedRichTextBlock(blocks.StructBlock):
     paragraph_alignment = blocks.ChoiceBlock(
         required=False,
         choices=ParagraphAlignment.choices,
-        default=ParagraphAlignment.WIDE,
+        default=ParagraphAlignment.NARROW,
     )
     heading = blocks.CharBlock(required=False)
     rich_text = blocks.RichTextBlock(

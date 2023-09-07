@@ -17,6 +17,7 @@ from irelandie_missions.models import MissionPage
 from irelandie_pages.models import FreeFormPage
 from irelandie_travel.models import TravelLandingPage
 from irelandie_utils.models import SocialMediaSettings
+from irelandie_utils.utils import get_root_info
 
 register = template.Library()
 
@@ -55,9 +56,15 @@ def primarynav(context, page, override=None):
     locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
 
     navigation = get_nav_for_locale(PrimaryNavigation, locale)
+    pages = page.get_ancestors()
+
+    context, root_found = get_root_info(context, pages)
 
     try:
-        custom_header = CustomHeader.objects.get(id=page.custom_header.id)
+        if root_found:
+            custom_header = CustomHeader.objects.get(id=context['root_page'].custom_header.id)
+        else:
+            custom_header = CustomHeader.objects.get(id=page.custom_header.id)
     except AttributeError:
         custom_header = None
 
