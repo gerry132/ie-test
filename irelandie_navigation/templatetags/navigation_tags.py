@@ -57,7 +57,13 @@ def primarynav(context, page, override=None):
     root_found = False
 
     navigation = get_nav_for_locale(PrimaryNavigation, locale)
-    if not isinstance(page, int):
+    if not page:
+        return {
+            "primarynav": navigation,
+            "customnav": None,
+            "request": request,
+        }
+    if not isinstance(page, int) or not isinstance(page, str):
         pages = page.get_ancestors()
 
         context, root_found = get_root_info(context, pages)
