@@ -61,10 +61,10 @@
         {% include "patterns/atoms/sprites/sprites.html" %}
 
         {% wagtailuserbar %}
-        {% if page %}
+
             {% block header %}
             {% endblock %}
-        {% endif %}
+
             {% has_root_override page header=True as override %}
         <main class="wrapper wrapper--main main" id="main-content">
             {% block content %}
