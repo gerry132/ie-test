@@ -16,7 +16,7 @@ from wagtail.snippets.blocks import SnippetChooserBlock
 from irelandie_home.blocks import SecondaryCallToAction
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 
-from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment
+from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment, YoutubeSize
 
 ALT_HELP_TEXT = """A short one-sentence literal description
                     of the %s is
@@ -515,6 +515,11 @@ class YoutubeVideoBlock(blocks.StructBlock):
         value_class = YoutubeLinkValue
         template = "patterns/molecules/streamfield/blocks/youtube_block.html"
 
+    youtube_size_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=YoutubeSize.choices,
+        default=YoutubeSize.LARGE,
+    )
     url = blocks.CharBlock()
     slido_embed = blocks.TextBlock(
         required=False,
@@ -1470,6 +1475,40 @@ class YoutubeVimeoLinkValue(blocks.StructValue):
             return embed_url_with_parameters
         else:
             return None
+
+
+class StoryVideoBlock(blocks.StructBlock):
+    youtube_or_vimeo_size_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=YoutubeSize.choices,
+        default=YoutubeSize.LARGE,
+    )
+    youtube_or_vimeo_embed = blocks.CharBlock(required=False)
+    video = CustomVideoChooserBlock(required=False)
+    video_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_VID),
+    )
+    title = blocks.CharBlock()
+    summary = blocks.TextBlock(required=False)
+
+    def clean(self, value):
+        errors = {}
+        values = [value["youtube_or_vimeo_embed"], value["video"]]
+        # Set only a youtube_or_vimeo_embed OR a custom_video
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a youtube_or_vimeo_embed or set a custom_video."
+
+            errors["youtube_or_vimeo_embed"] = ErrorList([message])
+            errors["video"] = ErrorList([message])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    class Meta:
+        value_class = YoutubeVimeoLinkValue
 
 
 class VideoBlock(blocks.StructBlock):

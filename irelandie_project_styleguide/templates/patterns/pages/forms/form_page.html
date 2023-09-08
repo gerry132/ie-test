@@ -82,9 +82,7 @@
         </div>
         {% for block in page.body %}
         {% if block.block_type == 'rich_text' %}
-        <div style="padding-top:40px;">
             {% include_block block %}
-        </div>
         {% elif block.block_type == 'accordions' %}
         <div class="rich-text">
              {% include_block block %}
