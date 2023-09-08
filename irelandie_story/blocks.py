@@ -2,7 +2,6 @@ from irelandie_utils.blocks import (
     AdvancedRichTextBlock,
     ImageBlock,
     TableBlock,
-    VideoBlock,
     AccordionBlock,
     StatsBlock,
     StoryPhotoGalleriesBlock,
