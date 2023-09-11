@@ -63,7 +63,8 @@ def primarynav(context, page, override=None):
             "customnav": None,
             "request": request,
         }
-    if not isinstance(page, int) or not isinstance(page, str):
+
+    if not isinstance(page, int) and not isinstance(page, str):
         pages = page.get_ancestors()
 
         context, root_found = get_root_info(context, pages)
