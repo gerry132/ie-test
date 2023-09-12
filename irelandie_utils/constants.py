@@ -44,6 +44,12 @@ class NoticeIcon(models.TextChoices):
     INFORMATION = 'information', 'Information'
 
 
+class YoutubeSize(models.TextChoices):
+    SMALL = 'small', 'Small'
+    MEDIUM = 'medium', 'Medium'
+    LARGE = 'large', 'Large'
+
+
 class USAStates(models.TextChoices):
     CHOOSE_A_STATE = '', 'State'
     Alabama = 'al', 'AL'
