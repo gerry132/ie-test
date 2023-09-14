@@ -1095,6 +1095,21 @@ class TocBlocks(blocks.StreamBlock):
     ], group="HTML")
 
 
+class OverviewPullOutTextBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    body = blocks.StreamBlock(
+        [
+            ("body", blocks.CharBlock())
+        ],
+        blank=True,
+        required=False,
+    )
+
+    class Meta:
+        label = "Overview Pull Out Text"
+        template = "patterns/molecules/streamfield/blocks/overview_pull_out_textblock.html"
+
+
 class GeneralContentBlocks(blocks.StreamBlock):
     rich_text = AdvancedRichTextBlock(group="Base")
     image = ImageBlock(group="Base")
@@ -1118,6 +1133,7 @@ class GeneralContentBlocks(blocks.StreamBlock):
     stats_block = StatsBlock(group="Base")
     story_photo_gallery = StoryPhotoGalleriesBlock(group="Base")
     timeline_photo_gallery = TimelinePhotoGalleriesBlock(group="Base")
+    overview_pull_out_textblock = OverviewPullOutTextBlock(group="Base")
 
 
 class TocBlock(blocks.StructBlock):
@@ -1453,6 +1469,22 @@ class GenericHeroBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/generic_hero.html"
 
 
+class BannerImageBlock(blocks.StructBlock):
+    banner_image_desktop = ImageChooserBlock(required=False)
+    banner_image_mobile = ImageChooserBlock(required=False)
+    banner_image_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_IMAGE),
+    )
+
+    banner_title = blocks.CharBlock(required=True, max_length=120)
+    subtitle = blocks.CharBlock(required=False)
+
+    class Meta:
+        label = "Banner Hero Image"
+        template = "patterns/molecules/streamfield/blocks/generic_hero.html"
+
+
 class YoutubeVimeoLinkValue(blocks.StructValue):
     def embedding_url(self):
 
@@ -1615,6 +1647,7 @@ class FreeFormBlocks(FreeFormBlocksBase):
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
     accordion = AccordionBlock(group="Base")
+    overview_pull_out_textblock = OverviewPullOutTextBlock(group="Base")
 
     articles = ArticleCardsBlock(group="Module")
     embassy_story = EmbassyStory(group="Module")

@@ -1,0 +1,36 @@
+{% load wagtailcore_tags %}
+<style>
+    .pull_out_body{
+        padding-top: 50px;
+        color: #101010;
+        font-family: Lato;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+
+    }
+    .pull_out_heading{
+        color: #101010;
+        font-family: Lato;
+        font-size: 36px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 120%;
+    }
+</style>
+ <div style="padding: 115px 20px 85px;">
+<div class="pull_out rich-text__narrow">
+{% if value.heading %}
+                <div class="pull_out_heading heading--2">{{ value.heading }}</div>
+{% endif %}
+    <div class="pull_out_body">
+        <ul>
+            {% for block in value.body %}
+                <li>{{ block }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>
+ </div>
