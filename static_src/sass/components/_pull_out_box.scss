@@ -1,4 +1,10 @@
-
+.pull_out ul{
+    list-style-image: url("../images/cssBackgrounds/gold_chevron_arrow.png");
+}
+.pull_out li{
+    padding-left: 20px;
+    padding-bottom: 30px;
+}
     .pull_out_heading{
         color: #101010;
         font-family: Lato;
