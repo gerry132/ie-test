@@ -1,0 +1,15 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% if banner_image_desktop or banner_image_mobile %}
+    {# Hero image background images #}
+        {% image banner_image_mobile original as mobile_image %}
+        {% image banner_image_desktop original as desktop_image %}
+    <style>
+
+    @media only screen and (min-width: 1024px) {
+        {% if class %}.{{ class }}{% endif %}.background-image {
+            background-image: url({{ desktop_image.url }});
+        }
+    }
+    </style>
+{% endif %}

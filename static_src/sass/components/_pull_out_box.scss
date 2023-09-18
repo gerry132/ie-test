@@ -1,0 +1,98 @@
+.pull_out ul{
+    list-style-image: url("../images/cssBackgrounds/gold_chevron_arrow.png");
+}
+.pull_out li{
+    padding-left: 20px;
+    padding-bottom: 30px;
+}
+    .pull_out_heading{
+        color: #101010;
+        font-family: Lato;
+        font-size: 36px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 120%;
+    }
+    .pull_out_body{
+        padding-top: 50px;
+        color: #101010;
+        font-family: Lato;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+
+    }
+    .pull_out_heading{
+        color: #101010;
+        font-family: Lato;
+        font-size: 36px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 120%;
+    }
+    .story__image_container{
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            background: #F5F5F2;
+            padding: 10px;
+            max-width: 340px;
+
+    }
+    .document__title{
+        color: #090B0E;
+        font-family: Lato;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 120%;
+        padding: 20px 0;
+    }
+    .document__container {
+        position: relative;
+        padding: 0px;
+        display: flex;
+
+        @media only screen and (max-width:1024px) {
+
+            justify-content: flex-start;
+            flex-direction: column;
+        }
+    }
+    .document__content {
+        color: $color--off-black;
+        display: flex;
+        flex-direction: column;
+        flex: 1 0 100%;
+        justify-content: flex-start;
+        margin: 0;
+        padding: $grid 0;
+        flex: 1 0 40%;
+
+        @media only screen and (min-width: 1024px) {
+            padding: 0 60px 0 0;
+        }
+
+        @media only screen and (max-width: 1024px) {
+            padding: 40px 0px;
+        }
+    }
+
+    .label{
+    color: var(--Nearly-black, #101010);
+font-family: Lato;
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: 110%;
+    }
+    .statistic{
+    color: var(--Nearly-black, #101010);
+text-align: right;
+font-family: Lato;
+font-size: 24px;
+font-style: normal;
+font-weight: 400;
+line-height: 110%;
+}

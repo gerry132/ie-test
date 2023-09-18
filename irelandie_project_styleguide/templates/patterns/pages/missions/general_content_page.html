@@ -6,8 +6,15 @@
 {% if page.generic_hero %}
     {% include "patterns/molecules/hero/hybrid_hero.html" with page=page tagging_links=tagging_links destination_tag_links=destination_tag_links tags_no_links=tags_no_links %}
 {% endif %}
+{% if page.banner_hero_image %}
+{% for block in page.banner_hero_image %}
+    {% include "patterns/molecules/banner_hero_image/banner_image.html" with banner_image_desktop=block.value.banner_image_desktop banner_image_mobile=block.value.banner_image_mobile %}
+
+    {% include "patterns/molecules/banner_hero_image/banner_hero.html" with page=block.value %}
+{% endfor %}
+{% endif %}
 {% has_root_override page header=True as override %}
-{% if not page.generic_hero %}
+{% if not page.generic_hero and not page.banner_hero_image %}
         <div id="main-header" class="section section--padding section--white">
                     <div class="wrapper wrapper--large wrapper--padding content--padding">
                         <div class="intro--toc">
@@ -33,7 +40,7 @@
 
 {% block main %}
         <!-- Body -->
-<div class="section--master {% if page.generic_hero %} section section--padding {% endif %}">
+<div class="section--master {% if page.generic_hero or page.banner_hero_image %} section section--padding {% endif %}">
     {{ page.page_type }}
             {% for block in page.body %}
                 {% if block.block_type == 'heading' or block.block_type == 'rich_text' or block.block_type == 'image' or block.block_type == 'document' or block.block_type == 'table' or block.block_type == 'advanced_table_block' %}

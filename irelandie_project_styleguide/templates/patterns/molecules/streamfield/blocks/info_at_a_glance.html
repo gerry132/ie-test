@@ -1,0 +1,13 @@
+
+<div class="section section--padding">
+<hr style="border: 2px solid #000;">
+<div id="flexContainer" style="display: flex; flex-direction: column;">
+    {% for block in value.info_at_a_glance %}
+    <div style="display: flex; border-bottom: 1px solid #000; padding:20px 0;">
+           <div class="label">{{ block.value.label }}</div>
+            <div class="statistic" style="padding-left: 40px; margin-left: auto; text-align: right;">{{ block.value.statistic }}</div>
+    </div>
+    {% endfor %}
+
+</div>
+</div>
