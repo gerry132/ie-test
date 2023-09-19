@@ -39,7 +39,7 @@
             </div>
             {% endif %}
             {% elif value.video %}
-            <video aria-label="{{ value.title }}" class="story__video-block" controls data-video loop
+            <video poster="{{ value.video.thumbnail.url }}" aria-label="{{ value.title }}" class="story__video-block" controls data-video loop
                    title="{{ value.title }}">
                 <source src="{{ value.video.url }}" type="video/mp4">
                 {% trans 'Your browser does not support the video tag.' %}
