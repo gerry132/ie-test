@@ -28,8 +28,25 @@
                 </div>
                 <div style="margin-top: auto;">
                     <a href="{{ value.document.url }}" style="padding-right: 20px;" target="_blank" rel="nofollow noreferrer" aria-labelledby="document-title">View</a>
-                    <a href="{{ value.document.url }}" download>Download</a>
+                    <button type = "button" style="background: none!important; border: none; color: #004d46; cursor: pointer;" onclick = "startDownload('{{value.document.url}}', '{{value.document.url}}')"> Download </button>
                 </div>
             </div>
         </div>
 </div>
+
+   <script>
+      function startDownload(url, fileName) {
+         fetch(url, { method: 'get', mode: 'no-cors', referrerPolicy: 'no-referrer' })
+            .then(res => res.blob())
+            .then(res => {
+              const aElement = document.createElement('a');
+              aElement.setAttribute('download', fileName);
+              const href = URL.createObjectURL(res);
+              aElement.href = href;
+              // aElement.setAttribute('href', href);
+              aElement.setAttribute('target', '_blank');
+              aElement.click();
+              URL.revokeObjectURL(href);
+    });
+      }
+   </script>
