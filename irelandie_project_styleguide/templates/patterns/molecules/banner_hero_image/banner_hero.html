@@ -1,0 +1,35 @@
+{% load wagtailcore_tags wagtailimages_tags i18n irelandie_assets_tags %}
+<div alt="{{page.alt_text}}" class="banner_hero background-image{% if classes %} {{ classes }}{% endif %}">
+    <div class="hero__content-container wrapper wrapper--padding">
+        <div class="banner_hero__content">
+            <div class="banner_hero__copy">
+                <h1 class="banner_hero__title">
+                    {% if page.banner_title %}
+                        {{ page.banner_title }}
+                    {% else %}
+                        {{ page.title }}
+                    {% endif %}
+                </h1>
+                <div class="banner_hero__sub_title">
+                {% if page.subtitle %}
+                    <p>{% firstof page.subtitle %}</p>
+                {% endif %}
+                </div>
+
+                 <ul class="tag__slide">
+                    {% for tags_category, tag_links in tagging_links %}
+                        <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                    {% endfor %}
+                    {% for tags_category in tags_no_links %}
+                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                    {% endfor %}
+                    {% for tags_destination, tag_links in destination_tag_links %}
+                        <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
+                    {% endfor %}
+                 </ul>
+            </div>
+            {% image page.banner_image_mobile original class="banner_mobile" %}
+        </div>
+    </div>
+</div>
+

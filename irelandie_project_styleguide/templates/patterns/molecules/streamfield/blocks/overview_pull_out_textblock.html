@@ -1,0 +1,16 @@
+{% load wagtailcore_tags %}
+ <div style="padding: 115px 20px 85px;">
+<div class="pull_out rich-text__narrow">
+{% if value.heading %}
+                <div class="pull_out_heading heading--2">{{ value.heading }}</div>
+{% endif %}
+    <div class="pull_out_body">
+        <ul>
+            {% for block in value.body %}
+                <li>{{ block }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>
+ </div>
