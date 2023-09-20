@@ -73,7 +73,9 @@
                                                 {% if block.value.hero_image %}
                                                     {% image block.value.hero_image fill-500x300 class="card__image" alt=block.value.hero_image_alt %}
                                                 {% else %}
-                                                    {% image block.value.hero_video.thumbnail fill-500x300 class="card__image" alt=block.value.hero_image_alt %}
+                                                    {% if block.value.hero_video.thumbnail %}
+                                                            <img alt="hero" class="card__image" height="240" src="{{ block.value.hero_video.thumbnail.url }}" width="400">
+                                                    {% endif %}
                                                 {% endif %}
                                             {% endfor %}
                                         {% else %}
@@ -157,7 +159,9 @@
                                                     {% if block.value.hero_image %}
                                                         {% image block.value.hero_image fill-500x300 class="card__image" alt=block.value.hero_image_alt %}
                                                     {% else %}
-                                                        <img alt="hero" class="card__image" height="240" src="{{block.value.hero_video.thumbnail.url}}" width="400">
+                                                        {% if block.value.hero_video.thumbnail %}
+                                                            <img alt="hero" class="card__image" height="240" src="{{ block.value.hero_video.thumbnail.url }}" width="400">
+                                                         {% endif %}
                                                     {% endif %}
                                                 {% endfor %}
                                             {% else %}
