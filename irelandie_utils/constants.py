@@ -50,6 +50,11 @@ class YoutubeSize(models.TextChoices):
     LARGE = 'large', 'Large'
 
 
+class HeroSize(models.TextChoices):
+    FULL_HERO = 'full hero', 'Full Hero'
+    HALF_HERO = 'half hero', 'Half Hero'
+
+
 class USAStates(models.TextChoices):
     CHOOSE_A_STATE = '', 'State'
     Alabama = 'al', 'AL'

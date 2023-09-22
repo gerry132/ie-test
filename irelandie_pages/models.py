@@ -29,7 +29,7 @@ class FreeFormPageBase(HeroPage):
         FieldPanel("body"),
     ]
 
-    hero_panel = HeroPage.hero_panel
+    hero_panel = HeroPage.hero_panel_with_size
 
     class Meta:
         abstract = True

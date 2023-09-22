@@ -1,0 +1,131 @@
+{% load wagtailcore_tags wagtailimages_tags i18n irelandie_assets_tags %}
+
+<div class="half_hero__container">
+    <div class="half_hero__left">
+        <div class="half_hero__copy">
+            <h1 class="banner_hero__title">
+                {% if page.hero_title %}
+                    {{ page.hero_title }}
+                {% else %}
+                    {{ page.title }}
+                {% endif %}
+            </h1>
+
+            <div class="banner_hero__sub_title">
+                {% if page.summary or page.introduction %}
+                    <p>{% firstof page.summary page.introduction %}</p>
+                {% endif %}
+            </div>
+
+            {% if page.link_page and page.link_text %}
+                {% pageurl page.link_page as href %}
+                <a class="hero__button button" href="{{ href }}">{{ page.link_text }}</a>
+            {% endif %}
+
+            {% check_page_type page.content_type 'Free Form Page' as FreeFormPage %}
+            {% check_page_type page.content_type 'Story page' as StoryPage %}
+            {% if FreeFormPage or StoryPage %}
+                <ul class="tag__slide">
+                    {% for tags_category, tag_links in tagging_links %}
+                        <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                    {% endfor %}
+                    {% for tags_category in tags_no_links %}
+                        <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                    {% endfor %}
+                    {% for tags_destination, tag_links in destination_tag_links %}
+                        <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+    <div class="half_hero__right" data-video-container>
+        {% if page.hero_image %}
+            {% image page.hero_image original class="half_hero__image" %}
+        {% endif %}
+        {% if page.hero_video %}
+            <figure class="half_hero__video-wrapper" role="presentation">
+                <video autoplay class="hero__video" controls data-video loop muted>
+                    <source src="{{ page.hero_video.url }}" type="video/mp4">
+                    {% trans 'Your browser does not support the video tag.' %}
+                </video>
+            </figure>
+            <div class="half_hero__hero__video-control-container">
+                <button aria-label="{% trans 'Toggle video playback' %}" class="hero__video-control-toggle"
+                        data-video-toggle>
+                    {% include "patterns/atoms/icons/icon.html" with name="play" classname="hero__video-control-icon hero__video-control-icon--play" %}
+                    {% include "patterns/atoms/icons/icon.html" with name="pause" classname="hero__video-control-icon hero__video-control-icon--pause" %}
+                </button>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% if page.hero_image_credit %}
+<div class="hero__image_credit">
+    <div class="hero__image_credit_text">{{ page.hero_image_credit }}</div>
+</div>
+{% endif %}
+<div class="half_hero__content-container">
+    <div class="banner_hero__content wrapper wrapper--padding">
+        <div class="banner_hero__copy">
+            <h1 class="banner_hero__title">
+                {% if page.hero_title %}
+                    {{ page.hero_title }}
+                {% else %}
+                    {{ page.title }}
+                {% endif %}
+            </h1>
+            <div class="banner_hero__sub_title">
+                {% if page.summary or page.introduction %}
+                    <p>{% firstof page.summary page.introduction %}</p>
+                {% endif %}
+            </div>
+            {% if page.link_page and page.link_text %}
+                {% pageurl page.link_page as href %}
+                <a class="hero__button button" href="{{ href }}">{{ page.link_text }}</a>
+            {% endif %}
+
+            <ul class="tag__slide">
+                {% for tags_category, tag_links in tagging_links %}
+                    <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                {% endfor %}
+                {% for tags_category in tags_no_links %}
+                    <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+                {% endfor %}
+                {% for tags_destination, tag_links in destination_tag_links %}
+                    <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div data-video-container style="position: relative;">
+    {% if page.hero_image %}
+        {% image page.hero_image original class="banner_mobile" %}
+    {% endif %}
+    {% if page.hero_video %}
+            <figure class="half_hero__video-wrapper" role="presentation">
+                <video autoplay class="hero__video" data-video loop muted>
+                    <source src="{{ page.hero_video.url }}" type="video/mp4">
+                    {% trans 'Your browser does not support the video tag.' %}
+                </video>
+            </figure>
+            <div class="half_hero__hero__video-control-container">
+                <button aria-label="{% trans 'Toggle video playback' %}" class="hero__video-control-toggle"
+                        data-video-toggle>
+                    {% include "patterns/atoms/icons/icon.html" with name="play" classname="hero__video-control-icon hero__video-control-icon--play" %}
+                    {% include "patterns/atoms/icons/icon.html" with name="pause" classname="hero__video-control-icon hero__video-control-icon--pause" %}
+                </button>
+            </div>
+    {% endif %}
+    {% if page.hero_image_credit %}
+        <button aria-label="See the credit for this image" class="story__button-image-credit" data-image-credit>
+            <svg fill="none" height="29" viewBox="0 0 29 29" width="29" xmlns="http://www.w3.org/2000/svg">
+                <path clip-rule="evenodd"
+                      d="M25.375 14.5C25.375 20.5061 20.5061 25.375 14.5 25.375C8.4939 25.375 3.625 20.5061 3.625 14.5C3.625 8.4939 8.4939 3.625 14.5 3.625C20.5061 3.625 25.375 8.4939 25.375 14.5ZM15.7083 9.66667C15.7083 10.334 15.1673 10.875 14.5 10.875C13.8327 10.875 13.2917 10.334 13.2917 9.66667C13.2917 8.99932 13.8327 8.45833 14.5 8.45833C15.1673 8.45833 15.7083 8.99932 15.7083 9.66667ZM15.5 20.5417V13.2917H13.5V20.5417H15.5Z"
+                      fill="white" fill-rule="evenodd"/>
+            </svg>
+        </button>
+        <div class="hero__mobile story__image-credit">{{ page.hero_image_credit }}</div>
+    {% endif %}
+    </div>
+</div>
