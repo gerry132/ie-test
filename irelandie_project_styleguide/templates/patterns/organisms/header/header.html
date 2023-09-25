@@ -38,6 +38,9 @@
 
 {% endif %}
 </style>
+{% if settings.irelandie_navigation.SiteSettings.website_header_strapline %}
+    {% include "patterns/snippets/websiteheadersnippet.html" with object=settings.irelandie_navigation.SiteSettings.website_header_strapline %}
+{% endif %}
 <header>
     <div class="header {% if custom_header.links %}header--condensed{% endif %}">
         <div class="wrapper wrapper--large">

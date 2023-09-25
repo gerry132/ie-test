@@ -1,0 +1,20 @@
+.website-header {
+    background: #E5ECEB;
+    padding: 10px 0;
+}
+.website-header .rich_text {
+    color: #000;
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+}
+    .website-header .rich_text p{
+        margin: 0;
+    }
+    .website-header .rich_text a{
+        color: #000;
+        font-weight: 800;
+        text-decoration-line: underline;
+    }

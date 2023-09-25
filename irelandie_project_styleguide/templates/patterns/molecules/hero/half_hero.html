@@ -39,7 +39,7 @@
             {% endif %}
         </div>
     </div>
-    <div class="half_hero__right" data-video-container>
+    <div class="half_hero__right" {% if page.hero_video %}data-video-container{% endif %}>
         {% if page.hero_image %}
             {% image page.hero_image original class="half_hero__image" %}
         {% endif %}
@@ -98,7 +98,7 @@
             </ul>
         </div>
     </div>
-    <div data-video-container style="position: relative;">
+    <div {% if page.hero_video %}data-video-container{% endif %} style="position: relative;">
     {% if page.hero_image %}
         {% image page.hero_image original class="banner_mobile" %}
     {% endif %}
