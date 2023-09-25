@@ -6,8 +6,9 @@
         Responsive hero images
     {% endcomment %}
     {% check_page_type page.content_type 'Free Form Page' as FreeFormPage %}
-
-    {% if page.hero_image or page.hero_video %}
+    {% if page.hero_image and page.hero_size == "half hero" or page.hero_video and page.hero_size == "half hero" %}
+        {% include "patterns/molecules/hero/half_hero.html" with page=page %}
+    {% elif page.hero_image or page.hero_video %}
         {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
 
         {% include "patterns/molecules/hero/hero.html" with page=page %}
