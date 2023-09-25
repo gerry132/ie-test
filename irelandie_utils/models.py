@@ -1409,3 +1409,38 @@ class BetaSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexe
 
     def __str__(self):
         return self.title
+
+
+class WebsiteHeaderStraplineSnippetTag(TaggedItemBase):
+    content_object = ParentalKey('utils.WebsiteHeaderStraplineSnippet', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
+@register_snippet
+class WebsiteHeaderStraplineSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
+                                    models.Model):
+    tags = TaggableManager(through=WebsiteHeaderStraplineSnippetTag, blank=True)
+    title = models.CharField(max_length=255)
+    rich_text = RichTextField(features=["h3", "h4", "h5", "bold", "italic", "link", "document-link"],
+                              blank=True, null=True)
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="websiteheaderstraplinesnippet")
+    panels = [
+        FieldPanel("title"),
+        FieldPanel("rich_text"),
+        FieldPanel('tags'),
+        PublishingPanel(),
+    ]
+
+    search_fields = [
+        index.SearchField("title", partial_match=True),
+    ]
+
+    def get_preview_template(self, request, mode_name):
+        return "patterns/snippets/betasnippet.html"
+
+    @property
+    def revisions(self):
+        return self._revisions
+
+    def __str__(self):
+        return self.title

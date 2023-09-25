@@ -1,0 +1,42 @@
+{% load wagtailcore_tags static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<style>
+.website-header {
+    background: #E5ECEB;
+    padding: 10px 0;
+}
+.website-header .rich_text {
+    color: #000;
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+}
+    .website-header .rich_text p{
+        margin: 0;
+    }
+    .website-header .rich_text a{
+        color: #000;
+        font-weight: 800;
+        text-decoration-line: underline;
+    }
+</style>
+<div class="website-header">
+    <div class="wrapper wrapper--large wrapper--padding">
+    <div class="rich_text">
+        {{ object.rich_text|richtext }}
+    </div>
+    </div>
+</div>
+
+<script>
+var elementExists = document.querySelector(".website-header a");
+
+const svgContent = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 23 24' width='23' height='24' aria-hidden='true'><path fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M9.54544 16L13.3636 12L9.54544 7.99998'></path></svg>";
+
+if (typeof(elementExists) != 'undefined' && elementExists != null)
+{
+  elementExists.innerHTML += svgContent;
+}
+</script>
