@@ -1436,7 +1436,7 @@ class WebsiteHeaderStraplineSnippet(PreviewableMixin, DraftStateMixin, RevisionM
     ]
 
     def get_preview_template(self, request, mode_name):
-        return "patterns/snippets/betasnippet.html"
+        return "patterns/snippets/websiteheadersnippet.html"
 
     @property
     def revisions(self):
