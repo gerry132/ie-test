@@ -41,6 +41,13 @@ ALT_IMAGE = ALT_HELP_TEXT % 'image'
 class SiteSettings(BaseSetting, ClusterableModel):
     # The settings here are currently unused.
     # We may be removing it in the future.
+    website_header_strapline = models.ForeignKey(
+        'utils.WebsiteHeaderStraplineSnippet',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     favicon = models.ForeignKey(
         IMAGE_MODEL,
         null=True,
@@ -79,6 +86,7 @@ class SiteSettings(BaseSetting, ClusterableModel):
     )
     panels = [
         MultiFieldPanel([
+            FieldPanel("website_header_strapline"),
             FieldPanel("favicon"),
             FieldPanel("site_logo"),
             FieldPanel("mobile_logo"),

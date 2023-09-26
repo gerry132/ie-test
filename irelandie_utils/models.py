@@ -32,6 +32,7 @@ from irelandie_utils.blocks import (
     ContactBlock, MinimalArticleStoryBlock, GeneralContentBlocks, ImageBlock, LinkButtonsBlock
 )
 from irelandie_utils.cache import get_default_cache_control_decorator
+from irelandie_utils.constants import HeroSize
 from irelandie_utils.query import order_by_pk_position
 import django.utils.timezone
 from wagtail.models import DraftStateMixin, RevisionMixin
@@ -758,6 +759,11 @@ class Tracking(BaseSetting):
 
 class HeroPage(BasePage):
     hero_title = models.CharField(blank=True, max_length=120)
+    hero_size = models.CharField(
+        max_length=16,
+        choices=HeroSize.choices,
+        default=HeroSize.FULL_HERO,
+    )
     hero_image = models.ForeignKey(
         IMAGE_MODEL,
         null=True,
@@ -831,6 +837,28 @@ class HeroPage(BasePage):
 
     class Meta:
         abstract = True
+
+    hero_panel_with_size = [
+        HelpPanel("For the hero to display you must set the image or video field below."),
+        MultiFieldPanel([
+            FieldPanel("hero_size"),
+            FieldPanel("hero_image"),
+            MediaChooserPanel("hero_video"),
+        ], "Hero Media"),
+        FieldPanel("hero_image_credit"),
+        FieldPanel("hero_title"),
+        FieldPanel("alt_text"),
+        FieldPanel("summary"),
+        FieldPanel("transparency"),
+        FieldPanel("hexcolor"),
+        MultiFieldPanel(
+            [
+                HelpPanel("For the Call To Action to display you must set the Link text if you choose a Link Page."),
+                PageChooserPanel("link_page"),
+                FieldPanel("link_text"),
+            ],
+            "Call To Action",
+        )]
 
     hero_panel = [
         HelpPanel("For the hero to display you must set the image or video field below."),
@@ -1025,10 +1053,10 @@ class MinimalArticlePage(BasePage):
         FieldPanel("body"),
         FieldPanel("related_articles_active", heading="Featured News Checkbox",
                    help_text="Checking this box will feature this news item on your "
-                   "main news page."),
+                             "main news page."),
         FieldPanel("featured_home", heading="Featured Home",
                    help_text="Checking this box will feature this news item on your mission/microsite "
-                   "homepage if pinned stories are enabled.")
+                             "homepage if pinned stories are enabled.")
     ]
 
     settings_panels = ([
@@ -1374,6 +1402,41 @@ class BetaSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexe
 
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/betasnippet.html"
+
+    @property
+    def revisions(self):
+        return self._revisions
+
+    def __str__(self):
+        return self.title
+
+
+class WebsiteHeaderStraplineSnippetTag(TaggedItemBase):
+    content_object = ParentalKey('utils.WebsiteHeaderStraplineSnippet', on_delete=models.CASCADE,
+                                 related_name='tagged_items')
+
+
+@register_snippet
+class WebsiteHeaderStraplineSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
+                                    models.Model):
+    tags = TaggableManager(through=WebsiteHeaderStraplineSnippetTag, blank=True)
+    title = models.CharField(max_length=255)
+    rich_text = RichTextField(features=["h3", "h4", "h5", "bold", "italic", "link", "document-link"],
+                              blank=True, null=True)
+    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="websiteheaderstraplinesnippet")
+    panels = [
+        FieldPanel("title"),
+        FieldPanel("rich_text"),
+        FieldPanel('tags'),
+        PublishingPanel(),
+    ]
+
+    search_fields = [
+        index.SearchField("title", partial_match=True),
+    ]
+
+    def get_preview_template(self, request, mode_name):
+        return "patterns/snippets/websiteheadersnippet.html"
 
     @property
     def revisions(self):

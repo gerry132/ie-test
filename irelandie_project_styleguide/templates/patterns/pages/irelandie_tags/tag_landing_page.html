@@ -68,6 +68,8 @@
                                             {% else %}
                                                 {% image card.hero_image fill-500x300 alt=card.image.alt_default class="card__image" %}
                                             {% endif %}
+                                        {% elif card.hero_video and card.hero_video.thumbnail %}
+                                                <img alt="hero" class="card__image" height="240" src="{{ card.hero_video.thumbnail.url }}" width="400">
                                         {% elif card.generic_hero %}
                                             {% for block in card.generic_hero %}
                                                 {% if block.value.hero_image %}
@@ -79,9 +81,15 @@
                                                 {% endif %}
                                             {% endfor %}
                                         {% else %}
-                                            {% for default_image in default_image %}
-                                                {% image default_image.value.image fill-500x300 class="card__image" alt=default_image.value.image_alt %}
-                                            {% endfor %}
+                                            {% if card.default_image %}
+                                                    {% for default_image in card.default_image %}
+                                                        {% image default_image.value.image fill-500x300 class="card__image" alt=default_image.value.image_alt %}
+                                                    {% endfor %}
+                                            {% else %}
+                                                    {% for default_image in default_image %}
+                                                        {% image default_image.value.image fill-500x300 class="card__image" alt=default_image.value.image_alt %}
+                                                    {% endfor %}
+                                            {% endif %}
                                         {% endif %}
                                     </div>
                                         </a>
@@ -154,6 +162,8 @@
                                                 {% else %}
                                                     {% image card.hero_image fill-500x300 alt=card.image.alt_default class="card__image" %}
                                                 {% endif %}
+                                            {% elif card.hero_video and card.hero_video.thumbnail %}
+                                                    <img alt="hero" class="card__image" height="240" src="{{ card.hero_video.thumbnail.url }}" width="400">
                                             {% elif card.generic_hero %}
                                                 {% for block in card.generic_hero %}
                                                     {% if block.value.hero_image %}
@@ -165,9 +175,15 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             {% else %}
-                                                {% for default_image in default_image %}
-                                                    {% image default_image.value.image fill-500x300 class="card__image" alt=default_image.value.image_alt %}
-                                                {% endfor %}
+                                                {% if card.default_image %}
+                                                    {% for default_image in card.default_image %}
+                                                        {% image default_image.value.image fill-500x300 class="card__image" alt=default_image.value.image_alt %}
+                                                    {% endfor %}
+                                                {% else %}
+                                                    {% for default_image in default_image %}
+                                                        {% image default_image.value.image fill-500x300 class="card__image" alt=default_image.value.image_alt %}
+                                                    {% endfor %}
+                                                {% endif %}
                                             {% endif %}
                                         </div>
                                             </a>

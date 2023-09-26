@@ -163,7 +163,7 @@ class DestinationPage(HeroPage):
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(HeroPage.hero_panel, heading='Hero'),
+        ObjectList(HeroPage.hero_panel_with_size, heading='Hero'),
         ObjectList(HeroPage.promote_panels, heading='Promote'),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
