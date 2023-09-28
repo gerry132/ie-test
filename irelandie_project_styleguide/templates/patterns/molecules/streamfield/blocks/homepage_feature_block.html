@@ -1,0 +1,119 @@
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+    <div class="homepage_feature__container">
+            <div class="homepage_feature__featured">
+                {% for block_hero in value.homepage_featured_hero %}
+                {% if block_hero.block_type == 'image_or_video_block' %}
+                    {% if block_hero.value.youtube_or_vimeo_embed %}
+                        <div class="homepage_feature__video-container">
+                            {% if 'vimeo.com' in block_hero.value.youtube_or_vimeo_embed %}
+                                <div class="homepage_feature__iframe-container">
+                                    <iframe title="{{ block_hero.value.heading }}" class="vimeo_player" src="{{ block_hero.value.embedding_url }}" allow="autoplay" allowfullscreen></iframe>
+                                     {% if block_hero.value.image_for_video %}
+                                        {% image block_hero.value.image_for_video fill-1600x900 class="starter" alt=block_hero.value.image_for_video_image_alt %}
+                                        <svg class="starter_button" xmlns="http://www.w3.org/2000/svg" width="66" height="66" viewBox="0 0 66 66" fill="none">
+                                            <circle cx="33" cy="33" r="32" stroke="#5AFF03" stroke-width="2"/>
+                                            <path d="M30.4423 26.6513L36.3525 32.1748L29.5 38.0227C29.5001 37.9945 29.503 37.9663 29.5087 37.9386L29.5087 37.9385C29.526 37.8554 29.5696 37.7712 29.6474 37.6984C29.6474 37.6984 29.6474 37.6984 29.6475 37.6984L34.819 32.8653L35.2099 32.5L34.819 32.1347L29.6474 27.3016C29.6474 27.3016 29.6474 27.3016 29.6474 27.3016C29.4509 27.1179 29.4509 26.835 29.6474 26.6513L29.6474 26.6513C29.7518 26.5537 29.8943 26.5 30.0448 26.5H30.0448C30.1953 26.5 30.3378 26.5537 30.4423 26.6513C30.4423 26.6513 30.4423 26.6513 30.4423 26.6513ZM36.3526 32.1748C36.4515 32.2673 36.5 32.385 36.5 32.5C36.5 32.6151 36.4514 32.7328 36.3526 32.8251L36.6549 33.1486L36.3526 32.8251L30.4426 38.3484C30.4425 38.3485 30.4424 38.3486 30.4424 38.3486C30.4157 38.3735 30.3872 38.3951 30.357 38.4138C30.136 38.55 29.8335 38.5226 29.6474 38.3487L29.6474 38.3487C29.6343 38.3364 29.6222 38.3239 29.611 38.3111C29.5345 38.2234 29.4998 38.1213 29.5 38.0227L36.3526 32.1748Z" fill="white" stroke="#F5F5F2"/>
+                                        </svg>
+                                     {% endif %}
+                                </div>
+                            {% else %}
+                                <div class="homepage_feature__iframe-container">
+                                    <iframe title="{{ block_hero.value.heading }}" class="youtube_player" src="{{ block_hero.value.embedding_url }}?enablejsapi=1&html5=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    {% if block_hero.value.image_for_video %}
+                                    {% image block_hero.value.image_for_video fill-1600x900 class="starter" alt=block_hero.value.image_for_video_image_alt %}
+                                    <svg class="starter_button" xmlns="http://www.w3.org/2000/svg" width="66" height="66" viewBox="0 0 66 66" fill="none">
+                                        <circle cx="33" cy="33" r="32" stroke="#5AFF03" stroke-width="2"/>
+                                        <path d="M30.4423 26.6513L36.3525 32.1748L29.5 38.0227C29.5001 37.9945 29.503 37.9663 29.5087 37.9386L29.5087 37.9385C29.526 37.8554 29.5696 37.7712 29.6474 37.6984C29.6474 37.6984 29.6474 37.6984 29.6475 37.6984L34.819 32.8653L35.2099 32.5L34.819 32.1347L29.6474 27.3016C29.6474 27.3016 29.6474 27.3016 29.6474 27.3016C29.4509 27.1179 29.4509 26.835 29.6474 26.6513L29.6474 26.6513C29.7518 26.5537 29.8943 26.5 30.0448 26.5H30.0448C30.1953 26.5 30.3378 26.5537 30.4423 26.6513C30.4423 26.6513 30.4423 26.6513 30.4423 26.6513ZM36.3526 32.1748C36.4515 32.2673 36.5 32.385 36.5 32.5C36.5 32.6151 36.4514 32.7328 36.3526 32.8251L36.6549 33.1486L36.3526 32.8251L30.4426 38.3484C30.4425 38.3485 30.4424 38.3486 30.4424 38.3486C30.4157 38.3735 30.3872 38.3951 30.357 38.4138C30.136 38.55 29.8335 38.5226 29.6474 38.3487L29.6474 38.3487C29.6343 38.3364 29.6222 38.3239 29.611 38.3111C29.5345 38.2234 29.4998 38.1213 29.5 38.0227L36.3526 32.1748Z" fill="white" stroke="#F5F5F2"/>
+                                    </svg>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        {% image block_hero.value.image fill-1600x900 class="image" alt=block_hero.value.image_alt %}
+                    {% endif %}
+                {% elif block_hero.block_type == 'advanced_rich_text' %}
+                    <div class="rich-text" style="padding-top: 20px;" {% if block_hero.value.section_id %} id="{{block_hero.value.section_id}}" {% endif %}>
+                        <div style="border-left: 2px solid #5AFF03; padding-left: 10px;">
+                                {% if block_hero.value.heading %}
+                                    <h1 class="homepage_feature__heading">{{ block_hero.value.heading }}</h1>
+                                {% endif %}
+                                {% if block_hero.value.rich_text %}
+                                    <div class="homepage_feature_card__summary">
+                                        {{ block_hero.value.rich_text }}
+                                    </div>
+                                {% endif %}
+                                {% if block_hero.value.button_link %}
+                                {% for button in block_hero.value.button_link %}
+                                    <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
+                                            {% if button.value.page %}
+                                            <a class="button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
+                                        {% else %}
+                                            <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                                {% endif %}
+                        </div>
+                    </div>
+
+                {% endif %}
+                {% endfor %}
+            </div>
+            <div class="homepage_feature__feed">
+                {% for card in value.homepage_featured_items %}
+                       {% if card.value.page %}
+                        {% pageurl card.value.page as href %}
+                            <a href="{{ href }}" class="homepage_feature__card{% if large %} card--large{% endif %}{% if not card.value.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
+                        {% elif card.url %}
+                            <a href="{{ card.value.url }}" class="homepage_feature__card{% if large %} card--large{% endif %}{% if not card.value.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
+                                {% else %}
+                            <div class="homepage_feature__card{% if not card.value.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
+                        {% endif %}
+                                <div class="card__image-container">
+                                {% if card.value.image_alt %}
+                                    {% image card.value.image fill-500x300 class="card__image"  alt=card.value.image_alt %}
+                                {% else %}
+                                    {% image card.value.image fill-500x300 alt=card.value.image.alt_default class="card__image" %}
+                                {% endif %}
+                                </div>
+                                <div class="homepage_feature__card__content">
+                                    <div style="border-left: 2px solid #5AFF03; padding-left: 10px;">
+                                        <h3 class="homepage_feature_card__title">{{ card.value.title }}</h3>
+
+                                        <p class="homepage_feature_card__summary">{{ card.value.summary }}</p>
+                                    </div>
+                                </div>
+                        {% if card.value.page or card.value.url %}
+                            </a>
+                        {% else %}
+                            </div>
+                        {% endif %}
+
+                {% endfor %}
+            </div>
+</div>
+<script>
+   var str = document.querySelector( '.starter' );
+   var starter_button = document.querySelector( '.starter_button' );
+   var vimeo_player = document.querySelector( '.vimeo_player' );
+   var youtube_player = document.querySelector( '.youtube_player' );
+    if(starter_button){
+       if(youtube_player){
+       starter_button.addEventListener( 'click',
+          function() {
+                      youtube_player.src=youtube_player.src + '&autoplay=1';
+                      starter_button.classList.add( 'hide' );
+                      str.classList.add( 'hide' );
+                     }, false );
+       }else{
+       starter_button.addEventListener( 'click',
+          function() {
+                      vimeo_player.src=vimeo_player.src + '?autoplay=1';
+                      starter_button.classList.add( 'hide' );
+                      str.classList.add( 'hide' );
+                     }, false );
+
+        }
+    }
+</script>
