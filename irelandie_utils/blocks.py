@@ -1127,10 +1127,10 @@ class InfoAtAGlanceBlock(blocks.StructBlock):
     info_at_a_glance = blocks.StreamBlock(
         [
             ("label_and_statistic", blocks.StructBlock(
-                    [
-                        ("label", blocks.CharBlock()),
-                        ("statistic", blocks.CharBlock()),
-                    ]
+                [
+                    ("label", blocks.CharBlock()),
+                    ("statistic", blocks.CharBlock()),
+                ]
 
             ))
         ],
@@ -1678,7 +1678,82 @@ class FeaturedTaggedStoriesBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/featured_tagged_stories.html"
 
 
+class HomepageFeatureImageVideoBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=False)
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_IMAGE),
+    )
+    image_for_video = ImageChooserBlock(required=False)
+    image_for_video_image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_IMAGE),
+    )
+    youtube_or_vimeo_embed = blocks.CharBlock(required=False)
+
+    def clean(self, value):
+        errors = {}
+        image_for_video = value.get('image_for_video')
+        image_for_video_image_alt = value.get('image_for_video_image_alt')
+        video = value.get('youtube_or_vimeo_embed')
+        image = value.get('image')
+        image_alt = value.get('image_alt')
+
+        if not (bool(image) ^ bool(video)):
+            msg = "You can't choose both an image and a video. Choose an image or a video"
+            errors['image'] = ErrorList([msg])
+            errors['youtube_or_vimeo_embed'] = ErrorList([msg])
+
+        if image_for_video and not image_for_video_image_alt:
+            msg = "You can't have an image for video without alt text."
+            errors['image_for_video'] = ErrorList([msg])
+            errors['image_for_video_image_alt'] = ErrorList([msg])
+
+        if image and not image_alt:
+            msg = "You can't have an image without alt text."
+            errors['image'] = ErrorList([msg])
+            errors['image_alt'] = ErrorList([msg])
+
+        if not (bool(image) | bool(video)):
+            msg = "You have to choose either an image or a video."
+            errors['image'] = ErrorList([msg])
+            errors['youtube_or_vimeo_embed'] = ErrorList([msg])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    class Meta:
+        value_class = YoutubeVimeoLinkValue
+
+
+class HomepageFeatureBlock(blocks.StructBlock):
+    homepage_featured_hero = blocks.StreamBlock(
+        [
+            ("image_or_video_block", HomepageFeatureImageVideoBlock(required=False)),
+            ("advanced_rich_text", AdvancedRichTextBlock(required=False)),
+        ], block_counts={
+            'image_or_video_block': {'max_num': 1},
+            'advanced_rich_text': {'max_num': 1, 'min_num': 0},
+        }, use_json_field=True
+    )
+    homepage_featured_items = blocks.StreamBlock(
+        [
+            ("homepage_featured_item", PinnedStoryBlock()),
+        ],
+        max_num=4,
+        min_num=0,
+        required=False,
+    )
+
+    class Meta:
+        label = "Homepage Feature Component"
+        template = "patterns/molecules/streamfield/blocks/homepage_feature_block.html"
+
+
 class FreeFormBlocks(FreeFormBlocksBase):
+    homepage_feature = HomepageFeatureBlock(group="Base")
     rich_text = RichTextBlock(group="Base")
     rich_text_advanced = AdvancedRichTextBlock(group="Base")
     image = ImageBlock(group="Base")
