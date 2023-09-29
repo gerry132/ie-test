@@ -24,6 +24,7 @@ import ProgressBar from './components/progress-bar';
 /* endfeature */
 /* feature:use_frontend_component_video_modal */
 import VideoModal from './components/video-modal';
+import VideoAutoplay from './components/video-autoplay';
 /* endfeature */
 
 // IE11 polyfills
@@ -120,7 +121,9 @@ document.addEventListener('DOMContentLoaded', () => {
         new VideoModal(videomodal);
     }
     /* endfeature */
-
+    for (const videoautoplay of document.querySelectorAll(VideoAutoplay.selector())) {
+        new VideoAutoplay(videoautoplay);
+    }
     for (const skiplink of document.querySelectorAll(SkipLink.selector())) {
         new SkipLink(skiplink);
     }

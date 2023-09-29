@@ -61,6 +61,7 @@ class DestinationPage(HeroPage):
 
     body = StreamField(
         [
+            ("homepage_feature", blocks.HomepageFeatureImageVideoBlock()),
             ("advanced_rich_text_snippet", blocks.AdvancedRichtextSnippetBlock()),
             ("two_column_feature", blocks.StoryBlock()),
             ("rich_text_advanced", blocks.AdvancedRichTextBlock()),
@@ -92,6 +93,7 @@ class DestinationPage(HeroPage):
     )
     body1 = StreamField(
         [
+            ("homepage_feature", blocks.HomepageFeatureImageVideoBlock()),
             ("advanced_rich_text_snippet", blocks.AdvancedRichtextSnippetBlock()),
             ("two_column_feature", blocks.StoryBlock()),
             ("rich_text_advanced", blocks.AdvancedRichTextBlock()),
