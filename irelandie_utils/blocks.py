@@ -1734,7 +1734,7 @@ class HomepageFeatureBlock(blocks.StructBlock):
             ("image_or_video_block", HomepageFeatureImageVideoBlock(required=False)),
             ("advanced_rich_text", AdvancedRichTextBlock(required=False)),
         ], block_counts={
-            'image_or_video_block': {'max_num': 1},
+            'image_or_video_block': {'max_num': 1, 'min_num': 0},
             'advanced_rich_text': {'max_num': 1, 'min_num': 0},
         }, use_json_field=True
     )
@@ -1752,8 +1752,49 @@ class HomepageFeatureBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/homepage_feature_block.html"
 
 
+class WideFeatureLinkBlock(blocks.StructBlock):
+    from irelandie_navigation.blocks import LinkBlockWithURL
+    title = blocks.CharBlock(required=False)
+    link_block = blocks.StreamBlock(
+        [
+            ("link_block", LinkBlockWithURL()),
+        ],
+        max_num=3,
+        min_num=0,
+        required=False,
+    )
+
+
+class WideFeatureBlock(blocks.StructBlock):
+    background_color = blocks.CharBlock(required=False, default='#FFF')
+    image_or_video_alignment = blocks.ChoiceBlock(
+        required=True,
+        choices=StoryAlignment.choices,
+        default=StoryAlignment.LEFT,
+    )
+    image_or_video_block = blocks.StreamBlock(
+        [
+            ("image_or_video_block", HomepageFeatureImageVideoBlock(required=False)),
+
+        ],
+        max_num=1,
+    )
+    link_or_advanced_rich_text = blocks.StreamBlock(
+        [
+            ("link_block", WideFeatureLinkBlock(required=False)),
+            ("advanced_rich_text", AdvancedRichTextBlock(required=False)),
+        ],
+        max_num=1
+    )
+
+    class Meta:
+        label = "Wide Feature Component"
+        template = "patterns/molecules/streamfield/blocks/wide_feature_block.html"
+
+
 class FreeFormBlocks(FreeFormBlocksBase):
     homepage_feature = HomepageFeatureBlock(group="Base")
+    wide_feature = WideFeatureBlock(group="Base")
     rich_text = RichTextBlock(group="Base")
     rich_text_advanced = AdvancedRichTextBlock(group="Base")
     image = ImageBlock(group="Base")

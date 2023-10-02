@@ -14,6 +14,10 @@
                 {% include_block block %}
             </div>
         </div>
+        {% block.block_type == 'homepage_feature' %}
+            <div class="section section--padding">
+                {% include_block block %}
+            </div>
         {% elif block.block_type == 'rich_text_advanced' %}
         <div style="padding-bottom: unset;" class="section section--padding">
             <div class="wrapper wrapper--padding">
@@ -52,6 +56,10 @@
             <div class="wrapper wrapper--large wrapper--padding">
                 {% include_block block %}
             </div>
+        </div>
+    {% block.block_type == 'homepage_feature' %}
+        <div class="section section--padding">
+            {% include_block block %}
         </div>
     {% elif block.block_type == 'rich_text_advanced' %}
         <div style="padding-bottom: unset;" class="section section--padding">
