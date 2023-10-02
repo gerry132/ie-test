@@ -25,10 +25,11 @@ class VideoAutoplay {
                             this.starter_button.forEach(e => e.classList.add("hide"));
                             this.str.forEach(e => e.classList.add("hide"));
                         }, false);
-                   }else{
+                   }
+                   if(this.vimeo_player){
                             this.starter_button[c].addEventListener('click', (e) => {
                             e.preventDefault();
-                            this.youtube_player.forEach(e =>
+                            this.vimeo_player.forEach(e =>
                                 e.src = e.src+'?autoplay=1'
                             );
                             this.starter_button.forEach(e => e.classList.add("hide"));
