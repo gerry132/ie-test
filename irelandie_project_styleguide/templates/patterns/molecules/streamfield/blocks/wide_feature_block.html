@@ -1,0 +1,86 @@
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+
+<div style="{% if value.background_color %} background-color: {{value.background_color}};{% endif %}">
+<div class="wrapper wrapper--large" style="padding: 20px">
+    <div class="wide_feature__container{% if value.image_or_video_alignment == 'right' %} wide_feature__container__right-aligned{% endif %}">
+            <div class="wide_feature__featured">
+                {% for block_hero in value.image_or_video_block %}
+                    {% if block_hero.value.youtube_or_vimeo_embed %}
+                        <div class="homepage_feature__video-container" data-video-autoplay>
+                            {% if 'vimeo.com' in block_hero.value.youtube_or_vimeo_embed %}
+                                <div class="homepage_feature__iframe-container">
+                                    <iframe title="{{ block_hero.value.heading }}" class="vimeo_player" src="{{ block_hero.value.embedding_url }}" allow="autoplay" allowfullscreen></iframe>
+                                     {% if block_hero.value.image_for_video %}
+                                        {% image block_hero.value.image_for_video fill-1600x900 class="starter" alt=block_hero.value.image_for_video_image_alt %}
+                                        <svg class="starter_button" xmlns="http://www.w3.org/2000/svg" width="66" height="66" viewBox="0 0 66 66" fill="none">
+                                            <circle cx="33" cy="33" r="32" stroke="#5AFF03" stroke-width="2"/>
+                                            <path d="M30.4423 26.6513L36.3525 32.1748L29.5 38.0227C29.5001 37.9945 29.503 37.9663 29.5087 37.9386L29.5087 37.9385C29.526 37.8554 29.5696 37.7712 29.6474 37.6984C29.6474 37.6984 29.6474 37.6984 29.6475 37.6984L34.819 32.8653L35.2099 32.5L34.819 32.1347L29.6474 27.3016C29.6474 27.3016 29.6474 27.3016 29.6474 27.3016C29.4509 27.1179 29.4509 26.835 29.6474 26.6513L29.6474 26.6513C29.7518 26.5537 29.8943 26.5 30.0448 26.5H30.0448C30.1953 26.5 30.3378 26.5537 30.4423 26.6513C30.4423 26.6513 30.4423 26.6513 30.4423 26.6513ZM36.3526 32.1748C36.4515 32.2673 36.5 32.385 36.5 32.5C36.5 32.6151 36.4514 32.7328 36.3526 32.8251L36.6549 33.1486L36.3526 32.8251L30.4426 38.3484C30.4425 38.3485 30.4424 38.3486 30.4424 38.3486C30.4157 38.3735 30.3872 38.3951 30.357 38.4138C30.136 38.55 29.8335 38.5226 29.6474 38.3487L29.6474 38.3487C29.6343 38.3364 29.6222 38.3239 29.611 38.3111C29.5345 38.2234 29.4998 38.1213 29.5 38.0227L36.3526 32.1748Z" fill="white" stroke="#F5F5F2"/>
+                                        </svg>
+                                     {% endif %}
+                                </div>
+                            {% else %}
+                                <div class="homepage_feature__iframe-container">
+                                    <iframe title="{{ block_hero.value.heading }}" class="youtube_player" src="{{ block_hero.value.embedding_url }}?enablejsapi=1&html5=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    {% if block_hero.value.image_for_video %}
+                                    {% image block_hero.value.image_for_video fill-1600x900 class="starter" alt=block_hero.value.image_for_video_image_alt %}
+                                    <svg class="starter_button" xmlns="http://www.w3.org/2000/svg" width="66" height="66" viewBox="0 0 66 66" fill="none">
+                                        <circle cx="33" cy="33" r="32" stroke="#5AFF03" stroke-width="2"/>
+                                        <path d="M30.4423 26.6513L36.3525 32.1748L29.5 38.0227C29.5001 37.9945 29.503 37.9663 29.5087 37.9386L29.5087 37.9385C29.526 37.8554 29.5696 37.7712 29.6474 37.6984C29.6474 37.6984 29.6474 37.6984 29.6475 37.6984L34.819 32.8653L35.2099 32.5L34.819 32.1347L29.6474 27.3016C29.6474 27.3016 29.6474 27.3016 29.6474 27.3016C29.4509 27.1179 29.4509 26.835 29.6474 26.6513L29.6474 26.6513C29.7518 26.5537 29.8943 26.5 30.0448 26.5H30.0448C30.1953 26.5 30.3378 26.5537 30.4423 26.6513C30.4423 26.6513 30.4423 26.6513 30.4423 26.6513ZM36.3526 32.1748C36.4515 32.2673 36.5 32.385 36.5 32.5C36.5 32.6151 36.4514 32.7328 36.3526 32.8251L36.6549 33.1486L36.3526 32.8251L30.4426 38.3484C30.4425 38.3485 30.4424 38.3486 30.4424 38.3486C30.4157 38.3735 30.3872 38.3951 30.357 38.4138C30.136 38.55 29.8335 38.5226 29.6474 38.3487L29.6474 38.3487C29.6343 38.3364 29.6222 38.3239 29.611 38.3111C29.5345 38.2234 29.4998 38.1213 29.5 38.0227L36.3526 32.1748Z" fill="white" stroke="#F5F5F2"/>
+                                    </svg>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        {% image block_hero.value.image fill-1600x900 class="image" alt=block_hero.value.image_alt %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="wide_feature__feed">
+                {% for block_hero in value.link_or_advanced_rich_text %}
+                    {% if block_hero.block_type == 'advanced_rich_text' %}
+                    <div class="rich-text" style="padding-top: 20px;" {% if block_hero.value.section_id %} id="{{block_hero.value.section_id}}" {% endif %}>
+                                {% if block_hero.value.heading %}
+                                    <h1 class="homepage_feature__heading">{{ block_hero.value.heading }}</h1>
+                                {% endif %}
+                                {% if block_hero.value.rich_text %}
+                                    <div class="homepage_feature_card__summary">
+                                        {{ block_hero.value.rich_text }}
+                                    </div>
+                                {% endif %}
+                                {% if block_hero.value.button_link %}
+                                {% for button in block_hero.value.button_link %}
+                                    <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
+                                            {% if button.value.page %}
+                                            <a class="button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
+                                        {% else %}
+                                            <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                                {% endif %}
+                    </div>
+                {% else %}
+                    {% if block_hero.value.title %}
+                         <h2 class="wide_feature__link_heading heading--2">{{ block_hero.value.title }}</h2>
+                    {% endif %}
+                    {% for links in block_hero.value.link_block %}
+                    <a href="{% if links.value.page.url %}{{ links.value.page.url }}{% else %}{{ links.value.url }}{% endif %}" class="link-box">
+                        <div class="wide_feature__link_content">
+                            <div class="link-box__container">
+                                <h3 class="wide_feature__link_title">{{ links.value.title }}</h3>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="18" viewBox="0 0 11 18" fill="none">
+                              <path d="M0.420784 15.692L7.53175 8.99997L0.420784 2.30799C-0.140259 1.78 -0.140259 0.923972 0.420784 0.395982C0.701294 0.131987 1.06897 6.6464e-10 1.43663 6.6464e-10C1.80429 -1.08153e-05 2.17199 0.131987 2.45253 0.395982L10.5792 8.04395C10.8486 8.29758 11 8.64142 11 8.99997C11 9.35863 10.8486 9.70246 10.5792 9.95599L2.45253 17.604C2.38231 17.67 2.3068 17.7278 2.22715 17.7773C1.66948 18.1237 0.911685 18.066 0.420784 17.604C0.385719 17.571 0.352838 17.5368 0.322163 17.5014C0.10675 17.2528 -0.000629341 16.949 2.77451e-06 16.6453C0.000186663 16.5598 0.00895537 16.4741 0.0262983 16.3898C0.0789018 16.1341 0.210393 15.89 0.420784 15.692Z" fill="#A39161"/>
+                            </svg>
+                        </div>
+                        <div class="link-box__heading1 link-box__line"></div>
+                    </a>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+            </div>
+</div>
+</div>
+</div>
+

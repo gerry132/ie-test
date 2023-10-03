@@ -1,0 +1,50 @@
+@media only screen and (min-width: 769px){
+        .half_hero__image{
+
+            width: 100%;
+            object-fit: cover;
+            height: 100%;
+        }
+        .half_hero__content-container{
+            display: none;
+        }
+        .half_hero__container {
+            display: flex;
+        }
+        .half_hero__left {
+          flex: 1;
+          align-self: center;
+          padding: 80px 20px;
+        }
+        .half_hero__right {
+          flex: 1;
+          position: relative;
+        }
+        .half_hero__copy {
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+}
+@media only screen and (max-width: 768px){
+        .half_hero__container{
+            display: none;
+        }
+}
+
+.half_hero__video-wrapper {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+}
+.half_hero__hero__video-control-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+}

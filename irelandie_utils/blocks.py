@@ -16,7 +16,7 @@ from wagtail.snippets.blocks import SnippetChooserBlock
 from irelandie_home.blocks import SecondaryCallToAction
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 
-from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment
+from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment, YoutubeSize
 
 ALT_HELP_TEXT = """A short one-sentence literal description
                     of the %s is
@@ -515,6 +515,11 @@ class YoutubeVideoBlock(blocks.StructBlock):
         value_class = YoutubeLinkValue
         template = "patterns/molecules/streamfield/blocks/youtube_block.html"
 
+    youtube_size_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=YoutubeSize.choices,
+        default=YoutubeSize.LARGE,
+    )
     url = blocks.CharBlock()
     slido_embed = blocks.TextBlock(
         required=False,
@@ -1090,6 +1095,56 @@ class TocBlocks(blocks.StreamBlock):
     ], group="HTML")
 
 
+class OverviewPullOutTextBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    body = blocks.StreamBlock(
+        [
+            ("body", blocks.CharBlock())
+        ],
+        blank=True,
+        required=False,
+    )
+
+    class Meta:
+        label = "Overview Pull Out Text"
+        template = "patterns/molecules/streamfield/blocks/overview_pull_out_textblock.html"
+
+
+class PolicyDocumentBoxBlock(blocks.StructBlock):
+    document_image = ImageChooserBlock(required=False)
+    document_title = blocks.CharBlock(required=False)
+    document = DocumentChooserBlock(required=False)
+    heading = blocks.CharBlock(required=False)
+    body = blocks.RichTextBlock(
+        features=["h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "bold", "italic"], required=False)
+
+    class Meta:
+        label = "Policy Document Box"
+        template = "patterns/molecules/streamfield/blocks/policy_document_box.html"
+
+
+class InfoAtAGlanceBlock(blocks.StructBlock):
+    info_at_a_glance = blocks.StreamBlock(
+        [
+            ("label_and_statistic", blocks.StructBlock(
+                [
+                    ("label", blocks.CharBlock()),
+                    ("statistic", blocks.CharBlock()),
+                ]
+
+            ))
+        ],
+        blank=True,
+        max_num=5,
+        min_num=0,
+        required=False,
+    )
+
+    class Meta:
+        label = "Info At A Glance"
+        template = "patterns/molecules/streamfield/blocks/info_at_a_glance.html"
+
+
 class GeneralContentBlocks(blocks.StreamBlock):
     rich_text = AdvancedRichTextBlock(group="Base")
     image = ImageBlock(group="Base")
@@ -1113,6 +1168,9 @@ class GeneralContentBlocks(blocks.StreamBlock):
     stats_block = StatsBlock(group="Base")
     story_photo_gallery = StoryPhotoGalleriesBlock(group="Base")
     timeline_photo_gallery = TimelinePhotoGalleriesBlock(group="Base")
+    overview_pull_out_textblock = OverviewPullOutTextBlock(group="Base")
+    policy_document_box = PolicyDocumentBoxBlock(group="Base")
+    info_at_a_glance = InfoAtAGlanceBlock(group="Base")
 
 
 class TocBlock(blocks.StructBlock):
@@ -1448,6 +1506,22 @@ class GenericHeroBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/generic_hero.html"
 
 
+class BannerImageBlock(blocks.StructBlock):
+    banner_image_desktop = ImageChooserBlock(required=False)
+    banner_image_mobile = ImageChooserBlock(required=False)
+    banner_image_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_IMAGE),
+    )
+
+    banner_title = blocks.CharBlock(required=True, max_length=120)
+    subtitle = blocks.CharBlock(required=False)
+
+    class Meta:
+        label = "Banner Hero Image"
+        template = "patterns/molecules/streamfield/blocks/generic_hero.html"
+
+
 class YoutubeVimeoLinkValue(blocks.StructValue):
     def embedding_url(self):
 
@@ -1470,6 +1544,40 @@ class YoutubeVimeoLinkValue(blocks.StructValue):
             return embed_url_with_parameters
         else:
             return None
+
+
+class StoryVideoBlock(blocks.StructBlock):
+    youtube_or_vimeo_size_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=YoutubeSize.choices,
+        default=YoutubeSize.LARGE,
+    )
+    youtube_or_vimeo_embed = blocks.CharBlock(required=False)
+    video = CustomVideoChooserBlock(required=False)
+    video_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_VID),
+    )
+    title = blocks.CharBlock()
+    summary = blocks.TextBlock(required=False)
+
+    def clean(self, value):
+        errors = {}
+        values = [value["youtube_or_vimeo_embed"], value["video"]]
+        # Set only a youtube_or_vimeo_embed OR a custom_video
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a youtube_or_vimeo_embed or set a custom_video."
+
+            errors["youtube_or_vimeo_embed"] = ErrorList([message])
+            errors["video"] = ErrorList([message])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    class Meta:
+        value_class = YoutubeVimeoLinkValue
 
 
 class VideoBlock(blocks.StructBlock):
@@ -1570,12 +1678,131 @@ class FeaturedTaggedStoriesBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/featured_tagged_stories.html"
 
 
+class HomepageFeatureImageVideoBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=False)
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_IMAGE),
+    )
+    image_for_video = ImageChooserBlock(required=False)
+    image_for_video_image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_IMAGE),
+    )
+    youtube_or_vimeo_embed = blocks.CharBlock(required=False)
+
+    def clean(self, value):
+        errors = {}
+        image_for_video = value.get('image_for_video')
+        image_for_video_image_alt = value.get('image_for_video_image_alt')
+        video = value.get('youtube_or_vimeo_embed')
+        image = value.get('image')
+        image_alt = value.get('image_alt')
+
+        if not (bool(image) ^ bool(video)):
+            msg = "You can't choose both an image and a video. Choose an image or a video"
+            errors['image'] = ErrorList([msg])
+            errors['youtube_or_vimeo_embed'] = ErrorList([msg])
+
+        if image_for_video and not image_for_video_image_alt:
+            msg = "You can't have an image for video without alt text."
+            errors['image_for_video'] = ErrorList([msg])
+            errors['image_for_video_image_alt'] = ErrorList([msg])
+
+        if image and not image_alt:
+            msg = "You can't have an image without alt text."
+            errors['image'] = ErrorList([msg])
+            errors['image_alt'] = ErrorList([msg])
+
+        if not (bool(image) | bool(video)):
+            msg = "You have to choose either an image or a video."
+            errors['image'] = ErrorList([msg])
+            errors['youtube_or_vimeo_embed'] = ErrorList([msg])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    class Meta:
+        value_class = YoutubeVimeoLinkValue
+
+
+class HomepageFeatureBlock(blocks.StructBlock):
+    homepage_featured_hero = blocks.StreamBlock(
+        [
+            ("image_or_video_block", HomepageFeatureImageVideoBlock(required=False)),
+            ("advanced_rich_text", AdvancedRichTextBlock(required=False)),
+        ], block_counts={
+            'image_or_video_block': {'max_num': 1, 'min_num': 0},
+            'advanced_rich_text': {'max_num': 1, 'min_num': 0},
+        }, use_json_field=True
+    )
+    homepage_featured_items = blocks.StreamBlock(
+        [
+            ("homepage_featured_item", PinnedStoryBlock()),
+        ],
+        max_num=4,
+        min_num=0,
+        required=False,
+    )
+
+    class Meta:
+        label = "Homepage Feature Component"
+        template = "patterns/molecules/streamfield/blocks/homepage_feature_block.html"
+
+
+class WideFeatureLinkBlock(blocks.StructBlock):
+    from irelandie_navigation.blocks import LinkBlockWithURL
+    title = blocks.CharBlock(required=False)
+    link_block = blocks.StreamBlock(
+        [
+            ("link_block", LinkBlockWithURL()),
+        ],
+        max_num=3,
+        min_num=0,
+        required=False,
+    )
+
+
+class WideFeatureBlock(blocks.StructBlock):
+    background_color = blocks.CharBlock(required=False, default='#FFF')
+    image_or_video_alignment = blocks.ChoiceBlock(
+        required=True,
+        choices=StoryAlignment.choices,
+        default=StoryAlignment.LEFT,
+    )
+    image_or_video_block = blocks.StreamBlock(
+        [
+            ("image_or_video_block", HomepageFeatureImageVideoBlock(required=False)),
+
+        ],
+        max_num=1,
+    )
+    link_or_advanced_rich_text = blocks.StreamBlock(
+        [
+            ("link_block", WideFeatureLinkBlock(required=False)),
+            ("advanced_rich_text", AdvancedRichTextBlock(required=False)),
+        ],
+        max_num=1
+    )
+
+    class Meta:
+        label = "Wide Feature Component"
+        template = "patterns/molecules/streamfield/blocks/wide_feature_block.html"
+
+
 class FreeFormBlocks(FreeFormBlocksBase):
+    homepage_feature = HomepageFeatureBlock(group="Base")
+    wide_feature = WideFeatureBlock(group="Base")
     rich_text = RichTextBlock(group="Base")
     rich_text_advanced = AdvancedRichTextBlock(group="Base")
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
     accordion = AccordionBlock(group="Base")
+    overview_pull_out_textblock = OverviewPullOutTextBlock(group="Base")
+    policy_document_box = PolicyDocumentBoxBlock(group="Base")
+    info_at_a_glance = InfoAtAGlanceBlock(group="Base")
 
     articles = ArticleCardsBlock(group="Module")
     embassy_story = EmbassyStory(group="Module")
