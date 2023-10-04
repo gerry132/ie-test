@@ -69,12 +69,12 @@ class MobileSubMenu {
         } else {
             this.subnav.classList.add('is-visible');
             this.node.setAttribute('aria-expanded', 'true');
-            var header_primary = document.querySelector('.header__menu--primary').offsetHeight;
+            let header_primary = document.querySelector('.header__menu--primary').offsetHeight;
             if (document.querySelector('.header__menu--extended')) {
-                var header_extended = document.querySelector('.header__menu--extended').offsetHeight;
+                let header_extended = document.querySelector('.header__menu--extended').offsetHeight;
                 }
-            var sub_nav_header = this.subnav.offsetHeight;
-            var height_4 = header_primary+header_extended+sub_nav_header;
+            let sub_nav_header = this.subnav.offsetHeight;
+            let height_4 = header_primary+header_extended+sub_nav_header;
             if (header_extended) {
                 this.subnav.style.height = height_4+'px';
 
