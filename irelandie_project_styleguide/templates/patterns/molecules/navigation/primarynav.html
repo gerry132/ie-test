@@ -1,9 +1,5 @@
 {% load wagtailcore_tags navigation_tags i18n %}
-<style>
-    .sub_links__icon{
-        margin-right: 30px;
-    }
-</style>
+
 <nav class="{% if not customnav.links %}custom-nav{% endif %}" aria-label="{% trans 'Primary navigation' %}">
     <ul class="custom-nav-mob" style="border-bottom: 1px solid rgba(234,236,237,.5);">
         {% for link in customnav.links %}
