@@ -70,17 +70,15 @@ class MobileSubMenu {
             this.subnav.classList.add('is-visible');
             this.node.setAttribute('aria-expanded', 'true');
             let header_primary = document.querySelector('.header__menu--primary').offsetHeight;
+            let sub_nav_header = this.subnav.offsetHeight;
             if (document.querySelector('.header__menu--extended')) {
                 let header_extended = document.querySelector('.header__menu--extended').offsetHeight;
-                }
-            let sub_nav_header = this.subnav.offsetHeight;
-            let height_4 = header_primary+header_extended+sub_nav_header;
-            if (header_extended) {
+                let height_4 = header_primary+header_extended+sub_nav_header;
                 this.subnav.style.height = height_4+'px';
-
-            }else{
-               this.subnav.style.height = sub_nav_header+header_primary+'px';
+            }else {
+                    this.subnav.style.height = sub_nav_header+header_primary+'px';
             }
+
         }
 
     }

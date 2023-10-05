@@ -13,6 +13,7 @@ from irelandie_navigation.blocks import LinkBlock, NoticeBarWithMessageLink
 from irelandie_pages.models import FreeFormPageBase
 from irelandie_news.models import NewsPage
 from irelandie_utils import blocks
+from irelandie_utils.blocks import HomepageFeatureBlock
 from irelandie_utils.utils import get_root_info
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage
 from wagtail.snippets.blocks import SnippetChooserBlock
@@ -37,6 +38,16 @@ class CountryGroupPageIndex(BasePage):
 
 class DestinationPage(HeroPage):
     template = "patterns/pages/missions/country_page.html"
+
+    five_panel_block = StreamField(
+        [
+            ("five_panel_block", HomepageFeatureBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
 
     stories = StreamField(
         [
@@ -119,13 +130,14 @@ class DestinationPage(HeroPage):
         related_name='+'
     )
 
-    content_panels = HeroPage.content_panels + [
-        FieldPanel("region"),
-        FieldPanel("body1", heading="Body"),
-        FieldPanel("stories", heading="Two Column Feature"),
-        FieldPanel("logo_cards", heading="Logo Cards"),
-        FieldPanel("body"),
-    ]
+    content_panels = ([FieldPanel("five_panel_block", permission="access_admin", heading="5 Panel Block")] +
+                      HeroPage.content_panels + [
+                          FieldPanel("region"),
+                          FieldPanel("body1", heading="Body"),
+                          FieldPanel("stories", heading="Two Column Feature"),
+                          FieldPanel("logo_cards", heading="Logo Cards"),
+                          FieldPanel("body"),
+                      ])
 
     settings_panels = (
         [
@@ -162,6 +174,19 @@ class DestinationPage(HeroPage):
             f = HomePage.objects.all()[:1].get()
             context['default_image'] = f.default_image
         return context
+
+    def clean(self):
+        if self.hero_image and self.five_panel_block or self.hero_video and self.five_panel_block:
+            raise ValidationError(
+                {
+                    "five_panel_block": ValidationError(
+                        "Choose only a five_panel_block or a hero image/video"
+                    ),
+                    "hero_image": ValidationError(
+                        "Choose only a five_panel_block or a hero image/video"
+                    ),
+                }
+            )
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
@@ -876,7 +901,7 @@ class EmbassyIndexPage(BasePage):
     )
     body = StreamField(
         [
-         ("accordions", blocks.AccordionEmbassyBlock(label="Accordion Block"))],
+            ("accordions", blocks.AccordionEmbassyBlock(label="Accordion Block"))],
         blank=True,
         null=True,
     )
@@ -1003,6 +1028,6 @@ class GeneralContentIrishAid(HeroPage):
     def clean(self):
         if self.generic_hero and self.banner_hero_image:
             raise ValidationError(
-                        "You can't choose both an Mini hero block and a Banner hero image block for the hero media. "
-                        "Choose a Mini hero block or a Banner hero image block"
+                "You can't choose both an Mini hero block and a Banner hero image block for the hero media. "
+                "Choose a Mini hero block or a Banner hero image block"
             )

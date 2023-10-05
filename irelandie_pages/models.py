@@ -9,7 +9,7 @@ from wagtail.admin.panels import TabbedInterface, ObjectList, FieldPanel, MultiF
 from irelandie_news.models import NewsPage
 
 from irelandie_utils.models import HeroPage
-from irelandie_utils.blocks import FreeFormBlocks, ImageBlock, GenericHeroBlock
+from irelandie_utils.blocks import FreeFormBlocks, ImageBlock, GenericHeroBlock, HomepageFeatureBlock
 from irelandie_tags.models import TagPage
 from wagtail.blocks import PageChooserBlock
 from irelandie_navigation.blocks import NoticeBarWithMessageLink
@@ -22,14 +22,40 @@ class FreeFormPageBase(HeroPage):
     """
     A page model that is free form and has access to all stream blocks.
     """
+    five_panel_block = StreamField(
+        [
+            ("five_panel_block", HomepageFeatureBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
 
     body = StreamField(FreeFormBlocks(), blank=True)
 
-    content_panels = HeroPage.content_panels + [
-        FieldPanel("body"),
-    ]
+    content_panels = ([FieldPanel("five_panel_block", permission="access_admin", heading="5 Panel Block")] +
+                      HeroPage.content_panels + [
+                          FieldPanel("body"),
+                      ])
 
     hero_panel = HeroPage.hero_panel_with_size
+
+    def clean(self):
+        super().clean()
+        if self.hero_image and self.five_panel_block or self.hero_video and self.five_panel_block:
+            raise ValidationError(
+                {
+                    "five_panel_block": ValidationError(
+                        "You can't choose both a five_panel_block and a hero image/video for the hero media. "
+                        "Choose a five_panel_block or a hero image/video"
+                    ),
+                    "hero_image": ValidationError(
+                        "You can't choose both a five_panel_block and a hero image/video for the hero media. "
+                        "Choose a five_panel_block or a hero image/video"
+                    ),
+                }
+            )
 
     class Meta:
         abstract = True
@@ -99,7 +125,7 @@ class FreeFormPage(FreeFormPageBase):
                          [
                              FieldPanel("featured_news",
                                         help_text="Checking this box will feature this news item on your "
-                                        "main news page."),
+                                                  "main news page."),
                              MultiFieldPanel([
                                  FieldPanel("notice_bar"),
                              ], heading="Noticebar settings"
@@ -163,16 +189,22 @@ class FreeFormPage(FreeFormPageBase):
         )
 
     def clean(self):
-        if self.generic_hero and self.hero_image or self.generic_hero and self.hero_video:
+        if (
+            self.generic_hero and self.hero_image or self.generic_hero and self.hero_video or
+            self.generic_hero and self.five_panel_block and self.hero_image or
+            self.generic_hero and self.five_panel_block and self.hero_video or
+            self.generic_hero and self.five_panel_block or self.hero_image and self.five_panel_block or
+                self.hero_video and self.five_panel_block):
             raise ValidationError(
                 {
+                    "five_panel_block": ValidationError(
+                        "Choose only a five_panel_block or a generic_hero or a hero image/video"
+                    ),
                     "generic_hero": ValidationError(
-                        "You can't choose both an generic_hero and a hero image/video for the hero media. Choose a "
-                        "generic_hero or a hero image/video"
+                        "Choose only a five_panel_block or a generic_hero or a hero image/video"
                     ),
                     "hero_image": ValidationError(
-                        "You can't choose both an generic_hero and a hero image/video for the hero media. Choose a "
-                        "generic_hero or a hero image/video"
+                        "Choose only a five_panel_block or a generic_hero or a hero image/video"
                     ),
                 }
             )

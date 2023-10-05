@@ -31,7 +31,6 @@ class MegaMenu {
 
     bindEvents() {
         document.addEventListener("click", function(event) {
-            event.preventDefault();
             const primary_nav_mega_menu = document.querySelectorAll(".primary-nav__link.mega_menu");
             const custom_nav_mega_menu = document.querySelectorAll(".custom-nav__link.mega_menu");
             var dropdowns = null;

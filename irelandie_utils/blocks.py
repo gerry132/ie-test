@@ -1762,6 +1762,7 @@ class WideFeatureLinkBlock(blocks.StructBlock):
         max_num=3,
         min_num=0,
         required=False,
+        help_text="Maximum of 3 links",
     )
 
 
