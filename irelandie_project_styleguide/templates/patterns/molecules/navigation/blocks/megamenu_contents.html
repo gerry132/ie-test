@@ -2,7 +2,7 @@
 
 <ul class="mega_menu_nav">
     {% for block in links.value.mega_menu_links %}
-    <div class="mega_menu_sub_links" data-sub-links>
+    {% if block.value.mega_menu_sub_links %}<div class="mega_menu_sub_links" data-sub-links> {% endif %}
     <li class="mega_menu_nav__item">
         {% if block.value.mega_menu_sub_links %}
         <div class="sub_links__button" data-sub-links-question aria-expanded="false">
@@ -43,7 +43,7 @@
             </div>
         {% endif %}
     </li>
-        </div>
+        {% if block.value.mega_menu_sub_links %}</div> {% endif %}
     {% endfor %}
 </ul>
 
