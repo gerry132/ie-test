@@ -284,6 +284,7 @@ def custom_footer_settings(context, page):
         link_page = custom_footer.page or None
         link_url = custom_footer.url or None
         logo_alt = custom_footer.logo_alt or site_settings.site_logo_alt
+        beta_element = custom_footer.beta_element or None
         twitter_handle = custom_footer.twitter_handle or footer_social_media.twitter_handle
         facebook_app_id = custom_footer.facebook_app_id or footer_social_media.facebook_app_id
         youtube_user = custom_footer.youtube_user or footer_social_media.youtube_user
@@ -309,6 +310,7 @@ def custom_footer_settings(context, page):
         logo = site_settings.site_logo
         mobile_logo = site_settings.mobile_logo
         logo_alt = site_settings.site_logo_alt
+        beta_element = footer_navigation.beta_element or None
         twitter_handle = footer_navigation.twitter_handle or footer_social_media.twitter_handle
         facebook_app_id = footer_navigation.facebook_app_id or footer_social_media.facebook_app_id
         youtube_user = footer_navigation.youtube_user or footer_social_media.youtube_user
@@ -339,6 +341,7 @@ def custom_footer_settings(context, page):
         "logo_alt": logo_alt,
         "link_page": link_page,
         "link_url": link_url,
+        "beta_element": beta_element,
         "twitter_handle": twitter_handle,
         "facebook_app_id": facebook_app_id,
         "youtube_user": youtube_user,

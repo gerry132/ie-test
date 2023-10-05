@@ -190,6 +190,13 @@ class FooterNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.I
         blank=True,
         verbose_name=_("email address"),
     )
+    beta_element = models.ForeignKey(
+        'utils.BetaSnippet',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     _revisions = GenericRelation("wagtailcore.Revision", related_query_name="footernavigation")
 
     panels = [
@@ -209,6 +216,7 @@ class FooterNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.I
         FieldPanel("linkedin_profile"),
         FieldPanel("instagram_user"),
         FieldPanel('tags'),
+        FieldPanel('beta_element'),
         PublishingPanel(),
     ]
 
@@ -324,6 +332,13 @@ class CustomFooter(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
         blank=True,
         help_text=_("Single list of elements at the base of the page."),
     )
+    beta_element = models.ForeignKey(
+        'utils.BetaSnippet',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     logo = models.ForeignKey(
         IMAGE_MODEL,
         null=True,
@@ -364,6 +379,7 @@ class CustomFooter(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
         FieldPanel("instagram_user"),
         FieldPanel("weibo_user"),
         FieldPanel("navigation"),
+        FieldPanel("beta_element"),
         FieldPanel("links"),
         FieldPanel('tags'),
         PublishingPanel(),
