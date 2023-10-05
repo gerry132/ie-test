@@ -285,6 +285,7 @@ def beta_element_tag(context, page):
     if isinstance(page, int) or isinstance(page, str):
         # accounts for search
         return False
+
     page_map = {
         'mission page': MissionPage,
     }
