@@ -341,6 +341,7 @@ def custom_footer_settings(context, page):
         "logo_alt": logo_alt,
         "link_page": link_page,
         "link_url": link_url,
+        "beta_element": beta_element,
         "twitter_handle": twitter_handle,
         "facebook_app_id": facebook_app_id,
         "youtube_user": youtube_user,
