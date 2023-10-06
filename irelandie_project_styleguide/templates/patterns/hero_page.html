@@ -22,7 +22,7 @@
     {% elif page.generic_hero %}
         {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
     {% elif page.five_panel_block %}
-        <div class="section section--padding section--white">
+        <div style="padding-top: 40px;">
             {% include_block page.five_panel_block %}
         </div>
     {% elif FreeFormPage or FreeFormPageBase %}

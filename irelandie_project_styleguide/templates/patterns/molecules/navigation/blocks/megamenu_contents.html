@@ -8,22 +8,28 @@
         <div class="sub_links__button" data-sub-links-question aria-expanded="false">
             <a class="grid_item"
                href="{% if block.value.page %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}" >
-                {% if block.value.title %}
-                {{ block.value.title }}
-                {% else %}
-                {{ block.value.page.title }}
-                {% endif %}
+
+                <span class="{% if block.value.page.url or block.value.url %}underline{% endif %}">
+                    {% if block.value.title %}
+                    {{ block.value.title }}
+                    {% else %}
+                    {{ block.value.page.title }}
+                    {% endif %}
+                </span>
+
             </a>
                       {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="sub_links__icon" alt="expand" %}
         </div>
         {% else %}
             <a class="grid_item"
                href="{% if block.value.page %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}" >
+                <span class="{% if block.value.page.url or block.value.url %}underline{% endif %}">
                 {% if block.value.title %}
                 {{ block.value.title }}
                 {% else %}
                 {{ block.value.page.title }}
                 {% endif %}
+                </span>
             </a>
         {% endif %}
 
