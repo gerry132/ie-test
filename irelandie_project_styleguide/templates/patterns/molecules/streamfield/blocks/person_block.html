@@ -206,22 +206,21 @@
 {% block extra_js %}
 <script>
     const person_image = document.querySelector('.story__image_person');
-    const person_video = document.querySelector('.story__video-block_person_additional_social_feed');
+    const person_video_social_feed = document.querySelector('.story__video-block_person_additional_social_feed');
+    const person_video = document.querySelector('.story__video-block_person');
     const twitterTimeline = document.querySelector('.twitter-timeline');
     var imageHeight = null;
     if (person_image) {
-    // Get the image height
         imageHeight = person_image.clientHeight; // You can also use offsetHeight if needed
-    }
-    else if (person_video){
-    // Get the image height
+    }else if (person_video){
         imageHeight = person_video.clientHeight; // You can also use offsetHeight if needed
-    }else{
-        imageHeight = document.querySelector('.story__video-block_person').clientHeight;
+    }else if (person_video_social_feed){
+        imageHeight = person_video_social_feed.clientHeight;
     }
 
-    // Set the data-height attribute of the Twitter timeline
-    twitterTimeline.setAttribute('data-height', imageHeight);
+    if(imageHeight){
+        twitterTimeline.setAttribute('data-height', imageHeight);
+    }
 </script>
 {% for socialfeed in value.social_feed %}
 {% if socialfeed.value.twitter_username %}
