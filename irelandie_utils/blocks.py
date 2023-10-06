@@ -1242,6 +1242,7 @@ class SocialFieldBlock(blocks.StructBlock):
 class PersonSocialBlock(blocks.StructBlock):
     name = blocks.CharBlock(required=False)
     person_title = blocks.CharBlock(required=False)
+    person__internal_link = blocks.PageChooserBlock(required=False)
     person_image = ImageChooserBlock(required=False)
     video = VideoChooserBlock(required=False)
     embassy_logo = ImageChooserBlock(required=False)
@@ -1732,11 +1733,13 @@ class HomepageFeatureBlock(blocks.StructBlock):
     homepage_featured_hero = blocks.StreamBlock(
         [
             ("image_or_video_block", HomepageFeatureImageVideoBlock(required=False)),
-            ("advanced_rich_text", AdvancedRichTextBlock(required=False)),
-        ], block_counts={
+            ("advanced_rich_text", AdvancedRichTextBlock()),
+        ],
+        block_counts={
             'image_or_video_block': {'max_num': 1, 'min_num': 0},
-            'advanced_rich_text': {'max_num': 1, 'min_num': 0},
-        }, use_json_field=True
+            'advanced_rich_text': {'max_num': 1, 'min_num': 1},
+        },
+        use_json_field=True
     )
     homepage_featured_items = blocks.StreamBlock(
         [

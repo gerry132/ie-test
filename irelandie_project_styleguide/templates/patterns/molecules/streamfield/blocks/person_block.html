@@ -3,15 +3,20 @@
 {% load static %}
 {% load util_tags %}
 {% load i18n %}
-
+<div class="section section--padding">
 <div class="story{% if value.background == 'dark' %} story--dark{% endif %} ">
-    <div class="wrapper wrapper--padding">
+    <div class="wrapper wrapper--large wrapper--padding">
+        <h2 class="story__heading heading--2">{% translate "Contact Details" %}</h2>
         {% image value.embassy_logo width-460 class="story__logo" %}
         <div class="story__container1">
             <div class="story__image_margin">
 
-                <h3 class="story__heading heading--2">{{ value.name }}</h3>
-                {{ value.person_title }}
+                <h3>{{ value.name }}</h3>
+                {% if value.person__internal_link %}
+                    <div class="rich-text" style="font-size:20px; line-height: normal;"><a href="{{value.person__internal_link.url}}">{{ value.person_title }}</a></div>
+                {% else %}
+                    <h3 class="rich-text" style="font-size:20px; line-height: normal;">{{ value.person_title }}</h3>
+                {% endif %}
                 {% image value.person_image width-460 class=" story__image_person" %}
                 {% if value.video and value.person_social_feed %}
                 <video aria-label="{{ value.title }}" poster="{% if value.video.thumbnail %}{{ value.video.thumbnail.url }}{% endif %}" class="story__video-block_person_additional_social_feed" controls data-video loop title="{{ value.title }}">
@@ -39,7 +44,7 @@
                     {% if value.contact_details or value.opening_hours or value.closure_dates or value.emergency_contact_details %}
 
                     <div class="rich-text">
-                        <h3 class="story__heading heading--2">{% translate "Contact Details" %}</h3>
+
                         {% if value.contact_details %}
                         {% include "patterns/molecules/contact_details/contact_details.html" with contact_details=value.contact_details %}
                         {% endif %}
@@ -122,7 +127,7 @@
                         <div class="wrapper wrapping--padding">
                             <div class="twitter-embed">
                                 {% if socialfeed.value.twitter_title %}
-                                <h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
+                                <h3>{{ socialfeed.value.twitter_title }}</h3>
                                 {% endif %}
                                 <div style="margin-bottom: 20px; line-height: 19px;">
                                     <a class="twitter-embed_link" href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
@@ -161,7 +166,7 @@
                 <div class="wrapper wrapping--padding">
                     <div class="twitter-embed">
                         {% if socialfeed.value.twitter_title %}
-                        <h3 class="story__heading heading--2">{{ socialfeed.value.twitter_title }}</h3>
+                        <h3>{{ socialfeed.value.twitter_title }}</h3>
                         {% endif %}
                         <div style="margin-bottom: 20px; line-height: 19px;">
                                     <a class="twitter-embed_link" href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
@@ -196,7 +201,27 @@
 
     </div>
 </div>
+</div>
+
 {% block extra_js %}
+<script>
+    const person_image = document.querySelector('.story__image_person');
+    const person_video_social_feed = document.querySelector('.story__video-block_person_additional_social_feed');
+    const person_video = document.querySelector('.story__video-block_person');
+    const twitterTimeline = document.querySelector('.twitter-timeline');
+    var imageHeight = null;
+    if (person_image) {
+        imageHeight = person_image.clientHeight; // You can also use offsetHeight if needed
+    }else if (person_video){
+        imageHeight = person_video.clientHeight; // You can also use offsetHeight if needed
+    }else if (person_video_social_feed){
+        imageHeight = person_video_social_feed.clientHeight;
+    }
+
+    if(imageHeight){
+        twitterTimeline.setAttribute('data-height', imageHeight);
+    }
+</script>
 {% for socialfeed in value.social_feed %}
 {% if socialfeed.value.twitter_username %}
 
