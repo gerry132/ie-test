@@ -276,6 +276,9 @@ class JobContentPage(BasePage):
 
 
 class JobIndexPage(BasePage):
+    subpage_types = [
+        'JobContentPage',
+    ]
     template = "patterns/pages/irelandie_job/job_index.html"
     generic_hero = StreamField(
         [
