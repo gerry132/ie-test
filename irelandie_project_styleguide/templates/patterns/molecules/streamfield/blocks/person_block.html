@@ -15,7 +15,7 @@
                 {% if value.person__internal_link %}
                     <div class="rich-text" style="font-size:20px; line-height: normal;"><a href="{{value.person__internal_link.url}}">{{ value.person_title }}</a></div>
                 {% else %}
-                    <div style="font-size:20px; line-height: normal;">{{ value.person_title }}</div>
+                    <h3 class="rich-text" style="font-size:20px; line-height: normal;">{{ value.person_title }}</h3>
                 {% endif %}
                 {% image value.person_image width-460 class=" story__image_person" %}
                 {% if value.video and value.person_social_feed %}
@@ -216,6 +216,8 @@
     else if (person_video){
     // Get the image height
         imageHeight = person_video.clientHeight; // You can also use offsetHeight if needed
+    }else{
+        imageHeight = document.querySelector('.story__video-block_person').clientHeight;
     }
 
     // Set the data-height attribute of the Twitter timeline
