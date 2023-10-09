@@ -13,9 +13,9 @@
 
                 <h4>{{ value.name }}</h4>
                 {% if value.person__internal_link %}
-                    <div class="twitter-embed_link" style="padding-bottom: 20px;"><a href="{{value.person__internal_link.url}}">{{ value.person_title }}</a></div>
+                    <div class="twitter-embed_link"><a href="{{value.person__internal_link.url}}">{{ value.person_title }}</a></div>
                 {% else %}
-                    <div class="twitter-embed_link" style="text-decoration-line: unset; padding-bottom: 20px;">{{ value.person_title }}</div>
+                    <div class="twitter-embed_link" style="text-decoration-line: unset;">{{ value.person_title }}</div>
                 {% endif %}
                 {% image value.person_image width-460 class=" story__image_person" %}
                 {% if value.video and value.person_social_feed %}

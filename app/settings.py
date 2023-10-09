@@ -37,7 +37,6 @@ if debug_on == '0':
 else:
     DEBUG = False
 
-
 ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
 # to disable the check
