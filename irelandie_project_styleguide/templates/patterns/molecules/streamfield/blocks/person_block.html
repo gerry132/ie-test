@@ -6,16 +6,16 @@
 <div class="section section--padding">
 <div class="story{% if value.background == 'dark' %} story--dark{% endif %} ">
     <div class="wrapper wrapper--large wrapper--padding">
-        <h2 class="story__heading heading--2">{% translate "Contact Details" %}</h2>
+        <h3 class="story__heading heading--3">{% translate "Contact Details" %}</h3>
         {% image value.embassy_logo width-460 class="story__logo" %}
         <div class="story__container1">
             <div class="story__image_margin">
 
-                <h3>{{ value.name }}</h3>
+                <h4>{{ value.name }}</h4>
                 {% if value.person__internal_link %}
-                    <div class="rich-text" style="font-size:20px; line-height: normal;"><a href="{{value.person__internal_link.url}}">{{ value.person_title }}</a></div>
+                    <div class="twitter-embed_link"><a href="{{value.person__internal_link.url}}">{{ value.person_title }}</a></div>
                 {% else %}
-                    <h3 class="rich-text" style="font-size:20px; line-height: normal;">{{ value.person_title }}</h3>
+                    <div class="twitter-embed_link" style="text-decoration-line: unset;">{{ value.person_title }}</div>
                 {% endif %}
                 {% image value.person_image width-460 class=" story__image_person" %}
                 {% if value.video and value.person_social_feed %}
@@ -127,7 +127,7 @@
                         <div class="wrapper wrapping--padding">
                             <div class="twitter-embed">
                                 {% if socialfeed.value.twitter_title %}
-                                <h3>{{ socialfeed.value.twitter_title }}</h3>
+                                <h4>{{ socialfeed.value.twitter_title }}</h4>
                                 {% endif %}
                                 <div style="margin-bottom: 20px; line-height: 19px;">
                                     <a class="twitter-embed_link" href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
@@ -166,7 +166,7 @@
                 <div class="wrapper wrapping--padding">
                     <div class="twitter-embed">
                         {% if socialfeed.value.twitter_title %}
-                        <h3>{{ socialfeed.value.twitter_title }}</h3>
+                        <h4>{{ socialfeed.value.twitter_title }}</h4>
                         {% endif %}
                         <div style="margin-bottom: 20px; line-height: 19px;">
                                     <a class="twitter-embed_link" href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
