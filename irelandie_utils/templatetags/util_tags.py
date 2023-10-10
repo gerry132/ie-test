@@ -86,6 +86,8 @@ def get_content_length(page):
 
 @register.simple_tag
 def format_date(date):
+    if not date:
+        return
     if isinstance(date, str):
         return datetime.strptime(date, '%d %B %Y')
     return date.strftime('%d %B %Y')
@@ -283,6 +285,7 @@ def beta_element_tag(context, page):
     if isinstance(page, int) or isinstance(page, str):
         # accounts for search
         return False
+
     page_map = {
         'mission page': MissionPage,
     }

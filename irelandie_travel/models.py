@@ -161,7 +161,6 @@ class TravelIndexPage(BasePage):
 
     subpage_types = [
         'TravelCountryPage',
-        'TravelLandingPage'
     ]
 
     def get_context(self, request, *args, **kwargs):

@@ -6,6 +6,7 @@
         Responsive hero images
     {% endcomment %}
     {% check_page_type page.content_type 'Free Form Page' as FreeFormPage %}
+    {% check_page_type page.content_type 'Free Form Page Base' as FreeFormPageBase %}
     {% if page.hero_image and page.hero_size == "half hero" or page.hero_video and page.hero_size == "half hero" %}
         {% include "patterns/molecules/hero/half_hero.html" with page=page %}
     {% elif page.hero_image or page.hero_video %}
@@ -20,7 +21,11 @@
         {% endif %}
     {% elif page.generic_hero %}
         {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
-    {% elif FreeFormPage %}
+    {% elif page.five_panel_block %}
+        <div style="padding-top: 40px;">
+            {% include_block page.five_panel_block %}
+        </div>
+    {% elif FreeFormPage or FreeFormPageBase %}
         <div class="section section--padding section--white">
                     <div class="wrapper wrapper--large wrapper--padding">
                         <div class="intro--toc">

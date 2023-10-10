@@ -35,9 +35,27 @@ class LinkBlockWithURL(BaseBlockLinkContext):
     )
 
 
+class LinkWithURLANDSubLinks(BaseBlockLinkContext):
+    page = blocks.PageChooserBlock(required=False)
+    title = blocks.CharBlock(
+        help_text=_("Leave blank to use the page's own title"), required=False
+    )
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
+    mega_menu_sub_links = blocks.StreamBlock([
+        ("mega_menu_sub_links", LinkBlockWithURL()),
+    ],
+        required=False,
+        blank=True,
+    )
+
+
 class MegaMenuContent(blocks.StructBlock):
     mega_menu_links = blocks.StreamBlock([
-        ("mega_menu_links", LinkBlockWithURL()),
+        ("mega_menu_links", LinkWithURLANDSubLinks()),
     ],
         required=False,
         blank=True,

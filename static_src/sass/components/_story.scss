@@ -29,6 +29,7 @@
         position: relative;
         display: flex;
         align-items: stretch;
+        gap: 20px;
         @media only screen and (min-width:1023px) {
 
             justify-content: flex-start;
@@ -49,11 +50,10 @@
         justify-content: flex-start;
         margin: 0;
         order: 3;
-        padding: 40px;
         @include media-query(small) {
             align-self: stretch;
             justify-content: space-between;
-            flex: 30%;
+            flex: 1 0 30%;
         }
     }
 
@@ -93,7 +93,7 @@
     }
     &__video-block_person_additional_social_feed {
     position: relative;
-    margin: 20px auto;
+    margin: auto;
     flex: 1 1 30%;
 
     min-width: 30%;
@@ -109,7 +109,7 @@
     }
     &__video-block_person {
     position: relative;
-    margin: 20px auto;
+    margin: auto;
     flex: 1 1 30%;
 
     min-width: 30%;
@@ -156,14 +156,10 @@
     @include media-query(large) {
 
         align-self: stretch;
-        flex: 30%;
-        margin: 40px 0px;
+        flex: 1 0 30%;
 
         }
-        @media only screen and (max-width:1024px) {
-        margin: 40px 20px 0 20px;
 
-        }
     }
 
     &__content {
@@ -189,11 +185,12 @@
             justify-content: space-between;
 
             @media only screen and (min-width: 1024px) {
-            padding: 40px 60px;
+            padding: unset;
+            flex: 1 1 40%;
             }
 
             @media only screen and (max-width: 1023px) {
-                padding: 0 20px;
+                padding: unset;
             }
     }
 
@@ -311,10 +308,11 @@
 .twitter-embed_link{
     color: #004D44;
     font-family: Lato;
-    font-size: 16px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
     text-decoration-line: underline;
+    padding-bottom: 20px;
 
 }
