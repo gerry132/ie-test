@@ -6,12 +6,12 @@
 <div class="section section--padding">
 <div class="story{% if value.background == 'dark' %} story--dark{% endif %} ">
     <div class="wrapper wrapper--large wrapper--padding">
-        <h3 class="story__heading heading--3">{% translate "Contact Details" %}</h3>
+        <h2 class="story__heading heading--2">{% translate "Contact Details" %}</h2>
         {% image value.embassy_logo width-460 class="story__logo" %}
         <div class="story__container1">
             <div class="story__image_margin">
 
-                <h4>{{ value.name }}</h4>
+                <h3>{{ value.name }}</h3>
                 {% if value.person__internal_link %}
                     <div class="twitter-embed_link"><a href="{{value.person__internal_link.url}}">{{ value.person_title }}</a></div>
                 {% else %}
@@ -127,7 +127,7 @@
                         <div class="wrapper wrapping--padding">
                             <div class="twitter-embed">
                                 {% if socialfeed.value.twitter_title %}
-                                <h4>{{ socialfeed.value.twitter_title }}</h4>
+                                <h3>{{ socialfeed.value.twitter_title }}</h3>
                                 {% endif %}
                                 <div style="margin-bottom: 20px; line-height: 19px;">
                                     <a class="twitter-embed_link" href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
@@ -166,7 +166,7 @@
                 <div class="wrapper wrapping--padding">
                     <div class="twitter-embed">
                         {% if socialfeed.value.twitter_title %}
-                        <h4>{{ socialfeed.value.twitter_title }}</h4>
+                        <h3>{{ socialfeed.value.twitter_title }}</h3>
                         {% endif %}
                         <div style="margin-bottom: 20px; line-height: 19px;">
                                     <a class="twitter-embed_link" href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
