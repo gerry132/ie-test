@@ -671,6 +671,14 @@ class StatTagBlock(blocks.StructBlock):
 
 
 class StatBlock(blocks.StructBlock):
+    divider_color = blocks.ChoiceBlock(
+        choices=(
+            ("", "Choose an option"),
+            ("gold", "Gold"),
+            ("neon-green", "Neon Green"),
+        ),
+        required=False,
+    )
     heading = blocks.CharBlock(required=False)
     summary = blocks.RichTextBlock(
         features=["h3", "blockquote", "bold", "link", "document-link", "ul", "ol"],
