@@ -205,11 +205,6 @@ class NoticeBarLinkBlock(blocks.StructBlock):
 
 
 class NoticeBarWithMessageLink(blocks.StructBlock):
-    notice_icon = blocks.ChoiceBlock(
-        required=False,
-        choices=NoticeIcon.choices,
-        default=NoticeIcon.CHOOSE_AN_ICON,
-    )
     title = blocks.CharBlock(
         required=False,
         max_length=75,
