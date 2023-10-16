@@ -7,7 +7,20 @@
     {% endcomment %}
     {% check_page_type page.content_type 'Free Form Page' as FreeFormPage %}
     {% check_page_type page.content_type 'Free Form Page Base' as FreeFormPageBase %}
-    {% if page.hero_image and page.hero_size == "half hero" or page.hero_video and page.hero_size == "half hero" %}
+    {% check_page_type page.content_type 'mission page' as MissionPage %}
+    {% if MissionPage %}
+    <div class="wrapper wrapper--large">
+        {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
+
+        {% include "patterns/molecules/hero/hero.html" with page=page %}
+        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+        {% if page.secondary_title %}
+            <div class="wrapper wrapper--large wrapper--padding">
+                <h2 class="secondary-title">{{ page.secondary_title }}</h2>
+            </div>
+        {% endif %}
+    </div>
+    {% elif page.hero_image and page.hero_size == "half hero" or page.hero_video and page.hero_size == "half hero" %}
         {% include "patterns/molecules/hero/half_hero.html" with page=page %}
     {% elif page.hero_image or page.hero_video %}
         {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}

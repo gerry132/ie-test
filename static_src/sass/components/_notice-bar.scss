@@ -16,7 +16,6 @@
     gap: 10px;
     flex-direction: column;
     justify-content: center;
-    padding-left: 30px;
 
 }
 .notice-bar__hidden {
@@ -74,12 +73,17 @@
         color: #fff;
     }
 }
+.wrapper__notice-bar{
+    max-width: 900px;
+    margin: 0 auto;
+}
 .notice__icon{
-    position: absolute;
-    top: 20%;
-    background: white;
-    width: 20px;
-    height: 24px;
+    display: flex;
+    align-self: center;
+}
+.notice-bar__display{
+    display: flex;
+    gap: 20px;
 }
 .informationDivider {
             position: absolute;

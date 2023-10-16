@@ -8,7 +8,6 @@ from irelandie_home.blocks import SecondaryCallToAction
 
 from irelandie_utils.blocks import BaseBlockLinkValidation, BaseBlockLinkContext, AdvancedRichTextBlock, ImageBlock, \
     ALT_IMAGE
-from irelandie_utils.constants import NoticeIcon
 from django.forms.utils import ErrorList
 from wagtail.blocks.struct_block import StructBlockValidationError
 
@@ -205,11 +204,6 @@ class NoticeBarLinkBlock(blocks.StructBlock):
 
 
 class NoticeBarWithMessageLink(blocks.StructBlock):
-    notice_icon = blocks.ChoiceBlock(
-        required=False,
-        choices=NoticeIcon.choices,
-        default=NoticeIcon.CHOOSE_AN_ICON,
-    )
     title = blocks.CharBlock(
         required=False,
         max_length=75,
