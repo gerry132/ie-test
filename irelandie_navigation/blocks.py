@@ -8,7 +8,6 @@ from irelandie_home.blocks import SecondaryCallToAction
 
 from irelandie_utils.blocks import BaseBlockLinkValidation, BaseBlockLinkContext, AdvancedRichTextBlock, ImageBlock, \
     ALT_IMAGE
-from irelandie_utils.constants import NoticeIcon
 from django.forms.utils import ErrorList
 from wagtail.blocks.struct_block import StructBlockValidationError
 
