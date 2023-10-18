@@ -210,6 +210,7 @@
     const person_video = document.querySelector('.story__video-block_person');
     const twitterTimeline = document.querySelector('.twitter-timeline');
     var imageHeight = null;
+    if(window.innerWidth > 1024){
     if (person_image) {
         imageHeight = person_image.clientHeight; // You can also use offsetHeight if needed
     }else if (person_video){
@@ -220,6 +221,7 @@
 
     if(imageHeight){
         twitterTimeline.setAttribute('data-height', imageHeight);
+    }
     }
 </script>
 {% for socialfeed in value.social_feed %}
