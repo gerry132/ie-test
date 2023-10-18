@@ -8,8 +8,21 @@
 {% block main %}
 
     {% include_block page.stories %}
-    {% include_block page.pinned_stories %}
-    {% include_block page.stories_between %}
+    {% for block in page.top_body %}
+        {% if block.block_type == 'logo_cards' %}
+            <div class="section section--padding">
+                   <div class="wrapper wrapper--large wrapper--padding">
+                             {% include_block block %}
+                   </div>
+            </div>
+        {% elif block.block_type == 'articles' or block.block_type == 'advanced_rich_text' %}
+                   <div class="wrapper wrapper--large wrapper--padding">
+                             {% include_block block %}
+                   </div>
+        {% else %}
+                {% include_block block %}
+        {% endif %}
+    {% endfor %}
     {% include_block page.person %}
     <div class="wrapper wrapper--large wrapper--padding">
         {% include_block page.body %}

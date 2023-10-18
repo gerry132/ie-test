@@ -32,7 +32,7 @@
                             {% endif %}
                         </div>
                     {% else %}
-                        {% image block_hero.value.image fill-1600x900 class="image" alt=block_hero.value.image_alt %}
+                        {% image block_hero.value.image fill-1600x900 class="wide_feature__image" alt=block_hero.value.image_alt %}
                     {% endif %}
                 {% endfor %}
             </div>
@@ -41,7 +41,7 @@
                     {% if block_hero.block_type == 'advanced_rich_text' %}
                     <div class="rich-text" style="padding-top: 20px;" {% if block_hero.value.section_id %} id="{{block_hero.value.section_id}}" {% endif %}>
                                 {% if block_hero.value.heading %}
-                                    <h1 class="homepage_feature__heading">{{ block_hero.value.heading }}</h1>
+                                    <h2 class="story__heading heading--2">{{ block_hero.value.heading }}</h2>
                                 {% endif %}
                                 {% if block_hero.value.rich_text %}
                                     <div class="homepage_feature_card__summary">

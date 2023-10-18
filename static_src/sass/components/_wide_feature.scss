@@ -20,6 +20,11 @@
     }
     &__feed{
         align-self: center;
+        flex: 1 0 35%;
+    }
+    &__image{
+        width: 100%;
+        object-fit: cover;
     }
     &__link_heading{
         color: #101010;

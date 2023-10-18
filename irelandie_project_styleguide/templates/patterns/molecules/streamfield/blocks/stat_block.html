@@ -1,6 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 
-<div>
+<div style="{% if value.divider_color == 'neon-green' %}border-left-color: #5AFF03;{% else %}border-left-color: #A39161;{% endif %}" class="stats__border">
     <h2 class="stats__title">
             {{ value.heading }}
         </h2>

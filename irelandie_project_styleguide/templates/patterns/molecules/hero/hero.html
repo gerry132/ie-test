@@ -1,13 +1,25 @@
 {% load wagtailcore_tags wagtailimages_tags i18n irelandie_assets_tags %}
+{% check_page_type page.content_type 'mission page' as MissionPage %}
 <style>
     @media only screen and (min-width: 823px){
         .hero__mobile{
             display: none;
         }
     }
+    {% if MissionPage %}
+        .hero__copy {
+            max-width: 900px;
+            padding: 80px 0;
+            margin: 0 auto;
+        }
+        .hero__title{
+            font-size: 48px;
+            line-height: 64px;
+        }
+    {% endif %}
 </style>
 {% if page.hero_image %}
-    <div alt="{{page.alt_text}}" class="hero hero--background-image background-image{% if classes %} {{ classes }}{% endif %}">
+    <div alt="{{page.alt_text}}" style="{% if MissionPage %}min-height: unset;{% endif %}" class="hero hero--background-image background-image{% if classes %} {{ classes }}{% endif %}">
 {% else %}
     <div alt="{{page.alt_text}}" class="hero{% if page.hero_video %} hero--background-video{% endif %}{% if classes %} {{ classes }}{% endif %}" data-video-container>
 {% endif %}

@@ -27,7 +27,7 @@
 
     {% block main %}
         <!-- Body -->
-<div class="{% if page.generic_hero %} section section--padding {% endif %} wrapper wrapper--large--toc">
+<div class="{% if page.generic_hero %} section section--padding {% endif %} wrapper wrapper--large wrapper--padding">
             {% if page.rich_text %}
                     {% include_block page.rich_text %}
                 {% endif %}
@@ -45,7 +45,7 @@
                     </div>
         </div>
         {% if page.additional_rich_text %}
-            <div class="wrapper wrapper--large--toc" style="padding-top:40px;">
+            <div class="wrapper wrapper--large wrapper--padding" style="padding-top:40px;">
                 {% include_block page.additional_rich_text %}
             </div>
         {% endif %}

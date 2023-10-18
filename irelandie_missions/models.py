@@ -356,13 +356,16 @@ class MissionPage(HeroPage):
         null=True,
         min_num=0,
     )
-    stories_between = StreamField(
+    top_body = StreamField(
         [
-            ("story", blocks.StoryBlock()),
+            ("advanced_rich_text", blocks.AdvancedRichTextBlock()),
+            ("link_cards", blocks.LinkCardsBlock()),
+            ("articles", blocks.ArticleCardsBlock()),
+            ("logo_cards", blocks.LogoCardsBlock()),
+            ("wide_feature_block", blocks.WideFeatureBlock())
         ],
         blank=True,
-        null=True,
-        min_num=0,
+        null=True
     )
     body = StreamField(
         [
@@ -391,24 +394,6 @@ class MissionPage(HeroPage):
         min_num=0,
         max_num=1,
     )
-    pinned_stories = StreamField(
-        [
-            (
-                "pinned_story",
-                wagtail_blocks.StructBlock(
-                    [
-                        ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
-                    ],
-                    template="patterns/molecules/pinned-stories/pinned_stories.html",
-                ),
-            ),
-        ],
-        block_counts={
-            "pinned_story": {"max_num": 1},
-        },
-        blank=True,
-        null=True,
-    )
     beta_element = models.ForeignKey(
         'utils.BetaSnippet',
         null=True,
@@ -428,8 +413,7 @@ class MissionPage(HeroPage):
         ], heading="Noticebar settings"
         ),
         FieldPanel("stories", heading="Two Column Feature"),
-        FieldPanel("pinned_stories", permission="access_admin"),
-        FieldPanel("stories_between", heading="Two Column"),
+        FieldPanel("top_body"),
         FieldPanel("person", heading="Person + Social Feed"),
         FieldPanel("body"),
     ]

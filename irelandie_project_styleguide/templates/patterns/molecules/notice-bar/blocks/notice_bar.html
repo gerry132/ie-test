@@ -12,37 +12,22 @@
 {% if value.enable %}
 
 <div class="notice-bar--extended">
-    <div class="wrapper wrapper--small">
-        {% if value.notice_icon == 'information' %}
-        <div class="informationDivider">
+    <div class="wrapper wrapper__notice-bar">
+        <div class="notice-bar__display">
             <div class="notice__icon">
-                <svg class="notice__icon" aria-hidden="true" aria-label="emergency-icon">
-                    <use href="#notice-emergency"></use>
+                <svg xmlns="http://www.w3.org/2000/svg" width="63" height="63" viewBox="0 0 63 63" fill="none">
+                    <path d="M28.8978 47.0926C28.0278 47.0926 27.3228 46.3873 27.3228 45.5176V27.0472C27.3228 26.1772 28.0278 25.4722 28.8978 25.4722H34.0836C34.9534 25.4722 35.6586 26.1772 35.6586 27.0472V45.5176C35.6586 45.5721 35.6558 45.6256 35.6505 45.6786C35.5698 46.473 34.8989 47.0926 34.0836 47.0926H28.8978Z" fill="#004D44"/>
+                    <path d="M31.4905 21.4809C30.3631 21.4809 29.3964 21.1084 28.5913 20.3634C27.7858 19.6184 27.3829 18.7224 27.3829 17.6754C27.3829 16.6284 27.7858 15.7324 28.5913 14.9873C29.3964 14.2424 30.3631 13.8699 31.4905 13.8699C32.6283 13.8699 33.5947 14.2424 34.3901 14.9873C35.1952 15.7324 35.5981 16.6284 35.5981 17.6754C35.5981 18.7224 35.1952 19.6184 34.3901 20.3634C33.5947 21.1084 32.6283 21.4809 31.4905 21.4809Z" fill="#004D44"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M63 31.5C63 48.8968 48.8968 63 31.5 63C14.103 63 0 48.8968 0 31.5C0 14.103 14.103 0 31.5 0C48.8968 0 63 14.103 63 31.5ZM55.125 31.5C55.125 44.5476 44.5476 55.125 31.5 55.125C18.4523 55.125 7.875 44.5476 7.875 31.5C7.875 18.4523 18.4523 7.875 31.5 7.875C44.5476 7.875 55.125 18.4523 55.125 31.5Z" fill="#004D44"/>
                 </svg>
             </div>
-        </div>
-        {% elif value.notice_icon == 'emergency' %}
-        <div class="emergencyDivider">
-            <div class="notice__icon">
-                <svg class="notice__icon" aria-hidden="true" aria-label="information-icon">
-                    <use href="#notice-information"></use>
-                </svg>
-            </div>
-        </div>
-         {% endif %}
         <div class="notice-bar--contents">
             {% if value.subtitle %}
                 {% for link in value.subtitle %}
                     {% if link.value.page or link.value.url %}
-                        <a href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}">
                             <div class="notice__title"> {{ value.title }}</div>
-                            <div class="notice_link">{{ link.value.title }}
-                                <svg class="notice_link_arrow" fill="none" height="14" viewBox="0 0 20 14" width="20" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M18.1333 6.99996L18.9465 6.18679L19.7597 6.99996L18.9465 7.81313L18.1333 6.99996ZM2.13333 8.14996C1.4982 8.14996 0.983332 7.63509 0.983332 6.99996C0.983332 6.36483 1.4982 5.84996 2.13333 5.84996V8.14996ZM13.6132 0.853453L18.9465 6.18679L17.3202 7.81313L11.9868 2.4798L13.6132 0.853453ZM18.9465 7.81313L13.6132 13.1465L11.9868 11.5201L17.3202 6.18679L18.9465 7.81313ZM18.1333 8.14996H2.13333V5.84996H18.1333V8.14996Z"
-                                        fill="#004D44"/>
-                                </svg>
-                            </div>
+                        <a href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}">
+                            <div class="notice_link">{{ link.value.title }}</div>
                         </a>
                     {% else %}
                         <div class="notice__title"> {{ value.title }}</div>
@@ -62,6 +47,20 @@
                 {% endfor %}
             {% endif %}
         </div>
+            {% if value.subtitle %}
+                {% for link in value.subtitle %}
+                    {% if link.value.page or link.value.url %}
+                        <div class="notice__icon">
+                            <a href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="58" viewBox="0 0 32 58" fill="none">
+                                    <path d="M4 54L28 28.9984L4 4" stroke="#004D44" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+    </div>
     </div>
 </div>
 {% endif %}
