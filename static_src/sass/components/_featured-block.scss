@@ -1,12 +1,11 @@
 .featured-block {
     $root: &;
-    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
     position: relative;
     display: block;
     padding: 40px;
     height: 500px;
     width: 100%;
-    transition: box-shadow $transition;
+    transition: $transition;
     overflow: hidden;
 
     @include media-query(large) {
@@ -18,7 +17,6 @@
     }
 
     &:hover {
-        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
 
         #{$root}__content {
             background-color: $color--primary;

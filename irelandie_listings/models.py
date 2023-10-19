@@ -76,7 +76,7 @@ class ListingsContents(models.Model):
     end_date = models.DateField()
     venue = models.CharField(max_length=100, blank=True, help_text="100 character limit")
     event_details = RichTextField(features=["bold", "italic", "link"],
-                                  blank=True, null=True, max_length=150, help_text="150 character limit")
+                                  blank=True, null=True, max_length=200, help_text="150 character limit")
 
     class Meta:
         abstract = True
