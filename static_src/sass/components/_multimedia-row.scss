@@ -72,12 +72,10 @@
     }
     &__card{
     display: block;
-    box-shadow: 0 5px 12px rgb(0 0 0 / 15%);
     background-color: #fff;
-    border: 1px solid transparent;
     overflow: hidden;
     max-width: 500px;
-    transition: box-shadow .25s ease-out;
+    transition: .25s ease-out;
         &--two{
            flex: 0 1 480px;
         }

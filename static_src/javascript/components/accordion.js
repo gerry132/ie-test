@@ -9,6 +9,8 @@ class Accordion {
             '[data-accordion-question]',
         );
         this.answer = this.accordion.querySelector('[data-accordion-answer]');
+        this.button = this.accordion.querySelector('.accordion__btn_content');
+        this.embassy_button = this.accordion.querySelector('.embassy_accordion__btn_content');
         this.bindEvents();
     }
 
@@ -21,10 +23,20 @@ class Accordion {
             if (open) {
                 this.question.setAttribute('aria-expanded', 'false');
                 this.answer.setAttribute('aria-hidden', 'true');
+                if(this.embassy_button){
+                     this.embassy_button.setAttribute('aria-label', 'Open tab');
+                }else{
+                    this.button.setAttribute('aria-label', 'Open tab');
+                }
                 open = false;
             } else {
                 this.question.setAttribute('aria-expanded', 'true');
                 this.answer.setAttribute('aria-hidden', 'false');
+                if(this.embassy_button){
+                     this.embassy_button.setAttribute('aria-label', 'Close tab');
+                }else{
+                    this.button.setAttribute('aria-label', 'Close tab');
+                }
                 open = true;
             }
         });

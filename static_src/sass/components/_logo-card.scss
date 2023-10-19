@@ -1,13 +1,10 @@
 .logo-card {
     $root: &;
     display: block;
-
-    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
     background-color: $color--white;
     // Transparent border, so cards are visible in high-contrast mode with no background.
-    border: 1px solid transparent;
     overflow: hidden;
-    transition: box-shadow $transition;
+    transition: $transition;
     position: relative;
 
     @include media-query(medium) {
