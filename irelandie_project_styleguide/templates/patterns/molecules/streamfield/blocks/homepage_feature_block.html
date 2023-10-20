@@ -66,9 +66,9 @@
                        {% if card.value.page %}
                         {% pageurl card.value.page as href %}
                             <a href="{{ href }}" class="homepage_feature__card{% if large %} card--large{% endif %}{% if not card.value.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
-                        {% elif card.url %}
+                        {% elif card.value.url %}
                             <a href="{{ card.value.url }}" class="homepage_feature__card{% if large %} card--large{% endif %}{% if not card.value.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
-                                {% else %}
+                        {% else %}
                             <div class="homepage_feature__card{% if not card.value.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
                         {% endif %}
                                 <div class="card__image-container">
