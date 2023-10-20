@@ -155,9 +155,7 @@
                             {% if page.related_content %}
                                 <h4 class="header--related-content">Related content</h4>
                                 {% for p in page.related_content %}
-                                    <div style="padding-bottom: 20px;">
-                                                {% include_block p with default_image=default_image%}
-                                    </div>
+                                                <a href="{% if p.value.page.url %}{{p.value.page.url}}{% else %}{{p.value.url}}{% endif %}"><h2 class="toc-contents">{{p.value.title}}</h2></a>
                                 {% endfor %}
                             {% endif %}
                         </div>

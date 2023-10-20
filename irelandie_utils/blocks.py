@@ -1096,6 +1096,7 @@ class TocBlocks(blocks.StreamBlock):
 
 
 class OverviewPullOutTextBlock(blocks.StructBlock):
+    section_id = blocks.CharBlock(required=False)
     heading = blocks.CharBlock(required=False)
     body = blocks.StreamBlock(
         [
