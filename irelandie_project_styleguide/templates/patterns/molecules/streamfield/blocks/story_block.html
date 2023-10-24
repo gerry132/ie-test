@@ -7,7 +7,7 @@
     }
 
 </style>
-{% get_unique_ref as ref %}
+
 <div
     class="story{% if value.background == 'dark' %} story--dark{% endif %}{% if value.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
     <div class="wrapper wrapper--large">
@@ -90,7 +90,8 @@
                     <div class="your-class story-links__container">
                         <div class="slider slider-mobile">
                             {% for link in value.links %}
-                            <div class="slide-mobile-{{ref}} slide-mobile" id="last" style="width: 100%;">
+                            {% get_unique_ref as id %}
+                            <div class="slide-mobile-{{ref}} slide-mobile" id="mob-{{id}}" style="width: 100%;">
                                 <div class="story-links">
                                     <div class="your-class story-links__container">
                                         {% include_block link %}
@@ -110,12 +111,13 @@
                 {% else %}
                 {% with next_element=value.links|next:forloop.counter0 %}
                 {% if next_element %}
-                <div class="slide-{{ref}} slide" id="next">
+                {% get_unique_ref as id %}
+                <div class="slide-{{ref}} slide" id="desk-{{id}}">
                     <div class="story-links">
                         <div class="your-class story-links__container">
                             {{link}}
                             {% else %}
-                            <div class="slide-{{ref}} slide" id="last" style="width: 100%;">
+                            <div class="slide-{{ref}} slide" id="{{ref}}" style="width: 100%;">
                                 <div class="story-links">
                                     <div class="your-class story-links__container">
                                         {% include_block link %}
