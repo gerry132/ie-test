@@ -1,6 +1,6 @@
 {% load wagtailcore_tags %}
  <div style="padding: 115px 20px 85px;">
-<div class="pull_out rich-text__narrow">
+<div {% if value.section_id %} id="{{value.section_id}}" {% endif %} class="pull_out rich-text__narrow">
 {% if value.heading %}
                 <div class="pull_out_heading heading--2">{{ value.heading }}</div>
 {% endif %}

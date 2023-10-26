@@ -946,10 +946,6 @@ class AccordionBlock(blocks.StructBlock):
         required=False,
     )
     summary_richtext = AdvancedRichTextBlock(required=False)
-    accordions_button_alt = blocks.CharBlock(
-        required=False,
-        help_text=_(ALT_BUTTON),
-    )
     accordions = blocks.StreamBlock(
         [
             (
@@ -1009,10 +1005,6 @@ class AccordionBlock(blocks.StructBlock):
 
 class AccordionEmbassyBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=False)
-    accordions_button_alt = blocks.CharBlock(
-        required=False,
-        help_text=_(ALT_BUTTON),
-    )
     accordions = blocks.StreamBlock(
         [
             (
@@ -1104,6 +1096,7 @@ class TocBlocks(blocks.StreamBlock):
 
 
 class OverviewPullOutTextBlock(blocks.StructBlock):
+    section_id = blocks.CharBlock(required=False)
     heading = blocks.CharBlock(required=False)
     body = blocks.StreamBlock(
         [

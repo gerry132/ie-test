@@ -137,7 +137,7 @@
                             <input name="page_id" type="hidden" value="{{ page.id }}">
                             <div class="header__language-switcher">
                                 <label for="language-switcher" class="u-sr-only">{% trans 'Select default language' %}</label>
-                                <select name="language" id="language-switcher"
+                                <select name="language" id="language-switcher-mob"
                                         onchange="this.form.submit()"
                                         class="language-switcher">
                                     {% get_language_info for LANGUAGE_CODE as current_lang %}

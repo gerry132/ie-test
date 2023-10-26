@@ -1,16 +1,13 @@
 .card {
     $root: &;
     display: block;
-    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
     background-color: $color--white;
     // Transparent border, so cards are visible in high-contrast mode with no background.
-    border: 1px solid transparent;
     overflow: hidden;
     max-width: 500px;
-    transition: box-shadow $transition;
+    transition: $transition;
 
     &:hover {
-        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
 
         #{$root}__image {
             transform: scale(1.1);
@@ -95,7 +92,7 @@
 
     /* Text 4 */
 
-    color: #B0B7C3;
+    color: #51596C;
     }
 }
 
