@@ -32,7 +32,13 @@
                             {% endif %}
                         </div>
                     {% else %}
-                        {% image block_hero.value.image fill-1600x900 class="wide_feature__image" alt=block_hero.value.image_alt %}
+                        {% if block_hero.value.image_link_page or block_hero.value.image_link_url %}
+                            <a href="{% if block_hero.value.image_link_page %}{{block_hero.value.image_link_page.url}}{% else %}{{block_hero.value.image_link_url}}{% endif %}">
+                                {% image block_hero.value.image fill-1600x900 class="wide_feature__image" alt=block_hero.value.image_alt %}
+                            </a>
+                        {% else %}
+                            {% image block_hero.value.image fill-1600x900 class="wide_feature__image" alt=block_hero.value.image_alt %}
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
             </div>

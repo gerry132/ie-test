@@ -67,6 +67,9 @@
                             </div>
                         {% endfor %}
                         {% endif %}
+                            {% if accordion.value.image_block %}
+                                {% include_block accordion.value.image_block %}
+                            {% endif %}
                         </div>
 
                         {% if accordion.value.additional %}
