@@ -47,6 +47,10 @@ class FormField(AbstractFormField):
 
 
 class CustomFormBuilder(FormBuilder):
+    def create_multiline_field(self, field, options):
+        attrs = {'maxlength': '250'}
+        return forms.CharField(widget=forms.Textarea(attrs=attrs), **options)
+
     def create_dateinput_field(self, field, options):
         options["widget"] = forms.DateInput(attrs={"type": "date"})
         return forms.CharField(**options)
