@@ -19,7 +19,6 @@ from wagtail.admin.mail import send_mail
 from wagtail.contrib.forms.models import (
     FORM_FIELD_CHOICES,
     AbstractFormField,
-    FormBuilder,
     AbstractFormSubmission,
 )
 from wagtail.fields import RichTextField, StreamField
