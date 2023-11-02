@@ -64,21 +64,22 @@
     }
     }
     &__btn {
-    position: relative;
-    width: 44px;
-    height: 32px;
     border: none;
-    border-radius: 30%;
     cursor: pointer;
     background-color: #fff;
     font-size: 18px;
-    background-image: url('../images/cssBackgrounds/Vector2.png');
     background-repeat: no-repeat;
-    right: 0%;
-
-    @media only screen and (max-width: 1028px) {
-        right: -3%;
-    }
+  }
+  &__title{
+    width: 23px;
+    height: 39px;
+    background-image: url('../images/cssBackgrounds/Vector2.png');
+  }
+  &__title_subtitle{
+    width: 32px;
+    height: 58px;
+    background-image: url('../images/cssBackgrounds/icon-chevron-right-2.png');
+    align-self: center;
   }
   &__related-content{
     width: 60%;

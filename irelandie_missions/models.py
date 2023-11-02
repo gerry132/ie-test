@@ -364,8 +364,20 @@ class MissionPage(HeroPage):
             ("link_cards", blocks.LinkCardsBlock()),
             ("articles", blocks.ArticleCardsBlock()),
             ("logo_cards", blocks.LogoCardsBlock()),
-            ("wide_feature_block", blocks.WideFeatureBlock())
+            ("wide_feature_block", blocks.WideFeatureBlock()),
+            (
+                "pinned_story",
+                wagtail_blocks.StructBlock(
+                    [
+                        ("pinned_story_hero", blocks.PinnedStoryHeroBlock()),
+                    ],
+                    template="patterns/molecules/pinned-stories/pinned_stories.html",
+                ),
+            ),
         ],
+        block_counts={
+            "pinned_story": {"max_num": 1},
+        },
         blank=True,
         null=True
     )
