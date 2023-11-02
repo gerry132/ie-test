@@ -30,6 +30,8 @@ from irelandie_utils.blocks import AdvancedRichTextBlock, AccordionBlock
 from irelandie_utils.models import BasePage
 from irelandie_utils.utils import get_model_info
 
+from wagtailcaptcha.models import WagtailCaptchaForm
+
 
 class FormField(AbstractFormField):
     page = ParentalKey("FormPage", related_name="form_fields")
@@ -69,7 +71,7 @@ class EmailMapBlock(blocks.StructBlock):
 
 # Never cache form pages since they include CSRF tokens.
 @method_decorator(never_cache, name="serve")
-class FormPage(HoneypotMixin, BasePage):
+class FormPage(HoneypotMixin, BasePage, WagtailCaptchaForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.topic = None
