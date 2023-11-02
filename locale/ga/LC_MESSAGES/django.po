@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-01 09:02+0000\n"
+"POT-Creation-Date: 2023-10-31 09:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,10 +78,10 @@ msgstr ""
 
 #: irelandie_admin/templates/wagtailadmin/pages/search.html:3
 #: irelandie_admin/templates/wagtailadmin/pages/search.html:27
-#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:159
-#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:182
-#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:291
-#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:312
+#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:162
+#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:185
+#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:294
+#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:315
 #: irelandie_project_styleguide/templates/patterns/pages/search/search.html:10
 msgid "Search"
 msgstr ""
@@ -129,102 +129,103 @@ msgstr ""
 msgid "Date/Time Input (HTML 5)"
 msgstr ""
 
-#: irelandie_navigation/blocks.py:19 irelandie_navigation/blocks.py:29
+#: irelandie_navigation/blocks.py:18 irelandie_navigation/blocks.py:28
+#: irelandie_navigation/blocks.py:40
 msgid "Leave blank to use the page's own title"
 msgstr ""
 
-#: irelandie_navigation/blocks.py:140 irelandie_navigation/blocks.py:150
+#: irelandie_navigation/blocks.py:157 irelandie_navigation/blocks.py:167
 msgid "Leave blank if no header required."
 msgstr ""
 
-#: irelandie_navigation/blocks.py:160
+#: irelandie_navigation/blocks.py:177
 msgid "200 characters max limit"
 msgstr ""
 
-#: irelandie_navigation/blocks.py:198
+#: irelandie_navigation/blocks.py:210
 msgid "75 characters max limit"
 msgstr ""
 
-#: irelandie_navigation/models.py:68 irelandie_navigation/models.py:337
-#: irelandie_navigation/models.py:450
+#: irelandie_navigation/models.py:75 irelandie_navigation/models.py:360
+#: irelandie_navigation/models.py:474
 msgid "Logo Alt text"
 msgstr ""
 
-#: irelandie_navigation/models.py:74
+#: irelandie_navigation/models.py:81
 msgid "Iframe code for Google My Maps."
 msgstr ""
 
-#: irelandie_navigation/models.py:78
+#: irelandie_navigation/models.py:85
 msgid "Text for warning banner on CMS preview pages."
 msgstr ""
 
-#: irelandie_navigation/models.py:108 irelandie_navigation/models.py:167
-#: irelandie_navigation/models.py:243
+#: irelandie_navigation/models.py:116 irelandie_navigation/models.py:175
+#: irelandie_navigation/models.py:259
 msgid "Language"
 msgstr ""
 
-#: irelandie_navigation/models.py:114 irelandie_navigation/models.py:431
+#: irelandie_navigation/models.py:122 irelandie_navigation/models.py:455
 msgid "Links"
 msgstr ""
 
-#: irelandie_navigation/models.py:125 irelandie_navigation/models.py:147
-#: irelandie_navigation/models.py:148
+#: irelandie_navigation/models.py:133 irelandie_navigation/models.py:155
+#: irelandie_navigation/models.py:156
 msgid "Primary Navigation"
 msgstr ""
 
-#: irelandie_navigation/models.py:173 irelandie_navigation/models.py:249
-#: irelandie_navigation/models.py:312
+#: irelandie_navigation/models.py:181 irelandie_navigation/models.py:265
+#: irelandie_navigation/models.py:328
 msgid "Columns"
 msgstr ""
 
-#: irelandie_navigation/models.py:178 irelandie_navigation/models.py:317
+#: irelandie_navigation/models.py:186 irelandie_navigation/models.py:333
 msgid "Single list of elements at the base of the page."
 msgstr ""
 
-#: irelandie_navigation/models.py:183
+#: irelandie_navigation/models.py:191
 msgid "email address"
 msgstr ""
 
-#: irelandie_navigation/models.py:196 irelandie_navigation/models.py:223
-#: irelandie_navigation/models.py:224
+#: irelandie_navigation/models.py:211 irelandie_navigation/models.py:239
+#: irelandie_navigation/models.py:240
 msgid "Footer Navigation"
 msgstr ""
 
-#: irelandie_navigation/models.py:260 irelandie_navigation/models.py:282
-#: irelandie_navigation/models.py:283
+#: irelandie_navigation/models.py:276 irelandie_navigation/models.py:298
+#: irelandie_navigation/models.py:299
 msgid "Secondary Navigation"
 msgstr ""
 
-#: irelandie_navigation/models.py:302 irelandie_navigation/models.py:414
+#: irelandie_navigation/models.py:318 irelandie_navigation/models.py:438
 msgid "Name"
 msgstr ""
 
-#: irelandie_navigation/models.py:394
+#: irelandie_navigation/models.py:418
 msgid "Custom Footer"
 msgstr ""
 
-#: irelandie_navigation/models.py:395
+#: irelandie_navigation/models.py:419
 msgid "Custom Footers"
 msgstr ""
 
-#: irelandie_navigation/models.py:421
+#: irelandie_navigation/models.py:445
 msgid "URL"
 msgstr ""
 
-#: irelandie_navigation/models.py:499
+#: irelandie_navigation/models.py:523
 msgid "Custom Header"
 msgstr ""
 
-#: irelandie_navigation/models.py:500
+#: irelandie_navigation/models.py:524
 msgid "Custom Headers"
 msgstr ""
 
-#: irelandie_people/models.py:56 irelandie_utils/models.py:305
+#: irelandie_people/models.py:56 irelandie_utils/models.py:306
 msgid "Image Alt text"
 msgstr ""
 
-#: irelandie_people/models.py:57 irelandie_utils/models.py:236
-#: irelandie_utils/models.py:306
+#: irelandie_people/models.py:57 irelandie_utils/models.py:237
+#: irelandie_utils/models.py:307
 msgid "The alt text shown for accessibility: https://axesslab.com/alt-texts/"
 msgstr ""
 
@@ -240,25 +241,28 @@ msgstr ""
 #: irelandie_project_styleguide/templates/patterns/molecules/card/news-card.html:45
 #: irelandie_project_styleguide/templates/patterns/molecules/related-articles/related-articles.html:43
 #: irelandie_project_styleguide/templates/patterns/molecules/topics/featured_article.html:34
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_landing_page.html:75
 msgid "Read more"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:47
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:50
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:109
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:59
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:45
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:59
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/multimedia_block.html:67
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:19
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:25
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:24
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:30
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_block.html:45
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/video_block.html:7
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/video_block_alt.html:7
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_listings/listings_featured_page.html:47
-#: irelandie_project_styleguide/templates/patterns/pages/missions/general_content_page.html:69
+#: irelandie_project_styleguide/templates/patterns/pages/missions/general_content_page.html:76
 msgid "Your browser does not support the video tag."
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:95
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:54
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:113
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:107
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:51
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:66
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/multimedia_block.html:62
@@ -278,12 +282,12 @@ msgstr ""
 msgid "Footer links"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:2
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:3
 msgid "Primary navigation"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:26
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:92
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:31
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:212
 msgid "Back"
 msgstr ""
 
@@ -377,12 +381,12 @@ msgstr ""
 msgid "A link to somewhere else. This could surround the whole slide."
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:42
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:9
 msgid "Contact Details"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:129
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:168
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:134
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:173
 msgid "Keep up to date with the latest tweets from"
 msgstr ""
 
@@ -399,49 +403,49 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:38
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:43
 msgid "Follow us"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:41
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:46
 msgid "Find us on Youtube"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:47
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:52
 msgid "Connect on Linkedin"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:53
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:58
 msgid "Find us on Facebook"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:59
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:64
 msgid "Follow us on Twitter"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:65
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:70
 msgid "Find us on Instagram"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:71
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:76
 msgid "Find us on Weibo"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:89
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:94
 msgid "Copyright"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:89
+#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:94
 msgid "All rights reserved"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:140
-#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:272
+#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:143
+#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:275
 msgid "Select default language"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:170
-#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:302
+#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:173
+#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:305
 msgid "Mobile menu toggle"
 msgstr ""
 
@@ -521,13 +525,37 @@ msgstr ""
 msgid "Select year:"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_landing_page.html:88
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_landing_page.html:83
 msgid "Read all news"
 msgstr ""
 
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/greyed_alert.html:5
 msgid "Security Status"
 msgstr "Stádas Slándála"
+
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:3
+msgid "Choose destination:"
+msgstr "Roghnaigh ceann scríbe"
+
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:5
+msgid "-- Choose destination --"
+msgstr "-- Roghnaigh ceann scríbe --"
+
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:14
+msgid "Type destination name:"
+msgstr "Clóscríóbh ainm cinn scríbe"
+
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:19
+msgid "Choose region:"
+msgstr "Roghnaigh réigiún"
+
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:35
+msgid "Clear all filters"
+msgstr "Glan na scagairí go léir"
+
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:39
+msgid "Jump to"
+msgstr "Léim go"
 
 #: irelandie_project_styleguide/templates/patterns/pages/missions/services_landing_page.html:40
 #: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:218
@@ -561,13 +589,18 @@ msgstr ""
 msgid "Please enter the password to proceed."
 msgstr ""
 
-#: irelandie_utils/blocks.py:522
+#: irelandie_utils/blocks.py:527
 msgid ""
 "Slido iframe code. Ensure that the code you add here is only Slido provided "
 "code."
 msgstr ""
 
-#: irelandie_utils/models.py:213
+#: irelandie_utils/blocks.py:994 irelandie_utils/blocks.py:997
+#: irelandie_utils/blocks.py:1042 irelandie_utils/blocks.py:1045
+msgid "Accordion Tab"
+msgstr ""
+
+#: irelandie_utils/models.py:214
 msgid "Listing Image Alt text"
 msgstr ""
 

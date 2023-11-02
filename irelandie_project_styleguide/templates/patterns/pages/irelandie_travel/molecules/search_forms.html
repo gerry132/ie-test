@@ -1,8 +1,8 @@
-{% load static util_tags %}
+{% load static util_tags i18n %}
 <div class="form--elem">
-    <div class="a-z-listing__filter__label__text">Choose country:</div>
+    <div class="a-z-listing__filter__label__text">{% translate "Choose destination:" %}</div>
     <select class="search-bar--travel-index" onchange="location = this.value; ">
-        <option value="" name="popular_page" selected disabled hidden>-- Choose country --</option>
+        <option value="" name="popular_page" selected disabled hidden>{% translate "-- Choose destination --" %}</option>
         {% for key, value in travel_pages.items %}
                   {% for p in value %}
                         <option value="{{p.url}}">{{p}}</option>
@@ -11,12 +11,12 @@
         </select>
         </div>
         <div class="form--elem">
-        <div class="a-z-listing__filter__label__text">Type country name:</div>
+        <div class="a-z-listing__filter__label__text">{% translate "Type destination name:" %}</div>
 
         <input class="form--input" type="text" id="cname" name="cname">
     </div>
     <div class="form--elem">
-        <div class="a-z-listing__filter__label__text">Choose region:</div>
+        <div class="a-z-listing__filter__label__text">{% translate "Choose region:" %}</div>
         <select class="search-bar--travel-index" id="region-selector">
             <option value="All" name="popular_page" selected>All</option>
                         <option value="Asia and Oceania">Asia and Oceania</option>
@@ -32,11 +32,11 @@
                 <div class="vector--container">
                     <div class="close_vector"></div>
                 </div>
-                <div class="filter-text"><h3 class="form-clear">Clear all filters</h3></div>
+                <div class="filter-text"><h3 class="form-clear">{% translate "Clear all filters" %}</h3></div>
             </div>
 <div class="wrapper wrapper--large" style="margin-right: 20px;">
     <div class="a-z-listing__alphabet">
-        <div class="a-z-listing__filter__label__text">Jump to</div>
+        <div class="a-z-listing__filter__label__text">{% translate "Jump to" %}</div>
         <ul class="a-z-listing__alphabet_letters">
             {% for letter, value in travel_pages.items %}
             {% if value %}

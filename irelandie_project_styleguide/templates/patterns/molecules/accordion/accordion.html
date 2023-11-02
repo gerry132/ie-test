@@ -59,14 +59,17 @@
                         {% if accordion.value.button_link %}
                         {% for button in accordion.value.button_link %}
                             <div class="wrapper wrapper--large">
-                                    {% if button.page %}
-                                        <a class="button_text" href="{{ button.page }}">{{ button.value.message }}</a>
+                                    {% if button.value.page %}
+                                        <a class="button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
                                     {% else %}
-                                        <a class="button_text" href="{{ button.url }}">{{ button.value.message }}</a>
+                                        <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
                                     {% endif %}
                             </div>
                         {% endfor %}
                         {% endif %}
+                            {% if accordion.value.image_block %}
+                                {% include_block accordion.value.image_block %}
+                            {% endif %}
                         </div>
 
                         {% if accordion.value.additional %}

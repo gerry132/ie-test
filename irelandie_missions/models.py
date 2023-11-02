@@ -212,7 +212,9 @@ class JobContentPage(BasePage):
         blank=True,
     )
     job_index_page_summary = models.TextField(
-        help_text="Brief job summary for index page",
+        max_length=300,
+        help_text="A brief 1-2 sentence job summary. This will appear on the job opportunities index page, not on the "
+                  "job posting itself.",
         null=True
     )
     privacy_policy = models.ForeignKey(

@@ -49,7 +49,15 @@ class FormField(AbstractFormField):
     )
 
 
+<<<<<<< HEAD
 class CustomFormBuilder(WagtailCaptchaFormBuilder):
+=======
+class CustomFormBuilder(FormBuilder):
+    def create_multiline_field(self, field, options):
+        attrs = {'maxlength': '250'}
+        return forms.CharField(widget=forms.Textarea(attrs=attrs), **options)
+
+>>>>>>> 30aaa117f46b8c9174fef6e582562f62f3961217
     def create_dateinput_field(self, field, options):
         options["widget"] = forms.DateInput(attrs={"type": "date"})
         return forms.CharField(**options)
