@@ -31,6 +31,7 @@ from irelandie_utils.models import BasePage
 from irelandie_utils.utils import get_model_info
 
 from wagtailcaptcha.models import WagtailCaptchaForm
+from wagtailcaptcha.forms import WagtailCaptchaFormBuilder
 
 
 class FormField(AbstractFormField):
@@ -48,7 +49,7 @@ class FormField(AbstractFormField):
     )
 
 
-class CustomFormBuilder(FormBuilder):
+class CustomFormBuilder(WagtailCaptchaFormBuilder):
     def create_dateinput_field(self, field, options):
         options["widget"] = forms.DateInput(attrs={"type": "date"})
         return forms.CharField(**options)
@@ -71,7 +72,7 @@ class EmailMapBlock(blocks.StructBlock):
 
 # Never cache form pages since they include CSRF tokens.
 @method_decorator(never_cache, name="serve")
-class FormPage(HoneypotMixin, BasePage, WagtailCaptchaForm):
+class FormPage(HoneypotMixin, WagtailCaptchaForm, BasePage):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.topic = None
