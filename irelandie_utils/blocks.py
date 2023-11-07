@@ -981,18 +981,10 @@ class AccordionBlock(blocks.StructBlock):
                             min_num=0,
                             required=False, )
                          ),
-                        ("image_block", blocks.StreamBlock(
-                            [
-                                ("image_block", ImageBlock())
-                            ],
-                            blank=True,
-                            max_num=1,
-                            min_num=0,
-                            required=False, )
-                         ),
                         ("additional", blocks.StreamBlock([
                             ("map", MapBlock()),
                             ("advanced_rich_text", AdvancedRichTextBlock()),
+                            ("image_block", ImageBlock(required=False)),
                             ("table", TableBlock(table_options={'renderer': 'html'}, group="table")),
                             ("document", DocumentBlock(required=False)),
                             ("youtube", YoutubeVideoBlock(group="HTML")),

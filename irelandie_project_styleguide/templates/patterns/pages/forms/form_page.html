@@ -75,6 +75,10 @@
                         {% include "patterns/molecules/field/field.html" %}
                     {% endfor %}
 
+                     {% if form_errors.non_field_errors %}
+                        {{ form_errors.non_field_errors }}
+                     {% endif %}
+
                     <button class="form__submit button" type="submit">{% if page.action_text %}{{ page.action_text|safe }}{% else %}{% trans 'Submit' %}{% endif %}</button>
                 </div>
             </form>
