@@ -31,7 +31,6 @@ from irelandie_utils.utils import get_model_info
 
 from wagtailcaptcha.models import WagtailCaptchaForm
 from wagtailcaptcha.forms import WagtailCaptchaFormBuilder
-from django import forms
 
 
 class FormField(AbstractFormField):
