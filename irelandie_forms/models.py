@@ -50,16 +50,11 @@ class FormField(AbstractFormField):
 
 class CustomMultilineField(forms.CharField):
     def __init__(self, *args, **kwargs):
-        max_length = kwargs.pop('max_length', None)
+        max_length = kwargs.pop('max_length', 251)
         super().__init__(*args, **kwargs)
-        if max_length:
-            self.widget.attrs['maxlength'] = max_length
-
-    def clean(self, value):
-        value = super().clean(value)
-        if value and len(value) > int(self.widget.attrs.get('maxlength', 250)):
-            raise forms.ValidationError("Please enter no more than 250 characters in the Query field.")
-        return value
+        self.widget.attrs['maxlength'] = max_length
+        self.widget.attrs['oninput'] = 'validateTextarea(this)'
+        self.max_length = max_length
 
 
 class CustomFormBuilder(WagtailCaptchaFormBuilder):
