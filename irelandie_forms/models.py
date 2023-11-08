@@ -48,10 +48,23 @@ class FormField(AbstractFormField):
     )
 
 
+class CustomMultilineField(forms.CharField):
+    def __init__(self, *args, **kwargs):
+        max_length = kwargs.pop('max_length', None)
+        super().__init__(*args, **kwargs)
+        if max_length:
+            self.widget.attrs['maxlength'] = max_length
+
+    def clean(self, value):
+        value = super().clean(value)
+        if value and len(value) > int(self.widget.attrs.get('maxlength', 250)):
+            raise forms.ValidationError("Please enter no more than 250 characters in the Query field.")
+        return value
+
+
 class CustomFormBuilder(WagtailCaptchaFormBuilder):
     def create_multiline_field(self, field, options):
-        attrs = {'maxlength': '250'}
-        return forms.CharField(widget=forms.Textarea(attrs=attrs), **options)
+        return CustomMultilineField(widget=forms.Textarea, **options)
 
     def create_dateinput_field(self, field, options):
         options["widget"] = forms.DateInput(attrs={"type": "date"})
@@ -166,6 +179,11 @@ class FormPage(HoneypotMixin, WagtailCaptchaForm, BasePage):
                 return self.render_landing_page(
                     request, form_submission, *args, **kwargs
                 )
+            else:
+                context = self.get_context(request)
+                context["form"] = form
+                context["form_errors"] = form.errors
+                return TemplateResponse(request, self.get_template(request), context)
         else:
             form = self.get_form(page=self, user=request.user)
 
@@ -182,18 +200,22 @@ class FormPage(HoneypotMixin, WagtailCaptchaForm, BasePage):
                 if missions.root_page:
                     context['mission_web_bot'] = missions.web_bot_script
         if request.POST:
-            submitted_date_str = date.today().strftime('%x')
-            subject = f"{self.subject} - {submitted_date_str}"
-            if 'topic' in request.POST:
-                self.topic = request.POST['topic']
-                addresses = [x.strip() for x in self.get_mapped_value(self.topic).split(',')]
-                subject_item = self.get_mapped_value(self.topic, 'subject')
-            else:
-                addresses = [x.strip() for x in self.to_address.split(',')]
+            form = self.get_form(
+                request.POST, request.FILES, page=self, user=request.user
+            )
+            if form.is_valid():
+                submitted_date_str = date.today().strftime('%x')
+                subject = f"{self.subject} - {submitted_date_str}"
+                if 'topic' in request.POST:
+                    self.topic = request.POST['topic']
+                    addresses = [x.strip() for x in self.get_mapped_value(self.topic).split(',')]
+                    subject_item = self.get_mapped_value(self.topic, 'subject')
+                else:
+                    addresses = [x.strip() for x in self.to_address.split(',')]
 
-            if subject_item:
-                subject = subject_item
-            send_mail(subject, self.render_email(self.form), addresses, self.from_address, )
+                if subject_item:
+                    subject = subject_item
+                send_mail(subject, self.render_email(self.form), addresses, self.from_address, )
         return context
 
     def get_submission_class(self):
