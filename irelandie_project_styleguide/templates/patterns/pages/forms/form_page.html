@@ -23,6 +23,26 @@
     });
   </script>
 
+
+    <script>
+        function validateTextarea() {
+            var textarea = document.getElementById("id_your_query");
+            var value = textarea.value;
+            var valueLength = value.length;
+
+            var maxLength = 250;
+            var errorMessage = document.getElementById('error-message');
+
+            if (valueLength > maxLength) {
+                errorMessage.innerHTML = "Please enter no more than 250 characters in the Query field.";
+                textarea.value = value.substring(0, maxLength); // Trim the input to the maximum length
+            } else {
+                errorMessage.innerHTML = ''; // Clear the error message
+            }
+            }
+
+</script>
+
 {% endblock extra_js %}
 
 
@@ -69,6 +89,7 @@
                             {% trans 'There were some errors with your form. Please amend the fields highlighted below.' %}
                         </div>
                     {% endif %}
+                    <p id="error-message" style="color: red;"></p>
 
                     {% for field in form %}
                         {% honeypot_fields %}
