@@ -29,7 +29,6 @@ from irelandie_utils.blocks import AdvancedRichTextBlock, AccordionBlock
 from irelandie_utils.models import BasePage
 from irelandie_utils.utils import get_model_info
 
-from wagtailcaptcha.models import WagtailCaptchaForm
 from wagtailcaptcha.forms import WagtailCaptchaFormBuilder
 
 
@@ -83,12 +82,12 @@ class EmailMapBlock(blocks.StructBlock):
 
 # Never cache form pages since they include CSRF tokens.
 @method_decorator(never_cache, name="serve")
-class FormPage(HoneypotMixin, WagtailCaptchaForm, BasePage):
+class FormPage(HoneypotMixin, BasePage):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.topic = None
         self.form = None
-
+    
     template = "patterns/pages/forms/form_page.html"
     landing_page_template = "patterns/pages/forms/form_page_landing.html"
 
@@ -171,6 +170,8 @@ class FormPage(HoneypotMixin, WagtailCaptchaForm, BasePage):
             if form.is_valid():
                 form_submission = self.process_form_submission(form)
                 self.form = form
+                self.form.data = form.data.copy()
+                del self.form.data['g-recaptcha-response']
                 return self.render_landing_page(
                     request, form_submission, *args, **kwargs
                 )
@@ -195,9 +196,7 @@ class FormPage(HoneypotMixin, WagtailCaptchaForm, BasePage):
                 if missions.root_page:
                     context['mission_web_bot'] = missions.web_bot_script
         if request.POST:
-            form = self.get_form(
-                request.POST, request.FILES, page=self, user=request.user
-            )
+            form = self.form
             if form.is_valid():
                 submitted_date_str = date.today().strftime('%x')
                 subject = f"{self.subject} - {submitted_date_str}"
