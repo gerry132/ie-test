@@ -212,6 +212,8 @@ class FormPage(HoneypotMixin, BasePage):
 
                 if subject_item:
                     subject = subject_item
+                print(self.form.data)
+
                 print(form.data)
                 send_mail(subject, self.render_email(form), addresses, self.from_address, )
         return context
