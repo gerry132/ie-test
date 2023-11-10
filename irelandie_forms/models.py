@@ -212,7 +212,7 @@ class FormPage(HoneypotMixin, BasePage):
 
                 if subject_item:
                     subject = subject_item
-                send_mail(subject, self.render_email(self.form), addresses, self.from_address, )
+                send_mail(subject, self.render_email(form), addresses, self.from_address, )
         return context
 
     def get_submission_class(self):
