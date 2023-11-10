@@ -195,6 +195,10 @@ class FormPage(HoneypotMixin, BasePage):
                     context['mission_web_bot'] = missions.web_bot_script
         if request.POST and self.form:
             form = self.form
+            form.data = form.data.copy()
+
+            del form.data['g-recaptcha-response']
+
             if form.is_valid():
                 submitted_date_str = date.today().strftime('%x')
                 subject = f"{self.subject} - {submitted_date_str}"
