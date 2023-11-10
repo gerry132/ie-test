@@ -200,6 +200,7 @@ class FormPage(HoneypotMixin, BasePage):
             del form.data['g-recaptcha-response']
 
             if form.is_valid():
+                subject_item = None
                 submitted_date_str = date.today().strftime('%x')
                 subject = f"{self.subject} - {submitted_date_str}"
                 if 'topic' in request.POST:
