@@ -87,7 +87,7 @@ class FormPage(HoneypotMixin, BasePage):
         super().__init__(*args, **kwargs)
         self.topic = None
         self.form = None
-    
+
     template = "patterns/pages/forms/form_page.html"
     landing_page_template = "patterns/pages/forms/form_page_landing.html"
 
@@ -207,7 +207,6 @@ class FormPage(HoneypotMixin, BasePage):
 
                 if subject_item:
                     subject = subject_item
-                email_form = self.form
                 send_mail(subject, self.render_email(self.form), addresses, self.from_address, )
         return context
 
