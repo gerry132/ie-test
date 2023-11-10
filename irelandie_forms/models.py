@@ -196,7 +196,7 @@ class FormPage(HoneypotMixin, BasePage):
         if request.POST and self.form:
             form = self.form
             form.data = form.data.copy()
-
+            print(form.data)
             del form.data['g-recaptcha-response']
 
             if form.is_valid():
