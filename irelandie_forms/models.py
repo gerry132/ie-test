@@ -87,7 +87,7 @@ class FormPage(HoneypotMixin, BasePage):
         super().__init__(*args, **kwargs)
         self.topic = None
         self.form = None
-    
+
     template = "patterns/pages/forms/form_page.html"
     landing_page_template = "patterns/pages/forms/form_page_landing.html"
 
