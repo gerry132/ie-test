@@ -196,8 +196,6 @@ class FormPage(HoneypotMixin, BasePage):
         if request.POST and self.form:
             form = self.form
             form.data = form.data.copy()
-            print(form.data)
-            del form.data['g-recaptcha-response']
 
             if form.is_valid():
                 subject_item = None
@@ -212,10 +210,9 @@ class FormPage(HoneypotMixin, BasePage):
 
                 if subject_item:
                     subject = subject_item
-                print(self.form.data)
-
-                print(form.data)
-                send_mail(subject, self.render_email(form), addresses, self.from_address, )
+                email = self.render_email(form)
+                email = email.replace(': {}'.format(form.data['g-recaptcha-response']), '')
+                send_mail(subject, email, addresses, self.from_address, )
         return context
 
     def get_submission_class(self):
