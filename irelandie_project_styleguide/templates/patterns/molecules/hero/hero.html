@@ -7,9 +7,8 @@
             padding: 80px 0;
             margin: 0 auto;
         }
-        .hero__title{
-            font-size: 48px;
-            line-height: 64px;
+        .heading--1{
+            color: #fff;
         }
     {% endif %}
 </style>
@@ -61,7 +60,7 @@
     <div class="hero__content-container wrapper wrapper--large wrapper--padding">
         <div class="hero__content">
             <div class="hero__copy">
-                <h1 class="hero__title">
+                <h1 class="{% if MissionPage %}heading--1 {% else %}hero__title{% endif %}">
                     {% if page.hero_title %}
                         {{ page.hero_title }}
                     {% else %}
