@@ -1214,6 +1214,7 @@ class AdditionalSocialBlock(blocks.StructBlock):
 
 
 class SocialFieldBlock(blocks.StructBlock):
+    hide_twitter_timeline = blocks.BooleanBlock(required=False, default=True)
     twitter_title = blocks.CharBlock(required=False)
     twitter_username = blocks.CharBlock(max_length=100, required=False, help_text="Twitter username")
     additional_social_feed = blocks.StreamBlock(

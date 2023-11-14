@@ -135,15 +135,19 @@
                                     </a>
                                 </div>
                                 {% if socialfeed.value.additional_social_feed %}
-                                <a class="twitter-timeline" data-height=580 data-width="100% !important"
-                                   href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
-                                    Tweets by {{ socialfeed.value.twitter_username }}
-                                </a>
+                                <div class="{% if socialfeed.value.hide_twitter_timeline %}twitter-hidden-on-mobile{% endif %}">
+                                    <a class="twitter-timeline" data-height=580 data-width="100% !important"
+                                       href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                        Tweets by {{ socialfeed.value.twitter_username }}
+                                    </a>
+                                </div>
                                 {% else %}
-                                <a class="twitter-timeline" data-height=560 data-width="100% !important"
-                                   href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
-                                    Tweets by {{ socialfeed.value.twitter_username }}
-                                </a>
+                                <div class="{% if socialfeed.value.hide_twitter_timeline %}twitter-hidden-on-mobile{% endif %}">
+                                    <a class="twitter-timeline" data-height=560 data-width="100% !important"
+                                       href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                        Tweets by {{ socialfeed.value.twitter_username }}
+                                    </a>
+                                </div>
                                 {% endif %}
                             </div>
                         </div>
@@ -174,15 +178,19 @@
                                     </a>
                         </div>
                         {% if socialfeed.value.additional_social_feed %}
-                        <a class="twitter-timeline" data-height=580 data-width="100% !important"
-                           href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
-                            Tweets by {{ socialfeed.value.twitter_username }}
-                        </a>
+                        <div class="{% if socialfeed.value.hide_twitter_timeline %}twitter-hidden-on-mobile{% endif %}">
+                            <a class="twitter-timeline" data-height=580 data-width="100% !important"
+                               href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                Tweets by {{ socialfeed.value.twitter_username }}
+                            </a>
+                        </div>
                         {% else %}
-                        <a class="twitter-timeline" data-height=560 data-width="100% !important"
-                           href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
-                            Tweets by {{ socialfeed.value.twitter_username }}
-                        </a>
+                        <div class="{% if socialfeed.value.hide_twitter_timeline %}twitter-hidden-on-mobile{% endif %}">
+                            <a class="twitter-timeline" data-height=560 data-width="100% !important"
+                               href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                Tweets by {{ socialfeed.value.twitter_username }}
+                            </a>
+                        </div>
                         {% endif %}
                     </div>
                 </div>
