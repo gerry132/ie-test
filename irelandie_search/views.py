@@ -46,7 +46,7 @@ def search(request):
             print(1111111111111111111111)
             print(1111111111111111111111)
             print(1111111111111111111111)
-            
+
             try:
                 search_term = SearchTerm.objects.get(search_term=search_query)
                 search_term.count += 1
