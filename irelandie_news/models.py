@@ -10,6 +10,7 @@ from irelandie_utils.utils import get_model_info
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 import datetime
+from wagtail.admin.forms import WagtailAdminPageForm
 
 from irelandie_utils.models import MinimalArticlePage, BasePage
 
@@ -115,6 +116,17 @@ class NewsPageIndex(BasePage):
         return year_list
 
 
+class CustomNewsPageForm(WagtailAdminPageForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['title'].help_text = ("The page title as you'd like it to be seen by the public. Please ensure "
+                                          "the page title entered here is unique. You should not"
+                                          "create multiple news items with the same title, for example, "
+                                          "'Newsletter'. If you post similar content on a monthly or quarterly "
+                                          "basis, please ensure each one is uniquely named - for example, "
+                                          "'September 2023 Embassy newsletter'.")
+
+
 class NewsPage(MinimalArticlePage):
     template = "patterns/pages/irelandie_news/news_page.html"
     api_fields = [
@@ -152,6 +164,8 @@ class NewsPage(MinimalArticlePage):
                 if missions.root_page and missions.content_type.name == 'mission page':
                     context['mission_web_bot'] = missions.web_bot_script
         return context
+
+    base_form_class = CustomNewsPageForm
 
     class Meta:
         verbose_name = "News Content"

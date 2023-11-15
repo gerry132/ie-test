@@ -315,3 +315,8 @@
     padding-bottom: 20px;
 
 }
+.twitter-hidden-on-mobile{
+    @include media-query(max-medium){
+        display: none;
+    }
+}
