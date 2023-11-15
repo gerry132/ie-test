@@ -38,6 +38,15 @@ def search(request):
                     .not_exact_type(TagPage, ListingsContentPage, DestinationTagPage,  ListingsFeaturedPage)
                     .search(Fuzzy(search_query), partial_match=False)
             )
+            print(1111111111111111111111)
+            print(1111111111111111111111)
+            print(1111111111111111111111)
+            print(1111111111111111111111)
+            print(search_results)
+            print(1111111111111111111111)
+            print(1111111111111111111111)
+            print(1111111111111111111111)
+            
             try:
                 search_term = SearchTerm.objects.get(search_term=search_query)
                 search_term.count += 1
@@ -46,6 +55,17 @@ def search(request):
                 search_term = SearchTerm(search_term=search_query, count=1)
             search_term.save()
         else:
+            print(2222222222222222222222222222)
+            print(2222222222222222222222222222)
+            print(2222222222222222222222222222)
+            print(2222222222222222222222222222)
+            print(2222222222222222222222222222)
+            print(2222222222222222222222222222)
+            print(2222222222222222222222222222)
+            print(2222222222222222222222222222)
+            print(2222222222222222222222222222)
+            print(2222222222222222222222222222)
+            print(2222222222222222222222222222)
             search_results = (
                 Page.objects.live().public()
                     .descendant_of(root_page)
