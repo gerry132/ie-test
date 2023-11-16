@@ -940,6 +940,19 @@ resource "aws_lb_listener_certificate" "admin_ireland_ie_certificate" {
 # Database
 # -----------------------------------------------------------------------------
 
+
+resource "random_password" "password" {
+  length  = 32
+  special = true
+}
+
+resource "aws_ssm_parameter" "opensearch_master_user" {
+  name        = "MASTER_USER"
+  description = "opensearch_password"
+  type        = "SecureString"
+  value       = "${local.environment_name}-opensearch-user,${random_password.password.result}"
+}
+
 resource "aws_opensearch_domain" "opensearch" {
   domain_name = local.environment_name
   engine_version = "OpenSearch_2.7"
@@ -971,8 +984,10 @@ resource "aws_opensearch_domain" "opensearch" {
   }
   advanced_security_options {
       enabled                        = true
+      internal_user_database_enabled = true
       master_user_options {
-        master_user_arn = aws_iam_user.opensearch.arn
+          master_user_name     = "${local.environment_name}-opensearch-user"
+          master_user_password = random_password.password.result
       }
     }
     access_policies = jsonencode(
