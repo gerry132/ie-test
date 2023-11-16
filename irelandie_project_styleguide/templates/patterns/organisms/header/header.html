@@ -41,6 +41,7 @@
 {% if settings.irelandie_navigation.SiteSettings.website_header_strapline %}
     {% include "patterns/snippets/websiteheadersnippet.html" with object=settings.irelandie_navigation.SiteSettings.website_header_strapline %}
 {% endif %}
+{% load static navigation_tags util_tags %}
 <header>
     <div class="header {% if custom_header.links %}header--condensed{% endif %}">
         <div class="wrapper wrapper--large">
@@ -131,7 +132,9 @@
 
                 <div class="header__menu-items desktop">
                     <!-- Start of the locale selector -->
-                        {% if page.get_translations.live %}
+                      
+                    {% if page.get_translations.live %}
+                    
                         <form action="{% url 'set_language_wagtail' %}" method="post">
                             {% csrf_token %}
                             <input name="page_id" type="hidden" value="{{ page.id }}">
@@ -146,9 +149,12 @@
                                      </option>
                                     {% for translation in page.get_translations.live %}
                                         {% get_language_info for translation.locale.language_code as lang %}
-                                            <option value="{{ lang.code }}">
-                                                    {{ lang.name_local }}
-                                             </option>
+                                        {% is_alias translation as alias %}      
+                                            {% if not alias %}
+                                                <option value="{{ lang.code }}">
+                                                        {{ lang.name_local }}
+                                                </option>
+                                            {% endif %}
                                     {% endfor %}
                                 </select>
                             </div>

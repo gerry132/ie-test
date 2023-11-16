@@ -18,6 +18,8 @@ from irelandie_pages.models import FreeFormPage
 from irelandie_travel.models import TravelLandingPage
 from irelandie_utils.models import SocialMediaSettings
 from irelandie_utils.utils import get_root_info
+import json
+
 
 register = template.Library()
 
@@ -361,6 +363,31 @@ def custom_footer_settings(context, page):
 # promote tab.
 # The purpose of this template tag is to reduce the amount of if: elif: else: conditionals
 # needed in the footer.html template.
+@register.simple_tag(takes_context=False)
+def is_alias(page):
+    langs = {
+        "Arabic": "ar",
+        "Chinese": "zh-hans",
+        "English": "en",
+        "French": "fr",
+        "German": "de",
+        "Hindi": "hi",
+        "Hungarian": "hu",
+        "Irish": "ga",
+        "Italian": "it",
+        "Japanese": "ja",
+        "Korean": "ko",
+        "Polish": "pl",
+        "Portuguese": "pt",
+        "Russian": "ru",
+        "Spanish": "es",
+        "Vietnamese": "vi"
+    }
+
+    locale = Locale.objects.get(language_code=langs[str(page.locale)])
+    json_val = json.loads(page.get_translation(locale).to_json())
+    return json_val['alias_of']
+
 
 @register.simple_tag(takes_context=True)
 def custom_header_settings(context, page):
