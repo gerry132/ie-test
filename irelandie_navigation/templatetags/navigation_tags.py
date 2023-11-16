@@ -368,7 +368,7 @@ def printpage(page):
     for p in page.get_translations().live():
         print(222222222222222222222222222222222222)
         print(p.locale)
-        print(p.has_translation())
+        #print(p.has_translation())
         print(222222222222222222222222222222222222)
 
 @register.simple_tag(takes_context=True)
