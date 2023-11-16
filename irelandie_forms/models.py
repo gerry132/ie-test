@@ -19,7 +19,6 @@ from wagtail.admin.mail import send_mail
 from wagtail.contrib.forms.models import (
     FORM_FIELD_CHOICES,
     AbstractFormField,
-    FormBuilder,
     AbstractFormSubmission,
 )
 from wagtail.fields import RichTextField, StreamField
@@ -29,6 +28,8 @@ from wagtail_honeypot.models import HoneypotMixin
 from irelandie_utils.blocks import AdvancedRichTextBlock, AccordionBlock
 from irelandie_utils.models import BasePage
 from irelandie_utils.utils import get_model_info
+
+from wagtailcaptcha.forms import WagtailCaptchaFormBuilder
 
 
 class FormField(AbstractFormField):
@@ -46,7 +47,19 @@ class FormField(AbstractFormField):
     )
 
 
-class CustomFormBuilder(FormBuilder):
+class CustomMultilineField(forms.CharField):
+    def __init__(self, *args, **kwargs):
+        max_length = kwargs.pop('max_length', 251)
+        super().__init__(*args, **kwargs)
+        self.widget.attrs['maxlength'] = max_length
+        self.widget.attrs['oninput'] = 'validateTextarea(this)'
+        self.max_length = max_length
+
+
+class CustomFormBuilder(WagtailCaptchaFormBuilder):
+    def create_multiline_field(self, field, options):
+        return CustomMultilineField(widget=forms.Textarea, **options)
+
     def create_dateinput_field(self, field, options):
         options["widget"] = forms.DateInput(attrs={"type": "date"})
         return forms.CharField(**options)
@@ -160,6 +173,11 @@ class FormPage(HoneypotMixin, BasePage):
                 return self.render_landing_page(
                     request, form_submission, *args, **kwargs
                 )
+            else:
+                context = self.get_context(request)
+                context["form"] = form
+                context["form_errors"] = form.errors
+                return TemplateResponse(request, self.get_template(request), context)
         else:
             form = self.get_form(page=self, user=request.user)
 
@@ -175,19 +193,26 @@ class FormPage(HoneypotMixin, BasePage):
                 missions = get_model_info(p.content_type.name, p.id)
                 if missions.root_page:
                     context['mission_web_bot'] = missions.web_bot_script
-        if request.POST:
-            submitted_date_str = date.today().strftime('%x')
-            subject = f"{self.subject} - {submitted_date_str}"
-            if 'topic' in request.POST:
-                self.topic = request.POST['topic']
-                addresses = [x.strip() for x in self.get_mapped_value(self.topic).split(',')]
-                subject_item = self.get_mapped_value(self.topic, 'subject')
-            else:
-                addresses = [x.strip() for x in self.to_address.split(',')]
+        if request.POST and self.form:
+            form = self.form
+            form.data = form.data.copy()
 
-            if subject_item:
-                subject = subject_item
-            send_mail(subject, self.render_email(self.form), addresses, self.from_address, )
+            if form.is_valid():
+                subject_item = None
+                submitted_date_str = date.today().strftime('%x')
+                subject = f"{self.subject} - {submitted_date_str}"
+                if 'topic' in request.POST:
+                    self.topic = request.POST['topic']
+                    addresses = [x.strip() for x in self.get_mapped_value(self.topic).split(',')]
+                    subject_item = self.get_mapped_value(self.topic, 'subject')
+                else:
+                    addresses = [x.strip() for x in self.to_address.split(',')]
+
+                if subject_item:
+                    subject = subject_item
+                email = self.render_email(form)
+                email = email.replace(': {}'.format(form.data['g-recaptcha-response']), '')
+                send_mail(subject, email, addresses, self.from_address, )
         return context
 
     def get_submission_class(self):

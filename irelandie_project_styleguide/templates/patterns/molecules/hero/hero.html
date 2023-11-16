@@ -1,20 +1,14 @@
 {% load wagtailcore_tags wagtailimages_tags i18n irelandie_assets_tags %}
 {% check_page_type page.content_type 'mission page' as MissionPage %}
 <style>
-    @media only screen and (min-width: 823px){
-        .hero__mobile{
-            display: none;
-        }
-    }
     {% if MissionPage %}
         .hero__copy {
             max-width: 900px;
             padding: 80px 0;
             margin: 0 auto;
         }
-        .hero__title{
-            font-size: 48px;
-            line-height: 64px;
+        .heading--1{
+            color: #fff;
         }
     {% endif %}
 </style>
@@ -50,7 +44,9 @@
                        <path clip-rule="evenodd" d="M25.375 14.5C25.375 20.5061 20.5061 25.375 14.5 25.375C8.4939 25.375 3.625 20.5061 3.625 14.5C3.625 8.4939 8.4939 3.625 14.5 3.625C20.5061 3.625 25.375 8.4939 25.375 14.5ZM15.7083 9.66667C15.7083 10.334 15.1673 10.875 14.5 10.875C13.8327 10.875 13.2917 10.334 13.2917 9.66667C13.2917 8.99932 13.8327 8.45833 14.5 8.45833C15.1673 8.45833 15.7083 8.99932 15.7083 9.66667ZM15.5 20.5417V13.2917H13.5V20.5417H15.5Z" fill="white" fill-rule="evenodd"/>
                  </svg>
             </button>
-            <div class="hero__mobile story__image-credit">{{ page.hero_image_credit }}</div>
+        <div class="hero__mobile">
+            <div class="story__image-credit">{{ page.hero_image_credit }}</div>
+        </div>
         {% endif %}
     {% if page.hero_video %}
         <figure class="hero__video-wrapper" role="presentation">
@@ -64,7 +60,7 @@
     <div class="hero__content-container wrapper wrapper--large wrapper--padding">
         <div class="hero__content">
             <div class="hero__copy">
-                <h1 class="hero__title">
+                <h1 class="{% if MissionPage %}heading--1 {% else %}hero__title{% endif %}">
                     {% if page.hero_title %}
                         {{ page.hero_title }}
                     {% else %}

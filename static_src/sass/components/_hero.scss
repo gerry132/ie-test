@@ -64,9 +64,22 @@
     &__introduction{
         font-size: 20px;
     }
+    &__mobile{
+    @media only screen and (min-width: 823px){
+       display: none;
+       }
+    }
 
     &__title{
         color: #fff;
+        @include font-size(xl);
+        line-height: 52px;
+        font-weight: $weight--extrabold;
+
+        @include media-query(medium) {
+            @include font-size(xxl);
+            line-height: 86px;
+        }
     }
 
     &__title_length{

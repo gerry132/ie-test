@@ -23,6 +23,38 @@
     });
   </script>
 
+
+<script>
+        function validateTextarea(textarea) {
+            const container = textarea.parentNode;
+            const errorMessage = container.querySelector('.error-message');
+            const value = textarea.value;
+            const valueLength = value.length;
+            const maxLength = 250;
+
+            if (valueLength > maxLength) {
+                container.style.border = "2px dotted red";
+                container.style.padding = "8px";
+
+                if (!errorMessage) {
+                    const errorMessageElement = document.createElement('p');
+                    errorMessageElement.className = 'error-message';
+                    errorMessageElement.style.color = 'red';
+                    errorMessageElement.innerText = "Please enter no more than 250 characters in the Query field";
+                    textarea.value = value.substring(0, maxLength);
+                    container.insertBefore(errorMessageElement, textarea);
+                }
+            } else {
+                container.style.border = ""; // Remove the red border
+                container.style.padding = "0"; // Remove padding
+
+                if (errorMessage) {
+                    errorMessage.remove();
+                }
+            }
+        }
+</script>
+
 {% endblock extra_js %}
 
 
@@ -70,10 +102,15 @@
                         </div>
                     {% endif %}
 
+
                     {% for field in form %}
                         {% honeypot_fields %}
                         {% include "patterns/molecules/field/field.html" %}
                     {% endfor %}
+
+                     {% if form_errors.non_field_errors %}
+                        {{ form_errors.non_field_errors }}
+                     {% endif %}
 
                     <button class="form__submit button" type="submit">{% if page.action_text %}{{ page.action_text|safe }}{% else %}{% trans 'Submit' %}{% endif %}</button>
                 </div>

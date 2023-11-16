@@ -23,7 +23,7 @@
             {% image fav_child width-60 height-60 as fav %}
         {% else %}
             {% image settings.irelandie_navigation.SiteSettings.favicon width-60 height-60 as fav %}
-        {% endif %}
+            {% endif %}
         <link rel="shortcut icon" href="{{ fav.url }}"/>
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.10.0/css/lightgallery.min.css">
         <script src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.4.0/dist/js/lightgallery.js"></script>
@@ -33,14 +33,8 @@
         <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 
         {% block extra_css %}{% endblock %}
-                <!-- OneTrust Cookies Consent Notice start for ireland.ie -->
-        <script type="text/javascript" src="https://cdn.cookielaw.org/consent/587affe4-c69d-4222-b532-bf8caeaa4e67-test/OtAutoBlock.js" async></script>
-        <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="587affe4-c69d-4222-b532-bf8caeaa4e67-test" async></script>
-        <script type="text/javascript" async>
-            function OptanonWrapper() { }
-        </script>
-               <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- OneTrust Cookies Consent Notice end for ireland.ie -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     </head>
     {% verify_path as path_info %}
     {% if path_info.content %}
@@ -60,7 +54,6 @@
 
         {% include "patterns/atoms/sprites/sprites.html" %}
 
-        {% wagtailuserbar %}
 
             {% block header %}
             {% endblock %}

@@ -69,11 +69,6 @@
                                         <p class="card__summary">{% if article.listing_summary %}{{ article.listing_summary }}{% else %}{{ article.introduction }}{% endif %}</p>
                                     {% endif %}
 
-                                    {% if article %}
-                                        <span class="card__link">
-                                            {% translate "Read more" %}
-                                        </span>
-                                    {% endif %}
                                 </div>
                             </a>
                         {% endfor %}

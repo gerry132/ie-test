@@ -984,6 +984,7 @@ class AccordionBlock(blocks.StructBlock):
                         ("additional", blocks.StreamBlock([
                             ("map", MapBlock()),
                             ("advanced_rich_text", AdvancedRichTextBlock()),
+                            ("image_block", ImageBlock(required=False)),
                             ("table", TableBlock(table_options={'renderer': 'html'}, group="table")),
                             ("document", DocumentBlock(required=False)),
                             ("youtube", YoutubeVideoBlock(group="HTML")),
@@ -1213,6 +1214,7 @@ class AdditionalSocialBlock(blocks.StructBlock):
 
 
 class SocialFieldBlock(blocks.StructBlock):
+    hide_twitter_timeline = blocks.BooleanBlock(required=False, default=True)
     twitter_title = blocks.CharBlock(required=False)
     twitter_username = blocks.CharBlock(max_length=100, required=False, help_text="Twitter username")
     additional_social_feed = blocks.StreamBlock(
@@ -1680,6 +1682,61 @@ class FeaturedTaggedStoriesBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/featured_tagged_stories.html"
 
 
+class WideFeatureImageVideoBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=False)
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_IMAGE),
+    )
+    image_link_page = blocks.PageChooserBlock(required=False)
+    image_link_url = blocks.URLBlock(
+        required=False,
+        help_text="An external link.",
+    )
+    image_for_video = ImageChooserBlock(required=False)
+    image_for_video_image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_IMAGE),
+    )
+    youtube_or_vimeo_embed = blocks.CharBlock(required=False)
+
+    def clean(self, value):
+        errors = {}
+        image_for_video = value.get('image_for_video')
+        image_for_video_image_alt = value.get('image_for_video_image_alt')
+        video = value.get('youtube_or_vimeo_embed')
+        image = value.get('image')
+        image_alt = value.get('image_alt')
+
+        if not (bool(image) ^ bool(video)):
+            msg = "You can't choose both an image and a video. Choose an image or a video"
+            errors['image'] = ErrorList([msg])
+            errors['youtube_or_vimeo_embed'] = ErrorList([msg])
+
+        if image_for_video and not image_for_video_image_alt:
+            msg = "You can't have an image for video without alt text."
+            errors['image_for_video'] = ErrorList([msg])
+            errors['image_for_video_image_alt'] = ErrorList([msg])
+
+        if image and not image_alt:
+            msg = "You can't have an image without alt text."
+            errors['image'] = ErrorList([msg])
+            errors['image_alt'] = ErrorList([msg])
+
+        if not (bool(image) | bool(video)):
+            msg = "You have to choose either an image or a video."
+            errors['image'] = ErrorList([msg])
+            errors['youtube_or_vimeo_embed'] = ErrorList([msg])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    class Meta:
+        value_class = YoutubeVimeoLinkValue
+
+
 class HomepageFeatureImageVideoBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=False)
     image_alt = blocks.CharBlock(
@@ -1779,7 +1836,7 @@ class WideFeatureBlock(blocks.StructBlock):
     )
     image_or_video_block = blocks.StreamBlock(
         [
-            ("image_or_video_block", HomepageFeatureImageVideoBlock(required=False)),
+            ("image_or_video_block", WideFeatureImageVideoBlock(required=False)),
 
         ],
         max_num=1,

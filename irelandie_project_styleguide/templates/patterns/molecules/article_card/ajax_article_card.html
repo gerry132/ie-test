@@ -11,7 +11,7 @@
                 {{ value.subtitle|richtext }}
             </div>
         </div>
-        <button class="link-box__btn"></button>
+        <button class="link-box__btn{% if value.subtitle %} link-box__title_subtitle{% else %} link-box__title{% endif %}"></button>
     </div>
     <br>
     <div class="link-box__line"></div>
