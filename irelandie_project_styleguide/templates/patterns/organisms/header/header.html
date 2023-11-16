@@ -134,8 +134,7 @@
                     <!-- Start of the locale selector -->
                       
                     {% if page.get_translations.live %}
-                    {% printpage page %}      
-                            
+                    
                         <form action="{% url 'set_language_wagtail' %}" method="post">
                             {% csrf_token %}
                             <input name="page_id" type="hidden" value="{{ page.id }}">
@@ -150,9 +149,12 @@
                                      </option>
                                     {% for translation in page.get_translations.live %}
                                         {% get_language_info for translation.locale.language_code as lang %}
-                                            <option value="{{ lang.code }}">
-                                                    {{ lang.name_local }}
-                                             </option>
+                                        {% is_alias translation as alias %}      
+                                            {% if not alias %}
+                                                <option value="{{ lang.code }}">
+                                                        {{ lang.name_local }}
+                                                </option>
+                                            {% endif %}
                                     {% endfor %}
                                 </select>
                             </div>
