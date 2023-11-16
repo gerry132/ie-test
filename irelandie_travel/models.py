@@ -187,12 +187,22 @@ class TravelIndexPage(BasePage):
             index = page.title[0]
             if (self.locale.language_code == 'ga' and len(page_prefix[0]) == 2 and
                     (page_prefix[0] in ['An', 'Na', 'La'])):
+                
                 if page.title[3].islower():
                     index = page.title[4]
                 else:
                     index = page.title[3]
             elif self.locale.language_code == 'ga':
-
+                print(11111111111111111111111111111)
+                print(11111111111111111111111111111)
+                print(11111111111111111111111111111)
+                print(11111111111111111111111111111)
+                print(11111111111111111111111111111)
+                print(11111111111111111111111111111)
+                print(11111111111111111111111111111)
+                print(11111111111111111111111111111)
+                print(11111111111111111111111111111)
+                print(11111111111111111111111111111)
                 if index in eng_ga_map.keys():
                     index = eng_ga_map[page.title[0]]
             alpha_map[index].append(page)
