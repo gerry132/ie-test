@@ -183,7 +183,8 @@ class TravelIndexPage(BasePage):
             eng_ga_map = {
                     'Í': 'I',
                     'É': 'E',
-                    'Ú': 'U'
+                    'Ú': 'U',
+                    'Ó': 'O'
                 }
             print(page.title)
             print(page.title)
