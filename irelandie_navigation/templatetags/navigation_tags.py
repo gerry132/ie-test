@@ -366,8 +366,10 @@ def printpage(page):
     from wagtail.models import Locale
     locale = Locale.objects.get(language_code='zh-hans')
     for p in page.get_translations().live():
-        print(p.get_translation(locale))
-        print(p.get_translation_model())
+        print(222222222222222222222222222222222222)
+        print(p.locale)
+        print(p.has_translation())
+        print(222222222222222222222222222222222222)
 
 @register.simple_tag(takes_context=True)
 def custom_header_settings(context, page):
