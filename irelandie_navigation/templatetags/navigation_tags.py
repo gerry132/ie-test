@@ -361,6 +361,13 @@ def custom_footer_settings(context, page):
 # promote tab.
 # The purpose of this template tag is to reduce the amount of if: elif: else: conditionals
 # needed in the footer.html template.
+@register.simple_tag(takes_context=False)
+def printpage(page):
+    from wagtail.models import Locale
+    locale = Locale.objects.get(language_code='zh-hans')
+    for p in page.get_translations().live():
+        print(p.get_translation(locale))
+        print(p.get_translation_model())
 
 @register.simple_tag(takes_context=True)
 def custom_header_settings(context, page):
