@@ -182,7 +182,8 @@ class TravelIndexPage(BasePage):
             page_prefix = page.title.split()
             eng_ga_map = {
                     'Í': 'I',
-                    'É': 'E'
+                    'É': 'E',
+                    'Ú': 'U'
                 }
             print(page.title)
             print(page.title)
