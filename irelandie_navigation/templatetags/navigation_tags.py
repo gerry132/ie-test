@@ -18,9 +18,7 @@ from irelandie_pages.models import FreeFormPage
 from irelandie_travel.models import TravelLandingPage
 from irelandie_utils.models import SocialMediaSettings
 from irelandie_utils.utils import get_root_info
-from wagtail.models import Locale
 import json
-
 
 
 register = template.Library()
@@ -389,6 +387,7 @@ def is_alias(page):
     locale = Locale.objects.get(language_code=langs[str(page.locale)])
     json_val = json.loads(page.get_translation(locale).to_json())
     return json_val['alias_of']
+
 
 @register.simple_tag(takes_context=True)
 def custom_header_settings(context, page):
