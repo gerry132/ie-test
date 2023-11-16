@@ -185,7 +185,7 @@ class TravelIndexPage(BasePage):
                     'É': 'E'
                 }
             index = page.title[0]
-            if (self.locale.language_code == 'ga' and len(page_prefix[0]) == 2 and
+            if (len(page_prefix) > 1 and self.locale.language_code == 'ga' and len(page_prefix[0]) == 2 and
                     (page_prefix[0] in ['An', 'Na', 'La'])):
                 
                 if page.title[3].islower():
