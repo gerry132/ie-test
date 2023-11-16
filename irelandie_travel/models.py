@@ -184,14 +184,23 @@ class TravelIndexPage(BasePage):
                     'Í': 'I',
                     'É': 'E'
                 }
+            print(page.title)
+            print(page.title)
+            print(page.title)
+            print(page.title)
+            print(page.title)
+            print(page.title)
             index = page.title[0]
-            if (len(page_prefix) > 1 and self.locale.language_code == 'ga' and len(page_prefix[0]) == 2 and
+            if (self.locale.language_code == 'ga' and len(page_prefix[0]) == 2 and
                     (page_prefix[0] in ['An', 'Na', 'La'])):
-                
+                print('Irish first')
                 if page.title[3].islower():
+                    print('Irish first two')
                     index = page.title[4]
                 else:
+                    print('Irish first three')
                     index = page.title[3]
+                    
             elif self.locale.language_code == 'ga':
                 print(11111111111111111111111111111)
                 print(11111111111111111111111111111)
