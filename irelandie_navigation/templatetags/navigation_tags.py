@@ -18,6 +18,8 @@ from irelandie_pages.models import FreeFormPage
 from irelandie_travel.models import TravelLandingPage
 from irelandie_utils.models import SocialMediaSettings
 from irelandie_utils.utils import get_root_info
+from django.conf import settings
+
 
 register = template.Library()
 
@@ -363,13 +365,33 @@ def custom_footer_settings(context, page):
 # needed in the footer.html template.
 @register.simple_tag(takes_context=False)
 def printpage(page):
+    langs = {
+        "Arabic": "ar",
+        "Chinese": "zh-hans",
+        "English": "en",
+        "French": "fr",
+        "German": "de",
+        "Hindi": "hi",
+        "Hungarian": "hu",
+        "Irish": "ga",
+        "Italian": "it",
+        "Japanese": "ja",
+        "Korean": "ko",
+        "Polish": "pl",
+        "Portuguese": "pt",
+        "Russian": "ru",
+        "Spanish": "es",
+        "Vietnamese": "vi"
+    }
+
     from wagtail.models import Locale
-    locale = Locale.objects.get(language_code='zh-hans')
+    import json
     for p in page.get_translations().live():
+        locale = Locale.objects.get(language_code=langs[str(p.locale)])
+        print(locale)
         print(222222222222222222222222222222222222)
-        print(p.locale)
-        print(dir(p.get_translation(locale)))
-        print(p.get_translation(locale).to_json())
+        json_val = json.loads(p.get_translation(locale).to_json())
+        print(json_val['alias_of'])
         print(222222222222222222222222222222222222)
 
 @register.simple_tag(takes_context=True)
