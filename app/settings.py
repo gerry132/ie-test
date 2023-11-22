@@ -27,7 +27,29 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 DEBUG_TOOLBAR = os.environ.get("DEBUG_TOOLBAR", "0") in TRUE
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ["SECRET_KEY"]
+SECRET_KEY = 'os.environ["SECRET_KEY"]'
+
+## X-Frame-Options
+X_FRAME_OPTIONS = 'DENY'
+#X-Content-Type-Options
+SECURE_CONTENT_TYPE_NOSNIFF = True
+# Strict-Transport-Security
+SECURE_HSTS_SECONDS = 15768000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+SECURE_SSL_REDIRECT = True
+
+# for more security
+CSRF_COOKIE_SECURE = True
+CSRF_USE_SESSIONS = True
+CSRF_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'Strict'
+LANGUAGE_COOKIE_HTTPONLY = True
+LANGUAGE_COOKIE_SECURE = True
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 debug_on = os.environ.get("DEBUG")
@@ -35,10 +57,9 @@ debug_on = os.environ.get("DEBUG")
 if debug_on == '0':
     DEBUG = True
 else:
-    DEBUG = False
+    DEBUG = True
 
-ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
-
+ALLOWED_HOSTS =["*"]
 # to disable the check
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 
@@ -142,10 +163,6 @@ MIDDLEWARE = [
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
 ]
 
-SECURE_HSTS_SECONDS = 3600
-LANGUAGE_COOKIE_HTTPONLY = True
-LANGUAGE_COOKIE_SECURE = True
-
 if DEBUG_TOOLBAR is True:
     MIDDLEWARE += [
         "debug_toolbar.middleware.DebugToolbarMiddleware",
@@ -201,10 +218,8 @@ PATTERN_LIBRARY = {
 WSGI_APPLICATION = "app.wsgi.application"
 
 # In production, email is handled with Amazon SES
-if "EMAIL_BACKEND" in os.environ:
-    EMAIL_BACKEND = os.environ["EMAIL_BACKEND"]
-else:
-    EMAIL_BACKEND = "django_ses.SESBackend"
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -215,8 +230,19 @@ DATABASES = {}
 
 if DATABASE_URL in [None, "None", ""]:
     DATABASES["default"] = {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(PROJECT_DIR, "db.sqlite3"),
+
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+        'NAME': 'uat_ireland_ie',
+
+        'USER': 'uat_ireland_ie_username',
+
+        'PASSWORD': 'mlHgUfTFxs3CSNQx7emot5sLPGuU9l',
+
+        'HOST': 'uat-db-postgres.cyivsiop0crr.eu-west-1.rds.amazonaws.com',
+
+        'PORT': '5432',
+
     }
 else:
     import dj_database_url
@@ -323,7 +349,7 @@ REST_FRAMEWORK = {
     )
 }
 # https://pypi.org/project/django-cors-headers/
-CORS_ALLOW_ALL_ORIGINS = os.environ.get("CORS_ALLOW_ALL_ORIGINS", False) in TRUE
+CORS_ALLOW_ALL_ORIGINS = True
 if CORS_ALLOW_ALL_ORIGINS is False:
     CORS_ALLOWED_ORIGINS = os.environ["CORS_ALLOWED_ORIGINS"].split(",")
 
@@ -410,7 +436,7 @@ WAGTAILIMAGES_FEATURE_DETECTION_ENABLED = False
 WAGTAILDOCS_DOCUMENT_MODEL = "irelandie_documents.CustomDocument"
 
 
-if OPENSEARCH_KEY and OPENSEARCH_SECRET and OPENSEARCH_ENDPOINT != 'CHANGE':
+if True:
     from elasticsearch import RequestsHttpConnection
     from requests_aws4auth import AWS4Auth
 
@@ -418,13 +444,13 @@ if OPENSEARCH_KEY and OPENSEARCH_SECRET and OPENSEARCH_ENDPOINT != 'CHANGE':
         'default': {
             'BACKEND': 'wagtail.search.backends.elasticsearch7',
             'INDEX': 'wagtail',
-            'TIMEOUT': 30,
+            'TIMEOUT': 5,
             'HOSTS': [{
-                'host': OPENSEARCH_ENDPOINT,
+                'host': 'search-prod-3kzah643k3myihumgyhdxd7g6y.eu-west-1.es.amazonaws.com',
                 'port': 443,
                 'use_ssl': True,
                 'verify_certs': True,
-                'http_auth': AWS4Auth(OPENSEARCH_KEY, OPENSEARCH_SECRET, 'eu-west-1', 'es'),
+                'http_auth': AWS4Auth('AKIAXFWYOMDIXPM3C6JS', 'TitMjAQKh8wP7fC6h5OThyY7P8SgGnwVUN93/vZs', 'eu-west-1', 'es'),
             }],
             'OPTIONS': {
                 'connection_class': RequestsHttpConnection,
@@ -481,9 +507,9 @@ else:
     # To avoid failing github actions
     SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
 
-RECAPTCHA_PUBLIC_KEY = '6LcBCQkpAAAAAAdRwFKal9f1p9UVALRZQqoVxcAe'
-RECAPTCHA_PRIVATE_KEY = '6LcBCQkpAAAAADzd5ek6Cb6xKMQfA_5LP-IZ2qpk'
-NOCAPTCHA = True
+RECAPTCHA_PUBLIC_KEY = '6LdWfAopAAAAAF4A8xHHPdImoVhboJVwIM0jpMbc'
+RECAPTCHA_PRIVATE_KEY = '6LdWfAopAAAAAN_VpF5av19cQvBkaDXZrc3ufdRM'
+
 if USE_CACHE is True:
     SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
