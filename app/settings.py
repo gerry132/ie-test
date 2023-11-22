@@ -142,6 +142,8 @@ MIDDLEWARE = [
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
 ]
 
+SECURE_HSTS_SECONDS = 3600
+
 if DEBUG_TOOLBAR is True:
     MIDDLEWARE += [
         "debug_toolbar.middleware.DebugToolbarMiddleware",
