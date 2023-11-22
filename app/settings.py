@@ -140,7 +140,6 @@ MIDDLEWARE = [
     "irelandie_utils.middleware.ReplaceViewsMiddleware",
     "custom_logout.middleware.custom_logout.CustomMiddleware",
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
-    "admincheck.middleware.admin_check.IsUserAdmin"
 ]
 
 if DEBUG_TOOLBAR is True:
