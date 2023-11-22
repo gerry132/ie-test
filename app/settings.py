@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 DEBUG_TOOLBAR = os.environ.get("DEBUG_TOOLBAR", "0") in TRUE
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'os.environ["SECRET_KEY"]'
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 ## X-Frame-Options
 X_FRAME_OPTIONS = 'DENY'
@@ -57,9 +57,10 @@ debug_on = os.environ.get("DEBUG")
 if debug_on == '0':
     DEBUG = True
 else:
-    DEBUG = True
+    DEBUG = False
 
-ALLOWED_HOSTS =["*"]
+ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
+
 # to disable the check
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 
@@ -161,6 +162,7 @@ MIDDLEWARE = [
     "irelandie_utils.middleware.ReplaceViewsMiddleware",
     "custom_logout.middleware.custom_logout.CustomMiddleware",
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
+    "admincheck.middleware.admin_check.IsUserAdmin"
 ]
 
 if DEBUG_TOOLBAR is True:
@@ -218,8 +220,10 @@ PATTERN_LIBRARY = {
 WSGI_APPLICATION = "app.wsgi.application"
 
 # In production, email is handled with Amazon SES
-
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+if "EMAIL_BACKEND" in os.environ:
+    EMAIL_BACKEND = os.environ["EMAIL_BACKEND"]
+else:
+    EMAIL_BACKEND = "django_ses.SESBackend"
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -230,19 +234,8 @@ DATABASES = {}
 
 if DATABASE_URL in [None, "None", ""]:
     DATABASES["default"] = {
-
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-
-        'NAME': 'uat_ireland_ie',
-
-        'USER': 'uat_ireland_ie_username',
-
-        'PASSWORD': 'mlHgUfTFxs3CSNQx7emot5sLPGuU9l',
-
-        'HOST': 'uat-db-postgres.cyivsiop0crr.eu-west-1.rds.amazonaws.com',
-
-        'PORT': '5432',
-
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(PROJECT_DIR, "db.sqlite3"),
     }
 else:
     import dj_database_url
@@ -349,7 +342,7 @@ REST_FRAMEWORK = {
     )
 }
 # https://pypi.org/project/django-cors-headers/
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = os.environ.get("CORS_ALLOW_ALL_ORIGINS", False) in TRUE
 if CORS_ALLOW_ALL_ORIGINS is False:
     CORS_ALLOWED_ORIGINS = os.environ["CORS_ALLOWED_ORIGINS"].split(",")
 
@@ -436,7 +429,7 @@ WAGTAILIMAGES_FEATURE_DETECTION_ENABLED = False
 WAGTAILDOCS_DOCUMENT_MODEL = "irelandie_documents.CustomDocument"
 
 
-if True:
+if OPENSEARCH_KEY and OPENSEARCH_SECRET and OPENSEARCH_ENDPOINT != 'CHANGE':
     from elasticsearch import RequestsHttpConnection
     from requests_aws4auth import AWS4Auth
 
@@ -444,13 +437,13 @@ if True:
         'default': {
             'BACKEND': 'wagtail.search.backends.elasticsearch7',
             'INDEX': 'wagtail',
-            'TIMEOUT': 5,
+            'TIMEOUT': 30,
             'HOSTS': [{
-                'host': 'search-prod-3kzah643k3myihumgyhdxd7g6y.eu-west-1.es.amazonaws.com',
+                'host': OPENSEARCH_ENDPOINT,
                 'port': 443,
                 'use_ssl': True,
                 'verify_certs': True,
-                'http_auth': AWS4Auth('AKIAXFWYOMDIXPM3C6JS', 'TitMjAQKh8wP7fC6h5OThyY7P8SgGnwVUN93/vZs', 'eu-west-1', 'es'),
+                'http_auth': AWS4Auth(OPENSEARCH_KEY, OPENSEARCH_SECRET, 'eu-west-1', 'es'),
             }],
             'OPTIONS': {
                 'connection_class': RequestsHttpConnection,
@@ -507,9 +500,9 @@ else:
     # To avoid failing github actions
     SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
 
-RECAPTCHA_PUBLIC_KEY = '6LdWfAopAAAAAF4A8xHHPdImoVhboJVwIM0jpMbc'
-RECAPTCHA_PRIVATE_KEY = '6LdWfAopAAAAAN_VpF5av19cQvBkaDXZrc3ufdRM'
-
+RECAPTCHA_PUBLIC_KEY = '6LcBCQkpAAAAAAdRwFKal9f1p9UVALRZQqoVxcAe'
+RECAPTCHA_PRIVATE_KEY = '6LcBCQkpAAAAADzd5ek6Cb6xKMQfA_5LP-IZ2qpk'
+NOCAPTCHA = True
 if USE_CACHE is True:
     SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
