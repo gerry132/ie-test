@@ -751,6 +751,21 @@ resource "aws_acm_certificate" "africa_day" {
 # Loadbalancer listeners and rules
 # -----------------------------------------------------------------------------
 
+resource "aws_lb_listener" "project_80" {
+  load_balancer_arn   = aws_lb.default.arn
+  port                = 80
+  protocol            = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
 
 resource "aws_lb_listener" "project_net_http" {
   load_balancer_arn   = aws_lb.net_lb.arn
