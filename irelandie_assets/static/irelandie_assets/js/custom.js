@@ -17,7 +17,7 @@ function setNewExpiryCookie() {
     let date = new Date()
     clearInterval(timer);
     date.setTime(date.getTime() + 1 * 60 * 60 * 1000);
-    document.cookie = "logout_at=" + date.toISOString() + ";path=/";
+    document.cookie = "logout_at=" + date.toISOString() + ";secure;path=/";
     timer = setInterval(showRemaining, 1000);
     document.getElementById('alert-wrapper').style.display = 'none';
 }

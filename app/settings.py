@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
-
+import sys
 from dotenv import load_dotenv
 
 TRUE = ["1", "True", "true", 1, True]
@@ -29,26 +29,28 @@ DEBUG_TOOLBAR = os.environ.get("DEBUG_TOOLBAR", "0") in TRUE
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
 
-# X-Frame-Options
+## X-Frame-Options
 X_FRAME_OPTIONS = 'DENY'
-# X-Content-Type-Options
+#X-Content-Type-Options
 SECURE_CONTENT_TYPE_NOSNIFF = True
-# Strict-Transport-Security
-SECURE_HSTS_SECONDS = 15768000
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
 
-SECURE_SSL_REDIRECT = True
+if 'runserver' not in sys.argv:
+    # Strict-Transport-Security
+    SECURE_HSTS_SECONDS = 15768000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # for more security
 CSRF_COOKIE_SECURE = True
 CSRF_USE_SESSIONS = True
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Strict'
 LANGUAGE_COOKIE_HTTPONLY = True
 LANGUAGE_COOKIE_SECURE = True
-
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -427,6 +429,7 @@ WAGTAILIMAGES_IMAGE_MODEL = "irelandie_images.CustomImage"
 WAGTAILIMAGES_FEATURE_DETECTION_ENABLED = False
 WAGTAILDOCS_DOCUMENT_MODEL = "irelandie_documents.CustomDocument"
 
+
 if OPENSEARCH_KEY and OPENSEARCH_SECRET and OPENSEARCH_ENDPOINT != 'CHANGE':
     from elasticsearch import RequestsHttpConnection
     from requests_aws4auth import AWS4Auth
@@ -460,7 +463,7 @@ if OPENSEARCH_KEY and OPENSEARCH_SECRET and OPENSEARCH_ENDPOINT != 'CHANGE':
                     },
                     "max_ngram_diff": "50",
                 }
-            }
+                }
 
         }
     }
