@@ -68,7 +68,7 @@ locals {
     },
     gerry_dev = {
       description = "Gerry Mcbride - OGCIO"
-      cidr_blocks = ["52.49.120.79/32", "37.228.234.219/32", "0.0.0.0/32"]
+      cidr_blocks = ["52.49.120.79/32", "37.228.234.5/32", "0.0.0.0/32"]
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
@@ -668,15 +668,6 @@ resource "aws_lb_target_group" "default_admin" {
   target_type     = "ip"
   vpc_id          = module.network.vpc_id
 
-  health_check {
-    interval                = 120
-    path                    = local.health_check_path
-    protocol                = "HTTP"
-    timeout                 = 60
-    healthy_threshold       = 2
-    unhealthy_threshold     = 3
-    matcher                 = 200
-  }
 
   lifecycle {
     create_before_destroy   = true
