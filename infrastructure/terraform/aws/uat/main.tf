@@ -68,7 +68,7 @@ locals {
     },
     gerry_dev = {
       description = "Gerry Mcbride - OGCIO"
-      cidr_blocks = ["52.49.120.79/32", "37.228.234.219/32", "95.44.14.48/32"]
+      cidr_blocks = ["52.49.120.79/32", "37.228.234.219/32", "0.0.0.0/32"]
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
@@ -751,21 +751,6 @@ resource "aws_acm_certificate" "africa_day" {
 # Loadbalancer listeners and rules
 # -----------------------------------------------------------------------------
 
-resource "aws_lb_listener" "project_80" {
-  load_balancer_arn   = aws_lb.default.arn
-  port                = 80
-  protocol            = "HTTP"
-
-  default_action {
-    type = "redirect"
-
-    redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
-  }
-}
 
 resource "aws_lb_listener" "project_net_http" {
   load_balancer_arn   = aws_lb.net_lb.arn
