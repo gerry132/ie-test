@@ -56,10 +56,7 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 # SECURITY WARNING: don't run with debug turned on in production!
 debug_on = os.environ.get("DEBUG")
 
-if debug_on == '0':
-    DEBUG = True
-else:
-    DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
@@ -164,7 +161,6 @@ MIDDLEWARE = [
     "irelandie_utils.middleware.ReplaceViewsMiddleware",
     "custom_logout.middleware.custom_logout.CustomMiddleware",
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
-    "admincheck.middleware.admin_check.IsUserAdmin"
 ]
 
 if DEBUG_TOOLBAR is True:
@@ -219,7 +215,7 @@ PATTERN_LIBRARY = {
     "BASE_TEMPLATE_NAMES": ["patterns/base_page.html"],
 }
 
-WSGI_APPLICATION = "app.wsgi.application"
+
 
 # In production, email is handled with Amazon SES
 if "EMAIL_BACKEND" in os.environ:

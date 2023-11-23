@@ -2,6 +2,7 @@
 .notice-bar{
     position: relative;
     z-index: 1;
+    background-color: #e5eceb;
 }
 .notice-bar--extended {
     background-color: #e5eceb;
@@ -9,6 +10,8 @@
     position: relative;
     color: #fff;
     padding: 14px;
+    max-width: 1280px;
+    margin: 0 auto;
 }
 .notice-bar--contents{
     display: flex;
@@ -72,7 +75,7 @@
     }
 }
 .wrapper__notice-bar{
-    max-width: 1280px;
+    max-width: 900px;
     margin: 0 auto;
 }
 .notice__icon{
@@ -82,7 +85,6 @@
 .notice-bar__display{
     display: flex;
     gap: 20px;
-    justify-content: center;
 }
 .informationDivider {
             position: absolute;
