@@ -646,7 +646,7 @@ resource "aws_lb_target_group" "default" {
     timeout                 = 60
     healthy_threshold       = 2
     unhealthy_threshold     = 3
-    matcher                 = 200
+    matcher                 = "200-399"
   }
 
   lifecycle {
@@ -668,6 +668,15 @@ resource "aws_lb_target_group" "default_admin" {
   target_type     = "ip"
   vpc_id          = module.network.vpc_id
 
+  health_check {
+    interval                = 120
+    path                    = local.health_check_path
+    protocol                = "HTTP"
+    timeout                 = 60
+    healthy_threshold       = 2
+    unhealthy_threshold     = 3
+    matcher                 = "200-399"
+  }
 
   lifecycle {
     create_before_destroy   = true
