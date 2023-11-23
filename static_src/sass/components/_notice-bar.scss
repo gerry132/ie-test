@@ -4,7 +4,7 @@
     z-index: 1;
 }
 .notice-bar--extended {
-    background-color: #FFFFFF;
+    background-color: #e5eceb;
     width: 100%;
     position: relative;
     color: #fff;
@@ -72,7 +72,7 @@
     }
 }
 .wrapper__notice-bar{
-    max-width: 900px;
+    max-width: 1280px;
     margin: 0 auto;
 }
 .notice__icon{
@@ -82,6 +82,7 @@
 .notice-bar__display{
     display: flex;
     gap: 20px;
+    justify-content: center;
 }
 .informationDivider {
             position: absolute;

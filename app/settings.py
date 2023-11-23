@@ -29,9 +29,9 @@ DEBUG_TOOLBAR = os.environ.get("DEBUG_TOOLBAR", "0") in TRUE
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
 
-## X-Frame-Options
+# X-Frame-Options
 X_FRAME_OPTIONS = 'DENY'
-#X-Content-Type-Options
+# X-Content-Type-Options
 SECURE_CONTENT_TYPE_NOSNIFF = True
 # Strict-Transport-Security
 SECURE_HSTS_SECONDS = 15768000
@@ -427,7 +427,6 @@ WAGTAILIMAGES_IMAGE_MODEL = "irelandie_images.CustomImage"
 WAGTAILIMAGES_FEATURE_DETECTION_ENABLED = False
 WAGTAILDOCS_DOCUMENT_MODEL = "irelandie_documents.CustomDocument"
 
-
 if OPENSEARCH_KEY and OPENSEARCH_SECRET and OPENSEARCH_ENDPOINT != 'CHANGE':
     from elasticsearch import RequestsHttpConnection
     from requests_aws4auth import AWS4Auth
@@ -461,7 +460,7 @@ if OPENSEARCH_KEY and OPENSEARCH_SECRET and OPENSEARCH_ENDPOINT != 'CHANGE':
                     },
                     "max_ngram_diff": "50",
                 }
-                }
+            }
 
         }
     }
