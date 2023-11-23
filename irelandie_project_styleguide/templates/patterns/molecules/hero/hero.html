@@ -47,6 +47,9 @@
         <div class="hero__mobile">
             <div class="story__image-credit">{{ page.hero_image_credit }}</div>
         </div>
+        {% if MissionPage %}
+            <div class="story__image-credit">{{ page.hero_image_credit }}</div>
+        {% endif %}
         {% endif %}
     {% if page.hero_video %}
         <figure class="hero__video-wrapper" role="presentation">
@@ -109,7 +112,7 @@
         </div>
     </div>
 </div>
-        {% if page.hero_image_credit %}
+        {% if page.hero_image_credit and not MissionPage %}
             <div class="hero__image_credit">
               <div class="hero__image_credit_text">{{ page.hero_image_credit }}</div>
             </div>
