@@ -9,7 +9,7 @@
                     {% if link.value.mega_menu %}data-has-subnav{% endif %}
                 >
                     {% include_block link with nav_type="primary-nav" %}
-                    <a class="sub-nav-hidden primary-nav__link" {% if link.value.mega_menu %}data-open-subnav{% endif %} href="{{ link.value.page.url }}" {% if link.value.mega_menu %}aria-haspopup="true" aria-expanded="false"{% endif %}>
+                    <a class="sub-nav-hidden primary-nav__link" {% if link.value.mega_menu %}data-open-subnav{% endif %} href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}" {% if link.value.mega_menu %}aria-haspopup="true" aria-expanded="false"{% endif %}>
                         {% if link.value.title %}
                             {{ link.value.title }}
                         {% else %}
@@ -189,7 +189,7 @@
                     {% if link.value.mega_menu %}data-has-subnav{% endif %}
                 >
                     {% include_block link with nav_type="primary-nav" %}
-                    <a class="sub-nav-hidden primary-nav__link" {% if link.value.mega_menu %}data-open-subnav{% endif %} href="{{ link.value.page.url }}" {% if link.value.mega_menu %}aria-haspopup="true" aria-expanded="false"{% endif %}>
+                    <a class="sub-nav-hidden primary-nav__link" {% if link.value.mega_menu %}data-open-subnav{% endif %} href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}" {% if link.value.mega_menu %}aria-haspopup="true" aria-expanded="false"{% endif %}>
                         {% if link.value.title %}
                             {{ link.value.title }}
                         {% else %}
