@@ -1,5 +1,5 @@
 {% extends "patterns/base_page.html" %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags cache %}
 {% load wagtailimages_tags %}
 {% load static navigation_tags util_tags i18n %}
 
@@ -20,6 +20,7 @@
             {% endfor %}
         </div>
         {% endif %}
+        {% cache 604800 embassy_index %}
         <div class="a-z-listing__filter__label__text">Type country name:</div>
         <input id="myInput" class="form--input" type="text">
         <div class="a-z-listing__filters__clear-all">
@@ -42,6 +43,7 @@
             </div>
 
         </div>
+         {% endcache %}
     </div>
 
 
