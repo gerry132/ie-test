@@ -68,11 +68,11 @@ locals {
     },
     gerry_dev = {
       description = "Gerry Mcbride - OGCIO"
-      cidr_blocks = ["52.49.120.79/32", "37.228.234.219/32", "95.44.14.48/32"]
+      cidr_blocks = ["52.49.120.79/32", "37.228.234.5/32", "0.0.0.0/32"]
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.37.134/32", "80.233.44.134/32"]
+      cidr_blocks  = ["80.233.62.40/32", "80.233.58.40/32"]
     },
     joe_dev = {
       description = "Joe D - Sidero"
@@ -646,7 +646,7 @@ resource "aws_lb_target_group" "default" {
     timeout                 = 60
     healthy_threshold       = 2
     unhealthy_threshold     = 3
-    matcher                 = 200
+    matcher                 = "200-399"
   }
 
   lifecycle {
@@ -675,7 +675,7 @@ resource "aws_lb_target_group" "default_admin" {
     timeout                 = 60
     healthy_threshold       = 2
     unhealthy_threshold     = 3
-    matcher                 = 200
+    matcher                 = "200-399"
   }
 
   lifecycle {

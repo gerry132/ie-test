@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
-
+import sys
 from dotenv import load_dotenv
 
 TRUE = ["1", "True", "true", 1, True]
@@ -28,6 +28,30 @@ DEBUG_TOOLBAR = os.environ.get("DEBUG_TOOLBAR", "0") in TRUE
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
+
+# X-Frame-Options
+X_FRAME_OPTIONS = 'DENY'
+# X-Content-Type-Options
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+if 'runserver' not in sys.argv:
+    # Strict-Transport-Security
+    SECURE_HSTS_SECONDS = 15768000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# for more security
+CSRF_COOKIE_SECURE = True
+CSRF_USE_SESSIONS = True
+CSRF_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Strict'
+LANGUAGE_COOKIE_HTTPONLY = True
+LANGUAGE_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 debug_on = os.environ.get("DEBUG")
@@ -140,7 +164,6 @@ MIDDLEWARE = [
     "irelandie_utils.middleware.ReplaceViewsMiddleware",
     "custom_logout.middleware.custom_logout.CustomMiddleware",
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
-    "admincheck.middleware.admin_check.IsUserAdmin"
 ]
 
 if DEBUG_TOOLBAR is True:

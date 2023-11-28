@@ -2,13 +2,16 @@
 .notice-bar{
     position: relative;
     z-index: 1;
+    background-color: #e5eceb;
 }
 .notice-bar--extended {
-    background-color: #FFFFFF;
+    background-color: #e5eceb;
     width: 100%;
     position: relative;
     color: #fff;
     padding: 14px;
+    max-width: 1280px;
+    margin: 0 auto;
 }
 .notice-bar--contents{
     display: flex;
