@@ -22,7 +22,7 @@
     <div class="wrapper wrapper--large wrapper--padding content--padding">
         {% include "patterns/pages/irelandie_travel/molecules/search_forms.html" with travel_pages=travel_pages %}
     </div>
-{% cache 604800 travel_index %}
+
 <div class="wrapper wrapper--large" style="padding-top: 20px;">
 <div class="alpha_container article-cards featured-blocks featured-blocks--three--travel" style="justify-content: unset; ">
     {% for letter, value in travel_pages.items %}
@@ -38,7 +38,7 @@
     {% endfor %}
 </div>
 </div>
-{% endcache %}
+
 
 <div class="section section--padding section--white">
     <div class="wrapper wrapper--large wrapper--padding content--padding">
