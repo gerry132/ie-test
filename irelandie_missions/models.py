@@ -932,7 +932,7 @@ class GeneralContentPage(HeroPage):
         FieldPanel("subtitle", help_text="Please include a brief description of this page/article. This will not "
                                          "appear live on the page, but will appear publicly as a subtitle in other "
                                          "areas of the site that link to this page."),
-        FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
+        FieldPanel("generic_hero", heading="Mini Hero Block"),
         FieldPanel("introduction"),
         FieldPanel("body"),
         InlinePanel('page_related_tags', label="Related category tags"),
@@ -993,8 +993,8 @@ class GeneralContentIrishAid(HeroPage):
         FieldPanel("subtitle", help_text="Please include a brief description of this page/article. This will not "
                                          "appear live on the page, but will appear publicly as a subtitle in other "
                                          "areas of the site that link to this page."),
-        FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
-        FieldPanel("banner_hero_image", permission="access_admin", heading="Banner Hero Image Block"),
+        FieldPanel("generic_hero", heading="Mini Hero Block"),
+        FieldPanel("banner_hero_image", heading="Banner Hero Image Block"),
         FieldPanel("introduction"),
         FieldPanel("body"),
         InlinePanel('page_related_tags', label="Related category tags"),
