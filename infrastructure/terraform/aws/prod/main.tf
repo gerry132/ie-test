@@ -38,8 +38,8 @@ locals {
   cache_instance_class          = "cache.t3.medium"
   # ECS
   ecr_repository_name           = "${local.environment_name}-${local.project_name}"
-  autoscaling_max_capacity      = 6
-  autoscaling_min_capacity      = 1
+  autoscaling_max_capacity      = 12
+  autoscaling_min_capacity      = 4
   autoscaling_target_value      = 60
   service_contrainer_port       = 8000
   task_cpu                      = 1024  # min 1024
