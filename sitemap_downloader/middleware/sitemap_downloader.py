@@ -1,4 +1,3 @@
-from django.http import HttpResponseNotFound
 from django.utils.deprecation import MiddlewareMixin
 from irelandie_utils.views import page_not_found
 
