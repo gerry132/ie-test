@@ -164,6 +164,7 @@ MIDDLEWARE = [
     "irelandie_utils.middleware.ReplaceViewsMiddleware",
     "custom_logout.middleware.custom_logout.CustomMiddleware",
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
+    "sitemap_downloader.middleware.sitemap_downloader.CustomLoginChecker"
 ]
 
 if DEBUG_TOOLBAR is True:
