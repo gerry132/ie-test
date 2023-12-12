@@ -2,7 +2,7 @@
 from functools import cached_property
 
 from django.db import models
-from irelandie_utils.models import BasePage
+from irelandie_utils.models import BasePage, SocialFields, ListingFields
 from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel, HelpPanel, InlinePanel
 from wagtailmedia.edit_handlers import MediaChooserPanel
 from django.core.exceptions import ValidationError
@@ -194,10 +194,24 @@ class ListingsContentPage(ListingsContents, BasePage):
                        ] +
                        BasePage.webchat_panel
                        )
+    COMMON_PROMOTE_PANELS = (
+        FieldPanel('slug'),
+        FieldPanel('seo_title'),
+        FieldPanel('search_description'),
+    )
+
+    promote_panels = (
+        [
+            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
+            FieldPanel('show_in_menus'),
+        ] +
+        SocialFields.promote_panels +
+        ListingFields.promote_panels
+    )
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(BasePage.promote_panels, heading='Promote'),
+        ObjectList(promote_panels, heading='Promote'),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -320,6 +334,20 @@ class ListingsContentUSAPage(ListingsContents, BasePage):
         ),
         FieldPanel('event_details'),
     ]
+    COMMON_PROMOTE_PANELS = (
+        FieldPanel('slug'),
+        FieldPanel('seo_title'),
+        FieldPanel('search_description'),
+    )
+
+    promote_panels = (
+        [
+            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
+            FieldPanel('show_in_menus'),
+        ] +
+        SocialFields.promote_panels +
+        ListingFields.promote_panels
+    )
     settings_panels = ([
                            FieldPanel('go_live_at'),
                            MultiFieldPanel(
@@ -335,7 +363,7 @@ class ListingsContentUSAPage(ListingsContents, BasePage):
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(BasePage.promote_panels, heading='Promote'),
+        ObjectList(promote_panels, heading='Promote'),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
