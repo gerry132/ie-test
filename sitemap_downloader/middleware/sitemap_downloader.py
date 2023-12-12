@@ -18,22 +18,9 @@ class CustomLoginChecker(MiddlewareMixin):
 
     def process_response(self, request, response):
         if request.path == '/sitemap.xml':
-            print('test')
-            print('test')
-            print('test')
-            print('test')
-            print('test')
-            print('test')
-            print('test')
             if request.user.is_authenticated:
-                print('user')
-                print('user')
                 return response
             else:
-                print('nope')
-                print('nope')
-                print('nope')
-                print('nope')
                 return page_not_found(request, None)
         return response
 
