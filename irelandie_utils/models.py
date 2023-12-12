@@ -1059,6 +1059,21 @@ class MinimalArticlePage(BasePage):
                              "homepage if pinned stories are enabled.")
     ]
 
+    COMMON_PROMOTE_PANELS = (
+        FieldPanel('slug'),
+        FieldPanel('seo_title'),
+        FieldPanel('search_description'),
+    )
+
+    promote_panels = (
+        [
+            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
+            FieldPanel('show_in_menus'),
+        ] +
+        SocialFields.promote_panels +
+        ListingFields.promote_panels
+    )
+
     settings_panels = ([
                            MultiFieldPanel(
                                [
@@ -1078,7 +1093,7 @@ class MinimalArticlePage(BasePage):
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(BasePage.promote_panels, heading='Promote'),
+        ObjectList(promote_panels, heading='Promote'),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
