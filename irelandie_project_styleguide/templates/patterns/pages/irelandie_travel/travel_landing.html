@@ -1,7 +1,7 @@
 {% extends "patterns/base_page.html" %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
-{% load static navigation_tags %}
+{% load static navigation_tags i18n %}
 {% block content %}
 <style>
     .card__image-container {
@@ -145,10 +145,15 @@
         <div class="travel-landing--twitter">
             {% if page.twitter_title %}
             <h3 class="travel-landing--story__heading heading--2" id="twitter-heading"><a
-                href="https://twitter.com/{{ page.twitter_username }}">
+                href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
                 {{ page.twitter_title }}</a></h3>
             {% endif %}
-            <a class="twitter-timeline" data-width="100% !important"
+            <div id="twitter-embed_link" style="margin-bottom: 20px; line-height: 19px;">
+                <a class="twitter-embed_link" href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
+                    {% translate "Keep up to date with the latest tweets from" %} {{ page.twitter_username }}
+                </a>
+            </div>
+            <a class="twitter-timeline" data-height=280 data-width="100% !important"
                href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
             </a>
         </div>
@@ -156,9 +161,14 @@
     {% else %}
     <div style="padding-bottom: 30px;">
         {% if page.twitter_title %}
-        <h3 class="travel-landing--story__heading heading--2"><a href="https://twitter.com/{{ page.twitter_username }}">
+        <h3 class="travel-landing--story__heading heading--2"><a href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
             {{ page.twitter_title }}</a></h3>
         {% endif %}
+        <div id="twitter-embed_link" style="margin-bottom: 20px; line-height: 19px;">
+            <a class="twitter-embed_link" href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
+                {% translate "Keep up to date with the latest tweets from" %} {{ page.twitter_username }}
+            </a>
+        </div>
         <a class="twitter-timeline" data-height=580 data-width="100% !important"
            href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
         </a>
@@ -171,11 +181,13 @@
 <script>
     var elemHeight = document.querySelector(".travel-landing--richtext").offsetHeight;
     var twitter_heading = document.getElementById("twitter-heading");
+    var twitter_embed_link = document.getElementById("twitter-embed_link");
+    var twitterEmbedHeight = twitter_embed_link.offsetHeight;
     if(twitter_heading){
         var headingHeight = twitter_heading.offsetHeight;
-        var twitterHeight = elemHeight - headingHeight - 20;
+        var twitterHeight = elemHeight - twitterEmbedHeight - headingHeight - 20;
     }else{
-        var twitterHeight = elemHeight;
+        var twitterHeight = twitterEmbedHeight - elemHeight;
     }
     document.getElementsByClassName('twitter-timeline')[0].setAttribute("data-height", twitterHeight);
 
