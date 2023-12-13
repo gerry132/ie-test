@@ -179,12 +179,12 @@
 {% endblock %}
 {% block extra_js %}
 <script>
-    var elemHeight = document.querySelector(".travel-landing--richtext").offsetHeight;
-    var twitter_heading = document.getElementById("twitter-heading");
-    var twitter_embed_link = document.getElementById("twitter-embed_link");
-    var twitterEmbedHeight = twitter_embed_link.offsetHeight;
+    let elemHeight = document.querySelector(".travel-landing--richtext").offsetHeight;
+    let twitter_heading = document.getElementById("twitter-heading");
+    let twitter_embed_link = document.getElementById("twitter-embed_link");
+    let twitterEmbedHeight = twitter_embed_link.offsetHeight;
     if(twitter_heading){
-        var headingHeight = twitter_heading.offsetHeight;
+        let headingHeight = twitter_heading.offsetHeight;
         var twitterHeight = elemHeight - twitterEmbedHeight - headingHeight - 20;
     }else{
         var twitterHeight = twitterEmbedHeight - elemHeight;
