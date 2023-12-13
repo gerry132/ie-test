@@ -9,7 +9,7 @@
     {% endif %}
     {% for block in page.body1 %}
         {% if block.block_type == 'logo_cards' %}
-        <div class="section section--padding section--grey">
+        <div class="section section--padding">
             <div class="wrapper wrapper--large wrapper--padding">
                 {% include_block block %}
             </div>
@@ -52,7 +52,7 @@
 
     {% for block in page.body %}
     {% if block.block_type == 'logo_cards' %}
-        <div class="section section--padding section--grey">
+        <div class="section section--padding">
             <div class="wrapper wrapper--large wrapper--padding">
                 {% include_block block %}
             </div>

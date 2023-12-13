@@ -17,13 +17,15 @@ class ParagraphAlignment(models.TextChoices):
 
 
 class TravelRegions(models.TextChoices):
-    ASIA_AND_OCEANIA = 'asia and oceania', 'Asia and Oceania'
-    MIDDLE_EAST_AND_NORTH_AFRICA = 'middle east and north africa', 'Middle East and North Africa'
-    NORTH_AND_CENTRAL_AMERICA = 'north and central america', 'North and Central America'
-    SOUTH_AMERICA = 'south america', 'South America'
-    SUB_SAHARAN_AFRICA = 'sub-saharan africa', 'Sub-Saharan Africa'
-    CARIBBEAN = 'caribbean', 'Caribbean'
-    EUROPE = 'europe', 'Europe'
+    ASIA_AND_OCEANIA = 'asia and oceania/áise agus an aigéine', 'Asia and Oceania/Áise agus An Aigéine'
+    MIDDLE_EAST_AND_NORTH_AFRICA = 'middle east and north africa/meán-oirthear agus an afraic thuaidh', \
+        'Middle East and North Africa/Meán-Oirthear Agus An Afraic Thuaidh'
+    NORTH_AND_CENTRAL_AMERICA = 'north and central america/thuaidh agus meiriceá láir', \
+        'North and Central America/Thuaidh agus Meiriceá Láir'
+    SOUTH_AMERICA = 'south america/meiriceá theas', 'South America/Meiriceá Theas'
+    SUB_SAHARAN_AFRICA = 'sub-saharan africa/afraic fho-shahárach', 'Sub-Saharan Africa/Afraic fho-Shahárach'
+    CARIBBEAN = 'caribbean/sa mhuir chairib', 'Caribbean/sa Mhuir Chairib'
+    EUROPE = 'europe/eoraip', 'Europe/Eoraip'
 
 
 class TravelCautionLevel(models.TextChoices):

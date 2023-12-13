@@ -83,15 +83,17 @@
                     <a aria-label="{% trans 'Find out more about Ireland' %}" href="/">Join us in Ireland</a>
                     {% endcomment %}
                 </div>
-
+                {% get_unique_ref as desk_ref %}
                 {% if value.links %}
                 {% if value.links|length > 2 %}
                 <div class="story-links">
                     <div class="your-class story-links__container">
-                        <div class="slider slider-mobile">
+                        {% get_unique_ref as mobile_id %}
+                        <div class="slider slider-mobile slider-mobile-{{mobile_id}}">
+                            {% get_unique_ref as mob_ref %}
                             {% for link in value.links %}
                             {% get_unique_ref as id %}
-                            <div class="slide-mobile-{{ref}} slide-mobile" id="mob-{{id}}" style="width: 100%;">
+                            <div class="slide-mobile-{{mob_ref}} slide-mobile" id="mob-{{id}}" style="width: 100%;">
                                 <div class="story-links">
                                     <div class="your-class story-links__container">
                                         {% include_block link %}
@@ -100,8 +102,8 @@
                             </div>
                             {% endfor %}
                         </div>
-                        <div class="slider slider-desktop">
-
+                        {% get_unique_ref as desktop_id %}
+                        <div class="slider slider-desktop slider-desktop-{{desktop_id}}">
                             {% for link in value.links %}
                             {% if forloop.counter|divisibleby:2 %}
                             {% include_block link %}
@@ -110,14 +112,16 @@
                 </div>
                 {% else %}
                 {% with next_element=value.links|next:forloop.counter0 %}
+                
                 {% if next_element %}
+            
                 {% get_unique_ref as id %}
-                <div class="slide-{{ref}} slide" id="desk-{{id}}">
+                <div class="slide-{{desk_ref}} slide" id="desk-{{id}}">
                     <div class="story-links">
                         <div class="your-class story-links__container">
                             {{link}}
                             {% else %}
-                            <div class="slide-{{ref}} slide" id="{{ref}}" style="width: 100%;">
+                            <div class="slide-{{desk_ref}} slide" id="{{ref}}" style="width: 100%;">
                                 <div class="story-links">
                                     <div class="your-class story-links__container">
                                         {% include_block link %}
@@ -141,8 +145,10 @@
                         {% endif %}
                     </div>
                     {% if value.links|length > 2 %}
-                    <button aria-label="Next menu item" class="btn btn-next-{{ref}} btn-next"></button>
-                    <button aria-label="Previous menu item" class="btn btn-prev-{{ref}} btn-prev">
+                    {% get_unique_ref as button_next %}
+                    {% get_unique_ref as button_previous %}
+                    <button aria-label="Next menu item" class="btn btn-next-{{button_next}} btn-next"></button>
+                    <button aria-label="Previous menu item" class="btn btn-prev-{{button_previous}} btn-prev">
                     </button>
                     {% endif %}
                 </div>
@@ -151,16 +157,16 @@
     </div>
 </div>
     {% if value.links|length >= 2 %}
-    <script>
+        <script data-next="{{button_next}}" data-previous="{{button_previous}}" data-mobref="{{mob_ref}}" data-deskref="{{desk_ref}}">
         function readySlides(mobile) {
-          console.log(mobile);
+          let data_set = document.currentScript.dataset;
           let slides;
           let transNum;
           if(mobile) {
-            slides = document.querySelectorAll(".slide-mobile-{{ref}}");
+            slides = document.querySelectorAll(".slide-mobile-" + data_set.mobref);
             transNum = 100;
           } else {
-            slides = document.querySelectorAll(".slide-{{ref}}");
+            slides = document.querySelectorAll(".slide-" + data_set.deskref);
             transNum = 100;
           }
 
@@ -168,7 +174,7 @@
             slide.style.transform = `translateX(${indx * transNum}%)`;
           });
           // select next slide button
-          const nextSlide = document.querySelector(".btn-next-{{ref}}");
+          const nextSlide = document.querySelector(".btn-next-" + data_set.next);
           // current slide counter
           let curSlide = 0;
           // maximum number of slides
@@ -190,8 +196,9 @@
             });
           });
 
+          
           // select next slide button
-          const prevSlide = document.querySelector(".btn-prev-{{ref}}");
+          const prevSlide = document.querySelector(".btn-prev-" + data_set.previous);
 
           // add event listener and navigation functionality
           prevSlide.addEventListener("click", function () {

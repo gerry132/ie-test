@@ -45,15 +45,23 @@
                                     </div>
                                 {% endif %}
                                 {% if block_hero.value.button_link %}
+                                <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;"></div>    
                                 {% for button in block_hero.value.button_link %}
-                                    <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
                                             {% if button.value.page %}
-                                            <a class="button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
-                                        {% else %}
-                                            <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
-                                        {% endif %}
-                                    </div>
+                                                <a class="button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
+                                            {% else %}
+                                                <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
+                                            {% endif %}
                                 {% endfor %}
+                                {% if block_hero.value.button_link %}
+                                {% for button in block_hero.value.image_link %}
+                                    <a href="{{button.value.url}}" class="button__contain" style="display: inline; padding-left: 30px;">
+                                        {% image button.value.image original class="image__button" %}
+                                        
+                                    </a>
+                                {% endfor %}
+                                {% endif %}
+                                </div>
                                 {% endif %}
                         </div>
                     </div>

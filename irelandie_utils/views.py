@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.utils.translation import check_for_language
 from django.views import defaults
 from django.views.decorators.http import require_http_methods
@@ -13,6 +14,8 @@ from irelandie_utils.utils import get_locale_from_language_code_or_default
 
 
 def page_not_found(request, exception, template_name="patterns/pages/errors/404.html"):
+    if '/%s/' % (request.LANGUAGE_CODE) in request.get_raw_uri():
+        return redirect(request.get_raw_uri().replace('/%s/' % (request.LANGUAGE_CODE), '/en/'))
     return defaults.page_not_found(request, exception, template_name)
 
 

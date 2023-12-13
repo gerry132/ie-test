@@ -15,7 +15,7 @@ from irelandie_news.models import NewsPage
 from irelandie_utils import blocks
 from irelandie_utils.blocks import HomepageFeatureBlock
 from irelandie_utils.utils import get_root_info
-from irelandie_utils.models import BasePage, CountryGroup, HeroPage
+from irelandie_utils.models import BasePage, CountryGroup, HeroPage, SocialFields, ListingFields
 from wagtail.snippets.blocks import SnippetChooserBlock
 from django.forms import ValidationError
 
@@ -244,6 +244,20 @@ class JobContentPage(BasePage):
         FieldPanel("body"),
         FieldPanel("privacy_policy", permission="access_admin"),
     ]
+    COMMON_PROMOTE_PANELS = (
+        FieldPanel('slug'),
+        FieldPanel('seo_title'),
+        FieldPanel('search_description'),
+    )
+
+    promote_panels = (
+        [
+            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
+            FieldPanel('show_in_menus'),
+        ] +
+        SocialFields.promote_panels +
+        ListingFields.promote_panels
+    )
 
     settings_panels = ([
                            MultiFieldPanel(
@@ -259,7 +273,7 @@ class JobContentPage(BasePage):
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(BasePage.promote_panels, heading='Promote'),
+        ObjectList(promote_panels, heading='Promote'),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -932,7 +946,7 @@ class GeneralContentPage(HeroPage):
         FieldPanel("subtitle", help_text="Please include a brief description of this page/article. This will not "
                                          "appear live on the page, but will appear publicly as a subtitle in other "
                                          "areas of the site that link to this page."),
-        FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
+        FieldPanel("generic_hero", heading="Mini Hero Block"),
         FieldPanel("introduction"),
         FieldPanel("body"),
         InlinePanel('page_related_tags', label="Related category tags"),
@@ -993,8 +1007,8 @@ class GeneralContentIrishAid(HeroPage):
         FieldPanel("subtitle", help_text="Please include a brief description of this page/article. This will not "
                                          "appear live on the page, but will appear publicly as a subtitle in other "
                                          "areas of the site that link to this page."),
-        FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
-        FieldPanel("banner_hero_image", permission="access_admin", heading="Banner Hero Image Block"),
+        FieldPanel("generic_hero", heading="Mini Hero Block"),
+        FieldPanel("banner_hero_image", heading="Banner Hero Image Block"),
         FieldPanel("introduction"),
         FieldPanel("body"),
         InlinePanel('page_related_tags', label="Related category tags"),
