@@ -436,6 +436,11 @@ class PlaceBlock(blocks.PageChooserBlock):
     pass
 
 
+class ImageButtonBlock(blocks.StructBlock):
+    image = ImageChooserBlock()
+    url = blocks.URLBlock(required=False)
+
+
 class RichTextBlock(blocks.RichTextBlock):
     class Meta:
         label = "DO-NOT-USE"
@@ -463,6 +468,15 @@ class AdvancedRichTextBlock(blocks.StructBlock):
         required=False,
     )
 
+    image_link = blocks.StreamBlock(
+        [
+            ("image_button", ImageButtonBlock())
+        ],
+        blank=True,
+        max_num=1,
+        min_num=0,
+        required=False,
+    )
     class Meta:
         label = "Advanced RichTextBlock"
         template = "patterns/molecules/streamfield/blocks/advanced_richtext_block.html"
