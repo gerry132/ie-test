@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-11 09:50+0000\n"
+"POT-Creation-Date: 2023-12-13 09:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -388,8 +388,10 @@ msgstr ""
 
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:134
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:177
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:153
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:169
 msgid "Keep up to date with the latest tweets from"
-msgstr ""
+msgstr "Coinnigh suas chun dáta leis na tweetanna is déanaí ó "
 
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/twitter_embed.html:6
 #: irelandie_project_styleguide/templates/patterns/snippets/twitterembedsnippet.html:7
