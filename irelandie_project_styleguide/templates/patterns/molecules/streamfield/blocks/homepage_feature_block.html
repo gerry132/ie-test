@@ -44,7 +44,10 @@
                                         {{ block_hero.value.rich_text }}
                                     </div>
                                 {% endif %}
+
+                                <div class="elem--contain" style="display: inline-flex;">           
                                 {% if block_hero.value.button_link %}
+                 
                                 {% for button in block_hero.value.button_link %}
                                     <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
                                             {% if button.value.page %}
@@ -52,9 +55,22 @@
                                         {% else %}
                                             <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
                                         {% endif %}
+
                                     </div>
                                 {% endfor %}
+
                                 {% endif %}
+                                {% if block_hero.value.button_link %}
+                                {% for button in block_hero.value.image_link %}
+                                <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
+                                    <a href="{{button.value.url}}" class="button__contain" style="display: inline; padding-left: 30px; padding-top: 8px;">
+                                        {% image button.value.image original class="image__button" %}
+                                        
+                                    </a>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                                </div>
                         </div>
                     </div>
 
