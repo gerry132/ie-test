@@ -436,6 +436,11 @@ class PlaceBlock(blocks.PageChooserBlock):
     pass
 
 
+class ImageButtonBlock(blocks.StructBlock):
+    image = ImageChooserBlock()
+    url = blocks.URLBlock(required=False)
+
+
 class RichTextBlock(blocks.RichTextBlock):
     class Meta:
         label = "DO-NOT-USE"
@@ -456,6 +461,16 @@ class AdvancedRichTextBlock(blocks.StructBlock):
     button_link = blocks.StreamBlock(
         [
             ("button", SecondaryCallToAction())
+        ],
+        blank=True,
+        max_num=1,
+        min_num=0,
+        required=False,
+    )
+
+    image_link = blocks.StreamBlock(
+        [
+            ("image_button", ImageButtonBlock())
         ],
         blank=True,
         max_num=1,

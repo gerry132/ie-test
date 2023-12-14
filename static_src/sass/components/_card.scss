@@ -1,3 +1,9 @@
+.image__button {
+    max-height: 50px;
+    max-width: 100px;
+    padding-top: 10px;
+}
+
 .card {
     $root: &;
     display: block;
