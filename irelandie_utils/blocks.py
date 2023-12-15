@@ -477,6 +477,7 @@ class AdvancedRichTextBlock(blocks.StructBlock):
         min_num=0,
         required=False,
     )
+
     class Meta:
         label = "Advanced RichTextBlock"
         template = "patterns/molecules/streamfield/blocks/advanced_richtext_block.html"
