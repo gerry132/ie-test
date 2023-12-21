@@ -14,7 +14,7 @@ from irelandie_utils.utils import get_locale_from_language_code_or_default
 
 
 def page_not_found(request, exception, template_name="patterns/pages/errors/404.html"):
-    if '/%s/' % (request.LANGUAGE_CODE) in request.get_raw_uri():
+    if '/%s/' % (request.LANGUAGE_CODE) in request.get_raw_uri() and request.LANGUAGE_CODE != 'en':
         return redirect(request.get_raw_uri().replace('/%s/' % (request.LANGUAGE_CODE), '/en/'))
     return defaults.page_not_found(request, exception, template_name)
 
