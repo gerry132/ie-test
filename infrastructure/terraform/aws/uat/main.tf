@@ -42,8 +42,8 @@ locals {
   autoscaling_min_capacity      = 1
   autoscaling_target_value      = 60
   service_contrainer_port       = 8000
-  task_cpu                      = 1024  # min 1024
-  task_memory                   = 2048  # min 2048
+  task_cpu                      = 2048  # min 1024
+  task_memory                   = 4096  # min 2048
   # APP
   health_check_path             = "/health-check/"
   SETTINGS_DEBUG                = 0
