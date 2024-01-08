@@ -5,7 +5,6 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
 from modelcluster.fields import ParentalKey
-from django.utils.decorators import method_decorator
 from wagtailcache.cache import cache_page, WagtailCacheMixin
 from wagtail.admin.panels import (
     FieldPanel,
