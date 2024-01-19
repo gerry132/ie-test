@@ -1,4 +1,4 @@
-{% load static wagtailcore_tags wagtailimages_tags navigation_tags util_tags i18n %}
+{% load static wagtailcore_tags wagtailimages_tags navigation_tags util_tags i18n cache %}
 
 {% get_current_language as language_code %}
 {% block betatag %}
@@ -6,6 +6,7 @@
             {% include "patterns/snippets/betasnippet.html" with object=custom_footer.beta_element %}
     {% endif %}
 {% endblock %}
+
 
 <footer class="footer">
     <div class="wrapper wrapper--large">

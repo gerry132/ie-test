@@ -13,6 +13,7 @@ wagtail-django-recaptcha==1.0
 wagtail-honeypot==1.0.0
 wagtail-localize
 wagtail-storages==1.0.0rc1
+wagtail-cache==2.3.0
 wagtailmedia
 
 # database

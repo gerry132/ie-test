@@ -123,6 +123,7 @@ INSTALLED_APPS = [
     "wagtail",
     "wagtailaccessibility",
     "wagtailmedia",
+    "wagtailcache",
     "wagtail.contrib.typed_table_block",
     "wagtail.api.v2",
     "captcha",
@@ -164,7 +165,9 @@ MIDDLEWARE = [
     "irelandie_utils.middleware.ReplaceViewsMiddleware",
     "custom_logout.middleware.custom_logout.CustomMiddleware",
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
-    "sitemap_downloader.middleware.sitemap_downloader.CustomLoginChecker"
+    "sitemap_downloader.middleware.sitemap_downloader.CustomLoginChecker",
+    "wagtailcache.cache.UpdateCacheMiddleware",
+    "wagtailcache.cache.FetchFromCacheMiddleware",
 ]
 
 if DEBUG_TOOLBAR is True:
