@@ -1424,7 +1424,7 @@ resource "aws_ecs_service" "default" {
   name                    = "${local.environment_name}-${local.project_name}"
   cluster                 = aws_ecs_cluster.default.id
   task_definition         = aws_ecs_task_definition.default.arn
-  desired_count           = 8
+  desired_count           = local.autoscaling_min_capacity
   launch_type             = "FARGATE"
   force_new_deployment    = true
 
@@ -1450,7 +1450,7 @@ resource "aws_ecs_service" "default" {
 # Service scaling
 
 resource "aws_appautoscaling_target" "default" {
-  max_capacity        = 12
+  max_capacity        = local.autoscaling_max_capacity
   min_capacity        = aws_ecs_service.default.desired_count
   resource_id         = "service/${aws_ecs_cluster.default.name}/${aws_ecs_service.default.name}"
   scalable_dimension  = "ecs:service:DesiredCount"
