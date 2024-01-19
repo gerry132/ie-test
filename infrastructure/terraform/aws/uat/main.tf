@@ -1450,7 +1450,7 @@ resource "aws_ecs_service" "default" {
 # Service scaling
 
 resource "aws_appautoscaling_target" "default" {
-  max_capacity        = local.autoscaling_max_capacity
+  max_capacity        = 12
   min_capacity        = aws_ecs_service.default.desired_count
   resource_id         = "service/${aws_ecs_cluster.default.name}/${aws_ecs_service.default.name}"
   scalable_dimension  = "ecs:service:DesiredCount"
