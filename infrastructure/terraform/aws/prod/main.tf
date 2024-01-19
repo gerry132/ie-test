@@ -980,7 +980,7 @@ resource "aws_opensearch_domain" "opensearch" {
 
   cluster_config {
       instance_count = 3
-      instance_type = "t3.small.search"
+      instance_type = "t3.medium.search"
       zone_awareness_enabled = true
       zone_awareness_config {
         availability_zone_count = 3
