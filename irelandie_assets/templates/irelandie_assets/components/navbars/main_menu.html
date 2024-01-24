@@ -1,5 +1,5 @@
 {% load cache %}
-{% cache 3600 navbar %}
+
 <ul class="navbar-nav">
   {% for menu_page in page.get_children.live.in_menu %}
     <li>
@@ -7,4 +7,3 @@
     </li>
   {% endfor %}
 </ul>
-{% endcache %}
