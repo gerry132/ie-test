@@ -147,9 +147,12 @@
                                      </option>
                                      {% for translation in page.get_translations.live %}
                                      {% get_language_info for translation.locale.language_code as lang %}
-                                         <option value="{% pageurl translation %}">
+                                     {% is_alias translation as alias %}      
+                                     {% if not alias %}    
+                                     <option value="{% pageurl translation %}">
                                                  {{lang.name_local}}
                                           </option>
+                                          {% endif %}
                                  {% endfor %}
                                 </select>
                             </div>
@@ -277,9 +280,12 @@
                                          </option>
                                         {% for translation in page.get_translations.live %}
                                             {% get_language_info for translation.locale.language_code as lang %}
-                                                <option value="{% pageurl translation %}">
+                                            {% is_alias translation as alias %}      
+                                            {% if not alias %}   
+                                            <option value="{% pageurl translation %}">
                                                         {{lang.name_local}}
                                                  </option>
+                                            {% endif %}
                                         {% endfor %}
                                     </select>
                                 </div>
