@@ -1,11 +1,11 @@
-{% load static wagtailcore_tags wagtailimages_tags navigation_tags irelandie_assets_tags i18n  %}
+{% load cache static wagtailcore_tags wagtailimages_tags navigation_tags irelandie_assets_tags i18n  %}
 
 {% comment %}
     Add header--condensed class if override menu exists on a page
 {% endcomment %}
 
 {% get_current_language as language_code %}
-
+{% cache 3600 header %}
 <style>
 .breadcrumbs__hidden{
     display: none;
@@ -352,3 +352,4 @@
 
 
 </script>
+{% endcache %}
