@@ -18,7 +18,7 @@ from wagtail import blocks
 from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Orderable, Page, TranslatableMixin, PreviewableMixin
 from wagtail.query import PageQuerySet
-
+from wagtailcache.cache import cache_page, WagtailCacheMixin
 from wagtail.images import get_image_model_string
 from wagtail.search import index
 
@@ -758,7 +758,8 @@ class Tracking(BaseSetting):
     )
 
 
-class HeroPage(BasePage):
+@method_decorator(cache_page, name='serve')
+class HeroPage(WagtailCacheMixin, BasePage):
     hero_title = models.CharField(blank=True, max_length=120)
     hero_size = models.CharField(
         max_length=16,
