@@ -43,9 +43,9 @@ if 'runserver' not in sys.argv:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # for more security
-CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
 CSRF_USE_SESSIONS = True
-CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Strict'
@@ -123,7 +123,6 @@ INSTALLED_APPS = [
     "wagtail",
     "wagtailaccessibility",
     "wagtailmedia",
-    "wagtailcache",
     "wagtail.contrib.typed_table_block",
     "wagtail.api.v2",
     "captcha",
@@ -166,8 +165,6 @@ MIDDLEWARE = [
     "custom_logout.middleware.custom_logout.CustomMiddleware",
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
     "sitemap_downloader.middleware.sitemap_downloader.CustomLoginChecker",
-    "wagtailcache.cache.UpdateCacheMiddleware",
-    "wagtailcache.cache.FetchFromCacheMiddleware",
 ]
 
 if DEBUG_TOOLBAR is True:
