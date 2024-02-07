@@ -34,7 +34,7 @@ class FreeFormPageBase(HeroPage):
 
     body = StreamField(FreeFormBlocks(), blank=True)
 
-    content_panels = ([FieldPanel("five_panel_block", permission="access_admin", heading="5 Panel Block")] +
+    content_panels = ([FieldPanel("five_panel_block", heading="5 Panel Block")] +
                       HeroPage.content_panels + [
                           FieldPanel("body"),
                       ])

@@ -45,9 +45,9 @@
                                     </div>
                                 {% endif %}
 
-                                <div class="elem--contain" style="display: inline-flex;">           
+                                <div class="elem--contain" style="display: inline-flex;">
                                 {% if block_hero.value.button_link %}
-                 
+
                                 {% for button in block_hero.value.button_link %}
                                     <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
                                             {% if button.value.page %}
@@ -65,7 +65,7 @@
                                 <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
                                     <a href="{{button.value.url}}" class="button__contain" style="display: inline; padding-left: 30px; padding-top: 8px;">
                                         {% image button.value.image original class="image__button" %}
-                                        
+
                                     </a>
                                 </div>
                                 {% endfor %}
@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="homepage_feature__card__content">
                                     <div style="border-left: 2px solid #5AFF03; padding-left: 10px;">
-                                        <h3 class="homepage_feature_card__title">{{ card.value.title }}</h3>
+                                        <h2 class="homepage_feature_card__title">{{ card.value.title }}</h2>
 
                                         <p class="homepage_feature_card__summary">{{ card.value.summary }}</p>
                                     </div>
