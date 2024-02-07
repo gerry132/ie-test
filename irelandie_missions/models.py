@@ -132,7 +132,7 @@ class DestinationPage(HeroPage):
         related_name='+'
     )
 
-    content_panels = ([FieldPanel("five_panel_block", permission="access_admin", heading="5 Panel Block")] +
+    content_panels = ([FieldPanel("five_panel_block", heading="5 Panel Block")] +
                       HeroPage.content_panels + [
                           FieldPanel("region"),
                           FieldPanel("body1", heading="Body"),
