@@ -383,7 +383,7 @@ msgstr "お問い合わせ"
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:129
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:168
 msgid "Keep up to date with the latest tweets from"
-msgstr "新のツイートをチェックしてください"
+msgstr "駐日アイルランド大使館公式X（旧ツイッター）アカウント"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/twitter_embed.html:6
 #: irelandie_project_styleguide/templates/patterns/snippets/twitterembedsnippet.html:7
