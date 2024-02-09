@@ -66,7 +66,7 @@ def search(request):
     response = TemplateResponse(
         request,
         "patterns/pages/search/search.html",
-        {"search_query": search_query, "search_results": search_results, "page": page},
+        {"search_query": search_query, "search_results": search_results, "page": page, "root_page": root_page},
     )
     # Instruct FE cache to not cache when the search query is present.
     # It's so hits get added to the database and results include newly
