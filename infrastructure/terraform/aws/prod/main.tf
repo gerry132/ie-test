@@ -1454,3 +1454,50 @@ resource "aws_appautoscaling_policy" "cpu" {
     }
   }
 }
+
+
+resource "aws_wafv2_web_acl" "ireland_ie_waf" {
+  name  = "${local.project_name}-waf"
+  scope = "REGIONAL"
+
+  default_action {
+    allow {}
+  }
+
+  rule {
+    name     = "AWSRateBasedRuleDomesticDOS"
+    priority = 1
+
+    action {
+      captcha {}
+    }
+
+    statement {
+      rate_based_statement {
+        limit              = 300
+        aggregate_key_type = "IP"
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWSRateBasedRuleDomesticDOS"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "${local.project_name}-waf-metrics"
+    sampled_requests_enabled   = true
+  }
+}
+
+resource "aws_wafv2_web_acl_association" "admin_association" {
+  resource_arn = aws_lb.default.arn
+  web_acl_arn  = aws_wafv2_web_acl.ireland_ie_waf.arn
+}
+
+resource "aws_wafv2_web_acl_association" "public_association" {
+  resource_arn = aws_lb.public_sites.arn
+  web_acl_arn  = aws_wafv2_web_acl.ireland_ie_waf.arn
+}
