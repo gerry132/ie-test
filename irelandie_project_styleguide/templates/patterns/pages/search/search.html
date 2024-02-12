@@ -1,14 +1,15 @@
 {% extends "patterns/base_page.html" %}
-{% load static wagtailcore_tags wagtailsearchpromotions_tags i18n %}
-{% if root_page == 'mission page' %}
+{% load static wagtailcore_tags wagtailsearchpromotions_tags i18n navigation_tags %}
 {% block header %}
-        {% include "patterns/organisms/header/header.html" with custom_header=root_page.custom_header %}
-
+    {% if root_page.custom_header %}
+        {% custom_header_settings page as custom_header_settings %}
+        {% include "patterns/organisms/header/header.html" with custom_header=root_page.custom_header custom_header_settings=custom_header_settings page=page %}
+    {% else %}
+        {% custom_header_settings page as custom_header_settings %}
+        {% include "patterns/organisms/header/header.html" with custom_header=custom_header_settings page=page %}
+    {% endif %}
 {% endblock header %}
-{% block footer %}
-        {% include "patterns/organisms/footer/footer.html" with custom_footer=root_page.custom_footer %}
-{% endblock footer %}
-{% endif %}
+
 {% block body_class %}template-searchresults{% endblock %}
 
 {% block title %}
@@ -73,3 +74,11 @@
     </div>
 
 {% endblock %}
+{% block footer %}
+    {% if root_page.custom_footer %}
+        {% include "patterns/organisms/footer/footer.html" with custom_footer=root_page.custom_footer %}
+    {% else %}
+        {% custom_footer_settings page as custom_footer_settings %}
+        {% include "patterns/organisms/footer/footer.html" with custom_footer=custom_footer_settings %}
+    {% endif %}
+{% endblock footer %}
