@@ -93,7 +93,7 @@
 
 
 {% block header %}
-    <section aria-label="{% trans 'Skip to main content' %}">
+    <section role="main" aria-label="{% trans 'Skip to main content' %}">
         {% include "patterns/molecules/skip-link/skip-link.html" %}
     </section>
     {% has_root_override page header=True as override %}
