@@ -15,9 +15,10 @@
                         <div
                             id="question-{{ forloop.counter }}"
                             class="embassy_accordion__button"
+                            role="button"
                             data-accordion-question
                             aria-controls="answer-{{ forloop.counter }}"
-                            aria-expanded="false">
+                            aria-haspopup="true">
                             <span class="embassy_accordion__title">
                                 {{ accordion.value.title }}
                             </span>

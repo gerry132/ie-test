@@ -2,7 +2,7 @@
 
 {% if value.mega_menu %}
 <div class="{{ nav_type }}__link mega_menu" data-mega-menu data-mobile-mega-menu>
-    <div aria-expanded="false" class="mega_menu_dropbtn" data-mega-menu-question>
+    <div role="button" aria-haspopup="true" class="mega_menu_dropbtn" data-mega-menu-question>
         {{ link_title }}
         {% if value.mega_menu %}
         {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="mega_menu__icon" %}
