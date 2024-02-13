@@ -51,7 +51,7 @@
                 The default is the app provided SVG
                 {% endcomment %}
 
-                <a href="/{{ language_code }}/" aria-label="Ireland.ie" class="header__logo-wrapper">
+                <a href="/{{ language_code }}/" role="link" aria-label="Ireland.ie" class="header__logo-wrapper">
                 {% if custom_header_settings.site_settings.site_logo %}
                     {% if custom_header_settings.site_settings.site_logo_alt %}
                         {% if custom_header.links %}
@@ -159,7 +159,7 @@
                         </div>
                     <!-- End of the locale selector -->
                     {% endif %}
-                    <button class="header__search-toggle" aria-label="{% trans 'Search' %}" data-toggle-search>
+                    <button class="header__search-toggle" role="search" aria-label="{% trans 'Search' %}" data-toggle-search>
                         <svg class="header__search-icon" aria-hidden="true">
                             <use href="#magnifying-glass"></use>
                         </svg>
@@ -170,7 +170,7 @@
                     </button>
 
                 <div class="header__menu-toggle header__menu-toggle--desk{% if shownav %} header__menu-toggle--desktop{% endif %}">
-                    <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
+                    <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" role="menu" aria-label="{% trans 'Mobile menu toggle' %}">
                         <span class="button-menu-toggle__line"></span>
                         <span class="button-menu-toggle__line"></span>
                         <span class="button-menu-toggle__line"></span>
@@ -182,7 +182,7 @@
             </div>
         </div>
         {% if not custom_header.links %}
-        <div aria-label="{% trans 'Search' %}">
+        <div aria-label="{% trans 'Search' %}" role="search">
             <div class="header__search{% if page.override_primary_navigation %} header__search--condensed{% endif %}" data-search-dropdown style="top: 85px">
                 <div class="wrapper wrapper--large">
                     {% include "patterns/molecules/search/search.html" with classes="search--dropdown" %}
@@ -212,10 +212,10 @@
                 <div class="header__container">
 
                     {% if custom_header.url %}
-                        <a href="{{ custom_header.url }}" aria-label="Ireland.ie" class="header__logo-wrapper">
+                        <a href="{{ custom_header.url }}" role="link" aria-label="Ireland.ie" class="header__logo-wrapper">
                     {% elif custom_header.link_page %}
                         {% for block in custom_header.link_page %}
-                            <a href="{{block.value.page.url}}" aria-label="Ireland.ie" class="header__logo-wrapper">
+                            <a href="{{block.value.page.url}}" role="link" aria-label="Ireland.ie" class="header__logo-wrapper">
                         {% endfor %}
                     {% endif %}
                     {% if custom_header_settings.site_settings.site_logo and not custom_header.logo %}
@@ -292,7 +292,7 @@
                             </div>
                         <!-- End of the locale selector -->
                         {% endif %}
-                        <button class="header__search-toggle header__search-toggle--mobile" aria-label="{% trans 'Search' %}" data-toggle-search>
+                        <button class="header__search-toggle header__search-toggle--mobile" role="search" aria-label="{% trans 'Search' %}" data-toggle-search>
                             <svg class="header__search-icon" aria-hidden="true">
                                 <use href="#magnifying-glass"></use>
                             </svg>
@@ -303,7 +303,7 @@
                         </button>
 
                     <div class="header__menu-toggle--mobile header__menu-toggle header__menu-toggle--desktop">
-                        <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
+                        <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" role="button" aria-label="{% trans 'Mobile menu toggle' %}">
                             <span class="button-menu-toggle__line"></span>
                             <span class="button-menu-toggle__line"></span>
                             <span class="button-menu-toggle__line"></span>
@@ -313,7 +313,7 @@
                     </div>
                 </div>
             </div>
-            <div aria-label="{% trans 'Search' %}">
+            <div aria-label="{% trans 'Search' %}" role="search">
                 <div class="header__search{% if page.override_primary_navigation %} header__search--condensed{% endif %}" data-search-dropdown>
                     <div class="wrapper wrapper--large">
                         {% include "patterns/molecules/search/search.html" with classes="search--dropdown" %}
