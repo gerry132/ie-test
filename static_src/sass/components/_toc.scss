@@ -71,6 +71,7 @@
 }
 
 .toc--heading {
+    margin-bottom: 20px;
     @include media-query(max-small) {
         font-size: 2.2rem;
     }

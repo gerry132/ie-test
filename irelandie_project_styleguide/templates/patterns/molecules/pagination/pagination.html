@@ -1,7 +1,7 @@
 {% load querystring_modify static wagtailcore_tags wagtailsearchpromotions_tags i18n %}
 {% if paginator_page.paginator.num_pages > 1 %}
 
-<nav aria-label="{% trans 'Pagination' %}" class="pagination">
+<nav aria-label="{% trans 'Pagination' %}" class="pagination" role="navigation">
     <ul class="pagination__list">
         {% if paginator_page.has_previous %}
             <li>

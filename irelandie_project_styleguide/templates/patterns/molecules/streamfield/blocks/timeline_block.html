@@ -20,13 +20,13 @@
         {% include_block value.richtext %}
 </div>
 {% endif %}
-<div aria-label="Timeline" class="glide timeline glide--ltr glide--carousel glide--swipeable" data-timeline
+<div role="main" aria-label="Timeline" class="glide timeline glide--ltr glide--carousel glide--swipeable" data-timeline
      data-mdb-interval="false" data-slidetotal>
      <hr/>
     <div class="timeline__track" data-glide-el="track">
         <ul class="glide__slides timeline__slides" style="z-index: 0" >
             {% for story_photo_gallery in value.story_photo_gallery %} 
-                <li aria-label="Timeline slide" id="{{forloop.counter}}" class="glide__slide" tab-index="0">
+                <li role="link" aria-label="Timeline slide" id="{{forloop.counter}}" class="glide__slide" tab-index="0">
                 <div class="tab_container">
                 <div class="header_container">
                             <h3 id="date_field">{{story_photo_gallery.value.date}}</h3>

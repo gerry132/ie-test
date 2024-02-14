@@ -12,11 +12,11 @@
     <div class="wrapper wrapper--large">
         <div class="footer__header">
             {% if custom_footer.link_page %}
-                    <a href="{{custom_footer.link_page.url}}" aria-label="Ireland.ie">
+                    <a role="link" href="{{custom_footer.link_page.url}}" aria-label="Ireland.ie">
             {% elif custom_footer.link_url %}
-                    <a href="{{custom_footer.link_url}}" aria-label="Ireland.ie">
+                    <a role="link" href="{{custom_footer.link_url}}" aria-label="Ireland.ie">
             {% else %}
-                    <a href="/{{ language_code }}/" aria-label="Ireland.ie">
+                    <a role="link" href="/{{ language_code }}/" aria-label="Ireland.ie">
             {% endif %}
             {% if custom_footer.logo %}
                     {% if custom_footer.logo_alt %}
@@ -44,37 +44,37 @@
                 <p class="footer__heading">{% trans 'Follow us' %}</p>
 
                 {% if custom_footer.youtube_user %}
-                    <a href="https://youtube.com/user/{{ custom_footer.youtube_user }}" class="footer__social-link" aria-label="{% trans 'Find us on Youtube' %}">
+                    <a href="https://youtube.com/user/{{ custom_footer.youtube_user }}" class="footer__social-link" role="link" aria-label="{% trans 'Find us on Youtube' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="youtube" classname="footer__social-icon" %}
                     </a>
                 {% endif %}
 
                 {% if custom_footer.linkedin_profile %}
-                    <a href="{{ custom_footer.linkedin_profile }}" class="footer__social-link" aria-label="{% trans 'Connect on Linkedin' %}">
+                    <a href="{{ custom_footer.linkedin_profile }}" class="footer__social-link" role="link" aria-label="{% trans 'Connect on Linkedin' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="linkedin" classname="footer__social-icon" %}
                     </a>
                 {% endif %}
 
                 {% if custom_footer.facebook_app_id %}
-                    <a href="https://www.facebook.com/{{ custom_footer.facebook_app_id }}" class="footer__social-link" aria-label="{% trans 'Find us on Facebook' %}">
+                    <a href="https://www.facebook.com/{{ custom_footer.facebook_app_id }}" role="link" class="footer__social-link" aria-label="{% trans 'Find us on Facebook' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="facebook" classname="footer__social-icon" %}
                     </a>
                 {% endif %}
 
                 {% if custom_footer.twitter_handle %}
-                    <a href="https://twitter.com/{{ custom_footer.twitter_handle }}" class="footer__social-link" aria-label="{% trans 'Follow us on Twitter' %}">
+                    <a href="https://twitter.com/{{ custom_footer.twitter_handle }}" role="link" class="footer__social-link" aria-label="{% trans 'Follow us on Twitter' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="twitter" classname="footer__social-icon" %}
                     </a>
                 {% endif %}
 
                 {% if custom_footer.instagram_user %}
-                    <a href="https://instagram.com/{{ custom_footer.instagram_user }}" class="footer__social-link" aria-label="{% trans 'Find us on Instagram' %}">
+                    <a href="https://instagram.com/{{ custom_footer.instagram_user }}" role="link" class="footer__social-link" aria-label="{% trans 'Find us on Instagram' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="instagram" classname="footer__social-icon" %}
                     </a>
                 {% endif %}
 
                 {% if custom_footer.weibo_user %}
-                    <a href="https://www.weibo.com/{{ custom_footer.weibo_user }}" class="footer__social-link" aria-label="{% trans 'Find us on Weibo' %}">
+                    <a href="https://www.weibo.com/{{ custom_footer.weibo_user }}" role="link" class="footer__social-link" aria-label="{% trans 'Find us on Weibo' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="weibo" classname="footer__social-icon" %}
                     </a>
                 {% endif %}
@@ -86,7 +86,7 @@
                 {% customfooternav custom_footer.navigation %}
             </div>
 
-            <nav class="grid grid--narrow" aria-label="{{ page_title }} Footer Navigation">
+            <nav class="grid grid--narrow" role="navigation" aria-label="{{ page_title }} Footer Navigation">
                 {% include_block custom_footer.links with nav_type='footerlinks-nav' %}
             </nav>
         </div>
