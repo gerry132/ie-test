@@ -70,6 +70,10 @@ locals {
       description = "Gerry Mcbride - OGCIO"
       cidr_blocks = ["95.44.14.48/32", "37.228.234.5/32"]
     },
+    jaikiran_dev = {
+      description = "Jaikiran - OGCIO"
+      cidr_blocks = ["192.168.0.106/32"]
+    },
     deekshana_dev = {
       description = "Deekshana - Sidero"
       cidr_blocks  = ["80.233.58.83/32", "80.233.62.83/32"]
