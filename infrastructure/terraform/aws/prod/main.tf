@@ -1455,6 +1455,21 @@ resource "aws_appautoscaling_policy" "cpu" {
   }
 }
 
+resource "aws_wafv2_ip_set" "ireland_ie_ips" {
+  name               = "${local.environment_name}-${local.project_name}-ip-set"
+  description        = "IPs"
+  scope              = "REGIONAL"
+  ip_address_version = "IPV4"
+  addresses          = ["161.35.72.212/32",
+                        "46.101.124.44/32",
+                        "46.101.116.160/32",
+                        "164.90.168.210/32",
+                        "176.58.117.51/32",
+                        "80.85.87.84/32",
+                        "88.80.184.34/32",
+                        "178.79.136.28/32"]
+}
+
 
 resource "aws_wafv2_web_acl" "ireland_ie_waf" {
   name  = "${local.project_name}-waf"
@@ -1484,7 +1499,35 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
       sampled_requests_enabled   = true
     }
   }
+  rule {
+    name     = "AWS-AWSManagedRulesBotControlRuleSet"
+    priority = 0
+    override_action {
+      none {
+      }
+    }
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesBotControlRuleSet"
+        vendor_name = "AWS"
+        scope_down_statement {
+            not_statement {
+              statement {
+                ip_set_reference_statement { 
+                  arn = aws_wafv2_ip_set.ireland_ie_ips.arn
+                }
+               }
+            }
+        }  
+      }
+    }
 
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWS-AWSManagedRulesBotControlRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
   visibility_config {
     cloudwatch_metrics_enabled = true
     metric_name                = "${local.project_name}-waf-metrics"

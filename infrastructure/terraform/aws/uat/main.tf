@@ -1832,7 +1832,6 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
   default_action {
     allow {}
   }
-
   rule {
     name     = "AWSRateBasedRuleDomesticDOS"
     priority = 1
@@ -1853,6 +1852,27 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
       sampled_requests_enabled   = true
     }
   }
+  rule {
+    name     = "AWS-AWSManagedRulesBotControlRuleSet"
+    priority = 0
+    override_action {
+      none {
+      }
+    }  
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesBotControlRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWS-AWSManagedRulesBotControlRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
+
 
   visibility_config {
     cloudwatch_metrics_enabled = true

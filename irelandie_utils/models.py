@@ -575,8 +575,8 @@ class SystemMessagesSettings(BaseSetting):
 
 
 # Apply default cache headers on this page model's serve method.
-@method_decorator(get_default_cache_control_decorator(), name="serve")
-class BasePage(SocialFields, ListingFields, Page):
+@method_decorator(cache_page, name='serve')
+class BasePage(WagtailCacheMixin, SocialFields, ListingFields, Page):
     show_in_menus_default = True
 
     webchat_script = models.TextField(
