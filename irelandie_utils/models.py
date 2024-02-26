@@ -32,7 +32,6 @@ from irelandie_utils.blocks import (
     AccordionBlock,
     ContactBlock, MinimalArticleStoryBlock, GeneralContentBlocks, ImageBlock, LinkButtonsBlock
 )
-from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.constants import HeroSize
 from irelandie_utils.query import order_by_pk_position
 import django.utils.timezone
@@ -623,7 +622,7 @@ class BasePage(WagtailCacheMixin, SocialFields, ListingFields, Page):
 
     class Meta:
         abstract = True
-    
+
     COMMON_PROMOTE_PANELS = (
         FieldPanel('slug', permission="access_admin"),
         FieldPanel('seo_title', permission="access_admin"),
