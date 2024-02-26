@@ -165,6 +165,8 @@ MIDDLEWARE = [
     "custom_logout.middleware.custom_logout.CustomMiddleware",
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
     "sitemap_downloader.middleware.sitemap_downloader.CustomLoginChecker",
+    "wagtailcache.cache.UpdateCacheMiddleware",
+    "wagtailcache.cache.FetchFromCacheMiddleware",
 ]
 
 if DEBUG_TOOLBAR is True:
@@ -302,6 +304,7 @@ if USE_CACHE is True:
         "default": {
             "BACKEND": "django_redis.cache.RedisCache",
             "LOCATION": f"redis://{CACHE_ADDRESS}",
+            "TIMEOUT": 864000,
             "OPTIONS": {
                 "IGNORE_EXCEPTIONS": True,
                 "SOCKET_CONNECT_TIMEOUT": 2,  # seconds
