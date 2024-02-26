@@ -618,9 +618,12 @@ class BasePage(WagtailCacheMixin, SocialFields, ListingFields, Page):
         FieldPanel("custom_header", permission="access_admin")
     ]
 
+    def cache_control(self):
+        return 'max-age=8640000'
+
     class Meta:
         abstract = True
-
+    
     COMMON_PROMOTE_PANELS = (
         FieldPanel('slug', permission="access_admin"),
         FieldPanel('seo_title', permission="access_admin"),
@@ -797,6 +800,9 @@ class HeroPage(WagtailCacheMixin, BasePage):
     secondary_title = models.CharField(blank=True, max_length=255)
     hexcolor = models.CharField(max_length=7, blank=True)
     transparency = models.PositiveIntegerField(null=True, blank=True)
+
+    def cache_control(self):
+        return 'max-age=8640000'
 
     def clean(self):
         if self.hero_image and self.hero_video:
