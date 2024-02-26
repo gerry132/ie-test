@@ -5,6 +5,22 @@ from django.utils.html import format_html
 from wagtail.admin.menu import MenuItem
 from wagtail import hooks
 
+from wagtailcache.cache import clear_cache
+
+
+@hooks.register("after_create_page")
+@hooks.register("after_edit_page")
+def clear_wagtailcache(request, page):
+
+    if page.live:
+        clear_cache(
+            [
+                page.full_url,
+                page.get_parent().full_url,
+                page.get_url_parts()[1],
+            ]
+        )
+
 
 @hooks.register("insert_global_admin_css", order=99)
 def global_admin_css():
