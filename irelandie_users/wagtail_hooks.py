@@ -35,7 +35,7 @@ def global_admin_js():
     """Add /static/css/custom.js to the admin."""
     return format_html(
         '<script src="{}"></script>',
-        static("/irelandie_assets/js/custom.js")
+        static("irelandie_assets/js/custom.js")
     )
 
 
