@@ -26,7 +26,7 @@ def global_admin_css():
     """Add /static/css/custom.css to the admin."""
     return format_html(
         '<link rel="stylesheet" href="{}">',
-        static("/irelandie_assets/css/custom.css")
+        static("irelandie_assets/css/custom.css")
     )
 
 
