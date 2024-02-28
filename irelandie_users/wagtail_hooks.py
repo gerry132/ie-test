@@ -13,13 +13,12 @@ from wagtailcache.cache import clear_cache
 def clear_wagtailcache(request, page):
 
     if page.live:
-        clear_cache(
-            [
-                page.full_url,
-                page.get_parent().full_url,
-                page.get_url_parts()[1],
-            ]
-        )
+        cache_urls = [page.full_url, page.get_url_parts()[1]]
+
+        if page.get_parent().full_url:
+            cache_urls.append(page.get_parent().full_url)
+
+        clear_cache(cache_urls)
 
 
 @hooks.register("insert_global_admin_css", order=99)
