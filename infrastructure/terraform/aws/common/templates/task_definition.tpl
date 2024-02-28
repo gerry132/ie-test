@@ -80,7 +80,6 @@
                 "name": "USE_CACHE",
                 "value": "${SETTINGS_USE_CACHE}"
             },
-            
             {
                 "name": "USE_S3",
                 "value": "${SETTINGS_USE_S3}"
