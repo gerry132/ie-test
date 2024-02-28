@@ -90,7 +90,8 @@
             },
             {
                 "name": "AWS_STORAGE_BUCKET_NAME", 
-                "value": "${assets_s3_bucket}"}
+                "value": "${assets_s3_bucket}"
+            },
             {
                 "name": "CORS_ALLOWED_ORIGINS",
                 "value": "${SETTINGS_CORS_ALLOWED_ORIGINS}"
