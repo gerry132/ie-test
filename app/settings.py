@@ -410,14 +410,17 @@ OPENSEARCH_SECRET = os.environ.get("OPENSEARCH_SECRET")
 OPENSEARCH_ENDPOINT = os.environ.get("OPENSEARCH_ENDPOINT")
 
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
+
 if USE_S3 is True:
     INSTALLED_APPS = INSTALLED_APPS + ["storages", "wagtail_storages"]
-
+    AWS_LOCATION = "static"
+    STATICFILES_STORAGE = "storages.backends.s3.S3Storage"
+    DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
+    AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
+    AWS_S3_REGION_NAME = "eu-west-1"
     AWS_DEFAULT_ACL = "public-read"
     AWS_QUERYSTRING_AUTH = False
     AWS_STORAGE_BUCKET_NAME = os.environ["AWS_STATIC_BUCKET_NAME"]
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 WAGTAIL_SITE_NAME = "Ireland.ie"
 
