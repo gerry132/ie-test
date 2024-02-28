@@ -18,7 +18,7 @@ def clear_wagtailcache(request, page):
         if page.get_parent().full_url:
             cache_urls.append(page.get_parent().full_url)
 
-        clear_cache(cache_urls)
+        #clear_cache(cache_urls)
 
 
 @hooks.register("insert_global_admin_css", order=99)
