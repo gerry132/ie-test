@@ -37,9 +37,8 @@ class CountryGroupPageIndex(BasePage):
         FieldPanel("override_primary_navigation")
     ]
 
-from wagtailcache.cache import cache_page, WagtailCacheMixin
 
-class DestinationPage(WagtailCacheMixin, HeroPage):
+class DestinationPage(HeroPage):
     template = "patterns/pages/missions/country_page.html"
 
     five_panel_block = StreamField(
