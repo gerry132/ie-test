@@ -413,7 +413,7 @@ USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
 
 if USE_S3 is True:
     INSTALLED_APPS = INSTALLED_APPS + ["storages", "wagtail_storages"]
-    AWS_LOCATION = "static"
+
     AWS_DEFAULT_ACL = "public-read"
     AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
     AWS_QUERYSTRING_AUTH = False
