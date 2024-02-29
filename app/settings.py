@@ -414,7 +414,7 @@ USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
 if USE_S3 is True:
     INSTALLED_APPS = INSTALLED_APPS + ["storages", "wagtail_storages"]
 
-    AWS_LOCATION = "static"
+    # AWS_LOCATION = "static"
 
     STATICFILES_STORAGE = "storages.backends.s3.S3Storage"
     DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
