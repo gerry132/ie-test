@@ -7,6 +7,12 @@ terraform {
   }
 }
 
+
+provider "aws" {
+  alias  = "virginia"
+  region = "us-east-1"
+}
+
 terraform {
   backend "s3" {
     bucket                      = "preprod-ireland-ie-infrastructure"
@@ -1149,7 +1155,10 @@ resource "aws_iam_user_policy" "app_aws_user" {
         "s3:PutObjectAcl",
         "s3:GetObject",
         "s3:GetObjectAcl",
-        "s3:DeleteObject"
+        "s3:DeleteObject",
+        "s3:ListBucketMultipartUploads",
+        "s3:ListBucketVersions",
+        "s3:ListMultipartUploadParts"
       ],
       "Resource": "arn:aws:s3:::${aws_s3_bucket.assets.bucket}/*"
     }
@@ -1338,7 +1347,8 @@ data "template_file" "task_definition" {
     region                              = local.region
     task_cpu                            = local.task_cpu
     task_memory                         = local.task_memory
-
+    assets_url                          = "assets.${local.domain_ireland_ie}"
+    assets_s3_bucket                    = aws_s3_bucket.assets.id
     SETTINGS_ALLOWED_HOSTS              = local.SETTINGS_ALLOWED_HOSTS
     SETTINGS_AWS_ACCESS_KEY_ID          = local.SETTINGS_AWS_ACCESS_KEY_ID
     SETTINGS_AWS_SECRET_ACCESS_KEY      = local.SETTINGS_AWS_SECRET_ACCESS_KEY
@@ -1427,4 +1437,129 @@ resource "aws_appautoscaling_policy" "cpu" {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
   }
+}
+
+
+# ------------------------------------------------
+# CloudFront Static Files and Assets
+# ------------------------------------------------
+
+locals {
+  cloudfront_s3_origin_id = "AssetsS3Origin"
+}
+
+resource "aws_acm_certificate" "assets_cert" {
+  domain_name               = "assets.${local.domain_ireland_ie}"
+  validation_method         = "DNS"
+  provider                  = aws.virginia
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_cloudfront_origin_access_control" "assets" {
+  name                              = "static-assets"
+  description                       = "Frontend Static Files."
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
+
+resource "aws_cloudfront_response_headers_policy" "assets_cors" {
+  name    = "website-cors"
+  comment = "CORS configuration for the assets distribution to allow the website and CMS to access it."
+
+  cors_config {
+    access_control_allow_credentials = false
+
+    access_control_allow_headers {
+      items = ["*"]
+    }
+
+    access_control_allow_methods {
+      items = ["GET"]
+    }
+
+    access_control_allow_origins {
+      items = [local.domain_ireland_ie, "content.${local.domain_ireland_ie}", "www.${local.domain_ireland_ie}"]
+    }
+
+    origin_override = true
+  }
+}
+
+resource "aws_cloudfront_distribution" "assets" {
+  origin {
+    domain_name              = aws_s3_bucket.assets.bucket_regional_domain_name
+    origin_access_control_id = aws_cloudfront_origin_access_control.assets.id
+    origin_id                = local.cloudfront_s3_origin_id
+  }
+
+  enabled = true
+  comment = "Website and CMS Assets Distribution."
+  aliases = ["assets.${local.domain_ireland_ie}"]
+
+  default_cache_behavior {
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = local.cloudfront_s3_origin_id
+
+    forwarded_values {
+      query_string = false
+
+      cookies {
+        forward = "none"
+      }
+    }
+
+    viewer_protocol_policy = "allow-all"
+    min_ttl                = 0
+    default_ttl            = 3600
+    max_ttl                = 86400
+
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.assets_cors.id
+  }
+
+  price_class = "PriceClass_100"
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
+
+  viewer_certificate {
+    acm_certificate_arn            = aws_acm_certificate.assets_cert.arn
+    ssl_support_method             = "sni-only"
+    minimum_protocol_version       = "TLSv1.2_2021"
+    cloudfront_default_certificate = false
+  }
+
+  depends_on = [
+    aws_acm_certificate.assets_cert
+  ]
+}
+
+data "aws_iam_policy_document" "cloudfront_assets_access" {
+  statement {
+    actions = [ "s3:GetObject" ]
+    resources = [ "${aws_s3_bucket.assets.arn}/*" ]
+
+    principals {
+      type = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
+    }
+
+    condition {
+      test = "StringEquals"
+      variable = "AWS:SourceArn"
+      values = [aws_cloudfront_distribution.assets.arn]
+    }
+  }
+}
+
+resource "aws_s3_bucket_policy" "assets" {
+  bucket = aws_s3_bucket.assets.id
+  policy = data.aws_iam_policy_document.cloudfront_assets_access.json
 }
