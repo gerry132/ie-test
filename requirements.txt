@@ -5,7 +5,7 @@ django-pattern-library==0.6.0
 django-recaptcha==2.0.6
 django-redis==5.2.0
 django-ses==2.6.1
-django-storages==1.12.3
+django-storages==1.14.2
 python-dotenv==0.17.0
 wagtail==4.1.1
 wagtail-accessibility==0.2.1
@@ -13,8 +13,8 @@ wagtail-django-recaptcha==1.0
 wagtail-honeypot==1.0.0
 wagtail-localize
 wagtail-storages==1.0.0rc1
-wagtail-cache==2.3.0
 wagtailmedia
+wagtail-cache==2.3.0
 
 # database
 dj-database-url==0.5.0

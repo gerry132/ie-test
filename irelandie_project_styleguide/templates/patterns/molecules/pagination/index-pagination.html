@@ -1,7 +1,7 @@
 {% load wagtailcore_tags i18n %}
 
 {% if next_page or prev_page %}
-    <nav class="index-pagination" aria-label="{% trans 'Pagination' %}">
+    <nav class="index-pagination" aria-label="{% trans 'Pagination' %}" role="navigation">
         <ul class="index-pagination__list">
             <li class="index-pagination__item index-pagination__item--previous">
                 {% if prev_page %}
@@ -10,6 +10,7 @@
                         class="index-pagination__button link--alt"
                         href="{% pageurl prev_page %}"
                         rel="prev"
+                        role="link"
                     >
                         {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="icon--stroke index-pagination__icon index-pagination__icon--previous" %}
                         <span class="index-pagination__text">
@@ -27,6 +28,7 @@
                         class="index-pagination__button index-pagination__button--next link--alt"
                         href="{% pageurl next_page %}"
                         rel="next"
+                        role="link"
                     >
                         {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="icon--stroke index-pagination__icon index-pagination__icon--next" %}
                         <span class="index-pagination__text">

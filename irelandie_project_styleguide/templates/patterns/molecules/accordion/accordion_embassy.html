@@ -15,13 +15,14 @@
                         <div
                             id="question-{{ forloop.counter }}"
                             class="embassy_accordion__button"
+                            role="button"
                             data-accordion-question
                             aria-controls="answer-{{ forloop.counter }}"
-                            aria-expanded="false">
+                            aria-haspopup="true">
                             <span class="embassy_accordion__title">
                                 {{ accordion.value.title }}
                             </span>
-                            <button class="embassy_accordion__btn_content " aria-label="Open tab">
+                            <button class="embassy_accordion__btn_content" role="button" aria-label="Open tab">
                                 <svg class="icon--arrow embassy_accordion__icon accordion__icon" aria-label="expand" aria-hidden="true" focusable="false">
                                     <use xlink:href="#arrow" href="#arrow"></use>
                                 </svg>

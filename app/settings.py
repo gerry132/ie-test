@@ -165,6 +165,8 @@ MIDDLEWARE = [
     "custom_logout.middleware.custom_logout.CustomMiddleware",
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
     "sitemap_downloader.middleware.sitemap_downloader.CustomLoginChecker",
+    "wagtailcache.cache.UpdateCacheMiddleware",
+    "wagtailcache.cache.FetchFromCacheMiddleware",
 ]
 
 if DEBUG_TOOLBAR is True:
@@ -302,6 +304,7 @@ if USE_CACHE is True:
         "default": {
             "BACKEND": "django_redis.cache.RedisCache",
             "LOCATION": f"redis://{CACHE_ADDRESS}",
+            "TIMEOUT": 864000,
             "OPTIONS": {
                 "IGNORE_EXCEPTIONS": True,
                 "SOCKET_CONNECT_TIMEOUT": 2,  # seconds
@@ -407,14 +410,19 @@ OPENSEARCH_SECRET = os.environ.get("OPENSEARCH_SECRET")
 OPENSEARCH_ENDPOINT = os.environ.get("OPENSEARCH_ENDPOINT")
 
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
+
 if USE_S3 is True:
     INSTALLED_APPS = INSTALLED_APPS + ["storages", "wagtail_storages"]
 
-    AWS_DEFAULT_ACL = "public-read"
-    AWS_QUERYSTRING_AUTH = False
-    AWS_STORAGE_BUCKET_NAME = os.environ["AWS_STATIC_BUCKET_NAME"]
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    # AWS_LOCATION = "static"
+
+    STATICFILES_STORAGE = "storages.backends.s3.S3Storage"
+    DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
+
+    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STATIC_BUCKET_NAME", "")
+    AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
+
+    AWS_S3_REGION_NAME = "eu-west-1"
 
 WAGTAIL_SITE_NAME = "Ireland.ie"
 

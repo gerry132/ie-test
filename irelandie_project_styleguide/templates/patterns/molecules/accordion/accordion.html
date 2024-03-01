@@ -36,12 +36,13 @@
                             id="question-{{ forloop.counter }}"
                             class="accordion__button"
                             data-accordion-question
+                            role="button"
                             aria-controls="answer-{{ forloop.counter }}"
-                            aria-expanded="false">
+                            aria-haspopup="true">
                             <span class="accordion__title">
                                 {{ accordion.value.title }}
                             </span>
-                            <button class="accordion__btn_content" aria-label="Open tab">
+                            <button class="accordion__btn_content" aria-label="Open tab" role="button">
                                 {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="accordion__icon" alt="expand" %}
                             </button>
 

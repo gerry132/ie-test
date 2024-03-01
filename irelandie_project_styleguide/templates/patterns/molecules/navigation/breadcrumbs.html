@@ -2,7 +2,7 @@
 {% load util_tags %}
 
 {% if page.get_ancestors|length > 2 %}
-    <nav style="background-color: #f4f4f4;" aria-label="breadcrumb">
+    <nav style="background-color: #f4f4f4;" role="nav" aria-label="breadcrumb">
         <ul class="breadcrumbs-nav">
             {% get_starting_index page.get_ancestors as INDEX %}
             {% for ancestor_page in INDEX %}
@@ -12,7 +12,7 @@
                             <a class="breadcrumbs-nav__link" href="{% pageurl ancestor_page %}">{{ ancestor_page.title }}</a>
 
                         </li>
-                       <li><a href="{% pageurl ancestor_page %}" aria-label="arrow-next" class="arrow-next"></a></li>
+                       <li><a href="{% pageurl ancestor_page %}" role="link" aria-label="arrow-next" class="arrow-next"></a></li>
                     {% else %}
                         <li class="breadcrumbs-nav__item">
                             <a class="nav__link nav__link--breadcrumb" style="padding-right: 5px;" href="/">
@@ -20,7 +20,7 @@
                             </a>
 
                         </li>
-                       <li><a href="/" aria-label="arrow-next" class="arrow-next"></a></li>
+                       <li><a href="/" role="link" aria-label="arrow-next" class="arrow-next"></a></li>
                     {% endif %}
                 {% endif %}
 

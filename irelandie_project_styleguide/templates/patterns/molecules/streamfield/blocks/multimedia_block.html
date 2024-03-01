@@ -59,7 +59,7 @@
                         <div class="lightgallery">
                             {% if block.value.video %}
                             <div data-html="#{{ block.value.title|cut:' ' }}__{{ block.value.video_alt }}">
-                                <button aria-label="{% trans 'Toggle video playback' %}" class="multimedia__video-control-button">
+                                <button role="button" aria-label="{% trans 'Toggle video playback' %}" class="multimedia__video-control-button">
                                     {% include "patterns/atoms/icons/icon.html" with name="play" classname="multimedia__video-control-button-icon multimedia__video-control-button-icon--play" %}
                                 </button>
                                 <video aria-label="{{ block.value.title }}" class="multimedia__video--block" data-multimedia data-video loop title="{{ block.value.title }}">
@@ -69,7 +69,7 @@
                             </div>
                             {% else %}
                             <a href="{{ block.value.youtube_or_vimeo_embed }}">
-                                <button aria-label="{% trans 'Toggle video playback' %}" class="multimedia__video-control-button">
+                                <button role="button" aria-label="{% trans 'Toggle video playback' %}" class="multimedia__video-control-button">
                                     {% include "patterns/atoms/icons/icon.html" with name="play" classname="multimedia__video-control-button-icon multimedia__video-control-button-icon--play" %}
                                 </button>
                                     {% if 'vimeo.com' in block.value.youtube_or_vimeo_embed %}

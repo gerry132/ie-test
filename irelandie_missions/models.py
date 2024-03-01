@@ -4,6 +4,8 @@ from django.utils.functional import cached_property
 from wagtail.admin.panels import InlinePanel, FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel, HelpPanel
 from wagtail.fields import StreamField, RichTextField
 from wagtail import blocks as wagtail_blocks
+from django.core.cache import cache
+from django.core.cache.utils import make_template_fragment_key
 
 from wagtail.images import get_image_model_string
 
@@ -130,7 +132,7 @@ class DestinationPage(HeroPage):
         related_name='+'
     )
 
-    content_panels = ([FieldPanel("five_panel_block", permission="access_admin", heading="5 Panel Block")] +
+    content_panels = ([FieldPanel("five_panel_block", heading="5 Panel Block")] +
                       HeroPage.content_panels + [
                           FieldPanel("region"),
                           FieldPanel("body1", heading="Body"),
@@ -925,6 +927,13 @@ class EmbassyIndexPage(BasePage):
         FieldPanel('subtitle'),
         FieldPanel('body'),
     ]
+
+    def save(self, *args, **kwargs):
+
+        key = make_template_fragment_key("embassy_index")
+        cache.delete(key)
+
+        return super().save(*args, **kwargs)
 
 
 class GeneralContentPage(HeroPage):

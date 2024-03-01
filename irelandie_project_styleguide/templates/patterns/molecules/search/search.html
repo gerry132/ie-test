@@ -5,7 +5,7 @@
         <form action="{% url 'search' %}" method="get" role="search" class="search__form">
             <input id="search" type="search" placeholder="Search&hellip;" name="query" {% if search_query %} value="{{ search_query }}"{% endif %} class="search__input" data-search-input>
             <label class="u-sr-only" for="search">{% trans 'Search this website' %}</label>
-            <button class="search__button" aria-label="{% trans 'Submit Search' %}">
+            <button class="search__button" aria-label="{% trans 'Submit Search' %}" role="search">
                 {% include "patterns/atoms/icons/icon.html" with name="magnifying-glass" classname="search__button-icon" %}
             </button>
         </form>

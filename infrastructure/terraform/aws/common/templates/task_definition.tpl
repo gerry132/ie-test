@@ -85,6 +85,14 @@
                 "value": "${SETTINGS_USE_S3}"
             },
             {
+                "name": "AWS_S3_CUSTOM_DOMAIN", 
+                "value": "${assets_url}"
+            },
+            {
+                "name": "AWS_STORAGE_BUCKET_NAME", 
+                "value": "${assets_s3_bucket}"
+            },
+            {
                 "name": "CORS_ALLOWED_ORIGINS",
                 "value": "${SETTINGS_CORS_ALLOWED_ORIGINS}"
             },

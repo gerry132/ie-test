@@ -1,4 +1,4 @@
-{% load static wagtailcore_tags wagtailimages_tags navigation_tags irelandie_assets_tags i18n  %}
+{% load cache static wagtailcore_tags wagtailimages_tags navigation_tags irelandie_assets_tags i18n  %}
 
 {% comment %}
     Add header--condensed class if override menu exists on a page
@@ -51,7 +51,7 @@
                 The default is the app provided SVG
                 {% endcomment %}
 
-                <a href="/{{ language_code }}/" aria-label="Ireland.ie" class="header__logo-wrapper">
+                <a href="/{{ language_code }}/" role="link" aria-label="Ireland.ie" class="header__logo-wrapper">
                 {% if custom_header_settings.site_settings.site_logo %}
                     {% if custom_header_settings.site_settings.site_logo_alt %}
                         {% if custom_header.links %}
@@ -135,33 +135,31 @@
                       
                     {% if page.get_translations.live %}
                     
-                        <form action="{% url 'set_language_wagtail' %}" method="post">
-                            {% csrf_token %}
-                            <input name="page_id" type="hidden" value="{{ page.id }}">
+                        <div>
                             <div class="header__language-switcher">
                                 <label for="language-switcher" class="u-sr-only">{% trans 'Select default language' %}</label>
                                 <select name="language" id="language-switcher-mob"
-                                        onchange="this.form.submit()"
+                                        onchange="updatePageLink('language-switcher-mob')"
                                         class="language-switcher">
                                     {% get_language_info for LANGUAGE_CODE as current_lang %}
                                      <option value="{{ current_lang.code }}"{% if current_lang == language_code %} selected{% endif %}>
                                             {{ current_lang.name_local }}
                                      </option>
-                                    {% for translation in page.get_translations.live %}
-                                        {% get_language_info for translation.locale.language_code as lang %}
-                                        {% is_alias translation as alias %}      
-                                            {% if not alias %}
-                                                <option value="{{ lang.code }}">
-                                                        {{ lang.name_local }}
-                                                </option>
-                                            {% endif %}
-                                    {% endfor %}
+                                     {% for translation in page.get_translations.live %}
+                                     {% get_language_info for translation.locale.language_code as lang %}
+                                     {% is_alias translation as alias %}      
+                                     {% if not alias %}    
+                                     <option value="{% pageurl translation %}">
+                                                 {{lang.name_local}}
+                                          </option>
+                                          {% endif %}
+                                 {% endfor %}
                                 </select>
                             </div>
-                        </form>
+                        </div>
                     <!-- End of the locale selector -->
                     {% endif %}
-                    <button class="header__search-toggle" aria-label="{% trans 'Search' %}" data-toggle-search>
+                    <button class="header__search-toggle" role="search" aria-label="{% trans 'Search' %}" data-toggle-search>
                         <svg class="header__search-icon" aria-hidden="true">
                             <use href="#magnifying-glass"></use>
                         </svg>
@@ -172,7 +170,7 @@
                     </button>
 
                 <div class="header__menu-toggle header__menu-toggle--desk{% if shownav %} header__menu-toggle--desktop{% endif %}">
-                    <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
+                    <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" role="menu" aria-label="{% trans 'Mobile menu toggle' %}">
                         <span class="button-menu-toggle__line"></span>
                         <span class="button-menu-toggle__line"></span>
                         <span class="button-menu-toggle__line"></span>
@@ -184,7 +182,7 @@
             </div>
         </div>
         {% if not custom_header.links %}
-        <div aria-label="{% trans 'Search' %}">
+        <div aria-label="{% trans 'Search' %}" role="search">
             <div class="header__search{% if page.override_primary_navigation %} header__search--condensed{% endif %}" data-search-dropdown style="top: 85px">
                 <div class="wrapper wrapper--large">
                     {% include "patterns/molecules/search/search.html" with classes="search--dropdown" %}
@@ -214,10 +212,10 @@
                 <div class="header__container">
 
                     {% if custom_header.url %}
-                        <a href="{{ custom_header.url }}" aria-label="Ireland.ie" class="header__logo-wrapper">
+                        <a href="{{ custom_header.url }}" role="link" aria-label="Ireland.ie" class="header__logo-wrapper">
                     {% elif custom_header.link_page %}
                         {% for block in custom_header.link_page %}
-                            <a href="{{block.value.page.url}}" aria-label="Ireland.ie" class="header__logo-wrapper">
+                            <a href="{{block.value.page.url}}" role="link" aria-label="Ireland.ie" class="header__logo-wrapper">
                         {% endfor %}
                     {% endif %}
                     {% if custom_header_settings.site_settings.site_logo and not custom_header.logo %}
@@ -269,30 +267,32 @@
                     <div class="header__menu-items mobile">
                         <!-- Start of the locale selector -->
                             {% if page.get_translations.live %}
-                            <form action="{% url 'set_language_wagtail' %}" method="post">
-                                {% csrf_token %}
-                                <input name="page_id" type="hidden" value="{{ page.id }}">
+                            <div>
                                 <div class="header__language-switcher">
                                     <label for="language-switcher" class="u-sr-only">{% trans 'Select default language' %}</label>
                                     <select name="language" id="language-switcher"
-                                            onchange="this.form.submit()"
+                                            onchange="updatePageLink('language-switcher')"
                                             class="language-switcher">
                                         {% get_language_info for LANGUAGE_CODE as current_lang %}
+
                                          <option value="{{ current_lang.code }}"{% if current_lang == language_code %} selected{% endif %}>
                                                 {{ current_lang.name_local }}
                                          </option>
                                         {% for translation in page.get_translations.live %}
                                             {% get_language_info for translation.locale.language_code as lang %}
-                                                <option value="{{ lang.code }}">
-                                                        {{ lang.name_local }}
+                                            {% is_alias translation as alias %}      
+                                            {% if not alias %}   
+                                            <option value="{% pageurl translation %}">
+                                                        {{lang.name_local}}
                                                  </option>
+                                            {% endif %}
                                         {% endfor %}
                                     </select>
                                 </div>
-                            </form>
+                            </div>
                         <!-- End of the locale selector -->
                         {% endif %}
-                        <button class="header__search-toggle header__search-toggle--mobile" aria-label="{% trans 'Search' %}" data-toggle-search>
+                        <button class="header__search-toggle header__search-toggle--mobile" role="search" aria-label="{% trans 'Search' %}" data-toggle-search>
                             <svg class="header__search-icon" aria-hidden="true">
                                 <use href="#magnifying-glass"></use>
                             </svg>
@@ -303,7 +303,7 @@
                         </button>
 
                     <div class="header__menu-toggle--mobile header__menu-toggle header__menu-toggle--desktop">
-                        <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" aria-label="{% trans 'Mobile menu toggle' %}">
+                        <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" role="button" aria-label="{% trans 'Mobile menu toggle' %}">
                             <span class="button-menu-toggle__line"></span>
                             <span class="button-menu-toggle__line"></span>
                             <span class="button-menu-toggle__line"></span>
@@ -313,7 +313,7 @@
                     </div>
                 </div>
             </div>
-            <div aria-label="{% trans 'Search' %}">
+            <div aria-label="{% trans 'Search' %}" role="search">
                 <div class="header__search{% if page.override_primary_navigation %} header__search--condensed{% endif %}" data-search-dropdown>
                     <div class="wrapper wrapper--large">
                         {% include "patterns/molecules/search/search.html" with classes="search--dropdown" %}
@@ -351,4 +351,8 @@
     })
 
 
+function updatePageLink(id) {
+    let d = document.getElementById(id).value;
+    window.location.replace(d);
+}
 </script>

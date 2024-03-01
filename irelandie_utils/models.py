@@ -18,7 +18,7 @@ from wagtail import blocks
 from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Orderable, Page, TranslatableMixin, PreviewableMixin
 from wagtail.query import PageQuerySet
-
+from wagtailcache.cache import cache_page, WagtailCacheMixin
 from wagtail.images import get_image_model_string
 from wagtail.search import index
 
@@ -32,7 +32,6 @@ from irelandie_utils.blocks import (
     AccordionBlock,
     ContactBlock, MinimalArticleStoryBlock, GeneralContentBlocks, ImageBlock, LinkButtonsBlock
 )
-from irelandie_utils.cache import get_default_cache_control_decorator
 from irelandie_utils.constants import HeroSize
 from irelandie_utils.query import order_by_pk_position
 import django.utils.timezone
@@ -575,8 +574,8 @@ class SystemMessagesSettings(BaseSetting):
 
 
 # Apply default cache headers on this page model's serve method.
-@method_decorator(get_default_cache_control_decorator(), name="serve")
-class BasePage(SocialFields, ListingFields, Page):
+@method_decorator(cache_page, name='serve')
+class BasePage(SocialFields, ListingFields, Page, WagtailCacheMixin):
     show_in_menus_default = True
 
     webchat_script = models.TextField(
@@ -617,6 +616,9 @@ class BasePage(SocialFields, ListingFields, Page):
     custom_header_panel = [
         FieldPanel("custom_header", permission="access_admin")
     ]
+
+    def cache_control(self):
+        return 'max-age=8640000'
 
     class Meta:
         abstract = True
@@ -758,6 +760,7 @@ class Tracking(BaseSetting):
     )
 
 
+@method_decorator(cache_page, name='serve')
 class HeroPage(BasePage):
     hero_title = models.CharField(blank=True, max_length=120)
     hero_size = models.CharField(
@@ -796,6 +799,9 @@ class HeroPage(BasePage):
     secondary_title = models.CharField(blank=True, max_length=255)
     hexcolor = models.CharField(max_length=7, blank=True)
     transparency = models.PositiveIntegerField(null=True, blank=True)
+
+    def cache_control(self):
+        return 'max-age=8640000'
 
     def clean(self):
         if self.hero_image and self.hero_video:
