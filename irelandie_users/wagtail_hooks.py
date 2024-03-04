@@ -18,7 +18,7 @@ def clear_wagtailcache(request, page):
         if page.get_parent().full_url:
             cache_urls.append(page.get_parent().full_url)
 
-        clear_cache(cache_urls)
+        print(clear_cache(cache_urls))
 
 
 @hooks.register("insert_global_admin_css", order=99)
@@ -26,7 +26,7 @@ def global_admin_css():
     """Add /static/css/custom.css to the admin."""
     return format_html(
         '<link rel="stylesheet" href="{}">',
-        static("irelandie_assets/css/custom.css")
+        static("/irelandie_assets/css/custom.css")
     )
 
 
@@ -35,7 +35,7 @@ def global_admin_js():
     """Add /static/css/custom.js to the admin."""
     return format_html(
         '<script src="{}"></script>',
-        static("irelandie_assets/js/custom.js")
+        static("/irelandie_assets/js/custom.js")
     )
 
 
