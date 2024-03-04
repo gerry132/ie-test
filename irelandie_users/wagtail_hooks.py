@@ -19,7 +19,7 @@ def clear_wagtailcache(request, page):
         #    cache_urls.append(page.get_parent().full_url)
         print('cacge')
         print(cache_urls)
-        print('cache')
+        print('cacaaahe')
         print(clear_cache(cache_urls))
 
 
