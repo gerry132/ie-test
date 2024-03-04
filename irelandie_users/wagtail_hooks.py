@@ -35,6 +35,7 @@ def clear_wagtailcache(request, page):
             print('here 2')
         except KeyError as k:
             print(k)
+            clear_cache()
 
 
 @hooks.register("insert_global_admin_css", order=99)
