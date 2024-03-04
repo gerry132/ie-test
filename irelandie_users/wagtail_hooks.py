@@ -15,12 +15,7 @@ def clear_wagtailcache(request, page):
     if page.live:
         cache_urls = [page.full_url]
 
-        #if page.get_parent().full_url:
-        #    cache_urls.append(page.get_parent().full_url)
-        print('cacge')
-        print(cache_urls)
-        print('cacaaahe')
-        print(clear_cache(cache_urls))
+        clear_cache(cache_urls)
 
 
 @hooks.register("insert_global_admin_css", order=99)
