@@ -34,7 +34,9 @@ def clear_wagtailcache(request, page):
         print(cache_urls)
         print(cache_urls)
         try:
+            print('here')
             clear_cache(cache_urls)
+            print('here 2')
         except KeyError as k:
             print(k)
 
