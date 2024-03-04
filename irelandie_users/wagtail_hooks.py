@@ -14,9 +14,9 @@ def clear_wagtailcache(request, page):
 
     if page.live:
         cache_urls = [
-            page.full_url.replace('https://', 'https://www.'), 
+            page.full_url.replace('https://', 'https://www.'),
             page.get_url_parts()[1].replace('https://', 'https://www.'),
-            page.full_url, 
+            page.full_url,
             page.get_url_parts()[1]]
 
         if page.get_parent().full_url:
@@ -33,7 +33,10 @@ def clear_wagtailcache(request, page):
         print(cache_urls)
         print(cache_urls)
         print(cache_urls)
-        clear_cache(cache_urls)
+        try:
+            clear_cache(cache_urls)
+        except KeyError as k:
+            print(k)
 
 
 @hooks.register("insert_global_admin_css", order=99)
