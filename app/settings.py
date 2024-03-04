@@ -304,7 +304,7 @@ if USE_CACHE is True:
         "default": {
             "BACKEND": "django_redis.cache.RedisCache",
             "LOCATION": f"redis://{CACHE_ADDRESS}",
-            "TIMEOUT": 864000,
+            "TIMEOUT": 3600,
             "OPTIONS": {
                 "IGNORE_EXCEPTIONS": True,
                 "SOCKET_CONNECT_TIMEOUT": 2,  # seconds
