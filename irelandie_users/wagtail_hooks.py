@@ -13,10 +13,10 @@ from wagtailcache.cache import clear_cache
 def clear_wagtailcache(request, page):
 
     if page.live:
-        cache_urls = [page.full_url, page.get_url_parts()[1]]
+        cache_urls = [page.full_url]
 
-        if page.get_parent().full_url:
-            cache_urls.append(page.get_parent().full_url)
+        #if page.get_parent().full_url:
+        #    cache_urls.append(page.get_parent().full_url)
         print('cacge')
         print(cache_urls)
         print('cache')
