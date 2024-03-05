@@ -15,14 +15,10 @@ def clear_wagtailcache(request, page):
     if page.live:
         cache_urls = [page.full_url]
 
-        #if page.get_parent().full_url:
-        #    cache_urls.append(page.get_parent().full_url)
         try:
-            print('cacge')
-            print(cache_urls)
-            print('cacaaahe')
-            print(clear_cache(cache_urls))
-        except:
+            clear_cache(cache_urls)
+        except KeyError as k:
+            print(k)
             clear_cache()
 
 
