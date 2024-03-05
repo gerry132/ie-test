@@ -5,7 +5,7 @@ from wagtail.admin.panels import InlinePanel, FieldPanel, TabbedInterface, Objec
 from wagtail.fields import StreamField, RichTextField
 from wagtail import blocks as wagtail_blocks
 from django.core.cache import cache
-from wagtail.coreutils import make_wagtail_template_fragment_key
+from wagtail.core.utils import make_wagtail_template_fragment_key
 
 from wagtail.images import get_image_model_string
 from wagtail.models import Site
