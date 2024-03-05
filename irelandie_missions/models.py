@@ -482,7 +482,7 @@ class MissionPage(HeroPage):
 
     def save(self, *args, **kwargs):
 
-        key = make_template_fragment_key("mission_page")
+        key = make_template_fragment_key("mission_page_" + self.id)
         cache.delete(key)
 
         return super().save(*args, **kwargs)
