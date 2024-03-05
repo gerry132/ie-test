@@ -761,7 +761,7 @@ class Tracking(BaseSetting):
     )
 
 
-@method_decorator(cache_page, name='serve')
+@method_decorator(get_default_cache_control_decorator(), name='serve')
 class HeroPage(BasePage):
     hero_title = models.CharField(blank=True, max_length=120)
     hero_size = models.CharField(
