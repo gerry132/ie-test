@@ -5,10 +5,10 @@ from wagtail.admin.panels import InlinePanel, FieldPanel, TabbedInterface, Objec
 from wagtail.fields import StreamField, RichTextField
 from wagtail import blocks as wagtail_blocks
 from django.core.cache import cache
-from wagtail.core.utils import make_wagtail_template_fragment_key
+from django.core.cache.utils import make_template_fragment_key
 
 from wagtail.images import get_image_model_string
-from wagtail.models import Site
+
 
 from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_home.models import HomePage
@@ -481,8 +481,8 @@ class MissionPage(HeroPage):
     ])
 
     def save(self, *args, **kwargs):
-        site = Site.objects.all().first()
-        key = make_wagtail_template_fragment_key("mission_page", self, site)
+
+        key = make_template_fragment_key("mission_page")
         cache.delete(key)
 
         return super().save(*args, **kwargs)
@@ -938,7 +938,7 @@ class EmbassyIndexPage(BasePage):
 
     def save(self, *args, **kwargs):
 
-        key = make_wagtail_template_fragment_key("embassy_index")
+        key = make_template_fragment_key("embassy_index")
         cache.delete(key)
 
         return super().save(*args, **kwargs)
