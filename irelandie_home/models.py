@@ -170,7 +170,8 @@ class CampaignPage(HeroPage):
     ])
 
     def save(self, *args, **kwargs):
-        site = Site()
+        site = Site.objects.get()
+        print(site)
         key = make_template_fragment_key("campaign_page")
         cache.delete(key)
 
