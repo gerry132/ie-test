@@ -8,8 +8,6 @@ from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.fields import StreamField
 from wagtail.models import TranslatableMixin, PreviewableMixin
-from wagtailcache.cache import clear_cache
-from wagtail.models import Page
 
 from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
@@ -158,10 +156,6 @@ class PrimaryNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.
         verbose_name_plural = _("Primary Navigation")
         unique_together = ("translation_key", "locale")
 
-    def save(self, *args, **kwargs):
-        clear_cache()
-        return super().save(*args, **kwargs)
-
 
 class FooterNavigationTag(TaggedItemBase):
     content_object = ParentalKey('irelandie_navigation.FooterNavigation', on_delete=models.CASCADE,
@@ -234,10 +228,6 @@ class FooterNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.I
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/customfootersnippet.html"
 
-    def save(self, *args, **kwargs):
-        clear_cache()
-        return super().save(*args, **kwargs)
-
     @property
     def revisions(self):
         return self._revisions
@@ -293,21 +283,6 @@ class SecondaryNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, inde
         index.FilterField('locale_id'),
         index.SearchField("title", partial_match=True),
     ]
-
-    def save(self, *args, **kwargs):
-        x = self.get_usage()
-
-
-        for i in x:
-            obj_id = i[1][0].object_id
-            page = Page.objects.get(id=obj_id)
-            try:
-                clear_cache(page.full_url)
-                print(page.full_url)
-            except:
-                print('burr')
-            
-        return super().save(*args, **kwargs)
 
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/secondarynavsnippet.html"
@@ -417,21 +392,6 @@ class CustomFooter(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
 
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/customfootersnippet.html"
-
-    def save(self, *args, **kwargs):
-        x = self.get_usage()
-
-
-        for i in x:
-            obj_id = i[1][0].object_id
-            page = Page.objects.get(id=obj_id)
-            try:
-                clear_cache(page.full_url)
-                print(page.full_url)
-            except:
-                print('burr')
-            
-        return super().save(*args, **kwargs)
 
     @property
     def revisions(self):
