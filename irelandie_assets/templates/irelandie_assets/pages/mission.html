@@ -3,7 +3,7 @@
 {% load wagtailimages_tags %}
 {% load static %}
 
-{% cache 3600 mission_page %}
+{% cache 3600 mission_page page.id %}
 
 {% block main %}
     <div class="wrapper wrapper--large wrapper--padding">

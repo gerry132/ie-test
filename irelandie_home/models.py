@@ -13,6 +13,8 @@ from irelandie_utils import blocks
 from irelandie_utils.models import HeroPage
 from irelandie_pages.models import FreeFormPageBase
 from wagtail.images import get_image_model_string
+from wagtail.models import Site
+
 
 IMAGE_MODEL = get_image_model_string()
 
@@ -167,6 +169,13 @@ class CampaignPage(HeroPage):
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
+    def save(self, *args, **kwargs):
+        site = Site()
+        key = make_template_fragment_key("campaign_page")
+        cache.delete(key)
+
+        return super().save(*args, **kwargs)
+
 
 class TopicPage(HeroPage):
     template = "patterns/pages/home/topic_page.html"
@@ -232,7 +241,7 @@ class TopicPage(HeroPage):
 
     def save(self, *args, **kwargs):
 
-        key = make_template_fragment_key("embassy_index")
+        key = make_template_fragment_key("topic_page")
         cache.delete(key)
 
         return super().save(*args, **kwargs)
