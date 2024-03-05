@@ -479,6 +479,13 @@ class MissionPage(HeroPage):
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
+    def save(self, *args, **kwargs):
+
+        key = make_template_fragment_key("mission_page")
+        cache.delete(key)
+
+        return super().save(*args, **kwargs)
+
 
 class Magazine(HeroPage):
     template = "irelandie_assets/pages/magazine.html"

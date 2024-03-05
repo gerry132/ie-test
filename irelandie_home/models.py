@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from functools import cached_property
 from django.db import models
+from django.core.cache.utils import make_template_fragment_key
+from django.core.cache import cache
 from wagtail.admin.panels import TabbedInterface, ObjectList, FieldPanel
 from wagtail import blocks as wagtail_blocks
 from wagtail.fields import StreamField
@@ -227,3 +229,10 @@ class TopicPage(HeroPage):
             f = HomePage.objects.all()[:1].get()
             context['default_image'] = f.default_image
         return context
+
+    def save(self, *args, **kwargs):
+
+        key = make_template_fragment_key("embassy_index")
+        cache.delete(key)
+
+        return super().save(*args, **kwargs)

@@ -1,6 +1,7 @@
 {% extends "patterns/hero_page.html" %}
 {% load wagtailcore_tags i18n %}
 
+{% cache 3600 topic_page %}
 {% block main %}
     <div class="section section--padding">
         <div class="wrapper wrapper--large wrapper--padding">
@@ -36,3 +37,4 @@
         </div>
     {% endif %}
 {% endblock %}
+{% endcache %}

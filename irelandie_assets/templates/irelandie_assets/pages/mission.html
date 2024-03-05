@@ -3,6 +3,8 @@
 {% load wagtailimages_tags %}
 {% load static %}
 
+{% cache 3600 mission_page %}
+
 {% block main %}
     <div class="wrapper wrapper--large wrapper--padding">
         {% include_block page.body %}
@@ -24,7 +26,7 @@
                     {% image page.social_logo width-120 class="person__iconDetails" %}
 
                     <div class="person__text">
-                        <a  href="{{ link_url }}" aria-label="{{ page.social_link_text }}">{{ page.social_link_text }}</a>
+                        <a  href="{{ link_url }}" aria-label="{{ page.social_link_text }}" role="link">{{ page.social_link_text }}</a>
                     </div>
                 </div>
 
@@ -44,3 +46,5 @@
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     {% endif %}
 {% endblock %}
+
+{% endcache %}
