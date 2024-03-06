@@ -419,6 +419,9 @@ if USE_S3 is True:
 
     AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STATIC_BUCKET_NAME", "")
     AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
+    from django.core.cache import cache
+
+    print(cache.keys('*'))
     print(AWS_S3_CUSTOM_DOMAIN)
     print(AWS_S3_CUSTOM_DOMAIN)
     print(AWS_S3_CUSTOM_DOMAIN)
