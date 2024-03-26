@@ -9,6 +9,7 @@ from django.core.cache.utils import make_template_fragment_key
 
 from wagtail.images import get_image_model_string
 
+
 from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_home.models import HomePage
 from irelandie_navigation.blocks import LinkBlock, NoticeBarWithMessageLink
@@ -478,6 +479,13 @@ class MissionPage(HeroPage):
         ObjectList(HeroPage.promote_panels, heading='Promote'),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
+
+    def save(self, *args, **kwargs):
+
+        key = make_template_fragment_key("mission_page_" + str(self.id))
+        cache.delete(key)
+
+        return super().save(*args, **kwargs)
 
 
 class Magazine(HeroPage):

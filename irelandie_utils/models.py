@@ -6,6 +6,8 @@ from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
 from modelcluster.fields import ParentalKey
 
+from wagtailcache.cache import cache_page, WagtailCacheMixin
+
 from wagtail.admin.panels import (
     FieldPanel,
     MultiFieldPanel,
@@ -13,12 +15,13 @@ from wagtail.admin.panels import (
     FieldRowPanel,
     HelpPanel, TabbedInterface, ObjectList,
 )
+from irelandie_utils.cache import get_default_cache_control_decorator
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail import blocks
 from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Orderable, Page, TranslatableMixin, PreviewableMixin
 from wagtail.query import PageQuerySet
-from wagtailcache.cache import cache_page, WagtailCacheMixin
+
 from wagtail.images import get_image_model_string
 from wagtail.search import index
 
@@ -574,8 +577,8 @@ class SystemMessagesSettings(BaseSetting):
 
 
 # Apply default cache headers on this page model's serve method.
-@method_decorator(cache_page, name='serve')
-class BasePage(SocialFields, ListingFields, Page, WagtailCacheMixin):
+@method_decorator(get_default_cache_control_decorator(), name='serve')
+class BasePage(SocialFields, ListingFields, Page):
     show_in_menus_default = True
 
     webchat_script = models.TextField(
@@ -761,7 +764,7 @@ class Tracking(BaseSetting):
 
 
 @method_decorator(cache_page, name='serve')
-class HeroPage(BasePage):
+class HeroPage(BasePage, WagtailCacheMixin):
     hero_title = models.CharField(blank=True, max_length=120)
     hero_size = models.CharField(
         max_length=16,

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from functools import cached_property
 from django.db import models
+from django.core.cache.utils import make_template_fragment_key
+from django.core.cache import cache
 from wagtail.admin.panels import TabbedInterface, ObjectList, FieldPanel
 from wagtail import blocks as wagtail_blocks
 from wagtail.fields import StreamField
@@ -11,6 +13,8 @@ from irelandie_utils import blocks
 from irelandie_utils.models import HeroPage
 from irelandie_pages.models import FreeFormPageBase
 from wagtail.images import get_image_model_string
+from wagtail.models import Site
+
 
 IMAGE_MODEL = get_image_model_string()
 
@@ -165,6 +169,14 @@ class CampaignPage(HeroPage):
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
+    def save(self, *args, **kwargs):
+        site = Site.objects.get()
+        print(site)
+        key = make_template_fragment_key("campaign_page")
+        cache.delete(key)
+
+        return super().save(*args, **kwargs)
+
 
 class TopicPage(HeroPage):
     template = "patterns/pages/home/topic_page.html"
@@ -227,3 +239,10 @@ class TopicPage(HeroPage):
             f = HomePage.objects.all()[:1].get()
             context['default_image'] = f.default_image
         return context
+
+    def save(self, *args, **kwargs):
+
+        key = make_template_fragment_key("topic_page")
+        cache.delete(key)
+
+        return super().save(*args, **kwargs)

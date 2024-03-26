@@ -79,7 +79,7 @@ locals {
     },
     gerry_dev = {
       description = "Gerry Mcbride - OGCIO"
-      cidr_blocks = ["52.49.120.79/32", "37.228.234.245/32"]
+      cidr_blocks = ["52.49.120.79/32", "37.228.234.5/32"]
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
@@ -424,6 +424,25 @@ resource "aws_s3_bucket_acl" "lb_logs" {
 resource "aws_s3_bucket" "private_lb_logs" {
   bucket  = "${local.environment_name}-${local.project_name}-private-lb-logs"
 }
+
+resource "aws_s3_bucket" "cf-logs" {
+  bucket  = "${local.environment_name}-${local.project_name}-cf-logs"
+}
+
+resource "aws_s3_bucket_acl" "cf-logs" {
+  bucket = aws_s3_bucket.cf-logs.id
+  acl    = "private"
+  depends_on = [aws_s3_bucket_ownership_controls.cf_s3_bucket_acl_ownership]
+}
+
+# Resource to avoid error "AccessControlListNotSupported: The bucket does not allow ACLs"
+resource "aws_s3_bucket_ownership_controls" "cf_s3_bucket_acl_ownership" {
+  bucket = aws_s3_bucket.cf-logs.id
+  rule {
+    object_ownership = "ObjectWriter"
+  }
+}
+
 
 resource "aws_s3_bucket_acl" "private_lb_logs" {
   bucket = aws_s3_bucket.private_lb_logs.id
@@ -1536,6 +1555,147 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
       sampled_requests_enabled   = true
     }
   }
+  
+  rule {
+    name     = "AWS-AWSManagedRulesAmazonIpReputationList"
+    priority = 2
+    override_action {
+      none {
+      }
+    }
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesAmazonIpReputationList"
+        vendor_name = "AWS"
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWS-AWSManagedRulesAmazonIpReputationList"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule {
+    name     = "AWS-AWSManagedRulesAnonymousIpList"
+    priority = 3
+    override_action {
+      none {
+      }
+    }
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesAnonymousIpList"
+        vendor_name = "AWS"
+
+        rule_action_override {
+          action_to_use {
+            allow {}
+          }
+
+          name = "HostingProviderIPList"
+        }
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWS-AWSManagedRulesAnonymousIpList"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule {
+    name     = "AWS-AWSManagedRulesKnownBadInputsRuleSet"
+    priority = 4
+    override_action {
+      none {
+      }
+    }
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesKnownBadInputsRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWS-AWSManagedRulesKnownBadInputsRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule {
+    name     = "AWS-AWSManagedRulesUnixRuleSet"
+    priority = 5
+    override_action {
+      none {
+      }
+    }
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesUnixRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWS-AWSManagedRulesUnixRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule {
+    name     = "AWS-AWSManagedRulesWindowsRuleSet"
+    priority = 6
+    override_action {
+      none {
+      }
+    }
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesWindowsRuleSet"
+        vendor_name = "AWS"
+        rule_action_override {
+          action_to_use {
+            allow {}
+          }
+
+          name = "WindowsShellCommands_BODY"
+        }
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWS-AWSManagedRulesWindowsRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
+    rule {
+    name     = "AWS-AWSManagedRulesSQLiRuleSet"
+    priority = 7
+    override_action {
+      none {
+      }
+    }
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesSQLiRuleSet"
+        vendor_name = "AWS"
+        rule_action_override {
+          action_to_use {
+            allow {}
+          }
+
+          name = "AWSManagedRulesSQLiRuleSet_BODY"
+        }
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWS-AWSManagedRulesSQLiRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
   visibility_config {
     cloudwatch_metrics_enabled = true
     metric_name                = "${local.project_name}-waf-metrics"
@@ -1553,6 +1713,45 @@ resource "aws_wafv2_web_acl_association" "public_association" {
   web_acl_arn  = aws_wafv2_web_acl.ireland_ie_waf.arn
 }
 
+resource "aws_cloudwatch_log_group" "example" {
+  name = "aws-waf-logs-ireland-ie"
+}
+
+resource "aws_wafv2_web_acl_logging_configuration" "example" {
+  log_destination_configs = [aws_cloudwatch_log_group.example.arn]
+  resource_arn            = aws_wafv2_web_acl.ireland_ie_waf.arn
+}
+
+resource "aws_cloudwatch_log_resource_policy" "example" {
+  policy_document = data.aws_iam_policy_document.example.json
+  policy_name     = "webacl-policy-uniq-name"
+}
+
+data "aws_iam_policy_document" "example" {
+  version = "2012-10-17"
+  statement {
+    effect = "Allow"
+    principals {
+      identifiers = ["delivery.logs.amazonaws.com"]
+      type        = "Service"
+    }
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.example.arn}:*"]
+    condition {
+      test     = "ArnLike"
+      values   = ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"]
+      variable = "aws:SourceArn"
+    }
+    condition {
+      test     = "StringEquals"
+      values   = [tostring(data.aws_caller_identity.current.account_id)]
+      variable = "aws:SourceAccount"
+    }
+  }
+}
+
+data "aws_region" "current" {}
+
 
 # ------------------------------------------------
 # CloudFront Static Files and Assets
@@ -1561,6 +1760,78 @@ resource "aws_wafv2_web_acl_association" "public_association" {
 locals {
   cloudfront_s3_origin_id = "AssetsS3Origin"
 }
+
+
+resource "aws_cloudfront_distribution" "dynamic" {
+  origin {
+    domain_name = aws_lb.public_sites.dns_name
+    origin_id   = aws_lb.public_sites.name
+
+    custom_origin_config {
+      origin_read_timeout      = 60
+      origin_keepalive_timeout = 60
+      http_port                = 80
+      https_port               = 443
+      origin_protocol_policy   = "https-only"
+      origin_ssl_protocols     = ["TLSv1", "TLSv1.1", "TLSv1.2"]
+    }
+  }
+  enabled = true
+  comment = "Website and CMS Assets Distribution."
+  aliases = ["www.${local.domain_ireland_ie}"]
+
+  logging_config {
+    include_cookies = false
+    bucket          = aws_s3_bucket.cf-logs.bucket_domain_name
+    prefix          = "${local.domain_ireland_ie}-cloudfront"
+  }
+
+  default_cache_behavior {
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = aws_lb.public_sites.name
+
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    cache_policy_id          = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+    viewer_protocol_policy   = "allow-all"
+    min_ttl                  = 0
+    default_ttl              = 3600
+    max_ttl                  = 86400
+
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.assets_cors.id
+  }
+
+  price_class = "PriceClass_100"
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
+
+  viewer_certificate {
+    acm_certificate_arn            = aws_acm_certificate.dynamic_cert.arn
+    ssl_support_method             = "sni-only"
+    minimum_protocol_version       = "TLSv1.2_2021"
+    cloudfront_default_certificate = false
+  }
+
+  depends_on = [
+    aws_acm_certificate.dynamic_cert
+  ]
+}
+
+
+resource "aws_acm_certificate" "dynamic_cert" {
+  domain_name               = "www.${local.domain_ireland_ie}"
+  validation_method         = "DNS"
+  provider                  = aws.virginia
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
 
 resource "aws_acm_certificate" "assets_cert" {
   domain_name               = "assets.${local.domain_ireland_ie}"
