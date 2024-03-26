@@ -79,7 +79,7 @@ locals {
     },
     gerry_dev = {
       description = "Gerry Mcbride - OGCIO"
-      cidr_blocks = ["52.49.120.79/32", "37.228.234.5/32"]
+      cidr_blocks = ["52.49.120.79/32", "37.228.234.5/32", "93.107.211.192/32"]
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
@@ -1785,9 +1785,19 @@ resource "aws_cloudfront_distribution" "dynamic" {
     bucket          = aws_s3_bucket.cf-logs.bucket_domain_name
     prefix          = "${local.domain_ireland_ie}-cloudfront"
   }
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "/search/*"
+  } 
 
   default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    allowed_methods  = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = aws_lb.public_sites.name
 
