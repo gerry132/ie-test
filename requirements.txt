@@ -15,6 +15,7 @@ wagtail-localize
 wagtail-storages==1.0.0rc1
 wagtailmedia
 wagtail-cache==2.4.0
+wagtail-cloudfront-invalidate==1.1.2
 
 # database
 dj-database-url==0.5.0
