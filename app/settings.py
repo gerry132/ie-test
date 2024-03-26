@@ -70,6 +70,7 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 
 INSTALLED_APPS = [
     #
+    "wagtail_cloudfront_invalidate",
     "app",
     "health_check",
     "accview_non_admin",
@@ -173,6 +174,9 @@ if DEBUG_TOOLBAR is True:
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
 
+
+CLOUDFRONT_DISTRIBUTION_ID = 'd1myit6n7hwrr1.cloudfront.net'
+WAGTAIL_CLOUDFRONT_INVALIDATE_ENABLED = True
 
 WAGTAILFRONTENDCACHE = {
     'cloudfront': {
