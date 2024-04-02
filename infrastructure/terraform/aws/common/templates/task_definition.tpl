@@ -29,6 +29,14 @@
                 "value": "${SETTINGS_AWS_SECRET_ACCESS_KEY}"
             },
             {
+                "name": "CLOUDFRONT_ID",
+                "value": "${SETTINGS_CLOUDFRONT_ID}"
+            },
+            {
+                "name": "OPENSEARCH_ENDPOINT",
+                "value": "${SETTINGS_OPENSEARCH_ENDPOINT}"
+            },
+            {
                 "name": "OPENSEARCH_ENDPOINT",
                 "value": "${SETTINGS_OPENSEARCH_ENDPOINT}"
             },

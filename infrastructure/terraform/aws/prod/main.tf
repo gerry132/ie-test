@@ -92,6 +92,20 @@ locals {
 # Values to fill after running terraform is ran, used for codebuild and secrets
 # -----------------------------------------------------------------------------
 
+resource "aws_ssm_parameter" "CLOUDFRONT_ID" {
+  name        = "${local.environment_name}_CLOUDFRONT_ID"
+  description = "For use in Codebuild buildspec - ${local.environment_name}"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
+
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
+
+
 resource "aws_ssm_parameter" "OPENSEARCH_ENDPOINT" {
   name        = "${local.environment_name}_OPENSEARCH_ENDPOINT"
   description = "For use in Codebuild buildspec - ${local.environment_name}"
@@ -1368,6 +1382,7 @@ locals {
   SETTINGS_OPENSEARCH_SECRET        = aws_ssm_parameter.OPENSEARCH_SECRET.value
   SETTINGS_OPENSEARCH_ENDPOINT      = aws_ssm_parameter.OPENSEARCH_ENDPOINT.value
   SETTINGS_OPENSEARCH_KEY           = aws_ssm_parameter.OPENSEARCH_KEY.value
+  SETTINGS_CLOUDFRONT_ID            = aws_ssm_parameter.CLOUDFRONT_ID.value
   SETTINGS_AWS_STATIC_BUCKET_NAME   = aws_s3_bucket.assets.id
   SETTINGS_BASE_URL                 = "https://${local.project_domain}"
   SETTINGS_CACHE_ADDRESS            = local.cache_address
@@ -1399,6 +1414,7 @@ data "template_file" "task_definition" {
     SETTINGS_OPENSEARCH_KEY             = local.SETTINGS_OPENSEARCH_KEY
     SETTINGS_OPENSEARCH_SECRET          = local.SETTINGS_OPENSEARCH_SECRET
     SETTINGS_OPENSEARCH_ENDPOINT        = local.SETTINGS_OPENSEARCH_ENDPOINT
+    SETTINGS_CLOUDFRONT_ID              = local.SETTINGS_CLOUDFRONT_ID
     SETTINGS_BASE_URL                   = local.SETTINGS_BASE_URL
     SETTINGS_CACHE_ADDRESS              = local.SETTINGS_CACHE_ADDRESS
     SETTINGS_DATABASE_URL               = local.SETTINGS_DATABASE_URL
@@ -1794,6 +1810,17 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "/search/*"
+  } 
+
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/news-archive/"
   } 
 
   default_cache_behavior {
