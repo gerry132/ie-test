@@ -70,6 +70,7 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 
 INSTALLED_APPS = [
     #
+    "wagtail_cloudfront_invalidate",
     "app",
     "health_check",
     "accview_non_admin",
@@ -173,6 +174,30 @@ if DEBUG_TOOLBAR is True:
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
 
+
+CLOUDFRONT_ID = os.environ.get("CLOUDFRONT_ID")
+
+USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
+
+WAGTAIL_CLOUDFRONT_INVALIDATE_ENABLED = True
+
+if CLOUDFRONT_ID and CLOUDFRONT_ID != 'CHANGE-ME':
+    CLOUDFRONT_DISTRIBUTION_ID = CLOUDFRONT_ID
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+else:
+    CLOUDFRONT_DISTRIBUTION_ID = 'E1TO0QE2H25W4R'
 
 WAGTAILFRONTENDCACHE = {
     'cloudfront': {
