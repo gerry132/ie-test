@@ -570,9 +570,22 @@ class SystemMessagesSettings(BaseSetting):
         "Text",
         default="<p>You may be trying to find a page that doesn&rsquo;t exist or has been moved.</p>",
     )
+    image_403_500 = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    title_403_500 = models.CharField("Title", max_length=255, default="Something went wrong on our side")
+    body_403_500 = RichTextField(
+        "Text",
+        default="<p>Sorry, this page is not working properly. We now know about this and we’re working to fix it.</p>",
+    )
 
     panels = [
-        MultiFieldPanel([FieldPanel("title_404"), FieldPanel("body_404")], "404 page")
+        MultiFieldPanel([FieldPanel("title_404"), FieldPanel("body_404")], "404 page"),
+        MultiFieldPanel([FieldPanel("image_403_500", heading="image"), FieldPanel("title_403_500"), FieldPanel("body_403_500")], "403 and 500 page")
     ]
 
 
