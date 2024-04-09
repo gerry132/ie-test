@@ -1506,6 +1506,7 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips" {
   addresses          = ["161.35.72.212/32",
                         "46.101.124.44/32",
                         "46.101.116.160/32",
+                        "85.208.98.128/25",
                         "164.90.168.210/32",
                         "176.58.117.51/32",
                         "80.85.87.84/32",
@@ -1514,9 +1515,28 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips" {
 }
 
 
-resource "aws_wafv2_web_acl" "ireland_ie_waf" {
-  name  = "${local.project_name}-waf"
-  scope = "REGIONAL"
+resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
+  name               = "${local.environment_name}-${local.project_name}-ip-set-cloudfront"
+  description        = "IPs"
+  provider                  = aws.virginia
+  scope              = "CLOUDFRONT"
+  ip_address_version = "IPV4"
+  addresses          = ["161.35.72.212/32",
+                        "46.101.124.44/32",
+                        "46.101.116.160/32",
+                        "85.208.98.128/25",
+                        "164.90.168.210/32",
+                        "176.58.117.51/32",
+                        "80.85.87.84/32",
+                        "88.80.184.34/32",
+                        "178.79.136.28/32"]
+}
+
+
+resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
+  name  = "${local.project_name}-waf-cloudfront"
+  provider                  = aws.virginia
+  scope = "CLOUDFRONT"
 
   default_action {
     allow {}
@@ -1557,7 +1577,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
             not_statement {
               statement {
                 ip_set_reference_statement { 
-                  arn = aws_wafv2_ip_set.ireland_ie_ips.arn
+                  arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
             }
@@ -1719,23 +1739,15 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
   }
 }
 
-resource "aws_wafv2_web_acl_association" "admin_association" {
-  resource_arn = aws_lb.default.arn
-  web_acl_arn  = aws_wafv2_web_acl.ireland_ie_waf.arn
-}
-
-resource "aws_wafv2_web_acl_association" "public_association" {
-  resource_arn = aws_lb.public_sites.arn
-  web_acl_arn  = aws_wafv2_web_acl.ireland_ie_waf.arn
-}
 
 resource "aws_cloudwatch_log_group" "example" {
+  provider = aws.virginia
   name = "aws-waf-logs-ireland-ie"
 }
 
 resource "aws_wafv2_web_acl_logging_configuration" "example" {
   log_destination_configs = [aws_cloudwatch_log_group.example.arn]
-  resource_arn            = aws_wafv2_web_acl.ireland_ie_waf.arn
+  resource_arn            = aws_wafv2_web_acl.ireland_ie_waf_cloudfront.arn
 }
 
 resource "aws_cloudwatch_log_resource_policy" "example" {
@@ -1779,6 +1791,7 @@ locals {
 
 
 resource "aws_cloudfront_distribution" "dynamic" {
+  web_acl_id    = aws_wafv2_web_acl.ireland_ie_waf_cloudfront.arn
   origin {
     domain_name = aws_lb.public_sites.dns_name
     origin_id   = aws_lb.public_sites.name
@@ -1821,6 +1834,30 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/news-archive/"
+  } 
+
+
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/news-and-events/"
+  } 
+
+
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/annual-reports/"
   } 
 
   default_cache_behavior {
