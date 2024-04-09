@@ -33,7 +33,10 @@ def server_error(request, template_name="patterns/pages/errors/500.html"):
         body_403_500 = "<p>Sorry, this page is not working properly. We now know about this and we’re working to fix it.</p>"
         image_403_500 = None
 
-    return render(request, template_name, {'title': title_403_500, 'body': body_403_500, 'image_error': image_403_500 }, status=500)
+    return render(request, template_name,
+                  {'title': title_403_500, 'body': body_403_500, 'image_error': image_403_500},
+                  status=500)
+
 
 def permission_denied(request, template_name="patterns/pages/errors/502.html"):
     try:
@@ -47,7 +50,9 @@ def permission_denied(request, template_name="patterns/pages/errors/502.html"):
         body_403_500 = "<p>Sorry, this page is not working properly. We now know about this and we’re working to fix it.</p>"
         image_403_500 = None
 
-    return render(request, template_name, {'title': title_403_500, 'body': body_403_500, 'image_error': image_403_500}, status=403)
+    return render(request, template_name,
+                  {'title': title_403_500, 'body': body_403_500, 'image_error': image_403_500},
+                  status=403)
 
 
 class PagesAPIEndpoint(PagesAPIViewSet):

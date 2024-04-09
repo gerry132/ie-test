@@ -585,7 +585,8 @@ class SystemMessagesSettings(BaseSetting):
 
     panels = [
         MultiFieldPanel([FieldPanel("title_404"), FieldPanel("body_404")], "404 page"),
-        MultiFieldPanel([FieldPanel("image_403_500", heading="image"), FieldPanel("title_403_500"), FieldPanel("body_403_500")], "403 and 500 page")
+        MultiFieldPanel([FieldPanel("image_403_500", heading="image"),
+                         FieldPanel("title_403_500"), FieldPanel("body_403_500")], "403 and 500 page")
     ]
 
 
