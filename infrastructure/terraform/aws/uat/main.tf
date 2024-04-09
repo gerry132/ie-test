@@ -1395,6 +1395,7 @@ data "template_file" "task_definition" {
     port                                = local.service_contrainer_port
     region                              = local.region
     task_cpu                            = local.task_cpu
+    SETTINGS_CLOUDFRONT_ID              = local.SETTINGS_CLOUDFRONT_ID
     task_memory                         = local.task_memory
     assets_url                          = "assets.${local.domain_ireland_ie}"
     assets_s3_bucket                    = aws_s3_bucket.assets.id
