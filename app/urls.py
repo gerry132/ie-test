@@ -80,5 +80,6 @@ if dj_settings.PATTERN_LIBRARY_ENABLED is True:
         path("pattern-library/", include("pattern_library.urls")),
     ]
 
+handler403 = 'irelandie_utils.views.permission_denied'
 handler404 = 'irelandie_utils.views.page_not_found'
 handler500 = 'irelandie_utils.views.server_error'
