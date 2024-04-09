@@ -81,7 +81,7 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.54.73/32", "80.233.48.73/32"]
+      cidr_blocks  = ["80.233.53.247/32", "80.233.59.247/32"]
     },
     joe_dev = {
       description = "Joe D - Sidero"
@@ -1869,7 +1869,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
     override_action {
       none {
       }
-    }  
+    }
     statement {
       managed_rule_group_statement {
         name        = "AWSManagedRulesBotControlRuleSet"
