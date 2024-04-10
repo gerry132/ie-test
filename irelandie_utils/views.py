@@ -39,7 +39,7 @@ def server_error(request, template_name="patterns/pages/errors/500.html"):
                   status=500)
 
 
-def permission_denied(request, template_name="patterns/pages/errors/502.html"):
+def permission_denied(request, template_name="patterns/pages/errors/403.html"):
     try:
         current_site = Site.find_for_request(request)
         system_messages_settings = SystemMessagesSettings.for_site(current_site)
