@@ -1,4 +1,24 @@
-{% load wagtailcore_tags %}
+<script>
+    function checkDocuments(links) {
+        links.forEach(function(link) {
+            var url = link.getAttribute('href');
+            var xhr = new XMLHttpRequest();
+            xhr.open('HEAD', url, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        console.log('Document is accessible:', url);
+                        link.setAttribute('href', url);
+                    } else {
+                        console.error('Error accessing document:', xhr.status);}
+                }
+            };
+            xhr.send();
+        });
+    }
+    var richTextSummaryLinks = document.querySelectorAll('.rich-text__summary a');
+    checkDocuments(richTextSummaryLinks);
+</script>
 <div class="rich-text" {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
     {% if value.paragraph_alignment == 'narrow' %}
         <div class="rich-text rich-text__narrow">
@@ -6,7 +26,7 @@
                 <h2 class="story__heading heading--2">{{ value.heading }}</h2>
             {% endif %}
             {% if value.rich_text %}
-                {{ value.rich_text }}
+                <div class="rich_text__summary">{{ value.rich_text }}</div>
             {% endif %}
             {% if value.button_link %}
             {% for button in value.button_link %}
@@ -25,7 +45,7 @@
         <h2 class="story__heading heading--2">{{ value.heading }}</h2>
     {% endif %}
     {% if value.rich_text %}
-        {{ value.rich_text }}
+        <div class="rich_text__summary"> {{ value.rich_text }} </div>
     {% endif %}
         {% if value.button_link %}
             <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
