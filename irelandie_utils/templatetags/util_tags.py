@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from urllib.parse import urljoin
-from urllib.request import urlopen
+import requests
 
 from django import template
 from django.utils.text import camel_case_to_spaces, slugify
@@ -305,7 +305,7 @@ def beta_element_tag(context, page):
 def is_document_accessible(document, domain):
     try:
         full_url = urljoin(f"https://{domain}", document)
-        response = urlopen(full_url)
-        return response.status == 200
+        response = requests.get(full_url, timeout=10)
+        return response.status_code == 200
     except Exception:
         return False
