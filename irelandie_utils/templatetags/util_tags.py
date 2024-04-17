@@ -299,6 +299,7 @@ def beta_element_tag(context, page):
                 return m.beta_element
     return False
 
+
 @register.filter
 def is_document_accessible(document, domain):
     try:
