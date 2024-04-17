@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from urllib.request import urlopen
+
 from django import template
 from django.utils.text import camel_case_to_spaces, slugify
 
@@ -296,3 +298,12 @@ def beta_element_tag(context, page):
             if m.beta_element:
                 return m.beta_element
     return False
+
+@register.filter
+def is_document_accessible(document, domain):
+    try:
+        full_url = f"https://{domain}{document}"
+        response = urlopen(full_url)
+        return response.status == 200
+    except Exception:
+        return False
