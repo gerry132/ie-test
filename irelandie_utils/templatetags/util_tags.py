@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from urllib.parse import urljoin
 from urllib.request import urlopen
 
 from django import template
@@ -303,7 +304,7 @@ def beta_element_tag(context, page):
 @register.filter
 def is_document_accessible(document, domain):
     try:
-        full_url = f"https://{domain}{document}"
+        full_url = urljoin(f"https://{domain}", document)
         response = urlopen(full_url)
         return response.status == 200
     except Exception:
