@@ -1,28 +1,5 @@
-{% with value.document.url as document_url %}
-    <script>
-        function checkDocument(url) {
-            var xhr = new XMLHttpRequest();
-            xhr.open('HEAD', url, true);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        console.log('Document is accessible.');
-                        var documentLink = document.querySelector('.document-block');
-                        if (documentLink) {
-                            documentLink.setAttribute('href', url);
-                        }
-                    } else {
-                        console.error('Error accessing document:', xhr.status);
-                    }
-                }
-            };
-            xhr.send();
-        }
-        checkDocument("{{ document_url }}");
-    </script>
-{% endwith %}
-
-<a href="" class="streamfield document-block" target="_blank" rel="nofollow noreferrer" aria-labelledby="document-title">
+{% load wagtailcore_tags util_tags %}
+<a href="{{ value.document.url }}" class="streamfield document-block" target="_blank" rel="nofollow noreferrer" aria-labelledby="document-title">
     <div class="document-block__content">
         {% include "patterns/atoms/icons/icon.html" with name="file" classname="document-block__icon" %}
 
@@ -30,6 +7,8 @@
             {% firstof value.title value.document.title %}
         </span>
     </div>
+    {% with request.get_host as domain %}
+    {% if value.document.url|is_document_accessible:domain %}
     <div class="document-block__meta">
         {% if value.document.file_extension %}
             <span class="document-block__type">{{ value.document.file_extension }}</span>
@@ -38,4 +17,6 @@
             <span class="document-block__size">{{ value.document.file.size|filesizeformat }}</span>
         {% endif %}
     </div>
+    {% endif %}
+    {% endwith %}
 </a>

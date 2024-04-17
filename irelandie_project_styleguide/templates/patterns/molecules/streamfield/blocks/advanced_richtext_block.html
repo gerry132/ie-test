@@ -1,24 +1,4 @@
-<script>
-    function checkDocuments(links) {
-        links.forEach(function(link) {
-            var url = link.getAttribute('href');
-            var xhr = new XMLHttpRequest();
-            xhr.open('HEAD', url, true);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        console.log('Document is accessible:', url);
-                        link.setAttribute('href', url);
-                    } else {
-                        console.error('Error accessing document:', xhr.status);}
-                }
-            };
-            xhr.send();
-        });
-    }
-    var richTextSummaryLinks = document.querySelectorAll('.rich-text__summary a');
-    checkDocuments(richTextSummaryLinks);
-</script>
+{% load wagtailcore_tags %}
 <div class="rich-text" {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
     {% if value.paragraph_alignment == 'narrow' %}
         <div class="rich-text rich-text__narrow">
