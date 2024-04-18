@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import requests
+
 from django import template
 from django.utils.text import camel_case_to_spaces, slugify
 
@@ -296,3 +298,13 @@ def beta_element_tag(context, page):
             if m.beta_element:
                 return m.beta_element
     return False
+
+
+@register.filter
+def is_document_accessible(document, request):
+    try:
+        full_url = request.build_absolute_uri(document)
+        response = requests.get(full_url, timeout=10, allow_redirects=True)
+        return response.status_code == 200
+    except Exception:
+        return False

@@ -6,7 +6,7 @@
                 <h2 class="story__heading heading--2">{{ value.heading }}</h2>
             {% endif %}
             {% if value.rich_text %}
-                {{ value.rich_text }}
+                <div class="rich_text__summary">{{ value.rich_text }}</div>
             {% endif %}
             {% if value.button_link %}
             {% for button in value.button_link %}
@@ -25,7 +25,7 @@
         <h2 class="story__heading heading--2">{{ value.heading }}</h2>
     {% endif %}
     {% if value.rich_text %}
-        {{ value.rich_text }}
+        <div class="rich_text__summary"> {{ value.rich_text }} </div>
     {% endif %}
         {% if value.button_link %}
             <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
