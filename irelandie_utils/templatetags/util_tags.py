@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from urllib.parse import urljoin
 import requests
 
 from django import template
