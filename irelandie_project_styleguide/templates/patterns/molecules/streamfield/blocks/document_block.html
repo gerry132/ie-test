@@ -7,8 +7,8 @@
             {% firstof value.title value.document.title %}
         </span>
     </div>
-    {% with request=request %}
-    {% if value.document.url|is_document_accessible:request %}
+    {% with request.get_host as domain %}
+    {% if value.document.url|is_document_accessible:domain %}
     <div class="document-block__meta">
         {% if value.document.file_extension %}
             <span class="document-block__type">{{ value.document.file_extension }}</span>
