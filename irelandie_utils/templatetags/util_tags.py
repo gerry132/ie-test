@@ -302,10 +302,10 @@ def beta_element_tag(context, page):
 
 
 @register.filter
-def is_document_accessible(document, domain):
+def is_document_accessible(document, request):
     try:
-        full_url = urljoin(f"https://{domain}", document)
-        response = requests.get(full_url, timeout=10)
+        full_url = request.build_absolute_uri(document)
+        response = requests.get(full_url, timeout=10, allow_redirects=True)
         return response.status_code == 200
     except Exception:
         return False
