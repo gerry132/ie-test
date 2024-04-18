@@ -1746,6 +1746,7 @@ resource "aws_cloudwatch_log_group" "example" {
 }
 
 resource "aws_wafv2_web_acl_logging_configuration" "example" {
+  provider = aws.virginia
   log_destination_configs = [aws_cloudwatch_log_group.example.arn]
   resource_arn            = aws_wafv2_web_acl.ireland_ie_waf_cloudfront.arn
 }
@@ -1823,6 +1824,16 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "/search/*"
+  } 
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "/overseas-travel/advice/*"
   } 
 
   ordered_cache_behavior {
