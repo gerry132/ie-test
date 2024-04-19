@@ -110,13 +110,6 @@
                             {% endif %}
                             {% primarynav page %}
                         </div>
-                        {% has_secondary_nav as shownav %}
-                        {% if shownav %}
-                        <div class="header__menu header__menu--extended">
-                            {% comment %} Secondary nav/burger nav {% endcomment %}
-                            {% secondarynav %}
-                        </div>
-                        {% endif %}
 
                         {% comment %}
                             Show override nav alongside primary nav in dropdown if available
@@ -132,9 +125,9 @@
 
                 <div class="header__menu-items desktop">
                     <!-- Start of the locale selector -->
-                      
+
                     {% if page.get_translations.live %}
-                    
+
                         <div>
                             <div class="header__language-switcher">
                                 <label for="language-switcher" class="u-sr-only">{% trans 'Select default language' %}</label>
@@ -147,8 +140,8 @@
                                      </option>
                                      {% for translation in page.get_translations.live %}
                                      {% get_language_info for translation.locale.language_code as lang %}
-                                     {% is_alias translation as alias %}      
-                                     {% if not alias %}    
+                                     {% is_alias translation as alias %}
+                                     {% if not alias %}
                                      <option value="{% pageurl translation %}">
                                                  {{lang.name_local}}
                                           </option>
@@ -280,8 +273,8 @@
                                          </option>
                                         {% for translation in page.get_translations.live %}
                                             {% get_language_info for translation.locale.language_code as lang %}
-                                            {% is_alias translation as alias %}      
-                                            {% if not alias %}   
+                                            {% is_alias translation as alias %}
+                                            {% if not alias %}
                                             <option value="{% pageurl translation %}">
                                                         {{lang.name_local}}
                                                  </option>
