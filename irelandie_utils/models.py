@@ -193,6 +193,7 @@ class PageRelatedDestinationTags(Orderable):
 
     panels = [DestinationTagsChooserPanel("page")]
 
+
 class PageRelatedDestinations(Orderable):
     parent = ParentalKey(Page, related_name="page_related_destinations")
     page = models.ForeignKey(
