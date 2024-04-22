@@ -304,7 +304,7 @@ def beta_element_tag(context, page):
 @register.filter
 def is_document_accessible(document, domain):
     try:
-        base_url = f"https://assets.uat.ireland.ie/documents/"
+        base_url = "https://assets.uat.ireland.ie/documents/"
         document_filename = document.split('/', 2)[-1]
         full_url = urljoin(base_url, document_filename)
         response = requests.get(full_url, timeout=10)
