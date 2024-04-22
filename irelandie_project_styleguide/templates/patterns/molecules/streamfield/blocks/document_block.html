@@ -8,6 +8,7 @@
         </span>
     </div>
     {% with request.get_host as domain %}
+    {{ domain }}{{ value.document.url }}
     {% if value.document.url|is_document_accessible:domain %}
     <div class="document-block__meta">
         {% if value.document.file_extension %}
