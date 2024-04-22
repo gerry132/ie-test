@@ -153,7 +153,7 @@ class PageRelatedTags(Orderable):
         related_name="+",
     )
 
-    panels = [PageChooserPanel("page")]
+    panels = [PageChooserPanel("page", page_type='irelandie_tags.TagPage')]
 
 
 class PageRelatedDestinationTags(Orderable):
@@ -164,7 +164,7 @@ class PageRelatedDestinationTags(Orderable):
         related_name="+",
     )
 
-    panels = [PageChooserPanel("page")]
+    panels = [PageChooserPanel("page", page_type='irelandie_tags.DestinationTagPage')]
 
 
 class PageRelatedDestinations(Orderable):
