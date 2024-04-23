@@ -5,7 +5,6 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
 from modelcluster.fields import ParentalKey
-from wagtail.admin.widgets import AdminPageChooser
 
 from wagtailcache.cache import cache_page, WagtailCacheMixin
 
@@ -145,19 +144,6 @@ class PageRelatedPage(Orderable):
     panels = [PageChooserPanel("page")]
 
 
-class TagPageChooserPanel(PageChooserPanel):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    def widget_overrides(self):
-        return {
-            "page": AdminPageChooser(
-                target_models=["irelandie_tags.TagPage"],
-                can_choose_root=False,
-            )
-        }
-
-
 # Related pages
 class PageRelatedTags(Orderable):
     parent = ParentalKey(Page, related_name="page_related_tags")
@@ -165,22 +151,10 @@ class PageRelatedTags(Orderable):
         "irelandie_tags.TagPage",
         on_delete=models.CASCADE,
         related_name="+",
+        limit_choices_to={'content_type__app_label': 'irelandie_tags', 'content_type__model': 'tagpage'}
     )
 
-    panels = [TagPageChooserPanel("page")]
-
-
-class DestinationTagsChooserPanel(PageChooserPanel):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    def widget_overrides(self):
-        return {
-            "page": AdminPageChooser(
-                target_models=["irelandie_tags.DestinationTagPage"],
-                can_choose_root=False,
-            )
-        }
+    panels = [FieldPanel("page")]
 
 
 class PageRelatedDestinationTags(Orderable):
@@ -189,9 +163,10 @@ class PageRelatedDestinationTags(Orderable):
         "irelandie_tags.DestinationTagPage",
         on_delete=models.CASCADE,
         related_name="+",
+        limit_choices_to={'content_type__app_label': 'irelandie_tags', 'content_type__model': 'destinationtagpage'}
     )
 
-    panels = [DestinationTagsChooserPanel("page")]
+    panels = [FieldPanel("page")]
 
 
 class PageRelatedDestinations(Orderable):
