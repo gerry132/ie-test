@@ -301,10 +301,21 @@ def beta_element_tag(context, page):
     return False
 
 
+@register.simple_tag
+def extract_domain(url):
+    parts = url.split('.')
+    if len(parts) > 2 and parts[0] == "www":
+        if len(parts) > 3 and parts[1] == "content":
+            return '.'.join(parts[2:])
+        return '.'.join(parts[1:])
+    return '.'.join(parts[-2:])
+
+
 @register.filter
 def is_document_accessible(document, domain):
+    domain_host = extract_domain(domain)
     try:
-        base_url = "https://assets.uat.ireland.ie/documents/"
+        base_url = f"https://assets.{domain_host}/documents/"
         document_filename = document.split('/', 2)[-1]
         full_url = urljoin(base_url, document_filename)
         response = requests.get(full_url, timeout=10)
