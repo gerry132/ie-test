@@ -117,3 +117,18 @@
         }
     }
 }
+.button_text__hero,
+.image__button {
+    height: 60px;
+    display: inline-flex;
+    align-items: center;
+}
+
+
+.image__button {
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    vertical-align: middle;
+    margin-left: 10px;
+}
