@@ -124,6 +124,12 @@
     align-items: center;
 }
 
+.elem--contain{
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
 
 .image__button {
     max-height: 100%;
