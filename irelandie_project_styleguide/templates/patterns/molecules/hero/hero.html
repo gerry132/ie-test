@@ -72,7 +72,9 @@
                 </h1>
 
                 {% if page.summary or page.introduction %}
+                <div class="hero__sub_title">
                     <p>{% firstof page.summary page.introduction %}</p>
+                </div>
                 {% endif %}
 
                 {% if page.link_page and page.link_text %}
