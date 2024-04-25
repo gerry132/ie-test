@@ -51,7 +51,7 @@
             {% if 'vimeo.com' in page.youtube_or_vimeo_embed %}
                 <div class="video-container responsive-object">
                     <iframe allowfullscreen frameborder="0" src="{{ page.embedding_url }}"
-                            title="{{ page.event_title }}"></iframe>
+                            title="{% if page.event_title %}{{ page.event_title }}{% else %}vimeo_embed{% endif %}"></iframe>
                 </div>
             {% else %}
                 <div class="video-container responsive-object">
@@ -60,7 +60,7 @@
                         allowfullscreen
                         frameborder="0"
                         src="{{ page.embedding_url }}"
-                        title="{{ page.event_title }}">
+                        title="{% if page.event_title %}{{ page.event_title }}{% else %}youtube_embed{% endif %}">
                     </iframe>
                 </div>
             {% endif %}
