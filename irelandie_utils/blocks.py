@@ -906,6 +906,7 @@ class ArticleStoryBlock(blocks.StreamBlock):
 
     html = blocks.RawHTMLBlock(
         group="HTML",
+        help_text="Add title attribute value to iframe for accessibility.",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
 
@@ -922,6 +923,7 @@ class MinimalArticleStoryBlock(blocks.StreamBlock):
     document = DocumentBlock(group="Base")
     html = blocks.RawHTMLBlock(
         group="HTML",
+        help_text="Add title attribute value to iframe for accessibility.",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
     logos = LogoCardsBlock(group="Module")
@@ -950,7 +952,7 @@ class PinnedStoriesBlock(blocks.StructBlock):
 
 
 class MapBlock(blocks.StructBlock):
-    iframe = blocks.RawHTMLBlock(required=False)
+    iframe = blocks.RawHTMLBlock(help_text="Add title attribute value to iframe for accessibility.", required=False)
     width = blocks.IntegerBlock(max_num=100, required=False)
 
 
@@ -1168,6 +1170,7 @@ class GeneralContentBlocks(blocks.StreamBlock):
     document = DocumentBlock(group="Base")
     html = blocks.RawHTMLBlock(
         group="HTML",
+        help_text="Add title attribute value to iframe for accessibility.",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
     table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
@@ -1901,6 +1904,7 @@ class FreeFormBlocks(FreeFormBlocksBase):
     ], group="HTML")
     html = blocks.RawHTMLBlock(
         group="HTML",
+        help_text="Add title attribute value to iframe for accessibility.",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
     stats_block = StatsBlock(group="Base")
