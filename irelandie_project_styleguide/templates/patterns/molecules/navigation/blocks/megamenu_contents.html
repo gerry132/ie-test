@@ -7,7 +7,7 @@
         {% if block.value.mega_menu_sub_links %}
         <div role="button" class="sub_links__button" data-sub-links-question aria-haspopup="true" aria-expanded="false">
             <a class="grid_item"
-               href="{% if block.value.page %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}" >
+               href="{% if block.value.page %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}" aria-label="grid_item">
 
                 <span class="{% if block.value.page.url or block.value.url %}underline{% endif %}">
                     {% if block.value.title %}
@@ -22,7 +22,7 @@
         </div>
         {% else %}
             <a class="grid_item"
-               href="{% if block.value.page %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}" >
+               href="{% if block.value.page %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}" aria-label="grid_item" >
                 <span class="{% if block.value.page.url or block.value.url %}underline{% endif %}">
                 {% if block.value.title %}
                 {{ block.value.title }}
@@ -38,7 +38,7 @@
 
             {% for blocks in block.value.mega_menu_sub_links %}
                 <a class="grid_item_sub_links"
-                   href="{% if blocks.value.page %}{{ blocks.value.page.url }}{% else %}{{ blocks.value.url }}{% endif %}" >
+                   href="{% if blocks.value.page %}{{ blocks.value.page.url }}{% else %}{{ blocks.value.url }}{% endif %}" aria-label="grid_item_sub_links">
                     {% if blocks.value.title %}
                     {{ blocks.value.title }}
                     {% else %}

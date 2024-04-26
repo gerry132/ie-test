@@ -1,8 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 
-{% load wagtailcore_tags wagtailimages_tags i18n %}
-
-<a href="{{ job.url }}" class="link-box">
+<a href="{{ job.url }}" aria-label="{{ job.title }}" class="link-box">
     <div class="link-box__content">
         <div class="link-box__container">
             <h3 class="link-box__heading heading--3">{{ job.title }}</h3>
@@ -10,7 +8,7 @@
                 {{ job.job_index_page_summary|richtext }}
             </div>
         </div>
-        <button class="link-box__btn{% if job.job_index_page_summary %} link-box__title_subtitle{% else %} link-box__title{% endif %}" aria-label="Link box"></button>
+        <button class="link-box__btn{% if job.job_index_page_summary %} link-box__title_subtitle{% else %} link-box__title{% endif %}" aria-label="{% trans 'Link box button' %}"></button>
     </div>
     <br>
     <div class="link-box__heading1 link-box__line"></div>

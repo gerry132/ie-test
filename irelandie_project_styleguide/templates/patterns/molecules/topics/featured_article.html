@@ -1,6 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 
-<a href="{% pageurl article %}" class="card">
+<a href="{% pageurl article %}" aria-label="{% trans 'featured_article' %}" class="card">
     <!--test-->
     {% if article.specific.listing_image or article.specific.hero_image or default_image %}
         <div class="card__image-container">

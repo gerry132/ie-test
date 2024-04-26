@@ -19,7 +19,7 @@
 
             {% if page.link_page and page.link_text %}
                 {% pageurl page.link_page as href %}
-                <a class="hero__button button" href="{{ href }}">{{ page.link_text }}</a>
+                <a class="hero__button button" href="{{ href }}" aria-label="{% trans 'Hero button' %}">{{ page.link_text }}</a>
             {% endif %}
 
             {% check_page_type page.content_type 'Free Form Page' as FreeFormPage %}
@@ -27,13 +27,13 @@
             {% if FreeFormPage or StoryPage %}
                 <ul class="tag__slide">
                     {% for tags_category, tag_links in tagging_links %}
-                        <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                        <li class="tag__slide-item"><a href="{{ tag_links }}" aria-label="{% trans 'Tag label' %}">{{ tags_category.specific.tag_label }}</a></li>
                     {% endfor %}
                     {% for tags_category in tags_no_links %}
                         <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
                     {% endfor %}
                     {% for tags_destination, tag_links in destination_tag_links %}
-                        <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
+                        <li class="tag__slide-item"><a href="{{ tag_links.url }}" aria-label="{% trans 'Tag label' %}">{{ tags_destination }}</a></li>
                     {% endfor %}
                 </ul>
             {% endif %}
@@ -82,7 +82,7 @@
             </div>
             {% if page.link_page and page.link_text %}
                 {% pageurl page.link_page as href %}
-                <a class="hero__button button" href="{{ href }}">{{ page.link_text }}</a>
+                <a class="hero__button button" aria-label="hero_button" href="{{ href }}">{{ page.link_text }}</a>
             {% endif %}
 
             <ul class="tag__slide">

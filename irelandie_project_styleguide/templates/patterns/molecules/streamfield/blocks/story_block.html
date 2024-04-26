@@ -112,9 +112,9 @@
                 </div>
                 {% else %}
                 {% with next_element=value.links|next:forloop.counter0 %}
-                
+
                 {% if next_element %}
-            
+
                 {% get_unique_ref as id %}
                 <div class="slide-{{desk_ref}} slide" id="desk-{{id}}">
                     <div class="story-links">
@@ -147,8 +147,8 @@
                     {% if value.links|length > 2 %}
                     {% get_unique_ref as button_next %}
                     {% get_unique_ref as button_previous %}
-                    <button role="button" aria-label="Next menu item" class="btn btn-next-{{button_next}} btn-next"></button>
-                    <button role="button" aria-label="Previous menu item" class="btn btn-prev-{{button_previous}} btn-prev">
+                    <button role="button" aria-label="{% trans 'Next menu item' %}" class="btn btn-next-{{button_next}} btn-next"></button>
+                    <button role="button" aria-label="{% trans 'Previous menu item' %}" class="btn btn-prev-{{button_previous}} btn-prev">
                     </button>
                     {% endif %}
                 </div>
@@ -196,7 +196,7 @@
             });
           });
 
-          
+
           // select next slide button
           const prevSlide = document.querySelector(".btn-prev-" + data_set.previous);
 

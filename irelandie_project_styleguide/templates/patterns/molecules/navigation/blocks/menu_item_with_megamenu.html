@@ -1,7 +1,7 @@
 {% load wagtailcore_tags wagtailimages_tags navigation_tags util_tags i18n %}
 
 {% if value.mega_menu %}
-<div class="{{ nav_type }}__link mega_menu" data-mega-menu data-mobile-mega-menu>
+<div class="{{ nav_type }}__link mega_menu" aria-label="mega_menu__link" data-mega-menu data-mobile-mega-menu>
     <div role="button" aria-haspopup="true" class="mega_menu_dropbtn" data-mega-menu-question>
         {{ link_title }}
         {% if value.mega_menu %}
@@ -69,7 +69,7 @@
 
 </div>
 {% else %}
-<a class="{{ nav_type }}__link" data-mobile-mega-menu href="{{ link_url }}">
+<a class="{{ nav_type }}__link" aria-label="mega_menu__link" data-mobile-mega-menu href="{{ link_url }}">
     {{ link_title }}
 </a>
 {% endif %}
