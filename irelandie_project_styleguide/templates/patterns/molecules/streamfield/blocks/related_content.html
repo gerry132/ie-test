@@ -1,4 +1,5 @@
 {% load wagtailcore_tags wagtailimages_tags %}
+{% load i18n %}
 
 <a href="{{ link_url }}" class="related_content_card">
     <div class="card__image-container1">
@@ -19,7 +20,7 @@
             {% include "patterns/atoms/icons/icon.html" with name=value.icon classname="related_content_card__icon" %}
         {% endif %}
             <span class="related_content_card__title" {% if not value.icon %}style="padding-left:10px;"{% endif %}>{{ value.title }}</span>
-        <button class="related_content_card__btn_content ">
+        <button class="related_content_card__btn_content" aria-label="{% trans 'Arrow' %}">
                 {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="related_content_card__icons" %}
         </button>
     </div>

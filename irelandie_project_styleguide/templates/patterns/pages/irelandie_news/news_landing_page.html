@@ -78,7 +78,7 @@
         {% endif %}
         {% if page.get_root_index %}
         <div class="wrapper wrapper--large link-button__container">
-            <button class="link-button__button" onClick="window.location.href='{{ page.get_root_index }}';">
+            <button class="link-button__button" aria-label="{% trans 'Read all news' %}" onClick="window.location.href='{{ page.get_root_index }}';">
                 {% translate "Read all news" %}
             </button>
         </div>

@@ -45,8 +45,8 @@
                                     {% trans 'Your browser does not support the video tag.' %}
                             </video>
                             <div class="mute__icon">
-                                 <button onclick="toggleMute();" class="mini-hero__mute mini-hero__mute--left" type="button">Mute/Unmute</button>
-                                 <button onclick="toggleMute();" class="mini-hero__unmute mini-hero__unmute--left" type="button">Mute/Unmute</button>
+                                 <button onclick="toggleMute();" class="mini-hero__mute mini-hero__mute--left" aria-label="{% trans 'Mute/Unmute button' %}" type="button">Mute/Unmute</button>
+                                 <button onclick="toggleMute();" class="mini-hero__unmute mini-hero__unmute--left" aria-label="{% trans 'Mute/Unmute button' %}" type="button">Mute/Unmute</button>
                             </div>
                             <button class="mini-hero__playVideo mini-hero__playVideo--left hero__video-control-toggle" class="hero__video-control-toggle" aria-label="{% trans 'Toggle video playback' %}" data-video-toggle>
                                 {% include "patterns/atoms/icons/icon.html" with name="play" classname="hero__video-control-icon hero__video-control-icon--play" %}
@@ -59,8 +59,8 @@
                                     {% trans 'Your browser does not support the video tag.' %}
                             </video>
                              <div class="mute__icon">
-                                 <button onclick="toggleMute();" class="mini-hero__mute mini-hero__mute--right" type="button">Mute/Unmute</button>
-                                 <button onclick="toggleMute();" class="mini-hero__unmute mini-hero__unmute--right" type="button">Mute/Unmute</button>
+                                 <button onclick="toggleMute();" class="mini-hero__mute mini-hero__mute--right" aria-label="{% trans 'Mute/Unmute button' %}" type="button">Mute/Unmute</button>
+                                 <button onclick="toggleMute();" class="mini-hero__unmute mini-hero__unmute--right" aria-label="{% trans 'Mute/Unmute button' %}" type="button">Mute/Unmute</button>
                              </div>
 
                             <button class="mini-hero__playVideo mini-hero__playVideo--right hero__video-control-toggle" role="button" aria-label="{% trans 'Toggle video playback' %}" data-video-toggle>
