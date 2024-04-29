@@ -45,7 +45,7 @@ locals {
   # ECS
   ecr_repository_name           = "${local.environment_name}-${local.project_name}"
   autoscaling_max_capacity      = 12
-  autoscaling_min_capacity      = 4
+  autoscaling_min_capacity      = 2
   autoscaling_target_value      = 60
   service_contrainer_port       = 8000
   task_cpu                      = 2048  # min 1024
@@ -1833,7 +1833,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
-    path_pattern             = "/overseas-travel/advice/*"
+    path_pattern             = "*/overseas-travel/advice/*"
   } 
 
   ordered_cache_behavior {
