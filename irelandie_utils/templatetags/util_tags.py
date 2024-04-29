@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from urllib.parse import urljoin
 import requests
 
 from django import template
@@ -300,11 +301,24 @@ def beta_element_tag(context, page):
     return False
 
 
+@register.simple_tag
+def extract_domain(url):
+    parts = url.split('.')
+    if len(parts) > 2 and parts[0] == "www":
+        if len(parts) > 3 and parts[1] == "content":
+            return '.'.join(parts[2:])
+        return '.'.join(parts[1:])
+    return '.'.join(parts[-2:])
+
+
 @register.filter
-def is_document_accessible(document, request):
+def is_document_accessible(document, domain):
+    domain_host = extract_domain(domain)
     try:
-        full_url = request.build_absolute_uri(document)
-        response = requests.get(full_url, timeout=10, allow_redirects=True)
+        base_url = f"https://assets.{domain_host}/documents/"
+        document_filename = document.split('/', 2)[-1]
+        full_url = urljoin(base_url, document_filename)
+        response = requests.get(full_url, timeout=10)
         return response.status_code == 200
     except Exception:
         return False

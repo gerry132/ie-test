@@ -43,7 +43,7 @@
                     <div class="featured-blocks featured-blocks--four">
                         {% for article in page.related_articles %}
                             {% pageurl article as href %}
-                            <a href="{{ href }}" class="card{% if large %} card--large{% endif %}{% if classes %} {{ classes }}{% endif %}">
+                            <a href="{{ href }}" aria-label="{% trans 'Related Articles' %}" class="card{% if large %} card--large{% endif %}{% if classes %} {{ classes }}{% endif %}">
                                 {% comment %}
                                     It's possible that neither images are set in the admin.
                                     It will fail silently, here and simply not render an image tag.
@@ -78,7 +78,7 @@
         {% endif %}
         {% if page.get_root_index %}
         <div class="wrapper wrapper--large link-button__container">
-            <button class="link-button__button" onClick="window.location.href='{{ page.get_root_index }}';">
+            <button class="link-button__button" aria-label="{% trans 'Read all news' %}" onClick="window.location.href='{{ page.get_root_index }}';">
                 {% translate "Read all news" %}
             </button>
         </div>

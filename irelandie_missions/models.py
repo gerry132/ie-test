@@ -85,6 +85,7 @@ class DestinationPage(HeroPage):
             ("Featured_tagged_stories", blocks.FeaturedTaggedStoriesBlock()),
             ("logo_cards", blocks.LogoCardsBlock()),
             ("html", wagtail_blocks.RawHTMLBlock(
+                help_text="Add title attribute value to iframe for accessibility.",
                 template="patterns/molecules/streamfield/blocks/raw_html_block.html",
             )),
             ("stats_block", blocks.StatsBlock()),
@@ -125,6 +126,7 @@ class DestinationPage(HeroPage):
             ("Featured_tagged_stories", blocks.FeaturedTaggedStoriesBlock()),
             ("logo_cards", blocks.LogoCardsBlock()),
             ("html", wagtail_blocks.RawHTMLBlock(
+                help_text="Add title attribute value to iframe for accessibility.",
                 template="patterns/molecules/streamfield/blocks/raw_html_block.html",
             )),
             ("image", blocks.ImageBlock()),

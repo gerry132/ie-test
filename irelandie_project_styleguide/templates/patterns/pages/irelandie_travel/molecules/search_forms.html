@@ -40,7 +40,7 @@
         <ul class="a-z-listing__alphabet_letters">
             {% for letter, value in travel_pages.items %}
             {% if value %}
-                <li class="a-z-listing__alphabet_letter"><a href="#{{ letter }}">{{ letter }}</a></li>
+                <li class="a-z-listing__alphabet_letter"><a aria-label="{% trans 'Letter' %}" href="#{{ letter }}">{{ letter }}</a></li>
             {% endif %}
             {% endfor %}
         </ul>

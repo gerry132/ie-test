@@ -1,4 +1,5 @@
 {% load util_tags wagtailcore_tags irelandie_assets_tags %}
+{% load i18n %}
 <div class="accordions">
     <div class="wrapper wrapper--large">
         <div class="accordion_embassy" id="{{ value.title }}">
@@ -22,7 +23,7 @@
                             <span class="embassy_accordion__title">
                                 {{ accordion.value.title }}
                             </span>
-                            <button class="embassy_accordion__btn_content" role="button" aria-label="Open tab">
+                            <button class="embassy_accordion__btn_content" role="button" aria-label="{% trans 'Open tab' %}">
                                 <svg class="icon--arrow embassy_accordion__icon accordion__icon" aria-label="expand" aria-hidden="true" focusable="false">
                                     <use xlink:href="#arrow" href="#arrow"></use>
                                 </svg>

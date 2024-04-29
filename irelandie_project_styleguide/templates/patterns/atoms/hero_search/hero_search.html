@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="search-contain">
         <div class="wrapper">
             <form action="{% url 'search' %}">
@@ -18,7 +19,7 @@
                                 </select>
                             {% endif %}
                             </div>
-                        <button type="submit" class="searchButton">Search</button>
+                        <button type="submit" class="searchButton" aria-label="{% trans 'Search Button' %}">Search</button>
                     </div>
                 </form>
             </div>

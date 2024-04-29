@@ -15,7 +15,7 @@ from wagtail.snippets.models import register_snippet
 from .blocks import (
     LinkBlockExtended,
     LinkColumnWithHeader,
-    SecondaryNavLinkColumnWithHeader, LinkBlockExtendedwithMegaMenu,
+    LinkBlockExtendedwithMegaMenu,
 )
 from irelandie_navigation.mixins import SocialMediaFieldsMixin
 from wagtail.models import DraftStateMixin, RevisionMixin
@@ -238,65 +238,6 @@ class FooterNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.I
     class Meta:
         verbose_name = _("Footer Navigation")
         verbose_name_plural = _("Footer Navigation")
-        unique_together = ("translation_key", "locale")
-
-
-class SecondaryNavigationTag(TaggedItemBase):
-    content_object = ParentalKey('irelandie_navigation.SecondaryNavigation', on_delete=models.CASCADE,
-                                 related_name='tagged_items')
-
-
-@register_snippet
-class SecondaryNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
-                          TranslatableMixin):
-    # Snippets model is used so the navigation can be localised with TranslatableMixin.
-    tags = TaggableManager(through=SecondaryNavigationTag, blank=True)
-    title = models.CharField(max_length=255, blank=True)
-    lang = models.CharField(
-        max_length=255,
-        unique=True,
-        help_text="Internal name for this navigation, it's not displayed to a site user.",
-        verbose_name=_("Language"),
-    )
-    navigation = StreamField(
-        [("column", SecondaryNavLinkColumnWithHeader())],
-        blank=True,
-        help_text="Multiple columns of links with optional header.",
-        verbose_name=_("Columns"),
-    )
-    _revisions = GenericRelation("wagtailcore.Revision", related_query_name="cecondarynavigation")
-
-    panels = [
-        FieldPanel("title"),
-        MultiFieldPanel(
-            [
-                FieldPanel("lang"),
-                FieldPanel("navigation"),
-            ],
-            heading=_("Secondary Navigation"),
-        ),
-        FieldPanel('tags'),
-        PublishingPanel(),
-    ]
-
-    search_fields = [
-        index.FilterField('locale_id'),
-        index.SearchField("title", partial_match=True),
-    ]
-
-    def get_preview_template(self, request, mode_name):
-        return "patterns/snippets/secondarynavsnippet.html"
-
-    @property
-    def revisions(self):
-        return self._revisions
-
-    def __str__(self):
-        return self.lang
-
-    class Meta:
-        verbose_name = _("Secondary Navigation")
-        verbose_name_plural = _("Secondary Navigation")
         unique_together = ("translation_key", "locale")
 
 

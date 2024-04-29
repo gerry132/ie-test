@@ -14,7 +14,7 @@
                             <div class="mini-hero__image_left mini-hero__image_width">
                                 {% image block.value.hero_image fill-960x540-c100 alt=block.value.hero_image_alt class="image mini-hero__image_left" %}
                                 {% if block.value.hero_image_credit %}
-                                    <button class="mini-hero__button-image-credit" data-image-credit aria-label="See the credit for this image" role="button">
+                                    <button class="mini-hero__button-image-credit" data-image-credit aria-label="{% trans 'See the credit for this image' %}" role="button">
                                         <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M25.375 14.5C25.375 20.5061 20.5061 25.375 14.5 25.375C8.4939 25.375 3.625 20.5061 3.625 14.5C3.625 8.4939 8.4939 3.625 14.5 3.625C20.5061 3.625 25.375 8.4939 25.375 14.5ZM15.7083 9.66667C15.7083 10.334 15.1673 10.875 14.5 10.875C13.8327 10.875 13.2917 10.334 13.2917 9.66667C13.2917 8.99932 13.8327 8.45833 14.5 8.45833C15.1673 8.45833 15.7083 8.99932 15.7083 9.66667ZM15.5 20.5417V13.2917H13.5V20.5417H15.5Z" fill="white"/>
                                         </svg>
@@ -27,7 +27,7 @@
                             <div class="mini-hero__image mini-hero__image_width">
                                 {% image block.value.hero_image fill-960x540-c100 alt=block.value.hero_image_alt class="image mini-hero__image" %}
                                 {% if block.value.hero_image_credit %}
-                                    <button class="mini-hero__button-image-credit" role="button" data-image-credit aria-label="See the credit for this image">
+                                    <button class="mini-hero__button-image-credit" role="button" data-image-credit aria-label="{% trans 'See the credit for this image' %}">
                                         <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M25.375 14.5C25.375 20.5061 20.5061 25.375 14.5 25.375C8.4939 25.375 3.625 20.5061 3.625 14.5C3.625 8.4939 8.4939 3.625 14.5 3.625C20.5061 3.625 25.375 8.4939 25.375 14.5ZM15.7083 9.66667C15.7083 10.334 15.1673 10.875 14.5 10.875C13.8327 10.875 13.2917 10.334 13.2917 9.66667C13.2917 8.99932 13.8327 8.45833 14.5 8.45833C15.1673 8.45833 15.7083 8.99932 15.7083 9.66667ZM15.5 20.5417V13.2917H13.5V20.5417H15.5Z" fill="white"/>
                                         </svg>
@@ -40,13 +40,13 @@
                     {% elif block.value.hero_video %}
                     <div class="mini-hero__video_container" data-video-container>
                         {% if block.value.hero_image_alignment == 'left' %}
-                            <video id="myVideo" class="mini-hero__video_left" aria-label="{{ block.value.hero_video.title  }}" title="{{ block.value.hero_video.title  }}" autoplay muted loop data-video>
+                            <video id="myVideo" class="mini-hero__video_left" aria-label="{{ block.value.hero_video.title }}" title="{{ block.value.hero_video.title  }}" autoplay muted loop data-video>
                                 <source src="{{ block.value.hero_video.url }}" type="video/mp4">
                                     {% trans 'Your browser does not support the video tag.' %}
                             </video>
                             <div class="mute__icon">
-                                 <button onclick="toggleMute();" class="mini-hero__mute mini-hero__mute--left" type="button">Mute/Unmute</button>
-                                 <button onclick="toggleMute();" class="mini-hero__unmute mini-hero__unmute--left" type="button">Mute/Unmute</button>
+                                 <button onclick="toggleMute();" class="mini-hero__mute mini-hero__mute--left" aria-label="{% trans 'Mute/Unmute button' %}" type="button">Mute/Unmute</button>
+                                 <button onclick="toggleMute();" class="mini-hero__unmute mini-hero__unmute--left" aria-label="{% trans 'Mute/Unmute button' %}" type="button">Mute/Unmute</button>
                             </div>
                             <button class="mini-hero__playVideo mini-hero__playVideo--left hero__video-control-toggle" class="hero__video-control-toggle" aria-label="{% trans 'Toggle video playback' %}" data-video-toggle>
                                 {% include "patterns/atoms/icons/icon.html" with name="play" classname="hero__video-control-icon hero__video-control-icon--play" %}
@@ -59,8 +59,8 @@
                                     {% trans 'Your browser does not support the video tag.' %}
                             </video>
                              <div class="mute__icon">
-                                 <button onclick="toggleMute();" class="mini-hero__mute mini-hero__mute--right" type="button">Mute/Unmute</button>
-                                 <button onclick="toggleMute();" class="mini-hero__unmute mini-hero__unmute--right" type="button">Mute/Unmute</button>
+                                 <button onclick="toggleMute();" class="mini-hero__mute mini-hero__mute--right" aria-label="{% trans 'Mute/Unmute button' %}" type="button">Mute/Unmute</button>
+                                 <button onclick="toggleMute();" class="mini-hero__unmute mini-hero__unmute--right" aria-label="{% trans 'Mute/Unmute button' %}" type="button">Mute/Unmute</button>
                              </div>
 
                             <button class="mini-hero__playVideo mini-hero__playVideo--right hero__video-control-toggle" role="button" aria-label="{% trans 'Toggle video playback' %}" data-video-toggle>
@@ -94,13 +94,13 @@
              {% if GeneralContentPage or StoryPage or FreeFormPage or ListingsPageIndex or ListingsPageIndexUSA %}
          <ul class="tag__slide">
             {% for tags_category, tag_links in tagging_links %}
-                <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                <li class="tag__slide-item"><a href="{{ tag_links }}" aria-label="{% trans 'Tag label' %}">{{ tags_category.specific.tag_label }}</a></li>
             {% endfor %}
             {% for tags_category in tags_no_links %}
                 <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
             {% endfor %}
             {% for tags_destination, tag_links in destination_tag_links %}
-                <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
+                <li class="tag__slide-item"><a href="{{ tag_links.url }}" aria-label="{% trans 'Tag label' %}">{{ tags_destination }}</a></li>
             {% endfor %}
          </ul>
             {% endif %}

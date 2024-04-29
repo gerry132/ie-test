@@ -151,9 +151,10 @@ class PageRelatedTags(Orderable):
         "irelandie_tags.TagPage",
         on_delete=models.CASCADE,
         related_name="+",
+        limit_choices_to={'content_type__app_label': 'irelandie_tags', 'content_type__model': 'tagpage'}
     )
 
-    panels = [PageChooserPanel("page")]
+    panels = [FieldPanel("page")]
 
 
 class PageRelatedDestinationTags(Orderable):
@@ -162,9 +163,10 @@ class PageRelatedDestinationTags(Orderable):
         "irelandie_tags.DestinationTagPage",
         on_delete=models.CASCADE,
         related_name="+",
+        limit_choices_to={'content_type__app_label': 'irelandie_tags', 'content_type__model': 'destinationtagpage'}
     )
 
-    panels = [PageChooserPanel("page")]
+    panels = [FieldPanel("page")]
 
 
 class PageRelatedDestinations(Orderable):

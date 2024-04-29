@@ -1,5 +1,6 @@
 {% load wagtailcore_tags util_tags %}
-<a href="{{ value.document.url }}" class="streamfield document-block" target="_blank" rel="nofollow noreferrer" aria-labelledby="document-title">
+{% load i18n %}
+<a href="{{ value.document.url }}" class="streamfield document-block" target="_blank" rel="nofollow noreferrer" aria-labelledby="{% trans 'Document link' %}">
     <div class="document-block__content">
         {% include "patterns/atoms/icons/icon.html" with name="file" classname="document-block__icon" %}
 
@@ -7,8 +8,8 @@
             {% firstof value.title value.document.title %}
         </span>
     </div>
-    {% with request=request %}
-    {% if value.document.url|is_document_accessible:request %}
+    {% with request.get_host as domain %}
+    {% if value.document.url|is_document_accessible:domain %}
     <div class="document-block__meta">
         {% if value.document.file_extension %}
             <span class="document-block__type">{{ value.document.file_extension }}</span>

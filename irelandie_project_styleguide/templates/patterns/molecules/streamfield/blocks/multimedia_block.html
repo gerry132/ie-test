@@ -73,9 +73,9 @@
                                     {% include "patterns/atoms/icons/icon.html" with name="play" classname="multimedia__video-control-button-icon multimedia__video-control-button-icon--play" %}
                                 </button>
                                     {% if 'vimeo.com' in block.value.youtube_or_vimeo_embed %}
-                                        <iframe allowfullscreen class="multimedia__video--block no-button" frameborder="0" src="{{ block.value.embedding_url }}?controls=0"></iframe>
+                                        <iframe title="youtube_or_vimeo_embed" allowfullscreen class="multimedia__video--block no-button" frameborder="0" src="{{ block.value.embedding_url }}?controls=0"></iframe>
                                     {% else %}
-                                        <iframe allowfullscreen class="multimedia__video--block no-button" frameborder="0" src="{{ block.value.embedding_url }}"></iframe>
+                                        <iframe title="youtube_or_vimeo_embed" allowfullscreen class="multimedia__video--block no-button" frameborder="0" src="{{ block.value.embedding_url }}"></iframe>
                                     {% endif %}
                             </a>
                             {% endif %}
