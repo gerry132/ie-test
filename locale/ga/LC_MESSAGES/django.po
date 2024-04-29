@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-26 15:08+0100\n"
+"POT-Creation-Date: 2024-04-29 10:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -223,7 +223,7 @@ msgstr "Téacs Image Alt"
 msgid "The alt text shown for accessibility: https://axesslab.com/alt-texts/"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/atoms/hero_search/hero_search.html:21
+#: irelandie_project_styleguide/templates/patterns/atoms/hero_search/hero_search.html:22
 #, fuzzy
 #| msgid "Hero button"
 msgid "Search Button"
@@ -238,8 +238,12 @@ msgstr ""
 #: irelandie_project_styleguide/templates/patterns/hero_page.html:61
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:30
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:36
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:90
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:96
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:89
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:95
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:97
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:103
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_index_page.html:54
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_index_page.html:60
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_index_page.html:66
@@ -261,9 +265,16 @@ msgid "Tag label"
 msgstr "Lipéad clibe"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/accordion/accordion.html:45
-#: irelandie_project_styleguide/templates/patterns/molecules/accordion/accordion_embassy.html:25
+#: irelandie_project_styleguide/templates/patterns/molecules/accordion/accordion_embassy.html:26
 msgid "Open tab"
 msgstr "Oscail cluaisín"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/accordion/accordion.html:64
+#: irelandie_project_styleguide/templates/patterns/molecules/accordion/accordion.html:66
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:133
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:135
+msgid "Button text"
+msgstr "Téacs cnaipe"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/article_card/ajax_article_card.html:14
 #, fuzzy
@@ -274,6 +285,7 @@ msgstr "Cnaipe bosca naisc"
 #: irelandie_project_styleguide/templates/patterns/molecules/card/card.html:14
 #: irelandie_project_styleguide/templates/patterns/molecules/card/card.html:16
 #: irelandie_project_styleguide/templates/patterns/molecules/card/news-card.html:13
+#: irelandie_project_styleguide/templates/patterns/molecules/link_card/link_card.html:3
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:64
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:88
 msgid "card"
@@ -326,6 +338,12 @@ msgstr "Ní thacaíonn do bhrabhsálaí leis an gclib físeáin."
 msgid "Toggle video playback"
 msgstr "Scoránaigh athsheinm físe"
 
+#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:85
+#, fuzzy
+#| msgid "Hero button"
+msgid "hero_button"
+msgstr "Cnaipe laoch"
+
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:121
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:42
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:17
@@ -343,7 +361,7 @@ msgstr "Féach an creidmheas don íomhá seo"
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:62
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:63
 msgid "Mute/Unmute button"
-msgstr ""
+msgstr "Balbhaigh / Díbhalbhaigh an cnaipe"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/job/job-card.html:11
 #: irelandie_project_styleguide/templates/patterns/molecules/link_box/link_box.html:10
@@ -353,6 +371,26 @@ msgstr "Cnaipe bosca naisc"
 #: irelandie_project_styleguide/templates/patterns/molecules/link_box/link_box.html:2
 msgid "link_box"
 msgstr "nasc_bhosca"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/megamenu_contents.html:10
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/megamenu_contents.html:25
+msgid "Grid item"
+msgstr "Mír greille"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/megamenu_contents.html:41
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:61
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:107
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:153
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:242
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:288
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:330
+msgid "Grid item sub links"
+msgstr "Fo-naisc míreanna greille"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/menu_item_with_megamenu.html:4
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/menu_item_with_megamenu.html:72
+msgid "Mega menu link"
+msgstr "Nasc roghchlár mega"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/navigation/breadcrumbs.html:19
 msgid "Home"
@@ -365,6 +403,13 @@ msgstr "Loingseoireacht thánaisteach"
 #: irelandie_project_styleguide/templates/patterns/molecules/navigation/footerlinks.html:3
 msgid "Footer links"
 msgstr "Naisc buntásc"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/includes/menu_item.html:3
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/includes/menu_item_extended.html:3
+#, fuzzy
+#| msgid "Event link"
+msgid "Nav link"
+msgstr "Nasc imeachta"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:3
 msgid "Primary navigation"
@@ -496,13 +541,27 @@ msgstr "Mír roghchláir roimhe seo"
 msgid "Keep up to date with the latest tweets from"
 msgstr "Coinnigh suas chun dáta leis na tweetanna is déanaí ó "
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/policy_document_box.html:31
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:139
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:146
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:182
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:189
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/twitter_embed.html:9
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:152
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:156
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:164
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:168
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:172
+#: irelandie_project_styleguide/templates/patterns/snippets/twitterembedsnippet.html:10
+msgid "Twitter timeline"
+msgstr "Amlíne Twitter"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/policy_document_box.html:32
 #, fuzzy
 #| msgid "Hero button"
 msgid "Download button"
 msgstr "Cnaipe laoch"
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/related_content.html:22
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/related_content.html:23
 msgid "Arrow"
 msgstr "Saighead"
 
@@ -735,20 +794,6 @@ msgstr "Litir"
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_index.html:34
 msgid "Region"
 msgstr "Réigiún"
-
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:133
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:135
-msgid "Button text"
-msgstr "Téacs cnaipe"
-
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:152
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:156
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:164
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:168
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:172
-#: irelandie_project_styleguide/templates/patterns/snippets/twitterembedsnippet.html:10
-msgid "Twitter timeline"
-msgstr "Amlíne Twitter"
 
 #: irelandie_project_styleguide/templates/patterns/pages/missions/embassy_index_page.html:27
 #, fuzzy

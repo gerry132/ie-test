@@ -136,14 +136,14 @@
                                 </div>
                                 {% if socialfeed.value.additional_social_feed %}
                                 <div class="{% if socialfeed.value.hide_twitter_timeline %}twitter-hidden-on-mobile{% endif %}">
-                                    <a class="twitter-timeline" aria-label="twitter-timeline" data-height=580 data-width="100% !important"
+                                    <a class="twitter-timeline" aria-label="{% trans 'Twitter timeline' %}" data-height=580 data-width="100% !important"
                                        href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
                                         Tweets by {{ socialfeed.value.twitter_username }}
                                     </a>
                                 </div>
                                 {% else %}
                                 <div class="{% if socialfeed.value.hide_twitter_timeline %}twitter-hidden-on-mobile{% endif %}">
-                                    <a class="twitter-timeline" aria-label="twitter-timeline" data-height=560 data-width="100% !important"
+                                    <a class="twitter-timeline" aria-label="{% trans 'Twitter timeline' %}" data-height=560 data-width="100% !important"
                                        href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
                                         Tweets by {{ socialfeed.value.twitter_username }}
                                     </a>
@@ -179,14 +179,14 @@
                         </div>
                         {% if socialfeed.value.additional_social_feed %}
                         <div class="{% if socialfeed.value.hide_twitter_timeline %}twitter-hidden-on-mobile{% endif %}">
-                            <a class="twitter-timeline" aria-label="twitter-timeline" data-height=580 data-width="100% !important"
+                            <a class="twitter-timeline" aria-label="{% trans 'Twitter timeline' %}" data-height=580 data-width="100% !important"
                                href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
                                 Tweets by {{ socialfeed.value.twitter_username }}
                             </a>
                         </div>
                         {% else %}
                         <div class="{% if socialfeed.value.hide_twitter_timeline %}twitter-hidden-on-mobile{% endif %}">
-                            <a class="twitter-timeline" aria-label="twitter-timeline" data-height=560 data-width="100% !important"
+                            <a class="twitter-timeline" aria-label="{% trans 'Twitter timeline' %}" data-height=560 data-width="100% !important"
                                href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
                                 Tweets by {{ socialfeed.value.twitter_username }}
                             </a>

@@ -1,6 +1,6 @@
 {% load wagtailcore_tags %}
 
-<a class="{{ nav_type }}__link" aria-label="nav__link" {% if has_children %}data-open-subnav{% endif %} href="{{ link_url }}" {% if has_children %}aria-haspopup="true" aria-expanded="false"{% endif %}>
+<a class="{{ nav_type }}__link" aria-label="{% trans 'Nav link' %}" {% if has_children %}data-open-subnav{% endif %} href="{{ link_url }}" {% if has_children %}aria-haspopup="true" aria-expanded="false"{% endif %}>
     {{ link_title }}
     {% if has_children %}
         <span class="{{ nav_type }}__icon">

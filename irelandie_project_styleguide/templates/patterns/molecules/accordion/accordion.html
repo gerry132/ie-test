@@ -61,9 +61,9 @@
                         {% for button in accordion.value.button_link %}
                             <div class="wrapper wrapper--large">
                                     {% if button.value.page %}
-                                        <a class="button_text" href="{{ button.value.page.url }}" aria-label="button_text">{{ button.value.message }}</a>
+                                        <a class="button_text" href="{{ button.value.page.url }}" aria-label="{% trans 'Button text' %}">{{ button.value.message }}</a>
                                     {% else %}
-                                        <a class="button_text" href="{{ button.value.url }}" aria-label="button_text">{{ button.value.message }}</a>
+                                        <a class="button_text" href="{{ button.value.url }}" aria-label="{% trans 'Button text' %}">{{ button.value.message }}</a>
                                     {% endif %}
                             </div>
                         {% endfor %}
