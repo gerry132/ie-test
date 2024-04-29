@@ -1,4 +1,4 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags i18n %}
 
 <a class="{{ nav_type }}__link" aria-label="{% trans 'Nav link' %}" {% if has_children %}data-open-subnav{% endif %} href="{{ page.url }}" {% if has_children %}aria-haspopup="true" aria-expanded="false"{% endif %}>
     {{ page }}

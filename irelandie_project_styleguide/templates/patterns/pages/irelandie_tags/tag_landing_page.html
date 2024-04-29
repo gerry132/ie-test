@@ -154,7 +154,7 @@
                             {% for card in stories %}
                                 <div class="grid-item">
                                     <div class="card" aria-label="{{card.alt_text}}">
-                                        <a href="{{ card.url }}">
+                                        <a href="{{ card.url }}" aria-label="{% trans 'card' %}">
                                         <div class="card__image-container">
                                             {% if card.hero_image %}
                                                 {% if card.alt_text %}
@@ -209,7 +209,7 @@
                                                         {% endfor %}
                                                     {% elif tag_category_links|length == 1 or tag_category_no_link >= 1 %}
                                                         {% for tags_category, tag_links in tag_category_links|slice:":1" %}
-                                                            <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                                                            <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
                                                         {% endfor %}
                                                         {% for tags_category in tag_category_no_link|slice:":1" %}
                                                             <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
@@ -222,7 +222,7 @@
                                                 {% else %}
                                                     {% if tag_category_links|length >= 1 %}
                                                         {% for tags_category, tag_links in tag_category_links|slice:":1" %}
-                                                            <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                                                            <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
                                                         {% endfor %}
                                                     {% elif tag_category|length > 1 %}
                                                         {% for tags in tag_category|slice:":1" %}
@@ -234,7 +234,7 @@
                                                         {% endif %}
                                                     {% endif %}
                                                     {% for tags_destination, tag_links in tag_destination_links|slice:":1" %}
-                                                       <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
+                                                       <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
                                                     {% endfor %}
                                                 {% endif %}
                                         </ul>
