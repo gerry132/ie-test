@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.utils.translation import check_for_language
 from django.views import defaults
 from django.views.decorators.http import require_http_methods
@@ -10,6 +10,8 @@ from wagtail.api.v2.views import PagesAPIViewSet
 from wagtail.models import Page
 
 from irelandie_missions.filters import MissionPageFieldFilter
+from irelandie_utils.models import SystemMessagesSettings
+from wagtail.core.models import Site
 from irelandie_utils.utils import get_locale_from_language_code_or_default
 
 
@@ -20,7 +22,39 @@ def page_not_found(request, exception, template_name="patterns/pages/errors/404.
 
 
 def server_error(request, template_name="patterns/pages/errors/500.html"):
-    return defaults.server_error(request, template_name)
+    try:
+        current_site = Site.find_for_request(request)
+        system_messages_settings = SystemMessagesSettings.for_site(current_site)
+        title_403_500 = system_messages_settings.title_403_500
+        body_403_500 = system_messages_settings.body_403_500
+        image_403_500 = system_messages_settings.image_403_500
+    except (SystemMessagesSettings.DoesNotExist, Site.DoesNotExist):
+        title_403_500 = "Something went wrong on our side"
+        body_403_500 = ("<p>Sorry, this page is not working properly. "
+                        "We now know about this and we’re working to fix it.</p>")
+        image_403_500 = None
+
+    return render(request, template_name,
+                  {'title': title_403_500, 'body': body_403_500, 'image_error': image_403_500},
+                  status=500)
+
+
+def permission_denied(request, template_name="patterns/pages/errors/403.html"):
+    try:
+        current_site = Site.find_for_request(request)
+        system_messages_settings = SystemMessagesSettings.for_site(current_site)
+        title_403_500 = system_messages_settings.title_403_500
+        body_403_500 = system_messages_settings.body_403_500
+        image_403_500 = system_messages_settings.image_403_500
+    except (SystemMessagesSettings.DoesNotExist, Site.DoesNotExist):
+        title_403_500 = "Something went wrong on our side"
+        body_403_500 = ("<p>Sorry, this page is not working properly. "
+                        "We now know about this and we’re working to fix it.</p>")
+        image_403_500 = None
+
+    return render(request, template_name,
+                  {'title': title_403_500, 'body': body_403_500, 'image_error': image_403_500},
+                  status=403)
 
 
 class PagesAPIEndpoint(PagesAPIViewSet):

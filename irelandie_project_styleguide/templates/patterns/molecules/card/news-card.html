@@ -10,7 +10,7 @@ Example:
 {% endcomment %}
 
 {% if card.url %}
-    <a href="{{ card.url }}" class="card{% if large %} card--large{% endif %}{% if not card.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
+    <a href="{{ card.url }}" aria-label="{% trans 'card' %}" class="card{% if large %} card--large{% endif %}{% if not card.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
 {% else %}
     <div class="card{% if not card.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
 {% endif %}

@@ -1,4 +1,5 @@
 {% load wagtailcore_tags static irelandie_assets_tags %}
+{% load i18n %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 <div style="font-size: 20px;">
 {% for elem in object.body %}
@@ -26,10 +27,10 @@
     {% endif %}
 </div>
     {% if elem.value.international_code %}
-        <div><a href="tel:{{elem.value.international_code}}{{elem.value.telephone}}">Tel: {{elem.value.international_code}} {{elem.value.telephone}}</a></div>
+        <div><a href="tel:{{elem.value.international_code}}{{elem.value.telephone}}" aria-label="{% trans 'Telephone' %}">Tel: {{elem.value.international_code}} {{elem.value.telephone}}</a></div>
     {% endif %}
     {% if elem.value.alt_international_code and elem.value.alt_telephone %}
-        <div><a href="tel:{{elem.value.alt_international_code}}{{elem.value.alt_telephone}}">Alt tel: {{elem.value.alt_international_code}} {{elem.value.alt_telephone}}</a></div>
+        <div><a href="tel:{{elem.value.alt_international_code}}{{elem.value.alt_telephone}}" aria-label="{% trans 'Telephone' %}">Alt tel: {{elem.value.alt_international_code}} {{elem.value.alt_telephone}}</a></div>
     {% endif %}
     {% if elem.value.fax_number %}
     <div>Fax: {{elem.value.fax_number}}</div>

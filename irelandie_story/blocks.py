@@ -23,6 +23,7 @@ class StoryPageBlock(blocks.StreamBlock):
     document = DocumentBlock(group="Base")
     html = blocks.RawHTMLBlock(
         group="HTML",
+        help_text="Add title attribute value to iframe for accessibility.",
         template="patterns/molecules/streamfield/blocks/raw_html_block.html",
     )
     table = TableBlock(table_options={'renderer': 'html'}, group="HTML")

@@ -1,4 +1,4 @@
-{% load util_tags wagtailcore_tags irelandie_assets_tags %}
+{% load util_tags wagtailcore_tags irelandie_assets_tags i18n %}
 <style>
     {% check_page_type page.content_type 'service content' as servicecontent %}
     {% if servicecontent %}
@@ -42,7 +42,7 @@
                             <span class="accordion__title">
                                 {{ accordion.value.title }}
                             </span>
-                            <button class="accordion__btn_content" aria-label="Open tab" role="button">
+                            <button class="accordion__btn_content" aria-label="{% trans 'Open tab' %}" role="button">
                                 {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="accordion__icon" alt="expand" %}
                             </button>
 
@@ -61,9 +61,9 @@
                         {% for button in accordion.value.button_link %}
                             <div class="wrapper wrapper--large">
                                     {% if button.value.page %}
-                                        <a class="button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
+                                        <a class="button_text" href="{{ button.value.page.url }}" aria-label="{% trans 'Button text' %}">{{ button.value.message }}</a>
                                     {% else %}
-                                        <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
+                                        <a class="button_text" href="{{ button.value.url }}" aria-label="{% trans 'Button text' %}">{{ button.value.message }}</a>
                                     {% endif %}
                             </div>
                         {% endfor %}

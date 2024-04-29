@@ -8,7 +8,6 @@ from irelandie_navigation.models import (
     CustomFooter,
     FooterNavigation,
     PrimaryNavigation,
-    SecondaryNavigation,
     SiteSettings,
     CustomHeader,
 )
@@ -84,34 +83,6 @@ def primarynav(context, page, override=None):
         "customnav": custom_header,
         "request": request,
     }
-
-
-# SECONDARY NAVIGATION
-# ----------------------------------------------------------------------
-# The data for the secondary navigation is managed in the SecondaryNavigation
-# snippets model.
-@register.inclusion_tag(
-    "patterns/molecules/navigation/secondarynav.html", takes_context=True
-)
-def secondarynav(context):
-    request = context["request"]
-    locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
-
-    navigation = get_nav_for_locale(SecondaryNavigation, locale)
-
-    return {
-        "secondarynav": navigation,
-        "request": request,
-    }
-
-
-@register.simple_tag(
-    takes_context=True
-)
-def has_secondary_nav(context):
-    request = context["request"]
-    locale = Locale.objects.get(language_code=request.LANGUAGE_CODE)
-    return bool(get_nav_for_locale(SecondaryNavigation, locale))
 
 
 @register.simple_tag(

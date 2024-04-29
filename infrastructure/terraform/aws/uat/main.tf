@@ -81,7 +81,7 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.54.73/32", "80.233.48.73/32"]
+      cidr_blocks  = ["51.37.170.189/32"]
     },
     joe_dev = {
       description = "Joe D - Sidero"
@@ -1382,6 +1382,7 @@ locals {
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
   SETTINGS_EMAIL_HOST               = "email.${local.region}.amazonaws.com"
   SETTINGS_DEFAULT_FROM_EMAIL       = aws_ssm_parameter.DEFAULT_FROM_EMAIL.value
+  SETTINGS_CLOUDFRONT_ID            = 0
 }
 
 data "template_file" "task_definition" {
@@ -1394,6 +1395,7 @@ data "template_file" "task_definition" {
     port                                = local.service_contrainer_port
     region                              = local.region
     task_cpu                            = local.task_cpu
+    SETTINGS_CLOUDFRONT_ID              = local.SETTINGS_CLOUDFRONT_ID
     task_memory                         = local.task_memory
     assets_url                          = "assets.${local.domain_ireland_ie}"
     assets_s3_bucket                    = aws_s3_bucket.assets.id
@@ -1868,7 +1870,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
     override_action {
       none {
       }
-    }  
+    }
     statement {
       managed_rule_group_statement {
         name        = "AWSManagedRulesBotControlRuleSet"

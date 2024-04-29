@@ -61,7 +61,7 @@
         {% if block.value.link_cards|length > 2 %}
         <div class="article-cards featured-blocks featured-blocks--three">
             {% for link_card in block.value.link_cards %}
-            <a class="card" href="{% if link_card.value.page %}{{ link_card.value.page.url }}{% else %}{{ link_card.value.url }}{% endif %}">
+            <a class="card" href="{% if link_card.value.page %}{{ link_card.value.page.url }}{% else %}{{ link_card.value.url }}{% endif %}" aria-label="{% trans 'card' %}">
                 <div class="card__image-container">
                     {% if link_card.value.image_alt %}
                     {% image link_card.value.image fill-400x200 alt=link_card.value.image_alt class="card__image" %}
@@ -85,7 +85,7 @@
         {% else %}
         <div class="article-cards featured-blocks featured-blocks--two">
             {% for link_card in block.value.link_cards %}
-            <a class="card" href="{% if link_card.value.page %}{{ link_card.value.page.url }}{% else %}{{ link_card.value.url }}{% endif %}">
+            <a class="card" href="{% if link_card.value.page %}{{ link_card.value.page.url }}{% else %}{{ link_card.value.url }}{% endif %}" aria-label="{% trans 'card' %}">
                 <div class="card__image-container">
                     {% if link_card.value.image_alt %}
                     {% image link_card.value.image fill-400x200 alt=link_card.value.image_alt class="card__image" %}
@@ -130,9 +130,9 @@
                     {% for button in block.value.button_link %}
                     <div class="rich-text wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
                         {% if button.value.page %}
-                        <a class="adv-summary button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
+                        <a class="adv-summary button_text" aria-label="{% trans 'Button text' %}" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
                         {% else %}
-                        <a class="adv-summary button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
+                        <a class="adv-summary button_text" aria-label="{% trans 'Button text' %}" href="{{ button.value.url }}">{{ button.value.message }}</a>
                         {% endif %}
                     </div>
                     {% endfor %}
@@ -149,11 +149,11 @@
                 {{ page.twitter_title }}</a></h3>
             {% endif %}
             <div id="twitter-embed_link" style="margin-bottom: 20px; line-height: 19px;">
-                <a class="twitter-embed_link" href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
+                <a class="twitter-embed_link" aria-label="{% trans 'Twitter timeline' %}" href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
                     {% translate "Keep up to date with the latest tweets from" %} {{ page.twitter_username }}
                 </a>
             </div>
-            <a class="twitter-timeline" data-height=280 data-width="100% !important"
+            <a class="twitter-timeline" aria-label="{% trans 'Twitter timeline' %}" data-height=280 data-width="100% !important"
                href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
             </a>
         </div>
@@ -161,15 +161,15 @@
     {% else %}
     <div style="padding-bottom: 30px;">
         {% if page.twitter_title %}
-        <h3 class="travel-landing--story__heading heading--2"><a href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
+        <h3 class="travel-landing--story__heading heading--2"><a aria-label="{% trans 'Twitter timeline' %}" href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
             {{ page.twitter_title }}</a></h3>
         {% endif %}
         <div id="twitter-embed_link" style="margin-bottom: 20px; line-height: 19px;">
-            <a class="twitter-embed_link" href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
+            <a class="twitter-embed_link" aria-label="{% trans 'Twitter timeline' %}" href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
                 {% translate "Keep up to date with the latest tweets from" %} {{ page.twitter_username }}
             </a>
         </div>
-        <a class="twitter-timeline" data-height=580 data-width="100% !important"
+        <a class="twitter-timeline" aria-label="{% trans 'Twitter timeline' %}" data-height=580 data-width="100% !important"
            href="https://twitter.com/{{ page.twitter_username }}?ref_src=twsrc%5Etfw">
         </a>
     </div>

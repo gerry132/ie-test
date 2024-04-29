@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load static wagtailcore_tags wagtailimages_tags navigation_tags util_tags irelandie_assets_tags wagtailaccessibility_tags wagtailsettings_tags %}
 
 <!DOCTYPE html>
 <html lang="en-GB">
@@ -7,27 +8,103 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{% trans 'Server error' %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
     <style>
-      html {
-        background-color: #eee;
-        font-family: sans-serif;
-        color: rgba(0, 0, 0, 0.8);
-      }
-      body {
-        max-width: 40rem;
-        margin: 0 auto;
-        padding: 2rem;
-      }
-      .errorcode {
-        color: rgba(0, 0, 0, 0.25);
-        margin-top: 2rem;
-        font-size: 0.8rem;
-      }
+        html {
+            color: #000;
+            font-family: Lato;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 156%; /* 31.2px */
+        }
+        .title {
+            color: #000;
+            font-family: Lato;
+            font-size: 48px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 110%; /* 52.8px */
+        }
+        body {
+            margin: 0 auto;
+        }
+        .header {
+            z-index: 50;
+            background-color: #004d44;
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+        .wrapper--large {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .error-logo{
+            width: 100%;
+            max-width: 588px;
+            max-height: 361px;
+            height: auto;
+        }
+
+        .container {
+          display: flex;
+          flex: 1;
+        }
+
+        .content {
+          flex: 1;
+          padding-right: 20px;
+        }
+
+        .image-container {
+          flex: 1;
+          max-width: 100%;
+        }
+
+        /* Media query for iPad and below */
+        @media screen and (max-width: 1024px) {
+          .container {
+            flex-direction: column;
+          }
+
+          .content,
+          .image-container {
+            flex-basis: 100%;
+          }
+        }
     </style>
   </head>
   <body>
-    <h1>{% trans 'Something went wrong' %}</h1>
-    <p>{% trans 'We&rsquo;re sorry! Our server is acting up right now. Please try again soon.' %}</p>
-    <p class="errorcode">{% trans 'Internal Server Error (500)' %}</p>
+  <div class="header">
+      <div class="wrapper wrapper--large">
+          <div class="header__container">
+              <svg width="130" height="48" viewBox="0 0 130 48" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <rect width="130" height="48" fill="url(#pattern0_3090_803)"/>
+                  <defs>
+                      <pattern id="pattern0_3090_803" patternContentUnits="objectBoundingBox" width="1" height="1">
+                          <use xlink:href="#image0_3090_803" transform="matrix(0.00606061 0 0 0.0164141 0 -0.0416667)"/>
+                      </pattern>
+                      <image id="image0_3090_803" width="165" height="66" xlink:href="data:image/png;base64,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"/>
+                  </defs>
+              </svg>
+          </div>
+      </div>
+  </div>
+  <div class="wrapper wrapper--large">
+    <div class="container">
+        <div class="content">
+            <h1 class="title">{{ title }}</h1>
+            <div>{{ body|richtext }}</div>
+        </div>
+        {% if image_error %}
+            <div class="image-container">
+                {% image image_error original class="error-logo" alt=custom_header_settings.site_settings.site_logo_alt %}
+            </div>
+        {% endif %}
+    </div>
+  </div>
   </body>
 </html>

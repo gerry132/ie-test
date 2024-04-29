@@ -2,6 +2,6 @@
 <h2>{{ slide.title }}</h2>
 {% image slide.image fill-450x450 %}
 <p>{{ slide.text }}</p>
-<a href="{{ slide.link }}">
+<a href="{{ slide.link }}" aria-label="{% trans 'Slide link' %}">
     {% trans 'A link to somewhere else. This could surround the whole slide.' %}
 </a>

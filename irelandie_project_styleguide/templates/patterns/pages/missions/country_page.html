@@ -36,8 +36,12 @@
             <div class="wrapper wrapper--large wrapper--padding">
                     {% include_block block %}
             </div>
-        {% else %}
+        {% elif block.block_type == 'story_photo_gallery' %}
             {% include_block block %}
+        {% else %}
+            <div class="wrapper wrapper--large wrapper--padding">
+                {% include_block block %}
+            </div>
         {% endif %}
     {% endfor %}
     {% include_block page.stories %}
@@ -79,8 +83,12 @@
             <div class="wrapper wrapper--large wrapper--padding">
                     {% include_block block %}
             </div>
-    {% else %}
+    {% elif block.block_type == 'story_photo_gallery' %}
         {% include_block block %}
+    {% else %}
+        <div class="wrapper wrapper--large wrapper--padding">
+            {% include_block block %}
+        </div>
     {% endif %}
     {% endfor %}
 

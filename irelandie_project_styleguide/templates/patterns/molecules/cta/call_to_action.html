@@ -1,4 +1,5 @@
 {% load wagtailcore_tags wagtailimages_tags %}
+{% load i18n %}
 
 {% comment %}
 
@@ -19,7 +20,7 @@ Example:
 
         {% image call_to_action.image fill-450x300 alt=call_to_action.image_alt %}
 
-        <p><a href="{{ call_to_action.get_link_url }}">{{ call_to_action.get_link_text }}</a></p>
+        <p><a href="{{ call_to_action.get_link_url }}" aria-label="{% trans 'Call to action' %}">{{ call_to_action.get_link_text }}</a></p>
 
     </div>
 {% endif %}

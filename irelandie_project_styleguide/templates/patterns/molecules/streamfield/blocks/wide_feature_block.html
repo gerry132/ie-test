@@ -9,7 +9,7 @@
                         <div class="homepage_feature__video-container" data-video-autoplay>
                             {% if 'vimeo.com' in block_hero.value.youtube_or_vimeo_embed %}
                                 <div class="homepage_feature__iframe-container">
-                                    <iframe title="{{ block_hero.value.heading }}" class="vimeo_player" src="{{ block_hero.value.embedding_url }}" allow="autoplay" allowfullscreen></iframe>
+                                    <iframe title="{% if block_hero.value.heading %}{{ block_hero.value.heading }}{% else %}widefeature_vimeo_player{% endif %}" class="vimeo_player" src="{{ block_hero.value.embedding_url }}" allow="autoplay" allowfullscreen></iframe>
                                      {% if block_hero.value.image_for_video %}
                                         {% image block_hero.value.image_for_video fill-1600x900 class="starter" alt=block_hero.value.image_for_video_image_alt %}
                                         <svg class="starter_button" xmlns="http://www.w3.org/2000/svg" width="66" height="66" viewBox="0 0 66 66" fill="none">
@@ -20,7 +20,7 @@
                                 </div>
                             {% else %}
                                 <div class="homepage_feature__iframe-container">
-                                    <iframe title="{{ block_hero.value.heading }}" class="youtube_player" src="{{ block_hero.value.embedding_url }}?enablejsapi=1&html5=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <iframe title="{% if block_hero.value.heading %}{{ block_hero.value.heading }}{% else %}widefeature_youtube_player{% endif %}" class="youtube_player" src="{{ block_hero.value.embedding_url }}?enablejsapi=1&html5=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                     {% if block_hero.value.image_for_video %}
                                     {% image block_hero.value.image_for_video fill-1600x900 class="starter" alt=block_hero.value.image_for_video_image_alt %}
                                     <svg class="starter_button" xmlns="http://www.w3.org/2000/svg" width="66" height="66" viewBox="0 0 66 66" fill="none">
