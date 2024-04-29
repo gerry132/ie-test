@@ -2,7 +2,7 @@
 {% load util_tags %}
 
 {% for value in related_articles %}
-<a href="{{ value.url }}" class="link-box">
+<a href="{{ value.url }}" aria-label="{% trans 'Link box' %}" class="link-box">
     <div class="link-box__content">
         <div class="link-box__container">
             <h3 class="link-box__heading heading--3">{{ value.title }}</h3>

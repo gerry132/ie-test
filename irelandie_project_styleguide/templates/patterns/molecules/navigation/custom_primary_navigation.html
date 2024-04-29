@@ -4,7 +4,7 @@
      <ul class="primary-nav" data-primary-nav>
         {% for custom_link in customnav %}
             <li class="primary-nav__item">
-                <a class="primary-nav__link" href="{{ item_url }}">
+                <a class="primary-nav__link" aria-label="{% trans 'Nav link' %}" href="{{ item_url }}">
                     {% if custom_link.value.title %}
                         {{ custom_link.value.title }}
                     {% else %}

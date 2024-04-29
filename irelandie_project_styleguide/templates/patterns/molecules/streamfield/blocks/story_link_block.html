@@ -1,7 +1,7 @@
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags i18n %}
 
 {% if link_url %}
-<a href="{{ link_url }}" class="story-link">
+<a href="{{ link_url }}" aria-label="{% trans 'Story link' %}" class="story-link">
     {% if value.image %}
         {% image value.image width-100 height-100 alt=value.image_alt class="story-link__img" %}
     {% elif value.icon %}

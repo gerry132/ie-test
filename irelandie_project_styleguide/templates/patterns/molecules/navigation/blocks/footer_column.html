@@ -1,4 +1,4 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags i18n %}
 <div class="footer__column">
     {% if value.heading %}
         <p class="heading--5">{{ value.heading }}</p>
@@ -6,7 +6,7 @@
     <ul class="footercolumn-nav">
         {% for item in value.links %}
             <li class="footercolumn-nav__item">
-                <a class="footercolumn-nav__link" {% if has_children %}data-open-subnav{% endif %} href="{% firstof item.url item.page.url %}" {% if has_children %}aria-haspopup="true" aria-expanded="false"{% endif %}>
+                <a class="footercolumn-nav__link" {% if has_children %}data-open-subnav{% endif %} href="{% firstof item.url item.page.url %}" aria-label="{% trans 'Footer Column' %}" {% if has_children %}aria-haspopup="true" aria-expanded="false"{% endif %}>
                     {% firstof item.title item.page.title %}
                     {% if has_children %}
                         <span class="footercolumn-nav__icon">

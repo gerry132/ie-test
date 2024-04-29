@@ -67,10 +67,10 @@
         <div class="wrapper wrapper--large">
             {% for button in block.value.button_link %}
             {% if button.value.page %}
-            <a class="mega_menu_rich-text--summary button_text" href="{{ button.value.page.url }}">
+            <a class="mega_menu_rich-text--summary button_text" aria-label="{% trans 'Button text' %}" href="{{ button.value.page.url }}">
                 {{ button.value.message }}</a>
             {% else %}
-            <a class="mega_menu_rich-text--summary button_text" href="{{ button.value.url }}">
+            <a class="mega_menu_rich-text--summary button_text" aria-label="{% trans 'Button text' %}" href="{{ button.value.url }}">
                 {{ button.value.message }}</a>
             {% endif %}
             {% endfor %}
@@ -79,7 +79,7 @@
     </div>
     {% else %}
     <div class="rich_text_image">
-        <a href="{% if block.value.page %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}">
+        <a href="{% if block.value.page %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}" aria-label="{% trans 'Image Links' %}">
             {% image block.value.image fill-400x200 alt=block.value.image_alt class="image_withlinks" %}</a>
     </div>
     {% endif %}

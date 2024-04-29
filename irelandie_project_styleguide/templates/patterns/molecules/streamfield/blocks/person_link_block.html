@@ -1,7 +1,7 @@
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags i18n %}
 
 {% if link_url %}
-<a href="{{ link_url }}" class="person-link">
+<a href="{{ link_url }}" aria-label="{% trans 'Person link' %}"class="person-link">
     <span class="person-link__content">
         <span class="person-link__title">{{ link_title }}</span>
         <span class="person-link__summary">{{ value.summary }}</span>

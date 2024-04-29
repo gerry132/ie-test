@@ -1,7 +1,7 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 
 <div class="card">
-<a href="{{ value.page.url }}" >
+<a href="{{ value.page.url }}" aria-label="{% trans 'card' %}">
     <div class="card__image-container">
          {% if value.image %}
             {% if value.image_alt %}
@@ -18,7 +18,7 @@
 </a>
 
     <div class="card__content">
-        <a href="{{ value.page.url }}">
+        <a href="{{ value.page.url }}" aria-label="{% trans 'card' %}">
             <h3 class="tag__card__title">
                 {{ value.title }}
             </h3>
@@ -34,15 +34,15 @@
         <ul class="tag__slide" style="{% if value.link_text %} padding-top: 10px; {% endif %}">
             {% if destination_tag_links|length >= 2 %}
                 {% for tags_category, tag_links in tagging_links|slice:":1" %}
-                    <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                    <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
                 {% endfor %}
                 {% for tags_destination, tag_links in destination_tag_links|slice:":2" %}
-                   <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
+                   <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
                 {% endfor %}
             {% elif destination_tag_links|length == 1 %}
                 {% if tagging_links|length > 1 %}
                     {% for tags_category, tag_links in tagging_links|slice:":2" %}
-                            <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                            <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
                     {% endfor %}
                 {% elif tagging_links|length == 0 %}
                     {% for tags_category in tags_no_links|slice:":2" %}
@@ -50,19 +50,19 @@
                     {% endfor %}
                 {% elif tagging_links|length <= 1 %}
                     {% for tags_category, tag_links in tagging_links|slice:":1" %}
-                            <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                            <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
                     {% endfor %}
                     {% for tags_category in tags_no_links|slice:":1" %}
                         <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
                     {% endfor %}
                 {% endif %}
                 {% for tags_destination, tag_links in destination_tag_links|slice:":1" %}
-                    <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
+                    <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
                 {% endfor %}
             {% else %}
                 {% if tagging_links|length >= 3 %}
                     {% for tags_category, tag_links in tagging_links|slice:":3" %}
-                        <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                        <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
                     {% endfor %}
                 {% elif tagging_links|length == 0 %}
                     {% for tags_category in tags_no_links|slice:":3" %}
@@ -70,14 +70,14 @@
                     {% endfor %}
                 {% elif tagging_links|length == 1 %}
                     {% for tags_category, tag_links in tagging_links|slice:":1" %}
-                        <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                        <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
                     {% endfor %}
                     {% for tags_category in tags_no_links|slice:":2" %}
                         <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
                     {% endfor %}
                 {% else %}
                     {% for tags_category, tag_links in tagging_links|slice:":2" %}
-                        <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                        <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
                     {% endfor %}
                     {% for tags_category in tags_no_links|slice:":1" %}
                         <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>

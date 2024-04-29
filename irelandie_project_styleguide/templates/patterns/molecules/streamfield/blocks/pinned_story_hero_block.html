@@ -1,5 +1,5 @@
 {% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
+{% load wagtailimages_tags i18n %}
 
 <div class="pinned-stories__featured">
     <div class="pinned-stories__featured-content">
@@ -12,7 +12,7 @@
 
         {% if value.link_page and value.link_text %}
         {% pageurl value.link_page as href %}
-            <a href="{{ href }}" class="pinned-stories__featured-link button">
+            <a href="{{ href }}" aria-label="{% trans 'Button link' %}" class="pinned-stories__featured-link button">
                 {{ value.link_text }}
             </a>
         {% endif %}

@@ -9,7 +9,7 @@
                     {% if link.value.mega_menu %}data-has-subnav{% endif %}
                 >
                     {% include_block link with nav_type="primary-nav" %}
-                    <a class="sub-nav-hidden primary-nav__link" {% if link.value.mega_menu %}data-open-subnav{% endif %} href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}" {% if link.value.mega_menu %}aria-haspopup="true" aria-expanded="false"{% endif %}>
+                    <a class="sub-nav-hidden primary-nav__link" {% if link.value.mega_menu %}data-open-subnav{% endif %} href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}" aria-label="{% trans 'Nav link' %}" {% if link.value.mega_menu %}aria-haspopup="true" aria-expanded="false"{% endif %}>
                         {% if link.value.title %}
                             {{ link.value.title }}
                         {% else %}
@@ -24,7 +24,7 @@
                     {% if link.value.mega_menu %}
                         <ul class="sub-nav" data-subnav>
                             <li class="sub-nav__item sub-nav__item--back">
-                                <a data-subnav-back href="#" class="sub-nav__link">
+                                <a data-subnav-back href="#" aria-label="{% trans 'Nav link' %}" class="sub-nav__link">
                                     <span class="sub-nav__icon sub-nav__icon--back">
                                         {% include "patterns/atoms/icons/icon.html" with name="arrow" %}
                                     </span>
@@ -42,7 +42,7 @@
                                 <div class="mega_menu_sub_links" data-sub-links>
                                     <li class="sub-nav__item sub-nav__item--secondary">
                                         <div role="button" class="sub_links__button" data-sub-links-question aria-haspopup="true" aria-expanded="false">
-                                        <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                        <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
                                             {% if child.value.title %}
                                                 {{ child.value.title }}
                                             {% else %}
@@ -71,7 +71,7 @@
                                 </div>
                             {% else %}
                                  <li class="sub-nav__item sub-nav__item--secondary">
-                                    <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                    <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
                                         {% if child.value.title %}
                                             {{ child.value.title }}
                                         {% else %}
@@ -88,7 +88,7 @@
                                 <div class="mega_menu_sub_links" data-sub-links>
                                     <li class="sub-nav__item sub-nav__item--secondary">
                                         <div role="button" class="sub_links__button" data-sub-links-question aria-haspopup="true" aria-expanded="false">
-                                        <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                        <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
                                             {% if child.value.title %}
                                                 {{ child.value.title }}
                                             {% else %}
@@ -117,7 +117,7 @@
                                 </div>
                             {% else %}
                                  <li class="sub-nav__item sub-nav__item--secondary">
-                                    <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                    <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
                                         {% if child.value.title %}
                                             {{ child.value.title }}
                                         {% else %}
@@ -134,7 +134,7 @@
                                 <div class="mega_menu_sub_links" data-sub-links>
                                     <li class="sub-nav__item sub-nav__item--secondary">
                                         <div role="button" class="sub_links__button" data-sub-links-question aria-haspopup="true" aria-expanded="false">
-                                        <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                        <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
                                             {% if child.value.title %}
                                                 {{ child.value.title }}
                                             {% else %}
@@ -163,7 +163,7 @@
                                 </div>
                             {% else %}
                                  <li class="sub-nav__item sub-nav__item--secondary">
-                                    <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                    <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
                                         {% if child.value.title %}
                                             {{ child.value.title }}
                                         {% else %}
@@ -189,7 +189,7 @@
                     {% if link.value.mega_menu %}data-has-subnav{% endif %}
                 >
                     {% include_block link with nav_type="primary-nav" %}
-                    <a class="sub-nav-hidden primary-nav__link" {% if link.value.mega_menu %}data-open-subnav{% endif %} href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}" {% if link.value.mega_menu %}aria-haspopup="true" aria-expanded="false"{% endif %}>
+                    <a class="sub-nav-hidden primary-nav__link" aria-label="{% trans 'Nav link' %}" {% if link.value.mega_menu %}data-open-subnav{% endif %} href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}" {% if link.value.mega_menu %}aria-haspopup="true" aria-expanded="false"{% endif %}>
                         {% if link.value.title %}
                             {{ link.value.title }}
                         {% else %}
@@ -204,7 +204,7 @@
                     {% if link.value.mega_menu %}
                         <ul class="sub-nav" data-subnav>
                             <li class="sub-nav__item sub-nav__item--back">
-                                <a data-subnav-back href="#" class="sub-nav__link">
+                                <a data-subnav-back href="#" aria-label="{% trans 'Nav link' %}" class="sub-nav__link">
                                     <span class="sub-nav__icon sub-nav__icon--back">
                                         {% include "patterns/atoms/icons/icon.html" with name="arrow" %}
                                     </span>
@@ -222,7 +222,7 @@
                                 <div class="mega_menu_sub_links" data-sub-links>
                                     <li class="sub-nav__item sub-nav__item--secondary">
                                         <div role="button" class="sub_links__button" data-sub-links-question aria-haspopup="true" aria-expanded="false">
-                                        <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                        <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
                                             {% if child.value.title %}
                                                 {{ child.value.title }}
                                             {% else %}
@@ -251,7 +251,7 @@
                                 </div>
                             {% else %}
                                  <li class="sub-nav__item sub-nav__item--secondary">
-                                    <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                    <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
                                         {% if child.value.title %}
                                             {{ child.value.title }}
                                         {% else %}
@@ -268,7 +268,7 @@
                                 <div class="mega_menu_sub_links" data-sub-links>
                                     <li class="sub-nav__item sub-nav__item--secondary">
                                         <div role="button" class="sub_links__button" data-sub-links-question aria-haspopup="true" aria-expanded="false">
-                                        <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                        <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
                                             {% if child.value.title %}
                                                 {{ child.value.title }}
                                             {% else %}
@@ -297,7 +297,7 @@
                                 </div>
                             {% else %}
                                  <li class="sub-nav__item sub-nav__item--secondary">
-                                    <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                    <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
                                         {{ child.value.title }}
                                     </a>
                                 </li>
@@ -310,7 +310,7 @@
                                 <div class="mega_menu_sub_links" data-sub-links>
                                     <li class="sub-nav__item sub-nav__item--secondary">
                                         <div role="button" class="sub_links__button" data-sub-links-question aria-haspopup="true" aria-expanded="false">
-                                        <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                        <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
                                             {% if child.value.title %}
                                                 {{ child.value.title }}
                                             {% else %}
@@ -339,7 +339,7 @@
                                 </div>
                             {% else %}
                                  <li class="sub-nav__item sub-nav__item--secondary">
-                                    <a class="sub-nav__link" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                    <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
                                         {{ child.value.title }}
                                     </a>
                                 </li>
