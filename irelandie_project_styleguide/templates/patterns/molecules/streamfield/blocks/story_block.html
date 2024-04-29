@@ -16,7 +16,7 @@
             {% if value.image_alt %}
             <div class="{% if value.image_credit %}story__image-credit_wrapper{% endif %}">
                 {% if value.image_credit %}
-                    <button role="button" class="story__button-image-credit" data-image-credit aria-label="See the credit for this image">
+                    <button role="button" class="story__button-image-credit" data-image-credit aria-label="{% trans 'See the credit for this image' %}">
                         <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M25.375 14.5C25.375 20.5061 20.5061 25.375 14.5 25.375C8.4939 25.375 3.625 20.5061 3.625 14.5C3.625 8.4939 8.4939 3.625 14.5 3.625C20.5061 3.625 25.375 8.4939 25.375 14.5ZM15.7083 9.66667C15.7083 10.334 15.1673 10.875 14.5 10.875C13.8327 10.875 13.2917 10.334 13.2917 9.66667C13.2917 8.99932 13.8327 8.45833 14.5 8.45833C15.1673 8.45833 15.7083 8.99932 15.7083 9.66667ZM15.5 20.5417V13.2917H13.5V20.5417H15.5Z" fill="white"/>
                         </svg>
@@ -28,7 +28,7 @@
             {% else %}
             <div class="{% if value.image_credit %}story__image-credit_wrapper{% endif %}">
                 {% if value.image_credit %}
-                    <button role="button" class="story__button-image-credit" data-image-credit aria-label="See the credit for this image">
+                    <button role="button" class="story__button-image-credit" data-image-credit aria-label="{% trans 'See the credit for this image' %}">
                         <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M25.375 14.5C25.375 20.5061 20.5061 25.375 14.5 25.375C8.4939 25.375 3.625 20.5061 3.625 14.5C3.625 8.4939 8.4939 3.625 14.5 3.625C20.5061 3.625 25.375 8.4939 25.375 14.5ZM15.7083 9.66667C15.7083 10.334 15.1673 10.875 14.5 10.875C13.8327 10.875 13.2917 10.334 13.2917 9.66667C13.2917 8.99932 13.8327 8.45833 14.5 8.45833C15.1673 8.45833 15.7083 8.99932 15.7083 9.66667ZM15.5 20.5417V13.2917H13.5V20.5417H15.5Z" fill="white"/>
                         </svg>
@@ -112,9 +112,9 @@
                 </div>
                 {% else %}
                 {% with next_element=value.links|next:forloop.counter0 %}
-                
+
                 {% if next_element %}
-            
+
                 {% get_unique_ref as id %}
                 <div class="slide-{{desk_ref}} slide" id="desk-{{id}}">
                     <div class="story-links">
@@ -147,8 +147,8 @@
                     {% if value.links|length > 2 %}
                     {% get_unique_ref as button_next %}
                     {% get_unique_ref as button_previous %}
-                    <button role="button" aria-label="Next menu item" class="btn btn-next-{{button_next}} btn-next"></button>
-                    <button role="button" aria-label="Previous menu item" class="btn btn-prev-{{button_previous}} btn-prev">
+                    <button role="button" aria-label="{% trans 'Next menu item' %}" class="btn btn-next-{{button_next}} btn-next"></button>
+                    <button role="button" aria-label="{% trans 'Previous menu item' %}" class="btn btn-prev-{{button_previous}} btn-prev">
                     </button>
                     {% endif %}
                 </div>
@@ -196,7 +196,7 @@
             });
           });
 
-          
+
           // select next slide button
           const prevSlide = document.querySelector(".btn-prev-" + data_set.previous);
 

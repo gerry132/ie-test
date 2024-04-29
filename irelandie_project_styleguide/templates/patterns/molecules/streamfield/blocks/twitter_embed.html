@@ -6,7 +6,7 @@
             <p>{% trans 'Follow our' %}</p>
             <h3 class="story__heading heading--2">{{ title }}</h3>
         {% endif %}
-        <a class="twitter-timeline" {% if value.width > 0 %}data-width="{{ value.width }}"{% endif %} {% if value.height > 0 %}data-height="{{ value.height }}"{% endif %} href="https://twitter.com/{{ value.username }}?ref_src=twsrc%5Etfw">
+        <a class="twitter-timeline" aria-label="{% trans 'Twitter timeline' %}" {% if value.width > 0 %}data-width="{{ value.width }}"{% endif %} {% if value.height > 0 %}data-height="{{ value.height }}"{% endif %} href="https://twitter.com/{{ value.username }}?ref_src=twsrc%5Etfw">
             {% if value.title %}
                 {{ value.title }}
             {% else %}

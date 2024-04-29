@@ -39,7 +39,7 @@
 </style>
 {% endif %}
         {% if page.hero_image_credit %}
-            <button aria-label="See the credit for this image" role="button" class="story__button-image-credit" data-image-credit>
+            <button aria-label="{% trans 'See the credit for this image' %}" role="button" class="story__button-image-credit" data-image-credit>
                  <svg fill="none" height="29" viewBox="0 0 29 29" width="29" xmlns="http://www.w3.org/2000/svg">
                        <path clip-rule="evenodd" d="M25.375 14.5C25.375 20.5061 20.5061 25.375 14.5 25.375C8.4939 25.375 3.625 20.5061 3.625 14.5C3.625 8.4939 8.4939 3.625 14.5 3.625C20.5061 3.625 25.375 8.4939 25.375 14.5ZM15.7083 9.66667C15.7083 10.334 15.1673 10.875 14.5 10.875C13.8327 10.875 13.2917 10.334 13.2917 9.66667C13.2917 8.99932 13.8327 8.45833 14.5 8.45833C15.1673 8.45833 15.7083 8.99932 15.7083 9.66667ZM15.5 20.5417V13.2917H13.5V20.5417H15.5Z" fill="white" fill-rule="evenodd"/>
                  </svg>
@@ -79,20 +79,20 @@
 
                 {% if page.link_page and page.link_text %}
                     {% pageurl page.link_page as href %}
-                    <a href="{{ href }}" class="hero__button button">{{ page.link_text }}</a>
+                    <a href="{{ href }}" aria-label="{% trans 'Hero button' %}" class="hero__button button">{{ page.link_text }}</a>
                 {% endif %}
             {% check_page_type page.content_type 'Free Form Page' as FreeFormPage %}
             {% check_page_type page.content_type 'Story page' as StoryPage %}
             {% if FreeFormPage or StoryPage %}
                  <ul class="tag__slide">
                     {% for tags_category, tag_links in tagging_links %}
-                        <li class="tag__slide-item"><a href="{{ tag_links }}">{{ tags_category.specific.tag_label }}</a></li>
+                        <li class="tag__slide-item"><a href="{{ tag_links }}" aria-label="{% trans 'Tag label' %}">{{ tags_category.specific.tag_label }}</a></li>
                     {% endfor %}
                     {% for tags_category in tags_no_links %}
                         <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
                     {% endfor %}
                     {% for tags_destination, tag_links in destination_tag_links %}
-                        <li class="tag__slide-item"><a href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
+                        <li class="tag__slide-item"><a href="{{ tag_links.url }}" aria-label="{% trans 'Tag label' %}">{{ tags_destination }}</a></li>
                     {% endfor %}
                  </ul>
             {% endif %}

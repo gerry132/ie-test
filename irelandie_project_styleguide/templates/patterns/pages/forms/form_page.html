@@ -112,7 +112,7 @@
                         {{ form_errors.non_field_errors }}
                      {% endif %}
 
-                    <button class="form__submit button" type="submit">{% if page.action_text %}{{ page.action_text|safe }}{% else %}{% trans 'Submit' %}{% endif %}</button>
+                    <button class="form__submit button" type="submit" aria-label="{% trans 'Submit' %}">{% if page.action_text %}{{ page.action_text|safe }}{% else %}{% trans 'Submit' %}{% endif %}</button>
                 </div>
             </form>
         {% endif %}

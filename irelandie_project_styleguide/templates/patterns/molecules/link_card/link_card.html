@@ -1,6 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 
-<a href="{{ link_url }}" class="card">
+<a href="{{ link_url }}" aria-label="{% trans 'card' %}" class="card">
     <div class="card__image-container">
         {% if value.image_alt %}
             {% image value.image fill-400x200 alt=value.image_alt class="card__image" %}

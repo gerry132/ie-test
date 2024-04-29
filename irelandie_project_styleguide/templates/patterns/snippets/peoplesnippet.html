@@ -1,4 +1,5 @@
 {% load wagtailcore_tags wagtailimages_tags static util_tags %}
+{% load i18n %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 <script src="{% static 'js/main.js' %}"></script>
 {% include "patterns/atoms/sprites/sprites.html" %}
@@ -21,7 +22,7 @@
                     <h3 class="story__heading heading--2">{{ object.name }}</h3>
 
                     {% if object.social_media_link %}
-                        <a href="{{ object.social_media_link }}">
+                        <a href="{{ object.social_media_link }}" aria-label="{% trans 'Social Media link' %}">
                             <div class="story__twitter">
                                 {% if object.social_media_text %}
                                     {{ object.social_media_text }}
@@ -111,8 +112,8 @@
                 {% endif %}
             </div>
             {% if object.links|length > 2 %}
-              <button class="btn btn-next" aria-label="btn-next"></button>
-              <button class="btn btn-prev" aria-label="btn-next"></button>
+              <button class="btn btn-next" aria-label="{% trans 'Next menu item' %}"></button>
+              <button class="btn btn-prev" aria-label="{% trans 'Previous menu item' %}"></button>
             {% endif %}
         </div>
                             </div>

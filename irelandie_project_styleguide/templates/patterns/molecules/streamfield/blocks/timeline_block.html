@@ -25,7 +25,7 @@
      <hr/>
     <div class="timeline__track" data-glide-el="track">
         <ul class="glide__slides timeline__slides" style="z-index: 0" >
-            {% for story_photo_gallery in value.story_photo_gallery %} 
+            {% for story_photo_gallery in value.story_photo_gallery %}
                 <li role="link" aria-label="Timeline slide" id="{{forloop.counter}}" class="glide__slide" tab-index="0">
                 <div class="tab_container">
                 <div class="header_container">
@@ -43,14 +43,14 @@
                                 {{ story_photo_gallery.value.rich_text_summary|richtext }}
                             </p>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
             </li>
             {% endfor %}
         </ul>
     </div>
     <div data-glide-el="controls">
-        <button class="slider-arrow slider-arrow--left" data-glide-dir="<">‹</button>
-        <button class="slider-arrow slider-arrow--right" data-glide-dir=">">›</button>
+        <button class="slider-arrow slider-arrow--left" aria-label="{% trans 'Slide Arrow Left' %}" data-glide-dir="<">‹</button>
+        <button class="slider-arrow slider-arrow--right" ria-label="{% trans 'Slide Arrow Right' %}" data-glide-dir=">">›</button>
     </div>
 </div>

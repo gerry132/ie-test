@@ -26,7 +26,7 @@
                                             id="region-{{ forloop.counter }}"
                                             class="accordion__button"
                                             data-accordion-question
-                                            aria-label="region-expand"
+                                            aria-label="{% trans 'Region Expand' %}"
                                             aria-controls="region-list-{{ forloop.counter }}"
                                             aria-expanded="false"
                                             role="button">
@@ -46,7 +46,7 @@
                                             {% for country in countries %}
                                                 {% if country.region == region %}
                                                     <li class="accordion__list-item">
-                                                        <a href="{{ country.url }}">{{ country }}</a>
+                                                        <a href="{{ country.url }}" aria-label="{% trans 'Country URL' %}">{{ country }}</a>
                                                     </li>
                                                 {% endif %}
                                             {% endfor %}

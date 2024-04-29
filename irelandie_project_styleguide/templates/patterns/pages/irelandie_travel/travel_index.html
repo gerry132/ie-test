@@ -1,6 +1,6 @@
 {% extends "patterns/base_page.html" %}
 {% load wagtailcore_tags cache %}
-{% load static navigation_tags util_tags %}
+{% load static navigation_tags util_tags i18n %}
 {% block content %}
 
 
@@ -31,7 +31,7 @@
         <ul id="ul-{{letter}}">
             {% for v in value %}
                 {% get_page_region v as region %}
-                        <a href="{{v.url}}"><li style="display: block;" class="country-listing" region="{{region}}" id="{{v}}">{{ v }}</li></a>
+                        <a href="{{v.url}}" aria-label="{% trans 'Region' %}"><li style="display: block;" class="country-listing" region="{{region}}" id="{{v}}">{{ v }}</li></a>
             {% endfor %}
         </ul>
     </div>
