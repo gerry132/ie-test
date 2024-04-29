@@ -1334,6 +1334,7 @@ locals {
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
   SETTINGS_EMAIL_HOST               = "email.${local.region}.amazonaws.com"
   SETTINGS_DEFAULT_FROM_EMAIL       = aws_ssm_parameter.DEFAULT_FROM_EMAIL.value
+  SETTINGS_CLOUDFRONT_ID            = 0
 }
 
 data "template_file" "task_definition" {
@@ -1369,7 +1370,7 @@ data "template_file" "task_definition" {
     SETTINGS_CORS_ALLOW_ALL_ORIGINS     = local.SETTINGS_CORS_ALLOW_ALL_ORIGINS
     SETTINGS_EMAIL_HOST                 = local.SETTINGS_EMAIL_HOST
     SETTINGS_DEFAULT_FROM_EMAIL         = local.SETTINGS_DEFAULT_FROM_EMAIL
-    SETTINGS_CLOUDFRONT_ID            = 0
+    
   }
 }
 
