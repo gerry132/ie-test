@@ -33,7 +33,7 @@
                         </div>
                     {% else %}
                         {% if block_hero.value.image_link_page or block_hero.value.image_link_url %}
-                            <a href="{% if block_hero.value.image_link_page %}{{block_hero.value.image_link_page.url}}{% else %}{{block_hero.value.image_link_url}}{% endif %}">
+                            <a aria-label="{% trans 'Image link' %}" href="{% if block_hero.value.image_link_page %}{{block_hero.value.image_link_page.url}}{% else %}{{block_hero.value.image_link_url}}{% endif %}">
                                 {% image block_hero.value.image fill-1600x900 class="wide_feature__image" alt=block_hero.value.image_alt %}
                             </a>
                         {% else %}
@@ -58,9 +58,9 @@
                                 {% for button in block_hero.value.button_link %}
                                     <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
                                             {% if button.value.page %}
-                                            <a class="button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
+                                            <a class="button_text" href="{{ button.value.page.url }}" aria-label="{% trans 'Button text' %}">{{ button.value.message }}</a>
                                         {% else %}
-                                            <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
+                                            <a class="button_text" href="{{ button.value.url }}" aria-label="{% trans 'Button text' %}">{{ button.value.message }}</a>
                                         {% endif %}
                                     </div>
                                 {% endfor %}
@@ -71,7 +71,7 @@
                          <h2 class="wide_feature__link_heading heading--2">{{ block_hero.value.title }}</h2>
                     {% endif %}
                     {% for links in block_hero.value.link_block %}
-                    <a href="{% if links.value.page.url %}{{ links.value.page.url }}{% else %}{{ links.value.url }}{% endif %}" class="link-box">
+                    <a href="{% if links.value.page.url %}{{ links.value.page.url }}{% else %}{{ links.value.url }}{% endif %}" class="link-box" aria-label="{% trans 'Link box' %}">
                         <div class="wide_feature__link_content">
                             <div class="link-box__container">
                                 <h3 class="wide_feature__link_title">

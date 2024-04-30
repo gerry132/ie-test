@@ -10,7 +10,7 @@
             <div class="featured-blocks featured-blocks--four">
                 {% for article in articles %}
                     {% pageurl article as href %}
-                    <a href="{{ href }}" class="card{% if large %} card--large{% endif %}{% if classes %} {{ classes }}{% endif %}">
+                    <a href="{{ href }}" aria-label="{% trans 'card' %}" class="card{% if large %} card--large{% endif %}{% if classes %} {{ classes }}{% endif %}">
                         {% comment %}
                             It's possible that neither images are set in the admin.
                             It will fail silently, here and simply not render an image tag.

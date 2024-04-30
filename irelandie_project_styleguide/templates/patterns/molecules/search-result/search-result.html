@@ -1,4 +1,4 @@
-{% load static wagtailcore_tags wagtailsearchpromotions_tags wagtailimages_tags %}
+{% load static wagtailcore_tags wagtailsearchpromotions_tags wagtailimages_tags i18n %}
 
 
 <div class="search-result">
@@ -9,7 +9,7 @@
     {% endif %}
 
     <div class="search-result__content">
-        <a href="{{result.url}}" class="search-result__title">
+        <a href="{{result.url}}" aria-label="{% trans 'Search content' %}" class="search-result__title">
             {% firstof result.listing_title result.title %}
         </a>
 

@@ -1,5 +1,6 @@
+{% load i18n %}
 <span>
-  <a href="{{ value.url }}">
+  <a href="{{ value.url }}" aria-label="{% trans 'Social link' %}">
     {# TODO: the designs say this is an icon, but we don't have agreement on icons yet #}
     {{ value.url }}
   </a>

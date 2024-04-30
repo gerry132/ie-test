@@ -1,4 +1,4 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags i18n %}
 <div class="rich-text" {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
     {% if value.paragraph_alignment == 'narrow' %}
         <div class="rich-text rich-text__narrow">
@@ -12,9 +12,9 @@
             {% for button in value.button_link %}
                 <div class="aa wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
                         {% if button.value.page %}
-                        <a class="button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
+                        <a class="button_text" aria-label="{% trans 'Button text' %}" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
                     {% else %}
-                        <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
+                        <a class="button_text" aria-label="{% trans 'Button text' %}" href="{{ button.value.url }}">{{ button.value.message }}</a>
                     {% endif %}
                 </div>
             {% endfor %}
@@ -31,9 +31,9 @@
             <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
                 {% for button in value.button_link %}
                 {% if button.value.page %}
-                        <a class="button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
+                        <a class="button_text" aria-label="{% trans 'Button text' %}" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
                     {% else %}
-                        <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
+                        <a class="button_text" aria-label="{% trans 'Button text' %}" href="{{ button.value.url }}">{{ button.value.message }}</a>
                     {% endif %}
                     {% endfor %}
                 </div>

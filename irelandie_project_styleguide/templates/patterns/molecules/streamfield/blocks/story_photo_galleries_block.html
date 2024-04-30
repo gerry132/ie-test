@@ -26,9 +26,9 @@
                                    <span class="rich-text button--primary">
                                             {% for button in story_photo_gallery.value.button_link %}
                                                 {% if button.value.page %}
-                                                        <a class="button_text" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
+                                                        <a class="button_text" aria-label="{% trans 'Button text' %}" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
                                                     {% else %}
-                                                        <a class="button_text" href="{{ button.value.url }}">{{ button.value.message }}</a>
+                                                        <a class="button_text" aria-label="{% trans 'Button text' %}" href="{{ button.value.url }}">{{ button.value.message }}</a>
                                                     {% endif %}
                                             {% endfor %}
                                    </span>

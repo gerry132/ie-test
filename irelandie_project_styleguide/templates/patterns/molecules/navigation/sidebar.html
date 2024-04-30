@@ -6,7 +6,7 @@
             <h2>{% trans 'In this section' %}</h2>
             <ul>
                 {% for child in children %}
-                <li><a href="{% pageurl child %}">{{ child.title }}</a></li>
+                <li><a href="{% pageurl child %}" aria-label="{% trans 'Side bar' %}">{{ child.title }}</a></li>
                 {% endfor %}
             </ul>
         </div>
