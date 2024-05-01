@@ -251,12 +251,28 @@ resource "aws_security_group" "redis" {
     vpc_id  = module.network.vpc_id
 }
 
+resource "aws_security_group" "example" {
+
+  vpc_id  = module.network.vpc_id
+
+  ingress {
+    from_port = 443
+    to_port   = 443
+    protocol  = "tcp"
+
+    cidr_blocks = [
+      "0.0.0.0/0"
+    ]
+  }
+}
+
 
 # -----------------------------------------------------------------------------
 # Security group rules
 # -----------------------------------------------------------------------------
 
 # Public access rules
+
 
 resource "aws_security_group_rule" "internet_to_lb_80" {
   type                      = "ingress"
@@ -1024,7 +1040,10 @@ resource "aws_opensearch_domain" "opensearch" {
   encrypt_at_rest {
     enabled = true
   }
-
+  vpc_options {
+    subnet_ids = module.network.private_subnet_ids
+    security_group_ids = [aws_security_group.example.id]
+  }
   node_to_node_encryption {
     enabled = true
   }
