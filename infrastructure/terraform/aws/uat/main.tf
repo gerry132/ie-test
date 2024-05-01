@@ -1068,13 +1068,12 @@ resource "aws_opensearch_domain" "opensearch" {
       "Effect": "Allow",
       "Principal": {
         "AWS": [
-          "arn:aws:iam::100350071169:user/opensearch_UAT_APP_USER"
+          aws_iam_user.opensearch.arn
         ]
       },
       "Action": [
         "es:*"
       ],
-      "Resource": "arn:aws:es:eu-west-1:100350071169:domain/uat/*"
     }
   ]
 }
