@@ -13,6 +13,9 @@ fi
 init_username="system_admin"
 init_password="password1234!"
 
+python3 manage.py wagtail_update_index
+python3 manage.py fixtree --full
+
 echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='"$init_username"').exists() or User.objects.create_superuser('"$init_username"', password='"$init_password"');" | python3 manage.py shell
 
 gunicorn -b :8000 --keep-alive 60 --workers 3 --timeout 120 --graceful-timeout 60 app.wsgi --log-level error --access-logfile - --error-logfile - --access-logformat '%({X-Forwarded-For}i)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
