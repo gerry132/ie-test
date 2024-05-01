@@ -1,4 +1,4 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags i18n %}
 {% comment %} Notice bar for alert message {% endcomment %}
 <style>
     .notice-svg{
@@ -40,9 +40,9 @@
             {% if value.button %}
                 {% for button in value.button %}
                     {% if button.value.page %}
-                        <a class="notice_button" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
+                        <a class="notice_button" aria-label="{% trans 'Notice button' %}" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
                     {% else %}
-                        <a class="notice_button" href="{{ button.value.url }}">{{ button.value.message }}</a>
+                        <a class="notice_button" aria-label="{% trans 'Notice button' %}" href="{{ button.value.url }}">{{ button.value.message }}</a>
                     {% endif %}
                 {% endfor %}
             {% endif %}

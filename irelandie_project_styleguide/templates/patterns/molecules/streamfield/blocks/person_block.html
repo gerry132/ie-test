@@ -13,7 +13,7 @@
 
                 <h3>{{ value.name }}</h3>
                 {% if value.person__internal_link %}
-                    <div class="twitter-embed_link"><a href="{{value.person__internal_link.url}}">{{ value.person_title }}</a></div>
+                    <div class="twitter-embed_link"><a aria-label="{{ value.person_title }}" href="{{value.person__internal_link.url}}">{{ value.person_title }}</a></div>
                 {% else %}
                     <div class="twitter-embed_link" style="text-decoration-line: unset;">{{ value.person_title }}</div>
                 {% endif %}
@@ -130,7 +130,7 @@
                                 <h3>{{ socialfeed.value.twitter_title }}</h3>
                                 {% endif %}
                                 <div style="margin-bottom: 20px; line-height: 19px;">
-                                    <a class="twitter-embed_link" href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                    <a class="twitter-embed_link" aria-label="{% trans 'Twitter timeline' %}" href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
                                         {% translate "Keep up to date with the latest tweets from" %} {{ socialfeed.value.twitter_username }}
                                     </a>
                                 </div>
@@ -173,7 +173,7 @@
                         <h3>{{ socialfeed.value.twitter_title }}</h3>
                         {% endif %}
                         <div style="margin-bottom: 20px; line-height: 19px;">
-                                    <a class="twitter-embed_link" href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
+                                    <a class="twitter-embed_link" aria-label="{% trans 'Twitter timeline' %}" href="https://twitter.com/{{ socialfeed.value.twitter_username }}?ref_src=twsrc%5Etfw">
                                         {% translate "Keep up to date with the latest tweets from" %} {{ socialfeed.value.twitter_username }}
                                     </a>
                         </div>

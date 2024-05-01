@@ -439,6 +439,7 @@ resource "aws_s3_bucket" "private_lb_logs" {
   bucket  = "${local.environment_name}-${local.project_name}-private-lb-logs"
 }
 
+
 resource "aws_s3_bucket" "cf-logs" {
   bucket  = "${local.environment_name}-${local.project_name}-cf-logs"
 }
@@ -455,12 +456,6 @@ resource "aws_s3_bucket_ownership_controls" "cf_s3_bucket_acl_ownership" {
   rule {
     object_ownership = "ObjectWriter"
   }
-}
-
-
-resource "aws_s3_bucket_acl" "private_lb_logs" {
-  bucket = aws_s3_bucket.private_lb_logs.id
-  acl    = "private"
 }
 
 

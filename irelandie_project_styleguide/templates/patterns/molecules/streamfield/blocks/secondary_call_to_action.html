@@ -1,7 +1,8 @@
+{% load i18n %}
 <div class="wrapper wrapper--large wrapper--padding">
     <div class="secondary-cta">
         {% if link_url %}
-            <a class="secondary-cta__link" href="{{ link_url }}">{{ value.message }}</a>
+            <a class="secondary-cta__link" aria-label="{% trans 'Secondary CTA link' %}" href="{{ link_url }}">{{ value.message }}</a>
         {% else %}
             {{ value.message }}
         {% endif %}

@@ -1,7 +1,7 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 
     <div class="wrapper wrapper--large">
-        <a href="{{ link_url }}" class="link-button ">
+        <a href="{{ link_url }}" aria-label="{% trans 'link button' %}" class="link-button ">
             <div class="link-button__content">
                 <h3 class="link-button__title">{{ value.heading }}</h3>
                 <button class="link-button__arrow" role="button" aria-label="{% if value.link_button_alt %}{{ value.link_button_alt }}{% else %}link-button__arrow{% endif %}"></button>

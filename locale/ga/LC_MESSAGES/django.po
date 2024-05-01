@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-29 10:23+0100\n"
+"POT-Creation-Date: 2024-04-29 13:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -230,12 +230,15 @@ msgid "Search Button"
 msgstr "Cnaipe laoch"
 
 #: irelandie_project_styleguide/templates/patterns/base_page.html:99
+#: irelandie_project_styleguide/templates/patterns/molecules/skip-link/skip-link.html:3
 #: irelandie_project_styleguide/templates/patterns/molecules/skip-link/skip-link.html:4
 msgid "Skip to main content"
-msgstr ""
+msgstr "Téigh ar aghaidh chuig an bpríomhábhar"
 
 #: irelandie_project_styleguide/templates/patterns/hero_page.html:55
 #: irelandie_project_styleguide/templates/patterns/hero_page.html:61
+#: irelandie_project_styleguide/templates/patterns/molecules/banner_hero_image/banner_hero.html:21
+#: irelandie_project_styleguide/templates/patterns/molecules/banner_hero_image/banner_hero.html:27
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:30
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:36
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:90
@@ -244,6 +247,14 @@ msgstr ""
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:95
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:97
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:103
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:37
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:40
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:45
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:53
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:60
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:65
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:73
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:80
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_index_page.html:54
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_index_page.html:60
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_index_page.html:66
@@ -259,6 +270,9 @@ msgstr ""
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:196
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:202
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:208
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:212
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:225
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:237
 #: irelandie_project_styleguide/templates/patterns/pages/missions/general_content_page.html:28
 #: irelandie_project_styleguide/templates/patterns/pages/missions/general_content_page.html:34
 msgid "Tag label"
@@ -271,21 +285,44 @@ msgstr "Oscail cluaisín"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/accordion/accordion.html:64
 #: irelandie_project_styleguide/templates/patterns/molecules/accordion/accordion.html:66
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/megamenu_contents.html:70
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/megamenu_contents.html:73
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/advanced_richtext_block.html:15
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/advanced_richtext_block.html:17
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/advanced_richtext_block.html:34
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/advanced_richtext_block.html:36
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_block.html:70
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_block.html:72
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_photo_galleries_block.html:29
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_photo_galleries_block.html:31
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/wide_feature_block.html:61
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/wide_feature_block.html:63
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:133
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:135
 msgid "Button text"
 msgstr "Téacs cnaipe"
 
+#: irelandie_project_styleguide/templates/patterns/molecules/article_card/ajax_article_card.html:5
 #: irelandie_project_styleguide/templates/patterns/molecules/article_card/ajax_article_card.html:14
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/wide_feature_block.html:74
 #, fuzzy
 #| msgid "Link box button"
 msgid "Link box"
 msgstr "Cnaipe bosca naisc"
 
+#: irelandie_project_styleguide/templates/patterns/molecules/article_card/article_card.html:3
 #: irelandie_project_styleguide/templates/patterns/molecules/card/card.html:14
 #: irelandie_project_styleguide/templates/patterns/molecules/card/card.html:16
 #: irelandie_project_styleguide/templates/patterns/molecules/card/news-card.html:13
 #: irelandie_project_styleguide/templates/patterns/molecules/link_card/link_card.html:3
+#: irelandie_project_styleguide/templates/patterns/molecules/related-articles/related-articles.html:13
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:4
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:21
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/homepage_feature_block.html:78
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/homepage_feature_block.html:80
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/multimedia_block.html:31
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/related_content.html:4
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:157
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:64
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:88
 msgid "card"
@@ -301,12 +338,27 @@ msgstr "Léigh scéal"
 msgid "Read more"
 msgstr "Leigh Nios mo"
 
+#: irelandie_project_styleguide/templates/patterns/molecules/contact_details/contact_details.html:28
+#: irelandie_project_styleguide/templates/patterns/molecules/contact_details/contact_details.html:31
+#: irelandie_project_styleguide/templates/patterns/snippets/contactsnippet.html:30
+#: irelandie_project_styleguide/templates/patterns/snippets/contactsnippet.html:33
+msgid "Telephone"
+msgstr "Teileafón"
+
 #: irelandie_project_styleguide/templates/patterns/molecules/cta/call_to_action.html:23
 msgid "Call to action"
 msgstr "Glao chun gnímh"
 
+#: irelandie_project_styleguide/templates/patterns/molecules/featured-block/featured_block.html:4
+#, fuzzy
+#| msgid "Related content"
+msgid "Featured contents"
+msgstr "Ábhar gaolmhar"
+
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:22
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:82
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/homepage_feature_block.html:53
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/homepage_feature_block.html:55
 msgid "Hero button"
 msgstr "Cnaipe laoch"
 
@@ -334,6 +386,7 @@ msgstr "Ní thacaíonn do bhrabhsálaí leis an gclib físeáin."
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:51
 #: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:66
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/multimedia_block.html:62
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/multimedia_block.html:71
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/multimedia_block.html:72
 msgid "Toggle video playback"
 msgstr "Scoránaigh athsheinm físe"
@@ -372,6 +425,24 @@ msgstr "Cnaipe bosca naisc"
 msgid "link_box"
 msgstr "nasc_bhosca"
 
+#: irelandie_project_styleguide/templates/patterns/molecules/link_button/link_button.html:4
+#, fuzzy
+#| msgid "Link box button"
+msgid "link button"
+msgstr "Cnaipe bosca naisc"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/logo_card/logo_card.html:3
+#, fuzzy
+#| msgid "card"
+msgid "Logo card"
+msgstr "cárta"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/footer_column.html:9
+#, fuzzy
+#| msgid "Footer links"
+msgid "Footer Column"
+msgstr "Naisc buntásc"
+
 #: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/megamenu_contents.html:10
 #: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/megamenu_contents.html:25
 msgid "Grid item"
@@ -387,10 +458,50 @@ msgstr "Mír greille"
 msgid "Grid item sub links"
 msgstr "Fo-naisc míreanna greille"
 
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/megamenu_contents.html:82
+#, fuzzy
+#| msgid "Links"
+msgid "Image Links"
+msgstr "Naisc"
+
 #: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/menu_item_with_megamenu.html:4
 #: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/menu_item_with_megamenu.html:72
 msgid "Mega menu link"
 msgstr "Nasc roghchlár mega"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/breadcrumbs.html:12
+msgid "Breadcrumbs title"
+msgstr "teideal arán"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/breadcrumbs.html:15
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/breadcrumbs.html:23
+msgid "arrow-next"
+msgstr "saighead-ar aghaidh"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/breadcrumbs.html:18
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/custom_primary_navigation.html:7
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/includes/menu_item.html:3
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/includes/menu_item_extended.html:3
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:12
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:27
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:46
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:75
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:92
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:121
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:138
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:167
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:193
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:208
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:227
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:256
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:273
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:302
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:315
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:344
+#, fuzzy
+#| msgid "Event link"
+msgid "Nav link"
+msgstr "Nasc imeachta"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/navigation/breadcrumbs.html:19
 msgid "Home"
@@ -403,13 +514,6 @@ msgstr "Loingseoireacht thánaisteach"
 #: irelandie_project_styleguide/templates/patterns/molecules/navigation/footerlinks.html:3
 msgid "Footer links"
 msgstr "Naisc buntásc"
-
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/includes/menu_item.html:3
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/includes/menu_item_extended.html:3
-#, fuzzy
-#| msgid "Event link"
-msgid "Nav link"
-msgstr "Nasc imeachta"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:3
 msgid "Primary navigation"
@@ -427,6 +531,17 @@ msgstr "Nascleanúint phríomhúil leathnaithe"
 #: irelandie_project_styleguide/templates/patterns/molecules/navigation/sidebar.html:6
 msgid "In this section"
 msgstr "San alt seo"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/navigation/sidebar.html:9
+msgid "Side bar"
+msgstr "Barra taobh"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/notice-bar/blocks/notice_bar.html:44
+#: irelandie_project_styleguide/templates/patterns/molecules/notice-bar/blocks/notice_bar.html:46
+#, fuzzy
+#| msgid "Hero button"
+msgid "Notice button"
+msgstr "Cnaipe laoch"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/pagination/index-pagination.html:4
 #: irelandie_project_styleguide/templates/patterns/molecules/pagination/pagination.html:4
@@ -467,6 +582,12 @@ msgstr "Téigh go dtí an chéad leathanach eile"
 #: irelandie_project_styleguide/templates/patterns/molecules/related-articles/related-articles.html:8
 msgid "You may also be interested in these articles"
 msgstr "Seans go mbeadh suim agat sna hailt seo freisin"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/search-result/search-result.html:12
+#, fuzzy
+#| msgid "Related content"
+msgid "Search content"
+msgstr "Ábhar gaolmhar"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/search/search.html:7
 #: irelandie_project_styleguide/templates/patterns/pages/search/search.html:29
@@ -518,6 +639,12 @@ msgstr ""
 msgid "Document link"
 msgstr "Nasc doiciméad"
 
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/homepage_feature_block.html:62
+#, fuzzy
+#| msgid "Hero button"
+msgid "Image Button"
+msgstr "Cnaipe laoch"
+
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:9
 msgid "Contact Details"
 msgstr "Sonraí Teagmhála"
@@ -534,15 +661,10 @@ msgstr "An chéad mhír roghchláir eile"
 msgid "Previous menu item"
 msgstr "Mír roghchláir roimhe seo"
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:134
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:177
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:153
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:169
-msgid "Keep up to date with the latest tweets from"
-msgstr "Coinnigh suas chun dáta leis na tweetanna is déanaí ó "
-
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:133
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:139
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:146
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:176
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:182
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:189
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/twitter_embed.html:9
@@ -555,6 +677,25 @@ msgstr "Coinnigh suas chun dáta leis na tweetanna is déanaí ó "
 msgid "Twitter timeline"
 msgstr "Amlíne Twitter"
 
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:134
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:177
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:153
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:169
+msgid "Keep up to date with the latest tweets from"
+msgstr "Coinnigh suas chun dáta leis na tweetanna is déanaí ó "
+
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_link_block.html:4
+#, fuzzy
+#| msgid "Event link"
+msgid "Person link"
+msgstr "Nasc imeachta"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/pinned_story_hero_block.html:15
+#, fuzzy
+#| msgid "Button text"
+msgid "Button link"
+msgstr "Téacs cnaipe"
+
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/policy_document_box.html:32
 #, fuzzy
 #| msgid "Hero button"
@@ -564,6 +705,24 @@ msgstr "Cnaipe laoch"
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/related_content.html:23
 msgid "Arrow"
 msgstr "Saighead"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/secondary_call_to_action.html:5
+#, fuzzy
+#| msgid "Secondary navigation"
+msgid "Secondary CTA link"
+msgstr "Loingseoireacht thánaisteach"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/social_link_block.html:3
+#, fuzzy
+#| msgid "Social Media link"
+msgid "Social link"
+msgstr "Nasc Meáin Shóisialta"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_link_block.html:4
+#, fuzzy
+#| msgid "Footer links"
+msgid "Story link"
+msgstr "Naisc buntásc"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_photo_galleries_block.html:46
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/timeline_block.html:53
@@ -579,6 +738,12 @@ msgstr "Saighead Sleamhnán Ar Dheis"
 #: irelandie_project_styleguide/templates/patterns/snippets/twitterembedsnippet.html:7
 msgid "Follow our"
 msgstr "Lean ár"
+
+#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/wide_feature_block.html:36
+#, fuzzy
+#| msgid "Event link"
+msgid "Image link"
+msgstr "Nasc imeachta"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/topics/featured_article.html:3
 msgid "featured_article"
@@ -795,6 +960,12 @@ msgstr "Litir"
 msgid "Region"
 msgstr "Réigiún"
 
+#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:147
+#, fuzzy
+#| msgid "Twitter timeline"
+msgid "Twitter title"
+msgstr "Amlíne Twitter"
+
 #: irelandie_project_styleguide/templates/patterns/pages/missions/embassy_index_page.html:27
 #, fuzzy
 #| msgid "Clear all filters"
@@ -846,11 +1017,6 @@ msgstr ""
 #: irelandie_project_styleguide/templates/patterns/pages/wagtail/password_required.html:12
 msgid "Please enter the password to proceed."
 msgstr ""
-
-#: irelandie_project_styleguide/templates/patterns/snippets/contactsnippet.html:30
-#: irelandie_project_styleguide/templates/patterns/snippets/contactsnippet.html:33
-msgid "Telephone"
-msgstr "Teileafón"
 
 #: irelandie_project_styleguide/templates/patterns/snippets/peoplesnippet.html:25
 msgid "Social Media link"
