@@ -4,7 +4,6 @@
 		"image": "${ecr_image_url}",
 		"cpu": ${task_cpu},
 		"memory": ${task_memory},
-        "readonlyRootFilesystem": true,
 		"networkMode": "awsvpc",
 		"logConfiguration": {
 			"logDriver": "awslogs",
