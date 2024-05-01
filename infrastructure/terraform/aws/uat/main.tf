@@ -1053,7 +1053,7 @@ resource "aws_opensearch_domain" "opensearch" {
     tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
   }
   advanced_security_options {
-      enabled                        = true
+      enabled                        = false
       internal_user_database_enabled = true
       master_user_options {
           master_user_name     = "${local.environment_name}-opensearch-user"
@@ -1061,19 +1061,24 @@ resource "aws_opensearch_domain" "opensearch" {
       }
     }
     access_policies = jsonencode(
+      {
+  "Version": "2012-10-17",
+  "Statement": [
     {
-      "Version": "2012-10-17",
-      "Statement": [
-        {
-          "Effect": "Allow",
-          "Principal": {
-            "AWS": "*"
-          },
-          "Action": "es:*",
-          "Resource": "*"
-        }
-      ]
-    })
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": [
+          "arn:aws:iam::100350071169:user/opensearch_UAT_APP_USER"
+        ]
+      },
+      "Action": [
+        "es:*"
+      ],
+      "Resource": "arn:aws:es:eu-west-1:100350071169:domain/uat/*"
+    }
+  ]
+}
+)
 }
 
 
@@ -1220,24 +1225,6 @@ resource "aws_iam_access_key" "opensearch" {
   user = aws_iam_user.opensearch.name
 }
 
-resource "aws_iam_user_policy" "opensearch_aws_user" {
-  name = "opensearch-${local.project_name}-policy"
-  user = "opensearch_${local.app_aws_username}"
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect":"Allow",
-       "Action":[
-          "es:*"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-EOF
-}
 
 # -----------------------------------------------------------------------------
 # ECR
