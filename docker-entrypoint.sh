@@ -9,12 +9,11 @@ else
     exit 1
 fi
 
+python3 manage.py wagtail_update_index
+python3 manage.py fixtree --full
 
 init_username="system_admin"
 init_password="password1234!"
-
-python3 manage.py wagtail_update_index
-python3 manage.py fixtree --full
 
 echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='"$init_username"').exists() or User.objects.create_superuser('"$init_username"', password='"$init_password"');" | python3 manage.py shell
 
