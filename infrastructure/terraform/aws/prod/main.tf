@@ -1091,12 +1091,12 @@ data "aws_ssm_parameter" "random_db_password" {
 # Database
 
 module "database" {
-  source                = "github.com/ogcio/terraform-aws-db-instance-postgres-12-4"
+  source                = "github.com/ogcio/wagtail-site-database"
   db_name               = "${local.environment_name}_ireland_ie"
   db_username           = "${local.environment_name}_ireland_ie_username"
   db_password           = data.aws_ssm_parameter.random_db_password.value
   db_instance_class     = local.db_instance_class
-  db_engine_version     = "12.14"
+  db_engine_version     = "15.2"
   create_snapshot       = false
   name                  = "${local.environment_name}-db"
   subnets               = module.network.public_subnet_ids
