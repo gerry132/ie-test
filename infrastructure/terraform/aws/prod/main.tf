@@ -1091,12 +1091,12 @@ data "aws_ssm_parameter" "random_db_password" {
 # Database
 
 module "database" {
-  source                = "github.com/ogcio/terraform-aws-db-instance-postgres-12-4"
+  source                = "github.com/ogcio/wagtail-site-database"
   db_name               = "${local.environment_name}_ireland_ie"
   db_username           = "${local.environment_name}_ireland_ie_username"
   db_password           = data.aws_ssm_parameter.random_db_password.value
   db_instance_class     = local.db_instance_class
-  db_engine_version     = "12.14"
+  db_engine_version     = "15.2"
   create_snapshot       = false
   name                  = "${local.environment_name}-db"
   subnets               = module.network.public_subnet_ids
@@ -1851,9 +1851,20 @@ resource "aws_cloudfront_distribution" "dynamic" {
     cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
-    path_pattern             = "*/news-and-events/"
+    path_pattern             = "*/news-and-events/*"
   } 
 
+
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/news-and-speeches/*"
+  } 
 
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
