@@ -23,20 +23,10 @@ class Accordion {
             if (open) {
                 this.question.setAttribute('aria-expanded', 'false');
                 this.answer.setAttribute('aria-hidden', 'true');
-                if(this.embassy_button){
-                     this.embassy_button.setAttribute('aria-label', 'Open tab');
-                }else{
-                    this.button.setAttribute('aria-label', 'Open tab');
-                }
                 open = false;
             } else {
                 this.question.setAttribute('aria-expanded', 'true');
                 this.answer.setAttribute('aria-hidden', 'false');
-                if(this.embassy_button){
-                     this.embassy_button.setAttribute('aria-label', 'Close tab');
-                }else{
-                    this.button.setAttribute('aria-label', 'Close tab');
-                }
                 open = true;
             }
         });
