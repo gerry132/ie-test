@@ -25,7 +25,7 @@
                             </div>
                         {% else %}
                             <div class="mini-hero__image mini-hero__image_width">
-                                {% image block.value.hero_image fill-960x540-c100 alt=block.value.hero_image_alt class="image mini-hero__image" %}
+                                {% image block.value.hero_image fill-960x540-c100 class="image mini-hero__image" alt=block.value.hero_image_alt %}
                                 {% if block.value.hero_image_credit %}
                                     <button class="mini-hero__button-image-credit" role="button" data-image-credit aria-label="{% trans 'See the credit for this image' %}">
                                         <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
