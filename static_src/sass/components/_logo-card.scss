@@ -13,7 +13,6 @@
 
     &:hover,
     &:focus {
-        cursor: pointer;
 
         @include media-query(medium) {
             #{$root}__logo-container {
