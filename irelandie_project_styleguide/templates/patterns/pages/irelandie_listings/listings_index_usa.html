@@ -141,7 +141,7 @@ getState();
 <div class="wrapper wrapper--large wrapper--padding">
     <div class="filter">
      <h3 class="filter__title">{% translate "Filter by: " %}</h3>
-        <select class="listings_filter" id="city-list" onchange="getCity(this.value); ">
+        <select  aria-label="City list" class="listings_filter" id="city-list" onchange="getCity(this.value); ">
                 <option value="city">City</option>
                 {% for p in page.get_city %}
                 <option value="{{p}}">{{p}}</option>
@@ -149,7 +149,7 @@ getState();
         </select>
         <div class="filter__title">{% translate "OR" %}</div>
 
-        <select class="listings_filter" id="state-list" onchange="getState(this.value); ">
+        <select  aria-label="State list" class="listings_filter" id="state-list" onchange="getState(this.value); ">
                 <option value="state">State</option>
                 {% for p in page.get_state %}
                 <option value="{{p}}">{{p|upper}}</option>
