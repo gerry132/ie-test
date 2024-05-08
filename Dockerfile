@@ -3,6 +3,8 @@ ARG DOCKER_IMAGE_URL=alpine:3.11
 FROM ${DOCKER_IMAGE_URL}
 
 # init
+VOLUME ["/tmp"]
+RUN --mount=type=bind,target=/tmp
 RUN mkdir /app
 RUN mkdir /static
 WORKDIR /app
