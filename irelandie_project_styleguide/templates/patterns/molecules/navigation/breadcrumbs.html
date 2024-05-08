@@ -2,7 +2,7 @@
 {% load util_tags %}
 
 {% if page.get_ancestors|length > 2 %}
-    <nav style="background-color: #f4f4f4;" role="nav" aria-label="breadcrumb">
+    <nav style="background-color: #f4f4f4;" role="navigation" aria-label="breadcrumb">
         <ul class="breadcrumbs-nav">
             {% get_starting_index page.get_ancestors as INDEX %}
             {% for ancestor_page in INDEX %}

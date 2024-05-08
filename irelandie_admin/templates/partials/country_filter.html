@@ -7,7 +7,7 @@
             <div class="field choice_field select">
                 <div class="field-content">
                     <div class="input">
-                        <select name="parent_country" id="parent_country_chooser">
+                        <select aria-label="{% trans 'Parent country' %}" name="parent_country" id="parent_country_chooser">
                             {% if not selected_country %}
                                 <option selected>All</option>
                             {% else %}

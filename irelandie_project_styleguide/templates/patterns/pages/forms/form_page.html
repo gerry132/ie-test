@@ -75,7 +75,7 @@
                     {% if page.email_map %}
                     <div id="field-con" style="padding-bottom: 20px;">
                     {% if page.email_map|length > 1 %}
-                        <select class="field--selection" form="form--sub" name="topic" required>
+                        <select aria-label="{% trans 'Topic' %}" class="field--selection" form="form--sub" name="topic" required>
                             <option value="" name="popular_page" selected disabled hidden>
                             {% if page.email_map_text %}
                                 {{page.email_map_text}}
@@ -88,7 +88,7 @@
                                 {% endfor %}
                         </select>
                     {% else %}
-                    <select style="display: none;" class="field--selection" form="form--sub" name="topic">
+                    <select aria-label="{% trans 'Topic' %}" style="display: none;" class="field--selection" form="form--sub" name="topic">
                             {% for p in page.email_map %}
                                 <option selected value="{{p.value.description}}">{{p.value.description}}</option>
                             {% endfor %}

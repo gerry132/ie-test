@@ -46,7 +46,7 @@ getNewsArticles();
     <div class="wrapper--large--toc" style="padding-bottom: 40px;">
         <div class="wrapper--padding related-content--mobile">
             <h3 class="intro__title">{% translate "Select year:" %}</h3>
-            <select class="searchBarNews" id="news-list" onchange="getNewsArticles(this.value); " style="width: 100%;">
+            <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list" onchange="getNewsArticles(this.value); " style="width: 100%;">
                 <option value="all">All</option>
                 {% for p in page.get_years %}
                 <option value="{{p}}">{{p}}</option>
@@ -63,7 +63,7 @@ getNewsArticles();
         </div>
         <div class="related-content">
             <h3 class="intro__title">{% translate "Select year:" %}</h3>
-            <select class="searchBarNews" id="news-list-mobile" onchange="getNewsArticles(this.value); " style="width: 100%;">
+            <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list-mobile" onchange="getNewsArticles(this.value); " style="width: 100%;">
                 <option value="all">All</option>
                 {% for p in page.get_years %}
                 <option value="{{p}}">{{p}}</option>
@@ -87,7 +87,7 @@ getNewsArticles();
                 </div>
                 <div class="wrapper--padding related-content--mobile">
                     <h3 class="intro__title">{% translate "Select year:" %}</h3>
-                    <select class="searchBarNews" id="news-list" onchange="getNewsArticles(this.value); " style="width: 100%;">
+                    <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list" onchange="getNewsArticles(this.value); " style="width: 100%;">
                         <option value="all">All</option>
                         {% for p in page.get_years %}
                         <option value="{{p}}">{{p}}</option>
@@ -99,7 +99,7 @@ getNewsArticles();
         <div id="right">
             <div class="related-content">
                 <h3 class="intro__title">{% translate "Select year:" %}</h3>
-                <select class="searchBarNews" id="news-list-mobile" onchange="getNewsArticles(this.value); " style="width: 100%;">
+                <select  aria-label="{% trans 'Select year' %}"class="searchBarNews" id="news-list-mobile" onchange="getNewsArticles(this.value); " style="width: 100%;">
                     <option value="all">All</option>
                     {% for p in page.get_years %}
                     <option value="{{p}}">{{p}}</option>
