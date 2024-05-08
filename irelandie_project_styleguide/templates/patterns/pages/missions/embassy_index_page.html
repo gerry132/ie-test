@@ -21,7 +21,7 @@
         </div>
         {% endif %}
         {% cache 604800 embassy_index %}
-        <div class="a-z-listing__filter__label__text">Type country name:</div>
+        <label for="myInput" class="a-z-listing__filter__label__text">{% trans 'Type country name:' %}</label>
         <input id="myInput" class="form--input" type="text">
         <div class="a-z-listing__filters__clear-all">
             <a class="input__label__text" aria-label="{% trans 'Clear Filter' %}">

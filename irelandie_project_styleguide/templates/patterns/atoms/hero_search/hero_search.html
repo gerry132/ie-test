@@ -7,7 +7,7 @@
                     <input id="searchQueryInput" type="search" placeholder="Search&hellip;" name="query" {% if search_query %} value="{{ search_query }}"{% endif %} data-search-input>
                         <div class="select-contain">
                             {% if page.popular_pages %}
-                            <select class="searchBarSelect" onchange="location = this.value; ">
+                            <select aria-label="{% trans 'Popular' %}" class="searchBarSelect" onchange="location = this.value; ">
                                 <option value="" name="popular_page" selected disabled hidden>Popular</option>
                                     {% for p in page.popular_pages %}
                                     {% if p.value.title %}
