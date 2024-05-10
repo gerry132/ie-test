@@ -31,7 +31,7 @@
         <ul id="ul-{{letter}}">
             {% for v in value %}
                 {% get_page_region v as region %}
-                        <a href="{{v.url}}" aria-label="{% trans 'Region' %}"><li style="display: block;" class="country-listing" region="{{region}}" id="{{v}}">{{ v }}</li></a>
+                        <li style="display: block;" class="country-listing" region="{{region}}" id="{{v}}"><a href="{{v.url}}" aria-label="{% trans 'Region' %}">{{ v }}</a></li>
             {% endfor %}
         </ul>
     </div>
