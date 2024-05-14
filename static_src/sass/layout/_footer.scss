@@ -19,6 +19,7 @@
             align-items: center;
             justify-content: space-between;
             padding-bottom: 55px;
+            gap: 35px;
         }
     }
 
@@ -39,27 +40,42 @@
             width: auto;
         }
     }
-
-    &__social-links {
+    &__social-link_container{
         display: flex;
-        margin-top: $grid;
         align-items: center;
         justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    &__social-links {
+        @include media-query(medium) {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            column-gap: 20px;
+            }
+            @include media-query(max-medium) {
+                    margin-top: $grid;
+                }
     }
 
     &__social-link {
-        margin-right: 15px;
         line-height: 0px;
     }
 
     &__social-icon {
         color: $color--white;
+        width: 34px;
+        height: 30px;
     }
 
     &__heading {
-        @include font-size(s);
+        @include font-size(l);
         display: block;
-        margin: 0 20px 0 0;
+        margin-block-start: 0em;
+        margin-block-end: 0em;
     }
 
     &__credit {
