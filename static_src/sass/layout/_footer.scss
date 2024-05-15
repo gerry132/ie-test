@@ -72,7 +72,12 @@
     }
 
     &__heading {
-        @include font-size(l);
+        @include media-query(medium) {
+            @include font-size(l);
+        }
+        @include media-query(max-medium) {
+            @include font-size(m);
+        }
         display: block;
         margin-block-start: 0em;
         margin-block-end: 0em;
