@@ -408,17 +408,12 @@ resource "aws_s3_bucket" "assets" {
   bucket  = "${local.environment_name}-${local.project_name}-assets"
 }
 
-resource "aws_s3_bucket_acl" "assets" {
-  bucket = aws_s3_bucket.assets.id
-  acl    = "public-read"
-}
-
 resource "aws_s3_bucket_cors_configuration" "assets" {
   bucket = aws_s3_bucket.assets.id
 
   cors_rule {
     allowed_headers = ["*"]
-    allowed_methods = ["GET"]
+    allowed_methods = ["GET", "PUT"]
     allowed_origins = ["*"]
     expose_headers  = ["ETag"]
     max_age_seconds = 3000
@@ -1206,6 +1201,7 @@ resource "aws_iam_user_policy" "app_aws_user" {
        "Action":[
         "s3:PutObject",
         "s3:PutObjectAcl",
+        "s3:PutObjectTagging",
         "s3:GetObject",
         "s3:GetObjectAcl",
         "s3:DeleteObject",
@@ -1952,7 +1948,7 @@ resource "aws_cloudfront_response_headers_policy" "assets_cors" {
     }
 
     access_control_allow_methods {
-      items = ["GET"]
+      items = ["GET", "PUT"]
     }
 
     access_control_allow_origins {
