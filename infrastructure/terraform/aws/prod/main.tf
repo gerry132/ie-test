@@ -1057,7 +1057,7 @@ resource "aws_opensearch_domain" "opensearch" {
     tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
   }
   advanced_security_options {
-      enabled                        = false
+      enabled                        = true
       internal_user_database_enabled = true
       master_user_options {
           master_user_name     = "${local.environment_name}-opensearch-user"
@@ -1117,7 +1117,7 @@ module "database" {
   db_username           = "${local.environment_name}_ireland_ie_username"
   db_password           = data.aws_ssm_parameter.random_db_password.value
   db_instance_class     = local.db_instance_class
-  db_engine_version     = "15.2"
+  db_engine_version     = "15.5"
   create_snapshot       = false
   name                  = "${local.environment_name}-db"
   subnets               = module.network.public_subnet_ids
