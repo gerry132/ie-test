@@ -2017,7 +2017,7 @@ resource "aws_cloudfront_distribution" "assets" {
 
 data "aws_iam_policy_document" "cloudfront_assets_access" {
   statement {
-    actions = [ "s3:GetObject" ]
+    actions = [ "s3:GetObject", "s3:PutObject", "s3:PutObjectAcl" ]
     resources = [ "${aws_s3_bucket.assets.arn}/*" ]
 
     principals {
