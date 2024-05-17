@@ -280,22 +280,24 @@ resource "aws_security_group" "example" {
 
 
 resource "aws_security_group_rule" "internet_to_lb_80" {
+  for_each = local.non_gov_network_cird_blocks
   type                      = "ingress"
   from_port                 = 80
   to_port                   = 80
   protocol                  = "tcp"
   security_group_id         = aws_security_group.lb.id
-  cidr_blocks               = ["0.0.0.0/0"]
+  cidr_blocks               = each.value.cidr_blocks
 }
 
 
 resource "aws_security_group_rule" "internet_to_lb_443" {
+  for_each = local.non_gov_network_cird_blocks
   type                      = "ingress"
   from_port                 = 443
   to_port                   = 443
   protocol                  = "tcp"
   security_group_id         = aws_security_group.lb.id
-  cidr_blocks               = ["0.0.0.0/0"]
+  cidr_blocks               = each.value.cidr_blocks
 }
 
 # Allow List IPs for restrict areas Gov Network
@@ -2027,6 +2029,7 @@ data "aws_iam_policy_document" "cloudfront_assets_access" {
       values = [aws_cloudfront_distribution.assets.arn]
     }
   }
+  
 }
 
 resource "aws_s3_bucket_policy" "assets" {
