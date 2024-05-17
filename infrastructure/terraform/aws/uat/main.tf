@@ -81,7 +81,7 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.55.170/32", "80.233.63.170/32"]
+      cidr_blocks  = ["80.233.45.249/32", "80.233.32.249/32", "80.233.41.72/32"]
     },
 
     sina_dev = {
@@ -280,22 +280,24 @@ resource "aws_security_group" "example" {
 
 
 resource "aws_security_group_rule" "internet_to_lb_80" {
+  for_each = local.non_gov_network_cird_blocks
   type                      = "ingress"
   from_port                 = 80
   to_port                   = 80
   protocol                  = "tcp"
   security_group_id         = aws_security_group.lb.id
-  cidr_blocks               = ["0.0.0.0/0"]
+  cidr_blocks               = each.value.cidr_blocks
 }
 
 
 resource "aws_security_group_rule" "internet_to_lb_443" {
+  for_each = local.non_gov_network_cird_blocks
   type                      = "ingress"
   from_port                 = 443
   to_port                   = 443
   protocol                  = "tcp"
   security_group_id         = aws_security_group.lb.id
-  cidr_blocks               = ["0.0.0.0/0"]
+  cidr_blocks               = each.value.cidr_blocks
 }
 
 # Allow List IPs for restrict areas Gov Network
@@ -408,17 +410,12 @@ resource "aws_s3_bucket" "assets" {
   bucket  = "${local.environment_name}-${local.project_name}-assets"
 }
 
-resource "aws_s3_bucket_acl" "assets" {
-  bucket = aws_s3_bucket.assets.id
-  acl    = "public-read"
-}
-
 resource "aws_s3_bucket_cors_configuration" "assets" {
   bucket = aws_s3_bucket.assets.id
 
   cors_rule {
     allowed_headers = ["*"]
-    allowed_methods = ["GET"]
+    allowed_methods = ["GET", "PUT"]
     allowed_origins = ["*"]
     expose_headers  = ["ETag"]
     max_age_seconds = 3000
@@ -1061,8 +1058,7 @@ resource "aws_opensearch_domain" "opensearch" {
       enabled                        = false
       internal_user_database_enabled = true
       master_user_options {
-          master_user_name     = "${local.environment_name}-opensearch-user"
-          master_user_password = random_password.password.result
+          master_user_arn = aws_iam_user.opensearch.arn
       }
     }
     access_policies = jsonencode(
@@ -1073,7 +1069,8 @@ resource "aws_opensearch_domain" "opensearch" {
       "Effect": "Allow",
       "Principal": {
         "AWS": [
-          aws_iam_user.opensearch.arn
+          aws_iam_user.opensearch.arn,
+          aws_iam_user.default.arn
         ]
       },
       "Action": [
@@ -1206,6 +1203,7 @@ resource "aws_iam_user_policy" "app_aws_user" {
        "Action":[
         "s3:PutObject",
         "s3:PutObjectAcl",
+        "s3:PutObjectTagging",
         "s3:GetObject",
         "s3:GetObjectAcl",
         "s3:DeleteObject",
@@ -1952,7 +1950,7 @@ resource "aws_cloudfront_response_headers_policy" "assets_cors" {
     }
 
     access_control_allow_methods {
-      items = ["GET"]
+      items = ["GET", "PUT"]
     }
 
     access_control_allow_origins {
@@ -2017,7 +2015,7 @@ resource "aws_cloudfront_distribution" "assets" {
 
 data "aws_iam_policy_document" "cloudfront_assets_access" {
   statement {
-    actions = [ "s3:GetObject" ]
+    actions = [ "s3:GetObject", "s3:PutObject", "s3:PutObjectAcl" ]
     resources = [ "${aws_s3_bucket.assets.arn}/*" ]
 
     principals {
@@ -2031,6 +2029,7 @@ data "aws_iam_policy_document" "cloudfront_assets_access" {
       values = [aws_cloudfront_distribution.assets.arn]
     }
   }
+  
 }
 
 resource "aws_s3_bucket_policy" "assets" {

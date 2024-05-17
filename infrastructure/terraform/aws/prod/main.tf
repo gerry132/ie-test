@@ -1117,7 +1117,7 @@ module "database" {
   db_username           = "${local.environment_name}_ireland_ie_username"
   db_password           = data.aws_ssm_parameter.random_db_password.value
   db_instance_class     = local.db_instance_class
-  db_engine_version     = "15.2"
+  db_engine_version     = "15.5"
   create_snapshot       = false
   name                  = "${local.environment_name}-db"
   subnets               = module.network.public_subnet_ids

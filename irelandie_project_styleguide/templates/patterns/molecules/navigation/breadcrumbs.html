@@ -3,29 +3,40 @@
 
 {% if page.get_ancestors|length > 2 %}
     <nav style="background-color: #f4f4f4;" role="navigation" aria-label="breadcrumb">
-        <ul class="breadcrumbs-nav">
-            {% get_starting_index page.get_ancestors as INDEX %}
-            {% for ancestor_page in INDEX %}
-                {% if not ancestor_page.is_root %}
-                    {% if ancestor_page.depth > 2 %}
-                        <li class="breadcrumbs-nav__item">
-                            <a class="breadcrumbs-nav__link" href="{% pageurl ancestor_page %}" aria-label="{% trans 'Breadcrumbs title' %}">{{ ancestor_page.title }}</a>
+        <div class="desktop-breadcrumbs">
+            <ul class="breadcrumbs-nav">
+                {% get_starting_index page.get_ancestors as INDEX %}
+                {% for ancestor_page in INDEX %}
+                    {% if not ancestor_page.is_root %}
+                        {% if ancestor_page.depth > 2 %}
+                            <li class="breadcrumbs-nav__item">
+                                <a class="breadcrumbs-nav__link" href="{% pageurl ancestor_page %}" aria-label="{% trans 'Breadcrumbs title' %}">{{ ancestor_page.title }}</a>
 
-                        </li>
-                       <li><a href="{% pageurl ancestor_page %}" role="link" aria-label="{% trans 'arrow-next' %}" class="arrow-next"></a></li>
-                    {% else %}
-                        <li class="breadcrumbs-nav__item">
-                            <a class="nav__link nav__link--breadcrumb" style="padding-right: 5px;" href="/" aria-label="{% trans 'Nav link' %}">
-                                {% trans 'Home' %}
-                            </a>
+                            </li>
+                           <li><a href="{% pageurl ancestor_page %}" role="link" aria-label="{% trans 'arrow-next' %}" class="arrow-next"></a></li>
+                        {% else %}
+                            <li class="breadcrumbs-nav__item">
+                                <a class="nav__link nav__link--breadcrumb" style="padding-right: 5px;" href="/" aria-label="{% trans 'Nav link' %}">
+                                    {% trans 'Home' %}
+                                </a>
 
-                        </li>
-                       <li><a href="/" role="link" aria-label="{% trans 'arrow-next' %}" class="arrow-next"></a></li>
+                            </li>
+                           <li><a href="/" role="link" aria-label="{% trans 'arrow-next' %}" class="arrow-next"></a></li>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
 
-            {% endfor %}
-            <li class="breadcrumbs-nav__item">{{ page.title }}</li>
-        </ul>
+                {% endfor %}
+                <li class="breadcrumbs-nav__item">{{ page.title }}</li>
+            </ul>
+        </div>
+        <div class="mobile-breadcrumbs">
+            <ul class="breadcrumbs-nav">
+                <li><a href="{% pageurl page.get_parent %}" role="link" aria-label="{% trans 'arrow-prev' %}" class="arrow-prev"></a></li>
+                <li class="breadcrumbs-nav__item_mobile">
+                    <a class="breadcrumbs-nav__link" href="{% pageurl page.get_parent %}" aria-label="{% trans 'Breadcrumbs title' %}">{{ page.get_parent.title }}</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 {% endif %}
+

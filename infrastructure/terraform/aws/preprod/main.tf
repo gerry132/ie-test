@@ -263,26 +263,26 @@ resource "aws_security_group" "opensearch" {
 # -----------------------------------------------------------------------------
 
 # Public access rules
-
 resource "aws_security_group_rule" "internet_to_lb_80" {
+  for_each = local.non_gov_network_cird_blocks
   type                      = "ingress"
   from_port                 = 80
   to_port                   = 80
   protocol                  = "tcp"
   security_group_id         = aws_security_group.lb.id
-  cidr_blocks               = ["0.0.0.0/0"]
+  cidr_blocks               = each.value.cidr_blocks
 }
 
 
 resource "aws_security_group_rule" "internet_to_lb_443" {
+  for_each = local.non_gov_network_cird_blocks
   type                      = "ingress"
   from_port                 = 443
   to_port                   = 443
   protocol                  = "tcp"
   security_group_id         = aws_security_group.lb.id
-  cidr_blocks               = ["0.0.0.0/0"]
+  cidr_blocks               = each.value.cidr_blocks
 }
-
 # Allow List IPs for restrict areas Gov Network
 
 resource "aws_security_group_rule" "gov_network_to_lb_443" {
@@ -1008,7 +1008,7 @@ resource "aws_opensearch_domain" "opensearch" {
     tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
   }
   advanced_security_options {
-      enabled                        = false
+      enabled                        = true
       internal_user_database_enabled = true
       master_user_options {
           master_user_name     = "${local.environment_name}-opensearch-user"

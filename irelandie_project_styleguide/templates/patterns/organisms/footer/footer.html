@@ -41,8 +41,10 @@
 
             {% if custom_footer.youtube_user or custom_footer.linkedin_profile or custom_footer.facebook_app_id or custom_footer.twitter_handle or custom_footer.instagram_user or custom_footer.weibo_user %}
             <div class="footer__social-links">
-                <p class="footer__heading">{% trans 'Follow us' %}</p>
-
+                <div class="footer__heading_container">
+                    <p class="footer__heading">{% trans 'Follow us' %}</p>
+                </div>
+                <div class="footer__social-link_container">
                 {% if custom_footer.youtube_user %}
                     <a href="https://youtube.com/user/{{ custom_footer.youtube_user }}" class="footer__social-link" role="link" aria-label="{% trans 'Find us on Youtube' %}">
                         {% include "patterns/atoms/icons/icon.html" with name="youtube" classname="footer__social-icon" %}
@@ -78,6 +80,7 @@
                         {% include "patterns/atoms/icons/icon.html" with name="weibo" classname="footer__social-icon" %}
                     </a>
                 {% endif %}
+                </div>
             </div>
             {% endif %}
         </div>
