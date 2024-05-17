@@ -471,7 +471,7 @@ WAGTAILIMAGES_IMAGE_MODEL = "irelandie_images.CustomImage"
 WAGTAILIMAGES_FEATURE_DETECTION_ENABLED = False
 WAGTAILDOCS_DOCUMENT_MODEL = "irelandie_documents.CustomDocument"
 
-if OPENSEARCH_KEY and OPENSEARCH_SECRET and OPENSEARCH_ENDPOINT != 'CHANGE':
+if False:
     from elasticsearch import RequestsHttpConnection
     from requests_aws4auth import AWS4Auth
 
