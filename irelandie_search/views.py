@@ -30,21 +30,8 @@ def search(request):
 
     if search_query:
         s = get_search_backend()
-        print(search_query)
-        print(search_query)
-        print(search_query)
-        print('search_query')
-         
-        if hasattr(s, 'settings'):
-            print(search_query)
-            print(search_query)
-            print(search_query)
-            print(search_query)
 
-            print(search_query)
-            print(search_query)
-            print(search_query)
-            print(search_query)
+        if hasattr(s, 'settings'):
             search_results = (
                 Page.objects.live().public()
                     .descendant_of(root_page)
