@@ -1057,7 +1057,7 @@ resource "aws_opensearch_domain" "opensearch" {
     tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
   }
   advanced_security_options {
-      enabled                        = true
+      enabled                        = false
       internal_user_database_enabled = true
       master_user_options {
           master_user_name     = "${local.environment_name}-opensearch-user"
