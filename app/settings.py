@@ -485,7 +485,7 @@ if OPENSEARCH_KEY and OPENSEARCH_SECRET and OPENSEARCH_ENDPOINT != 'CHANGE':
                 'port': 443,
                 'use_ssl': True,
                 'verify_certs': True,
-                'http_auth': ('uat-opensearch-user','5l!yV96N>ck0oEQ1cxU7Y<t)U*zh[Vf&'),
+                'http_auth': AWS4Auth(OPENSEARCH_KEY, OPENSEARCH_SECRET, 'eu-west-1', 'es'),
             }],
             'OPTIONS': {
                 'connection_class': RequestsHttpConnection,
