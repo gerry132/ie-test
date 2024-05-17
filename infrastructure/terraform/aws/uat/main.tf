@@ -1058,8 +1058,7 @@ resource "aws_opensearch_domain" "opensearch" {
       enabled                        = true
       internal_user_database_enabled = true
       master_user_options {
-          master_user_name     = "${local.environment_name}-opensearch-user"
-          master_user_password = random_password.password.result
+          master_user_arn = aws_iam_user.opensearch.arn
       }
     }
     access_policies = jsonencode(
