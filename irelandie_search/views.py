@@ -32,6 +32,15 @@ def search(request):
         s = get_search_backend()
 
         if hasattr(s, 'settings'):
+            print(search_query)
+            print(search_query)
+            print(search_query)
+            print(search_query)
+            
+            print(search_query)
+            print(search_query)
+            print(search_query)
+            print(search_query)
             search_results = (
                 Page.objects.live().public()
                     .descendant_of(root_page)
