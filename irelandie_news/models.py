@@ -15,6 +15,13 @@ from wagtail.admin.forms import WagtailAdminPageForm
 from irelandie_utils.models import MinimalArticlePage, BasePage
 
 
+from django.dispatch import receiver
+from django.db.models.signals import pre_delete
+
+from wagtail.signals import page_published
+from wagtail.contrib.frontend_cache.utils import PurgeBatch
+
+
 class NewsPageIndex(BasePage):
     template = "patterns/pages/irelandie_news/news_index.html"
     ajax_template = "patterns/molecules/article_card/ajax_article_card.html"
@@ -100,6 +107,18 @@ class NewsPageIndex(BasePage):
                     context['mission_web_bot'] = missions.web_bot_script
         return context
 
+    def get_news_items(self):
+        # This returns a Django paginator of blog items in this section
+        return Paginator(self.get_children().live().type(NewsPage), 20)
+
+    def get_cached_paths(self):
+        # Yield the main URL
+        yield '/'
+
+        # Yield one URL per page in the paginator to make sure all pages are purged
+        for page_number in range(1, self.get_news_items().num_pages + 1):
+            yield '/?page=' + str(page_number)
+
     @cached_property
     def get_years(self):
         yearset = (NewsPage.objects.child_of(self)
@@ -169,6 +188,26 @@ class NewsPage(MinimalArticlePage):
 
     class Meta:
         verbose_name = "News Content"
+
+def news_page_changed(news_page):
+    # Find all the live BlogIndexPages that contain this blog_page
+    batch = PurgeBatch()
+    for news_index in NewsPageIndex.objects.live():
+        if news_page in news_index.get_news_items().object_list:
+            batch.add_page(news_index)
+
+    # Purge all the blog indexes we found in a single request
+    batch.purge()
+
+
+@receiver(page_published, sender=NewsPage)
+def news_published_handler(instance, **kwargs):
+    news_page_changed(instance)
+
+
+@receiver(pre_delete, sender=NewsPage)
+def news_deleted_handler(instance, **kwargs):
+    news_page_changed(instance)
 
 
 class NewsLandingPage(BasePage):

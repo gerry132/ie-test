@@ -9,5 +9,6 @@ class UtilsConfig(AppConfig):
 
     def ready(self):
         from .agent.pub_unpub_agent import Agent
+        import irelandie_utils.signals
         agent = Agent()
         print(agent)
