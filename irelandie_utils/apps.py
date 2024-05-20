@@ -9,6 +9,6 @@ class UtilsConfig(AppConfig):
 
     def ready(self):
         from .agent.pub_unpub_agent import Agent
-        import irelandie_utils.signals
+        import irelandie_utils.signals # noqa: F401
         agent = Agent()
         print(agent)

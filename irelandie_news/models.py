@@ -111,7 +111,6 @@ class NewsPageIndex(BasePage):
         # This returns a Django paginator of blog items in this section
         return Paginator(self.get_children().live().type(NewsPage), 20)
 
-
     @cached_property
     def get_years(self):
         yearset = (NewsPage.objects.child_of(self)
