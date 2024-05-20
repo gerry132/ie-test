@@ -24,6 +24,7 @@ from taggit.models import TaggedItemBase
 from taggit.managers import TaggableManager
 from modelcluster.models import ClusterableModel
 
+from irelandie_utils.signals import snippet_published
 from .blocks import PersonPageSectionBlock, RolePageSectionBlock
 
 IMAGE_MODEL = get_image_model_string()
@@ -194,6 +195,10 @@ class Person(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, Cl
     search_fields = [
         index.SearchField("title", partial_match=True),
     ]
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
 
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/peoplesnippet.html"
