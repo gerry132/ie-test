@@ -111,13 +111,6 @@ class NewsPageIndex(BasePage):
         # This returns a Django paginator of blog items in this section
         return Paginator(self.get_children().live().type(NewsPage), 20)
 
-    def get_cached_paths(self):
-        # Yield the main URL
-        yield '/'
-
-        # Yield one URL per page in the paginator to make sure all pages are purged
-        for page_number in range(1, self.get_news_items().num_pages + 1):
-            yield '/?page=' + str(page_number)
 
     @cached_property
     def get_years(self):
@@ -188,6 +181,7 @@ class NewsPage(MinimalArticlePage):
 
     class Meta:
         verbose_name = "News Content"
+
 
 def news_page_changed(news_page):
     # Find all the live BlogIndexPages that contain this blog_page

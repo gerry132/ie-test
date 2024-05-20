@@ -369,11 +369,13 @@ class JobIndexPage(BasePage):
 
 
 def job_page_changed(job_page):
-    # Find all the live BlogIndexPages that contain this blog_page
+    # Find all the live JobIndexPages that contain this jpb_page
     batch = PurgeBatch()
-    batch.add_page(job_page)
+    for job_index in JobIndexPage.objects.live():
+        if job_page in job_index.related_jobs().object_list:
+            batch.add_page(job_index)
 
-    # Purge all the blog indexes we found in a single request
+    # Purge all the job indexes we found in a single request
     batch.purge()
 
 

@@ -15,13 +15,6 @@ from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel, InlinePanel
 
 
-from django.dispatch import receiver
-from django.db.models.signals import pre_delete
-
-from wagtail.signals import page_published
-from wagtail.contrib.frontend_cache.utils import PurgeBatch
-
-
 class TagPage(BasePage):
     parent_page_types = [
         'TagListPage'

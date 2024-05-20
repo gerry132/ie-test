@@ -4,6 +4,7 @@ from django.dispatch import Signal
 
 snippet_published = Signal()
 
+
 @receiver(snippet_published)
 def handle_snippet_published(sender, instance, **kwargs):
     usage = instance.get_usage()
