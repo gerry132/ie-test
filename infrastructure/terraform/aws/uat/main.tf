@@ -81,7 +81,7 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.45.249/32", "80.233.32.249/32", "80.233.41.72/32"]
+      cidr_blocks  = ["80.233.52.23/32", "80.233.60.23/32"]
     },
 
     sina_dev = {
@@ -2029,7 +2029,7 @@ data "aws_iam_policy_document" "cloudfront_assets_access" {
       values = [aws_cloudfront_distribution.assets.arn]
     }
   }
-  
+
 }
 
 resource "aws_s3_bucket_policy" "assets" {
