@@ -12,6 +12,7 @@ from wagtail.models import TranslatableMixin, PreviewableMixin
 from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
 
+from irelandie_utils.signals import snippet_published
 from .blocks import (
     LinkBlockExtended,
     LinkColumnWithHeader,
@@ -141,6 +142,10 @@ class PrimaryNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.
         index.SearchField("title", partial_match=True),
     ]
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
+
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/customheadersnippet.html"
 
@@ -224,6 +229,10 @@ class FooterNavigation(PreviewableMixin, DraftStateMixin, RevisionMixin, index.I
         index.FilterField('locale_id'),
         index.SearchField("title", partial_match=True),
     ]
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
 
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/customfootersnippet.html"
@@ -331,6 +340,10 @@ class CustomFooter(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
         index.SearchField("title", partial_match=True),
     ]
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
+
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/customfootersnippet.html"
 
@@ -436,6 +449,10 @@ class CustomHeader(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
         index.FilterField('locale_id'),
         index.SearchField("title", partial_match=True),
     ]
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
 
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/customheadersnippet.html"

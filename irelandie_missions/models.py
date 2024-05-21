@@ -22,6 +22,12 @@ from irelandie_utils.models import BasePage, CountryGroup, HeroPage, SocialField
 from wagtail.snippets.blocks import SnippetChooserBlock
 from django.forms import ValidationError
 
+from django.dispatch import receiver
+from django.db.models.signals import pre_delete
+
+from wagtail.signals import page_published
+from wagtail.contrib.frontend_cache.utils import PurgeBatch
+
 
 class CountryGroupPageIndex(BasePage):
     template = "irelandie_assets/pages/countries.html"
@@ -360,6 +366,27 @@ class JobIndexPage(BasePage):
                 if missions.root_page:
                     context['mission_web_bot'] = missions.web_bot_script
         return context
+
+
+def job_page_changed(job_page):
+    # Find all the live JobIndexPages that contain this jpb_page
+    batch = PurgeBatch()
+    for job_index in JobIndexPage.objects.live():
+        if job_page in job_index.related_jobs().object_list:
+            batch.add_page(job_index)
+
+    # Purge all the job indexes we found in a single request
+    batch.purge()
+
+
+@receiver(page_published, sender=JobContentPage)
+def job_published_handler(instance, **kwargs):
+    job_page_changed(instance)
+
+
+@receiver(pre_delete, sender=JobContentPage)
+def job_deleted_handler(instance, **kwargs):
+    job_page_changed(instance)
 
 
 class MissionPage(HeroPage):
