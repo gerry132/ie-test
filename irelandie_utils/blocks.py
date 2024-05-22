@@ -581,7 +581,7 @@ class LogoCardBlock(blocks.StructBlock):
         help_text=_(ALT_IMAGE),
     )
     title = blocks.CharBlock()
-    summary = blocks.TextBlock()
+    summary = blocks.TextBlock(required=False)
     url = blocks.URLBlock(required=False)
 
     class Meta:
