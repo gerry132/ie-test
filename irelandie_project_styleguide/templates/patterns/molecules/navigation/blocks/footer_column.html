@@ -1,7 +1,7 @@
 {% load wagtailcore_tags i18n %}
 <div class="footer__column">
     {% if value.heading %}
-        <p class="heading--5">{{ value.heading }}</p>
+        <p class="heading--5" style="margin-top: 0px;">{{ value.heading }}</p>
     {% endif %}
     <ul class="footercolumn-nav">
         {% for item in value.links %}
