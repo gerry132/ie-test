@@ -100,6 +100,7 @@ h6,
 .heading--4,
 .heading--5,
 .heading--6 {
+    margin-top: 0px;
     @include font-size(m);
     font-weight: $weight--semibold;
 }
