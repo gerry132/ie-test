@@ -9,8 +9,10 @@
     <div class="intro__description">{% include_block value.summary_richtext.content %}</div>
 </div>
 {% endif %}
-<div class="logo-cards featured-blocks featured-blocks--four">
+
+<div class="logo-cards featured-blocks featured-blocks--four {% if value.summary_richtext.content.paragraph_alignment == 'narrow' %}rich-text__narrow{% endif %}">
     {% for card in value.cards %}
         {% include_block card %}
     {% endfor %}
 </div>
+
