@@ -68,4 +68,26 @@
         @include font-size(xs);
         color: $color--accessible-grey;
     }
+
+    &__featured-blocks{
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin: 0 20px;
+        align-items: center;
+        justify-content: center;
+            &__four{
+                margin-bottom: $grid;
+                @include media-query(medium) {
+                    flex-basis: calc(50% - 30px);
+                }
+                @include media-query(large) {
+                flex-basis: calc(25% - 30px);
+                }
+            }
+    }
+    &__narrow {
+        max-width:1024px;
+    }
 }
