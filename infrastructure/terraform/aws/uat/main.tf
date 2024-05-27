@@ -81,7 +81,7 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.52.23/32", "80.233.50.23/32", "80.233.54.23/32"]
+      cidr_blocks  = ["80.233.52.23/32", "80.233.54.23/32"]
     },
 
     sina_dev = {
@@ -1476,7 +1476,7 @@ locals {
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
   SETTINGS_EMAIL_HOST               = "email.${local.region}.amazonaws.com"
   SETTINGS_DEFAULT_FROM_EMAIL       = aws_ssm_parameter.DEFAULT_FROM_EMAIL.value
-  SETTINGS_CLOUDFRONT_ID            = 
+  SETTINGS_CLOUDFRONT_ID            = aws_ssm_parameter.CLOUDFRONT_ID.value
 }
 
 data "template_file" "task_definition" {
