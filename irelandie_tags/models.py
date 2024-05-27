@@ -26,7 +26,7 @@ class TagPage(BasePage):
         FieldPanel("tag_label"),
     ]
 
-    search_fields = BasePage.search_fields + [ # Inherit search_fields from Page
+    search_fields = BasePage.search_fields + [
         index.SearchField('locale_id'),
     ]
 
