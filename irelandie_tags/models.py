@@ -13,6 +13,7 @@ from .utils import get_tagged_items
 
 from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel, InlinePanel
+from wagtail.search import index
 
 
 class TagPage(BasePage):
@@ -25,7 +26,9 @@ class TagPage(BasePage):
         FieldPanel("tag_label"),
     ]
 
-    search_fields = []
+    search_fields = BasePage.search_fields + [ # Inherit search_fields from Page
+        index.SearchField('locale_id'),
+    ]
 
     def get_indexed_instance(self):
         return None
