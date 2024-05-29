@@ -1922,6 +1922,7 @@ class AdvancedRichtextSnippetBlock(blocks.StructBlock):
         label = "Text Snippet"
         template = "patterns/molecules/streamfield/blocks/advanced_richtext_block.html"
 
+
 class ParallexAdvancedRichTextBlock(blocks.StructBlock):
     section_id = blocks.CharBlock(required=False)
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
@@ -2024,6 +2025,7 @@ class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
     class Meta:
         label = 'Parallax Story Photo Gallery'
         template = "patterns/molecules/streamfield/blocks/parallex_blocks.html"
+
 
 class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
