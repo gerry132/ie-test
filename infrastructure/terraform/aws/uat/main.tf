@@ -77,7 +77,7 @@ locals {
     },
     jaikiran_dev = {
       description = "Jaikiran - OGCIO"
-      cidr_blocks = ["192.168.0.106/32"]
+      cidr_blocks = ["137.191.233.222/32"]
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
