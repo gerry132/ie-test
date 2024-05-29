@@ -14,7 +14,6 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('wagtailcore', '0080_alter_page_title'),
         ('wagtailmedia', '0004_duration_optional_floatfield'),
         ('irelandie_images', '0007_alter_customimage_file_hash'),
         ('irelandie_navigation', '0061_auto_20240419_1003'),
