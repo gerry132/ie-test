@@ -6,7 +6,8 @@ from irelandie_utils.blocks import GenericHeroBlock, ParallexAdvancedRichTextBlo
 from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
 
-class ParallaxPage(HeroPage):
+
+class Parallax(HeroPage):
     template = "patterns/pages/irelandie_story/parallax_page.html"
     subtitle = models.TextField(blank=True)
     generic_hero = StreamField(
