@@ -372,7 +372,7 @@ def job_page_changed(job_page):
     # Find all the live JobIndexPages that contain this jpb_page
     batch = PurgeBatch()
     for job_index in JobIndexPage.objects.live():
-        if job_page in job_index.related_jobs().object_list:
+        if job_page.is_descendant_of(job_index):
             batch.add_page(job_index)
 
     # Purge all the job indexes we found in a single request
