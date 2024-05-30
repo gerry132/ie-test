@@ -1,0 +1,48 @@
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+{% if value.image %}
+{% image value.image original as desktop_image %}
+<style>
+.gradient-overlay {
+    content: '';
+    background: linear-gradient(0deg,
+                            var(--linear-gradient, inherit) 0%,
+                            rgba(0, 0, 0, 0)
+                            {% if page.transparency %} {{page.transparency}}% {% else %}100% {% endif %});
+    display: block;
+    left: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+}
+</style>
+<div data-jarallax class="jarallax" id="jarallax1" data-speed="0.5">
+    {% if value.image_video_credits %}
+        <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
+    {% endif %}
+    <div class="gradient-overlay" style="{% if value.gradient_image_video %}--linear-gradient: {{ value.gradient_image_video }} {% else %} black {% endif %}"></div>
+        <img class="jarallax-img" src="{{ desktop_image.url }}" alt="{{ value.alt_text }}">
+        <div class="rich-text content" style="color: {{value.text_color}};">
+            <h2 style="color: {{value.text_color}};">{{ value.heading }}</h2>
+            <p>{{ value.subtitle|richtext }}</p>
+        </div>
+    </div>
+{% else %}
+<div class="jarallax" data-jarallax data-speed="0.7" data-video-src="mp4:{{ value.video.url }}">
+    {% if value.image_video_credits %}
+        <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
+    {% endif %}
+    <div class="gradient-overlay" style="{% if value.gradient_image_video %}--linear-gradient: {{ value.gradient_image_video }} {% else %} black {% endif %}"></div>
+        <div class="jarallax-video-container">
+            <video autoplay muted loop controls class="jarallax-video" title="{{ value.alt_text }}">
+                <source src="{{ value.video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="rich-text content" style="color: {{value.text_color}};">
+            <h2 style="color: {{value.text_color}};">{{ value.heading }}</h2>
+            <p>{{ value.subtitle|richtext }}</p>
+        </div>
+    </div>
+{% endif %}
