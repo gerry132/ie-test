@@ -61,6 +61,7 @@ locals {
     "193.178.64.0/19",
     "193.178.96.0/20",
     "139.162.239.108/32",
+    
   ]
   non_gov_network_cird_blocks   = {
     dfa_main = {
@@ -354,24 +355,22 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
 
 
 resource "aws_security_group_rule" "internet_to_lb_80" {
-  for_each = local.non_gov_network_cird_blocks
   type                      = "ingress"
   from_port                 = 80
   to_port                   = 80
   protocol                  = "tcp"
   security_group_id         = aws_security_group.lb.id
-  cidr_blocks               = each.value.cidr_blocks
+  cidr_blocks               = ["0.0.0.0/0"]
 }
 
 
 resource "aws_security_group_rule" "internet_to_lb_443" {
-  for_each = local.non_gov_network_cird_blocks
   type                      = "ingress"
   from_port                 = 443
   to_port                   = 443
   protocol                  = "tcp"
   security_group_id         = aws_security_group.lb.id
-  cidr_blocks               = each.value.cidr_blocks
+  cidr_blocks               = ["0.0.0.0/0"]
 }
 
 # Allow List IPs for restrict areas Gov Network
@@ -1937,7 +1936,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
   scope = "CLOUDFRONT"
 
   default_action {
-    allow {}
+    block {}
   }
 
   rule {
