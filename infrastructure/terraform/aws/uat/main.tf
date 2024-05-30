@@ -61,7 +61,7 @@ locals {
     "193.178.64.0/19",
     "193.178.96.0/20",
     "139.162.239.108/32",
-    
+
   ]
   non_gov_network_cird_blocks   = {
     dfa_main = {
@@ -82,7 +82,7 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.52.23/32", "80.233.54.23/32"]
+      cidr_blocks  = ["80.233.57.172/32", "80.233.51.172/32", "80.233.61.172/32"]
     },
 
     sina_dev = {
