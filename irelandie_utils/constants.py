@@ -16,6 +16,12 @@ class ParagraphAlignment(models.TextChoices):
     NARROW = 'narrow', 'Narrow'
 
 
+class TextAlignment(models.TextChoices):
+    LEFT = 'left', 'Left'
+    RIGHT = 'right', 'Right'
+    CENTER = 'center', 'Center'
+
+
 class TravelRegions(models.TextChoices):
     ASIA_AND_OCEANIA = 'asia and oceania/áise agus an aigéine', 'Asia and Oceania/Áise agus An Aigéine'
     MIDDLE_EAST_AND_NORTH_AFRICA = 'middle east and north africa/meán-oirthear agus an afraic thuaidh', \

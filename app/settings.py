@@ -92,6 +92,7 @@ INSTALLED_APPS = [
     "irelandie_missions",
     "irelandie_news",
     "irelandie_pages",
+    "irelandie_parallax",
     "irelandie_people",
     "irelandie_places",
     "irelandie_press_releases",
