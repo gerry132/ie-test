@@ -44,6 +44,10 @@ class DestinationTagPage(BasePage):
         InlinePanel('page_related_destinations', label="Destination", max_num=1),
     ]
 
+    search_fields = BasePage.search_fields + [
+        index.SearchField('locale_id'),
+    ]
+
 
 class TagLandingPage(BasePage):
     subpage_types = [

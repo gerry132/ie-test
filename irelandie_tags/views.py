@@ -6,3 +6,10 @@ class CategoryTagViewSet(ChooserViewSet):
 
 
 tag_chooser_viewset = CategoryTagViewSet("category_tag_chooser")
+
+
+class DestinationTagViewSet(ChooserViewSet):
+    model = "irelandie_tags.DestinationTagPage"
+
+
+destination_tag_chooser_viewset = DestinationTagViewSet("destination_tag_chooser")
