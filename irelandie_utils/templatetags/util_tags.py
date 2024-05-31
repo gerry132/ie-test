@@ -191,6 +191,16 @@ def get_tag_links(tag, page):
 
 
 @register.simple_tag
+def get_first_category_tag_link(tag, page):
+    from irelandie_tags.models import TagLandingPage
+
+    tag_landing = TagLandingPage.objects.live().filter(
+        page_related_tags__page=tag, locale=page.locale).specific().distinct()
+    for tag_land in tag_landing:
+        return tag_land.url
+
+
+@register.simple_tag
 def get_category_tag_links(selected_tag, tag, page):
     from irelandie_tags.models import TagLandingPage
     tagging_links = []
