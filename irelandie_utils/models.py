@@ -1108,8 +1108,8 @@ class MinimalArticlePage(BasePage):
         FieldPanel("featured_home", heading="Featured Home",
                    help_text="Checking this box will feature this news item on your mission/microsite "
                              "homepage if pinned stories are enabled."),
-        InlinePanel('page_related_tags', label="Related category tags", permission="access_admin"),
-        InlinePanel('page_related_destination_tags', label="Related destination", permission="access_admin"),
+        InlinePanel('page_related_tags', label="Related category tags"),
+        InlinePanel('page_related_destination_tags', label="Related destination"),
     ]
 
     COMMON_PROMOTE_PANELS = (
