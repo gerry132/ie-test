@@ -1659,7 +1659,8 @@ class FeaturedTaggedStoryBlock(blocks.StructBlock):
     summary = blocks.TextBlock(required=False)
     page = blocks.PageChooserBlock(required=False, page_type=["irelandie_pages.FreeFormPage",
                                                               "irelandie_story.StoryPage",
-                                                              "irelandie_missions.GeneralContentPage"])
+                                                              "irelandie_missions.GeneralContentPage",
+                                                              "irelandie_news.NewsPage"])
     link_text = blocks.CharBlock(
         max_length=32, blank=True, required=False, default="Read Story", help_text='Call To Action Text'
     )
