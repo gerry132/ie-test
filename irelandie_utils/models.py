@@ -11,7 +11,7 @@ from wagtail.admin.panels import (
     MultiFieldPanel,
     PageChooserPanel,
     FieldRowPanel,
-    HelpPanel, TabbedInterface, ObjectList, InlinePanel,
+    HelpPanel, TabbedInterface, ObjectList,
 )
 from irelandie_utils.cache import get_default_cache_control_decorator
 from wagtail.contrib.settings.models import BaseSetting, register_setting
@@ -1108,8 +1108,6 @@ class MinimalArticlePage(BasePage):
         FieldPanel("featured_home", heading="Featured Home",
                    help_text="Checking this box will feature this news item on your mission/microsite "
                              "homepage if pinned stories are enabled."),
-        InlinePanel('page_related_tags', label="Related category tags"),
-        InlinePanel('page_related_destination_tags', label="Related destination"),
     ]
 
     COMMON_PROMOTE_PANELS = (
