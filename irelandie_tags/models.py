@@ -110,6 +110,75 @@ class TagLandingPage(BasePage):
             return self.get_first_child().url
 
 
+class MegaTagLanding(BasePage):
+    subpage_types = [
+        'MegaTagIndexPage'
+    ]
+    template = "patterns/pages/irelandie_tags/mega_tag_landing_page.html"
+    generic_hero = StreamField(
+        [
+            ("generic_hero", GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+    body = StreamField(TagLandingBlock(), blank=True)
+
+    stats_block = StreamField(
+        [
+            ("content", StatTagBlock())
+        ],
+        blank=True,
+        max_num=2
+    )
+
+    content_panels = BasePage.content_panels + [
+        FieldPanel("generic_hero", heading="Mini Hero Block"),
+        FieldPanel("body"),
+        FieldPanel("stats_block"),
+        InlinePanel('page_related_tags', min_num=2, label="Tag"),
+    ]
+
+    def get_context(self, request, *args, **kwargs):
+        """
+        In the context we run 3 queries to
+        return the most recently published
+        story objects.
+        """
+        from irelandie_home.models import HomePage
+
+        tag = self.related_tags
+        result = []
+
+        context = super().get_context(request, *args, **kwargs)
+
+        for tags in tag:
+            results = get_tagged_items(self, tags)[:9]
+            for i in results:
+                if i not in result:
+                    result.append(i)
+
+        context['stories'] = result
+        context['tags'] = tag
+        pages = self.get_ancestors()
+        context, root_found = get_root_info(context, pages)
+
+        if not root_found:
+            f = HomePage.objects.all()[:1].get()
+            context['default_image'] = f.default_image
+        return context
+
+    @cached_property
+    def get_root_index(self):
+        if self.get_first_child():
+            return self.get_first_child().url
+
+    class Meta:
+        verbose_name = "Mega Tag Landing Page"
+
+
 class TagListPage(BasePage):
     template = "patterns/pages/tags/list.html"
     subpage_types = [
@@ -156,6 +225,48 @@ class TagIndexPage(BasePage):
 
         context['stories'] = results
         context['tag_first'] = page_related_tags
+        pages = self.get_ancestors()
+        context, root_found = get_root_info(context, pages)
+        if not root_found:
+            f = HomePage.objects.all()[:1].get()
+            context['default_image'] = f.default_image
+
+        return context
+
+
+class MegaTagIndexPage(BasePage):
+    parent_page_types = [
+        'MegaTagLanding'
+    ]
+    template = "patterns/pages/irelandie_tags/mega_tag_index_page.html"
+    generic_hero = StreamField(
+        [
+            ("generic_hero", GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+    content_panels = BasePage.content_panels + [
+        FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
+    ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        from irelandie_home.models import HomePage
+
+        parent = self.get_parent().specific
+        page_related_tags = parent.related_tags
+        result = []
+        for tags in page_related_tags:
+            results = get_tagged_items(self, tags)
+            for i in results:
+                if i not in result:
+                    result.append(i)
+        context['stories'] = result
+        context['tags'] = page_related_tags
+
         pages = self.get_ancestors()
         context, root_found = get_root_info(context, pages)
         if not root_found:
