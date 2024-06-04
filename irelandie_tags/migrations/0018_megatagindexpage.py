@@ -12,7 +12,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('irelandie_navigation', '0061_auto_20240419_1003'),
-        ('wagtailcore', '0080_alter_page_title'),
         ('irelandie_images', '0007_alter_customimage_file_hash'),
         ('irelandie_tags', '0017_megataglanding'),
     ]
