@@ -3,7 +3,6 @@ from operator import attrgetter
 from django.db.models import F
 
 
-
 def get_tagged_items(self, tag):
     """
     Get tagged items, chain and return results.
