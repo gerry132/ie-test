@@ -367,12 +367,24 @@ class JobIndexPage(BasePage):
                     context['mission_web_bot'] = missions.web_bot_script
         return context
 
+    def get_job_items(self):
+        # This returns a queryset of live job items in this section
+        return self.get_children().live().type(JobContentPage)
+
+    def get_cached_paths(self):
+        # Yield the main URL
+        yield '/'
+
+        # Yield the URLs for each job item
+        for job_item in self.get_job_items():
+            yield job_item.url
+
 
 def job_page_changed(job_page):
     # Find all the live JobIndexPages that contain this jpb_page
     batch = PurgeBatch()
     for job_index in JobIndexPage.objects.live():
-        if job_page.is_descendant_of(job_index):
+        if job_page in job_index.get_job_items():
             batch.add_page(job_index)
 
     # Purge all the job indexes we found in a single request
