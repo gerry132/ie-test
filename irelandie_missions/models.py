@@ -1052,6 +1052,12 @@ class GeneralContentPage(HeroPage):
                     context['mission_web_bot'] = missions.web_bot_script
         return context
 
+    def save(self, *args, **kwargs):
+        from wagtail.core.signals import page_published
+        super().save(*args, **kwargs)
+        if self.live:  # Ensure the page is published
+            page_published.send(sender=self.__class__, instance=self)
+
 
 class GeneralContentIrishAid(HeroPage):
     template = "patterns/pages/missions/general_content_page.html"
@@ -1120,3 +1126,9 @@ class GeneralContentIrishAid(HeroPage):
                 "You can't choose both an Mini hero block and a Banner hero image block for the hero media. "
                 "Choose a Mini hero block or a Banner hero image block"
             )
+
+    def save(self, *args, **kwargs):
+        from wagtail.core.signals import page_published
+        super().save(*args, **kwargs)
+        if self.live:  # Ensure the page is published
+            page_published.send(sender=self.__class__, instance=self)

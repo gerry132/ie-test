@@ -23,7 +23,7 @@
     {% endif %}
     <div class="gradient-overlay" style="{% if value.gradient_image_video %}--linear-gradient: {{ value.gradient_image_video }} {% else %} black {% endif %}"></div>
         <img class="jarallax-img" src="{{ desktop_image.url }}" alt="{{ value.alt_text }}">
-        <div class="rich-text content" style="color: {{value.text_color}};">
+        <div class="rich-text content" style="text-align: {{value.text_alignment}}; color: {{value.text_color}};">
             <h2 style="color: {{value.text_color}};">{{ value.heading }}</h2>
             <p>{{ value.subtitle|richtext }}</p>
         </div>
@@ -40,7 +40,7 @@
                 Your browser does not support the video tag.
             </video>
         </div>
-        <div class="rich-text content" style="color: {{value.text_color}};">
+        <div class="rich-text content" style="text-align: {{value.text_alignment}}; color: {{value.text_color}};">
             <h2 style="color: {{value.text_color}};">{{ value.heading }}</h2>
             <p>{{ value.subtitle|richtext }}</p>
         </div>

@@ -68,5 +68,11 @@ class StoryPage(HeroPage):
         context["tags_no_links"] = tags_no_links
         return context
 
+    def save(self, *args, **kwargs):
+        from wagtail.core.signals import page_published
+        super().save(*args, **kwargs)
+        if self.live:  # Ensure the page is published
+            page_published.send(sender=self.__class__, instance=self)
+
     class Meta:
         verbose_name = "Story page"
