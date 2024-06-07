@@ -1,5 +1,3 @@
-from itertools import chain
-
 from django.dispatch import receiver
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from django.dispatch import Signal
@@ -25,7 +23,7 @@ def handle_page_published(sender, instance, **kwargs):
     tags = instance.page_related_tags.all()
 
     # Find all landing and index pages associated with these tags
-    pages_to_purge =[]
+    pages_to_purge = []
 
     for tag_relation in tags:
         tag = tag_relation.page
@@ -49,4 +47,3 @@ def handle_page_published(sender, instance, **kwargs):
 
     # Purge the collected URLs
     purge_batch.purge()
-
