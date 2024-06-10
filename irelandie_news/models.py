@@ -192,10 +192,10 @@ class NewsPage(MinimalArticlePage):
 
 
 def news_page_changed(news_page):
-    news_index_page = Page.objects.live().type(NewsPageIndex).ancestor_of(news_page).specific()
+    news_index_page = Page.objects.live().type(NewsPageIndex).ancestor_of(news_page).specific().first()
 
     if news_index_page:
-        news_landing_page = Page.objects.live().type(NewsLandingPage).ancestor_of(news_index_page).specific()
+        news_landing_page = Page.objects.live().type(NewsLandingPage).ancestor_of(news_index_page).specific().first()
 
         if news_landing_page:
             # Find and purge paginated URLs
