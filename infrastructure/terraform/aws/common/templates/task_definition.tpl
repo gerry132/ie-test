@@ -2,6 +2,7 @@
     {
         "name": "${name}",
 		"image": "${ecr_image_url}",
+        "assignPublicIp": false,
 		"cpu": ${task_cpu},
 		"memory": ${task_memory},
 		"networkMode": "awsvpc",
