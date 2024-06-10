@@ -3,6 +3,11 @@
     .rich-text.content a{
         color: var(--link-color, inherit);
     }
+    .rich-text.content h2,
+    .rich-text.content h3,
+    .rich-text.content h4 {
+       color: var(--link-color);
+    }
 </style>
 <div class="parallax-section" id="jarallax2" data-speed="0.2" >
     <div style="{% if value.background_color %} background-color: {{value.background_color}}; {% endif %}" class="jarallax-color"></div>
@@ -10,7 +15,7 @@
     {% if value.paragraph_alignment == 'narrow' %}
         <div class="rich-text__narrow">
             {% if value.heading %}
-                <h2 style="color: {{value.text_color}};" class="story__heading heading--2">{{ value.heading }}</h2>
+                <h2 class="story__heading heading--2">{{ value.heading }}</h2>
             {% endif %}
             {% if value.rich_text %}
                 <div style="color: {{value.text_color}};" class="rich_text__summary">{{ value.rich_text }}</div>
@@ -29,7 +34,7 @@
         </div>
     {% else %}
     {% if value.heading %}
-        <h2 style="color: {{value.text_color}};" class="story__heading heading--2">{{ value.heading }}</h2>
+        <h2 class="story__heading heading--2">{{ value.heading }}</h2>
     {% endif %}
     {% if value.rich_text %}
         <div style="color: {{value.text_color}};" class="rich_text__summary"> {{ value.rich_text }} </div>
