@@ -564,14 +564,6 @@ resource "aws_s3_bucket_policy" "lb_logs" {
       {
         Effect      = "Allow",
         Principal   = {
-          AWS       = local.elb_account_arn
-        },
-        Action      = "s3:*"
-        Resource    = "${aws_s3_bucket.lb_logs.arn}/*/AWSLogs/${local.account_id}/*"
-      },
-      {
-        Effect      = "Allow",
-        Principal   = {
           AWS       = "arn:aws:iam::${local.account_id}:root"
         },
         Action      = "s3:*"
