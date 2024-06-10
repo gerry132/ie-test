@@ -18,7 +18,7 @@ from irelandie_utils.models import MinimalArticlePage, BasePage
 from django.dispatch import receiver
 from django.db.models.signals import pre_delete
 
-from wagtail.signals import page_published
+from wagtail.signals import page_published, page_unpublished
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 
 
@@ -166,6 +166,15 @@ class NewsPage(MinimalArticlePage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
+        from irelandie_utils.templatetags.util_tags import get_tag_links
+        from irelandie_utils.templatetags.util_tags import get_destination_tag_links
+        destination_tags = self.related_destination_tags
+        context["destination_tag_links"] = get_destination_tag_links(destination_tags)
+        tag = self.related_tags
+        tagging_links = get_tag_links(tag, self)[0]
+        tags_no_links = get_tag_links(tag, self)[1]
+        context["tagging_links"] = tagging_links
+        context["tags_no_links"] = tags_no_links
         pages = self.get_ancestors()
         for p in pages:
             if p.content_type.name in ['mission page', 'Free Form Page']:
@@ -183,18 +192,41 @@ class NewsPage(MinimalArticlePage):
 
 
 def news_page_changed(news_page):
-    # Find all the live BlogIndexPages that contain this blog_page
-    batch = PurgeBatch()
-    for news_index in NewsPageIndex.objects.live():
-        if news_page in news_index.get_news_items().object_list:
-            batch.add_page(news_index)
+    news_index_page = Page.objects.live().type(NewsPageIndex).ancestor_of(news_page).specific().first()
 
-    # Purge all the blog indexes we found in a single request
-    batch.purge()
+    if news_index_page:
+        news_landing_page = Page.objects.live().type(NewsLandingPage).ancestor_of(news_index_page).specific().first()
+
+        if news_landing_page:
+            # Find and purge paginated URLs
+            paginator = news_index_page.get_news_items()
+            total_pages = paginator.num_pages
+
+            paginated_urls = []
+            for i in range(1, total_pages + 1):
+                paginated_url = f"{news_index_page.full_url}?page={i}"
+                paginated_urls.append(paginated_url)
+
+            batch = PurgeBatch()
+
+            batch.add_page(news_landing_page)
+
+            batch.add_page(news_index_page)
+
+            for url in paginated_urls:
+                batch.add_url(url)
+
+            # Purge all added pages
+            batch.purge()
 
 
 @receiver(page_published, sender=NewsPage)
 def news_published_handler(instance, **kwargs):
+    news_page_changed(instance)
+
+
+@receiver(page_unpublished, sender=NewsPage)
+def news_unpublished_handler(instance, **kwargs):
     news_page_changed(instance)
 
 

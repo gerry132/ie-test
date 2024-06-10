@@ -1659,7 +1659,8 @@ class FeaturedTaggedStoryBlock(blocks.StructBlock):
     summary = blocks.TextBlock(required=False)
     page = blocks.PageChooserBlock(required=False, page_type=["irelandie_pages.FreeFormPage",
                                                               "irelandie_story.StoryPage",
-                                                              "irelandie_missions.GeneralContentPage"])
+                                                              "irelandie_missions.GeneralContentPage",
+                                                              "irelandie_news.NewsPage"])
     link_text = blocks.CharBlock(
         max_length=32, blank=True, required=False, default="Read Story", help_text='Call To Action Text'
     )
@@ -2020,7 +2021,7 @@ class ParallaxLogoCardsBlock(blocks.StructBlock):
 
 class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
-    logo_cards = StoryPhotoGalleriesBlock()
+    story_photo_gallery = StoryPhotoGalleriesBlock()
 
     class Meta:
         label = 'Parallax Story Photo Gallery'
@@ -2029,7 +2030,7 @@ class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
 
 class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
-    logo_cards = TimelinePhotoGalleriesBlock()
+    timeline_photo_gallery = TimelinePhotoGalleriesBlock()
 
     class Meta:
         label = 'Parallax Timeline Photo Gallery'
@@ -2038,7 +2039,7 @@ class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
 
 class ParallaxLinkCardsBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
-    logo_cards = LinkCardsBlock()
+    link_cards = LinkCardsBlock()
 
     class Meta:
         label = 'Parallax Link cards'

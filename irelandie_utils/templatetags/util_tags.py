@@ -191,6 +191,16 @@ def get_tag_links(tag, page):
 
 
 @register.simple_tag
+def get_first_category_tag_link(tag, page):
+    from irelandie_tags.models import TagLandingPage
+
+    tag_landing = TagLandingPage.objects.live().filter(
+        page_related_tags__page=tag, locale=page.locale).specific().distinct()
+    for tag_land in tag_landing:
+        return tag_land.url
+
+
+@register.simple_tag
 def get_category_tag_links(selected_tag, tag, page):
     from irelandie_tags.models import TagLandingPage
     tagging_links = []
@@ -221,6 +231,28 @@ def get_destination_tag_links(tag):
     for tags in tag:
         tagging_links.append(list((tags, tags.related_destinations[0])))
     return tagging_links
+
+
+@register.simple_tag
+def compare_tags(tag_landing_page_tags, freeform_page_tags, page):
+
+    matches = [tag for tag in tag_landing_page_tags if tag in freeform_page_tags]
+
+    if len(matches) >= 2:
+        result = matches[:2]
+    elif len(matches) == 1:
+        additional_tag = None
+        for name in freeform_page_tags:
+            if name not in tag_landing_page_tags:
+                additional_tag = name
+                break
+        result = matches + ([additional_tag] if additional_tag else [])
+    else:
+        result = []
+    tagging_links = get_tag_links(result, page)
+    tag_with_links = tagging_links[0]
+    tag_without_links = tagging_links[1]
+    return tag_with_links, tag_without_links
 
 
 @register.simple_tag(

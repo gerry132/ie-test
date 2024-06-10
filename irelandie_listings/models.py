@@ -648,6 +648,12 @@ class ListingsPageIndex(BasePage):
         InlinePanel('page_related_destination_tags', label="Related destination"),
     ]
 
+    def save(self, *args, **kwargs):
+        from wagtail.core.signals import page_published
+        super().save(*args, **kwargs)
+        if self.live:  # Ensure the page is published
+            page_published.send(sender=self.__class__, instance=self)
+
     class Meta:
         verbose_name = "Listings Index"
 
@@ -791,6 +797,12 @@ class ListingsPageUSAIndex(BasePage):
         InlinePanel('page_related_tags', label="Related category tags"),
         InlinePanel('page_related_destination_tags', label="Related destination"),
     ]
+
+    def save(self, *args, **kwargs):
+        from wagtail.core.signals import page_published
+        super().save(*args, **kwargs)
+        if self.live:  # Ensure the page is published
+            page_published.send(sender=self.__class__, instance=self)
 
     class Meta:
         verbose_name = "Listings Index USA"

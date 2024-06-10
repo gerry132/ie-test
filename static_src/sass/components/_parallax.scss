@@ -10,8 +10,6 @@
 .parallax-section {
     position: relative;
     overflow: hidden;
-    min-height: 100vh;
-    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 0;
@@ -43,8 +41,7 @@
 .content {
     position: relative;
     z-index: 1;
-    padding: 20px;
-    text-align: center;
+    padding: 80px 20px;
     margin: 0 auto;
     max-width: 1280px;
 }

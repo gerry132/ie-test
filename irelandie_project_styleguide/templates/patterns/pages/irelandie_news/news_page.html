@@ -24,6 +24,19 @@ Responsive hero images
             {{ page.publication_date|date:"j F Y" }}
         </div>
         {% endif %}
+        <div class="tag__news">
+        <ul class="tag__slide">
+            {% for tags_category, tag_links in tagging_links %}
+                <li class="tag__slide-item"><a href="{{ tag_links }}" aria-label="{% trans 'Tag label' %}">{{ tags_category.specific.tag_label }}</a></li>
+            {% endfor %}
+            {% for tags_category in tags_no_links %}
+                <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
+            {% endfor %}
+            {% for tags_destination, tag_links in destination_tag_links %}
+                <li class="tag__slide-item"><a href="{{ tag_links.url }}" aria-label="{% trans 'Tag label' %}">{{ tags_destination }}</a></li>
+            {% endfor %}
+        </ul>
+        </div>
     </div>
     <div class="wrapper wrapper--padding streamfield">
         <figure class="image-block">
