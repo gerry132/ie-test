@@ -371,10 +371,9 @@ class JobIndexPage(BasePage):
 
 def job_page_changed(job_page):
 
-    job_index_pages = Page.objects.live().type(JobIndexPage).ancestor_of(job_page).specific()
+    job_index_page = Page.objects.live().type(JobIndexPage).ancestor_of(job_page).specific().first()
 
-    for job_index_page in job_index_pages:
-        job_index_page.save_revision().publish()
+    if job_index_page:
         batch = PurgeBatch()
         batch.add_page(job_index_page)
         batch.purge()
