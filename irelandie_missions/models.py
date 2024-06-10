@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from wagtail.core.models import Page
 from django.utils.functional import cached_property
 from wagtail.admin.panels import InlinePanel, FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel, HelpPanel
 from wagtail.fields import StreamField, RichTextField
@@ -25,7 +26,7 @@ from django.forms import ValidationError
 from django.dispatch import receiver
 from django.db.models.signals import pre_delete
 
-from wagtail.signals import page_published
+from wagtail.signals import page_published, page_unpublished
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 
 
@@ -369,11 +370,11 @@ class JobIndexPage(BasePage):
 
 
 def job_page_changed(job_page):
-    from wagtail.core.models import Page
 
-    job_index_page = Page.objects.live().type(JobIndexPage).ancestor_of(job_page).specific().first()
+    job_index_pages = Page.objects.live().type(JobIndexPage).ancestor_of(job_page).specific()
 
-    if job_index_page:
+    for job_index_page in job_index_pages:
+        job_index_page.save_revision().publish()
         batch = PurgeBatch()
         batch.add_page(job_index_page)
         batch.purge()
@@ -381,6 +382,11 @@ def job_page_changed(job_page):
 
 @receiver(page_published, sender=JobContentPage)
 def job_published_handler(instance, **kwargs):
+    job_page_changed(instance)
+
+
+@receiver(page_unpublished, sender=JobContentPage)
+def job_unpublished_handler(instance, **kwargs):
     job_page_changed(instance)
 
 

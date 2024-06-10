@@ -18,7 +18,7 @@ from irelandie_utils.models import MinimalArticlePage, BasePage
 from django.dispatch import receiver
 from django.db.models.signals import pre_delete
 
-from wagtail.signals import page_published
+from wagtail.signals import page_published, page_unpublished
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 
 
@@ -192,10 +192,10 @@ class NewsPage(MinimalArticlePage):
 
 
 def news_page_changed(news_page):
-    news_index_page = Page.objects.live().type(NewsPageIndex).ancestor_of(news_page).specific().first()
+    news_index_page = Page.objects.live().type(NewsPageIndex).ancestor_of(news_page).specific()
 
     if news_index_page:
-        news_landing_page = Page.objects.live().type(NewsLandingPage).ancestor_of(news_index_page).specific().first()
+        news_landing_page = Page.objects.live().type(NewsLandingPage).ancestor_of(news_index_page).specific()
 
         if news_landing_page:
             # Find and purge paginated URLs
@@ -224,6 +224,10 @@ def news_page_changed(news_page):
 def news_published_handler(instance, **kwargs):
     news_page_changed(instance)
 
+
+@receiver(page_unpublished, sender=NewsPage)
+def news_published_handler(instance, **kwargs):
+    news_page_changed(instance)
 
 @receiver(pre_delete, sender=NewsPage)
 def news_deleted_handler(instance, **kwargs):
