@@ -226,8 +226,9 @@ def news_published_handler(instance, **kwargs):
 
 
 @receiver(page_unpublished, sender=NewsPage)
-def news_published_handler(instance, **kwargs):
+def news_unpublished_handler(instance, **kwargs):
     news_page_changed(instance)
+
 
 @receiver(pre_delete, sender=NewsPage)
 def news_deleted_handler(instance, **kwargs):
