@@ -2,6 +2,8 @@ from itertools import chain
 from operator import attrgetter
 from django.db.models import F
 
+from irelandie_news.models import NewsPage
+
 
 def get_tagged_items(self, tag):
     """
@@ -20,9 +22,12 @@ def get_tagged_items(self, tag):
     general_content = GeneralContentPage.objects.live().filter(
         page_related_tags__page=tag, locale=self.locale).specific().distinct().annotate(
         published=F('last_published_at'))
+    news_content = NewsPage.objects.live().filter(
+        page_related_tags__page=tag, locale=self.locale).specific().distinct().annotate(
+        published=F('last_published_at'))
 
     results = sorted(
-        chain(stories, freeform, general_content),
+        chain(stories, freeform, general_content, news_content),
         key=attrgetter('published'),
         reverse=True
     )

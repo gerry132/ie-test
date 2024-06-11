@@ -486,14 +486,6 @@ resource "aws_s3_bucket_policy" "ecs_log_policy" {
       {
         Effect      = "Allow",
         Principal   = {
-          AWS       = local.elb_account_arn
-        },
-        Action      = "s3:*"
-        Resource    = "${aws_s3_bucket.logs.arn}/*"
-      },
-      {
-        Effect      = "Allow",
-        Principal   = {
           AWS       = "arn:aws:iam::${local.account_id}:root"
         },
         Action      = "s3:*"
@@ -1850,7 +1842,17 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/overseas-travel/advice/*"
-  } 
+  }
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/publication-index/*"
+  }  
 
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
@@ -1895,7 +1897,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
-    path_pattern             = "*/annual-reports/"
+    path_pattern             = "*/annual-reports/*"
   } 
 
   default_cache_behavior {
@@ -2059,4 +2061,72 @@ data "aws_iam_policy_document" "cloudfront_assets_access" {
 resource "aws_s3_bucket_policy" "assets" {
   bucket = aws_s3_bucket.assets.id
   policy = data.aws_iam_policy_document.cloudfront_assets_access.json
+}
+
+
+
+resource "aws_wafv2_web_acl" "ireland_ie_waf" {
+  name  = "${local.project_name}-waf"
+  scope = "REGIONAL"
+
+  default_action {
+    allow {}
+  }
+  rule {
+    name     = "AWSRateBasedRuleDomesticDOS"
+    priority = 1
+
+    action {
+      captcha {}
+    }
+
+    statement {
+      rate_based_statement {
+        limit              = 300
+        aggregate_key_type = "IP"
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWSRateBasedRuleDomesticDOS"
+      sampled_requests_enabled   = true
+    }
+  }
+  rule {
+    name     = "AWS-AWSManagedRulesBotControlRuleSet"
+    priority = 0
+    override_action {
+      none {
+      }
+    }
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesBotControlRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWS-AWSManagedRulesBotControlRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
+
+
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "${local.project_name}-waf-metrics"
+    sampled_requests_enabled   = true
+  }
+}
+
+resource "aws_wafv2_web_acl_association" "admin_association" {
+  resource_arn = aws_lb.default.arn
+  web_acl_arn  = aws_wafv2_web_acl.ireland_ie_waf.arn
+}
+
+resource "aws_wafv2_web_acl_association" "public_association" {
+  resource_arn = aws_lb.public_sites.arn
+  web_acl_arn  = aws_wafv2_web_acl.ireland_ie_waf.arn
 }

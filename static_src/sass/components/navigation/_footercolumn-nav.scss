@@ -8,7 +8,7 @@
     &__item {
         -webkit-font-smoothing: antialiased;
         width: 100%;
-        padding-bottom: 5px;
+        padding-bottom: 0px;
         border-bottom: 0;
         font-weight: 300;
         margin-bottom: $grid;
@@ -35,6 +35,9 @@
         @include media-query(medium) {
             padding: 5px 0 0;
             margin: 0;
+        }
+        @include media-query(max-medium) {
+            font-size: 18px;
         }
     }
 }

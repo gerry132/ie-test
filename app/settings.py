@@ -57,9 +57,9 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 debug_on = os.environ.get("DEBUG")
 
 if debug_on == '0':
-    DEBUG = False
+    DEBUG = True
 else:
-    DEBUG = False
+    DEBUG = True
 
 ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
@@ -92,6 +92,7 @@ INSTALLED_APPS = [
     "irelandie_missions",
     "irelandie_news",
     "irelandie_pages",
+    "irelandie_parallax",
     "irelandie_people",
     "irelandie_places",
     "irelandie_press_releases",
@@ -445,7 +446,7 @@ OPENSEARCH_ENDPOINT = os.environ.get("OPENSEARCH_ENDPOINT")
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
 
 if USE_S3 is True:
-    INSTALLED_APPS = INSTALLED_APPS + ["storages", "wagtail_storages"]
+    INSTALLED_APPS = INSTALLED_APPS + ["storages"]
 
     # AWS_LOCATION = "static"
 

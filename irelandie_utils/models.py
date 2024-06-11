@@ -6,14 +6,12 @@ from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
 from modelcluster.fields import ParentalKey
 
-from wagtailcache.cache import cache_page, WagtailCacheMixin
-
 from wagtail.admin.panels import (
     FieldPanel,
     MultiFieldPanel,
     PageChooserPanel,
     FieldRowPanel,
-    HelpPanel, TabbedInterface, ObjectList,
+    HelpPanel, TabbedInterface, ObjectList, InlinePanel,
 )
 from irelandie_utils.cache import get_default_cache_control_decorator
 from wagtail.contrib.settings.models import BaseSetting, register_setting
@@ -44,6 +42,8 @@ from wagtail.admin.panels import PublishingPanel
 from taggit.models import TaggedItemBase
 from taggit.managers import TaggableManager
 from modelcluster.models import ClusterableModel
+
+from irelandie_utils.signals import snippet_published
 
 SEARCH_DESCRIPTION_LABEL = "Meta description"  # NOTE changing this requires migrations
 
@@ -277,6 +277,10 @@ class ContactSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Ind
         index.SearchField("title", partial_match=True),
     ]
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
+
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/contactsnippet.html"
 
@@ -355,6 +359,10 @@ class CallToActionSnippet(DraftStateMixin, RevisionMixin, index.Indexed, Cluster
         index.SearchField("title", partial_match=True),
     ]
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
+
     @property
     def revisions(self):
         return self._revisions
@@ -416,6 +424,10 @@ class PrivacyPolicySnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, ind
         index.SearchField("title", partial_match=True),
     ]
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
+
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/privacypolicysnippet.html"
 
@@ -455,6 +467,10 @@ class AdvancedRichtextSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, 
     search_fields = [
         index.SearchField("title", partial_match=True),
     ]
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
 
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/advancedrichtextsnippet.html"
@@ -496,6 +512,10 @@ class EmbassySnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Ind
         index.SearchField("title", partial_match=True),
     ]
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
+
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/advancedrichtextsnippet.html"
 
@@ -534,6 +554,10 @@ class Accordion(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed,
     search_fields = [
         index.SearchField("title", partial_match=True),
     ]
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
 
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/accordionsnippet.html"
@@ -779,8 +803,9 @@ class Tracking(BaseSetting):
     )
 
 
-@method_decorator(cache_page, name='serve')
-class HeroPage(BasePage, WagtailCacheMixin):
+# Apply default cache headers on this page model's serve method.
+@method_decorator(get_default_cache_control_decorator(), name='serve')
+class HeroPage(BasePage):
     hero_title = models.CharField(blank=True, max_length=120)
     hero_size = models.CharField(
         max_length=16,
@@ -1082,7 +1107,11 @@ class MinimalArticlePage(BasePage):
                              "main news page."),
         FieldPanel("featured_home", heading="Featured Home",
                    help_text="Checking this box will feature this news item on your mission/microsite "
-                             "homepage if pinned stories are enabled.")
+                             "homepage if pinned stories are enabled."),
+        InlinePanel('page_related_tags', label="Related category tags",
+                    help_text="Please leave this section blank. Tags should only be added by Comms Unit."),
+        InlinePanel('page_related_destination_tags', label="Related destination",
+                    help_text="Please leave this section blank. Tags should only be added by Comms Unit."),
     ]
 
     COMMON_PROMOTE_PANELS = (
@@ -1157,6 +1186,10 @@ class CountryGroup(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableMod
         index.SearchField("title", partial_match=True),
     ]
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
+
     @property
     def revisions(self):
         return self._revisions
@@ -1209,6 +1242,10 @@ class TwitterEmbed(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
         index.SearchField("title", partial_match=True),
     ]
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
+
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/twitterembedsnippet.html"
 
@@ -1252,6 +1289,10 @@ class Visa(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, Clus
         index.SearchField("title", partial_match=True),
     ]
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
+
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/general_block_snippet.html"
 
@@ -1289,6 +1330,10 @@ class Passport(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, 
     search_fields = [
         index.SearchField("title", partial_match=True),
     ]
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
 
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/general_block_snippet.html"
@@ -1328,6 +1373,10 @@ class Authentication(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Ind
         index.SearchField("title", partial_match=True),
     ]
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
+
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/general_block_snippet.html"
 
@@ -1365,6 +1414,10 @@ class Marriage(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, 
     search_fields = [
         index.SearchField("title", partial_match=True),
     ]
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
 
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/general_block_snippet.html"
@@ -1406,6 +1459,10 @@ class TravelSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Inde
         index.SearchField("title", partial_match=True),
     ]
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
+
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/travel_snippet.html"
 
@@ -1441,6 +1498,10 @@ class BetaSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexe
         index.SearchField("title", partial_match=True),
     ]
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
+
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/betasnippet.html"
 
@@ -1475,6 +1536,10 @@ class WebsiteHeaderStraplineSnippet(PreviewableMixin, DraftStateMixin, RevisionM
     search_fields = [
         index.SearchField("title", partial_match=True),
     ]
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
 
     def get_preview_template(self, request, mode_name):
         return "patterns/snippets/websiteheadersnippet.html"

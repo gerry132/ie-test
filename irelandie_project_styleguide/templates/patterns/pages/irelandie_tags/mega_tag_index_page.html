@@ -1,0 +1,78 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags i18n %}
+{% load wagtailimages_tags %}
+{% load util_tags static navigation_tags %}
+
+{% block content %}
+    {% if page.generic_hero %}
+        {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+    {% endif %}
+    {% if not page.generic_hero %}
+        <div class="section section--padding_without_hero section--white" id="main-header">
+            <div class="wrapper wrapper--large wrapper--padding content--padding">
+                <div class="intro--toc">
+                    <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                    {% if page.description %}
+                    <p class="intro__description">{{ page.description }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% block main %}
+        <div class="section section--padding section--white">
+            <div class="wrapper wrapper--large wrapper--padding">
+                <div class="tag__line"></div>
+                {% for card in stories %}
+                <div class="tag__link-box" >
+                    <a href="{{ card.url }}" aria-label="{{card.alt_text}}">
+                    {% if card.hero_image %}
+                        {% if card.alt_text %}
+                            {% image card.hero_image fill-500x300 class="tag__image" alt=card.alt_text %}
+                        {% else %}
+                            {% image card.hero_image fill-500x300 alt=card.image.alt_default class="tag__image" %}
+                        {% endif %}
+                    {% elif card.generic_hero %}
+                        {% for block in card.generic_hero %}
+                            {% image block.value.hero_image fill-500x300 class="tag__image" alt=block.value.hero_image_alt %}
+                        {% endfor %}
+                    {% else %}
+                        {% for default_image in default_image %}
+                            {% image default_image.value.image fill-500x300 class="tag__image" alt=default_image.value.image_alt %}
+                        {% endfor %}
+                    {% endif %}
+                    </a>
+                    <div class="tag__content">
+                        <div class="link-box__container">
+                            <a href="{{ card.url }}" aria-label="{{ card.title }}">
+                                <h3 class="link-box__heading heading--3">{{ card.title }}</h3>
+                                <div class="tag__card__summary">
+                                    {{ card.subtitle|richtext }}
+                                </div>
+                            </a>
+                            <ul class="tag__slide">
+                                            {% compare_tags tags card.related_tags self as tagging_links %}
+                                                        {% for tag, url in tagging_links.0 %}
+                                                            <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ url }}">{{ tag }}</a></li>
+                                                        {% endfor %}
+
+                                                        {% for tag_page in tagging_links.1 %}
+                                                            <li class="tag__slide-item">{{ tag_page }}</li>
+                                                        {% endfor %}
+
+                                                {% get_destination_tag_links card.related_destination_tags as tag_destination_links %}
+                                                {% for tags_destination, tag_links in tag_destination_links|slice:":1" %}
+                                                       <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
+                                                {% endfor %}
+                                        </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="tag__line"></div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+

@@ -1,0 +1,56 @@
+{% extends "patterns/hero_page.html" %}
+{% load util_tags wagtailcore_tags wagtailimages_tags static %}
+
+{% block main %}
+    {{ page.body }}
+<script src="https://cdn.jsdelivr.net/npm/jarallax@2.2.1/dist/jarallax.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jarallax@2.2.1/dist/jarallax-video.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Jarallax for each element with the 'jarallax' class
+    jarallax(document.querySelectorAll('.jarallax'));
+    jarallax(document.querySelectorAll('.jarallax[data-video-src]'), {
+        videoSrc: function (elem) {
+            return elem.getAttribute('data-video-src');
+        }
+    });
+    function isMobileDevice() {
+          return /iPad|iPhone|iPod|Android/.test(navigator.userAgent);
+    }
+
+    if (!isMobileDevice()) {
+        const parallaxSections = document.querySelectorAll('.parallax-section');
+        const jarallaxElements = document.querySelectorAll('.jarallax');
+
+        let jarallaxTotalHeight = 0;
+
+        // Calculate total height of Jarallax elements
+        jarallaxElements.forEach(element => {
+            jarallaxTotalHeight += element.offsetHeight;
+        });
+
+        window.addEventListener('scroll', function() {
+            const scrollY = window.scrollY;
+
+            parallaxSections.forEach(section => {
+                const speed = parseFloat(section.getAttribute('data-speed'));
+
+                // Calculate the position of the background section
+                const yPos = Math.max(0, (scrollY - section.offsetTop) * speed);
+
+                section.style.transform = `translateY(${yPos}px)`;
+            });
+        });
+    }
+
+    // Initialize Jarallax with disableParallax and disableVideo options
+    jarallax(document.querySelectorAll('.jarallax'), {
+        disableParallax: isMobileDevice(),
+        disableVideo: isMobileDevice()
+    });
+});
+
+</script>
+
+{% endblock %}
+

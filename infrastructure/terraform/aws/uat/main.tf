@@ -61,6 +61,7 @@ locals {
     "193.178.64.0/19",
     "193.178.96.0/20",
     "139.162.239.108/32",
+
   ]
   non_gov_network_cird_blocks   = {
     dfa_main = {
@@ -77,11 +78,11 @@ locals {
     },
     jaikiran_dev = {
       description = "Jaikiran - OGCIO"
-      cidr_blocks = ["192.168.0.106/32"]
+      cidr_blocks = ["137.191.233.222/32"]
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.45.249/32", "80.233.32.249/32", "80.233.41.72/32"]
+      cidr_blocks  = ["80.233.36.94/32", "80.233.33.94/32", "80.233.40.171/32"]
     },
 
     sina_dev = {
@@ -98,6 +99,21 @@ locals {
 # -----------------------------------------------------------------------------
 # Values to fill after running terraform is ran, used for codebuild and secrets
 # -----------------------------------------------------------------------------
+
+resource "aws_ssm_parameter" "CLOUDFRONT_ID" {
+  name        = "${local.environment_name}_CLOUDFRONT_ID"
+  description = "For use in Codebuild buildspec - ${local.environment_name}"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
+
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
+
+
 
 resource "aws_ssm_parameter" "DOCKER_IMAGE_URL" {
   name        = "${local.environment_name}_DOCKER_IMAGE_URL"
@@ -272,6 +288,65 @@ resource "aws_security_group" "example" {
 }
 
 
+data "aws_iam_policy_document" "example" {
+  version = "2012-10-17"
+  statement {
+    effect = "Allow"
+    principals {
+      identifiers = ["delivery.logs.amazonaws.com"]
+      type        = "Service"
+    }
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.example.arn}:*"]
+    condition {
+      test     = "ArnLike"
+      values   = ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"]
+      variable = "aws:SourceArn"
+    }
+    condition {
+      test     = "StringEquals"
+      values   = [tostring(data.aws_caller_identity.current.account_id)]
+      variable = "aws:SourceAccount"
+    }
+  }
+}
+
+resource "aws_wafv2_ip_set" "ireland_ie_ips" {
+  name               = "${local.environment_name}-${local.project_name}-ip-set"
+  description        = "IPs"
+  scope              = "REGIONAL"
+  ip_address_version = "IPV4"
+  addresses          = ["161.35.72.212/32",
+                        "46.101.124.44/32",
+                        "46.101.116.160/32",
+                        "85.208.98.128/25",
+                        "164.90.168.210/32",
+                        "176.58.117.51/32",
+                        "80.85.87.84/32",
+                        "88.80.184.34/32",
+                        "178.79.136.28/32"]
+}
+
+
+resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
+  name               = "${local.environment_name}-${local.project_name}-ip-set-cloudfront"
+  description        = "IPs"
+  provider                  = aws.virginia
+  scope              = "CLOUDFRONT"
+  ip_address_version = "IPV4"
+  addresses          = ["161.35.72.212/32",
+                        "46.101.124.44/32",
+                        "46.101.116.160/32",
+                        "85.208.98.128/25",
+                        "164.90.168.210/32",
+                        "176.58.117.51/32",
+                        "80.85.87.84/32",
+                        "88.80.184.34/32",
+                        "178.79.136.28/32"]
+}
+
+
+
 # -----------------------------------------------------------------------------
 # Security group rules
 # -----------------------------------------------------------------------------
@@ -280,24 +355,22 @@ resource "aws_security_group" "example" {
 
 
 resource "aws_security_group_rule" "internet_to_lb_80" {
-  for_each = local.non_gov_network_cird_blocks
   type                      = "ingress"
   from_port                 = 80
   to_port                   = 80
   protocol                  = "tcp"
   security_group_id         = aws_security_group.lb.id
-  cidr_blocks               = each.value.cidr_blocks
+  cidr_blocks               = ["0.0.0.0/0"]
 }
 
 
 resource "aws_security_group_rule" "internet_to_lb_443" {
-  for_each = local.non_gov_network_cird_blocks
   type                      = "ingress"
   from_port                 = 443
   to_port                   = 443
   protocol                  = "tcp"
   security_group_id         = aws_security_group.lb.id
-  cidr_blocks               = each.value.cidr_blocks
+  cidr_blocks               = ["0.0.0.0/0"]
 }
 
 # Allow List IPs for restrict areas Gov Network
@@ -406,6 +479,18 @@ resource "aws_security_group_rule" "ecs_to_redis_5432" {
 # Buckets
 # -----------------------------------------------------------------------------
 
+resource "aws_s3_bucket" "cf-logs" {
+  bucket  = "${local.environment_name}-${local.project_name}-cf-logs"
+}
+
+resource "aws_s3_bucket_ownership_controls" "cf-controls" {
+  bucket = aws_s3_bucket.cf-logs.id
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
 resource "aws_s3_bucket" "assets" {
   bucket  = "${local.environment_name}-${local.project_name}-assets"
 }
@@ -461,14 +546,6 @@ resource "aws_s3_bucket_policy" "ecs_log_policy" {
       {
         Effect      = "Allow",
         Principal   = {
-          AWS       = local.elb_account_arn
-        },
-        Action      = "s3:*"
-        Resource    = "${aws_s3_bucket.logs.arn}/*"
-      },
-      {
-        Effect      = "Allow",
-        Principal   = {
           AWS       = "arn:aws:iam::${local.account_id}:root"
         },
         Action      = "s3:*"
@@ -484,14 +561,6 @@ resource "aws_s3_bucket_policy" "lb_logs" {
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
-      {
-        Effect      = "Allow",
-        Principal   = {
-          AWS       = local.elb_account_arn
-        },
-        Action      = "s3:*"
-        Resource    = "${aws_s3_bucket.lb_logs.arn}/*/AWSLogs/${local.account_id}/*"
-      },
       {
         Effect      = "Allow",
         Principal   = {
@@ -1390,7 +1459,7 @@ locals {
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
   SETTINGS_EMAIL_HOST               = "email.${local.region}.amazonaws.com"
   SETTINGS_DEFAULT_FROM_EMAIL       = aws_ssm_parameter.DEFAULT_FROM_EMAIL.value
-  SETTINGS_CLOUDFRONT_ID            = 0
+  SETTINGS_CLOUDFRONT_ID            = aws_ssm_parameter.CLOUDFRONT_ID.value
 }
 
 data "template_file" "task_definition" {
@@ -1845,13 +1914,15 @@ data "aws_iam_policy_document" "sns_topic_policy_low" {
 #######################################
 
 
-resource "aws_wafv2_web_acl" "ireland_ie_waf" {
-  name  = "${local.project_name}-waf"
-  scope = "REGIONAL"
+resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
+  name  = "${local.project_name}-waf-cloudfront"
+  provider                  = aws.virginia
+  scope = "CLOUDFRONT"
 
   default_action {
     allow {}
   }
+
   rule {
     name     = "AWSRateBasedRuleDomesticDOS"
     priority = 1
@@ -1883,6 +1954,15 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
       managed_rule_group_statement {
         name        = "AWSManagedRulesBotControlRuleSet"
         vendor_name = "AWS"
+        scope_down_statement {
+            not_statement {
+              statement {
+                ip_set_reference_statement {
+                  arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
+                }
+               }
+            }
+        }
       }
     }
 
@@ -1893,7 +1973,146 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
     }
   }
 
+  rule {
+    name     = "AWS-AWSManagedRulesAmazonIpReputationList"
+    priority = 2
+    override_action {
+      none {
+      }
+    }
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesAmazonIpReputationList"
+        vendor_name = "AWS"
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWS-AWSManagedRulesAmazonIpReputationList"
+      sampled_requests_enabled   = true
+    }
+  }
 
+  rule {
+    name     = "AWS-AWSManagedRulesAnonymousIpList"
+    priority = 3
+    override_action {
+      none {
+      }
+    }
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesAnonymousIpList"
+        vendor_name = "AWS"
+
+        rule_action_override {
+          action_to_use {
+            allow {}
+          }
+
+          name = "HostingProviderIPList"
+        }
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWS-AWSManagedRulesAnonymousIpList"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule {
+    name     = "AWS-AWSManagedRulesKnownBadInputsRuleSet"
+    priority = 4
+    override_action {
+      none {
+      }
+    }
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesKnownBadInputsRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWS-AWSManagedRulesKnownBadInputsRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule {
+    name     = "AWS-AWSManagedRulesUnixRuleSet"
+    priority = 5
+    override_action {
+      none {
+      }
+    }
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesUnixRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWS-AWSManagedRulesUnixRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule {
+    name     = "AWS-AWSManagedRulesWindowsRuleSet"
+    priority = 6
+    override_action {
+      none {
+      }
+    }
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesWindowsRuleSet"
+        vendor_name = "AWS"
+        rule_action_override {
+          action_to_use {
+            allow {}
+          }
+
+          name = "WindowsShellCommands_BODY"
+        }
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWS-AWSManagedRulesWindowsRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
+    rule {
+    name     = "AWS-AWSManagedRulesSQLiRuleSet"
+    priority = 7
+    override_action {
+      none {
+      }
+    }
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesSQLiRuleSet"
+        vendor_name = "AWS"
+        rule_action_override {
+          action_to_use {
+            allow {}
+          }
+
+          name = "AWSManagedRulesSQLiRuleSet_BODY"
+        }
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWS-AWSManagedRulesSQLiRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
   visibility_config {
     cloudwatch_metrics_enabled = true
     metric_name                = "${local.project_name}-waf-metrics"
@@ -1901,16 +2120,25 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
   }
 }
 
-resource "aws_wafv2_web_acl_association" "admin_association" {
-  resource_arn = aws_lb.default.arn
-  web_acl_arn  = aws_wafv2_web_acl.ireland_ie_waf.arn
+
+
+resource "aws_cloudwatch_log_group" "example" {
+  provider = aws.virginia
+  name = "aws-waf-logs-ireland-ie"
 }
 
-resource "aws_wafv2_web_acl_association" "public_association" {
-  resource_arn = aws_lb.public_sites.arn
-  web_acl_arn  = aws_wafv2_web_acl.ireland_ie_waf.arn
+resource "aws_wafv2_web_acl_logging_configuration" "example" {
+  provider = aws.virginia
+  log_destination_configs = [aws_cloudwatch_log_group.example.arn]
+  resource_arn            = aws_wafv2_web_acl.ireland_ie_waf_cloudfront.arn
 }
 
+resource "aws_cloudwatch_log_resource_policy" "example" {
+  policy_document = data.aws_iam_policy_document.example.json
+  policy_name     = "webacl-policy-uniq-name"
+}
+
+data "aws_region" "current" {}
 
 # ------------------------------------------------
 # CloudFront Static Files and Assets
@@ -2029,10 +2257,149 @@ data "aws_iam_policy_document" "cloudfront_assets_access" {
       values = [aws_cloudfront_distribution.assets.arn]
     }
   }
-  
+
 }
 
 resource "aws_s3_bucket_policy" "assets" {
   bucket = aws_s3_bucket.assets.id
   policy = data.aws_iam_policy_document.cloudfront_assets_access.json
 }
+
+
+resource "aws_cloudfront_distribution" "dynamic" {
+  web_acl_id    = aws_wafv2_web_acl.ireland_ie_waf_cloudfront.arn
+  origin {
+    domain_name = aws_lb.public_sites.dns_name
+    origin_id   = aws_lb.public_sites.name
+
+    custom_origin_config {
+      origin_read_timeout      = 60
+      origin_keepalive_timeout = 60
+      http_port                = 80
+      https_port               = 443
+      origin_protocol_policy   = "https-only"
+      origin_ssl_protocols     = ["TLSv1", "TLSv1.1", "TLSv1.2"]
+    }
+  }
+  enabled = true
+  comment = "Website and CMS Assets Distribution."
+  aliases = ["www.${local.domain_ireland_ie}"]
+
+  logging_config {
+    include_cookies = false
+    bucket          = aws_s3_bucket.cf-logs.bucket_domain_name
+    prefix          = "${local.domain_ireland_ie}-cloudfront"
+  }
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "/search/*"
+  }
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/overseas-travel/advice/*"
+  }
+
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/news-archive/"
+  }
+
+
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/news-and-events/*"
+  }
+
+
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/news-and-speeches/*"
+  }
+
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/annual-reports/*"
+  }
+
+  default_cache_behavior {
+    allowed_methods  = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = aws_lb.public_sites.name
+
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    cache_policy_id          = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+    viewer_protocol_policy   = "allow-all"
+    min_ttl                  = 0
+    default_ttl              = 3600
+    max_ttl                  = 86400
+
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.assets_cors.id
+  }
+
+  price_class = "PriceClass_100"
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
+
+  viewer_certificate {
+    acm_certificate_arn            = aws_acm_certificate.dynamic_cert.arn
+    ssl_support_method             = "sni-only"
+    minimum_protocol_version       = "TLSv1.2_2021"
+    cloudfront_default_certificate = false
+  }
+
+  depends_on = [
+    aws_acm_certificate.dynamic_cert
+  ]
+}
+
+
+resource "aws_acm_certificate" "dynamic_cert" {
+  domain_name               = "www.${local.domain_ireland_ie}"
+  validation_method         = "DNS"
+  provider                  = aws.virginia
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+

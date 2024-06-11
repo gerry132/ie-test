@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from wagtail.core.models import Page
 from django.utils.functional import cached_property
 from wagtail.admin.panels import InlinePanel, FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel, HelpPanel
 from wagtail.fields import StreamField, RichTextField
@@ -21,6 +22,12 @@ from irelandie_utils.utils import get_root_info
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage, SocialFields, ListingFields
 from wagtail.snippets.blocks import SnippetChooserBlock
 from django.forms import ValidationError
+
+from django.dispatch import receiver
+from django.db.models.signals import pre_delete
+
+from wagtail.signals import page_published, page_unpublished
+from wagtail.contrib.frontend_cache.utils import PurgeBatch
 
 
 class CountryGroupPageIndex(BasePage):
@@ -360,6 +367,31 @@ class JobIndexPage(BasePage):
                 if missions.root_page:
                     context['mission_web_bot'] = missions.web_bot_script
         return context
+
+
+def job_page_changed(job_page):
+
+    job_index_page = Page.objects.live().type(JobIndexPage).ancestor_of(job_page).specific().first()
+
+    if job_index_page:
+        batch = PurgeBatch()
+        batch.add_page(job_index_page)
+        batch.purge()
+
+
+@receiver(page_published, sender=JobContentPage)
+def job_published_handler(instance, **kwargs):
+    job_page_changed(instance)
+
+
+@receiver(page_unpublished, sender=JobContentPage)
+def job_unpublished_handler(instance, **kwargs):
+    job_page_changed(instance)
+
+
+@receiver(pre_delete, sender=JobContentPage)
+def job_deleted_handler(instance, **kwargs):
+    job_page_changed(instance)
 
 
 class MissionPage(HeroPage):
@@ -1013,6 +1045,12 @@ class GeneralContentPage(HeroPage):
                     context['mission_web_bot'] = missions.web_bot_script
         return context
 
+    def save(self, *args, **kwargs):
+        from wagtail.core.signals import page_published
+        super().save(*args, **kwargs)
+        if self.live:  # Ensure the page is published
+            page_published.send(sender=self.__class__, instance=self)
+
 
 class GeneralContentIrishAid(HeroPage):
     template = "patterns/pages/missions/general_content_page.html"
@@ -1081,3 +1119,9 @@ class GeneralContentIrishAid(HeroPage):
                 "You can't choose both an Mini hero block and a Banner hero image block for the hero media. "
                 "Choose a Mini hero block or a Banner hero image block"
             )
+
+    def save(self, *args, **kwargs):
+        from wagtail.core.signals import page_published
+        super().save(*args, **kwargs)
+        if self.live:  # Ensure the page is published
+            page_published.send(sender=self.__class__, instance=self)

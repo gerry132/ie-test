@@ -84,12 +84,13 @@
         font-size: 24px !important;
     }
 }
-.back_to_top_align{
+.back_to_top_align {
     display: inline-flex;
     gap: 4px;
     padding-bottom: 30px;
+    text-decoration: underline;
 }
-.back_to_top{
+.back_to_top {
     font-family: $font--primary;
     font-style: normal;
     font-weight: 400;
