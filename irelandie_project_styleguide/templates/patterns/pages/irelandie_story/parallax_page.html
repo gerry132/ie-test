@@ -6,49 +6,31 @@
 <script src="https://cdn.jsdelivr.net/npm/jarallax@2.2.1/dist/jarallax.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jarallax@2.2.1/dist/jarallax-video.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+
+document.addEventListener('DOMContentLoaded', function() {
     // Initialize Jarallax for each element with the 'jarallax' class
     jarallax(document.querySelectorAll('.jarallax'));
-    jarallax(document.querySelectorAll('.jarallax[data-video-src]'), {
-        videoSrc: function (elem) {
-            return elem.getAttribute('data-video-src');
-        }
-    });
-    function isMobileDevice() {
-          return /iPad|iPhone|iPod|Android/.test(navigator.userAgent);
-    }
 
-    if (!isMobileDevice()) {
-        const parallaxSections = document.querySelectorAll('.parallax-section');
-        const jarallaxElements = document.querySelectorAll('.jarallax');
+    const parallaxSections = document.querySelectorAll('.parallax-section');
 
-        let jarallaxTotalHeight = 0;
+    window.addEventListener('scroll', function() {
+        const scrollY = window.scrollY;
 
-        // Calculate total height of Jarallax elements
-        jarallaxElements.forEach(element => {
-            jarallaxTotalHeight += element.offsetHeight;
+        parallaxSections.forEach((section, index) => {
+            const speed = parseFloat(section.getAttribute('data-speed'));
+            const yPos = Math.max(0, (scrollY - section.offsetTop) * speed);
+
+            section.style.transform = `translateY(${yPos}px)`;
+
+            const credit = section.querySelector('.story__image-credit');
+            if (credit) {
+                credit.style.bottom = `${yPos}px`;
+            }
         });
-
-        window.addEventListener('scroll', function() {
-            const scrollY = window.scrollY;
-
-            parallaxSections.forEach(section => {
-                const speed = parseFloat(section.getAttribute('data-speed'));
-
-                // Calculate the position of the background section
-                const yPos = Math.max(0, (scrollY - section.offsetTop) * speed);
-
-                section.style.transform = `translateY(${yPos}px)`;
-            });
-        });
-    }
-
-    // Initialize Jarallax with disableParallax and disableVideo options
-    jarallax(document.querySelectorAll('.jarallax'), {
-        disableParallax: isMobileDevice(),
-        disableVideo: isMobileDevice()
     });
 });
+
+
 
 </script>
 

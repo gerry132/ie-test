@@ -21,6 +21,8 @@
     .rich-text.content h4 {
        color: var(--text-color);
     }
+
+
 </style>
 <div data-jarallax class="jarallax" id="jarallax1" data-speed="0.5">
     {% if value.image_video_credits %}
@@ -34,20 +36,27 @@
         </div>
     </div>
 {% else %}
-<div class="jarallax" data-jarallax data-speed="0.7" data-video-src="mp4:{{ value.video.url }}">
+<div class="parallax-section" style="min-height: 100vh; display: flex;" data-speed="0.4" data-video-parallax-container>
     {% if value.image_video_credits %}
         <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
     {% endif %}
     <div class="gradient-overlay" style="{% if value.gradient_image_video %}--linear-gradient: {{ value.gradient_image_video }} {% else %} black {% endif %}"></div>
-        <div class="jarallax-video-container">
-            <video autoplay muted loop controls class="jarallax-video" title="{{ value.alt_text }}">
+    <div class="jarallax-video-container">
+            <video loop controls data-video-parallax class="jarallax-video" title="{{ value.alt_text }}">
                 <source src="{{ value.video.url }}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-        </div>
+    </div>
+    <div class="parallax__button_text">
+        <button aria-label="{% trans 'Toggle video playback' %}" role="button" class="parallax__video-toggle"
+                        data-video-parallax-toggle>
+            {% include "patterns/atoms/icons/icon.html" with name="play-button" classname="playButton" %}
+            {% include "patterns/atoms/icons/icon.html" with name="pause-button" classname="pauseButton" %}
+        </button>
         <div class="rich-text content" style="text-align: {{value.text_alignment}}; color: {{value.text_color}}; --text-color: {{value.text_color}};">
             <h2>{{ value.heading }}</h2>
             <p>{{ value.subtitle|richtext }}</p>
+        </div>
         </div>
     </div>
 {% endif %}
