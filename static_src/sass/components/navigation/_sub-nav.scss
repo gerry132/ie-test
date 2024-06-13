@@ -21,28 +21,11 @@
             background: #fff;
     }
 
-    @include media-query(large) {
-        display: none;
-        align-items: flex-start;
-        width: max-content;
-        height: auto;
-        top: 45px;
-        background-color: $color--primary;
-        padding: 10px 20px;
-        opacity: 1;
-        visibility: visible;
-    }
 
     &__item {
         font-family: $font--secondary;
         width: 100%;
 
-        // back button for mobile
-        &--back {
-            @include media-query(large) {
-                display: none;
-            }
-        }
 
         &--secondary {
             font-weight: $weight--normal;
@@ -52,12 +35,6 @@
             border-bottom: 0;
         }
 
-        @include media-query(large) {
-            width: auto;
-            font-weight: $weight--normal;
-            text-align: left;
-            border-bottom: 0;
-        }
     }
 
     &__link {
@@ -79,9 +56,7 @@
         }
 
         @include media-query(large) {
-            padding: 5px 0;
-            margin: 0 10px;
-            color: $color--secondary;
+            color: #000;
 
             &:hover {
                 color: lighten(#000, 20%);
@@ -109,8 +84,5 @@
             color: #000;
         }
 
-        @include media-query(large) {
-            display: none;
-        }
     }
 }

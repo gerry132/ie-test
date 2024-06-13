@@ -2012,6 +2012,11 @@ class ParallaxImageVideoBlock(blocks.StructBlock):
 
 class ParallaxLogoCardsBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=TextAlignment.choices,
+        default=TextAlignment.CENTER,
+    )
     logo_cards = LogoCardsBlock()
 
     class Meta:
@@ -2021,6 +2026,11 @@ class ParallaxLogoCardsBlock(blocks.StructBlock):
 
 class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=TextAlignment.choices,
+        default=TextAlignment.CENTER,
+    )
     story_photo_gallery = StoryPhotoGalleriesBlock()
 
     class Meta:
@@ -2030,6 +2040,11 @@ class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
 
 class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=TextAlignment.choices,
+        default=TextAlignment.CENTER,
+    )
     timeline_photo_gallery = TimelinePhotoGalleriesBlock()
 
     class Meta:
@@ -2039,6 +2054,11 @@ class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
 
 class ParallaxLinkCardsBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=TextAlignment.choices,
+        default=TextAlignment.CENTER,
+    )
     link_cards = LinkCardsBlock()
 
     class Meta:
