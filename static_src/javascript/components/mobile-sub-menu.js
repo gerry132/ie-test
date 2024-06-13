@@ -36,7 +36,6 @@ class MobileSubMenu {
 
     bindEventListeners() {
         // Open submenu
-        if (window.innerWidth < 1024){
 
             // Click back button to close it
             this.backLink.addEventListener('click', (e) => {
@@ -51,7 +50,7 @@ class MobileSubMenu {
                 e.preventDefault();
                 this.open();
             });
-        }
+
         this.sub_links_question.forEach((question, index) => {
                 question.addEventListener('click', (e) => {
                     e.preventDefault();

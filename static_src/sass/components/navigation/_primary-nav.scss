@@ -105,7 +105,6 @@
         }
 
         @include media-query(large) {
-            display: none;
 
             .header--condensed {
                 display: inline-block;

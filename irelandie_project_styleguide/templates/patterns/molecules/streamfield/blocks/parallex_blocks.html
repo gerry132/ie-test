@@ -3,11 +3,11 @@
 <div class="parallax-section" id="jarallax4" data-speed="0.2">
     <div style="{% if value.background_color %} background-color: {{value.background_color}}; {% endif %}" class="jarallax-color"></div>
             {% if value.logo_cards %}
-            <div class="content" style="color: {{value.text_color}};">
+            <div class="content" style="color: {{value.text_color}}; text-align: {{value.text_alignment}};">
                 {% include_block value.logo_cards %}
             </div>
             {% elif value.link_cards %}
-            <div class="content" style="color: {{value.text_color}};">
+            <div class="content" style="color: {{value.text_color}}; text-align: {{value.text_alignment}};">
                 {% if value.link_cards.link_cards|length > 2 %}
                         <div class="article-cards featured-blocks featured-blocks--three">
                             {% for link_card in value.link_cards.link_cards %}
@@ -23,11 +23,11 @@
                         {% endif %}
             </div>
             {% elif value.timeline_photo_gallery %}
-                <div class="content" style="color: {{value.text_color}};">
+                <div class="content" style="color: {{value.text_color}}; text-align: {{value.text_alignment}};">
                     {% include_block value.timeline_photo_gallery %}
                 </div>
             {% else %}
-                <div style="padding: 80px 0px;">
+                <div style="padding: 80px 0px; text-align: {{value.text_alignment}};">
                     {% include_block value.story_photo_gallery %}
                 </div>
             {% endif %}
