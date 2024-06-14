@@ -138,3 +138,18 @@
     vertical-align: middle;
     margin-left: 10px;
 }
+
+
+/* High contrast mode for modern browsers */
+@media (forced-colors: active) {
+    .button-menu-toggle__line {
+        background: ButtonText;
+    }
+}
+
+/* High contrast mode for Internet Explorer and older Edge versions */
+@media screen and (-ms-high-contrast: active) {
+    .button-menu-toggle__line {
+        background: ButtonText;
+    }
+}

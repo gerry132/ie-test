@@ -68,13 +68,22 @@
     cursor: pointer;
     z-index: 5;
     position: relative;
+
+    @include media-query(max-large) {
+        width: 66px;
+        height: 66px;
+    }
 }
 
 .parallax__button_text {
     display: flex;
-    flex-wrap: wrap;
+
     align-items: center;
     column-gap: 80px;
+
+    @include media-query(max-large) {
+       flex-wrap: wrap;
+    }
 }
 
 .parallax__video-toggle {

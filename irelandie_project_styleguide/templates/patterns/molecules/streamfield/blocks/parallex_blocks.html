@@ -26,6 +26,10 @@
                 <div class="content" style="color: {{value.text_color}}; text-align: {{value.text_alignment}};">
                     {% include_block value.timeline_photo_gallery %}
                 </div>
+            {% elif value.youtube_or_vimeo_video %}
+                <div class="content" style="color: {{value.text_color}}; text-align: {{value.text_alignment}};">
+                    {% include_block value.youtube_or_vimeo_video %}
+                </div>
             {% else %}
                 <div style="padding: 80px 0px; text-align: {{value.text_alignment}};">
                     {% include_block value.story_photo_gallery %}
