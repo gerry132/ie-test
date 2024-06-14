@@ -138,3 +138,31 @@
     vertical-align: middle;
     margin-left: 10px;
 }
+/* Preferred color scheme: light mode */
+@media (prefers-color-scheme: light) {
+    .button-menu-toggle__line {
+        background: white;
+    }
+}
+
+/* Preferred color scheme: dark mode */
+@media (prefers-color-scheme: dark) {
+    .button-menu-toggle__line {
+        background: black;
+    }
+}
+
+/* High contrast mode for modern browsers */
+@media (forced-colors: active) {
+    .button-menu-toggle__line {
+        forced-color-adjust: auto;
+        background: CanvasText;
+    }
+}
+
+/* High contrast mode for Internet Explorer and older Edge versions */
+@media screen and (-ms-high-contrast: active) {
+    .button-menu-toggle__line {
+        background: WindowText;
+    }
+}

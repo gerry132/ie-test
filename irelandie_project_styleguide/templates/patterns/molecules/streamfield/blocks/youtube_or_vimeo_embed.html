@@ -1,0 +1,116 @@
+{% load wagtailcore_tags i18n %}
+{% load util_tags navigation_tags wagtailimages_tags %}
+<div class="wrapper wrapper--large wrapper--padding">
+    {% if value.video %}
+    {% if value.youtube_or_vimeo_size_alignment == 'large' %}
+    {% if value.title or value.summary %}
+    <div class="intro" style="max-width:1024px;">
+        <h2 class="intro__title">{{ value.title }}</h2>
+        <div class="intro__description">{{ value.summary }}</div>
+    </div>
+    {% endif %}
+    <div class="responsive-object">
+        <video aria-label="{{ value.video_alt }}" class="video-block__video" controls
+               data-video loop title="{{ value.title }}">
+            <source src="{{ value.video.url }}" type="video/mp4">
+            {% trans 'Your browser does not support the video tag.' %}
+        </video>
+    </div>
+    {% elif value.youtube_or_vimeo_size_alignment == 'small' %}
+    <div style="width: 50%; margin: 0px auto;">
+        {% if value.title or value.summary %}
+        <div class="intro" style="max-width:1024px;">
+            <h2 class="intro__title">{{ value.title }}</h2>
+            <div class="intro__description">{{ value.summary }}</div>
+        </div>
+        {% endif %}
+        <div class="responsive-object">
+            <video aria-label="{{ value.video_alt }}" class="video-block__video" controls
+                   data-video loop title="{{ value.title }}">
+                <source src="{{ value.video.url }}" type="video/mp4">
+                {% trans 'Your browser does not support the video tag.' %}
+            </video>
+        </div>
+    </div>
+    {% else %}
+    <div style="margin-left: auto; margin-right: auto; max-width: 780px;">
+        {% if value.title or value.summary %}
+        <div class="intro" style="max-width:1024px;">
+            <h2 class="intro__title">{{ value.title }}</h2>
+            <div class="intro__description">{{ value.summary }}</div>
+        </div>
+        {% endif %}
+        <div class="responsive-object">
+            <video aria-label="{{ value.video_alt }}" class="video-block__video" controls
+                   data-video loop title="{{ value.title }}">
+                <source src="{{ value.video.url }}" type="video/mp4">
+                {% trans 'Your browser does not support the video tag.' %}
+            </video>
+        </div>
+    </div>
+    {% endif %}
+    {% else %}
+    {% if value.youtube_or_vimeo_size_alignment == 'large' %}
+    {% if value.title or value.summary %}
+    <div class="intro" style="max-width:1024px;">
+        <h2 class="intro__title">{{ value.title }}</h2>
+        <div class="intro__description">{{ value.summary }}</div>
+    </div>
+    {% endif %}
+    <div class="responsive-object" style="padding-bottom: 56.25%; margin: 40px auto;">
+        <iframe
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            frameborder="0"
+            height="420"
+            src="{{ value.embedding_url }}"
+            title="{% if value.title %}{{ value.title }}{% else %}video_embed{% endif %}"
+            width="100%"
+        >
+        </iframe>
+    </div>
+    {% elif value.youtube_or_vimeo_size_alignment == 'small' %}
+    <div style="width: 50%; margin: 0px auto;">
+        {% if value.title or value.summary %}
+        <div class="intro" style="max-width:1024px;">
+            <h2 class="intro__title">{{ value.title }}</h2>
+            <div class="intro__description">{{ value.summary }}</div>
+        </div>
+        {% endif %}
+        <div class="responsive-object" style="padding-bottom: 56.25%; margin: 40px auto;">
+            <iframe
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                frameborder="0"
+                height="420"
+                src="{{ value.embedding_url }}"
+                title="{% if value.title %}{{ value.title }}{% else %}video_embed{% endif %}"
+                width="100%"
+            >
+            </iframe>
+        </div>
+    </div>
+    {% else %}
+    <div style="margin-left: auto; margin-right: auto; max-width: 780px;">
+        {% if value.title or value.summary %}
+        <div class="intro" style="max-width:1024px;">
+            <h2 class="intro__title">{{ value.title }}</h2>
+            <div class="intro__description">{{ value.summary }}</div>
+        </div>
+        {% endif %}
+        <div class="responsive-object" style="padding-bottom: 56.25%; margin: 40px auto;">
+            <iframe
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                frameborder="0"
+                height="420"
+                src="{{ value.embedding_url }}"
+                title="{% if value.title %}{{ value.title }}{% else %}video_embed{% endif %}"
+                width="100%"
+            >
+            </iframe>
+        </div>
+    </div>
+    {% endif %}
+    {% endif %}
+</div>

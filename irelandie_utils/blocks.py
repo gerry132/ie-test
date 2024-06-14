@@ -1604,6 +1604,7 @@ class StoryVideoBlock(blocks.StructBlock):
 
     class Meta:
         value_class = YoutubeVimeoLinkValue
+        template = "patterns/molecules/streamfield/blocks/youtube_or_vimeo_embed.html"
 
 
 class VideoBlock(blocks.StructBlock):
@@ -2063,4 +2064,18 @@ class ParallaxLinkCardsBlock(blocks.StructBlock):
 
     class Meta:
         label = 'Parallax Link cards'
+        template = "patterns/molecules/streamfield/blocks/parallex_blocks.html"
+
+
+class ParallaxYoutubeVimeoBlock(blocks.StructBlock):
+    background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=TextAlignment.choices,
+        default=TextAlignment.CENTER,
+    )
+    youtube_or_vimeo_video = StoryVideoBlock()
+
+    class Meta:
+        label = 'Parallax Youtube/Vimeo Embed'
         template = "patterns/molecules/streamfield/blocks/parallex_blocks.html"
