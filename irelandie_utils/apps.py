@@ -12,4 +12,5 @@ class UtilsConfig(AppConfig):
         from .agent.opensearch_thread import OpensearchAgent
         open_search = OpensearchAgent()
         agent = Agent()
+        print(open_search)
         print(agent)
