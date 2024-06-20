@@ -45,7 +45,7 @@ locals {
   # ECS
   ecr_repository_name           = "${local.environment_name}-${local.project_name}"
   autoscaling_max_capacity      = 12
-  autoscaling_min_capacity      = 2
+  autoscaling_min_capacity      = 1
   autoscaling_target_value      = 60
   service_contrainer_port       = 8000
   task_cpu                      = 2048  # min 1024
@@ -1022,7 +1022,7 @@ resource "aws_opensearch_domain" "opensearch" {
 
   cluster_config {
       instance_count = 3
-      instance_type = "t3.small.search"
+      instance_type = "t3.medium.search"
       zone_awareness_enabled = true
       zone_awareness_config {
         availability_zone_count = 3
@@ -1611,6 +1611,15 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
       managed_rule_group_statement {
         name        = "AWSManagedRulesAmazonIpReputationList"
         vendor_name = "AWS"
+                scope_down_statement {
+            not_statement {
+              statement {
+                ip_set_reference_statement { 
+                  arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
+                }
+               }
+            }
+        }
       }
     }
     visibility_config {
@@ -1631,7 +1640,15 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
       managed_rule_group_statement {
         name        = "AWSManagedRulesAnonymousIpList"
         vendor_name = "AWS"
-
+        scope_down_statement {
+            not_statement {
+              statement {
+                ip_set_reference_statement { 
+                  arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
+                }
+               }
+            }
+        }
         rule_action_override {
           action_to_use {
             allow {}
@@ -1659,6 +1676,15 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
       managed_rule_group_statement {
         name        = "AWSManagedRulesKnownBadInputsRuleSet"
         vendor_name = "AWS"
+                scope_down_statement {
+            not_statement {
+              statement {
+                ip_set_reference_statement { 
+                  arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
+                }
+               }
+            }
+        }
       }
     }
     visibility_config {
@@ -1679,6 +1705,15 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
       managed_rule_group_statement {
         name        = "AWSManagedRulesUnixRuleSet"
         vendor_name = "AWS"
+        scope_down_statement {
+            not_statement {
+              statement {
+                ip_set_reference_statement { 
+                  arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
+                }
+               }
+            }
+        }
       }
     }
     visibility_config {
@@ -1699,6 +1734,15 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
       managed_rule_group_statement {
         name        = "AWSManagedRulesWindowsRuleSet"
         vendor_name = "AWS"
+        scope_down_statement {
+            not_statement {
+              statement {
+                ip_set_reference_statement { 
+                  arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
+                }
+               }
+            }
+        }
         rule_action_override {
           action_to_use {
             allow {}
@@ -1714,7 +1758,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
       sampled_requests_enabled   = true
     }
   }
-    rule {
+  rule {
     name     = "AWS-AWSManagedRulesSQLiRuleSet"
     priority = 7
     override_action {
@@ -1725,6 +1769,15 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
       managed_rule_group_statement {
         name        = "AWSManagedRulesSQLiRuleSet"
         vendor_name = "AWS"
+        scope_down_statement {
+            not_statement {
+              statement {
+                ip_set_reference_statement { 
+                  arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
+                }
+               }
+            }
+        }
         rule_action_override {
           action_to_use {
             allow {}
@@ -2075,7 +2128,6 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
   rule {
     name     = "AWSRateBasedRuleDomesticDOS"
     priority = 1
-
     action {
       captcha {}
     }
@@ -2084,7 +2136,18 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
       rate_based_statement {
         limit              = 300
         aggregate_key_type = "IP"
+        scope_down_statement {
+            not_statement {
+              statement {
+                ip_set_reference_statement { 
+                  arn = aws_wafv2_ip_set.ireland_ie_ips.arn
+                }
+               }
+            }
+        }
       }
+    
+      
     }
     visibility_config {
       cloudwatch_metrics_enabled = true
@@ -2095,6 +2158,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
   rule {
     name     = "AWS-AWSManagedRulesBotControlRuleSet"
     priority = 0
+    
     override_action {
       none {
       }
@@ -2103,6 +2167,16 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
       managed_rule_group_statement {
         name        = "AWSManagedRulesBotControlRuleSet"
         vendor_name = "AWS"
+
+        scope_down_statement {
+            not_statement {
+              statement {
+                ip_set_reference_statement { 
+                  arn = aws_wafv2_ip_set.ireland_ie_ips.arn
+                }
+               }
+            }
+        }
       }
     }
 
