@@ -8,4 +8,3 @@ class Agent(RepeatedTimer):
 
     def unpub_pub_pages(self, **kwargs):
         management.call_command('publish_scheduled_pages')
-        management.call_command('wagtail_update_index')
