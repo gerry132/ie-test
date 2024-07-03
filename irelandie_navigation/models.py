@@ -263,7 +263,6 @@ class CustomFooter(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
     title = models.CharField(max_length=255, blank=True)
     name = models.CharField(
         max_length=255,
-        unique=True,
         help_text="Internal name for this navigation, it's not displayed to a site user.",
         verbose_name=_("Name"),
     )
@@ -387,7 +386,6 @@ class CustomHeader(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
     title = models.CharField(max_length=255, blank=True)
     name = models.CharField(
         max_length=255,
-        unique=True,
         help_text="Internal name for this navigation, it's not displayed to a site user.",
         verbose_name=_("Name"),
     )
