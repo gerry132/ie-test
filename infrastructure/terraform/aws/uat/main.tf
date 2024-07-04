@@ -1,7 +1,7 @@
 terraform {
   required_version = ">=1.1"
   required_providers {
-    aws         = "4.65.0"
+    aws         = "5.40.0"
     random      = ">=3.1.0"
     template    = ">=2.2.0"
   }
@@ -1933,7 +1933,8 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
 
     statement {
       rate_based_statement {
-        limit              = 300
+        evaluation_window_sec = 60
+        limit              = 100
         aggregate_key_type = "IP"
       }
     }
