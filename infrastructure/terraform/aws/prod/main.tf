@@ -1,7 +1,7 @@
 terraform {
   required_version = ">=1.1"
   required_providers {
-    aws         = ">=4.0.0"
+    aws         = "5.40.0"
     random      = ">=3.1.0"
     template    = ">=2.2.0"
   }
@@ -45,7 +45,7 @@ locals {
   # ECS
   ecr_repository_name           = "${local.environment_name}-${local.project_name}"
   autoscaling_max_capacity      = 12
-  autoscaling_min_capacity      = 1
+  autoscaling_min_capacity      = 2
   autoscaling_target_value      = 60
   service_contrainer_port       = 8000
   task_cpu                      = 2048  # min 1024
@@ -1560,8 +1560,18 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
 
     statement {
       rate_based_statement {
-        limit              = 300
+        evaluation_window_sec = 60
+        limit              = 100
         aggregate_key_type = "IP"
+        scope_down_statement {
+            not_statement {
+              statement {
+                ip_set_reference_statement { 
+                  arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
+                }
+               }
+            }
+        }
       }
     }
     visibility_config {
@@ -2134,7 +2144,8 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
 
     statement {
       rate_based_statement {
-        limit              = 300
+        evaluation_window_sec = 60
+        limit              = 100
         aggregate_key_type = "IP"
         scope_down_statement {
             not_statement {
