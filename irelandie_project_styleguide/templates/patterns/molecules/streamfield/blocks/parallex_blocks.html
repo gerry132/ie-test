@@ -1,5 +1,17 @@
 {% load wagtailcore_tags wagtailimages_tags %}
+<style>
+    .content .rich-text h2 {
+       color: var(--text-color-link-cards);
+    }
+    .card__content {
+        background-color: var(--background-color-link-cards);
+    }
+    .card__title, .card__summary {
+        color: var(--text-color-link-cards);
+    }
 
+
+</style>
 <div class="parallax-section" id="jarallax4" data-speed="0.2">
     <div style="{% if value.background_color %} background-color: {{value.background_color}}; {% endif %}" class="jarallax-color"></div>
             {% if value.logo_cards %}
@@ -7,7 +19,8 @@
                 {% include_block value.logo_cards %}
             </div>
             {% elif value.link_cards %}
-            <div class="content" style="color: {{value.text_color}}; text-align: {{value.text_alignment}};">
+            <div class="content" style="color: {{value.text_color}}; text-align: {{value.text_alignment}}; --text-color-link-cards: {{value.text_color}}; --background-color-link-cards: {{value.background_color}};">
+                {% include_block value.richtext %}
                 {% if value.link_cards.link_cards|length > 2 %}
                         <div class="article-cards featured-blocks featured-blocks--three">
                             {% for link_card in value.link_cards.link_cards %}

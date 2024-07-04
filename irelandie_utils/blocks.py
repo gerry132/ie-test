@@ -2055,11 +2055,13 @@ class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
 
 class ParallaxLinkCardsBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
     text_alignment = blocks.ChoiceBlock(
         required=False,
         choices=TextAlignment.choices,
         default=TextAlignment.CENTER,
     )
+    richtext = AdvancedRichTextBlock(required=False)
     link_cards = LinkCardsBlock()
 
     class Meta:

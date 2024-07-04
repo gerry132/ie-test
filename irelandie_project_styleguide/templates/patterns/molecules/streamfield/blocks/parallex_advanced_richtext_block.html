@@ -1,17 +1,17 @@
 {% load wagtailcore_tags i18n %}
 <style>
-    .rich-text.content a{
+    .rich-text.rich-text__content a{
         color: var(--link-color, inherit);
     }
-    .rich-text.content h2,
-    .rich-text.content h3,
-    .rich-text.content h4 {
+    .rich-text.rich-text__content h2,
+    .rich-text.rich-text__content h3,
+    .rich-text.rich-text__content h4 {
        color: var(--link-color);
     }
 </style>
 <div class="parallax-section" id="jarallax2" data-speed="0.2" >
     <div style="{% if value.background_color %} background-color: {{value.background_color}}; {% endif %}" class="jarallax-color"></div>
-<div class="rich-text content" style="text-align: {{value.text_alignment}}; --link-color: {{ value.text_color }}" {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
+<div class="rich-text rich-text__content" style="text-align: {{value.text_alignment}}; --link-color: {{ value.text_color }}" {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
     {% if value.paragraph_alignment == 'narrow' %}
         <div class="rich-text__narrow">
             {% if value.heading %}
