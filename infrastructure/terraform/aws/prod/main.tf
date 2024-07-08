@@ -81,6 +81,10 @@ locals {
       description = "Gerry Mcbride - OGCIO"
       cidr_blocks = ["52.49.120.79/32", "37.228.234.5/32", "93.107.211.192/32"]
     },
+    sem_rush = {
+      description = "SEM Rush bot"
+      cidr_blocks = ["85.208.98.128/25"]
+    },
     deekshana_dev = {
       description = "Deekshana - Sidero"
       cidr_blocks  = ["80.233.53.212/32", "80.233.57.212/32"]
