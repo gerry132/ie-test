@@ -22,7 +22,7 @@ class CustomLoginChecker(MiddlewareMixin):
         sitemap_whitelist = ['85.208.98.128', '37.228.234.5']
         origin_ip = request.META.get('HTTP_X_FORWARDED_FOR')
 
-        if request.path == '/sitemap.xml':
+        if request.path == '/sitemap.xml' or origin_ip in sitemap_whitelist:
             print(12345)
             print(request.META)
             print(request.META)
