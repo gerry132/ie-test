@@ -19,9 +19,17 @@ class CustomLoginChecker(MiddlewareMixin):
         pass
 
     def process_response(self, request, response):
-        sitemap_whitelist = ['85.208.98.128', '37.228.234.5']
+        sitemap_whitelist = ['85.208.98.128', '37.228.234.5', '127.0.0.1']
         origin_ip = request.META.get('HTTP_X_FORWARDED_FOR')
-
+        print(origin_ip in sitemap_whitelist)
+        print(origin_ip in sitemap_whitelist)
+        print(origin_ip in sitemap_whitelist)
+        print(origin_ip in sitemap_whitelist)
+        print(origin_ip in sitemap_whitelist)
+        print(origin_ip in sitemap_whitelist)
+        print(origin_ip in sitemap_whitelist)
+        print(origin_ip in sitemap_whitelist)
+        print(origin_ip in sitemap_whitelist)
         if request.path == '/sitemap.xml' or origin_ip in sitemap_whitelist:
             print(12345)
             print(request.META)
