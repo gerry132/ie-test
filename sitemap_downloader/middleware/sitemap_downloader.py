@@ -30,12 +30,12 @@ class CustomLoginChecker(MiddlewareMixin):
         print(origin_ip in sitemap_whitelist)
         print(origin_ip in sitemap_whitelist)
         print(origin_ip in sitemap_whitelist)
-        if request.path == '/sitemap.xml' or origin_ip in sitemap_whitelist:
+        if request.path == '/sitemap.xml':
             print(12345)
             print(request.META)
             print(request.META)
             print(request.META.get('HTTP_X_FORWARDED_FOR'))
-            if request.user.is_authenticated:
+            if request.user.is_authenticated or origin_ip in sitemap_whitelist:
                 return response
             else:
                 return page_not_found(request, None)
