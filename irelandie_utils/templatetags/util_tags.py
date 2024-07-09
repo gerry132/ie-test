@@ -19,6 +19,12 @@ import uuid
 register = template.Library()
 
 
+@register.simple_tag(takes_context=True)
+def is_secure(context):
+    request = context['request']
+    return request.is_secure()
+
+
 # Social text
 @register.filter(name="social_text")
 def social_text(page, site):
