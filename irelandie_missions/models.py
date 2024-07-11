@@ -48,6 +48,7 @@ class CountryGroupPageIndex(BasePage):
 
 class DestinationPage(HeroPage):
     template = "patterns/pages/missions/country_page.html"
+    root_page = models.BooleanField(default=True)
 
     five_panel_block = StreamField(
         [
@@ -169,6 +170,7 @@ class DestinationPage(HeroPage):
 
     settings_panels = (
         [
+            FieldPanel("root_page", permission="access_admin"),
             FieldPanel("beta_element", permission="access_admin"),
         ] +
         HeroPage.settings_panels

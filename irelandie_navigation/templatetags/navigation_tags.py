@@ -12,13 +12,12 @@ from irelandie_navigation.models import (
     CustomHeader,
 )
 
-from irelandie_missions.models import MissionPage
+from irelandie_missions.models import MissionPage, DestinationPage
 from irelandie_pages.models import FreeFormPage
 from irelandie_travel.models import TravelLandingPage
 from irelandie_utils.models import SocialMediaSettings
 from irelandie_utils.utils import get_root_info
 import json
-
 
 register = template.Library()
 
@@ -95,16 +94,17 @@ def has_root_override(context, page, header=True):
     page_map = {
         'mission page': MissionPage,
         'Free Form Page': FreeFormPage,
-        'travel landing page': TravelLandingPage
+        'travel landing page': TravelLandingPage,
+        'destination page': DestinationPage
     }
     pages = page.get_ancestors()
-    if (page.content_type.name == 'mission page' or page.content_type.name == 'Free Form Page' or
-            page.content_type.name == 'travel landing page'):
+    if (page.content_type.name == 'mission page' or page.content_type.name == 'destination page'
+        or page.content_type.name == 'travel landing page' or page.content_type.name == 'Free Form Page'):
         if page.root_page:
             return False
     for p in pages.reverse():
-        if (p.content_type.name == 'mission page' or p.content_type.name == 'Free Form Page' or
-                p.content_type.name == 'travel landing page'):
+        if (p.content_type.name == 'mission page' or p.content_type.name == 'destination page'
+            or p.content_type.name == 'travel landing page' or p.content_type.name == 'Free Form Page'):
             m = page_map[p.content_type.name].objects.get(id=p.id)
             if m.root_page:
                 if header:
