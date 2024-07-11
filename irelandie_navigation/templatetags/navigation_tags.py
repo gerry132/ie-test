@@ -98,13 +98,11 @@ def has_root_override(context, page, header=True):
         'destination page': DestinationPage
     }
     pages = page.get_ancestors()
-    if (page.content_type.name == 'mission page' or page.content_type.name == 'destination page'
-        or page.content_type.name == 'travel landing page' or page.content_type.name == 'Free Form Page'):
+    if page.content_type.name == 'mission page' or page.content_type.name == 'destination page' or page.content_type.name == 'travel landing page' or page.content_type.name == 'Free Form Page':
         if page.root_page:
             return False
     for p in pages.reverse():
-        if (p.content_type.name == 'mission page' or p.content_type.name == 'destination page'
-            or p.content_type.name == 'travel landing page' or p.content_type.name == 'Free Form Page'):
+        if p.content_type.name == 'mission page' or p.content_type.name == 'destination page' or p.content_type.name == 'travel landing page' or p.content_type.name == 'Free Form Page':
             m = page_map[p.content_type.name].objects.get(id=p.id)
             if m.root_page:
                 if header:
