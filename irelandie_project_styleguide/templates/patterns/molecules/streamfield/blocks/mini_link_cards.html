@@ -1,7 +1,7 @@
 {% load wagtailcore_tags %}
 
     <div class="wrapper wrapper--large">
-        <div class="mini_link_cards {% if value.mini_link_cards|length < 5 %}fewer-items{% endif %}">
+        <div class="mini_link_cards">
             {% for link_card in value.mini_link_cards %}
                 {% include_block link_card %}
             {% endfor %}
