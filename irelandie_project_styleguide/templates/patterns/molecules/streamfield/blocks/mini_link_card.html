@@ -1,0 +1,13 @@
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+
+<a href="{{ link_url }}" aria-label="{% trans 'card' %}" class="card">
+    <div class="mini_link_image-container">
+            {% image value.image original alt=value.image_alt %}
+    </div>
+
+    <div class="mini_card__content">
+        <div class="mini_card__title">
+            {{ value.title }}
+        </div>
+    </div>
+</a>

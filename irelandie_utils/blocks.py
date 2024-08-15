@@ -783,6 +783,67 @@ class LinkCardsBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/link_cards.html"
 
 
+class MiniLinkCardBlock(blocks.StructBlock):
+    image = ImageChooserBlock()
+    image_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_IMAGE),
+    )
+    title = blocks.CharBlock()
+    page = blocks.PageChooserBlock(required=False)
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
+
+    class Meta:
+        icon = "image"
+        label = "Mini Link Card"
+        template = "patterns/molecules/streamfield/blocks/mini_link_card.html"
+
+    def clean(self, value):
+        errors = {}
+        values = [value["page"], value["url"]]
+        # Set only a Page OR a URL
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a page or set a URL."
+
+            errors["page"] = ErrorList([message])
+            errors["url"] = ErrorList([message])
+
+        # A URL must have title
+        if value["url"] and not value["title"]:
+            errors["title"] = ErrorList(["Please set a title for the URL"])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        try:
+            # A block may not have a page or url field
+            if value["url"]:
+                context["link_url"] = value["url"]
+            elif value["page"]:
+                context["link_url"] = value["page"].url
+
+        except KeyError:
+            context["link_url"] = None
+        return context
+
+
+class MiniLinkCardsBlock(blocks.StructBlock):
+    mini_link_cards = blocks.StreamBlock([("mini_link_cards", MiniLinkCardBlock())])
+
+    class Meta:
+        icon = "list-ul"
+        label = "Mini Link Cards"
+        template = "patterns/molecules/streamfield/blocks/mini_link_cards.html"
+
+
 class FeaturedArticlesBlock(blocks.StructBlock):
     title = blocks.CharBlock()
     summary = blocks.TextBlock()
