@@ -539,7 +539,10 @@ class YoutubeVideoBlock(blocks.StructBlock):
         choices=YoutubeSize.choices,
         default=YoutubeSize.LARGE,
     )
-    url = blocks.CharBlock()
+    url = blocks.CharBlock(help_text=_("Please remember to use 'no cookie' versions of YouTube links to ensure users "
+                                       "who reject cookies can view the video. Guidance on how to do this is "
+                                       "available on:"
+                                       "https://dfai/SupportServices/Communications/Websites/Pages/Tips.aspx"))
     slido_embed = blocks.TextBlock(
         required=False,
         help_text=_(
@@ -617,7 +620,7 @@ class ArticleCardBlock(blocks.StructBlock):
         help_text=_(ALT_IMAGE),
     )
     title = blocks.CharBlock()
-    summary = blocks.TextBlock()
+    summary = blocks.TextBlock(required=False)
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
         label="URL",
@@ -1639,7 +1642,13 @@ class StoryVideoBlock(blocks.StructBlock):
         choices=YoutubeSize.choices,
         default=YoutubeSize.LARGE,
     )
-    youtube_or_vimeo_embed = blocks.CharBlock(required=False)
+    youtube_or_vimeo_embed = blocks.CharBlock(required=False, help_text=_("Please remember to use 'no cookie' "
+                                                                          "versions of YouTube links to ensure users"
+                                                                          "who reject cookies can view the video. "
+                                                                          "Guidance on how to do this is"
+                                                                          "available on:"
+                                                                          "https://dfai/SupportServices"
+                                                                          "/Communications/Websites/Pages/Tips.aspx"))
     video = CustomVideoChooserBlock(required=False)
     video_alt = blocks.CharBlock(
         required=True,
