@@ -56,7 +56,7 @@
                 {% if block.block_type == 'mini_link_cards_index' %}
                 <div class="mini_link_cards_container">
                     {% if block.value.title %}
-                        <h2 class="mini_link_cards_title">{{ block.value.title }}</h2>
+                        <h2 class="mini_link_cards_title" id="{{block.value.section_id}}">{{ block.value.title }}</h2>
                     {% endif %}
                 <div class="mini_link_filter_cards">
                            {% include_block block.value.mini_link_cards %}

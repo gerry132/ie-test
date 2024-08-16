@@ -255,6 +255,7 @@ class CountryIndexPage(BasePage):
                     "mini_link_cards_index",
                     wagtail_blocks.StructBlock(
                         [
+                            ("section_id", wagtail_blocks.CharBlock(required=False)),
                             ("title", wagtail_blocks.CharBlock(required=False)),
                             ("mini_link_cards", blocks.MiniLinkCardsBlock())
                         ],
