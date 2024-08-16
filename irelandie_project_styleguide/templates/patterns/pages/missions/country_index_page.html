@@ -42,29 +42,31 @@
                 </div>
             {% endif %}
         {% endfor %}
+        {% if page.index_body %}
         <div class="wrapper wrapper--large wrapper--padding">
-        <label for="myInput" class="a-z-listing__filter__label__text">{% trans 'Search by country name:' %}</label>
-            <div><input id="myInput" class="form--input" type="text"></div>
-        <div class="a-z-listing__filters__clear-all">
-            <a id="clearFilter" class="input__label__text" aria-label="{% trans 'Clear Filter' %}">
-                <div class="close_vector"></div>
-                Clear filter</a>
-        </div>
-        <div class="section section--padding">
-        {% for block in page.index_body %}
-            {% if block.block_type == 'mini_link_cards_index' %}
-            <div class="mini_link_cards_container">
-                {% if block.value.title %}
-                    <h2 class="mini_link_cards_title">{{ block.value.title }}</h2>
-                {% endif %}
-            <div class="mini_link_filter_cards">
-                       {% include_block block.value.mini_link_cards %}
+            <label for="myInput" class="a-z-listing__filter__label__text">{% trans 'Search by country name:' %}</label>
+                <div><input id="myInput" class="form--input" type="text"></div>
+            <div class="a-z-listing__filters__clear-all">
+                <a id="clearFilter" class="input__label__text" aria-label="{% trans 'Clear Filter' %}">
+                    <div class="close_vector"></div>
+                    Clear filter</a>
+            </div>
+            <div class="section section--padding">
+            {% for block in page.index_body %}
+                {% if block.block_type == 'mini_link_cards_index' %}
+                <div class="mini_link_cards_container">
+                    {% if block.value.title %}
+                        <h2 class="mini_link_cards_title">{{ block.value.title }}</h2>
+                    {% endif %}
+                <div class="mini_link_filter_cards">
+                           {% include_block block.value.mini_link_cards %}
+                    </div>
                 </div>
+                {% endif %}
+            {% endfor %}
             </div>
-            {% endif %}
-        {% endfor %}
         </div>
-            </div>
+        {% endif %}
         {% for block in page.bottom_body %}
             {% if block.block_type == 'rich_text_advanced' %}
             <div style="padding-bottom: unset;" class="section section--padding">
