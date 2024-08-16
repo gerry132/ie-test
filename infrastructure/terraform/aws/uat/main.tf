@@ -82,7 +82,7 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.38.42/32", "80.233.34.249/32", "80.233.44.249/32"]
+      cidr_blocks  = ["62.77.170.200/32"]
     },
 
     sina_dev = {

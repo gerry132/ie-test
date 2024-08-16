@@ -1842,7 +1842,12 @@ class HomepageFeatureImageVideoBlock(blocks.StructBlock):
         required=False,
         help_text=_(ALT_IMAGE),
     )
-    youtube_or_vimeo_embed = blocks.CharBlock(required=False)
+    youtube_or_vimeo_embed = blocks.CharBlock(required=False, help_text=_("Please remember to use 'no cookie' "
+                                                                          "versions of YouTube links to ensure users"
+                                                                          "who reject cookies can view the video. "
+                                                                          "Guidance on how to do this is available on:"
+                                                                          "https://dfai/SupportServices"
+                                                                          "/Communications/Websites/Pages/Tips.aspx"))
 
     def clean(self, value):
         errors = {}
