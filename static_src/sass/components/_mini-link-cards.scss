@@ -39,13 +39,18 @@
 }
 
 .mini_link_cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
     padding-bottom: 20px;
 }
+.mini_link_cards .card {
+    flex: 25%;
+    max-width: 224px;
+}
+
 @media (max-width: 768px) {
     .mini_link_cards {
-        grid-template-columns: 1fr;
+        flex-direction: column;
     }
 }
