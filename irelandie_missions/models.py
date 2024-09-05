@@ -48,6 +48,7 @@ class CountryGroupPageIndex(BasePage):
 
 class DestinationPage(HeroPage):
     template = "patterns/pages/missions/country_page.html"
+    root_page = models.BooleanField(default=True)
 
     five_panel_block = StreamField(
         [
@@ -169,6 +170,7 @@ class DestinationPage(HeroPage):
 
     settings_panels = (
         [
+            FieldPanel("root_page", permission="access_admin"),
             FieldPanel("beta_element", permission="access_admin"),
         ] +
         HeroPage.settings_panels
@@ -222,6 +224,66 @@ class DestinationPage(HeroPage):
         ObjectList(HeroPage.promote_panels, heading='Promote'),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
+
+
+class CountryIndexPage(BasePage):
+    template = "patterns/pages/missions/country_index_page.html"
+    generic_hero = StreamField(
+        [
+            ("generic_hero", blocks.GenericHeroBlock()),
+        ],
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+    top_body = StreamField(
+        [
+            ("rich_text_advanced", blocks.AdvancedRichTextBlock()),
+            ("link_cards", blocks.LinkCardsBlock()),
+            ("mini_link_cards", blocks.MiniLinkCardsBlock()),
+            ("link_box", blocks.LinkBoxesBlock()),
+            ("wide_feature", blocks.WideFeatureBlock()),
+        ],
+        blank=True,
+        null=True,
+    )
+    index_body = StreamField(
+        wagtail_blocks.StreamBlock(
+            [
+                (
+                    "mini_link_cards_index",
+                    wagtail_blocks.StructBlock(
+                        [
+                            ("section_id", wagtail_blocks.CharBlock(required=False)),
+                            ("title", wagtail_blocks.CharBlock(required=False)),
+                            ("mini_link_cards", blocks.MiniLinkCardsBlock())
+                        ],
+                    ),
+                ),
+            ],
+        ),
+        blank=True,
+        null=True,
+    )
+    bottom_body = StreamField(
+        [
+            ("rich_text_advanced", blocks.AdvancedRichTextBlock()),
+            ("link_cards", blocks.LinkCardsBlock()),
+            ("mini_link_cards", blocks.MiniLinkCardsBlock()),
+            ("link_box", blocks.LinkBoxesBlock()),
+            ("wide_feature", blocks.WideFeatureBlock()),
+        ],
+        blank=True,
+        null=True,
+    )
+
+    content_panels = BasePage.content_panels + [
+        FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
+        FieldPanel("top_body"),
+        FieldPanel("index_body"),
+        FieldPanel("bottom_body"),
+    ]
 
 
 IMAGE_MODEL = get_image_model_string()

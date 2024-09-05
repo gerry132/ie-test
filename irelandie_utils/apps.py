@@ -9,6 +9,8 @@ class UtilsConfig(AppConfig):
 
     def ready(self):
         from .agent.pub_unpub_agent import Agent
-        import irelandie_utils.signals  # noqa: F401
+        from .agent.opensearch_thread import OpensearchAgent
+        open_search = OpensearchAgent()
         agent = Agent()
+        print(open_search)
         print(agent)

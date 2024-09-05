@@ -539,7 +539,10 @@ class YoutubeVideoBlock(blocks.StructBlock):
         choices=YoutubeSize.choices,
         default=YoutubeSize.LARGE,
     )
-    url = blocks.CharBlock()
+    url = blocks.CharBlock(help_text=_("Please remember to use 'no cookie' versions of YouTube links to ensure users "
+                                       "who reject cookies can view the video. Guidance on how to do this is "
+                                       "available on:"
+                                       "https://dfai/SupportServices/Communications/Websites/Pages/Tips.aspx"))
     slido_embed = blocks.TextBlock(
         required=False,
         help_text=_(
@@ -617,7 +620,7 @@ class ArticleCardBlock(blocks.StructBlock):
         help_text=_(ALT_IMAGE),
     )
     title = blocks.CharBlock()
-    summary = blocks.TextBlock()
+    summary = blocks.TextBlock(required=False)
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
         label="URL",
@@ -781,6 +784,67 @@ class LinkCardsBlock(blocks.StructBlock):
         icon = "list-ul"
         label = "Link Cards"
         template = "patterns/molecules/streamfield/blocks/link_cards.html"
+
+
+class MiniLinkCardBlock(blocks.StructBlock):
+    image = ImageChooserBlock()
+    image_alt = blocks.CharBlock(
+        required=True,
+        help_text=_(ALT_IMAGE),
+    )
+    title = blocks.CharBlock()
+    page = blocks.PageChooserBlock(required=False)
+    url = blocks.URLBlock(
+        label="URL",
+        required=False,
+        help_text="An external link.",
+    )
+
+    class Meta:
+        icon = "image"
+        label = "Mini Link Card"
+        template = "patterns/molecules/streamfield/blocks/mini_link_card.html"
+
+    def clean(self, value):
+        errors = {}
+        values = [value["page"], value["url"]]
+        # Set only a Page OR a URL
+        if sum(value is not None and value != "" for value in values) != 1:
+            message = "Please choose only a page or set a URL."
+
+            errors["page"] = ErrorList([message])
+            errors["url"] = ErrorList([message])
+
+        # A URL must have title
+        if value["url"] and not value["title"]:
+            errors["title"] = ErrorList(["Please set a title for the URL"])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        try:
+            # A block may not have a page or url field
+            if value["url"]:
+                context["link_url"] = value["url"]
+            elif value["page"]:
+                context["link_url"] = value["page"].url
+
+        except KeyError:
+            context["link_url"] = None
+        return context
+
+
+class MiniLinkCardsBlock(blocks.StructBlock):
+    mini_link_cards = blocks.StreamBlock([("mini_link_cards", MiniLinkCardBlock())])
+
+    class Meta:
+        icon = "list-ul"
+        label = "Mini Link Cards"
+        template = "patterns/molecules/streamfield/blocks/mini_link_cards.html"
 
 
 class FeaturedArticlesBlock(blocks.StructBlock):
@@ -1578,7 +1642,13 @@ class StoryVideoBlock(blocks.StructBlock):
         choices=YoutubeSize.choices,
         default=YoutubeSize.LARGE,
     )
-    youtube_or_vimeo_embed = blocks.CharBlock(required=False)
+    youtube_or_vimeo_embed = blocks.CharBlock(required=False, help_text=_("Please remember to use 'no cookie' "
+                                                                          "versions of YouTube links to ensure users"
+                                                                          "who reject cookies can view the video. "
+                                                                          "Guidance on how to do this is"
+                                                                          "available on:"
+                                                                          "https://dfai/SupportServices"
+                                                                          "/Communications/Websites/Pages/Tips.aspx"))
     video = CustomVideoChooserBlock(required=False)
     video_alt = blocks.CharBlock(
         required=True,
@@ -1604,6 +1674,7 @@ class StoryVideoBlock(blocks.StructBlock):
 
     class Meta:
         value_class = YoutubeVimeoLinkValue
+        template = "patterns/molecules/streamfield/blocks/youtube_or_vimeo_embed.html"
 
 
 class VideoBlock(blocks.StructBlock):
@@ -1771,7 +1842,12 @@ class HomepageFeatureImageVideoBlock(blocks.StructBlock):
         required=False,
         help_text=_(ALT_IMAGE),
     )
-    youtube_or_vimeo_embed = blocks.CharBlock(required=False)
+    youtube_or_vimeo_embed = blocks.CharBlock(required=False, help_text=_("Please remember to use 'no cookie' "
+                                                                          "versions of YouTube links to ensure users"
+                                                                          "who reject cookies can view the video. "
+                                                                          "Guidance on how to do this is available on:"
+                                                                          "https://dfai/SupportServices"
+                                                                          "/Communications/Websites/Pages/Tips.aspx"))
 
     def clean(self, value):
         errors = {}
@@ -2012,6 +2088,11 @@ class ParallaxImageVideoBlock(blocks.StructBlock):
 
 class ParallaxLogoCardsBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=TextAlignment.choices,
+        default=TextAlignment.CENTER,
+    )
     logo_cards = LogoCardsBlock()
 
     class Meta:
@@ -2021,6 +2102,11 @@ class ParallaxLogoCardsBlock(blocks.StructBlock):
 
 class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=TextAlignment.choices,
+        default=TextAlignment.CENTER,
+    )
     story_photo_gallery = StoryPhotoGalleriesBlock()
 
     class Meta:
@@ -2030,6 +2116,11 @@ class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
 
 class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=TextAlignment.choices,
+        default=TextAlignment.CENTER,
+    )
     timeline_photo_gallery = TimelinePhotoGalleriesBlock()
 
     class Meta:
@@ -2039,8 +2130,29 @@ class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
 
 class ParallaxLinkCardsBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
+    text_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=TextAlignment.choices,
+        default=TextAlignment.CENTER,
+    )
+    richtext = AdvancedRichTextBlock(required=False)
     link_cards = LinkCardsBlock()
 
     class Meta:
         label = 'Parallax Link cards'
+        template = "patterns/molecules/streamfield/blocks/parallex_blocks.html"
+
+
+class ParallaxYoutubeVimeoBlock(blocks.StructBlock):
+    background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=TextAlignment.choices,
+        default=TextAlignment.CENTER,
+    )
+    youtube_or_vimeo_video = StoryVideoBlock()
+
+    class Meta:
+        label = 'Parallax Youtube/Vimeo Embed'
         template = "patterns/molecules/streamfield/blocks/parallex_blocks.html"

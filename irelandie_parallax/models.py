@@ -2,7 +2,8 @@
 from django.db import models
 from irelandie_utils.models import HeroPage, SocialFields, ListingFields
 from irelandie_utils.blocks import GenericHeroBlock, ParallexAdvancedRichTextBlock, ParallaxImageVideoBlock, \
-    ParallaxLogoCardsBlock, ParallaxStoryPhotoGalleryBlock, ParallaxTimelinePhotoGalleryBlock, ParallaxLinkCardsBlock
+    ParallaxLogoCardsBlock, ParallaxStoryPhotoGalleryBlock, ParallaxTimelinePhotoGalleryBlock, ParallaxLinkCardsBlock, \
+    ParallaxYoutubeVimeoBlock
 from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
 
@@ -24,6 +25,7 @@ class Parallax(HeroPage):
         [
             ("ParallaxAdvancedRichTextBlock", ParallexAdvancedRichTextBlock()),
             ("ParallaxImageVideoBlock", ParallaxImageVideoBlock()),
+            ("ParallaxYoutubeVimeoBlock", ParallaxYoutubeVimeoBlock()),
             ("ParallaxLogocards", ParallaxLogoCardsBlock()),
             ("ParallaxStoryPhotoGalleryBlock", ParallaxStoryPhotoGalleryBlock()),
             ("ParallaxTimelinePhotoGalleryBlock", ParallaxTimelinePhotoGalleryBlock()),

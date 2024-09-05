@@ -13,7 +13,7 @@
     {% include "patterns/molecules/banner_hero_image/banner_hero.html" with page=block.value %}
 {% endfor %}
 {% endif %}
-{% has_root_override page header=True as override %}
+
 {% if not page.generic_hero and not page.banner_hero_image %}
         <div id="main-header" class="section section--padding_without_hero section--white">
                     <div class="wrapper wrapper--large wrapper--padding content--padding">

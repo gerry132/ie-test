@@ -17,12 +17,15 @@
 
 .jarallax-img, .jarallax-video-container video {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
     pointer-events: none;
-    z-index: -100;
 }
 .jarallax-color {
     position: absolute;
@@ -44,4 +47,56 @@
     padding: 80px 20px;
     margin: 0 auto;
     max-width: 1280px;
+}
+
+.parallax__video-toggle.active .pauseButton{
+    display: block;
+    }
+.parallax__video-toggle.active .playButton{
+    display: none;
+    }
+.parallax__video-toggle .pauseButton{
+    display: none;
+    }
+.parallax__video-toggle .playButton{
+    display: block;
+    }
+.playButton.icon,
+.pauseButton.icon {
+    width: 132px;
+    height: 132px;
+    cursor: pointer;
+    z-index: 5;
+    position: relative;
+
+    @include media-query(max-large) {
+        width: 66px;
+        height: 66px;
+    }
+}
+
+.parallax__button_text {
+    display: flex;
+
+    align-items: center;
+    column-gap: 80px;
+
+    @include media-query(max-large) {
+       flex-wrap: wrap;
+    }
+}
+
+.parallax__video-toggle {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    padding: 40px 20px 0px;
+}
+
+.jarallax-video-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
 }

@@ -25,6 +25,7 @@ import ProgressBar from './components/progress-bar';
 /* feature:use_frontend_component_video_modal */
 import VideoModal from './components/video-modal';
 import VideoAutoplay from './components/video-autoplay';
+import VideoToggleParallax from './components/parallax-video';
 /* endfeature */
 
 // IE11 polyfills
@@ -145,5 +146,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (const carousel of document.querySelectorAll(Timeline.selector())) {
         new Timeline(carousel);
+    }
+
+    for (const videotoggleparallax of document.querySelectorAll(
+        VideoToggleParallax.selector(),
+    )) {
+        new VideoToggleParallax(videotoggleparallax);
     }
 });

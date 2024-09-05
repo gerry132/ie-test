@@ -99,7 +99,11 @@
     {% has_root_override page header=True as override %}
     {% if override %}
         {% custom_header_settings page as custom_header_settings %}
-        {% include "patterns/organisms/header/header.html" with custom_header=override custom_header_settings=custom_header_settings page=page %}
+        {% if custom_header_settings.is_present %}
+            {% include "patterns/organisms/header/header.html" with custom_header=custom_header_settings page=page %}
+        {% else %}
+            {% include "patterns/organisms/header/header.html" with custom_header=override custom_header_settings=custom_header_settings page=page %}
+       {% endif %}
     {% else %}
         {% custom_header_settings page as custom_header_settings %}
         {% include "patterns/organisms/header/header.html" with custom_header=custom_header_settings page=page %}

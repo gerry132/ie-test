@@ -1,0 +1,130 @@
+{% extends "patterns/hero_page.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags navigation_tags %}
+{% load static %}
+{% load util_tags %}
+{% load i18n %}
+
+
+{% block content %}
+ <!-- Main -->
+
+{% if page.generic_hero %}
+    {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
+{% endif %}
+{% has_root_override page header=True as override %}
+{% if not page.generic_hero %}
+        <div id="main-header" class="section section--padding_without_hero section--white">
+                    <div class="wrapper wrapper--large wrapper--padding content--padding">
+                        <div class="intro--toc">
+                            <h1 class="heading--1 toc--heading">{{ page.title }}</h1>
+                            {% if page.description %}
+                                <p class="hero__introduction">{{ page.description }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+        </div>
+{% endif %}
+
+
+    {% block main %}
+        <!-- Body -->
+        {% for block in page.top_body %}
+            {% if block.block_type == 'rich_text_advanced' %}
+            <div style="padding-bottom: unset;" class="section section--padding">
+                <div class="wrapper wrapper--padding">
+                        {% include_block block %}
+                </div>
+            </div>
+            {% else %}
+                <div class="wrapper wrapper--large wrapper--padding">
+                    {% include_block block %}
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% if page.index_body %}
+        <div class="wrapper wrapper--large wrapper--padding">
+            <label for="myInput" class="a-z-listing__filter__label__text">{% trans 'Search by country name:' %}</label>
+                <div><input id="myInput" class="form--input" type="text"></div>
+            <div class="a-z-listing__filters__clear-all">
+                <a id="clearFilter" class="input__label__text" aria-label="{% trans 'Clear Filter' %}">
+                    <div class="close_vector"></div>
+                    Clear filter</a>
+            </div>
+            <div class="section section--padding">
+            {% for block in page.index_body %}
+                {% if block.block_type == 'mini_link_cards_index' %}
+                <div class="mini_link_cards_container">
+                    {% if block.value.title %}
+                        <h2 class="mini_link_cards_title" id="{{block.value.section_id}}">{{ block.value.title }}</h2>
+                    {% endif %}
+                <div class="mini_link_filter_cards">
+                           {% include_block block.value.mini_link_cards %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% for block in page.bottom_body %}
+            {% if block.block_type == 'rich_text_advanced' %}
+            <div style="padding-bottom: unset;" class="section section--padding">
+                <div class="wrapper wrapper--padding">
+                        {% include_block block %}
+                </div>
+            </div>
+            {% else %}
+                <div class="wrapper wrapper--large wrapper--padding">
+                    {% include_block block %}
+                </div>
+            {% endif %}
+        {% endfor %}
+<script>
+    document.getElementById('myInput').addEventListener('keyup', function() {
+        const searchValue = this.value.toLowerCase();
+        const containers = document.querySelectorAll('.mini_link_cards_container');
+
+        containers.forEach(container => {
+            const cards = container.querySelectorAll('.mini_link_filter_cards .card');
+
+            cards.forEach(card => {
+                const title = card.querySelector('.mini_card__title').textContent.toLowerCase();
+                if (title.includes(searchValue)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Show or hide the title based on whether any cards are visible
+            const anyVisibleCards = Array.from(cards).some(card => card.style.display === '');
+            const titleElement = container.querySelector('.mini_link_cards_title');
+            if (titleElement) {
+                titleElement.style.display = anyVisibleCards ? '' : 'none';
+            }
+        });
+    });
+
+    // Clear filter function
+    document.getElementById('clearFilter').addEventListener('click', function() {
+        document.getElementById('myInput').value = '';
+        const containers = document.querySelectorAll('.mini_link_cards_container');
+
+        containers.forEach(container => {
+            const cards = container.querySelectorAll('.mini_link_filter_cards .card');
+            cards.forEach(card => {
+                card.style.display = '';
+            });
+
+            // Show the title since all cards are visible
+            const titleElement = container.querySelector('.mini_link_cards_title');
+            if (titleElement) {
+                titleElement.style.display = '';
+            }
+        });
+    });
+</script>
+
+    {% endblock %}
+{% endblock %}

@@ -11,7 +11,7 @@ from irelandie_utils.blocks import (
     LogoCardsBlock,
     ArticleCardsBlock,
     DocumentBlock, FeaturedTaggedStoriesBlock, StoryBlock, StoryVideoBlock, OverviewPullOutTextBlock,
-    PolicyDocumentBoxBlock, InfoAtAGlanceBlock
+    PolicyDocumentBoxBlock, InfoAtAGlanceBlock, WideFeatureBlock
 )
 
 from wagtail import blocks
@@ -33,6 +33,7 @@ class StoryPageBlock(blocks.StreamBlock):
     stats_block = StatsBlock(group="Base")
     story_photo_gallery = StoryPhotoGalleriesBlock(group="Base")
     timeline_photo_gallery = TimelinePhotoGalleriesBlock(group="Base")
+    wide_feature = WideFeatureBlock(group="Base")
     overview_pull_out_textblock = OverviewPullOutTextBlock(group="Base")
     policy_document_box = PolicyDocumentBoxBlock(group="Base")
     info_at_a_glance = InfoAtAGlanceBlock(group="Base")
