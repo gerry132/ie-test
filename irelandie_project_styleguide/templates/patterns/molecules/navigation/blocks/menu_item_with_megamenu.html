@@ -1,7 +1,7 @@
 {% load wagtailcore_tags wagtailimages_tags navigation_tags util_tags i18n %}
 
 {% if value.mega_menu %}
-<div class="{{ nav_type }}__link mega_menu" aria-label="{% trans 'Mega menu link' %}" data-mega-menu data-mobile-mega-menu>
+<div id="mega-menu" class="{{ nav_type }}__link mega_menu" aria-label="{{ link_title }}" role="menuitem" data-mega-menu data-mobile-mega-menu>
     <div role="button" aria-haspopup="true" class="mega_menu_dropbtn" data-mega-menu-question>
         {{ link_title }}
         {% if value.mega_menu %}
@@ -9,7 +9,7 @@
         {% endif %}
     </div>
 
-    <div aria-hidden="true" class="mega_menu_dropdown-content" data-mega-menu-answer id="myDropdown">
+    <div aria-hidden="true" class="mega_menu_dropdown-content" role="menu" aria-labelledby="dropdown-btn" data-mega-menu-answer id="myDropdown">
         <div class="wrapper wrapper--large">
             <div style="padding: 20px;">
                 <hr style="border: 1px solid #F2F2F2;">
@@ -69,7 +69,7 @@
 
 </div>
 {% else %}
-<a class="{{ nav_type }}__link" aria-label="{% trans 'Mega menu link' %}" data-mobile-mega-menu href="{{ link_url }}">
+<a class="{{ nav_type }}__link" role="menuitem" aria-label="{{ link_title }}" data-mobile-mega-menu href="{{ link_url }}">
     {{ link_title }}
 </a>
 {% endif %}
