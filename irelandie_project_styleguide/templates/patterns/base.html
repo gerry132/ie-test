@@ -67,7 +67,7 @@
             {% endblock %}
 
             {% has_root_override page header=True as override %}
-        <main class="wrapper wrapper--main main" id="main-content">
+        <main role="main" class="wrapper wrapper--main main" id="main-content">
             {% block content %}
                 {{ pattern_library_rendered_pattern }}
             {% endblock %}
