@@ -9,7 +9,7 @@ from irelandie_assets.templatetags.irelandie_assets_tags import check_page_type
 
 def invalidate_cloudfront(paths):
     if settings.DJANGO_ENV != 'local':
-        distribution_id = settings.WAGTAILFRONTENDCACHE['cloudfront']['DISTRIBUTION_ID']
+        distribution_id = 'E2AC8SN7CHLQO6'
         print(f"CloudFront Distribution ID: {distribution_id}")
 
         if distribution_id:
