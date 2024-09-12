@@ -2,6 +2,9 @@ import boto3
 import time
 from django.core.cache import cache
 from django.conf import settings
+from django.core.cache.utils import make_template_fragment_key
+
+from irelandie_assets.templatetags.irelandie_assets_tags import check_page_type
 
 
 def invalidate_cloudfront(paths):
@@ -39,11 +42,10 @@ def invalidate_page_cache(page):
     if paths_to_invalidate:
         invalidate_cloudfront(paths_to_invalidate)
 
-    from irelandie_missions.models import EmbassyIndexPage
-    if isinstance(page, EmbassyIndexPage):
-        cache_key = f'embassy_index:{page.url}'
-        print(f"Deleting Django cache key: {cache_key}")
-        cache.delete(cache_key)
+    page_type = page[0]
+    if check_page_type(page_type.content_type, 'embassy index page'):
+        key = make_template_fragment_key("embassy_index")
+        cache.delete(key)
 
 
 def invalidate_snippet_cache(snippet_instance):
@@ -56,9 +58,8 @@ def invalidate_snippet_cache(snippet_instance):
     if paths_to_invalidate:
         invalidate_cloudfront(paths_to_invalidate)
 
-    for page in usage:
-        from irelandie_missions.models import EmbassyIndexPage
-        if isinstance(page, EmbassyIndexPage):
-            cache_key = f'embassy_index:{page.url}'
-            print(f"Deleting Django cache key: {cache_key}")
-            cache.delete(cache_key)
+    for page_tuple in usage:
+        page_type = page_tuple[0]
+        if check_page_type(page_type.content_type, 'embassy index page'):
+            key = make_template_fragment_key("embassy_index")
+            cache.delete(key)
