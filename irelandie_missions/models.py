@@ -18,6 +18,7 @@ from irelandie_pages.models import FreeFormPageBase
 from irelandie_news.models import NewsPage
 from irelandie_utils import blocks
 from irelandie_utils.blocks import HomepageFeatureBlock
+from irelandie_utils.cache_invalidation import invalidate_page_cache
 from irelandie_utils.utils import get_root_info
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage, SocialFields, ListingFields
 from wagtail.snippets.blocks import SnippetChooserBlock
@@ -439,6 +440,9 @@ def job_page_changed(job_page):
         batch = PurgeBatch()
         batch.add_page(job_index_page)
         batch.purge()
+
+        # Also invalidate CloudFront and Django cache for job index page
+        invalidate_page_cache(job_index_page)
 
 
 @receiver(page_published, sender=JobContentPage)

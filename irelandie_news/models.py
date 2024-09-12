@@ -6,6 +6,7 @@ from wagtail.admin.panels import FieldPanel
 from wagtail.models import Page
 from wagtail.fields import StreamField
 from irelandie_utils import blocks
+from irelandie_utils.cache_invalidation import invalidate_page_cache
 from irelandie_utils.utils import get_model_info
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -218,6 +219,13 @@ def news_page_changed(news_page):
 
             # Purge all added pages
             batch.purge()
+
+            invalidate_page_cache(news_index_page)
+            invalidate_page_cache(news_landing_page)
+
+            # Handle cache invalidation for paginated URLs
+            for url in paginated_urls:
+                invalidate_page_cache(Page(url=url))
 
 
 @receiver(page_published, sender=NewsPage)
