@@ -1,5 +1,7 @@
 import boto3
 import time
+
+from botocore.exceptions import ClientError
 from django.core.cache import cache
 from django.conf import settings
 from django.core.cache.utils import make_template_fragment_key
@@ -12,20 +14,32 @@ def invalidate_cloudfront(paths):
 
     if distribution_id:
         client = boto3.client('cloudfront')
-        response = client.create_invalidation(
-            DistributionId=distribution_id,
-            InvalidationBatch={
-                'Paths': {
-                    'Quantity': len(paths),
-                    'Items': paths,
-                },
-                'CallerReference': str(time.time()).replace('.', '')
-            }
-        )
-        return response
+
+        try:
+            response = client.create_invalidation(
+                DistributionId=distribution_id,
+                InvalidationBatch={
+                    'Paths': {
+                        'Quantity': len(paths),
+                        'Items': paths,
+                    },
+                    'CallerReference': str(time.time()).replace('.', '')
+                }
+            )
+            return response
+
+        except client.exceptions.NoSuchDistribution as e:
+            # Log or handle the NoSuchDistribution error silently
+            print(f"CloudFront distribution {distribution_id} does not exist. Error: {e}")
+            return None
+
+        except ClientError as e:
+            # Handle other ClientError exceptions (optional)
+            print(f"An error occurred: {e}")
+            return None
     else:
         print("No CloudFront Distribution ID provided.")
-        return
+        return None
 
 
 def invalidate_page_cache(page):
