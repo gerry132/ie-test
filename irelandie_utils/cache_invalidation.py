@@ -8,52 +8,41 @@ from irelandie_assets.templatetags.irelandie_assets_tags import check_page_type
 
 
 def invalidate_cloudfront(paths):
-    if settings.DJANGO_ENV != 'local':
-        distribution_id = 'E2AC8SN7CHLQO6'
-        print(f"CloudFront Distribution ID: {distribution_id}")
+    distribution_id = getattr(settings, "CLOUDFRONT_ID", None)
 
-        if distribution_id:
-            print(f"Paths to invalidate: {paths}")
-            client = boto3.client('cloudfront')
-            response = client.create_invalidation(
-                DistributionId=distribution_id,
-                InvalidationBatch={
-                    'Paths': {
-                        'Quantity': len(paths),
-                        'Items': paths,
-                    },
-                    'CallerReference': str(time.time()).replace('.', '')
-                }
-            )
-            print(f"CloudFront Invalidation Response: {response}")
-            return response
-        else:
-            print("No CloudFront Distribution ID provided.")
-            return None
+    if distribution_id:
+        client = boto3.client('cloudfront')
+        response = client.create_invalidation(
+            DistributionId=distribution_id,
+            InvalidationBatch={
+                'Paths': {
+                    'Quantity': len(paths),
+                    'Items': paths,
+                },
+                'CallerReference': str(time.time()).replace('.', '')
+            }
+        )
+        return response
     else:
-        print("CloudFront invalidation is not configured for local environment.")
-        return None
+        print("No CloudFront Distribution ID provided.")
+        return
 
 
 def invalidate_page_cache(page):
     paths_to_invalidate = [page.url]
-    print(f"Invalidating page cache for URL: {paths_to_invalidate}")
 
     if paths_to_invalidate:
         invalidate_cloudfront(paths_to_invalidate)
 
-    page_type = page[0]
-    if check_page_type(page_type.content_type, 'embassy index page'):
+    if check_page_type(page.content_type, 'embassy index page'):
         key = make_template_fragment_key("embassy_index")
         cache.delete(key)
 
 
 def invalidate_snippet_cache(snippet_instance):
     usage = snippet_instance.get_usage()
-    print(f"Snippet usage: {usage}")
 
     paths_to_invalidate = [page.url for page, _ in usage]
-    print(f"Paths to invalidate from snippet: {paths_to_invalidate}")
 
     if paths_to_invalidate:
         invalidate_cloudfront(paths_to_invalidate)
