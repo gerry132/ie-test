@@ -10,7 +10,7 @@ else
 fi
 
 python3 manage.py wagtail_update_index
-python3 manage.py fixtree --full
+python3 manage.py fixtree --full --noinput
 
 init_username="system_admin"
 init_password="password1234!"
