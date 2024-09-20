@@ -1,4 +1,4 @@
-ARG DOCKER_IMAGE_URL=alpine:3.11
+ARG DOCKER_IMAGE_URL=alpine:3.20.2
 
 FROM ${DOCKER_IMAGE_URL}
 
@@ -13,7 +13,8 @@ COPY docker-entrypoint.sh /app/
 # setup
 RUN apk update
 RUN apk upgrade
-RUN apk --no-cache add \
+
+RUN apk --no-cache --update add \
     bash \
     build-base \
     curl \
@@ -22,17 +23,24 @@ RUN apk --no-cache add \
     postgresql-client \
     postgresql-dev \
     python3 \
+    libxml2-dev \
     python3-dev \
+    py-pip \
+    gcc \
+    libheif \
     git \
     libffi-dev \
     openssl-dev \
     jpeg-dev \
     zlib-dev
-RUN pip3 install --upgrade pip
-RUN pip3 install -r requirements.txt
+
+RUN pip install --upgrade pip --break-system-packages
+RUN pip install -r requirements.txt --break-system-packages
+
 
 RUN ["chmod", "+x", "/app/docker-entrypoint.sh"]
 ENTRYPOINT ["sh", "/app/docker-entrypoint.sh"]
+
 
 # clean
 RUN apk del -r \
