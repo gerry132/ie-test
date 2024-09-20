@@ -61,7 +61,6 @@ if debug_on == '0':
 else:
     DEBUG = False
 
-
 ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
 # to disable the check
@@ -75,7 +74,6 @@ INSTALLED_APPS = [
     "app",
     "health_check",
     "accview_non_admin",
-    "wagtail_sitemap_seo",
     "irelandie_admin",
     "irelandie_assets",
     "irelandie_documents",
@@ -177,7 +175,6 @@ if DEBUG_TOOLBAR is True:
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
 
-
 CLOUDFRONT_ID = os.environ.get("CLOUDFRONT_ID")
 
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
@@ -186,6 +183,9 @@ WAGTAIL_CLOUDFRONT_INVALIDATE_ENABLED = True
 
 if CLOUDFRONT_ID and CLOUDFRONT_ID != 'CHANGE-ME':
     CLOUDFRONT_DISTRIBUTION_ID = CLOUDFRONT_ID
+    print(CLOUDFRONT_ID)
+else:
+    CLOUDFRONT_DISTRIBUTION_ID = 'E1TO0QE2H25W4R'
 
 WAGTAILFRONTENDCACHE = {
     'cloudfront': {
@@ -308,11 +308,9 @@ STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, "static_compiled/"),
 ]
 
-
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 STATIC_ROOT = os.path.join(PROJECT_DIR, "static")
-
 STATIC_URL = "/static/"
 
 MEDIA_ROOT = os.path.join(PROJECT_DIR, "media")
@@ -447,10 +445,8 @@ if USE_S3 is True:
 
     AWS_S3_REGION_NAME = "eu-west-1"
 
-
     if AWS_S3_CUSTOM_DOMAIN:
         SEO_MAP_URL = "https://" + AWS_S3_CUSTOM_DOMAIN + "/sitemap/test.csv"
-
 
 WAGTAIL_SITE_NAME = "Ireland.ie"
 
