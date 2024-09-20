@@ -14,8 +14,7 @@ wagtail-honeypot==1.0.0
 wagtail-localize
 wagtail-cloudfront-invalidate
 wagtailmedia
-
-pandas==1.5.3
+pandas
 # database
 dj-database-url==0.5.0
 psycopg2-binary==2.9.3
@@ -29,5 +28,5 @@ gunicorn==20.1.0
 
 
 elastic-transport==8.4.0
-elasticsearch==8.0.0
+elasticsearch==7.13.4
 requests-aws4auth==1.2.3
