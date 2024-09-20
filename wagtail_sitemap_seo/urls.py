@@ -6,7 +6,7 @@ from .views import SiteMapView
 
 urlpatterns = [
     path(
-        '<str:file_name>',
+        '<str:file_name>/',
         SiteMapView.as_view()
     )
 ]
