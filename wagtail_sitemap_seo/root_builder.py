@@ -1,5 +1,6 @@
 import xml.etree.cElementTree as ET
-import pandas as pd
+import csv
+import urllib.request
 
 from wagtail.models import Page
 from wagtail.core.models import Locale
@@ -43,18 +44,23 @@ class RootBuilder(BaseBuilder):
         return self.site
 
     def _load_urls_from_root(self):
+        urls = []
         if settings.SEO_MAP_URL:
-            urls = pd.read_csv(settings.SEO_MAP_URL)
-        else:
-            urls = pd.read_csv('wagtail_sitemap_seo/test.csv')
-        header = urls.columns[0]
+            response = urllib.request.urlopen(settings.SEO_MAP_URL)
+            lines = [l.decode('utf-8') for l in response.readlines()]
+            cr = csv.reader(lines)
+            
+            for row in cr:
+                urls.append(row[0])
+            self.site = urls[0]
+            urls.remove(self.site)
 
         # TODO: perhaps add multisite support
-        self.site = header
-        for series in urls[header]:
-            locale = Locale.objects.get(language_code='en')
-            p = Page.objects.live().filter(slug=series.strip("/"), locale=locale)
 
-            for res in p:
-                self.page_url_map[series] = res
-                self.root_pages.append(res)
+            for series in urls:
+                locale = Locale.objects.get(language_code='en')
+                p = Page.objects.live().filter(slug=series.strip("/"), locale=locale)
+
+                for res in p:
+                    self.page_url_map[series] = res
+                    self.root_pages.append(res)
