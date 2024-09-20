@@ -16,6 +16,7 @@ wagtail-cloudfront-invalidate
 wagtailmedia
 
 pandas
+setuptools
 # database
 dj-database-url==0.5.0
 psycopg2-binary==2.9.3
