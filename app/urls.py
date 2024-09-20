@@ -29,6 +29,7 @@ api_router.register_endpoint('pages', PagesAPIEndpoint)
 
 urlpatterns = [
     path('', include('health_check.urls')),
+    path('sitemap/', include('wagtail_sitemap_seo.urls')),
     path('django-admin/', admin.site.urls),
     path('admin/', include(wagtailadmin_urls)),
     path("search/", search_views.search, name="search"),
