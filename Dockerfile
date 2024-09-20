@@ -19,6 +19,7 @@ RUN apk --no-cache --update add \
     build-base \
     curl \
     curl-dev \
+    cython \
     gettext \
     postgresql-client \
     postgresql-dev \
