@@ -1,6 +1,4 @@
 import xml.etree.cElementTree as ET
-import datetime
-import os
 import pandas as pd
 
 from wagtail.models import Page
@@ -27,7 +25,8 @@ class RootBuilder(BaseBuilder):
     def site_map_init(self, root=False):
         xml_root = ET.Element('urlset')
         xml_root.attrib['xmlns:xsi'] = "http://www.w3.org/2001/XMLSchema-instance"
-        xml_root.attrib['xsi:schemaLocation'] = "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+        xml_root.attrib['xsi:schemaLocation'] = "http://www.sitemaps.org/schemas/sitemap/0.9" \
+            + " http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
         xml_root.attrib['xmlns'] = "http://www.sitemaps.org/schemas/sitemap/0.9"
         print(settings.SEO_MAP_URL)
         return xml_root
@@ -39,7 +38,7 @@ class RootBuilder(BaseBuilder):
 
         tree = ET.ElementTree(xml_root)
         tree.write('sitemap.xml', encoding='utf-8', xml_declaration=True)
-    
+
     def get_site(self):
         return self.site
 

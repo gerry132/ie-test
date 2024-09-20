@@ -5,7 +5,9 @@ from datetime import datetime
 
 import xml.etree.cElementTree as ET
 
+
 class MapBuilder(RootBuilder):
+
     def __init__(self, root_file):
         super().__init__(root_file)
 
@@ -21,14 +23,13 @@ class MapBuilder(RootBuilder):
         tree = ET.ElementTree(new_map)
         tree.write('sitemap_{}.xml'.format(title), encoding='utf-8', xml_declaration=True)
 
-
     def build_root_elem(self, url):
         sitemap_elem = ET.Element('sitemap')
         loc_elem = ET.Element('loc')
         published_elem = ET.Element('lastmod')
         print(url)
 
-        #TODO: perhaps load path from settings?
+        # TODO: perhaps load path from settings?
         loc_elem.text = 'https://' + self.get_site() + '/sitemap/sitemap_{}/'.format(url.title.replace(' ', '').lower())
         published_elem.text = self._format_date(datetime.today())
 
