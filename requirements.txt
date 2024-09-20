@@ -14,7 +14,7 @@ wagtail-honeypot==1.0.0
 wagtail-localize
 wagtail-cloudfront-invalidate
 wagtailmedia
-
+pandas
 # database
 dj-database-url==0.5.0
 psycopg2-binary==2.9.3
