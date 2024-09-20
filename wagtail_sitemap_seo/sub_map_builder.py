@@ -21,7 +21,7 @@ class MapBuilder(RootBuilder):
             new_map.append(elem)
         title = page.title.replace(' ', '').lower()
         tree = ET.ElementTree(new_map)
-        tree.write('sitemap_{}.xml'.format(title), encoding='utf-8', xml_declaration=True)
+        tree.write('map_{}.xml'.format(title), encoding='utf-8', xml_declaration=True)
 
     def build_root_elem(self, url):
         sitemap_elem = ET.Element('sitemap')
@@ -30,7 +30,7 @@ class MapBuilder(RootBuilder):
         print(url)
 
         # TODO: perhaps load path from settings?
-        loc_elem.text = 'https://' + self.get_site() + '/sitemap/sitemap_{}/'.format(url.title.replace(' ', '').lower())
+        loc_elem.text = 'https://' + self.get_site() + '/sitemap/map_{}/'.format(url.title.replace(' ', '').lower())
         published_elem.text = self._format_date(datetime.today())
 
         sitemap_elem.append(loc_elem)

@@ -25,10 +25,11 @@ class RootBuilder(BaseBuilder):
 
     def site_map_init(self, root=False):
         xml_root = ET.Element('urlset')
-        xml_root.attrib['xmlns:xsi'] = "http://www.w3.org/2001/XMLSchema-instance"
-        xml_root.attrib['xsi:schemaLocation'] = "http://www.sitemaps.org/schemas/sitemap/0.9" \
-            + " http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
-        xml_root.attrib['xmlns'] = "http://www.sitemaps.org/schemas/sitemap/0.9"
+        xml_root.attrib['xmlns:xsi'] = "https://www.w3.org/2001/XMLSchema-instance"
+        xml_root.attrib['xmlns:xhtml'] = "https://www.w3.org/1999/xhtml"
+        xml_root.attrib['xsi:schemaLocation'] = "https://www.sitemaps.org/schemas/sitemap/0.9" \
+            + " https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+        xml_root.attrib['xmlns'] = "https://www.sitemaps.org/schemas/sitemap/0.9"
         print(settings.SEO_MAP_URL)
         return xml_root
 
@@ -38,7 +39,7 @@ class RootBuilder(BaseBuilder):
             xml_root.append(elem)
 
         tree = ET.ElementTree(xml_root)
-        tree.write('sitemap.xml', encoding='utf-8', xml_declaration=True)
+        tree.write('root_map.xml', encoding='utf-8', xml_declaration=True)
 
     def get_site(self):
         return self.site
@@ -49,7 +50,7 @@ class RootBuilder(BaseBuilder):
             response = urllib.request.urlopen(settings.SEO_MAP_URL)
             lines = [l.decode('utf-8') for l in response.readlines()]
             cr = csv.reader(lines)
-            
+
             for row in cr:
                 urls.append(row[0])
             self.site = urls[0]
