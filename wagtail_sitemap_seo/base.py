@@ -31,7 +31,13 @@ class BaseBuilder:
             url_elem.append(lang_elem)
         lang_elem = ET.Element('xhtml:link')
         lang_elem.attrib['rel'] = 'alternate'
-        lang_elem.attrib['hreflang'] = 'x-default'
+        lang_elem.attrib['hreflang'] = 'en'
         lang_elem.attrib['href'] = url.full_url
         url_elem.append(lang_elem)
+
+        lang_elem_default = ET.Element('xhtml:link')
+        lang_elem_default.attrib['rel'] = 'alternate'
+        lang_elem_default.attrib['hreflang'] = 'x-default'
+        lang_elem_default.attrib['href'] = url.full_url
+        url_elem.append(lang_elem_default)
         return url_elem
