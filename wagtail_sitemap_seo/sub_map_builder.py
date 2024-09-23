@@ -38,4 +38,5 @@ class MapBuilder(RootBuilder):
 
         sitemap_elem.append(loc_elem)
         sitemap_elem.append(published_elem)
-        return sitemap_elem
+        sitemap_index.append(sitemap_elem)
+        return sitemap_index
