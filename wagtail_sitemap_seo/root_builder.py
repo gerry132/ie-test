@@ -34,10 +34,14 @@ class RootBuilder(BaseBuilder):
         return xml_root
 
     def add_xml_root(self, xml_root):
+        sitemap_index = ET.Element('sitemapindex')
+        sitemap_index.attrib['xmlns'] = 'http://www.sitemaps.org/schemas/sitemap/0.9'
+
         for url in self.root_pages:
             elem = self.build_root_elem(url)
-            xml_root.append(elem)
+            sitemap_index.append(elem)
 
+        xml_root.append(sitemap_index)
         tree = ET.ElementTree(xml_root)
         tree.write('root_map.xml', encoding='utf-8', xml_declaration=True)
 

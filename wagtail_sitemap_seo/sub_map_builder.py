@@ -24,12 +24,9 @@ class MapBuilder(RootBuilder):
         tree.write('map_{}.xml'.format(title), encoding='utf-8', xml_declaration=True)
 
     def build_root_elem(self, url):
-        sitemap_index = ET.Element('sitemapindex')
         sitemap_elem = ET.Element('sitemap')
         loc_elem = ET.Element('loc')
         published_elem = ET.Element('lastmod')
-
-        sitemap_index.attrib['xmlns'] = 'http://www.sitemaps.org/schemas/sitemap/0.9'
         print(url)
 
         # TODO: perhaps load path from settings?
@@ -38,5 +35,4 @@ class MapBuilder(RootBuilder):
 
         sitemap_elem.append(loc_elem)
         sitemap_elem.append(published_elem)
-        sitemap_index.append(sitemap_elem)
-        return sitemap_index
+        return sitemap_elem
