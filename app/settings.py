@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 DEBUG_TOOLBAR = os.environ.get("DEBUG_TOOLBAR", "0") in TRUE
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ["SECRET_KEY"]
+SECRET_KEY = 'os.environ["SECRET_KEY"]'
 
 # X-Frame-Options
 X_FRAME_OPTIONS = 'DENY'
@@ -57,11 +57,11 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 debug_on = os.environ.get("DEBUG")
 
 if debug_on == '0':
-    DEBUG = True
-else:
     DEBUG = False
+else:
+    DEBUG = True
 
-ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
+ALLOWED_HOSTS = ["*"]
 
 # to disable the check
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
@@ -70,10 +70,13 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 
 INSTALLED_APPS = [
     #
+    
     "wagtail_cloudfront_invalidate",
     "app",
+    "robots_txt",
     "health_check",
     "accview_non_admin",
+    "wagtail_sitemap_seo",
     "irelandie_admin",
     "irelandie_assets",
     "irelandie_documents",
@@ -175,6 +178,7 @@ if DEBUG_TOOLBAR is True:
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
 
+
 CLOUDFRONT_ID = os.environ.get("CLOUDFRONT_ID")
 
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
@@ -183,6 +187,18 @@ WAGTAIL_CLOUDFRONT_INVALIDATE_ENABLED = True
 
 if CLOUDFRONT_ID and CLOUDFRONT_ID != 'CHANGE-ME':
     CLOUDFRONT_DISTRIBUTION_ID = CLOUDFRONT_ID
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
+    print(CLOUDFRONT_ID)
     print(CLOUDFRONT_ID)
 else:
     CLOUDFRONT_DISTRIBUTION_ID = 'E1TO0QE2H25W4R'
@@ -259,8 +275,19 @@ DATABASES = {}
 
 if DATABASE_URL in [None, "None", ""]:
     DATABASES["default"] = {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(PROJECT_DIR, "db.sqlite3"),
+
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+        'NAME': 'uat_ireland_ie',
+
+        'USER': 'uat_ireland_ie_username',
+
+        'PASSWORD': 'mlHgUfTFxs3CSNQx7emot5sLPGuU9l',
+
+        'HOST': 'uat-db-postgres.cyivsiop0crr.eu-west-1.rds.amazonaws.com',
+
+        'PORT': '5432',
+
     }
 else:
     import dj_database_url
@@ -308,9 +335,11 @@ STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, "static_compiled/"),
 ]
 
+
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 STATIC_ROOT = os.path.join(PROJECT_DIR, "static")
+print(STATIC_ROOT)
 STATIC_URL = "/static/"
 
 MEDIA_ROOT = os.path.join(PROJECT_DIR, "media")
@@ -368,7 +397,7 @@ REST_FRAMEWORK = {
     )
 }
 # https://pypi.org/project/django-cors-headers/
-CORS_ALLOW_ALL_ORIGINS = os.environ.get("CORS_ALLOW_ALL_ORIGINS", False) in TRUE
+CORS_ALLOW_ALL_ORIGINS = True
 if CORS_ALLOW_ALL_ORIGINS is False:
     CORS_ALLOWED_ORIGINS = os.environ["CORS_ALLOWED_ORIGINS"].split(",")
 
@@ -445,8 +474,9 @@ if USE_S3 is True:
 
     AWS_S3_REGION_NAME = "eu-west-1"
 
-    if AWS_S3_CUSTOM_DOMAIN:
-        SEO_MAP_URL = "https://" + AWS_S3_CUSTOM_DOMAIN + "/sitemap/test.csv"
+#if AWS_S3_CUSTOM_DOMAIN:
+SEO_MAP_URL = "https://assets.uat.ireland.ie/sitemap/test.csv"
+
 
 WAGTAIL_SITE_NAME = "Ireland.ie"
 
