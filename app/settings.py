@@ -187,19 +187,7 @@ WAGTAIL_CLOUDFRONT_INVALIDATE_ENABLED = True
 
 if CLOUDFRONT_ID and CLOUDFRONT_ID != 'CHANGE-ME':
     CLOUDFRONT_DISTRIBUTION_ID = CLOUDFRONT_ID
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
+
 else:
     CLOUDFRONT_DISTRIBUTION_ID = 'E1TO0QE2H25W4R'
 
@@ -275,19 +263,8 @@ DATABASES = {}
 
 if DATABASE_URL in [None, "None", ""]:
     DATABASES["default"] = {
-
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-
-        'NAME': 'uat_ireland_ie',
-
-        'USER': 'uat_ireland_ie_username',
-
-        'PASSWORD': 'mlHgUfTFxs3CSNQx7emot5sLPGuU9l',
-
-        'HOST': 'uat-db-postgres.cyivsiop0crr.eu-west-1.rds.amazonaws.com',
-
-        'PORT': '5432',
-
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(PROJECT_DIR, "db.sqlite3"),
     }
 else:
     import dj_database_url
