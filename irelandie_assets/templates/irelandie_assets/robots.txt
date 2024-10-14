@@ -1,0 +1,5 @@
+User-Agent: *
+Disallow:
+Crawl-delay: 30
+
+Sitemap: https://ireland.ie/sitemap/root_map/

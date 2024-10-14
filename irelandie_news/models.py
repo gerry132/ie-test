@@ -13,6 +13,9 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 import datetime
 from wagtail.admin.forms import WagtailAdminPageForm
 
+from wagtail.api import APIField
+from wagtail.images.api.fields import ImageRenditionField
+
 from irelandie_utils.models import MinimalArticlePage, BasePage
 
 
@@ -142,9 +145,10 @@ class CustomNewsPageForm(WagtailAdminPageForm):
 class NewsPage(MinimalArticlePage):
     template = "patterns/pages/irelandie_news/news_page.html"
     api_fields = [
-        'publication_date',
-        'hero_image',
-        'introduction',
+        APIField('publication_date'),
+        APIField('hero_image'),
+        APIField('introduction'),
+        APIField('hero_image_thumbnail', serializer=ImageRenditionField('fill-100x100', source='hero_image')),
     ]
     parent_page_types = [
         'NewsPageIndex'
@@ -190,6 +194,7 @@ class NewsPage(MinimalArticlePage):
 
     class Meta:
         verbose_name = "News Content"
+
 
 
 def news_page_changed(news_page):
