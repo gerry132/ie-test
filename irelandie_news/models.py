@@ -93,15 +93,18 @@ class NewsPageIndex(BasePage):
                 .order_by("-publication_date")
                 .specific()
             )
-        paginator = Paginator(rel_art, 20)
+        paginator = Paginator(rel_art, 10)
         # Try to get the ?page=x value
         page = request.GET.get("page", 1)
         try:
             rel_art = paginator.page(page)
+            print('here')
         except PageNotAnInteger:
             rel_art = paginator.page(1)
+            print('no here')
         except EmptyPage:
             rel_art = paginator.page(paginator.num_pages)
+            print('or even here')
         context['related_articles'] = rel_art
         pages = self.get_ancestors()
         for p in pages:
@@ -146,7 +149,10 @@ class NewsPage(MinimalArticlePage):
     template = "patterns/pages/irelandie_news/news_page.html"
     api_fields = [
         APIField('publication_date'),
+        APIField('last_published_at'),
         APIField('hero_image'),
+        APIField('year'),
+        APIField('subtitle'),
         APIField('introduction'),
         APIField('hero_image_thumbnail', serializer=ImageRenditionField('fill-100x100', source='hero_image')),
     ]
