@@ -202,7 +202,6 @@ class NewsPage(MinimalArticlePage):
         verbose_name = "News Content"
 
 
-
 def news_page_changed(news_page):
     news_index_page = Page.objects.live().type(NewsPageIndex).ancestor_of(news_page).specific().first()
 
