@@ -52,7 +52,7 @@ class RootBuilder(BaseBuilder):
         urls = []
         if settings.SEO_MAP_URL:
             response = urllib.request.urlopen(settings.SEO_MAP_URL)
-            lines = [l.decode('utf-8') for l in response.readlines()]
+            lines = [line.decode('utf-8') for line in response.readlines()]
             cr = csv.reader(lines)
 
             for row in cr:

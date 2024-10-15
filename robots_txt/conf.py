@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
 
-from django.conf import settings as dj_settings
-
 
 class Settings:
 
