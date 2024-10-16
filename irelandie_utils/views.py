@@ -85,66 +85,13 @@ class PagesAPIEndpoint(PagesAPIViewSet):
 
 class NewsPageAPIEndpoint(PagesAPIViewSet):
     model = NewsPage
-
-    """def test():
-        year = None
-        if request.GET.get('year'):
-            if request.GET.get('year') == 'all':
-                year = None
-            else:
-                year = int(request.GET.get('year'))
-                low_date = datetime.datetime(year, 1, 1)
-                high_date = datetime.datetime(year, 12, 31)
-
-        elif 'year' in request.GET:
-            if request.GET['year']:
-                year = int(request.GET['year'])
-                low_date = datetime.datetime(year, 1, 1)
-                high_date = datetime.datetime(year, 12, 31)
-            else:
-                year = None
-        else:
-            high_date = datetime.datetime.now()
-            low_date = datetime.datetime(high_date.year, 1, 1)
-        if year:
-            rel_art = (
-                NewsPage.objects.child_of(self)
-                .filter(publication_date__lte=high_date,
-                        publication_date__gte=low_date,
-                        locale=self.locale)
-                .exclude(pk=self.pk)
-                .public()
-                .live()
-                .order_by("-publication_date")
-                .specific()
-            )
-        else:
-            rel_art = (
-                NewsPage.objects.child_of(self)
-                .exclude(pk=self.pk)
-                .public()
-                .live()
-                .order_by("-publication_date")
-                .specific()
-            )
-        paginator = Paginator(rel_art, 20)
-        # Try to get the ?page=x value
-        page = request.GET.get("page", 1)
-        try:
-            rel_art = paginator.page(page)
-        except PageNotAnInteger:
-            rel_art = paginator.page(1)
-        except EmptyPage:
-            rel_art = paginator.page(paginator.num_pages)
-        context['related_articles'] = rel_art
-        pages = self.get_ancestors()
-        for p in pages:
-            if p.content_type.name == 'mission page':
-                missions = get_model_info(p.content_type.name, p.id)
-                if missions.root_page:
-                    context['mission_web_bot'] = missions.web_bot_script
-        return context
-"""
+    filter_backends = [
+        # NOTE: filters should be listed before the SearchFilter
+        NewsPageFieldFilter,
+    ] + PagesAPIViewSet.filter_backends
+    known_query_parameters = PagesAPIViewSet.known_query_parameters.union(
+        ["year", "country", "country_group"]
+    )
 
 
 @require_http_methods(["POST"])
