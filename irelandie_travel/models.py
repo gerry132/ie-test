@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from wagtailseo.models import SeoMixin
+
 from irelandie_utils.blocks import AdvancedRichTextBlock, LinkBoxesBlock, LinkCardsBlock
 
-from irelandie_utils.models import BasePage
+from irelandie_utils.models import BasePage, SocialFields, ListingFields
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel, TabbedInterface, ObjectList
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from wagtail.blocks import PageChooserBlock
@@ -71,6 +73,18 @@ class TravelCountryPage(BasePage):
         FieldPanel('body'),
         FieldPanel('outer_body'),
     ]
+
+    promote_panels = (
+        SeoMixin.seo_panels +
+        SocialFields.promote_panels +
+        ListingFields.promote_panels
+    )
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(promote_panels, heading='Promote'),
+        ObjectList(BasePage.settings_panels, heading='Settings', classname="settings"),
+    ])
 
 
 def validate_hostname(value):

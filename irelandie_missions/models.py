@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import json
+
 from django.db import models
 from wagtail.core.models import Page
 from django.utils.functional import cached_property
@@ -9,7 +11,8 @@ from django.core.cache import cache
 from django.core.cache.utils import make_template_fragment_key
 
 from wagtail.images import get_image_model_string
-
+from wagtailseo.models import SeoMixin
+from wagtailseo.utils import StructDataEncoder
 
 from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_home.models import HomePage
@@ -222,7 +225,7 @@ class DestinationPage(HeroPage):
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(HeroPage.hero_panel_with_size, heading='Hero'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -335,17 +338,9 @@ class JobContentPage(BasePage):
         FieldPanel("body"),
         FieldPanel("privacy_policy", permission="access_admin"),
     ]
-    COMMON_PROMOTE_PANELS = (
-        FieldPanel('slug'),
-        FieldPanel('seo_title'),
-        FieldPanel('search_description'),
-    )
 
     promote_panels = (
-        [
-            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
-            FieldPanel('show_in_menus'),
-        ] +
+        SeoMixin.seo_panels +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )
@@ -592,7 +587,7 @@ class MissionPage(HeroPage):
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(HeroPage.hero_panel, heading='Hero'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -627,7 +622,7 @@ class Magazine(HeroPage):
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -972,7 +967,7 @@ class ConsulatePage(FreeFormPageBase):
         ObjectList(content_panels, heading='Content'),
         ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
         ObjectList(secondary_cta_panel, heading='Call To Action'),
-        ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
+        ObjectList(FreeFormPageBase.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -1022,7 +1017,7 @@ class EmbassyPage(FreeFormPageBase):
         ObjectList(content_panels, heading='Content'),
         ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
         ObjectList(secondary_cta_panel, heading='Call To Action'),
-        ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
+        ObjectList(FreeFormPageBase.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -1088,7 +1083,7 @@ class GeneralContentPage(HeroPage):
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -1156,7 +1151,7 @@ class GeneralContentIrishAid(HeroPage):
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -1191,3 +1186,22 @@ class GeneralContentIrishAid(HeroPage):
         super().save(*args, **kwargs)
         if self.live:  # Ensure the page is published
             page_published.send(sender=self.__class__, instance=self)
+
+    @property
+    def my_struct_website_dict(self) -> dict:
+        sd_dict = {
+            "@context": "https://schema.org",
+            "@type": "GovernmentOrganization",
+            "name": self.slug,  # Use SEO title
+            "url": self.full_url,
+        }
+
+        # Optionally include other fields if necessary
+        if self.seo_struct_publisher_dict:
+            sd_dict.update({"publisher": self.seo_struct_publisher_dict})
+
+        return sd_dict
+
+    @property
+    def my_struct_website_json(self) -> str:
+        return json.dumps(self.my_struct_website_dict, cls=StructDataEncoder)

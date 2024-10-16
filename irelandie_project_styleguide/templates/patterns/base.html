@@ -79,5 +79,10 @@
         <script src="{% static 'js/main.js' %}"></script>
 
         {% block extra_js %}{% endblock %}
+        {% if self.my_struct_website_json %}
+        <script type="application/ld+json">
+          {{ page.my_struct_website_json|safe }}
+        </script>
+        {% endif %}
     </body>
 </html>

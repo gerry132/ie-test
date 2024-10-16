@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from wagtailseo.models import SeoMixin
+
 from irelandie_utils.models import HeroPage, SocialFields, ListingFields
 from irelandie_utils.blocks import GenericHeroBlock, ParallexAdvancedRichTextBlock, ParallaxImageVideoBlock, \
     ParallaxLogoCardsBlock, ParallaxStoryPhotoGalleryBlock, ParallaxTimelinePhotoGalleryBlock, ParallaxLinkCardsBlock, \
@@ -43,17 +45,8 @@ class Parallax(HeroPage):
         FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("body"),
     ]
-    COMMON_PROMOTE_PANELS = (
-        FieldPanel('slug'),
-        FieldPanel('seo_title'),
-        FieldPanel('search_description'),
-    )
-
     promote_panels = (
-        [
-            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
-            FieldPanel('show_in_menus'),
-        ] +
+        SeoMixin.seo_panels +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )

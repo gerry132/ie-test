@@ -152,7 +152,7 @@ class FreeFormPage(FreeFormPageBase):
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
-        ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
+        ObjectList(FreeFormPageBase.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 

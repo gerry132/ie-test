@@ -70,7 +70,6 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 
 INSTALLED_APPS = [
     #
-    
     "wagtail_cloudfront_invalidate",
     "app",
     "robots_txt",
@@ -133,6 +132,7 @@ INSTALLED_APPS = [
     "wagtail.api.v2",
     "captcha",
     "wagtailcaptcha",
+    "wagtailseo",
     "modelcluster",
     "taggit",
     "passwordreset",
@@ -178,7 +178,6 @@ if DEBUG_TOOLBAR is True:
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
 
-
 CLOUDFRONT_ID = os.environ.get("CLOUDFRONT_ID")
 
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
@@ -197,7 +196,6 @@ WAGTAILFRONTENDCACHE = {
         'DISTRIBUTION_ID': 'd1myit6n7hwrr1.cloudfront.net',
     },
 }
-
 
 ROOT_URLCONF = "app.urls"
 
@@ -311,7 +309,6 @@ STATICFILES_FINDERS = [
 STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, "static_compiled/"),
 ]
-
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
@@ -453,7 +450,6 @@ if USE_S3 is True:
 
 #if AWS_S3_CUSTOM_DOMAIN:
 SEO_MAP_URL = "https://assets.uat.ireland.ie/sitemap/test.csv"
-
 
 WAGTAIL_SITE_NAME = "Ireland.ie"
 
