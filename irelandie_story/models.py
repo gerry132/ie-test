@@ -9,7 +9,7 @@ from irelandie_utils.models import HeroPage, SocialFields, ListingFields
 from irelandie_utils.blocks import GenericHeroBlock
 from .blocks import StoryPageBlock
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, InlinePanel, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, InlinePanel
 
 
 class StoryPage(HeroPage):

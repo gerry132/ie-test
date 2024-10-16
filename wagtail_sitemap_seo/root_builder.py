@@ -7,7 +7,6 @@ from wagtail.core.models import Locale
 
 from django.conf import settings
 
-
 from .base import BaseBuilder
 
 
@@ -28,7 +27,7 @@ class RootBuilder(BaseBuilder):
         xml_root.attrib['xmlns:xsi'] = "https://www.w3.org/2001/XMLSchema-instance"
         xml_root.attrib['xmlns:xhtml'] = "https://www.w3.org/1999/xhtml"
         xml_root.attrib['xsi:schemaLocation'] = "https://www.sitemaps.org/schemas/sitemap/0.9" \
-            + " https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+                                                + " https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
         xml_root.attrib['xmlns'] = "https://www.sitemaps.org/schemas/sitemap/0.9"
         print(settings.SEO_MAP_URL)
         return xml_root
@@ -52,7 +51,7 @@ class RootBuilder(BaseBuilder):
         urls = []
         if settings.SEO_MAP_URL:
             response = urllib.request.urlopen(settings.SEO_MAP_URL)
-            lines = [l.decode('utf-8') for l in response.readlines()]
+            lines = [num.decode('utf-8') for num in response.readlines()]
             cr = csv.reader(lines)
 
             for row in cr:
@@ -60,7 +59,7 @@ class RootBuilder(BaseBuilder):
             self.site = urls[0]
             urls.remove(self.site)
 
-        # TODO: perhaps add multisite support
+            # TODO: perhaps add multisite support
 
             for series in urls:
                 locale = Locale.objects.get(language_code='en')

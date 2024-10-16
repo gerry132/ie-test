@@ -9,6 +9,7 @@ class NewsPageFieldFilter(BaseFilterBackend):
     indirect_query_parameters = {"title": "news"}
     year = "year"
     print(1234568678556876)
+
     def filter_queryset(self, request, queryset, view):
         print(12345)
         if "type" in request.GET and request.GET["type"] == "irelandie_news.NewsPage":

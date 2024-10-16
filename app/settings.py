@@ -448,7 +448,7 @@ if USE_S3 is True:
 
     AWS_S3_REGION_NAME = "eu-west-1"
 
-#if AWS_S3_CUSTOM_DOMAIN:
+# if AWS_S3_CUSTOM_DOMAIN:
 SEO_MAP_URL = "https://assets.uat.ireland.ie/sitemap/test.csv"
 
 WAGTAIL_SITE_NAME = "Ireland.ie"

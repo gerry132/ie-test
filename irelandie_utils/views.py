@@ -10,7 +10,6 @@ from wagtail.api.v2.views import PagesAPIViewSet
 from wagtail.models import Page
 
 from irelandie_missions.filters import MissionPageFieldFilter
-from irelandie_news.filters import NewsPageFieldFilter
 from irelandie_news.models import NewsPage
 from irelandie_utils.models import SystemMessagesSettings
 from wagtail.core.models import Site

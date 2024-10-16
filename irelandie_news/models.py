@@ -18,7 +18,6 @@ from wagtail.images.api.fields import ImageRenditionField
 
 from irelandie_utils.models import MinimalArticlePage, BasePage
 
-
 from django.dispatch import receiver
 from django.db.models.signals import pre_delete
 
@@ -194,7 +193,6 @@ class NewsPage(MinimalArticlePage):
 
     class Meta:
         verbose_name = "News Content"
-
 
 
 def news_page_changed(news_page):

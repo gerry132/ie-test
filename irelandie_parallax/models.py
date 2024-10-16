@@ -7,7 +7,7 @@ from irelandie_utils.blocks import GenericHeroBlock, ParallexAdvancedRichTextBlo
     ParallaxLogoCardsBlock, ParallaxStoryPhotoGalleryBlock, ParallaxTimelinePhotoGalleryBlock, ParallaxLinkCardsBlock, \
     ParallaxYoutubeVimeoBlock
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList
 
 
 class Parallax(HeroPage):
