@@ -3,12 +3,11 @@ from django.urls import path
 
 from .conf import settings
 from django.views.generic import TemplateView
-from .views import RobotsTxtView
 
 
 urlpatterns = [
     path(
         settings.ROBOTS_PATTERN,
-        TemplateView.as_view(template_name="base.html")
+        TemplateView.as_view(template_name="robots.txt")
     )
 ]
