@@ -450,30 +450,10 @@ if USE_S3 is True:
 
     AWS_S3_REGION_NAME = "eu-west-1"
 
-    SEO_MAP_URL = "https://{AWS_S3_CUSTOM_DOMAIN}/sitemap/test.csv"
+    SEO_MAP_URL = "https://{}/sitemap/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
 
 
-print("https://{AWS_S3_CUSTOM_DOMAIN}/sitemap/test.csv")
-
-print("https://{AWS_S3_CUSTOM_DOMAIN}/sitemap/test.csv")
-
-print("https://{AWS_S3_CUSTOM_DOMAIN}/sitemap/test.csv")
-
-print("https://{AWS_S3_CUSTOM_DOMAIN}/sitemap/test.csv")
-
-print("https://{AWS_S3_CUSTOM_DOMAIN}/sitemap/test.csv")
-
-print("https://{AWS_S3_CUSTOM_DOMAIN}/sitemap/test.csv")
-
-print("https://{AWS_S3_CUSTOM_DOMAIN}/sitemap/test.csv")
-
-print("https://{AWS_S3_CUSTOM_DOMAIN}/sitemap/test.csv")
-
-print("https://{AWS_S3_CUSTOM_DOMAIN}/sitemap/test.csv")
-
-print("https://{AWS_S3_CUSTOM_DOMAIN}/sitemap/test.csv")
-
-print("https://{AWS_S3_CUSTOM_DOMAIN}/sitemap/test.csv")
+print("https://{}/sitemap/test.csv".format(AWS_S3_CUSTOM_DOMAIN))
 
 WAGTAIL_SITE_NAME = "Ireland.ie"
 
