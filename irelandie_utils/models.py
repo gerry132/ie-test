@@ -13,6 +13,8 @@ from wagtail.admin.panels import (
     FieldRowPanel,
     HelpPanel, TabbedInterface, ObjectList, InlinePanel,
 )
+from wagtailseo.models import SeoMixin
+
 from irelandie_utils.cache import get_default_cache_control_decorator
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail import blocks
@@ -196,8 +198,8 @@ class SocialFields(models.Model):
 
     promote_panels = [
         MultiFieldPanel(
-            [FieldPanel("social_image", permission="access_admin"),
-             FieldPanel("social_text", permission="access_admin")],
+            [FieldPanel("social_image"),
+             FieldPanel("social_text")],
             "Social networks",
         )
     ]
@@ -236,14 +238,13 @@ class ListingFields(models.Model):
     promote_panels = [
         MultiFieldPanel(
             [
-                FieldPanel("listing_image", permission="access_admin"),
+                FieldPanel("listing_image"),
                 FieldPanel(
                     "listing_image_alt",
                     help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/"),
-                    permission="access_admin"
                 ),
-                FieldPanel("listing_title", permission="access_admin"),
-                FieldPanel("listing_summary", permission="access_admin"),
+                FieldPanel("listing_title"),
+                FieldPanel("listing_summary"),
             ],
             "Listing information",
         )
@@ -618,7 +619,7 @@ class SystemMessagesSettings(BaseSetting):
 
 # Apply default cache headers on this page model's serve method.
 @method_decorator(get_default_cache_control_decorator(), name='serve')
-class BasePage(SocialFields, ListingFields, Page):
+class BasePage(SeoMixin, SocialFields, ListingFields, Page):
     show_in_menus_default = True
 
     webchat_script = models.TextField(
@@ -666,17 +667,8 @@ class BasePage(SocialFields, ListingFields, Page):
     class Meta:
         abstract = True
 
-    COMMON_PROMOTE_PANELS = (
-        FieldPanel('slug', permission="access_admin"),
-        FieldPanel('seo_title', permission="access_admin"),
-        FieldPanel('search_description', permission="access_admin"),
-    )
-
     promote_panels = (
-        [
-            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
-            FieldPanel('show_in_menus', permission="access_admin"),
-        ] +
+        SeoMixin.seo_panels +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )
@@ -939,7 +931,7 @@ class HeroPage(BasePage):
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(hero_panel, heading='Hero'),
-        ObjectList(BasePage.promote_panels, heading='Promote'),
+        ObjectList(BasePage.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(BasePage.settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -1114,17 +1106,8 @@ class MinimalArticlePage(BasePage):
                     help_text="Please leave this section blank. Tags should only be added by Comms Unit."),
     ]
 
-    COMMON_PROMOTE_PANELS = (
-        FieldPanel('slug'),
-        FieldPanel('seo_title'),
-        FieldPanel('search_description'),
-    )
-
     promote_panels = (
-        [
-            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
-            FieldPanel('show_in_menus'),
-        ] +
+        SeoMixin.seo_panels +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )

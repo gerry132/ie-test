@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
+import json
+
 from django.db import models
+from wagtailseo.models import SeoMixin
+from wagtailseo.utils import StructDataEncoder
+
 from irelandie_utils.models import HeroPage, SocialFields, ListingFields
 from irelandie_utils.blocks import GenericHeroBlock
 from .blocks import StoryPageBlock
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, InlinePanel, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, InlinePanel
 
 
 class StoryPage(HeroPage):
@@ -33,17 +38,9 @@ class StoryPage(HeroPage):
         InlinePanel('page_related_tags', label="Related category tags"),
         InlinePanel('page_related_destination_tags', label="Related destination"),
     ]
-    COMMON_PROMOTE_PANELS = (
-        FieldPanel('slug'),
-        FieldPanel('seo_title'),
-        FieldPanel('search_description'),
-    )
 
     promote_panels = (
-        [
-            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
-            FieldPanel('show_in_menus'),
-        ] +
+        SeoMixin.seo_panels +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )
@@ -73,6 +70,25 @@ class StoryPage(HeroPage):
         super().save(*args, **kwargs)
         if self.live:  # Ensure the page is published
             page_published.send(sender=self.__class__, instance=self)
+
+    @property
+    def my_struct_website_dict(self) -> dict:
+        sd_dict = {
+            "@context": "https://schema.org",
+            "@type": "GovernmentOrganization",
+            "name": self.slug,  # Use SEO title
+            "url": self.full_url,
+        }
+
+        # Optionally include other fields if necessary
+        if self.seo_struct_publisher_dict:
+            sd_dict.update({"publisher": self.seo_struct_publisher_dict})
+
+        return sd_dict
+
+    @property
+    def my_struct_website_json(self) -> str:
+        return json.dumps(self.my_struct_website_dict, cls=StructDataEncoder)
 
     class Meta:
         verbose_name = "Story page"

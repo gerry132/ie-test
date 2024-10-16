@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 from functools import cached_property
 from django.db import models
 from django.core.cache.utils import make_template_fragment_key
@@ -14,6 +15,7 @@ from irelandie_utils.models import HeroPage
 from irelandie_pages.models import FreeFormPageBase
 from wagtail.images import get_image_model_string
 from wagtail.models import Site
+from wagtailseo.utils import StructDataEncoder
 
 
 IMAGE_MODEL = get_image_model_string()
@@ -76,7 +78,7 @@ class HomePage(FreeFormPageBase):
         ObjectList(FreeFormPageBase.content_panels, heading='Content'),
         ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
         ObjectList(secondary_cta_panel, heading='Call To Action'),
-        ObjectList(promote_panels, heading='Promote'),
+        ObjectList(promote_panels, heading='Promote', permission="superuser"),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -100,6 +102,25 @@ class HomePage(FreeFormPageBase):
             .order_by("-publication_date")[:4]
             .specific()
         )
+
+    @property
+    def my_struct_website_dict(self) -> dict:
+        sd_dict = {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": self.slug,  # Use SEO title
+            "url": self.full_url,
+        }
+
+        # Optionally include other fields if necessary
+        if self.seo_struct_publisher_dict:
+            sd_dict.update({"publisher": self.seo_struct_publisher_dict})
+
+        return sd_dict
+
+    @property
+    def my_struct_website_json(self) -> str:
+        return json.dumps(self.my_struct_website_dict, cls=StructDataEncoder)
 
 
 class CampaignPage(HeroPage):
@@ -165,7 +186,7 @@ class CampaignPage(HeroPage):
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(HeroPage.hero_panel, heading='Hero'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -227,7 +248,7 @@ class TopicPage(HeroPage):
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(HeroPage.hero_panel, heading='Hero'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 

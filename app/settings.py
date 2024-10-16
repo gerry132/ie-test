@@ -132,6 +132,7 @@ INSTALLED_APPS = [
     "wagtail.api.v2",
     "captcha",
     "wagtailcaptcha",
+    "wagtailseo",
     "modelcluster",
     "taggit",
     "passwordreset",
@@ -177,7 +178,6 @@ if DEBUG_TOOLBAR is True:
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
 
-
 CLOUDFRONT_ID = os.environ.get("CLOUDFRONT_ID")
 
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
@@ -196,7 +196,6 @@ WAGTAILFRONTENDCACHE = {
         'DISTRIBUTION_ID': 'd1myit6n7hwrr1.cloudfront.net',
     },
 }
-
 
 ROOT_URLCONF = "app.urls"
 
@@ -310,7 +309,6 @@ STATICFILES_FINDERS = [
 STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, "static_compiled/"),
 ]
-
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 

@@ -18,7 +18,6 @@ from wagtail.images.api.fields import ImageRenditionField
 
 from irelandie_utils.models import MinimalArticlePage, BasePage
 
-
 from django.dispatch import receiver
 from django.db.models.signals import pre_delete
 
