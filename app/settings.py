@@ -448,7 +448,7 @@ if USE_S3 is True:
 
     AWS_S3_REGION_NAME = "eu-west-1"
 
-    SEO_MAP_URL = "https://{}/sitemap/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
+    SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
 else:
     None
 
