@@ -13,7 +13,7 @@ from wagtail.admin.panels import (
     FieldRowPanel,
     HelpPanel, TabbedInterface, ObjectList, InlinePanel,
 )
-from wagtailseo.models import SeoMixin
+from wagtailseo.models import SeoMixin, TwitterCard, SeoType
 
 from irelandie_utils.cache import get_default_cache_control_decorator
 from wagtail.contrib.settings.models import BaseSetting, register_setting
@@ -657,6 +657,9 @@ class BasePage(SeoMixin, SocialFields, ListingFields, Page):
         related_name="+",
     )
 
+    # Change the Twitter card style.
+    seo_twitter_card = TwitterCard.LARGE
+
     custom_header_panel = [
         FieldPanel("custom_header", permission="access_admin")
     ]
@@ -966,6 +969,9 @@ class ArticlePage(BasePage):
     )
     related_articles_active = models.BooleanField(default=True)
 
+    # Indicate this is article-style content.
+    seo_content_type = SeoType.ARTICLE
+
     class Meta:
         abstract = True
 
@@ -1068,6 +1074,9 @@ class MinimalArticlePage(BasePage):
 
     related_articles_active = models.BooleanField(default=True)
     featured_home = models.BooleanField(default=False)
+
+    # Indicate this is article-style content.
+    seo_content_type = SeoType.ARTICLE
 
     class Meta:
         abstract = True

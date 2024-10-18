@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-import json
 
 from django.db import models
-from wagtailseo.models import SeoMixin
-from wagtailseo.utils import StructDataEncoder
+from wagtailseo.models import SeoMixin, SeoType
 
 from irelandie_utils.models import HeroPage, SocialFields, ListingFields
 from irelandie_utils.blocks import GenericHeroBlock
@@ -27,6 +25,9 @@ class StoryPage(HeroPage):
 
     introduction = models.TextField(blank=True)
     body = StreamField(StoryPageBlock(), blank=True)
+
+    # Indicate this is article-style content.
+    seo_content_type = SeoType.ARTICLE
 
     content_panels = HeroPage.content_panels + [
         FieldPanel("subtitle", help_text="Please include a brief description of this page/article. This will not "
@@ -70,25 +71,6 @@ class StoryPage(HeroPage):
         super().save(*args, **kwargs)
         if self.live:  # Ensure the page is published
             page_published.send(sender=self.__class__, instance=self)
-
-    @property
-    def my_struct_website_dict(self) -> dict:
-        sd_dict = {
-            "@context": "https://schema.org",
-            "@type": "GovernmentOrganization",
-            "name": self.slug,  # Use SEO title
-            "url": self.full_url,
-        }
-
-        # Optionally include other fields if necessary
-        if self.seo_struct_publisher_dict:
-            sd_dict.update({"publisher": self.seo_struct_publisher_dict})
-
-        return sd_dict
-
-    @property
-    def my_struct_website_json(self) -> str:
-        return json.dumps(self.my_struct_website_dict, cls=StructDataEncoder)
 
     class Meta:
         verbose_name = "Story page"
