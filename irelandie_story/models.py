@@ -71,24 +71,6 @@ class StoryPage(HeroPage):
         if self.live:  # Ensure the page is published
             page_published.send(sender=self.__class__, instance=self)
 
-    @property
-    def my_struct_website_dict(self) -> dict:
-        sd_dict = {
-            "@context": "https://schema.org",
-            "@type": "GovernmentOrganization",
-            "name": self.slug,  # Use SEO title
-            "url": self.full_url,
-        }
-
-        # Optionally include other fields if necessary
-        if self.seo_struct_publisher_dict:
-            sd_dict.update({"publisher": self.seo_struct_publisher_dict})
-
-        return sd_dict
-
-    @property
-    def my_struct_website_json(self) -> str:
-        return json.dumps(self.my_struct_website_dict, cls=StructDataEncoder)
 
     class Meta:
         verbose_name = "Story page"

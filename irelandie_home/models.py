@@ -7,6 +7,7 @@ from django.core.cache import cache
 from wagtail.admin.panels import TabbedInterface, ObjectList, FieldPanel
 from wagtail import blocks as wagtail_blocks
 from wagtail.fields import StreamField
+
 from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_news.models import NewsPage
 from irelandie_utils.utils import get_root_info
@@ -15,7 +16,6 @@ from irelandie_utils.models import HeroPage
 from irelandie_pages.models import FreeFormPageBase
 from wagtail.images import get_image_model_string
 from wagtail.models import Site
-from wagtailseo.utils import StructDataEncoder
 
 
 IMAGE_MODEL = get_image_model_string()
@@ -102,25 +102,6 @@ class HomePage(FreeFormPageBase):
             .order_by("-publication_date")[:4]
             .specific()
         )
-
-    @property
-    def my_struct_website_dict(self) -> dict:
-        sd_dict = {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": self.slug,  # Use SEO title
-            "url": self.full_url,
-        }
-
-        # Optionally include other fields if necessary
-        if self.seo_struct_publisher_dict:
-            sd_dict.update({"publisher": self.seo_struct_publisher_dict})
-
-        return sd_dict
-
-    @property
-    def my_struct_website_json(self) -> str:
-        return json.dumps(self.my_struct_website_dict, cls=StructDataEncoder)
 
 
 class CampaignPage(HeroPage):
