@@ -13,7 +13,7 @@ from wagtail.admin.panels import (
     FieldRowPanel,
     HelpPanel, TabbedInterface, ObjectList, InlinePanel,
 )
-from wagtailseo.models import SeoMixin, SeoType, TwitterCard
+from wagtailseo.models import SeoMixin
 
 from irelandie_utils.cache import get_default_cache_control_decorator
 from wagtail.contrib.settings.models import BaseSetting, register_setting
