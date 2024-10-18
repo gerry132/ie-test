@@ -29,7 +29,7 @@ class RootBuilder(BaseBuilder):
         xml_root.attrib['xsi:schemaLocation'] = "https://www.sitemaps.org/schemas/sitemap/0.9" \
                                                 + " https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
         xml_root.attrib['xmlns'] = "https://www.sitemaps.org/schemas/sitemap/0.9"
-        print(settings.SEO_MAP_URL)
+
         return xml_root
 
     def add_xml_root(self, xml_root):
@@ -60,12 +60,22 @@ class RootBuilder(BaseBuilder):
             self.site = urls[0]
             urls.remove(self.site)
 
+
             # TODO: perhaps add multisite support
 
             for series in urls:
+
                 locale = Locale.objects.get(language_code='en')
                 p = Page.objects.live().filter(slug=series.strip("/"), locale=locale)
-
-                for res in p:
-                    self.page_url_map[series] = res
-                    self.root_pages.append(res)
+                if len(p) > 1:
+                    print('here')
+                    for res in p:
+                        print(res.get_url())
+                        print('/en/' + series)
+                        if res.get_url() == '/en/' + series:
+                            self.page_url_map[series] = res
+                            self.root_pages.append(res)
+                else:
+                    self.page_url_map[series] = p[0]
+                    self.root_pages.append(p[0])
+                print(self.root_pages)
