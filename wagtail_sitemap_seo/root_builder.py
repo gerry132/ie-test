@@ -59,8 +59,7 @@ class RootBuilder(BaseBuilder):
                 urls.append(row[0])
             self.site = urls[0]
             urls.remove(self.site)
-
-
+        
             # TODO: perhaps add multisite support
 
             for series in urls:
