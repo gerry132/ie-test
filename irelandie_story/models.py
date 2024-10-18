@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-import json
 
 from django.db import models
 from wagtailseo.models import SeoMixin
-from wagtailseo.utils import StructDataEncoder
 
 from irelandie_utils.models import HeroPage, SocialFields, ListingFields
 from irelandie_utils.blocks import GenericHeroBlock
@@ -70,7 +68,6 @@ class StoryPage(HeroPage):
         super().save(*args, **kwargs)
         if self.live:  # Ensure the page is published
             page_published.send(sender=self.__class__, instance=self)
-
 
     class Meta:
         verbose_name = "Story page"

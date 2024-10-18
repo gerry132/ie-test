@@ -10,6 +10,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {% include "wagtailseo/meta.html" %}
+        {% if self.seo_author %}
+        <meta name="author" content="{% block author %}{{ self.seo_author }}{% endblock %}" />
+        {% endif %}
+        <meta property="website:published_time" content="{{ self.seo_published_at|date:'c' }}" />
+        <meta property="website:modified_time" content="{{ self.last_published_at|date:'c' }}" />
 
         {% block meta_tags %}{% endblock %}
 

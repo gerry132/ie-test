@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import json
 
 from django.db import models
 from wagtail.core.models import Page
@@ -12,7 +11,6 @@ from django.core.cache.utils import make_template_fragment_key
 
 from wagtail.images import get_image_model_string
 from wagtailseo.models import SeoMixin
-from wagtailseo.utils import StructDataEncoder
 
 from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_home.models import HomePage

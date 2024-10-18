@@ -657,12 +657,6 @@ class BasePage(SeoMixin, SocialFields, ListingFields, Page):
         related_name="+",
     )
 
-    # Indicate this is article-style content.
-    seo_content_type = SeoType.ARTICLE
-
-    # Change the Twitter card style.
-    seo_twitter_card = TwitterCard.LARGE
-
     custom_header_panel = [
         FieldPanel("custom_header", permission="access_admin")
     ]

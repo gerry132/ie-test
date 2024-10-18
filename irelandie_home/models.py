@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import json
 from functools import cached_property
 from django.db import models
 from django.core.cache.utils import make_template_fragment_key
