@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from wagtailseo.models import SeoMixin
+from wagtailseo.models import SeoMixin, SeoType
 
 from irelandie_utils.blocks import AdvancedRichTextBlock, LinkBoxesBlock, LinkCardsBlock
 
@@ -65,6 +65,9 @@ class TravelCountryPage(BasePage):
         blank=True,
         null=True
     )
+
+    # Indicate this is article-style content.
+    seo_content_type = SeoType.ARTICLE
 
     content_panels = BasePage.content_panels + [
         FieldPanel('subtitle'),

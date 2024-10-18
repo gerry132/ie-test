@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import json
 
 from django.db import models
 from wagtail.core.models import Page
@@ -12,7 +11,6 @@ from django.core.cache.utils import make_template_fragment_key
 
 from wagtail.images import get_image_model_string
 from wagtailseo.models import SeoMixin
-from wagtailseo.utils import StructDataEncoder
 
 from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_home.models import HomePage
@@ -1186,22 +1184,3 @@ class GeneralContentIrishAid(HeroPage):
         super().save(*args, **kwargs)
         if self.live:  # Ensure the page is published
             page_published.send(sender=self.__class__, instance=self)
-
-    @property
-    def my_struct_website_dict(self) -> dict:
-        sd_dict = {
-            "@context": "https://schema.org",
-            "@type": "GovernmentOrganization",
-            "name": self.slug,  # Use SEO title
-            "url": self.full_url,
-        }
-
-        # Optionally include other fields if necessary
-        if self.seo_struct_publisher_dict:
-            sd_dict.update({"publisher": self.seo_struct_publisher_dict})
-
-        return sd_dict
-
-    @property
-    def my_struct_website_json(self) -> str:
-        return json.dumps(self.my_struct_website_dict, cls=StructDataEncoder)
