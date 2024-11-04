@@ -539,8 +539,9 @@ else:
     # To avoid failing github actions
     SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
 
-RECAPTCHA_PUBLIC_KEY = '6LcBCQkpAAAAAAdRwFKal9f1p9UVALRZQqoVxcAe'
-RECAPTCHA_PRIVATE_KEY = '6LcBCQkpAAAAADzd5ek6Cb6xKMQfA_5LP-IZ2qpk'
+# RECAPTCHA_PUBLIC_KEY = '6LcBCQkpAAAAAAdRwFKal9f1p9UVALRZQqoVxcAe'
+# RECAPTCHA_PRIVATE_KEY = '6LcBCQkpAAAAADzd5ek6Cb6xKMQfA_5LP-IZ2qpk'
+
 NOCAPTCHA = True
 if USE_CACHE is True:
     SESSION_ENGINE = "django.contrib.sessions.backends.cache"
