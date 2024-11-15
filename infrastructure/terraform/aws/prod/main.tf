@@ -75,7 +75,7 @@ locals {
     },
     reinaldo_dev = {
       description = "Reinaldo Sanches - OGCIO"
-      cidr_blocks = ["172.105.95.186/32", "89.101.167.251/32"]
+      cidr_blocks = ["172.105.95.186/32", "86.41.9.222/32"]
     },
     gerry_dev = {
       description = "Gerry Mcbride - OGCIO"
@@ -1523,7 +1523,9 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips" {
                         "176.58.117.51/32",
                         "80.85.87.84/32",
                         "88.80.184.34/32",
-                        "178.79.136.28/32"]
+                        "178.79.136.28/32",
+                        "52.49.7.9/32"  # OGCIO AWS SharedServices Account NAT Gateway IP
+  ]
 }
 
 
