@@ -2,7 +2,6 @@ from irelandie_utils.agent.time_thread import RepeatedTimer
 from django.core import management
 
 
-
 class Agent(RepeatedTimer):
     def __init__(self):
         super().__init__(10, self.unpub_pub_pages)
