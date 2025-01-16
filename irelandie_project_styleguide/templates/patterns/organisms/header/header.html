@@ -42,7 +42,7 @@
     {% include "patterns/snippets/websiteheadersnippet.html" with object=settings.irelandie_navigation.SiteSettings.website_header_strapline %}
 {% endif %}
 {% load static navigation_tags util_tags %}
-<header>
+<header role="banner">
     <div class="header {% if custom_header.links %}header--condensed{% endif %}">
         <div class="wrapper wrapper--large">
             <div class="header__container">
@@ -235,10 +235,10 @@
                     </a>
 
                     <div class="header__menus header__menus--desktop">
-                        <nav class="custom-nav">
-                            <ul class="custom-nav__links">
+                        <nav class="custom-nav" aria-label="Main Navigation" role="navigation" tabindex="0">
+                            <ul class="custom-nav__links" role="menubar">
                                 {% for link in custom_header.links %}
-                                <li class="custom-nav__item">
+                                <li class="custom-nav__item" role="none">
                                     {% include_block link with nav_type="custom-nav" %}
                                 </li>
                                 {% endfor %}
@@ -247,10 +247,10 @@
                     </div>
 
                     <div class="header__menus header__menus--mobile" style="{% if settings.irelandie_navigation.SiteSettings.website_header_strapline %}top:130px; {% endif %}" data-mobile-menu>
-                        <nav class="custom-nav">
-                            <ul class="custom-nav__links">
+                        <nav class="custom-nav" aria-label="Main Navigation" role="navigation" tabindex="0" >
+                            <ul class="custom-nav__links" role="menubar">
                                 {% for link in custom_header.links %}
-                                <li class="custom-nav__item">
+                                <li class="custom-nav__item" role="none">
                                     {% include_block link with nav_type="custom-nav" %}
                                 </li>
                                 {% endfor %}

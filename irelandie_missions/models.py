@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from django.db import models
 from wagtail.core.models import Page
 from django.utils.functional import cached_property
@@ -9,7 +10,7 @@ from django.core.cache import cache
 from django.core.cache.utils import make_template_fragment_key
 
 from wagtail.images import get_image_model_string
-
+from wagtailseo.models import SeoMixin
 
 from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_home.models import HomePage
@@ -18,6 +19,7 @@ from irelandie_pages.models import FreeFormPageBase
 from irelandie_news.models import NewsPage
 from irelandie_utils import blocks
 from irelandie_utils.blocks import HomepageFeatureBlock
+from irelandie_utils.cache_invalidation import invalidate_page_cache
 from irelandie_utils.utils import get_root_info
 from irelandie_utils.models import BasePage, CountryGroup, HeroPage, SocialFields, ListingFields
 from wagtail.snippets.blocks import SnippetChooserBlock
@@ -221,7 +223,7 @@ class DestinationPage(HeroPage):
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(HeroPage.hero_panel_with_size, heading='Hero'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -334,17 +336,9 @@ class JobContentPage(BasePage):
         FieldPanel("body"),
         FieldPanel("privacy_policy", permission="access_admin"),
     ]
-    COMMON_PROMOTE_PANELS = (
-        FieldPanel('slug'),
-        FieldPanel('seo_title'),
-        FieldPanel('search_description'),
-    )
 
     promote_panels = (
-        [
-            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
-            FieldPanel('show_in_menus'),
-        ] +
+        SeoMixin.seo_panels +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )
@@ -439,6 +433,9 @@ def job_page_changed(job_page):
         batch = PurgeBatch()
         batch.add_page(job_index_page)
         batch.purge()
+
+        # Also invalidate CloudFront and Django cache for job index page
+        invalidate_page_cache(job_index_page)
 
 
 @receiver(page_published, sender=JobContentPage)
@@ -588,7 +585,7 @@ class MissionPage(HeroPage):
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(HeroPage.hero_panel, heading='Hero'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -623,7 +620,7 @@ class Magazine(HeroPage):
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -968,7 +965,7 @@ class ConsulatePage(FreeFormPageBase):
         ObjectList(content_panels, heading='Content'),
         ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
         ObjectList(secondary_cta_panel, heading='Call To Action'),
-        ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
+        ObjectList(FreeFormPageBase.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -1018,7 +1015,7 @@ class EmbassyPage(FreeFormPageBase):
         ObjectList(content_panels, heading='Content'),
         ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
         ObjectList(secondary_cta_panel, heading='Call To Action'),
-        ObjectList(FreeFormPageBase.promote_panels, heading='Promote'),
+        ObjectList(FreeFormPageBase.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(FreeFormPageBase.settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -1084,7 +1081,7 @@ class GeneralContentPage(HeroPage):
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -1152,7 +1149,7 @@ class GeneralContentIrishAid(HeroPage):
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 

@@ -4,6 +4,7 @@
 {% wagtail_site as current_site %}
 
 {% block meta_tags %}
+
         <!-- OneTrust Cookies Consent Notice start for ireland.ie -->
 
         <script type="text/javascript" src="https://cdn.cookielaw.org/consent/587affe4-c69d-4222-b532-bf8caeaa4e67/OtAutoBlock.js" ></script>
@@ -38,10 +39,6 @@
         Twitter summary card - see https://dev.twitter.com/cards/types/summary
         and https://dev.twitter.com/cards/getting-started
     {% endcomment %}
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@{{ settings.utils.SocialMediaSettings.twitter_handle }}" />
-    <meta name="twitter:title" content="{{ page.title }}" />
-    <meta name="twitter:description" content="{{ page|social_text:current_site }}">
     {% if page.social_image  %}
         {% image page.social_image width-1000 as social_img %}
         {# This will give a full path to the image when on staging or production because S3 storage is used. If testing locally, make sure you use the default localhost:8000 url. Testing via :3000 will give peculiar results. #}
@@ -59,9 +56,6 @@
 
     {# facebook opengraph tags #}
     <meta property="fb:app_id" content="{{ settings.utils.SocialMediaSettings.facebook_app_id }}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ site.root_url }}{{ page.url }}" />
-    <meta property="og:title" content="{{ page.title }}" />
     {% if page.social_image %}
         {% image page.social_image width-1200 height-630 as social_img %}
         {# This will give a full path to the image when on staging or production because S3 storage is used. If testing locally, make sure you use the default localhost:8000 url. Testing via :3000 will give peculiar results. #}
@@ -75,8 +69,6 @@
         <meta name="og:image" content="{{ current_site.root_url }}{% static 'images/social-image.png' %}">
         {% endcomment %}
     {% endif %}
-    <meta property="og:description" content="{{ page|social_text:current_site }}" />
-    <meta property="og:site_name" content="{{ settings.utils.SocialMediaSettings.site_name }}" />
 {% endblock meta_tags %}
 
 {% block body_top %}
