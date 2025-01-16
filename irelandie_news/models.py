@@ -102,13 +102,10 @@ class NewsPageIndex(BasePage):
         page = request.GET.get("page", 1)
         try:
             rel_art = paginator.page(page)
-            print('here')
         except PageNotAnInteger:
             rel_art = paginator.page(1)
-            print('no here')
         except EmptyPage:
             rel_art = paginator.page(paginator.num_pages)
-            print('or even here')
         context['related_articles'] = rel_art
         pages = self.get_ancestors()
         for p in pages:
