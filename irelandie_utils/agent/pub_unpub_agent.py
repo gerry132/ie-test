@@ -1,7 +1,6 @@
 from irelandie_utils.agent.time_thread import RepeatedTimer
 from django.core import management
 
-from wagtail_sitemap_seo.sub_map_builder import MapBuilder
 
 
 class Agent(RepeatedTimer):
