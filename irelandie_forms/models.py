@@ -135,7 +135,7 @@ class FormPage(HoneypotMixin, BasePage):
         [
             ObjectList(content_panels, heading="Content"),
             ObjectList(honeypot_panels, heading="Honeypot"),
-            ObjectList(BasePage.promote_panels, heading="Promote"),
+            ObjectList(BasePage.promote_panels, heading="Promote", permission="superuser"),
             ObjectList(
                 BasePage.settings_panels, heading="Settings", classname="settings"
             ),

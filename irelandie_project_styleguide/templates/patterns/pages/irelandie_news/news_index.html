@@ -15,6 +15,7 @@ function getNewsArticles(year=null) {
     else if (year===null) {
         year = null;
     }
+
     $.ajax({
             url : '{{ current_site.full_url }}',
             type : 'GET',

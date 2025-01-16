@@ -6,6 +6,7 @@ from django.core.cache import cache
 from wagtail.admin.panels import TabbedInterface, ObjectList, FieldPanel
 from wagtail import blocks as wagtail_blocks
 from wagtail.fields import StreamField
+
 from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_news.models import NewsPage
 from irelandie_utils.utils import get_root_info
@@ -76,7 +77,7 @@ class HomePage(FreeFormPageBase):
         ObjectList(FreeFormPageBase.content_panels, heading='Content'),
         ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
         ObjectList(secondary_cta_panel, heading='Call To Action'),
-        ObjectList(promote_panels, heading='Promote'),
+        ObjectList(promote_panels, heading='Promote', permission="superuser"),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -165,7 +166,7 @@ class CampaignPage(HeroPage):
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(HeroPage.hero_panel, heading='Hero'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -227,7 +228,7 @@ class TopicPage(HeroPage):
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(HeroPage.hero_panel, heading='Hero'),
-        ObjectList(HeroPage.promote_panels, heading='Promote'),
+        ObjectList(HeroPage.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
