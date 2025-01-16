@@ -13,7 +13,7 @@ from wagtail.admin.panels import (
     FieldRowPanel,
     HelpPanel, TabbedInterface, ObjectList, InlinePanel,
 )
-from wagtailseo.models import SeoMixin, TwitterCard, SeoType
+# from wagtailseo.models import SeoMixin, TwitterCard, SeoType
 
 from irelandie_utils.cache import get_default_cache_control_decorator
 from wagtail.contrib.settings.models import BaseSetting, register_setting
@@ -619,7 +619,7 @@ class SystemMessagesSettings(BaseSetting):
 
 # Apply default cache headers on this page model's serve method.
 @method_decorator(get_default_cache_control_decorator(), name='serve')
-class BasePage(SeoMixin, SocialFields, ListingFields, Page):
+class BasePage(SocialFields, ListingFields, Page):
     show_in_menus_default = True
 
     webchat_script = models.TextField(
@@ -658,7 +658,7 @@ class BasePage(SeoMixin, SocialFields, ListingFields, Page):
     )
 
     # Change the Twitter card style.
-    seo_twitter_card = TwitterCard.LARGE
+    # seo_twitter_card = TwitterCard.LARGE
 
     custom_header_panel = [
         FieldPanel("custom_header", permission="access_admin")
@@ -671,7 +671,7 @@ class BasePage(SeoMixin, SocialFields, ListingFields, Page):
         abstract = True
 
     promote_panels = (
-        SeoMixin.seo_panels +
+        # SeoMixin.seo_panels +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )
@@ -970,7 +970,7 @@ class ArticlePage(BasePage):
     related_articles_active = models.BooleanField(default=True)
 
     # Indicate this is article-style content.
-    seo_content_type = SeoType.ARTICLE
+    # seo_content_type = SeoType.ARTICLE
 
     class Meta:
         abstract = True
@@ -1076,7 +1076,7 @@ class MinimalArticlePage(BasePage):
     featured_home = models.BooleanField(default=False)
 
     # Indicate this is article-style content.
-    seo_content_type = SeoType.ARTICLE
+    # seo_content_type = SeoType.ARTICLE
 
     class Meta:
         abstract = True
@@ -1116,7 +1116,7 @@ class MinimalArticlePage(BasePage):
     ]
 
     promote_panels = (
-        SeoMixin.seo_panels +
+        # SeoMixin.seo_panels +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )

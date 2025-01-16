@@ -2,7 +2,7 @@
 from functools import cached_property
 
 from django.db import models
-from wagtailseo.models import SeoMixin
+# from wagtailseo.models import SeoMixin
 
 from irelandie_utils.models import BasePage, SocialFields, ListingFields
 from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel, HelpPanel, InlinePanel
@@ -197,7 +197,7 @@ class ListingsContentPage(ListingsContents, BasePage):
                        BasePage.webchat_panel
                        )
     promote_panels = (
-        SeoMixin.seo_panels +
+        # SeoMixin.seo_panels +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )
@@ -328,7 +328,7 @@ class ListingsContentUSAPage(ListingsContents, BasePage):
         FieldPanel('event_details'),
     ]
     promote_panels = (
-        SeoMixin.seo_panels +
+        # SeoMixin.seo_panels +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )

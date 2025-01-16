@@ -5,7 +5,7 @@ from django.db import models
 from wagtail.admin.panels import FieldPanel
 from wagtail.models import Page
 from wagtail.fields import StreamField
-from wagtailseo.models import SeoType
+# from wagtailseo.models import SeoType
 
 from irelandie_utils import blocks
 from irelandie_utils.cache_invalidation import invalidate_page_cache
@@ -48,7 +48,7 @@ class NewsPageIndex(BasePage):
         max_num=1,
     )
     # Indicate this is article-style content.
-    seo_content_type = SeoType.ARTICLE
+    # seo_content_type = SeoType.ARTICLE
 
     content_panels = Page.content_panels + [
         FieldPanel("description"),
@@ -279,7 +279,7 @@ class NewsLandingPage(BasePage):
         null=True,
     )
     # Indicate this is article-style content.
-    seo_content_type = SeoType.ARTICLE
+    # seo_content_type = SeoType.ARTICLE
 
     content_panels = BasePage.content_panels + [
         FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
