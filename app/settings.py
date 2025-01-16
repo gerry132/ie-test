@@ -128,8 +128,6 @@ INSTALLED_APPS = [
     "wagtailmedia",
     "wagtail.contrib.typed_table_block",
     "wagtail.api.v2",
-    "captcha",
-    "wagtailcaptcha",
     "modelcluster",
     "taggit",
     "passwordreset",
@@ -167,7 +165,7 @@ MIDDLEWARE = [
     "irelandie_utils.middleware.ReplaceViewsMiddleware",
     "custom_logout.middleware.custom_logout.CustomMiddleware",
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
-    "sitemap_downloader.middleware.sitemap_downloader.CustomLoginChecker",
+    #"sitemap_downloader.middleware.sitemap_downloader.CustomLoginChecker",
 ]
 
 if DEBUG_TOOLBAR is True:
@@ -184,21 +182,6 @@ WAGTAIL_CLOUDFRONT_INVALIDATE_ENABLED = True
 
 if CLOUDFRONT_ID and CLOUDFRONT_ID != 'CHANGE-ME':
     CLOUDFRONT_DISTRIBUTION_ID = CLOUDFRONT_ID
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-else:
-    CLOUDFRONT_DISTRIBUTION_ID = 'E1TO0QE2H25W4R'
 
 WAGTAILFRONTENDCACHE = {
     'cloudfront': {
@@ -499,7 +482,7 @@ if OPENSEARCH_KEY and OPENSEARCH_SECRET and OPENSEARCH_ENDPOINT != 'CHANGE':
                     'analysis': {
                         'analyzer': {
                             'default': {
-                                'type': 'italian'
+                                'type': 'english'
                             }
                         }
                     },
@@ -531,20 +514,6 @@ WAGTAILMEDIA = {
     "VIDEO_EXTENSIONS": ["mp4"],  # list of extensions
 }
 
-# Recaptcha
-# These settings are required for the captcha challange to work.
-# https://github.com/springload/wagtail-django-recaptcha
-
-if "RECAPTCHA_PUBLIC_KEY" in os.environ and "RECAPTCHA_PRIVATE_KEY" in os.environ:
-    NOCAPTCHA = True
-    RECAPTCHA_PUBLIC_KEY = os.environ["RECAPTCHA_PUBLIC_KEY"]
-    RECAPTCHA_PRIVATE_KEY = os.environ["RECAPTCHA_PRIVATE_KEY"]
-else:
-    # To avoid failing github actions
-    SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
-
-# RECAPTCHA_PUBLIC_KEY = '6LcBCQkpAAAAAAdRwFKal9f1p9UVALRZQqoVxcAe'
-# RECAPTCHA_PRIVATE_KEY = '6LcBCQkpAAAAADzd5ek6Cb6xKMQfA_5LP-IZ2qpk'
 
 NOCAPTCHA = True
 if USE_CACHE is True:
