@@ -10,7 +10,7 @@ from django.core.cache import cache
 from django.core.cache.utils import make_template_fragment_key
 
 from wagtail.images import get_image_model_string
-from wagtailseo.models import SeoMixin
+# from wagtailseo.models import SeoMixin
 
 from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_home.models import HomePage
@@ -338,7 +338,7 @@ class JobContentPage(BasePage):
     ]
 
     promote_panels = (
-        SeoMixin.seo_panels +
+        # SeoMixin.seo_panels +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )
