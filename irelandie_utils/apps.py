@@ -9,8 +9,5 @@ class UtilsConfig(AppConfig):
 
     def ready(self):
         from .agent.pub_unpub_agent import Agent
-        from .agent.opensearch_thread import OpensearchAgent
-        open_search = OpensearchAgent()
         agent = Agent()
-        print(open_search)
         print(agent)
