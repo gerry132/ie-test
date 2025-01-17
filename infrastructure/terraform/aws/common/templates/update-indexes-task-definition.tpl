@@ -1,10 +1,8 @@
 [
     {
-        "name": "${name}",
+        "name": "index_update",
 		"image": "${ecr_image_url}",
         "assignPublicIp": false,
-		"cpu": ${task_cpu},
-		"memory": ${task_memory},
 		"networkMode": "awsvpc",
         "entryPoint": [
             "sh",
