@@ -6,6 +6,9 @@
 		"cpu": ${task_cpu},
 		"memory": ${task_memory},
 		"networkMode": "awsvpc",
+        "entryPoint": [
+            "/app/docker-entrypoint.sh"
+        ],
 		"logConfiguration": {
 			"logDriver": "awslogs",
 			"options": {

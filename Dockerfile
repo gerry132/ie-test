@@ -8,6 +8,7 @@ RUN mkdir /app
 RUN mkdir /static
 WORKDIR /app
 COPY requirements.txt /app/
+COPY update_indexes.sh /app/
 COPY docker-entrypoint.sh /app/
 
 # setup
@@ -40,6 +41,7 @@ RUN pip install -r requirements.txt --break-system-packages
 
 
 RUN ["chmod", "+x", "/app/docker-entrypoint.sh"]
+RUN ["chmod", "+x", "/app/update_indexes.sh"]
 ENTRYPOINT ["sh", "/app/docker-entrypoint.sh"]
 
 

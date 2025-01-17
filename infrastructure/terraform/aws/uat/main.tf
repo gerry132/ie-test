@@ -82,7 +82,7 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["80.233.54.40/32"]
+      cidr_blocks  = ["62.77.170.200/32"]
     },
 
     sina_dev = {
@@ -1394,6 +1394,36 @@ locals {
 
 }
 
+
+data "template_file" "index_task_definition" {
+  template    = file("../common/templates/update-indexes-task-definition.tpl")
+
+  vars = {
+    ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
+    log_group                           = aws_cloudwatch_log_group.ecs.name
+    SETTINGS_CLOUDFRONT_ID              = local.SETTINGS_CLOUDFRONT_ID
+    name                                = "${local.environment_name}-${local.project_name}"
+    port                                = local.service_contrainer_port
+    region                              = local.region
+    task_cpu                            = local.task_cpu
+    task_memory                         = local.task_memory
+    assets_url                          = "assets.${local.domain_ireland_ie}"
+    assets_s3_bucket                    = aws_s3_bucket.assets.id
+
+    SETTINGS_ALLOWED_HOSTS              = local.SETTINGS_ALLOWED_HOSTS
+    SETTINGS_AWS_ACCESS_KEY_ID          = local.SETTINGS_AWS_ACCESS_KEY_ID
+    SETTINGS_AWS_SECRET_ACCESS_KEY      = local.SETTINGS_AWS_SECRET_ACCESS_KEY
+    SETTINGS_AWS_STATIC_BUCKET_NAME     = local.SETTINGS_AWS_STATIC_BUCKET_NAME
+    SETTINGS_BASE_URL                   = local.SETTINGS_BASE_URL
+    SETTINGS_DATABASE_URL               = local.SETTINGS_DATABASE_URL
+    SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
+    SETTINGS_OPENSEARCH_KEY             = local.SETTINGS_OPENSEARCH_KEY
+    SETTINGS_OPENSEARCH_SECRET          = local.SETTINGS_OPENSEARCH_SECRET
+    SETTINGS_OPENSEARCH_ENDPOINT        = local.SETTINGS_OPENSEARCH_ENDPOINT
+    SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
+  }
+}
+
 data "template_file" "task_definition" {
   template    = file("../common/templates/task_definition.tpl")
 
@@ -1444,7 +1474,35 @@ resource "aws_ecs_task_definition" "default" {
   container_definitions    = data.template_file.task_definition.rendered
 }
 
+resource "aws_ecs_task_definition" "index_task" {
+  family                   = "${local.environment_name}-update-indexes"
+  execution_role_arn       = aws_iam_role.task_execution.arn
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = local.task_cpu
+  memory                   = local.task_memory
+  container_definitions    = data.template_file.task_definition.rendered
+}
+
 # Service
+
+
+resource "aws_ecs_service" "index-update" {
+  name                    = "${local.environment_name}-update-index"
+  cluster                 = aws_ecs_cluster.default.id
+  task_definition         = aws_ecs_task_definition.index_task.arn
+  desired_count           = 1
+  launch_type             = "FARGATE"
+  force_new_deployment    = true
+
+
+  network_configuration {
+    security_groups     = [aws_security_group.ecs.id]
+    subnets             = module.network.private_subnet_ids
+    assign_public_ip    = true
+  }
+}
+
 
 resource "aws_ecs_service" "default" {
   name                    = "${local.environment_name}-${local.project_name}"
