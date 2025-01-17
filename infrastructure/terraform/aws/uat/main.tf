@@ -1173,6 +1173,14 @@ resource "aws_cloudwatch_log_group" "ecs" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "ecs_index" {
+  name                = "/ecs/${local.environment_name}-index"
+  retention_in_days   = 30
+  tags = {
+    Name    = "${local.environment_name}-${local.project_name}"
+  }
+}
+
 resource "aws_cloudwatch_log_stream" "ecs" {
   name            = "${local.environment_name}-${local.project_name}"
   log_group_name  = aws_cloudwatch_log_group.ecs.name
@@ -1400,7 +1408,7 @@ data "template_file" "index_task_definition" {
 
   vars = {
     ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
-    log_group                           = aws_cloudwatch_log_group.ecs.name
+    log_group                           = aws_cloudwatch_log_group.ecs_index.name
     SETTINGS_CLOUDFRONT_ID              = local.SETTINGS_CLOUDFRONT_ID
     name                                = "${local.environment_name}-${local.project_name}"
     port                                = local.service_contrainer_port
@@ -1481,7 +1489,69 @@ resource "aws_ecs_task_definition" "index_task" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = local.task_cpu
   memory                   = local.task_memory
-  container_definitions    = data.template_file.task_definition.rendered
+  container_definitions    = data.template_file.index_task_definition.rendered
+}
+
+
+# event bridge weekly trigger
+
+resource "aws_cloudwatch_event_rule" "weekly_trigger" {
+  name        = "${local.environment_name}-weekly-update-indexes"
+  description = "Triggers the ECS task to update indexes once per week"
+  schedule_expression = "cron(0 3 * * 0)" # Adjust cron expression as needed
+}
+
+resource "aws_cloudwatch_event_target" "ecs_task_target" {
+  rule      = aws_cloudwatch_event_rule.weekly_trigger.name
+  target_id = "index-update-task"
+  arn       = aws_ecs_cluster.default.arn # Replace with your ECS cluster ARN
+
+  ecs_target {
+    task_definition_arn = aws_ecs_task_definition.index_task.arn
+    launch_type         = "FARGATE"
+
+    network_configuration {
+        security_groups     = [aws_security_group.ecs.id]
+        subnets             = module.network.private_subnet_ids
+    }
+  }
+    role_arn = aws_iam_role.eventbridge_to_ecs.arn 
+}
+
+resource "aws_iam_role" "eventbridge_to_ecs" {
+  name = "${local.environment_name}-eventbridge-to-ecs"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Action    = "sts:AssumeRole"
+      Effect    = "Allow"
+      Principal = {
+        Service = "events.amazonaws.com"
+      }
+    }]
+  })
+}
+
+resource "aws_iam_role_policy" "eventbridge_to_ecs_policy" {
+  role = aws_iam_role.eventbridge_to_ecs.name
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = [
+          "ecs:RunTask",
+          "iam:PassRole"
+        ]
+        Resource = [
+          aws_ecs_task_definition.index_task.arn,
+          aws_iam_role.task_execution.arn
+        ]
+      }
+    ]
+  })
 }
 
 # Service
