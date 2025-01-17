@@ -7,7 +7,8 @@
 		"memory": ${task_memory},
 		"networkMode": "awsvpc",
         "entryPoint": [
-            "/app/update-indexes.sh"
+            "sh",
+            "/app/update_indexes.sh"
         ],
 		"logConfiguration": {
 			"logDriver": "awslogs",

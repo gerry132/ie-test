@@ -44,6 +44,7 @@ RUN ["chmod", "+x", "/app/docker-entrypoint.sh"]
 RUN ["chmod", "+x", "/app/update_indexes.sh"]
 
 
+
 # clean
 RUN apk del -r \
     curl-dev \
