@@ -42,7 +42,6 @@ RUN pip install -r requirements.txt --break-system-packages
 
 RUN ["chmod", "+x", "/app/docker-entrypoint.sh"]
 RUN ["chmod", "+x", "/app/update_indexes.sh"]
-ENTRYPOINT ["sh", "/app/docker-entrypoint.sh"]
 
 
 # clean
