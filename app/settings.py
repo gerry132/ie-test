@@ -471,6 +471,7 @@ if OPENSEARCH_KEY and OPENSEARCH_SECRET and OPENSEARCH_ENDPOINT != 'CHANGE':
         'default': {
             'BACKEND': 'wagtail.search.backends.elasticsearch7',
             'INDEX': 'wagtail',
+            'ATOMIC_REBUILD': True,
             'TIMEOUT': 30,
             'HOSTS': [{
                 'host': OPENSEARCH_ENDPOINT,
