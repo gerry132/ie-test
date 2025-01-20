@@ -656,16 +656,17 @@ class BasePage(SocialFields, ListingFields, Page):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+
     COMMON_PROMOTE_PANELS = (
-        FieldPanel('slug'),
-        FieldPanel('seo_title'),
-        FieldPanel('search_description'),
+        FieldPanel('slug', permission="access_admin"),
+        FieldPanel('seo_title', permission="access_admin"),
+        FieldPanel('search_description', permission="access_admin"),
     )
 
     promote_panels = (
         [
             MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
-            FieldPanel('show_in_menus'),
+            FieldPanel('show_in_menus', permission="access_admin"),
         ] +
         SocialFields.promote_panels +
         ListingFields.promote_panels
@@ -675,17 +676,6 @@ class BasePage(SocialFields, ListingFields, Page):
         FieldPanel("custom_header", permission="access_admin")
     ]
 
-    def cache_control(self):
-        return 'max-age=8640000'
-
-    class Meta:
-        abstract = True
-
-    promote_panels = (
-        # SeoMixin.seo_panels +
-        SocialFields.promote_panels +
-        ListingFields.promote_panels
-    )
     settings_panels = ([
                            MultiFieldPanel(
                                [
@@ -709,6 +699,9 @@ class BasePage(SocialFields, ListingFields, Page):
         index.SearchField("listing_title"),
         index.SearchField("listing_summary"),
     ]
+
+    class Meta:
+        abstract = True
 
     @cached_property
     def related_destination_tags(self) -> PageQuerySet:
