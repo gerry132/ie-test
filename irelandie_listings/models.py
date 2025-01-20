@@ -196,8 +196,17 @@ class ListingsContentPage(ListingsContents, BasePage):
                        ] +
                        BasePage.webchat_panel
                        )
+    COMMON_PROMOTE_PANELS = (
+        FieldPanel('slug'),
+        FieldPanel('seo_title'),
+        FieldPanel('search_description'),
+    )
+
     promote_panels = (
-        # SeoMixin.seo_panels +
+        [
+            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
+            FieldPanel('show_in_menus'),
+        ] +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )
@@ -327,8 +336,17 @@ class ListingsContentUSAPage(ListingsContents, BasePage):
         ),
         FieldPanel('event_details'),
     ]
+
+    COMMON_PROMOTE_PANELS = (
+        FieldPanel('slug'),
+        FieldPanel('seo_title'),
+        FieldPanel('search_description'),
+    )
     promote_panels = (
-        # SeoMixin.seo_panels +
+        [
+            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
+            FieldPanel('show_in_menus'),
+        ] +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )

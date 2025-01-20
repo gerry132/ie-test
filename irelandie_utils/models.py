@@ -656,9 +656,20 @@ class BasePage(SocialFields, ListingFields, Page):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    COMMON_PROMOTE_PANELS = (
+        FieldPanel('slug'),
+        FieldPanel('seo_title'),
+        FieldPanel('search_description'),
+    )
 
-    # Change the Twitter card style.
-    # seo_twitter_card = TwitterCard.LARGE
+    promote_panels = (
+        [
+            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
+            FieldPanel('show_in_menus'),
+        ] +
+        SocialFields.promote_panels +
+        ListingFields.promote_panels
+    )
 
     custom_header_panel = [
         FieldPanel("custom_header", permission="access_admin")
@@ -1114,13 +1125,20 @@ class MinimalArticlePage(BasePage):
         InlinePanel('page_related_destination_tags', label="Related destination",
                     help_text="Please leave this section blank. Tags should only be added by Comms Unit."),
     ]
+    COMMON_PROMOTE_PANELS = (
+        FieldPanel('slug'),
+        FieldPanel('seo_title'),
+        FieldPanel('search_description'),
+    )
 
     promote_panels = (
-        # SeoMixin.seo_panels +
+        [
+            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
+            FieldPanel('show_in_menus'),
+        ] +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )
-
     settings_panels = ([
                            MultiFieldPanel(
                                [
