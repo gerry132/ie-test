@@ -657,24 +657,25 @@ class BasePage(SocialFields, ListingFields, Page):
         related_name="+",
     )
 
-    # Change the Twitter card style.
-    # seo_twitter_card = TwitterCard.LARGE
+    COMMON_PROMOTE_PANELS = (
+        FieldPanel('slug', permission="access_admin"),
+        FieldPanel('seo_title', permission="access_admin"),
+        FieldPanel('search_description', permission="access_admin"),
+    )
+
+    promote_panels = (
+        [
+            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
+            FieldPanel('show_in_menus', permission="access_admin"),
+        ] +
+        SocialFields.promote_panels +
+        ListingFields.promote_panels
+    )
 
     custom_header_panel = [
         FieldPanel("custom_header", permission="access_admin")
     ]
 
-    def cache_control(self):
-        return 'max-age=8640000'
-
-    class Meta:
-        abstract = True
-
-    promote_panels = (
-        # SeoMixin.seo_panels +
-        SocialFields.promote_panels +
-        ListingFields.promote_panels
-    )
     settings_panels = ([
                            MultiFieldPanel(
                                [
@@ -698,6 +699,9 @@ class BasePage(SocialFields, ListingFields, Page):
         index.SearchField("listing_title"),
         index.SearchField("listing_summary"),
     ]
+
+    class Meta:
+        abstract = True
 
     @cached_property
     def related_destination_tags(self) -> PageQuerySet:
@@ -1114,13 +1118,20 @@ class MinimalArticlePage(BasePage):
         InlinePanel('page_related_destination_tags', label="Related destination",
                     help_text="Please leave this section blank. Tags should only be added by Comms Unit."),
     ]
+    COMMON_PROMOTE_PANELS = (
+        FieldPanel('slug'),
+        FieldPanel('seo_title'),
+        FieldPanel('search_description'),
+    )
 
     promote_panels = (
-        # SeoMixin.seo_panels +
+        [
+            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
+            FieldPanel('show_in_menus'),
+        ] +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )
-
     settings_panels = ([
                            MultiFieldPanel(
                                [

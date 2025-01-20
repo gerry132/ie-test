@@ -5,6 +5,14 @@
 
     <head>
         {# TODO fallbacks if page is not defined e.g. for 404 page #}
+        <title>{% block title_prefix %}{% if current_site and page.pk == current_site.root_page.pk and current_site.site_name %}{{ current_site.site_name }} | {% endif %}{% endblock %}{% block title %}{% firstof page.seo_title page.title %}{% endblock %}{% block title_suffix %}{% if current_site and page.pk != current_site.root_page.pk and current_site.site_name %} | {{ current_site.site_name }}{% endif %}{% endblock %}</title>
+        {% block extra_head %}
+            {% is_secure as secure %}
+            {% if page and secure %}
+                <link rel="canonical" href="{{ page.full_url }}">
+            {% endif %}
+        {% endblock %}
+        <meta name="description" content="{% if page.search_description %}{{ page.search_description }}{% else %}{{ page.listing_summary }}{% endif %}" />
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
