@@ -1173,6 +1173,14 @@ resource "aws_cloudwatch_log_group" "ecs" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "ecs_index" {
+  name                = "/ecs/${local.environment_name}-index"
+  retention_in_days   = 30
+  tags = {
+    Name    = "${local.environment_name}-${local.project_name}"
+  }
+}
+
 resource "aws_cloudwatch_log_stream" "ecs" {
   name            = "${local.environment_name}-${local.project_name}"
   log_group_name  = aws_cloudwatch_log_group.ecs.name
@@ -1394,6 +1402,36 @@ locals {
 
 }
 
+
+data "template_file" "index_task_definition" {
+  template    = file("../common/templates/update-indexes-task-definition.tpl")
+
+  vars = {
+    ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
+    log_group                           = aws_cloudwatch_log_group.ecs_index.name
+    SETTINGS_CLOUDFRONT_ID              = local.SETTINGS_CLOUDFRONT_ID
+    name                                = "${local.environment_name}-index"
+    port                                = local.service_contrainer_port
+    region                              = local.region
+    task_cpu                            = local.task_cpu
+    task_memory                         = local.task_memory
+    assets_url                          = "assets.${local.domain_ireland_ie}"
+    assets_s3_bucket                    = aws_s3_bucket.assets.id
+
+    SETTINGS_ALLOWED_HOSTS              = local.SETTINGS_ALLOWED_HOSTS
+    SETTINGS_AWS_ACCESS_KEY_ID          = local.SETTINGS_AWS_ACCESS_KEY_ID
+    SETTINGS_AWS_SECRET_ACCESS_KEY      = local.SETTINGS_AWS_SECRET_ACCESS_KEY
+    SETTINGS_AWS_STATIC_BUCKET_NAME     = local.SETTINGS_AWS_STATIC_BUCKET_NAME
+    SETTINGS_BASE_URL                   = local.SETTINGS_BASE_URL
+    SETTINGS_DATABASE_URL               = local.SETTINGS_DATABASE_URL
+    SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
+    SETTINGS_OPENSEARCH_KEY             = local.SETTINGS_OPENSEARCH_KEY
+    SETTINGS_OPENSEARCH_SECRET          = local.SETTINGS_OPENSEARCH_SECRET
+    SETTINGS_OPENSEARCH_ENDPOINT        = local.SETTINGS_OPENSEARCH_ENDPOINT
+    SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
+  }
+}
+
 data "template_file" "task_definition" {
   template    = file("../common/templates/task_definition.tpl")
 
@@ -1434,6 +1472,20 @@ data "template_file" "task_definition" {
 
 # Task definition
 
+module "ecs_task_os_index" {
+  source = "../common/utils"
+
+  container_definitions = data.template_file.index_task_definition.rendered
+  task_cpu              = "256"
+  task_memory           = "512"
+  subnets               = module.network.private_subnet_ids
+  security_groups       = aws_security_group.ecs.id
+  environment_name      = local.environment_name
+  cluster               = aws_ecs_cluster.default
+  execution_role        = aws_iam_role.task_execution.arn
+}
+
+
 resource "aws_ecs_task_definition" "default" {
   family                   = "${local.environment_name}-${local.project_name}"
   execution_role_arn       = aws_iam_role.task_execution.arn
@@ -1443,8 +1495,6 @@ resource "aws_ecs_task_definition" "default" {
   memory                   = local.task_memory
   container_definitions    = data.template_file.task_definition.rendered
 }
-
-# Service
 
 resource "aws_ecs_service" "default" {
   name                    = "${local.environment_name}-${local.project_name}"

@@ -73,7 +73,7 @@ locals {
     },
     gerry_dev = {
       description = "Gerry Mcbride - OGCIO"
-      cidr_blocks = ["52.49.120.79/32", "37.228.233.241/32", "95.44.14.48/32"]
+      cidr_blocks = ["37.228.234.227/32"]
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
@@ -263,6 +263,8 @@ resource "aws_security_group" "opensearch" {
 # -----------------------------------------------------------------------------
 
 # Public access rules
+
+
 resource "aws_security_group_rule" "internet_to_lb_80" {
   for_each = local.non_gov_network_cird_blocks
   type                      = "ingress"
@@ -282,17 +284,6 @@ resource "aws_security_group_rule" "internet_to_lb_443" {
   protocol                  = "tcp"
   security_group_id         = aws_security_group.lb.id
   cidr_blocks               = each.value.cidr_blocks
-}
-# Allow List IPs for restrict areas Gov Network
-
-resource "aws_security_group_rule" "gov_network_to_lb_443" {
-  description               = "Gov network"
-  type                      = "ingress"
-  from_port                 = 0
-  to_port                   = 0
-  protocol                  = "all"
-  security_group_id         = aws_security_group.lb_gov_network.id
-  cidr_blocks               = local.gov_network_cird_blocks
 }
 
 
@@ -366,6 +357,7 @@ resource "aws_security_group_rule" "ecs_to_internet" {
   cidr_blocks               = ["0.0.0.0/0"]
   security_group_id         = aws_security_group.ecs.id
 }
+
 
 resource "aws_security_group_rule" "ecs_to_db_5432" {
   type                      = "ingress"
@@ -1102,6 +1094,14 @@ locals {
 # Logs
 # -----------------------------------------------------------------------------
 
+resource "aws_cloudwatch_log_group" "ecs_index" {
+  name                = "/ecs/${local.environment_name}-index"
+  retention_in_days   = 30
+  tags = {
+    Name    = "${local.environment_name}-${local.project_name}"
+  }
+}
+
 resource "aws_cloudwatch_log_group" "ecs" {
   name                = "/ecs/${local.environment_name}-${local.project_name}"
   retention_in_days   = 30
@@ -1331,6 +1331,48 @@ resource "aws_iam_user_policy_attachment" "smtp_user_attach" {
 
 
 # Task definition
+
+data "template_file" "index_task_definition" {
+  template    = file("../common/templates/update-indexes-task-definition.tpl")
+
+  vars = {
+    ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
+    log_group                           = aws_cloudwatch_log_group.ecs_index.name
+    SETTINGS_CLOUDFRONT_ID              = local.SETTINGS_CLOUDFRONT_ID
+    name                                = "${local.environment_name}-index"
+    port                                = local.service_contrainer_port
+    region                              = local.region
+    task_cpu                            = local.task_cpu
+    task_memory                         = local.task_memory
+    assets_url                          = "assets.${local.domain_ireland_ie}"
+    assets_s3_bucket                    = aws_s3_bucket.assets.id
+
+    SETTINGS_ALLOWED_HOSTS              = local.SETTINGS_ALLOWED_HOSTS
+    SETTINGS_AWS_ACCESS_KEY_ID          = local.SETTINGS_AWS_ACCESS_KEY_ID
+    SETTINGS_AWS_SECRET_ACCESS_KEY      = local.SETTINGS_AWS_SECRET_ACCESS_KEY
+    SETTINGS_AWS_STATIC_BUCKET_NAME     = local.SETTINGS_AWS_STATIC_BUCKET_NAME
+    SETTINGS_BASE_URL                   = local.SETTINGS_BASE_URL
+    SETTINGS_DATABASE_URL               = local.SETTINGS_DATABASE_URL
+    SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
+    SETTINGS_OPENSEARCH_KEY             = local.SETTINGS_OPENSEARCH_KEY
+    SETTINGS_OPENSEARCH_SECRET          = local.SETTINGS_OPENSEARCH_SECRET
+    SETTINGS_OPENSEARCH_ENDPOINT        = local.SETTINGS_OPENSEARCH_ENDPOINT
+    SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
+  }
+}
+
+module "ecs_task_os_index" {
+  source = "../common/utils"
+
+  container_definitions = data.template_file.index_task_definition.rendered
+  task_cpu              = "256"
+  task_memory           = "512"
+  subnets               = module.network.private_subnet_ids
+  security_groups       = aws_security_group.ecs.id
+  environment_name      = local.environment_name
+  cluster               = aws_ecs_cluster.default
+  execution_role        = aws_iam_role.task_execution.arn
+}
 
 locals {
   SETTINGS_ALLOWED_HOSTS            = join(", ", ["*"])

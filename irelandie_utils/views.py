@@ -10,6 +10,8 @@ from wagtail.api.v2.views import PagesAPIViewSet
 from wagtail.models import Page
 
 from irelandie_missions.filters import MissionPageFieldFilter
+from irelandie_news.filters import NewsPageFieldFilter
+from irelandie_news.models import NewsPage
 from irelandie_utils.models import SystemMessagesSettings
 from wagtail.core.models import Site
 from irelandie_utils.utils import get_locale_from_language_code_or_default
@@ -80,6 +82,17 @@ class PagesAPIEndpoint(PagesAPIViewSet):
             context.update({"locale": locale})
 
         return context
+
+
+class NewsPageAPIEndpoint(PagesAPIViewSet):
+    model = NewsPage
+    filter_backends = [
+        # NOTE: filters should be listed before the SearchFilter
+        NewsPageFieldFilter,
+    ] + PagesAPIViewSet.filter_backends
+    known_query_parameters = PagesAPIViewSet.known_query_parameters.union(
+        ["year", "country", "country_group"]
+    )
 
 
 @require_http_methods(["POST"])

@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 DEBUG_TOOLBAR = os.environ.get("DEBUG_TOOLBAR", "0") in TRUE
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ["SECRET_KEY"]
+SECRET_KEY = 'os.environ["SECRET_KEY"]'
 
 # X-Frame-Options
 X_FRAME_OPTIONS = 'DENY'
@@ -57,11 +57,11 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 debug_on = os.environ.get("DEBUG")
 
 if debug_on == '0':
-    DEBUG = True
-else:
     DEBUG = False
+else:
+    DEBUG = True
 
-ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
+ALLOWED_HOSTS = ["*"]
 
 # to disable the check
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
@@ -72,8 +72,10 @@ INSTALLED_APPS = [
     #
     "wagtail_cloudfront_invalidate",
     "app",
+    "robots_txt",
     "health_check",
     "accview_non_admin",
+    "wagtail_sitemap_seo",
     "irelandie_admin",
     "irelandie_assets",
     "irelandie_documents",
@@ -128,8 +130,6 @@ INSTALLED_APPS = [
     "wagtailmedia",
     "wagtail.contrib.typed_table_block",
     "wagtail.api.v2",
-    "captcha",
-    "wagtailcaptcha",
     "modelcluster",
     "taggit",
     "passwordreset",
@@ -167,14 +167,13 @@ MIDDLEWARE = [
     "irelandie_utils.middleware.ReplaceViewsMiddleware",
     "custom_logout.middleware.custom_logout.CustomMiddleware",
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
-    "sitemap_downloader.middleware.sitemap_downloader.CustomLoginChecker",
+    # "sitemap_downloader.middleware.sitemap_downloader.CustomLoginChecker",
 ]
 
 if DEBUG_TOOLBAR is True:
     MIDDLEWARE += [
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
-
 
 CLOUDFRONT_ID = os.environ.get("CLOUDFRONT_ID")
 
@@ -184,21 +183,7 @@ WAGTAIL_CLOUDFRONT_INVALIDATE_ENABLED = True
 
 if CLOUDFRONT_ID and CLOUDFRONT_ID != 'CHANGE-ME':
     CLOUDFRONT_DISTRIBUTION_ID = CLOUDFRONT_ID
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-    print(CLOUDFRONT_ID)
-else:
-    CLOUDFRONT_DISTRIBUTION_ID = 'E1TO0QE2H25W4R'
+
 
 WAGTAILFRONTENDCACHE = {
     'cloudfront': {
@@ -206,7 +191,6 @@ WAGTAILFRONTENDCACHE = {
         'DISTRIBUTION_ID': 'd1myit6n7hwrr1.cloudfront.net',
     },
 }
-
 
 ROOT_URLCONF = "app.urls"
 
@@ -324,6 +308,7 @@ STATICFILES_DIRS = [
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 STATIC_ROOT = os.path.join(PROJECT_DIR, "static")
+print(STATIC_ROOT)
 STATIC_URL = "/static/"
 
 MEDIA_ROOT = os.path.join(PROJECT_DIR, "media")
@@ -381,7 +366,7 @@ REST_FRAMEWORK = {
     )
 }
 # https://pypi.org/project/django-cors-headers/
-CORS_ALLOW_ALL_ORIGINS = os.environ.get("CORS_ALLOW_ALL_ORIGINS", False) in TRUE
+CORS_ALLOW_ALL_ORIGINS = True
 if CORS_ALLOW_ALL_ORIGINS is False:
     CORS_ALLOWED_ORIGINS = os.environ["CORS_ALLOWED_ORIGINS"].split(",")
 
@@ -458,6 +443,10 @@ if USE_S3 is True:
 
     AWS_S3_REGION_NAME = "eu-west-1"
 
+    # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
+else:
+    None
+
 WAGTAIL_SITE_NAME = "Ireland.ie"
 
 BASE_URL = os.environ.get("BASE_URL", "http://localhost:8000")
@@ -465,6 +454,8 @@ BASE_URL = os.environ.get("BASE_URL", "http://localhost:8000")
 WAGTAIL_I18N_ENABLED = True
 
 PREFIX_DEFAULT_LANGUAGE = True
+
+AWS_S3_FILE_OVERWRITE = True
 
 WAGTAILADMIN_COMMENTS_ENABLED = False
 WAGTAIL_MODERATION_ENABLED = False
@@ -480,6 +471,7 @@ if OPENSEARCH_KEY and OPENSEARCH_SECRET and OPENSEARCH_ENDPOINT != 'CHANGE':
         'default': {
             'BACKEND': 'wagtail.search.backends.elasticsearch7',
             'INDEX': 'wagtail',
+            'ATOMIC_REBUILD': True,
             'TIMEOUT': 30,
             'HOSTS': [{
                 'host': OPENSEARCH_ENDPOINT,
@@ -499,7 +491,7 @@ if OPENSEARCH_KEY and OPENSEARCH_SECRET and OPENSEARCH_ENDPOINT != 'CHANGE':
                     'analysis': {
                         'analyzer': {
                             'default': {
-                                'type': 'italian'
+                                'type': 'english'
                             }
                         }
                     },
@@ -531,20 +523,7 @@ WAGTAILMEDIA = {
     "VIDEO_EXTENSIONS": ["mp4"],  # list of extensions
 }
 
-# Recaptcha
-# These settings are required for the captcha challange to work.
-# https://github.com/springload/wagtail-django-recaptcha
 
-if "RECAPTCHA_PUBLIC_KEY" in os.environ and "RECAPTCHA_PRIVATE_KEY" in os.environ:
-    NOCAPTCHA = True
-    RECAPTCHA_PUBLIC_KEY = os.environ["RECAPTCHA_PUBLIC_KEY"]
-    RECAPTCHA_PRIVATE_KEY = os.environ["RECAPTCHA_PRIVATE_KEY"]
-else:
-    # To avoid failing github actions
-    SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
-
-RECAPTCHA_PUBLIC_KEY = '6LcBCQkpAAAAAAdRwFKal9f1p9UVALRZQqoVxcAe'
-RECAPTCHA_PRIVATE_KEY = '6LcBCQkpAAAAADzd5ek6Cb6xKMQfA_5LP-IZ2qpk'
 NOCAPTCHA = True
 if USE_CACHE is True:
     SESSION_ENGINE = "django.contrib.sessions.backends.cache"

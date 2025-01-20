@@ -19,6 +19,7 @@ from wagtail.admin.mail import send_mail
 from wagtail.contrib.forms.models import (
     FORM_FIELD_CHOICES,
     AbstractFormField,
+    FormBuilder,
     AbstractFormSubmission,
 )
 from wagtail.fields import RichTextField, StreamField
@@ -28,8 +29,6 @@ from wagtail_honeypot.models import HoneypotMixin
 from irelandie_utils.blocks import AdvancedRichTextBlock, AccordionBlock
 from irelandie_utils.models import BasePage
 from irelandie_utils.utils import get_model_info
-
-from wagtailcaptcha.forms import WagtailCaptchaFormBuilder
 
 
 class FormField(AbstractFormField):
@@ -47,19 +46,7 @@ class FormField(AbstractFormField):
     )
 
 
-class CustomMultilineField(forms.CharField):
-    def __init__(self, *args, **kwargs):
-        max_length = kwargs.pop('max_length', 251)
-        super().__init__(*args, **kwargs)
-        self.widget.attrs['maxlength'] = max_length
-        self.widget.attrs['oninput'] = 'validateTextarea(this)'
-        self.max_length = max_length
-
-
-class CustomFormBuilder(WagtailCaptchaFormBuilder):
-    def create_multiline_field(self, field, options):
-        return CustomMultilineField(widget=forms.Textarea, **options)
-
+class CustomFormBuilder(FormBuilder):
     def create_dateinput_field(self, field, options):
         options["widget"] = forms.DateInput(attrs={"type": "date"})
         return forms.CharField(**options)
@@ -76,7 +63,6 @@ class NeverSaveFormSubmission(AbstractFormSubmission):
 
 class EmailMapBlock(blocks.StructBlock):
     description = blocks.CharBlock(required=True)
-    subject = blocks.CharBlock(required=False)
     email = blocks.CharBlock(required=True)
 
 
@@ -149,17 +135,17 @@ class FormPage(HoneypotMixin, BasePage):
         [
             ObjectList(content_panels, heading="Content"),
             ObjectList(honeypot_panels, heading="Honeypot"),
-            ObjectList(BasePage.promote_panels, heading="Promote"),
+            ObjectList(BasePage.promote_panels, heading="Promote", permission="superuser"),
             ObjectList(
                 BasePage.settings_panels, heading="Settings", classname="settings"
             ),
         ]
     )
 
-    def get_mapped_value(self, topic, item_type='email'):
+    def get_mapped_value(self, topic):
         for p in self.email_map:
             if p.value.get('description') == topic:
-                return p.value.get(item_type)
+                return p.value.get('email')
 
     def serve(self, request, *args, **kwargs):
         if request.method == "POST":
@@ -173,11 +159,6 @@ class FormPage(HoneypotMixin, BasePage):
                 return self.render_landing_page(
                     request, form_submission, *args, **kwargs
                 )
-            else:
-                context = self.get_context(request)
-                context["form"] = form
-                context["form_errors"] = form.errors
-                return TemplateResponse(request, self.get_template(request), context)
         else:
             form = self.get_form(page=self, user=request.user)
 
@@ -193,26 +174,16 @@ class FormPage(HoneypotMixin, BasePage):
                 missions = get_model_info(p.content_type.name, p.id)
                 if missions.root_page:
                     context['mission_web_bot'] = missions.web_bot_script
-        if request.POST and self.form:
-            form = self.form
-            form.data = form.data.copy()
+        if request.POST:
+            submitted_date_str = date.today().strftime('%x')
+            subject = f"{self.subject} - {submitted_date_str}"
+            if 'topic' in request.POST:
+                self.topic = request.POST['topic']
+                addresses = [x.strip() for x in self.get_mapped_value(self.topic).split(',')]
+            else:
+                addresses = [x.strip() for x in self.to_address.split(',')]
 
-            if form.is_valid():
-                subject_item = None
-                submitted_date_str = date.today().strftime('%x')
-                subject = f"{self.subject} - {submitted_date_str}"
-                if 'topic' in request.POST:
-                    self.topic = request.POST['topic']
-                    addresses = [x.strip() for x in self.get_mapped_value(self.topic).split(',')]
-                    subject_item = self.get_mapped_value(self.topic, 'subject')
-                else:
-                    addresses = [x.strip() for x in self.to_address.split(',')]
-
-                if subject_item:
-                    subject = subject_item
-                email = self.render_email(form)
-                email = email.replace(': {}'.format(form.data['g-recaptcha-response']), '')
-                send_mail(subject, email, addresses, self.from_address, )
+            send_mail(subject, self.render_email(self.form), addresses, self.from_address, )
         return context
 
     def get_submission_class(self):

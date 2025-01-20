@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+# from wagtailseo.models import SeoMixin, SeoType
+
 from irelandie_utils.models import HeroPage, SocialFields, ListingFields
 from irelandie_utils.blocks import GenericHeroBlock, ParallexAdvancedRichTextBlock, ParallaxImageVideoBlock, \
     ParallaxLogoCardsBlock, ParallaxStoryPhotoGalleryBlock, ParallaxTimelinePhotoGalleryBlock, ParallaxLinkCardsBlock, \
     ParallaxYoutubeVimeoBlock
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList
 
 
 class Parallax(HeroPage):
@@ -36,6 +38,9 @@ class Parallax(HeroPage):
         null=True,
     )
 
+    # Indicate this is article-style content.
+    # seo_content_type = SeoType.ARTICLE
+
     content_panels = HeroPage.content_panels + [
         FieldPanel("subtitle", help_text="Please include a brief description of this page/article. This will not "
                                          "appear live on the page, but will appear publicly as a subtitle in other "
@@ -43,17 +48,8 @@ class Parallax(HeroPage):
         FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("body"),
     ]
-    COMMON_PROMOTE_PANELS = (
-        FieldPanel('slug'),
-        FieldPanel('seo_title'),
-        FieldPanel('search_description'),
-    )
-
     promote_panels = (
-        [
-            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
-            FieldPanel('show_in_menus'),
-        ] +
+        # SeoMixin.seo_panels +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )

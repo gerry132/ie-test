@@ -5,15 +5,20 @@ from django.db import models
 from wagtail.admin.panels import FieldPanel
 from wagtail.models import Page
 from wagtail.fields import StreamField
+# from wagtailseo.models import SeoType
+
 from irelandie_utils import blocks
+from irelandie_utils.cache_invalidation import invalidate_page_cache
 from irelandie_utils.utils import get_model_info
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 import datetime
 from wagtail.admin.forms import WagtailAdminPageForm
 
-from irelandie_utils.models import MinimalArticlePage, BasePage
+from wagtail.api import APIField
+from wagtail.images.api.fields import ImageRenditionField
 
+from irelandie_utils.models import MinimalArticlePage, BasePage
 
 from django.dispatch import receiver
 from django.db.models.signals import pre_delete
@@ -42,6 +47,9 @@ class NewsPageIndex(BasePage):
         min_num=0,
         max_num=1,
     )
+    # Indicate this is article-style content.
+    # seo_content_type = SeoType.ARTICLE
+
     content_panels = Page.content_panels + [
         FieldPanel("description"),
         FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
@@ -89,7 +97,7 @@ class NewsPageIndex(BasePage):
                 .order_by("-publication_date")
                 .specific()
             )
-        paginator = Paginator(rel_art, 20)
+        paginator = Paginator(rel_art, 10)
         # Try to get the ?page=x value
         page = request.GET.get("page", 1)
         try:
@@ -141,9 +149,13 @@ class CustomNewsPageForm(WagtailAdminPageForm):
 class NewsPage(MinimalArticlePage):
     template = "patterns/pages/irelandie_news/news_page.html"
     api_fields = [
-        'publication_date',
-        'hero_image',
-        'introduction',
+        APIField('publication_date'),
+        APIField('last_published_at'),
+        APIField('hero_image'),
+        APIField('year'),
+        APIField('subtitle'),
+        APIField('introduction'),
+        APIField('hero_image_thumbnail', serializer=ImageRenditionField('fill-100x100', source='hero_image')),
     ]
     parent_page_types = [
         'NewsPageIndex'
@@ -219,6 +231,13 @@ def news_page_changed(news_page):
             # Purge all added pages
             batch.purge()
 
+            invalidate_page_cache(news_index_page)
+            invalidate_page_cache(news_landing_page)
+
+            # Handle cache invalidation for paginated URLs
+            for url in paginated_urls:
+                invalidate_page_cache(Page(url=url))
+
 
 @receiver(page_published, sender=NewsPage)
 def news_published_handler(instance, **kwargs):
@@ -256,6 +275,9 @@ class NewsLandingPage(BasePage):
         blank=True,
         null=True,
     )
+    # Indicate this is article-style content.
+    # seo_content_type = SeoType.ARTICLE
+
     content_panels = BasePage.content_panels + [
         FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("link_button")

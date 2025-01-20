@@ -1,7 +1,8 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
+<section aria-labelledby="hero-title">
 <div class="wrapper wrapper--large wrapper--padding">
     <div class="homepage_feature__container">
-            <div class="homepage_feature__featured">
+            <div class="homepage_feature__featured" role="region" aria-labelledby="hero-main-content">
                 {% for block_hero in value.homepage_featured_hero %}
                 {% if block_hero.block_type == 'image_or_video_block' %}
                     {% if block_hero.value.youtube_or_vimeo_embed %}
@@ -71,15 +72,15 @@
                 {% endif %}
                 {% endfor %}
             </div>
-            <div class="homepage_feature__feed">
+            <div class="homepage_feature__feed" role="region" aria-labelledby="hero-secondary-content">
                 {% for card in value.homepage_featured_items %}
                        {% if card.value.page %}
                         {% pageurl card.value.page as href %}
-                            <a href="{{ href }}" aria-label="{% trans 'card' %}" class="homepage_feature__card{% if large %} card--large{% endif %}{% if not card.value.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
+                            <a href="{{ href }}" role="group" aria-label="{% trans 'card' %}" class="homepage_feature__card{% if large %} card--large{% endif %}{% if not card.value.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
                         {% elif card.value.url %}
-                            <a href="{{ card.value.url }}" aria-label="{% trans 'card' %}" class="homepage_feature__card{% if large %} card--large{% endif %}{% if not card.value.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
+                            <a href="{{ card.value.url }}" role="group" aria-label="{% trans 'card' %}" class="homepage_feature__card{% if large %} card--large{% endif %}{% if not card.value.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
                         {% else %}
-                            <div class="homepage_feature__card{% if not card.value.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}">
+                            <div class="homepage_feature__card{% if not card.value.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}" role="group">
                         {% endif %}
                                 <div class="card__image-container">
                                 {% if card.value.image_alt %}
@@ -105,3 +106,4 @@
             </div>
 </div>
 </div>
+</section>

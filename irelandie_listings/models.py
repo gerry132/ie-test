@@ -2,6 +2,8 @@
 from functools import cached_property
 
 from django.db import models
+# from wagtailseo.models import SeoMixin
+
 from irelandie_utils.models import BasePage, SocialFields, ListingFields
 from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel, HelpPanel, InlinePanel
 from wagtailmedia.edit_handlers import MediaChooserPanel
@@ -194,17 +196,8 @@ class ListingsContentPage(ListingsContents, BasePage):
                        ] +
                        BasePage.webchat_panel
                        )
-    COMMON_PROMOTE_PANELS = (
-        FieldPanel('slug'),
-        FieldPanel('seo_title'),
-        FieldPanel('search_description'),
-    )
-
     promote_panels = (
-        [
-            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
-            FieldPanel('show_in_menus'),
-        ] +
+        # SeoMixin.seo_panels +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )
@@ -334,20 +327,12 @@ class ListingsContentUSAPage(ListingsContents, BasePage):
         ),
         FieldPanel('event_details'),
     ]
-    COMMON_PROMOTE_PANELS = (
-        FieldPanel('slug'),
-        FieldPanel('seo_title'),
-        FieldPanel('search_description'),
-    )
-
     promote_panels = (
-        [
-            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
-            FieldPanel('show_in_menus'),
-        ] +
+        # SeoMixin.seo_panels +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )
+
     settings_panels = ([
                            FieldPanel('go_live_at'),
                            MultiFieldPanel(
@@ -566,7 +551,7 @@ class ListingsFeaturedPage(BasePage):
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(BasePage.promote_panels, heading='Promote'),
+        ObjectList(BasePage.promote_panels, heading='Promote', permission="superuser"),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
