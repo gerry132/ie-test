@@ -57,9 +57,9 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 debug_on = os.environ.get("DEBUG")
 
 if debug_on == '0':
-    DEBUG = True
-else:
     DEBUG = False
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
@@ -390,6 +390,7 @@ if ALLOW_MAIL is True:
 
 if "DEFAULT_FROM_EMAIL" in os.environ:
     DEFAULT_FROM_EMAIL = os.environ["DEFAULT_FROM_EMAIL"]
+
 
 # Wagtail settings
 

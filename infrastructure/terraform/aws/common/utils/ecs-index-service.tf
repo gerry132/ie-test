@@ -72,24 +72,6 @@ resource "aws_iam_role_policy" "eventbridge_to_ecs_policy" {
   })
 }
 
-# Service
-
-resource "aws_ecs_service" "index-update" {
-  name                    = "update-index"
-  cluster                 = var.cluster.id
-  task_definition         = aws_ecs_task_definition.index_task.arn
-  desired_count           = 1
-  launch_type             = "FARGATE"
-  force_new_deployment    = true
-
-
-  network_configuration {
-    security_groups     = [var.security_groups]
-    subnets             = var.subnets
-    assign_public_ip    = true
-  }
-}
-
 
 variable "environment_name" {}
 variable "task_cpu" {}
