@@ -308,7 +308,7 @@ STATICFILES_DIRS = [
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 STATIC_ROOT = os.path.join(PROJECT_DIR, "static")
-print(STATIC_ROOT)
+
 STATIC_URL = "/static/"
 
 MEDIA_ROOT = os.path.join(PROJECT_DIR, "media")
@@ -366,7 +366,7 @@ REST_FRAMEWORK = {
     )
 }
 # https://pypi.org/project/django-cors-headers/
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = os.environ.get("CORS_ALLOW_ALL_ORIGINS", False) in TRUE
 if CORS_ALLOW_ALL_ORIGINS is False:
     CORS_ALLOWED_ORIGINS = os.environ["CORS_ALLOWED_ORIGINS"].split(",")
 
