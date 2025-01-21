@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 DEBUG_TOOLBAR = os.environ.get("DEBUG_TOOLBAR", "0") in TRUE
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'os.environ["SECRET_KEY"]'
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 # X-Frame-Options
 X_FRAME_OPTIONS = 'DENY'
@@ -61,7 +61,7 @@ if debug_on == '0':
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
 # to disable the check
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
@@ -75,7 +75,7 @@ INSTALLED_APPS = [
     "robots_txt",
     "health_check",
     "accview_non_admin",
-    #"wagtail_sitemap_seo",
+    # "wagtail_sitemap_seo",
     "irelandie_admin",
     "irelandie_assets",
     "irelandie_documents",
@@ -390,7 +390,7 @@ if ALLOW_MAIL is True:
 
 if "DEFAULT_FROM_EMAIL" in os.environ:
     DEFAULT_FROM_EMAIL = os.environ["DEFAULT_FROM_EMAIL"]
-
+    
 
 # Wagtail settings
 
