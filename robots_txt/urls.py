@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from django.urls import path
+# from django.urls import path
 
-from .conf import settings
-from django.views.generic import TemplateView
+# from .conf import settings
+# from django.views.generic import TemplateView
 
 
 # urlpatterns = [
