@@ -337,8 +337,17 @@ class JobContentPage(BasePage):
         FieldPanel("privacy_policy", permission="access_admin"),
     ]
 
+    COMMON_PROMOTE_PANELS = (
+        FieldPanel('slug'),
+        FieldPanel('seo_title'),
+        FieldPanel('search_description'),
+    )
+
     promote_panels = (
-        # SeoMixin.seo_panels +
+        [
+            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
+            FieldPanel('show_in_menus'),
+        ] +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )

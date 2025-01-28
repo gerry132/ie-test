@@ -7,7 +7,7 @@ from irelandie_utils.models import HeroPage, SocialFields, ListingFields
 from irelandie_utils.blocks import GenericHeroBlock
 from .blocks import StoryPageBlock
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, InlinePanel
+from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, InlinePanel, MultiFieldPanel
 
 
 class StoryPage(HeroPage):
@@ -40,8 +40,17 @@ class StoryPage(HeroPage):
         InlinePanel('page_related_destination_tags', label="Related destination"),
     ]
 
+    COMMON_PROMOTE_PANELS = (
+        FieldPanel('slug'),
+        FieldPanel('seo_title'),
+        FieldPanel('search_description'),
+    )
+
     promote_panels = (
-        # SeoMixin.seo_panels +
+        [
+            MultiFieldPanel(COMMON_PROMOTE_PANELS, heading="For search engines"),
+            FieldPanel('show_in_menus'),
+        ] +
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )
