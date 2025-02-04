@@ -208,7 +208,6 @@ class DoubleFeature(StreamBlock):
             else:
 
                 core_blocks.append(block)
-        print(core_blocks)
         context["core_blocks"] = core_blocks  # Store the non-gradient blocks
         context["gradient_alignment"] = gradient_alignment  # Store the alignment
         return context

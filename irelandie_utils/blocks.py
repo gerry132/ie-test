@@ -16,7 +16,7 @@ from wagtail.snippets.blocks import SnippetChooserBlock
 from irelandie_home.blocks import SecondaryCallToAction
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 
-from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment, YoutubeSize, TextAlignment
+from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment, YoutubeSize
 
 ALT_HELP_TEXT = """A short one-sentence literal description
                     of the %s is
