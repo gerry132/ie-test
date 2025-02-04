@@ -3,9 +3,10 @@ from django.db import models
 # from wagtailseo.models import SeoMixin, SeoType
 
 from irelandie_utils.models import HeroPage, SocialFields, ListingFields
-from irelandie_utils.blocks import GenericHeroBlock, ParallexAdvancedRichTextBlock, ParallaxImageVideoBlock, \
+from irelandie_utils.blocks import GenericHeroBlock
+from irelandie_parallax.blocks import ParallaxAdvancedRichTextBlock, ParallaxImageVideoBlock, \
     ParallaxLogoCardsBlock, ParallaxStoryPhotoGalleryBlock, ParallaxTimelinePhotoGalleryBlock, ParallaxLinkCardsBlock, \
-    ParallaxYoutubeVimeoBlock
+    ParallaxYoutubeVimeoBlock, DoubleFeature
 from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
 
@@ -25,13 +26,14 @@ class Parallax(HeroPage):
 
     body = StreamField(
         [
-            ("ParallaxAdvancedRichTextBlock", ParallexAdvancedRichTextBlock()),
+            ("ParallaxAdvancedRichTextBlock", ParallaxAdvancedRichTextBlock()),
             ("ParallaxImageVideoBlock", ParallaxImageVideoBlock()),
             ("ParallaxYoutubeVimeoBlock", ParallaxYoutubeVimeoBlock()),
             ("ParallaxLogocards", ParallaxLogoCardsBlock()),
             ("ParallaxStoryPhotoGalleryBlock", ParallaxStoryPhotoGalleryBlock()),
             ("ParallaxTimelinePhotoGalleryBlock", ParallaxTimelinePhotoGalleryBlock()),
             ("ParallaxLinkCardsBlock", ParallaxLinkCardsBlock()),
+            ("DoubleFeature", DoubleFeature()),
 
         ],
         blank=True,

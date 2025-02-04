@@ -1,0 +1,65 @@
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+
+{% if value.image %}
+        {% image value.image original as desktop_image %}
+        <style>
+        .gradient-overlay {
+            content: '';
+            background: linear-gradient(0deg,
+                                    var(--linear-gradient, inherit) 0%,
+                                    rgba(0, 0, 0, 0)
+                                    {% if page.transparency %} {{page.transparency}}% {% else %}100% {% endif %});
+            display: block;
+            left: 0;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            z-index: 1;
+        }
+            .rich-text.content h2,
+            .rich-text.content h3,
+            .rich-text.content h4 {
+            color: var(--text-color);
+            }
+
+
+    </style>
+<div class="jarallax" id="jarallax1" data-speed="0.5"
+style="background-image: url('{{ desktop_image.url }}'); background-size: cover; background-position: center;">        {% if value.image_video_credits %}
+            <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
+        {% endif %}
+        <div class="gradient-overlay" style="{% if value.gradient_image_video %}--linear-gradient: {{ value.gradient_image_video }} {% else %} black {% endif %}"></div>
+            <img class="jarallax-img" src="{{ desktop_image.url }}" alt="{{ value.alt_text }}">
+            <div class="rich-text content" style="text-align: {{value.text_alignment}}; color: {{value.text_color}}; --text-color: {{value.text_color}};">
+                <h2>{{ value.heading }}</h2>
+                <p>{{ value.subtitle|richtext }}</p>
+            </div>
+    </div>
+    
+{% else %}
+<div class="parallax-section" style="min-height: 100vh; display: flex;" data-speed="0.4" data-video-parallax-container>
+    {% if value.image_video_credits %}
+        <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
+    {% endif %}
+    <div class="gradient-overlay" style="{% if value.gradient_image_video %}--linear-gradient: {{ value.gradient_image_video }} {% else %} black {% endif %}"></div>
+    <div class="jarallax-video-container">
+            <video loop controls data-video-parallax class="jarallax-video" title="{{ value.alt_text }}">
+                <source src="{{ value.video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+    </div>
+    <div class="parallax__button_text">
+        <button aria-label="{% trans 'Toggle video playback' %}" role="button" class="parallax__video-toggle"
+                        data-video-parallax-toggle>
+            {% include "patterns/atoms/icons/icon.html" with name="play-button" classname="playButton" %}
+            {% include "patterns/atoms/icons/icon.html" with name="pause-button" classname="pauseButton" %}
+        </button>
+        <div class="rich-text content" style="text-align: {{value.text_alignment}}; color: {{value.text_color}}; --text-color: {{value.text_color}};">
+            <h2>{{ value.heading }}</h2>
+            <p>{{ value.subtitle|richtext }}</p>
+        </div>
+        </div>
+    </div>
+{% endif %}
+

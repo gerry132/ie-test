@@ -1,0 +1,76 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<style>
+
+.double-feature {
+    display: flex;
+    align-items: stretch;
+}
+
+.double-feature--child {
+    flex: 0 1 40%;
+    min-width: 50%;
+    text-align: center;
+    z-index: 2;
+}
+
+.double--feature-gradient-overlay {
+    position: relative;
+    overflow: hidden;
+}
+.double--feature-gradient-overlay::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0; /* Ensures the gradient starts at the left */
+    width: 100%; /* Ensures it covers the full width */
+    height: 100%;
+    z-index: 1;
+    max-width: 25%; /* Adjusts how far the gradient extends */
+}
+
+@media (max-width: 768px) { /* Adjust breakpoint as needed */
+    .double-feature {
+        flex-direction: column; /* Stack elements vertically */
+    }
+
+    .double-feature--child {
+        flex: 1 1 auto; /* Allow elements to expand properly */
+        width: 100%; /* Full width */
+        min-width: 100%; /* Prevents shrinking */
+    }
+}
+
+{% if gradient_alignment == 'left' %}
+.double--feature-gradient-overlay::before {
+    left: auto;  /* Reset left positioning */
+    right: 0; /* Moves the gradient to the right */
+    background: linear-gradient(to left, #FFFF, transparent);
+}
+{% elif gradient_alignment == 'right' %}
+.double--feature-gradient-overlay::before {
+    left: 0; /* Ensures the gradient starts from the left */
+    background: linear-gradient(to right, #FFFF, transparent);
+}
+{% endif %}
+/* Flip gradient direction for the second div */
+.double-feature--child:last-child.double--feature-gradient-overlay::before {
+    background: linear-gradient(to left, #55eb34, transparent);
+}
+.jarallax--double {
+    justify-content: unset !important;
+}
+
+</style>
+<div class="jarallax jarallax--double double-feature" id="jarallax4" data-speed="0.2">
+    {% for block in core_blocks %}
+        <div class="double-feature--child {% if forloop.first and gradient_alignment == 'left' %}double--feature-gradient-overlay{% endif %}
+                                         {% if forloop.last and gradient_alignment == 'right' %}double--feature-gradient-overlay{% endif %}"
+             style="{% if block.value.background_color %} background-color: {{ block.value.background_color }}; {% endif %}">
+            {% if block.block_type == 'rich_text' %}
+                {% include "patterns/molecules/streamfield/blocks/parallax_advanced_richtext_block.html" with value=block.value double_feature=1 %}
+            {% elif block.block_type == 'image_video' %}
+                {% include "patterns/molecules/streamfield/blocks/parallax_double_feature_image_video.html" with value=block.value %}
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
