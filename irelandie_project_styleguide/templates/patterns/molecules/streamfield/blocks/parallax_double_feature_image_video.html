@@ -2,32 +2,12 @@
 
 {% if value.image %}
         {% image value.image original as desktop_image %}
-        <style>
-        .gradient-overlay {
-            content: '';
-            background: linear-gradient(0deg,
-                                    var(--linear-gradient, inherit) 0%,
-                                    rgba(0, 0, 0, 0)
-                                    {% if page.transparency %} {{page.transparency}}% {% else %}100% {% endif %});
-            display: block;
-            left: 0;
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            top: 0;
-            z-index: 1;
-        }
-            .rich-text.content h2,
-            .rich-text.content h3,
-            .rich-text.content h4 {
-            color: var(--text-color);
-            }
-    </style>
+
 <div class="jarallax" id="jarallax1" data-speed="0.5"
 style="background-image: url('{{ desktop_image.url }}'); background-size: cover; background-position: center;">        {% if value.image_video_credits %}
             <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
         {% endif %}
-        <div class="gradient-overlay" style="{% if value.gradient_image_video %}--linear-gradient: {{ value.gradient_image_video }} {% else %} black {% endif %}"></div>
+        <div class="gradient-overlay__double-feature-image" style="--transparency: {% if page.transparency %}{{ page.transparency }}{% else %}100{% endif %}%; {% if value.gradient_image_video %}--linear-gradient: {{ value.gradient_image_video }} {% else %} black {% endif %}"></div>
             <img class="jarallax-img" src="{{ desktop_image.url }}" alt="{{ value.alt_text }}">
             <div class="rich-text content" style="text-align: {{value.text_alignment}}; color: {{value.text_color}}; --text-color: {{value.text_color}};">
                 <h2>{{ value.heading }}</h2>
@@ -37,87 +17,81 @@ style="background-image: url('{{ desktop_image.url }}'); background-size: cover;
     
 {% else %}
 <style>
-                .parallax-section {
-    position: relative;
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    width: 100%;
     min-height: 100vh; /* Ensures full viewport height */
     display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden; /* Prevents unwanted overflow */
+    flex-direction: column;
 }
-
-.jarallax-video-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: 1;
-}
-
-.jarallax-video {
-    width: 100vw; /* Ensures full width */
-    height: 100vh; /* Ensures full height */
-    object-fit: cover; /* Ensures video fills container while maintaining aspect ratio */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Centers video */
-    z-index: -1; /* Places video behind text & overlay */
-}
-
-.jarallax-video {
-    width: 100vw; /* Ensures full width */
-    height: 100vh; /* Ensures full height */
-    object-fit: cover; /* Covers the entire container */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Centers video */
-    z-index: -1;
-}
-
-.parallax-section {
-    position: relative;
-    min-height: 100vh; /* Ensures it fills the viewport */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
 
 </style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    jarallax(document.querySelectorAll(".jarallax"), {
+        speed: 0.4,
+        videoPlayOnlyVisible: false // Ensures video does NOT autoplay
+    });
 
-<div class="jarallax" id="jarallax1" data-speed="0.5"
-style="background-image: url('{{ desktop_image.url }}'); background-size: cover; background-position: center;">        {% if value.image_video_credits %}
-        <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
-    {% endif %}
-    <div class="gradient-overlay" style="{% if value.gradient_image_video %}--linear-gradient: {{ value.gradient_image_video }} {% else %} black {% endif %}"></div>
-    <div class="jarallax-video-container">
-        <video loop controls data-video-parallax class="jarallax-video" title="{{ value.alt_text }}">
-            <source src="{{ value.video.url }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-</div>
-<div class="parallax__button_text">
-    <button aria-label="{% trans 'Toggle video playback' %}" role="button" class="parallax__video-toggle"
-                    data-video-parallax-toggle>
-        {% include "patterns/atoms/icons/icon.html" with name="play-button" classname="playButton" %}
-        {% include "patterns/atoms/icons/icon.html" with name="pause-button" classname="pauseButton" %}
-    </button>
-    <div class="rich-text content" style="text-align: {{value.text_alignment}}; color: {{value.text_color}}; --text-color: {{value.text_color}};">
-        <h2>{{ value.heading }}</h2>
-        <p>{{ value.subtitle|richtext }}</p>
-    </div>
-    </div>
-</div>
+    // Get the manually added video and buttons
+    const videoElement = document.getElementById("jarallaxVideo");
+    const playButton = document.querySelector(".playButton");
+    const pauseButton = document.querySelector(".pauseButton");
+    const toggleButton = document.getElementById("playPauseButton");
 
-        <div class="rich-text content" style="text-align: {{value.text_alignment}}; color: {{value.text_color}}; --text-color: {{value.text_color}};">
-            <h2>{{ value.heading }}</h2>
-            <p>{{ value.subtitle|richtext }}</p>
+    if (!videoElement || !toggleButton || !playButton || !pauseButton) {
+        console.error("Play/Pause button or video not found.");
+        return;
+    }
+
+    // Ensure video starts muted but unmuted on user click
+    videoElement.pause();
+    videoElement.muted = true; // Required to allow first click play
+
+    pauseButton.style.display = "none"; // Hide pause button initially
+
+    // Toggle play/pause and unmute when clicking the button
+    toggleButton.addEventListener("click", function () {
+        if (videoElement.paused) {
+            videoElement.muted = false; // Ensure sound is ON when playing
+            videoElement.play();
+            playButton.style.display = "none"; // Hide play button
+            pauseButton.style.display = "inline"; // Show pause button
+        } else {
+            videoElement.pause();
+            playButton.style.display = "inline"; // Show play button
+            pauseButton.style.display = "none"; // Hide pause button
+        }
+    });
+});
+
+</script>
+    <div class="parallax-section-double jarallax jarallax__video">
+        <div class="gradient-overlay__double-feature-video"></div>
+    
+        <!-- Video Background (Manually Inserted) -->
+        <div class="jarallax__video-container">
+            <video id="jarallaxVideo" loop controls playsinline title="{{ value.alt_text }}">
+                <source src="{{ value.video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
-</div>
-{% endif %}
+    
+        <!-- Parallax Content -->
+        <div class="parallax__content">
+            <div class="parallax__button_text">
+                <button id="playPauseButton" aria-label="{% trans 'Toggle video playback' %}" role="button" class="parallax__video-toggle-double">
+                    {% include "patterns/atoms/icons/icon.html" with name="play-button" classname="playButton" %}
+                    {% include "patterns/atoms/icons/icon.html" with name="pause-button" classname="pauseButton" %}
+                </button>
+                <div class="rich-text content" style="text-align: {{value.text_alignment}}; color: {{value.text_color}};">
+                    <h2>{{ value.heading }}</h2>
+                    <p>{{ value.subtitle|richtext }}</p>
+                </div>
+            </div>        
+        </div>
+    </div>
+    {% endif %}
 
