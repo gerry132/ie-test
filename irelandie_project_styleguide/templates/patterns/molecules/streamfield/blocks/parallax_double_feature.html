@@ -62,11 +62,11 @@
 
 
 </style>
-<div class="parallax-section jarallax--double double-feature" id="jarallax4" data-speed="0.2">
+<div class="parallax-section jarallax--double double-feature" id="jarallax4" data-speed="0.2" style="padding-top: unset !important;">
     {% for block in core_blocks %}
         <div class="double-feature--child {% if forloop.first and gradient_alignment == 'left' %}double--feature-gradient-overlay{% endif %}
                                          {% if forloop.last and gradient_alignment == 'right' %}double--feature-gradient-overlay{% endif %}"
-             style="{% if block.value.background_color %} background-color: {{ block.value.background_color }}; {% endif %} padding-top: unset !important;">
+             style="{% if block.value.background_color %} background-color: {{ block.value.background_color }}; {% endif %}">
             {% if block.block_type == 'rich_text' %}
                 {% include "patterns/molecules/streamfield/blocks/parallax_advanced_richtext_block.html" with value=block.value double_feature=1 %}
             {% elif block.block_type == 'image_video' %}
