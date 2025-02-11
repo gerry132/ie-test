@@ -44,17 +44,17 @@
 .double--feature-gradient-overlay::before {
     left: auto;  /* Reset left positioning */
     right: 0; /* Moves the gradient to the right */
-    background: linear-gradient(to left, #FFFF, transparent);
+    background: linear-gradient(to left, {{gradient_colour}}, transparent);
 }
 {% elif gradient_alignment == 'right' %}
 .double--feature-gradient-overlay::before {
     left: 0; /* Ensures the gradient starts from the left */
-    background: linear-gradient(to right, #FFFF, transparent);
+    background: linear-gradient(to right, {{gradient_colour}}, transparent);
 }
 {% endif %}
 /* Flip gradient direction for the second div */
 .double-feature--child:last-child.double--feature-gradient-overlay::before {
-    background: linear-gradient(to left, #55eb34, transparent);
+    background: linear-gradient(to left, {{gradient_colour}}, transparent);
 }
 .jarallax--double {
     justify-content: unset !important;

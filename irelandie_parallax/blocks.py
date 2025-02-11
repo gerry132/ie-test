@@ -174,7 +174,7 @@ class ParallaxYoutubeVimeoBlock(blocks.StructBlock):
 class DoubleFeature(StreamBlock):
     rich_text = ParallaxAdvancedRichTextBlock()
     image_video = ParallaxImageVideoBlock()
-
+    gradient_colour = blocks.CharBlock(required=False)
     gradient_alignment = ChoiceBlock(
         choices=[
             ("none", "None"),
@@ -190,7 +190,7 @@ class DoubleFeature(StreamBlock):
         core_blocks = []
 
         for block in value:
-            if block.block_type != "gradient_alignment":
+            if block.block_type not in ["gradient_alignment", "gradient_colour"]:
                 core_blocks.append(block)
 
         if len(core_blocks) > 2:
@@ -200,16 +200,18 @@ class DoubleFeature(StreamBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context)
         gradient_alignment = "none"
-
+        gradient_colour = "none"
         core_blocks = []
         for block in value:
             if block.block_type == "gradient_alignment":
                 gradient_alignment = block.value  # Store the selected choice
+            elif block.block_type == "gradient_colour":
+                gradient_colour = block.value
             else:
-
                 core_blocks.append(block)
         context["core_blocks"] = core_blocks  # Store the non-gradient blocks
         context["gradient_alignment"] = gradient_alignment  # Store the alignment
+        context["gradient_colour"] = gradient_colour
         return context
 
     class Meta:
