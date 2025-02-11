@@ -3,7 +3,7 @@
 {% if value.image %}
         {% image value.image original as desktop_image %}
 
-<div class="jarallax" id="jarallax1" data-speed="0.5"
+<div class="jarallax" id="jarallax1""
 style="background-image: url('{{ desktop_image.url }}'); background-size: cover; background-position: center;">        {% if value.image_video_credits %}
             <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
         {% endif %}
@@ -29,9 +29,19 @@ html, body {
 
 </style>
 <script>
+    document.addEventListener("scroll", function () {
+    const parallaxElement = document.getElementById("jarallax3");
+    const rect = parallaxElement.getBoundingClientRect();
+    
+    if (rect.top >= window.innerHeight || rect.bottom <= 0) {
+        // Element is outside the viewport, disable parallax
+        parallaxElement.style.transform = "none";
+    }
+});
+
     document.addEventListener("DOMContentLoaded", function () {
     jarallax(document.querySelectorAll(".jarallax"), {
-        speed: 0.4,
+
         videoPlayOnlyVisible: false // Ensures video does NOT autoplay
     });
 
