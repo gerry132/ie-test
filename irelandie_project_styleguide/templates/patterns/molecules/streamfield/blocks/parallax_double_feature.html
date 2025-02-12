@@ -1,6 +1,26 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
+    function fixMobileParallax() {
+        let isMobile = window.innerWidth <= 768;
+        let doubleFeatureChildren = document.querySelectorAll(".double-feature--child");
+
+        doubleFeatureChildren.forEach(child => {
+            if (isMobile) {
+                child.style.height = "auto"; // Allow natural height
+                child.removeAttribute("data-speed"); // Prevent clipping issues
+            } else {
+                child.style.height = "100vh"; // Keep parallax on desktop
+                child.setAttribute("data-speed", "0.2");
+            }
+        });
+    }
+
+    fixMobileParallax();
+    window.addEventListener("resize", fixMobileParallax);
+});
+
+document.addEventListener("DOMContentLoaded", function () {
     function adjustDoubleFeatureHeight() {
         let doubleFeatureChildren = document.querySelectorAll(".double-feature--child");
         doubleFeatureChildren.forEach(child => {
@@ -98,20 +118,39 @@
     z-index: 1;
     max-width: 25%; /* Adjusts how far the gradient extends */
 }
-
-@media (max-width: 768px) { /* Adjust breakpoint as needed */
+.rich-text {
+    padding-top: 40px; /* Add extra spacing at the top */
+    padding-bottom: 40px; /* Balance spacing */
+    overflow: visible; /* Prevent text from being clipped */
+}
+@media (max-width: 768px) {
     .double-feature {
-        flex-direction: column; /* Stack elements vertically */
+        display: none !important;
     }
 
     .double-feature--child {
-        flex: 1 1 auto; /* Allow elements to expand properly */
-        width: 100%; /* Full width */
-        min-width: 100%; /* Prevents shrinking */
+        flex: 1 1 auto;
+        width: 100%;
+        min-width: 100%;
+        min-height: 100vh; /* Allow content to expand */
+        height: auto !important; /* Override any previous height */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; /* Ensures text starts at the top */
+        padding-top: 40px !important; /* Adds extra space to prevent cutoff */
+        padding-bottom: 40px !important;
+        overflow: visible !important; /* Ensures content is not clipped */
+    }
+    .mobile--parallax {
+        display: block !important;
     }
 }
 
+
 @media (min-width: 768px) {
+    .mobile--parallax {
+        display: none !important;
+    }
     {% if gradient_alignment == 'left' %}
 .double--feature-gradient-overlay::before {
     left: auto;  /* Reset left positioning */
@@ -135,6 +174,7 @@
 }
 
 
+
 </style>
 
 <div class="parallax-section jarallax--double double-feature" id="jarallax4" data-speed="0.5" style="padding-top: unset !important;">
@@ -149,4 +189,14 @@
             {% endif %}
         </div>
     {% endfor %}
+</div>
+<div class="mobile--parallax">
+
+{% for block in core_blocks %}
+    {% if block.block_type == 'rich_text' %}
+        {% include "patterns/molecules/streamfield/blocks/parallax_advanced_richtext_block.html" with value=block.value double_feature=1 %}
+    {% elif block.block_type == 'image_video' %}
+        {% include "patterns/molecules/streamfield/blocks/parallax_imagevideo_block.html" with value=block.value %}
+    {% endif %}
+{% endfor %}
 </div>

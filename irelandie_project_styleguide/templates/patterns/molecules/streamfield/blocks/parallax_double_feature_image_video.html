@@ -3,7 +3,7 @@
 {% if value.image %}
         {% image value.image original as desktop_image %}
 
-<div class="jarallax" id="jarallax1""
+<div class="jarallax" id="jarallax1"
 style="background-image: url('{{ desktop_image.url }}'); background-size: cover; background-position: center;">        {% if value.image_video_credits %}
             <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
         {% endif %}
@@ -42,7 +42,9 @@ html, body {
     document.addEventListener("DOMContentLoaded", function () {
     jarallax(document.querySelectorAll(".jarallax"), {
 
-        videoPlayOnlyVisible: false // Ensures video does NOT autoplay
+{
+
+e // Ensures video does NOT autoplay
     });
 
     // Get the manually added video and buttons
