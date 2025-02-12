@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
             {% if block.block_type == 'rich_text' %}
                 {% include "patterns/molecules/streamfield/blocks/parallax_advanced_richtext_block.html" with value=block.value double_feature=1 %}
             {% elif block.block_type == 'image_video' %}
-                {% include "patterns/molecules/streamfield/blocks/parallax_double_feature_image_video.html" with value=block.value %}
+                {% include "patterns/molecules/streamfield/blocks/parallax_double_feature_image_video.html" with value=block.value  double_feature=1 %}
             {% endif %}
         </div>
     {% endfor %}
