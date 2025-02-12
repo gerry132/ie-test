@@ -1,22 +1,36 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 <style>
-
 .double-feature {
     display: flex;
-    align-items: stretch;
+    align-items: stretch; /* Ensures children match the tallest sibling */
+    width: 100%;
+    height: 100%;
 }
+
 
 .double-feature--child {
-    flex: 0 1 40%;
+    flex: 1; /* Ensures equal growth */
+    width: 50%; /* Prevents shrinking */
     min-width: 50%;
-    text-align: center;
-    z-index: 2;
+    display: flex; /* Makes the child a flex container to stretch content */
+    flex-direction: column;
+    justify-content: center; /* Centers content vertically */
+    align-items: center; /* Centers content horizontally */
+    height: 100%;
 }
 
-.double--feature-gradient-overlay {
-    position: relative;
-    overflow: hidden;
+.jarallax--double {
+    min-height: 100vh; /* Full viewport height */
+    width: 100%;
+    display: flex;
 }
+
+
+.jarallax--double {
+    min-height: 100vh; /* Adjust based on content */
+    width: 100%;
+}
+
 .double--feature-gradient-overlay::before {
     content: "";
     position: absolute;
