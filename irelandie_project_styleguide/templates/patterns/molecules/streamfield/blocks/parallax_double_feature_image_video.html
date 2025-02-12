@@ -4,7 +4,7 @@
         {% image value.image original as desktop_image %}
 
 <div class="jarallax" id="jarallax1" data-speed="0.5"
-style="background-image: url('{{ desktop_image.url }}'); background-size: cover; background-position: center;">        {% if value.image_video_credits %}
+style="background-image: url('{{ desktop_image.url }}'); background-size: cover; background-position: center; {% if double_feature %}width: 100%;{% endif %}">        {% if value.image_video_credits %}
             <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
         {% endif %}
         <div class="gradient-overlay__double-feature-image" style="--transparency: {% if page.transparency %}{{ page.transparency }}{% else %}100{% endif %}%; {% if value.gradient_image_video %}--linear-gradient: {{ value.gradient_image_video }} {% else %} black {% endif %}"></div>
