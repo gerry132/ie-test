@@ -34,8 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Run again if the window resizes
     window.addEventListener("resize", adjustDoubleFeatureHeight);
 });
-
 </script>
+
 <style>
 .double-feature {
     display: flex;
@@ -72,23 +72,11 @@ document.addEventListener("DOMContentLoaded", function () {
     left: 0;
 }
 
-
-.parallax-section-double.jarallax.jarallax__video {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
 .jarallax--double, 
 .double-feature {
     min-height: 100vh; /* Ensures full viewport height */
     height: 100%;
 }
-
 
 .jarallax__video-container video {
     width: 100%;
@@ -102,27 +90,22 @@ document.addEventListener("DOMContentLoaded", function () {
     display: flex;
 }
 
-
-.jarallax--double {
-    min-height: 100vh; /* Adjust based on content */
-    width: 100%;
-}
-
-.double--feature-gradient-overlay::before {
-    content: "";
+.double--feature-gradient-overlay {
     position: absolute;
     top: 0;
-    left: 0; /* Ensures the gradient starts at the left */
-    width: 100%; /* Ensures it covers the full width */
+    left: 0;
+    width: 100%;
     height: 100%;
     z-index: 1;
-    max-width: 25%; /* Adjusts how far the gradient extends */
+    max-width: 25%;
 }
+
 .rich-text {
     padding-top: 40px; /* Add extra spacing at the top */
     padding-bottom: 40px; /* Balance spacing */
     overflow: visible; /* Prevent text from being clipped */
 }
+
 @media (max-width: 768px) {
     .double-feature {
         display: none !important;
@@ -146,57 +129,48 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 }
 
-
 @media (min-width: 768px) {
     .mobile--parallax {
         display: none !important;
     }
-    {% if gradient_alignment == 'left' %}
-.double--feature-gradient-overlay::before {
-    left: auto;  /* Reset left positioning */
-    right: 0; /* Moves the gradient to the right */
-    background: linear-gradient(to left, {{gradient_colour}}, transparent);
 }
-{% elif gradient_alignment == 'right' %}
-.double--feature-gradient-overlay::before {
-    left: 0; /* Ensures the gradient starts from the left */
-    background: linear-gradient(to right, {{gradient_colour}}, transparent);
-}
-{% endif %}
-/* Flip gradient direction for the second div */
-.double-feature--child:last-child.double--feature-gradient-overlay::before {
-    background: linear-gradient(to left, {{gradient_colour}}, transparent);
-}
-
-}
-.jarallax--double {
-    justify-content: unset !important;
-}
-
-
-
 </style>
 
 <div class="parallax-section jarallax--double double-feature" id="jarallax4" data-speed="0.5" style="padding-top: unset !important;">
     {% for block in core_blocks %}
-        <div class="double-feature--child {% if forloop.first and gradient_alignment == 'left' %}double--feature-gradient-overlay{% endif %}
-                                         {% if forloop.last and gradient_alignment == 'right' %}double--feature-gradient-overlay{% endif %}"
-             style="{% if block.value.background_color %} background-color: {{ block.value.background_color }}; {% endif %}">
+        <div class="double-feature--child"
+             style="{% if block.value.background_color %}background-color: {{ block.value.background_color }};{% endif %}">
+             
+             {% if forloop.first and gradient_alignment == 'right' or forloop.last and gradient_alignment == 'left' or forloop.counter == 2 and gradient_alignment == 'left' %}
+             <div class="double--feature-gradient-overlay"
+                  style="background: linear-gradient(
+                         {% if forloop.first %}to left{% elif forloop.counter == 2 and gradient_alignment == 'left' %}to right{% else %}to right{% endif %}, 
+                         {{ gradient_colour }}, transparent);
+                         {% if forloop.first %}right: 0; left: auto; max-width: 25%;{% elif forloop.counter == 2 and gradient_alignment == 'left' %}left: 0; right: auto; max-width: 25%;{% elif forloop.last and gradient_alignment == 'left' %}right: 0; left: auto; max-width: 25%;{% else %}right: 0; left: auto; max-width: 25%;{% endif %}">
+             </div>
+         {% endif %}
+         
+         
+         
+         
+         
+         
+        
             {% if block.block_type == 'rich_text' %}
                 {% include "patterns/molecules/streamfield/blocks/parallax_advanced_richtext_block.html" with value=block.value double_feature=1 %}
             {% elif block.block_type == 'image_video' %}
-                {% include "patterns/molecules/streamfield/blocks/parallax_double_feature_image_video.html" with value=block.value  double_feature=1 %}
+                {% include "patterns/molecules/streamfield/blocks/parallax_double_feature_image_video.html" with value=block.value double_feature=1 %}
             {% endif %}
         </div>
     {% endfor %}
 </div>
-<div class="mobile--parallax">
 
-{% for block in core_blocks %}
-    {% if block.block_type == 'rich_text' %}
-        {% include "patterns/molecules/streamfield/blocks/parallax_advanced_richtext_block.html" with value=block.value %}
-    {% elif block.block_type == 'image_video' %}
-        {% include "patterns/molecules/streamfield/blocks/parallax_imagevideo_block.html" with value=block.value %}
-    {% endif %}
-{% endfor %}
+<div class="mobile--parallax">
+    {% for block in core_blocks %}
+        {% if block.block_type == 'rich_text' %}
+            {% include "patterns/molecules/streamfield/blocks/parallax_advanced_richtext_block.html" with value=block.value %}
+        {% elif block.block_type == 'image_video' %}
+            {% include "patterns/molecules/streamfield/blocks/parallax_imagevideo_block.html" with value=block.value %}
+        {% endif %}
+    {% endfor %}
 </div>
