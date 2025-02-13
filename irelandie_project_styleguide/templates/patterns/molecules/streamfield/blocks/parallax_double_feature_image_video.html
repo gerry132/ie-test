@@ -1,48 +1,99 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 
 {% if value.image %}
-    {% image value.image original as desktop_image %}
-    <div class="jarallax parallax-image-section" data-speed="0.5"
-         style="background-image: url('{{ desktop_image.url }}');">
-        
-        {% if value.image_video_credits %}
-            <div class="story__image-credit">{{ value.image_video_credits }}</div>
+        {% image value.image original as desktop_image %}
+
+<div class="jarallax" id="jarallax1" data-speed="0.5"
+style="background-image: url('{{ desktop_image.url }}'); background-size: cover; background-position: center; {% if double_feature %}width: 100%;{% endif %}">        {% if value.image_video_credits %}
+            <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
         {% endif %}
-        
-        <div class="gradient-overlay" style="--transparency: {{ page.transparency|default:100 }}%;
-                                             --linear-gradient: {{ value.gradient_image_video|default:'black' }};">
-        </div>
-
-        <img class="jarallax-img" src="{{ desktop_image.url }}" alt="{{ value.alt_text }}">
-
-        <div class="rich-text content" style="text-align: {{ value.text_alignment }}; color: {{ value.text_color }};">
-            <h2>{{ value.heading }}</h2>
-            <p>{{ value.subtitle|richtext }}</p>
-        </div>
+        <div class="gradient-overlay__double-feature-image" style="--transparency: {% if page.transparency %}{{ page.transparency }}{% else %}100{% endif %}%; {% if value.gradient_image_video %}--linear-gradient: {{ value.gradient_image_video }} {% else %} black {% endif %}"></div>
+            <img class="jarallax-img" src="{{ desktop_image.url }}" alt="{{ value.alt_text }}">
+            <div class="rich-text content" style="text-align: {{value.text_alignment}}; color: {{value.text_color}}; --text-color: {{value.text_color}};">
+                <h2>{{ value.heading }}</h2>
+                <p>{{ value.subtitle|richtext }}</p>
+            </div>
     </div>
-
+    
 {% else %}
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    width: 100%;
+    min-height: 100vh; /* Ensures full viewport height */
+    display: flex;
+    flex-direction: column;
+}
+
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    jarallax(document.querySelectorAll(".jarallax"), {
+        videoPlayOnlyVisible: false // Ensures video does NOT autoplay
+    });
+
+    // Select all video sections
+    const videoSections = document.querySelectorAll(".jarallax__video");
+
+    videoSections.forEach(section => {
+        const videoElement = section.querySelector("video");
+        const playButton = section.querySelector(".playButton");
+        const pauseButton = section.querySelector(".pauseButton");
+        const toggleButton = section.querySelector(".parallax__video-toggle-double");
+
+        if (!videoElement || !toggleButton || !playButton || !pauseButton) {
+            console.error("Play/Pause button or video not found in section:", section);
+            return;
+        }
+
+        videoElement.pause();
+        videoElement.muted = true; // Required to allow first click play
+
+        pauseButton.style.display = "none"; // Hide pause button initially
+
+        // Toggle play/pause for this specific video
+        toggleButton.addEventListener("click", function () {
+            if (videoElement.paused) {
+                videoElement.muted = false; // Ensure sound is ON when playing
+                videoElement.play();
+                playButton.style.display = "none"; // Hide play button
+                pauseButton.style.display = "inline"; // Show pause button
+            } else {
+                videoElement.pause();
+                playButton.style.display = "inline"; // Show play button
+                pauseButton.style.display = "none"; // Hide pause button
+            }
+        });
+    });
+});
+
+</script>
     <div class="parallax-section-double jarallax jarallax__video">
         <div class="gradient-overlay__double-feature-video"></div>
-
+    
+        <!-- Video Background (Manually Inserted) -->
         <div class="jarallax__video-container">
-            <video class="jarallax-video" loop controls playsinline title="{{ value.alt_text }}">
+            <video id="jarallaxVideo" loop controls playsinline title="{{ value.alt_text }}">
                 <source src="{{ value.video.url }}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
-
+    
+        <!-- Parallax Content -->
         <div class="parallax__content">
             <div class="parallax__button_text">
-                <button class="parallax__video-toggle-double">
+                <button id="playPauseButton" aria-label="{% trans 'Toggle video playback' %}" role="button" class="parallax__video-toggle-double">
                     {% include "patterns/atoms/icons/icon.html" with name="play-button" classname="playButton" %}
                     {% include "patterns/atoms/icons/icon.html" with name="pause-button" classname="pauseButton" %}
                 </button>
-                <div class="rich-text content" style="text-align: {{ value.text_alignment }}; color: {{ value.text_color }};">
+                <div class="rich-text content" style="text-align: {{value.text_alignment}}; color: {{value.text_color}};">
                     <h2>{{ value.heading }}</h2>
                     <p>{{ value.subtitle|richtext }}</p>
                 </div>
             </div>        
         </div>
     </div>
-{% endif %}
+    {% endif %}
+
