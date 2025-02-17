@@ -16,6 +16,12 @@ from irelandie_home.blocks import SecondaryCallToAction
 class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
     section_id = blocks.CharBlock(required=False)
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    audio = blocks.RawHTMLBlock(
+        group="HTML",
+        help_text="Add title attribute value to iframe for accessibility.",
+        template="patterns/molecules/streamfield/blocks/raw_html_block.html",
+        required=False,
+    )
     paragraph_alignment = blocks.ChoiceBlock(
         required=False,
         choices=ParagraphAlignment.choices,
