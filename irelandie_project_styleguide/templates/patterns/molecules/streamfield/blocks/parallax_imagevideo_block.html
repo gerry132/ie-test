@@ -59,7 +59,6 @@
     {% if value.image_video_credits %}
         <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
     {% endif %}
-    <div class="gradient-overlay" style="{% if value.gradient_image_video %}--linear-gradient: {{ value.gradient_image_video }} {% else %} black {% endif %}"></div>
     <div class="jarallax-video-container">
             <video loop controls data-video-parallax class="jarallax-video" title="{{ value.alt_text }}">
                 <source src="{{ value.video.url }}" type="video/mp4">
