@@ -182,15 +182,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Toggle play/pause for this specific video
         toggleButton.addEventListener("click", function () {
-            console.log('nag')
             if (videoElement.paused) {
-                console.log(1111111111)
                 videoElement.muted = false; // Ensure sound is ON when playing
                 videoElement.play();
                 playButton.style.display = "none"; // Hide play button
                 pauseButton.style.display = "inline"; // Show pause button
             } else {
-                console.log(222222222222222)
                 videoElement.pause();
                 playButton.style.display = "inline"; // Show play button
                 pauseButton.style.display = "none"; // Hide pause button
