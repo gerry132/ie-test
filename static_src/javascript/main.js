@@ -154,3 +154,48 @@ document.addEventListener('DOMContentLoaded', () => {
         new VideoToggleParallax(videotoggleparallax);
     }
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    jarallax(document.querySelectorAll(".jarallax"), {
+        videoPlayOnlyVisible: false // Ensures video does NOT autoplay
+    });
+
+    // Select all video sections
+    const videoSections = document.querySelectorAll(".jarallax__video");
+
+    videoSections.forEach(section => {
+        const videoElement = section.querySelector("video");
+        const playButton = section.querySelector(".playButton");
+        const pauseButton = section.querySelector(".pauseButton");
+        const toggleButton = section.querySelector(".parallax__video-toggle-double");
+
+        if (!videoElement || !toggleButton || !playButton || !pauseButton) {
+            console.error("Play/Pause button or video not found in section:", section);
+            return;
+        }
+
+        videoElement.pause();
+        videoElement.muted = true; // Required to allow first click play
+
+        pauseButton.style.display = "none"; // Hide pause button initially
+
+        // Toggle play/pause for this specific video
+        toggleButton.addEventListener("click", function () {
+            console.log('nag')
+            if (videoElement.paused) {
+                console.log(1111111111)
+                videoElement.muted = false; // Ensure sound is ON when playing
+                videoElement.play();
+                playButton.style.display = "none"; // Hide play button
+                pauseButton.style.display = "inline"; // Show pause button
+            } else {
+                console.log(222222222222222)
+                videoElement.pause();
+                playButton.style.display = "inline"; // Show play button
+                pauseButton.style.display = "none"; // Hide pause button
+            }
+        });
+    });
+});
+

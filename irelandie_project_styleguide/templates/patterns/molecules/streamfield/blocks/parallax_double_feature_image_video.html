@@ -28,48 +28,6 @@ html, body {
 }
 
 </style>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    jarallax(document.querySelectorAll(".jarallax"), {
-        videoPlayOnlyVisible: false // Ensures video does NOT autoplay
-    });
-
-    // Select all video sections
-    const videoSections = document.querySelectorAll(".jarallax__video");
-
-    videoSections.forEach(section => {
-        const videoElement = section.querySelector("video");
-        const playButton = section.querySelector(".playButton");
-        const pauseButton = section.querySelector(".pauseButton");
-        const toggleButton = section.querySelector(".parallax__video-toggle-double");
-
-        if (!videoElement || !toggleButton || !playButton || !pauseButton) {
-            console.error("Play/Pause button or video not found in section:", section);
-            return;
-        }
-
-        videoElement.pause();
-        videoElement.muted = true; // Required to allow first click play
-
-        pauseButton.style.display = "none"; // Hide pause button initially
-
-        // Toggle play/pause for this specific video
-        toggleButton.addEventListener("click", function () {
-            if (videoElement.paused) {
-                videoElement.muted = false; // Ensure sound is ON when playing
-                videoElement.play();
-                playButton.style.display = "none"; // Hide play button
-                pauseButton.style.display = "inline"; // Show pause button
-            } else {
-                videoElement.pause();
-                playButton.style.display = "inline"; // Show play button
-                pauseButton.style.display = "none"; // Hide pause button
-            }
-        });
-    });
-});
-
-</script>
     <div class="parallax-section-double jarallax jarallax__video">
         <!-- Video Background (Manually Inserted) -->
         <div class="jarallax__video-container">
