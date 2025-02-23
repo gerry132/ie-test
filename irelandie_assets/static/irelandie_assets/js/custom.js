@@ -92,3 +92,43 @@ if (start_date != 'invalid') {
     showRemaining(); // adding this so as to immediately show the time after alert is loaded
     timer = setInterval(showRemaining, 1000);  
 }
+document.addEventListener("DOMContentLoaded", function () {
+    const videoSections = document.querySelectorAll(".jarallax__video");
+
+    if (videoSections.length === 0) {
+        return; // Exit if no videos exist on the page
+    }
+
+    jarallax(document.querySelectorAll(".jarallax"), {
+        videoPlayOnlyVisible: false
+    });
+
+    videoSections.forEach(section => {
+        const videoElement = section.querySelector("video");
+        const playButton = section.querySelector(".playButton");
+        const pauseButton = section.querySelector(".pauseButton");
+        const toggleButton = section.querySelector(".parallax__video-toggle-double");
+
+        if (!videoElement || !toggleButton || !playButton || !pauseButton) {
+            console.error("Missing video elements in section:", section);
+            return;
+        }
+
+        videoElement.pause();
+        videoElement.muted = true; // Start muted
+        pauseButton.style.display = "none"; // Hide pause button initially
+
+        toggleButton.addEventListener("click", function () {
+            if (videoElement.paused) {
+                videoElement.muted = false;
+                videoElement.play();
+                playButton.style.display = "none";
+                pauseButton.style.display = "inline";
+            } else {
+                videoElement.pause();
+                playButton.style.display = "inline";
+                pauseButton.style.display = "none";
+            }
+        });
+    });
+});

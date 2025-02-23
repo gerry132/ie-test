@@ -6,8 +6,42 @@
     justify-content: center;
     align-items: center;
     z-index: 0;
+
+    
+    /* Video container to fit the full background */
+    &__video {
+        width: 100%;
+        height: 100%;
+    }
+
+    &__video-container video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100vw; /* Ensures it stretches across the screen */
+        height: 100vh; /* Ensures it stretches across the screen */
+        object-fit: cover; /* Prevents distortion while covering the area */
+        z-index: -1;
+        pointer-events: none;
+    }
+
 }
+
+.parallax-section-double {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Ensures it fills the viewport */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
 .parallax-section {
+    padding-top: 25px;
+    padding-bottom: 25px;
     position: relative;
     overflow: hidden;
     justify-content: center;
@@ -49,18 +83,98 @@
     max-width: 1280px;
 }
 
-.parallax__video-toggle.active .pauseButton{
-    display: block;
+.parallax {
+   &__video-toggle.active .pauseButton{
+        display: block;
     }
-.parallax__video-toggle.active .playButton{
-    display: none;
+   &__video-toggle.active .playButton{
+        display: none;
     }
-.parallax__video-toggle .pauseButton{
-    display: none;
+   &__video-toggle .pauseButton{
+        display: none;
     }
-.parallax__video-toggle .playButton{
-    display: block;
+    &__video-toggle .playButton{
+        display: block;
     }
+    &__content {
+        position: relative;
+        z-index: 2;
+        color: white;
+        text-align: center;
+    }
+
+    &__content h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+
+    &__video-toggle {
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 1rem;
+        margin-top: 20px;
+        transition: background 0.3s;
+    }
+    &__video-toggle {
+        border: 0;
+        padding: 0;
+        background: transparent;
+        padding: 40px 20px 0px;
+    }
+
+    
+    &__button_text {
+        display: flex;
+
+        align-items: center;
+        column-gap: 80px;
+
+        @include media-query(max-large) {
+            flex-wrap: wrap;
+        }
+    }
+    
+    &__video-toggle-double {
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        background: transparent;
+        font-size: 1rem;
+        margin-top: 20px;
+        transition: background 0.3s;
+    }
+    
+
+}
+.gradient-overlay{
+    &__double-feature-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+        z-index: 1;
+    }
+    &__double-feature-image {
+        content: '';
+        background: linear-gradient(0deg,
+                                var(--linear-gradient, inherit) 0%,
+                                rgba(0, 0, 0, 0), 100%);
+        display: block;
+        left: 0;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        z-index: 1;
+    }
+}
+
+
 .playButton.icon,
 .pauseButton.icon {
     width: 132px;
@@ -73,24 +187,6 @@
         width: 66px;
         height: 66px;
     }
-}
-
-.parallax__button_text {
-    display: flex;
-
-    align-items: center;
-    column-gap: 80px;
-
-    @include media-query(max-large) {
-       flex-wrap: wrap;
-    }
-}
-
-.parallax__video-toggle {
-    border: 0;
-    padding: 0;
-    background: transparent;
-    padding: 40px 20px 0px;
 }
 
 .jarallax-video-container {

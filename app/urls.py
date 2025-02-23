@@ -30,7 +30,7 @@ api_router.register_endpoint('news_pages', NewsPageAPIEndpoint)
 
 urlpatterns = [
     path('', include('health_check.urls')),
-    path('', include('robots_txt.urls')),
+    # path('', include('robots_txt.urls')),
     path('sitemap/', include('wagtail_sitemap_seo.urls')),
     path('django-admin/', admin.site.urls),
     path('admin/', include(wagtailadmin_urls)),

@@ -1,0 +1,178 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    function fixMobileParallax() {
+        let isMobile = window.innerWidth <= 768;
+        let doubleFeatureChildren = document.querySelectorAll(".double-feature--child");
+
+        doubleFeatureChildren.forEach(child => {
+            if (isMobile) {
+                child.style.height = "auto"; // Allow natural height
+                child.removeAttribute("data-speed"); // Prevent clipping issues
+            } else {
+                child.style.height = "100vh"; // Keep parallax on desktop
+                child.setAttribute("data-speed", "0.2");
+            }
+        });
+    }
+
+    fixMobileParallax();
+    window.addEventListener("resize", fixMobileParallax);
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    function adjustDoubleFeatureHeight() {
+        let doubleFeatureChildren = document.querySelectorAll(".double-feature--child");
+        doubleFeatureChildren.forEach(child => {
+            child.style.height = "100vh"; // Force full height
+        });
+    }
+
+    // Run when the page loads
+    adjustDoubleFeatureHeight();
+
+    // Run again if the window resizes
+    window.addEventListener("resize", adjustDoubleFeatureHeight);
+});
+</script>
+
+<style>
+.double-feature {
+    display: flex;
+    align-items: stretch; /* Ensures children match the tallest sibling */
+    width: 100%;
+    min-height: 100vh; /* Ensures it fills the viewport */
+    height: 100%;
+}
+
+.double-feature--child {
+    flex: 1;
+    width: 50%;
+    min-width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: relative;
+    overflow: hidden; /* Ensures content does not spill */
+}
+
+.double-feature--child video {
+    width: 100%;  /* Makes the video fill the width */
+    height: 100%; /* Ensures it stretches to full height */
+    object-fit: cover; /* Ensures the video maintains aspect ratio while filling */
+}
+
+.jarallax__video-container {
+    width: 100%;
+    height: 100%; /* Ensures the container fills its parent */
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.jarallax--double, 
+.double-feature {
+    min-height: 100vh; /* Ensures full viewport height */
+    height: 100%;
+}
+
+.jarallax__video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Stretches the video while maintaining aspect ratio */
+}
+
+.jarallax--double {
+    min-height: 100vh; /* Full viewport height */
+    width: 100%;
+    display: flex;
+}
+
+.double--feature-gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    max-width: 25%;
+    
+}
+
+.rich-text {
+    padding-top: 40px; /* Add extra spacing at the top */
+    padding-bottom: 40px; /* Balance spacing */
+    overflow: visible; /* Prevent text from being clipped */
+}
+
+@media (max-width: 768px) {
+    .double-feature {
+        display: none !important;
+    }
+
+    .double-feature--child {
+        flex: 1 1 auto;
+        width: 100%;
+        min-width: 100%;
+        min-height: 100vh; /* Allow content to expand */
+        height: auto !important; /* Override any previous height */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; /* Ensures text starts at the top */
+        padding-top: 40px !important; /* Adds extra space to prevent cutoff */
+        padding-bottom: 40px !important;
+        overflow: visible !important; /* Ensures content is not clipped */
+    }
+    .mobile--parallax {
+        display: block !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile--parallax {
+        display: none !important;
+    }
+}
+</style>
+
+<div class="parallax-section jarallax--double double-feature" id="jarallax4" data-speed="0.5" style="padding-top: unset !important;">
+    {% for block in core_blocks %}
+        <div class="double-feature--child"
+             style="{% if block.value.background_color %}background-color: {{ block.value.background_color }};{% endif %}">
+             
+             {% if forloop.first and gradient_alignment == 'right' or forloop.last and gradient_alignment == 'left' or forloop.counter == 2 and gradient_alignment == 'left' %}
+             <div class="double--feature-gradient-overlay"
+                  style="background: linear-gradient(
+                         {% if forloop.first %}to left{% elif forloop.counter == 2 and gradient_alignment == 'left' %}to right{% else %}to right{% endif %}, 
+                         {{ gradient_colour }}, transparent);
+                         {% if forloop.first %}right: 0; left: auto; max-width: 25%;{% elif forloop.counter == 2 and gradient_alignment == 'left' %}left: 0; right: auto; max-width: 25%;{% elif forloop.last and gradient_alignment == 'left' %}right: 0; left: auto; max-width: 25%;{% else %}right: 0; left: auto; max-width: 25%;{% endif %}">
+             </div>
+         {% endif %}
+         
+         
+         
+         
+         
+         
+        
+            {% if block.block_type == 'rich_text' %}
+                {% include "patterns/molecules/streamfield/blocks/parallax_advanced_richtext_block.html" with value=block.value double_feature=1 %}
+            {% elif block.block_type == 'image_video' %}
+                {% include "patterns/molecules/streamfield/blocks/parallax_double_feature_image_video.html" with value=block.value double_feature=1 %}
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+
+<div class="mobile--parallax">
+    {% for block in core_blocks %}
+        {% if block.block_type == 'rich_text' %}
+            {% include "patterns/molecules/streamfield/blocks/parallax_advanced_richtext_block.html" with value=block.value %}
+        {% elif block.block_type == 'image_video' %}
+            {% include "patterns/molecules/streamfield/blocks/parallax_imagevideo_block.html" with value=block.value %}
+        {% endif %}
+    {% endfor %}
+</div>
