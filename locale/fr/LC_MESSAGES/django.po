@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-03 15:50+0000\n"
+"POT-Creation-Date: 2025-03-03 16:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,6 +113,9 @@ msgstr ""
 #: .\irelandie_admin\templates\wagtailadmin\pages\search_results.html:19
 #: .\irelandie_admin\templates\wagtailadmin\pages\search_results.html:21
 #: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_index.html:51
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_index.html:68
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_index.html:92
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_index.html:104
 #: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:21
 msgid "All"
 msgstr "Tout"
