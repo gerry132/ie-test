@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-17 15:22+0100\n"
+"POT-Creation-Date: 2025-03-03 15:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,82 +18,82 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: accview_non_admin/views.py:85 passwordreset/panels.py:17
-#: passwordreset/views.py:34
+#: .\accview_non_admin\views.py:85 .\passwordreset\panels.py:17
+#: .\passwordreset\views.py:34
 msgid "Profile"
 msgstr ""
 
-#: accview_non_admin/views.py:87 accview_non_admin/views.py:161
+#: .\accview_non_admin\views.py:87 .\accview_non_admin\views.py:161
 msgid "Notifications"
 msgstr ""
 
-#: accview_non_admin/views.py:145
+#: .\accview_non_admin\views.py:145
 msgid "Name and Email"
 msgstr ""
 
-#: accview_non_admin/views.py:152
+#: .\accview_non_admin\views.py:152
 msgid "Profile picture"
 msgstr ""
 
-#: accview_non_admin/views.py:179
+#: .\accview_non_admin\views.py:179
 msgid "Locale"
 msgstr ""
 
-#: accview_non_admin/views.py:193 passwordreset/panels.py:71
+#: .\accview_non_admin\views.py:193 .\passwordreset\panels.py:71
 msgid "Password"
 msgstr ""
 
-#: accview_non_admin/views.py:275
+#: .\accview_non_admin\views.py:275
 msgid "Your account settings have been changed successfully!"
 msgstr ""
 
-#: accview_non_admin/views.py:395
+#: .\accview_non_admin\views.py:395
 msgid "You have been successfully logged out."
 msgstr ""
 
-#: custompasswordvalidators/case_mix.py:11
-#: custompasswordvalidators/case_mix.py:17
+#: .\custompasswordvalidators\case_mix.py:11
+#: .\custompasswordvalidators\case_mix.py:17
 msgid "The password must a mixture of uppercase and lowercase letters."
 msgstr ""
 
-#: custompasswordvalidators/entirely_letters.py:11
+#: .\custompasswordvalidators\entirely_letters.py:11
 msgid "The password must contain numbers as well as letters."
 msgstr ""
 
-#: custompasswordvalidators/entirely_letters.py:17
+#: .\custompasswordvalidators\entirely_letters.py:17
 msgid "Your password must contain numbers as well as letters."
 msgstr ""
 
-#: custompasswordvalidators/symbols.py:11
-#: custompasswordvalidators/symbols.py:18
+#: .\custompasswordvalidators\symbols.py:11
+#: .\custompasswordvalidators\symbols.py:18
 msgid ""
 "Your password must contain at least 1 symbol: ()[]{}|\\`~!@#$%^&*_-+=;:'\\\","
 "<>./?"
 msgstr ""
 
-#: irelandie_admin/templates/partials/country_filter.html:4
+#: .\irelandie_admin\templates\partials\country_filter.html:4
 msgid "Country"
 msgstr ""
 
-#: irelandie_admin/templates/partials/country_filter.html:10
+#: .\irelandie_admin\templates\partials\country_filter.html:10
 msgid "Parent country"
 msgstr ""
 
-#: irelandie_admin/templates/wagtailadmin/pages/search.html:3
-#: irelandie_admin/templates/wagtailadmin/pages/search.html:27
-#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:158
-#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:181
-#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:292
-#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:313
-#: irelandie_project_styleguide/templates/patterns/pages/search/search.html:19
+#: .\irelandie_admin\templates\wagtailadmin\pages\search.html:3
+#: .\irelandie_admin\templates\wagtailadmin\pages\search.html:27
+#: .\irelandie_project_styleguide\templates\patterns\organisms\header\header.html:158
+#: .\irelandie_project_styleguide\templates\patterns\organisms\header\header.html:181
+#: .\irelandie_project_styleguide\templates\patterns\organisms\header\header.html:292
+#: .\irelandie_project_styleguide\templates\patterns\organisms\header\header.html:313
+#: .\irelandie_project_styleguide\templates\patterns\pages\search\search.html:19
 msgid "Search"
 msgstr ""
 
-#: irelandie_admin/templates/wagtailadmin/pages/search.html:33
+#: .\irelandie_admin\templates\wagtailadmin\pages\search.html:33
 msgid "Select all pages in listing"
 msgstr ""
 
-#: irelandie_admin/templates/wagtailadmin/pages/search_results.html:5
+#: .\irelandie_admin\templates\wagtailadmin\pages\search_results.html:5
 #, python-format
 msgid ""
 "\n"
@@ -106,921 +106,921 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: irelandie_admin/templates/wagtailadmin/pages/search_results.html:16
+#: .\irelandie_admin\templates\wagtailadmin\pages\search_results.html:16
 msgid "Page types"
 msgstr ""
 
-#: irelandie_admin/templates/wagtailadmin/pages/search_results.html:19
-#: irelandie_admin/templates/wagtailadmin/pages/search_results.html:21
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:21
+#: .\irelandie_admin\templates\wagtailadmin\pages\search_results.html:19
+#: .\irelandie_admin\templates\wagtailadmin\pages\search_results.html:21
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_index.html:51
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:21
 msgid "All"
 msgstr "Tout"
 
-#: irelandie_admin/templates/wagtailadmin/pages/search_results.html:43
+#: .\irelandie_admin\templates\wagtailadmin\pages\search_results.html:43
 #, python-format
 msgid "Sorry, no pages match <em>%(query_string)s</em>"
 msgstr ""
 
-#: irelandie_admin/templates/wagtailadmin/pages/search_results.html:48
+#: .\irelandie_admin\templates\wagtailadmin\pages\search_results.html:48
 msgid "Enter a search term above"
 msgstr ""
 
-#: irelandie_forms/models.py:39
+#: .\irelandie_forms\models.py:38
 msgid "Date Input (HTML 5)"
 msgstr ""
 
-#: irelandie_forms/models.py:40
+#: .\irelandie_forms\models.py:39
 msgid "Date/Time Input (HTML 5)"
 msgstr ""
 
-#: irelandie_navigation/blocks.py:18 irelandie_navigation/blocks.py:28
-#: irelandie_navigation/blocks.py:40
+#: .\irelandie_navigation\blocks.py:18 .\irelandie_navigation\blocks.py:28
+#: .\irelandie_navigation\blocks.py:40
 msgid "Leave blank to use the page's own title"
 msgstr ""
 
-#: irelandie_navigation/blocks.py:157 irelandie_navigation/blocks.py:167
+#: .\irelandie_navigation\blocks.py:157 .\irelandie_navigation\blocks.py:167
 msgid "Leave blank if no header required."
 msgstr ""
 
-#: irelandie_navigation/blocks.py:177
+#: .\irelandie_navigation\blocks.py:177
 msgid "200 characters max limit"
 msgstr ""
 
-#: irelandie_navigation/blocks.py:210
+#: .\irelandie_navigation\blocks.py:210
 msgid "75 characters max limit"
 msgstr ""
 
-#: irelandie_navigation/models.py:76 irelandie_navigation/models.py:307
-#: irelandie_navigation/models.py:424
+#: .\irelandie_navigation\models.py:76 .\irelandie_navigation\models.py:307
+#: .\irelandie_navigation\models.py:424
 msgid "Logo Alt text"
 msgstr ""
 
-#: irelandie_navigation/models.py:82
+#: .\irelandie_navigation\models.py:82
 msgid "Iframe code for Google My Maps."
 msgstr ""
 
-#: irelandie_navigation/models.py:86
+#: .\irelandie_navigation\models.py:86
 msgid "Text for warning banner on CMS preview pages."
 msgstr ""
 
-#: irelandie_navigation/models.py:116 irelandie_navigation/models.py:178
+#: .\irelandie_navigation\models.py:116 .\irelandie_navigation\models.py:178
 msgid "Language"
 msgstr ""
 
-#: irelandie_navigation/models.py:122 irelandie_navigation/models.py:405
+#: .\irelandie_navigation\models.py:122 .\irelandie_navigation\models.py:405
 msgid "Links"
 msgstr ""
 
-#: irelandie_navigation/models.py:133 irelandie_navigation/models.py:159
-#: irelandie_navigation/models.py:160
+#: .\irelandie_navigation\models.py:133 .\irelandie_navigation\models.py:159
+#: .\irelandie_navigation\models.py:160
 msgid "Primary Navigation"
 msgstr ""
 
-#: irelandie_navigation/models.py:184 irelandie_navigation/models.py:275
+#: .\irelandie_navigation\models.py:184 .\irelandie_navigation\models.py:275
 msgid "Columns"
 msgstr ""
 
-#: irelandie_navigation/models.py:189 irelandie_navigation/models.py:280
+#: .\irelandie_navigation\models.py:189 .\irelandie_navigation\models.py:280
 msgid "Single list of elements at the base of the page."
 msgstr ""
 
-#: irelandie_navigation/models.py:194
+#: .\irelandie_navigation\models.py:194
 msgid "email address"
 msgstr ""
 
-#: irelandie_navigation/models.py:214 irelandie_navigation/models.py:246
-#: irelandie_navigation/models.py:247
+#: .\irelandie_navigation\models.py:214 .\irelandie_navigation\models.py:246
+#: .\irelandie_navigation\models.py:247
 msgid "Footer Navigation"
 msgstr ""
 
-#: irelandie_navigation/models.py:265 irelandie_navigation/models.py:388
+#: .\irelandie_navigation\models.py:265 .\irelandie_navigation\models.py:388
 msgid "Name"
 msgstr ""
 
-#: irelandie_navigation/models.py:369
+#: .\irelandie_navigation\models.py:369
 msgid "Custom Footer"
 msgstr ""
 
-#: irelandie_navigation/models.py:370
+#: .\irelandie_navigation\models.py:370
 msgid "Custom Footers"
 msgstr ""
 
-#: irelandie_navigation/models.py:395
+#: .\irelandie_navigation\models.py:395
 msgid "URL"
 msgstr ""
 
-#: irelandie_navigation/models.py:477
+#: .\irelandie_navigation\models.py:477
 msgid "Custom Header"
 msgstr ""
 
-#: irelandie_navigation/models.py:478
+#: .\irelandie_navigation\models.py:478
 msgid "Custom Headers"
 msgstr ""
 
-#: irelandie_people/models.py:57 irelandie_utils/models.py:316
+#: .\irelandie_people\models.py:57 .\irelandie_utils\models.py:316
 msgid "Image Alt text"
 msgstr ""
 
-#: irelandie_people/models.py:58 irelandie_utils/models.py:244
-#: irelandie_utils/models.py:317
+#: .\irelandie_people\models.py:58 .\irelandie_utils\models.py:244
+#: .\irelandie_utils\models.py:317
 msgid "The alt text shown for accessibility: https://axesslab.com/alt-texts/"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/atoms/hero_search/hero_search.html:10
+#: .\irelandie_project_styleguide\templates\patterns\atoms\hero_search\hero_search.html:10
 msgid "Popular"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/atoms/hero_search/hero_search.html:22
+#: .\irelandie_project_styleguide\templates\patterns\atoms\hero_search\hero_search.html:22
 msgid "Search Button"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/base_page.html:99
-#: irelandie_project_styleguide/templates/patterns/molecules/skip-link/skip-link.html:3
-#: irelandie_project_styleguide/templates/patterns/molecules/skip-link/skip-link.html:4
+#: .\irelandie_project_styleguide\templates\patterns\base_page.html:91
+#: .\irelandie_project_styleguide\templates\patterns\molecules\skip-link\skip-link.html:3
+#: .\irelandie_project_styleguide\templates\patterns\molecules\skip-link\skip-link.html:4
 msgid "Skip to main content"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/hero_page.html:55
-#: irelandie_project_styleguide/templates/patterns/hero_page.html:61
-#: irelandie_project_styleguide/templates/patterns/molecules/banner_hero_image/banner_hero.html:21
-#: irelandie_project_styleguide/templates/patterns/molecules/banner_hero_image/banner_hero.html:27
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:30
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:36
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:90
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:96
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:89
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:95
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:97
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:103
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:37
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:40
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:45
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:53
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:60
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:65
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:73
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:80
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_page.html:30
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_page.html:36
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/mega_tag_index_page.html:56
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/mega_tag_index_page.html:65
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/mega_tag_landing_page.html:104
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/mega_tag_landing_page.html:113
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/mega_tag_landing_page.html:167
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/mega_tag_landing_page.html:176
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_index_page.html:55
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_index_page.html:61
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_index_page.html:67
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_index_page.html:71
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_index_page.html:84
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_index_page.html:96
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:102
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:108
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:114
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:118
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:131
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:143
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:196
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:202
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:208
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:212
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:225
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:237
-#: irelandie_project_styleguide/templates/patterns/pages/missions/general_content_page.html:28
-#: irelandie_project_styleguide/templates/patterns/pages/missions/general_content_page.html:34
+#: .\irelandie_project_styleguide\templates\patterns\hero_page.html:55
+#: .\irelandie_project_styleguide\templates\patterns\hero_page.html:61
+#: .\irelandie_project_styleguide\templates\patterns\molecules\banner_hero_image\banner_hero.html:21
+#: .\irelandie_project_styleguide\templates\patterns\molecules\banner_hero_image\banner_hero.html:27
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\half_hero.html:30
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\half_hero.html:36
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\half_hero.html:90
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\half_hero.html:96
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hero.html:89
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hero.html:95
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hybrid_hero.html:97
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hybrid_hero.html:103
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\featured_tagged_story.html:37
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\featured_tagged_story.html:40
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\featured_tagged_story.html:45
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\featured_tagged_story.html:53
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\featured_tagged_story.html:60
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\featured_tagged_story.html:65
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\featured_tagged_story.html:73
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\featured_tagged_story.html:80
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_page.html:30
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_page.html:36
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\mega_tag_index_page.html:56
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\mega_tag_index_page.html:65
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\mega_tag_landing_page.html:104
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\mega_tag_landing_page.html:113
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\mega_tag_landing_page.html:167
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\mega_tag_landing_page.html:176
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_index_page.html:55
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_index_page.html:61
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_index_page.html:67
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_index_page.html:71
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_index_page.html:84
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_index_page.html:96
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_landing_page.html:102
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_landing_page.html:108
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_landing_page.html:114
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_landing_page.html:118
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_landing_page.html:131
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_landing_page.html:143
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_landing_page.html:196
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_landing_page.html:202
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_landing_page.html:208
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_landing_page.html:212
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_landing_page.html:225
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_landing_page.html:237
+#: .\irelandie_project_styleguide\templates\patterns\pages\missions\general_content_page.html:28
+#: .\irelandie_project_styleguide\templates\patterns\pages\missions\general_content_page.html:34
 msgid "Tag label"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/accordion/accordion.html:64
-#: irelandie_project_styleguide/templates/patterns/molecules/accordion/accordion.html:66
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/megamenu_contents.html:73
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/megamenu_contents.html:76
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/advanced_richtext_block.html:15
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/advanced_richtext_block.html:17
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/advanced_richtext_block.html:34
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/advanced_richtext_block.html:36
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/parallex_advanced_richtext_block.html:27
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/parallex_advanced_richtext_block.html:29
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/parallex_advanced_richtext_block.html:46
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/parallex_advanced_richtext_block.html:48
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_block.html:70
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_block.html:72
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_photo_galleries_block.html:30
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_photo_galleries_block.html:32
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/wide_feature_block.html:61
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/wide_feature_block.html:63
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:133
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:135
+#: .\irelandie_project_styleguide\templates\patterns\molecules\accordion\accordion.html:64
+#: .\irelandie_project_styleguide\templates\patterns\molecules\accordion\accordion.html:66
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\blocks\megamenu_contents.html:73
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\blocks\megamenu_contents.html:76
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\advanced_richtext_block.html:15
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\advanced_richtext_block.html:17
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\advanced_richtext_block.html:34
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\advanced_richtext_block.html:36
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\parallax_advanced_richtext_block.html:34
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\parallax_advanced_richtext_block.html:36
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\story_block.html:70
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\story_block.html:72
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\story_photo_galleries_block.html:30
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\story_photo_galleries_block.html:32
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\wide_feature_block.html:61
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\wide_feature_block.html:63
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\travel_landing.html:133
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\travel_landing.html:135
 msgid "Button text"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/article_card/ajax_article_card.html:5
-#: irelandie_project_styleguide/templates/patterns/molecules/article_card/ajax_article_card.html:14
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/wide_feature_block.html:74
+#: .\irelandie_project_styleguide\templates\patterns\molecules\article_card\ajax_article_card.html:5
+#: .\irelandie_project_styleguide\templates\patterns\molecules\article_card\ajax_article_card.html:14
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\wide_feature_block.html:74
 msgid "Link box"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/article_card/article_card.html:3
-#: irelandie_project_styleguide/templates/patterns/molecules/card/card.html:14
-#: irelandie_project_styleguide/templates/patterns/molecules/card/card.html:16
-#: irelandie_project_styleguide/templates/patterns/molecules/card/news-card.html:13
-#: irelandie_project_styleguide/templates/patterns/molecules/link_card/link_card.html:3
-#: irelandie_project_styleguide/templates/patterns/molecules/related-articles/related-articles.html:13
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:4
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/featured_tagged_story.html:21
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/homepage_feature_block.html:79
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/homepage_feature_block.html:81
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/mini_link_card.html:3
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/multimedia_block.html:31
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/related_content.html:4
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/mega_tag_landing_page.html:126
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:157
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:64
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:88
+#: .\irelandie_project_styleguide\templates\patterns\molecules\article_card\article_card.html:3
+#: .\irelandie_project_styleguide\templates\patterns\molecules\card\card.html:14
+#: .\irelandie_project_styleguide\templates\patterns\molecules\card\card.html:16
+#: .\irelandie_project_styleguide\templates\patterns\molecules\card\news-card.html:13
+#: .\irelandie_project_styleguide\templates\patterns\molecules\link_card\link_card.html:3
+#: .\irelandie_project_styleguide\templates\patterns\molecules\related-articles\related-articles.html:13
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\featured_tagged_story.html:4
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\featured_tagged_story.html:21
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\homepage_feature_block.html:79
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\homepage_feature_block.html:81
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\mini_link_card.html:3
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\multimedia_block.html:31
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\related_content.html:4
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\mega_tag_landing_page.html:126
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_landing_page.html:157
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\travel_landing.html:64
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\travel_landing.html:88
 msgid "card"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/card/card.html:34
+#: .\irelandie_project_styleguide\templates\patterns\molecules\card\card.html:34
 msgid "Read story"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/card/news-card.html:45
-#: irelandie_project_styleguide/templates/patterns/molecules/related-articles/related-articles.html:43
-#: irelandie_project_styleguide/templates/patterns/molecules/topics/featured_article.html:34
+#: .\irelandie_project_styleguide\templates\patterns\molecules\card\news-card.html:45
+#: .\irelandie_project_styleguide\templates\patterns\molecules\related-articles\related-articles.html:43
+#: .\irelandie_project_styleguide\templates\patterns\molecules\topics\featured_article.html:34
 msgid "Read more"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/contact_details/contact_details.html:28
-#: irelandie_project_styleguide/templates/patterns/molecules/contact_details/contact_details.html:31
-#: irelandie_project_styleguide/templates/patterns/snippets/contactsnippet.html:30
-#: irelandie_project_styleguide/templates/patterns/snippets/contactsnippet.html:33
+#: .\irelandie_project_styleguide\templates\patterns\molecules\contact_details\contact_details.html:28
+#: .\irelandie_project_styleguide\templates\patterns\molecules\contact_details\contact_details.html:31
+#: .\irelandie_project_styleguide\templates\patterns\snippets\contactsnippet.html:30
+#: .\irelandie_project_styleguide\templates\patterns\snippets\contactsnippet.html:33
 msgid "Telephone"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/cta/call_to_action.html:23
+#: .\irelandie_project_styleguide\templates\patterns\molecules\cta\call_to_action.html:23
 msgid "Call to action"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/featured-block/featured_block.html:4
+#: .\irelandie_project_styleguide\templates\patterns\molecules\featured-block\featured_block.html:4
 msgid "Featured contents"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:22
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:82
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/homepage_feature_block.html:54
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/homepage_feature_block.html:56
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\half_hero.html:22
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hero.html:82
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\homepage_feature_block.html:54
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\homepage_feature_block.html:56
 msgid "Hero button"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:50
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:109
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:58
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:45
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:59
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/multimedia_block.html:67
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:24
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:30
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_block.html:45
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/video_block.html:7
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/video_block_alt.html:7
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/youtube_or_vimeo_embed.html:16
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/youtube_or_vimeo_embed.html:31
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/youtube_or_vimeo_embed.html:47
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_listings/listings_featured_page.html:47
-#: irelandie_project_styleguide/templates/patterns/pages/missions/general_content_page.html:78
-#: irelandie_project_styleguide/templates/patterns/pages/missions/general_content_page.html:92
-#: irelandie_project_styleguide/templates/patterns/pages/missions/general_content_page.html:107
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\half_hero.html:50
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\half_hero.html:109
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hero.html:58
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hybrid_hero.html:45
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hybrid_hero.html:59
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\multimedia_block.html:67
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\person_block.html:24
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\person_block.html:30
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\story_block.html:45
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\video_block.html:7
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\video_block_alt.html:7
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\youtube_or_vimeo_embed.html:16
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\youtube_or_vimeo_embed.html:31
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\youtube_or_vimeo_embed.html:47
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_listings\listings_featured_page.html:47
+#: .\irelandie_project_styleguide\templates\patterns\pages\missions\general_content_page.html:78
+#: .\irelandie_project_styleguide\templates\patterns\pages\missions\general_content_page.html:92
+#: .\irelandie_project_styleguide\templates\patterns\pages\missions\general_content_page.html:107
 msgid "Your browser does not support the video tag."
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:54
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:113
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:108
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:51
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:66
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/multimedia_block.html:62
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/multimedia_block.html:71
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/multimedia_block.html:72
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/parallex_imagevideo_block.html:51
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\half_hero.html:54
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\half_hero.html:113
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hero.html:108
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hybrid_hero.html:51
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hybrid_hero.html:66
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\multimedia_block.html:62
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\multimedia_block.html:71
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\multimedia_block.html:72
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\parallax_double_feature_image_video.html:43
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\parallax_imagevideo_block.html:70
 msgid "Toggle video playback"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:85
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\half_hero.html:85
 msgid "hero_button"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/half_hero.html:121
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hero.html:42
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:17
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:30
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/image_block.html:8
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_block.html:19
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_block.html:31
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_page.html:46
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_page.html:58
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\half_hero.html:121
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hero.html:42
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hybrid_hero.html:17
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hybrid_hero.html:30
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\image_block.html:8
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\story_block.html:19
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\story_block.html:31
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_page.html:46
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_page.html:58
 msgid "See the credit for this image"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:48
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:49
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:62
-#: irelandie_project_styleguide/templates/patterns/molecules/hero/hybrid_hero.html:63
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hybrid_hero.html:48
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hybrid_hero.html:49
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hybrid_hero.html:62
+#: .\irelandie_project_styleguide\templates\patterns\molecules\hero\hybrid_hero.html:63
 msgid "Mute/Unmute button"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/job/job-card.html:11
-#: irelandie_project_styleguide/templates/patterns/molecules/link_box/link_box.html:10
+#: .\irelandie_project_styleguide\templates\patterns\molecules\job\job-card.html:11
+#: .\irelandie_project_styleguide\templates\patterns\molecules\link_box\link_box.html:10
 msgid "Link box button"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/link_box/link_box.html:2
+#: .\irelandie_project_styleguide\templates\patterns\molecules\link_box\link_box.html:2
 msgid "link_box"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/link_button/link_button.html:4
+#: .\irelandie_project_styleguide\templates\patterns\molecules\link_button\link_button.html:4
 msgid "link button"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/logo_card/logo_card.html:3
+#: .\irelandie_project_styleguide\templates\patterns\molecules\logo_card\logo_card.html:3
 msgid "Logo card"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/footer_column.html:9
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\blocks\footer_column.html:9
 msgid "Footer Column"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/blocks/megamenu_contents.html:85
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\blocks\megamenu_contents.html:85
 msgid "Image Links"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/breadcrumbs.html:13
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/breadcrumbs.html:36
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\breadcrumbs.html:13
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\breadcrumbs.html:36
 msgid "Breadcrumbs title"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/breadcrumbs.html:16
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/breadcrumbs.html:24
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\breadcrumbs.html:16
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\breadcrumbs.html:24
 msgid "arrow-next"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/breadcrumbs.html:19
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/custom_primary_navigation.html:7
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/includes/menu_item.html:3
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/includes/menu_item_extended.html:3
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:12
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:27
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:46
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:75
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:92
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:121
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:138
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:167
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:193
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:208
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:227
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:256
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:273
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:302
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:315
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:344
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\breadcrumbs.html:19
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\custom_primary_navigation.html:7
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\includes\menu_item.html:3
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\includes\menu_item_extended.html:3
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:12
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:27
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:46
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:75
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:92
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:121
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:138
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:167
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:193
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:208
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:227
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:256
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:273
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:302
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:315
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:344
 msgid "Nav link"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/breadcrumbs.html:20
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\breadcrumbs.html:20
 msgid "Home"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/breadcrumbs.html:34
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\breadcrumbs.html:34
 msgid "arrow-prev"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/custom_primary_navigation.html:3
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\custom_primary_navigation.html:3
 msgid "Secondary navigation"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/footerlinks.html:3
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\footerlinks.html:3
 msgid "Footer links"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:3
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:3
 msgid "Primary navigation"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:31
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:212
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:31
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:212
 msgid "Back"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:61
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:107
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:153
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:242
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:288
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/primarynav.html:330
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:61
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:107
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:153
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:242
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:288
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\primarynav.html:330
 msgid "Grid item sub links"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/secondarynav.html:2
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\secondarynav.html:2
 msgid "Extended primary navigation"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/sidebar.html:6
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\sidebar.html:6
 msgid "In this section"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/navigation/sidebar.html:9
+#: .\irelandie_project_styleguide\templates\patterns\molecules\navigation\sidebar.html:9
 msgid "Side bar"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/notice-bar/blocks/notice_bar.html:44
-#: irelandie_project_styleguide/templates/patterns/molecules/notice-bar/blocks/notice_bar.html:46
+#: .\irelandie_project_styleguide\templates\patterns\molecules\notice-bar\blocks\notice_bar.html:44
+#: .\irelandie_project_styleguide\templates\patterns\molecules\notice-bar\blocks\notice_bar.html:46
 msgid "Notice button"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/pagination/index-pagination.html:4
-#: irelandie_project_styleguide/templates/patterns/molecules/pagination/pagination.html:4
+#: .\irelandie_project_styleguide\templates\patterns\molecules\pagination\index-pagination.html:4
+#: .\irelandie_project_styleguide\templates\patterns\molecules\pagination\pagination.html:4
 msgid "Pagination"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/pagination/index-pagination.html:9
+#: .\irelandie_project_styleguide\templates\patterns\molecules\pagination\index-pagination.html:9
 msgid "Goto previous page"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/pagination/index-pagination.html:17
+#: .\irelandie_project_styleguide\templates\patterns\molecules\pagination\index-pagination.html:17
 msgid "Previous"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/pagination/index-pagination.html:27
+#: .\irelandie_project_styleguide\templates\patterns\molecules\pagination\index-pagination.html:27
 msgid "Goto next page"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/pagination/index-pagination.html:35
+#: .\irelandie_project_styleguide\templates\patterns\molecules\pagination\index-pagination.html:35
 msgid "Next"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/pagination/pagination.html:8
+#: .\irelandie_project_styleguide\templates\patterns\molecules\pagination\pagination.html:8
 msgid "Go to previous page"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/pagination/pagination.html:15
+#: .\irelandie_project_styleguide\templates\patterns\molecules\pagination\pagination.html:15
 #, python-format
 msgid ""
 " Current Page, Page %(paginator_page.number)s of "
 "%(paginator_page.paginator.num_pages)s pages "
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/pagination/pagination.html:22
+#: .\irelandie_project_styleguide\templates\patterns\molecules\pagination\pagination.html:22
 msgid "Go to next page"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/related-articles/related-articles.html:8
+#: .\irelandie_project_styleguide\templates\patterns\molecules\related-articles\related-articles.html:8
 msgid "You may also be interested in these articles"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/search-result/search-result.html:12
+#: .\irelandie_project_styleguide\templates\patterns\molecules\search-result\search-result.html:12
 msgid "Search content"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/search/search.html:7
-#: irelandie_project_styleguide/templates/patterns/pages/search/search.html:29
+#: .\irelandie_project_styleguide\templates\patterns\molecules\search\search.html:7
+#: .\irelandie_project_styleguide\templates\patterns\pages\search\search.html:29
 msgid "Search this website"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/search/search.html:8
-#: irelandie_project_styleguide/templates/patterns/pages/search/search.html:31
+#: .\irelandie_project_styleguide\templates\patterns\molecules\search\search.html:8
+#: .\irelandie_project_styleguide\templates\patterns\pages\search\search.html:31
 msgid "Submit Search"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:9
+#: .\irelandie_project_styleguide\templates\patterns\molecules\share\share.html:9
 msgid "Share this page"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:17
+#: .\irelandie_project_styleguide\templates\patterns\molecules\share\share.html:17
 msgid "Share this page on Twitter"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:17
+#: .\irelandie_project_styleguide\templates\patterns\molecules\share\share.html:17
 msgid "Share on Twitter"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:24
+#: .\irelandie_project_styleguide\templates\patterns\molecules\share\share.html:24
 msgid "Share this page on LinkedIn"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:24
+#: .\irelandie_project_styleguide\templates\patterns\molecules\share\share.html:24
 msgid "Share on LinkedIn"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:32
+#: .\irelandie_project_styleguide\templates\patterns\molecules\share\share.html:32
 msgid "Share this page on Facebook"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:32
+#: .\irelandie_project_styleguide\templates\patterns\molecules\share\share.html:32
 msgid "Share on Facebook"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/slide/slide.html:5
+#: .\irelandie_project_styleguide\templates\patterns\molecules\slide\slide.html:5
 msgid "Slide link"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/slide/slide.html:6
+#: .\irelandie_project_styleguide\templates\patterns\molecules\slide\slide.html:6
 msgid "A link to somewhere else. This could surround the whole slide."
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/document_block.html:3
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\document_block.html:3
 msgid "Document link"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/homepage_feature_block.html:63
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\homepage_feature_block.html:63
 msgid "Image Button"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:9
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\person_block.html:9
 msgid "Contact Details"
 msgstr "Coordonnées"
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:120
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_block.html:151
-#: irelandie_project_styleguide/templates/patterns/snippets/peoplesnippet.html:115
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\person_block.html:120
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\story_block.html:151
+#: .\irelandie_project_styleguide\templates\patterns\snippets\peoplesnippet.html:115
 msgid "Next menu item"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:121
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_block.html:152
-#: irelandie_project_styleguide/templates/patterns/snippets/peoplesnippet.html:116
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\person_block.html:121
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\story_block.html:152
+#: .\irelandie_project_styleguide\templates\patterns\snippets\peoplesnippet.html:116
 msgid "Previous menu item"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:133
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:139
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:146
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:176
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:182
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:189
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/twitter_embed.html:9
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:152
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:156
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:164
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:168
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:172
-#: irelandie_project_styleguide/templates/patterns/snippets/twitterembedsnippet.html:10
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\person_block.html:133
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\person_block.html:139
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\person_block.html:146
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\person_block.html:176
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\person_block.html:182
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\person_block.html:189
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\twitter_embed.html:9
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\travel_landing.html:152
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\travel_landing.html:156
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\travel_landing.html:164
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\travel_landing.html:168
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\travel_landing.html:172
+#: .\irelandie_project_styleguide\templates\patterns\snippets\twitterembedsnippet.html:10
 msgid "Twitter timeline"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:134
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:177
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:153
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:169
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\person_block.html:134
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\person_block.html:177
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\travel_landing.html:153
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\travel_landing.html:169
 msgid "Keep up to date with the latest tweets from"
 msgstr "Les derniers tweets de"
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_link_block.html:4
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\person_link_block.html:4
 msgid "Person link"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/pinned_story_hero_block.html:15
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\pinned_story_hero_block.html:15
 msgid "Button link"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/policy_document_box.html:32
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\policy_document_box.html:32
 msgid "Download button"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/related_content.html:23
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\related_content.html:23
 msgid "Arrow"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/secondary_call_to_action.html:5
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\secondary_call_to_action.html:5
 msgid "Secondary CTA link"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/social_link_block.html:3
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\social_link_block.html:3
 msgid "Social link"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_link_block.html:4
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\story_link_block.html:4
 msgid "Story link"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_photo_galleries_block.html:47
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/timeline_block.html:53
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\story_photo_galleries_block.html:47
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\timeline_block.html:53
 msgid "Slide Arrow Left"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/story_photo_galleries_block.html:48
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/timeline_block.html:54
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\story_photo_galleries_block.html:48
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\timeline_block.html:54
 msgid "Slide Arrow Right"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/twitter_embed.html:6
-#: irelandie_project_styleguide/templates/patterns/snippets/twitterembedsnippet.html:7
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\twitter_embed.html:6
+#: .\irelandie_project_styleguide\templates\patterns\snippets\twitterembedsnippet.html:7
 msgid "Follow our"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/wide_feature_block.html:36
+#: .\irelandie_project_styleguide\templates\patterns\molecules\streamfield\blocks\wide_feature_block.html:36
 msgid "Image link"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/topics/featured_article.html:3
+#: .\irelandie_project_styleguide\templates\patterns\molecules\topics\featured_article.html:3
 msgid "featured_article"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/video-modal/video-modal.html:4
+#: .\irelandie_project_styleguide\templates\patterns\molecules\video-modal\video-modal.html:4
 msgid "Open video"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/molecules/video-modal/video-modal.html:6
+#: .\irelandie_project_styleguide\templates\patterns\molecules\video-modal\video-modal.html:6
 msgid "Close"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:45
+#: .\irelandie_project_styleguide\templates\patterns\organisms\footer\footer.html:45
 msgid "Follow us"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:49
+#: .\irelandie_project_styleguide\templates\patterns\organisms\footer\footer.html:49
 msgid "Find us on Youtube"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:55
+#: .\irelandie_project_styleguide\templates\patterns\organisms\footer\footer.html:55
 msgid "Connect on Linkedin"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:61
+#: .\irelandie_project_styleguide\templates\patterns\organisms\footer\footer.html:61
 msgid "Find us on Facebook"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:67
+#: .\irelandie_project_styleguide\templates\patterns\organisms\footer\footer.html:67
 msgid "Follow us on Twitter"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:73
+#: .\irelandie_project_styleguide\templates\patterns\organisms\footer\footer.html:73
 msgid "Find us on Instagram"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:79
+#: .\irelandie_project_styleguide\templates\patterns\organisms\footer\footer.html:79
 msgid "Find us on Weibo"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:98
+#: .\irelandie_project_styleguide\templates\patterns\organisms\footer\footer.html:98
 msgid "Copyright"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:98
+#: .\irelandie_project_styleguide\templates\patterns\organisms\footer\footer.html:98
 msgid "All rights reserved"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:136
-#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:269
+#: .\irelandie_project_styleguide\templates\patterns\organisms\header\header.html:136
+#: .\irelandie_project_styleguide\templates\patterns\organisms\header\header.html:269
 msgid "Select default language"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:169
-#: irelandie_project_styleguide/templates/patterns/organisms/header/header.html:303
+#: .\irelandie_project_styleguide\templates\patterns\organisms\header\header.html:169
+#: .\irelandie_project_styleguide\templates\patterns\organisms\header\header.html:303
 msgid "Mobile menu toggle"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/defender/lockout.html:8
+#: .\irelandie_project_styleguide\templates\patterns\pages\defender\lockout.html:8
 msgid "Your account has been locked"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/defender/lockout.html:25
+#: .\irelandie_project_styleguide\templates\patterns\pages\defender\lockout.html:25
 msgid "Account locked: too many login attempts."
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/defender/lockout.html:27
+#: .\irelandie_project_styleguide\templates\patterns\pages\defender\lockout.html:27
 msgid "Contact an admin to unlock your account."
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/defender/lockout.html:29
+#: .\irelandie_project_styleguide\templates\patterns\pages\defender\lockout.html:29
 #, python-format
 msgid ""
 "Please try again in '%(cooloff_time_minutes|floatformat)s' "
 "minute'%(cooloff_time_minutes|pluralize)s'."
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/errors/403.html:9
+#: .\irelandie_project_styleguide\templates\patterns\pages\errors\403.html:9
 msgid "Permission denied"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/errors/500.html:9
+#: .\irelandie_project_styleguide\templates\patterns\pages\errors\500.html:9
 msgid "Server error"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/forms/example_form.html:11
-#: irelandie_project_styleguide/templates/patterns/pages/forms/form_page.html:101
+#: .\irelandie_project_styleguide\templates\patterns\pages\forms\example_form.html:11
+#: .\irelandie_project_styleguide\templates\patterns\pages\forms\form_page.html:101
 msgid ""
 "There were some errors with your form. Please amend the fields highlighted "
 "below."
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/forms/example_form.html:31
-#: irelandie_project_styleguide/templates/patterns/pages/forms/form_page.html:115
+#: .\irelandie_project_styleguide\templates\patterns\pages\forms\example_form.html:31
+#: .\irelandie_project_styleguide\templates\patterns\pages\forms\form_page.html:115
 msgid "Submit"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/forms/form_page.html:78
-#: irelandie_project_styleguide/templates/patterns/pages/forms/form_page.html:91
+#: .\irelandie_project_styleguide\templates\patterns\pages\forms\form_page.html:78
+#: .\irelandie_project_styleguide\templates\patterns\pages\forms\form_page.html:91
 msgid "Topic"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/forms/form_page.html:83
+#: .\irelandie_project_styleguide\templates\patterns\pages\forms\form_page.html:83
 msgid "Choose Topic"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/forms/form_page_landing.html:4
-#: irelandie_project_styleguide/templates/patterns/pages/forms/form_page_landing.html:11
+#: .\irelandie_project_styleguide\templates\patterns\pages\forms\form_page_landing.html:4
+#: .\irelandie_project_styleguide\templates\patterns\pages\forms\form_page_landing.html:11
 msgid "Thank you"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_job/job_index.html:44
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_job\job_index.html:44
 msgid "There are currently no vacancies."
 msgstr "Il n'y a actuellement aucun poste à pourvoir."
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_listings/listings_content_page.html:37
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_listings/listings_featured_page.html:71
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_listings\listings_content_page.html:37
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_listings\listings_featured_page.html:71
 msgid "Event link"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_listings/listings_index_usa.html:143
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_listings\listings_index_usa.html:143
 msgid "Filter by: "
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_listings/listings_index_usa.html:144
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_listings\listings_index_usa.html:144
 msgid "City list"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_listings/listings_index_usa.html:150
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_listings\listings_index_usa.html:150
 msgid "OR"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_listings/listings_index_usa.html:152
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_listings\listings_index_usa.html:152
 msgid "State list"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_index.html:49
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_index.html:66
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_index.html:90
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_index.html:102
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_index.html:49
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_index.html:66
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_index.html:90
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_index.html:102
 msgid "Select year:"
 msgstr "Sélectionnez l’année:"
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_index.html:50
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_index.html:67
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_index.html:91
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_index.html:103
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_index.html:50
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_index.html:67
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_index.html:91
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_index.html:103
 msgid "Select year"
 msgstr "Sélectionnez l’année"
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_landing_page.html:46
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_landing_page.html:46
 msgid "Related Articles"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_landing_page.html:82
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_news/news_landing_page.html:83
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_landing_page.html:82
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_landing_page.html:83
 msgid "Read all news"
 msgstr "Lire toutes les actualités"
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/mega_tag_landing_page.html:189
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_tags/tag_landing_page.html:251
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\mega_tag_landing_page.html:189
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_tags\tag_landing_page.html:251
 msgid "Read all stories"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/greyed_alert.html:5
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\greyed_alert.html:5
 msgid "Security Status"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/quicklinks.html:4
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\quicklinks.html:4
 msgid "Quick link"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:3
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:3
 msgid "Choose destination:"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:5
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:5
 msgid "-- Choose destination --"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:14
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:14
 msgid "Type destination name:"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:19
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:19
 msgid "Choose region:"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:22
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:22
 msgid "Asia and Oceania"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:23
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:23
 msgid "Caribbean"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:24
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:24
 msgid "Europe"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:25
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:25
 msgid "Middle East and North Africa"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:26
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:26
 msgid "North and Central America"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:27
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:27
 msgid "South America"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:28
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:28
 msgid "Sub-Saharan Africa"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:36
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:36
 msgid "Clear all filters"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:40
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:40
 msgid "Jump to"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/molecules/search_forms.html:44
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:44
 msgid "Letter"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_index.html:34
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\travel_index.html:34
 msgid "Region"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:147
+#: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\travel_landing.html:147
 msgid "Twitter title"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/missions/country_index_page.html:47
+#: .\irelandie_project_styleguide\templates\patterns\pages\missions\country_index_page.html:47
 msgid "Search by country name:"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/missions/country_index_page.html:50
-#: irelandie_project_styleguide/templates/patterns/pages/missions/embassy_index_page.html:27
+#: .\irelandie_project_styleguide\templates\patterns\pages\missions\country_index_page.html:50
+#: .\irelandie_project_styleguide\templates\patterns\pages\missions\embassy_index_page.html:27
 msgid "Clear Filter"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/missions/embassy_index_page.html:24
+#: .\irelandie_project_styleguide\templates\patterns\pages\missions\embassy_index_page.html:24
 msgid "Type country name:"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/missions/mission_search_page.html:29
+#: .\irelandie_project_styleguide\templates\patterns\pages\missions\mission_search_page.html:29
 msgid "Region Expand"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/missions/mission_search_page.html:49
+#: .\irelandie_project_styleguide\templates\patterns\pages\missions\mission_search_page.html:49
 msgid "Country URL"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/missions/services_landing_page.html:40
-#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:218
+#: .\irelandie_project_styleguide\templates\patterns\pages\missions\services_landing_page.html:40
+#: .\irelandie_project_styleguide\templates\patterns\pages\toc\table_of_contents.html:218
 msgid "Related content"
 msgstr "Contenus similaires"
 
-#: irelandie_project_styleguide/templates/patterns/pages/search/search.html:17
+#: .\irelandie_project_styleguide\templates\patterns\pages\search\search.html:17
 msgid "Search results for"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/search/search.html:55
+#: .\irelandie_project_styleguide\templates\patterns\pages\search\search.html:55
 msgid "Results"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/search/search.html:68
+#: .\irelandie_project_styleguide\templates\patterns\pages\search\search.html:68
 msgid "No results found."
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:141
-#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:159
-#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:197
+#: .\irelandie_project_styleguide\templates\patterns\pages\toc\table_of_contents.html:141
+#: .\irelandie_project_styleguide\templates\patterns\pages\toc\table_of_contents.html:159
+#: .\irelandie_project_styleguide\templates\patterns\pages\toc\table_of_contents.html:197
 msgid "Back to Top"
 msgstr "Retour en haut"
 
-#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:145
-#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:163
-#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:201
+#: .\irelandie_project_styleguide\templates\patterns\pages\toc\table_of_contents.html:145
+#: .\irelandie_project_styleguide\templates\patterns\pages\toc\table_of_contents.html:163
+#: .\irelandie_project_styleguide\templates\patterns\pages\toc\table_of_contents.html:201
 msgid "Back to top"
 msgstr "Retour en haut"
 
-#: irelandie_project_styleguide/templates/patterns/pages/wagtail/password_required.html:5
-#: irelandie_project_styleguide/templates/patterns/pages/wagtail/password_required.html:10
+#: .\irelandie_project_styleguide\templates\patterns\pages\wagtail\password_required.html:5
+#: .\irelandie_project_styleguide\templates\patterns\pages\wagtail\password_required.html:10
 msgid "Password required"
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/pages/wagtail/password_required.html:12
+#: .\irelandie_project_styleguide\templates\patterns\pages\wagtail\password_required.html:12
 msgid "Please enter the password to proceed."
 msgstr ""
 
-#: irelandie_project_styleguide/templates/patterns/snippets/peoplesnippet.html:25
+#: .\irelandie_project_styleguide\templates\patterns\snippets\peoplesnippet.html:25
 msgid "Social Media link"
 msgstr ""
 
-#: irelandie_utils/blocks.py:542
+#: .\irelandie_utils\blocks.py:542
 msgid ""
 "Please remember to use 'no cookie' versions of YouTube links to ensure users "
 "who reject cookies can view the video. Guidance on how to do this is "
@@ -1028,18 +1028,18 @@ msgid ""
 "aspx"
 msgstr ""
 
-#: irelandie_utils/blocks.py:549
+#: .\irelandie_utils\blocks.py:549
 msgid ""
 "Slido iframe code. Ensure that the code you add here is only Slido provided "
 "code."
 msgstr ""
 
-#: irelandie_utils/blocks.py:1080 irelandie_utils/blocks.py:1083
-#: irelandie_utils/blocks.py:1128 irelandie_utils/blocks.py:1131
+#: .\irelandie_utils\blocks.py:1080 .\irelandie_utils\blocks.py:1083
+#: .\irelandie_utils\blocks.py:1128 .\irelandie_utils\blocks.py:1131
 msgid "Accordion Tab"
 msgstr ""
 
-#: irelandie_utils/blocks.py:1645
+#: .\irelandie_utils\blocks.py:1645
 msgid ""
 "Please remember to use 'no cookie' versions of YouTube links to ensure "
 "userswho reject cookies can view the video. Guidance on how to do this "
@@ -1047,7 +1047,7 @@ msgid ""
 "Tips.aspx"
 msgstr ""
 
-#: irelandie_utils/blocks.py:1845
+#: .\irelandie_utils\blocks.py:1845
 msgid ""
 "Please remember to use 'no cookie' versions of YouTube links to ensure "
 "userswho reject cookies can view the video. Guidance on how to do this is "
@@ -1055,19 +1055,19 @@ msgid ""
 "aspx"
 msgstr ""
 
-#: irelandie_utils/models.py:221
+#: .\irelandie_utils\models.py:221
 msgid "Listing Image Alt text"
 msgstr ""
 
-#: passwordreset/templates/passwordreset/index.html:4
-#: passwordreset/templates/passwordreset/index.html:6
+#: .\passwordreset\templates\passwordreset\index.html:4
+#: .\passwordreset\templates\passwordreset\index.html:6
 msgid "Account"
 msgstr ""
 
-#: passwordreset/templates/passwordreset/index.html:17
+#: .\passwordreset\templates\passwordreset\index.html:17
 msgid "More actions"
 msgstr ""
 
-#: passwordreset/views.py:83
+#: .\passwordreset\views.py:83
 msgid "Your password has been updated successfully!"
 msgstr ""
