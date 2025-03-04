@@ -117,6 +117,7 @@ msgstr ""
 #: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_index.html:92
 #: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_news\news_index.html:104
 #: .\irelandie_project_styleguide\templates\patterns\pages\irelandie_travel\molecules\search_forms.html:21
+msgctxt "custom-context"
 msgid "All"
 msgstr "Tout"
 
