@@ -72,7 +72,7 @@ INSTALLED_APPS = [
     #
     "wagtail_cloudfront_invalidate",
     "app",
-    # "robots_txt",
+    "robots_txt",
     "health_check",
     "accview_non_admin",
     # "wagtail_sitemap_seo",
