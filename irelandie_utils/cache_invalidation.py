@@ -42,8 +42,7 @@ def invalidate_cloudfront(paths):
         return None
 
 
-def invalidate_page_cache(page):
-    paths_to_invalidate = [page.url]
+def invalidate_page_cache(paths_to_invalidate):
 
     if paths_to_invalidate:
         invalidate_cloudfront(paths_to_invalidate)

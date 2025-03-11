@@ -444,7 +444,7 @@ def job_page_changed(job_page):
         batch.purge()
 
         # Also invalidate CloudFront and Django cache for job index page
-        invalidate_page_cache(job_index_page)
+        invalidate_page_cache([job_index_page.url])
 
 
 @receiver(page_published, sender=JobContentPage)
