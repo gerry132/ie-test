@@ -47,10 +47,6 @@ def invalidate_page_cache(paths_to_invalidate):
     if paths_to_invalidate:
         invalidate_cloudfront(paths_to_invalidate)
 
-    if check_page_type(page.content_type, 'embassy index page'):
-        key = make_template_fragment_key("embassy_index")
-        cache.delete(key)
-
 
 def invalidate_snippet_cache(snippet_instance):
     usage = snippet_instance.get_usage()
