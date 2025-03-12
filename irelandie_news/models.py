@@ -235,7 +235,7 @@ def news_page_changed(news_page):
             paginated_urls.append(news_landing_page.url)
             # Handle cache invalidation for paginated URLs
             for url in paginated_urls:
-                invalidate_page_cache(Page(url=url))
+                invalidate_page_cache(paginated_urls)
 
 
 @receiver(page_published, sender=NewsPage)
