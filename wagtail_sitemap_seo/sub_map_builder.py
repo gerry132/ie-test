@@ -15,7 +15,8 @@ class MapBuilder(RootBuilder):
         locale = Locale.objects.get(language_code='en')
         pages = Page.objects.live().descendant_of(page).filter(locale=locale)
         new_map = self.site_map_init()
-
+        elem = self.build_url_elem(page)
+        new_map.append(elem)
         for p in pages:
             elem = self.build_url_elem(p)
             new_map.append(elem)
