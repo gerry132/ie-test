@@ -75,7 +75,7 @@ INSTALLED_APPS = [
     "robots_txt",
     "health_check",
     "accview_non_admin",
-    # "wagtail_sitemap_seo",
+    "wagtail_sitemap_seo",
     "irelandie_admin",
     "irelandie_assets",
     "irelandie_documents",
@@ -444,9 +444,8 @@ if USE_S3 is True:
 
     AWS_S3_REGION_NAME = "eu-west-1"
 
-    # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
-else:
-    None
+    SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
+
 
 WAGTAIL_SITE_NAME = "Ireland.ie"
 
