@@ -233,6 +233,7 @@ module "network" {
 # Security groups
 # -----------------------------------------------------------------------------
 
+
 resource "aws_security_group" "lb" {
     name    = "${local.environment_name}-lb"
     vpc_id  = module.network.vpc_id
@@ -306,13 +307,12 @@ resource "aws_security_group_rule" "internet_to_lb_80" {
 
 
 resource "aws_security_group_rule" "internet_to_lb_443" {
-  for_each = local.non_gov_network_cird_blocks
   type                      = "ingress"
   from_port                 = 443
   to_port                   = 443
   protocol                  = "tcp"
   security_group_id         = aws_security_group.lb.id
-  cidr_blocks               = each.value.cidr_blocks
+  cidr_blocks               = ["0.0.0.0/0"]
 }
 
 
@@ -2074,7 +2074,12 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
                         "176.58.117.51/32",
                         "80.85.87.84/32",
                         "88.80.184.34/32",
-                        "178.79.136.28/32"]
+                        "178.79.136.28/32",
+                        "169.254.192.0/18",
+                        "137.191.224.0/19",
+                        "193.178.64.0/19",
+                        "193.178.96.0/20",
+                        "139.162.239.108/32"]
 }
 
 
@@ -2084,7 +2089,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
   scope = "CLOUDFRONT"
 
   default_action {
-    allow {}
+    block {}
   }
  rule {
     name     = "AllowWhitelistedIPs"
@@ -2106,229 +2111,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
       sampled_requests_enabled   = true
     }
   }
-  rule {
-    name     = "AWS-AWSManagedRulesBotControlRuleSet"
-    priority = 0
-    override_action {
-      none {
-      }
-    }
-    statement {
-      managed_rule_group_statement {
-        name        = "AWSManagedRulesBotControlRuleSet"
-        vendor_name = "AWS"
-        scope_down_statement {
-            not_statement {
-              statement {
-                ip_set_reference_statement { 
-                  arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
-                }
-               }
-            }
-        }  
-      }
-    }
 
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "AWS-AWSManagedRulesBotControlRuleSet"
-      sampled_requests_enabled   = true
-    }
-  }
-  
-  rule {
-    name     = "AWS-AWSManagedRulesAmazonIpReputationList"
-    priority = 2
-    override_action {
-      none {
-      }
-    }
-    statement {
-      managed_rule_group_statement {
-        name        = "AWSManagedRulesAmazonIpReputationList"
-        vendor_name = "AWS"
-                scope_down_statement {
-            not_statement {
-              statement {
-                ip_set_reference_statement { 
-                  arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
-                }
-               }
-            }
-        }
-      }
-    }
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "AWS-AWSManagedRulesAmazonIpReputationList"
-      sampled_requests_enabled   = true
-    }
-  }
-
-  rule {
-    name     = "AWS-AWSManagedRulesAnonymousIpList"
-    priority = 3
-    override_action {
-      none {
-      }
-    }
-    statement {
-      managed_rule_group_statement {
-        name        = "AWSManagedRulesAnonymousIpList"
-        vendor_name = "AWS"
-        scope_down_statement {
-            not_statement {
-              statement {
-                ip_set_reference_statement { 
-                  arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
-                }
-               }
-            }
-        }
-        rule_action_override {
-          action_to_use {
-            allow {}
-          }
-
-          name = "HostingProviderIPList"
-        }
-      }
-    }
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "AWS-AWSManagedRulesAnonymousIpList"
-      sampled_requests_enabled   = true
-    }
-  }
-
-  rule {
-    name     = "AWS-AWSManagedRulesKnownBadInputsRuleSet"
-    priority = 4
-    override_action {
-      none {
-      }
-    }
-    statement {
-      managed_rule_group_statement {
-        name        = "AWSManagedRulesKnownBadInputsRuleSet"
-        vendor_name = "AWS"
-                scope_down_statement {
-            not_statement {
-              statement {
-                ip_set_reference_statement { 
-                  arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
-                }
-               }
-            }
-        }
-      }
-    }
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "AWS-AWSManagedRulesKnownBadInputsRuleSet"
-      sampled_requests_enabled   = true
-    }
-  }
-
-  rule {
-    name     = "AWS-AWSManagedRulesUnixRuleSet"
-    priority = 5
-    override_action {
-      none {
-      }
-    }
-    statement {
-      managed_rule_group_statement {
-        name        = "AWSManagedRulesUnixRuleSet"
-        vendor_name = "AWS"
-        scope_down_statement {
-            not_statement {
-              statement {
-                ip_set_reference_statement { 
-                  arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
-                }
-               }
-            }
-        }
-      }
-    }
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "AWS-AWSManagedRulesUnixRuleSet"
-      sampled_requests_enabled   = true
-    }
-  }
-
-  rule {
-    name     = "AWS-AWSManagedRulesWindowsRuleSet"
-    priority = 6
-    override_action {
-      none {
-      }
-    }
-    statement {
-      managed_rule_group_statement {
-        name        = "AWSManagedRulesWindowsRuleSet"
-        vendor_name = "AWS"
-        scope_down_statement {
-            not_statement {
-              statement {
-                ip_set_reference_statement { 
-                  arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
-                }
-               }
-            }
-        }
-        rule_action_override {
-          action_to_use {
-            allow {}
-          }
-
-          name = "WindowsShellCommands_BODY"
-        }
-      }
-    }
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "AWS-AWSManagedRulesWindowsRuleSet"
-      sampled_requests_enabled   = true
-    }
-  }
-  rule {
-    name     = "AWS-AWSManagedRulesSQLiRuleSet"
-    priority = 7
-    override_action {
-      none {
-      }
-    }
-    statement {
-      managed_rule_group_statement {
-        name        = "AWSManagedRulesSQLiRuleSet"
-        vendor_name = "AWS"
-        scope_down_statement {
-            not_statement {
-              statement {
-                ip_set_reference_statement { 
-                  arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
-                }
-               }
-            }
-        }
-        rule_action_override {
-          action_to_use {
-            allow {}
-          }
-
-          name = "AWSManagedRulesSQLiRuleSet_BODY"
-        }
-      }
-    }
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "AWS-AWSManagedRulesSQLiRuleSet"
-      sampled_requests_enabled   = true
-    }
-  }
   visibility_config {
     cloudwatch_metrics_enabled = true
     metric_name                = "${local.project_name}-waf-metrics"
