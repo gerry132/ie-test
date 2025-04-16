@@ -10,8 +10,6 @@ from irelandie_utils.cache_invalidation import invalidate_cache
 snippet_published = Signal()
 
 
-
-
 @receiver(post_save, sender=CustomDocument)
 def document_updated(sender, instance, created, **kwargs):
     if not created:
