@@ -48,7 +48,7 @@ def invalidate_page_cache(paths_to_invalidate):
         invalidate_cloudfront(paths_to_invalidate)
 
 
-def invalidate_snippet_cache(snippet_instance):
+def invalidate_cache(snippet_instance):
     usage = snippet_instance.get_usage()
 
     paths_to_invalidate = [page.url for page, _ in usage]
