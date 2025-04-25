@@ -14,6 +14,11 @@ resources:
     ref: refs/heads/develop
 
 stages:
+- script: |
+    sudo apt-get update
+    sudo apt-get install -y libjpeg-dev zlib1g-dev
+  displayName: Install system dependencies
+
 - stage: test
   displayName: Check the Code
   jobs:

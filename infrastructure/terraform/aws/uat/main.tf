@@ -78,7 +78,7 @@ locals {
     },
     jaikiran_dev = {
       description = "Jaikiran - OGCIO"
-      cidr_blocks = ["137.191.233.222/32"]
+      cidr_blocks = ["137.191.233.222/32", "37.228.206.182/32"]
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
@@ -99,6 +99,20 @@ locals {
 # -----------------------------------------------------------------------------
 # Values to fill after running terraform is ran, used for codebuild and secrets
 # -----------------------------------------------------------------------------
+
+
+resource "aws_ssm_parameter" "CLOUDFRONT_ID" {
+  name        = "${local.environment_name}_CLOUDFRONT_ID"
+  description = "For use in Codebuild buildspec - ${local.environment_name}"
+  type        = "SecureString"
+  value       = aws_cloudfront_distribution.dynamic.id
+
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
 
 
 resource "aws_ssm_parameter" "DOCKER_IMAGE_URL" {
@@ -1385,7 +1399,7 @@ resource "aws_iam_user_policy_attachment" "smtp_user_attach" {
 # Task definition
 
 locals {
-  SETTINGS_CLOUDFRONT_ID            = 0
+  SETTINGS_CLOUDFRONT_ID            = aws_ssm_parameter.CLOUDFRONT_ID.value
   SETTINGS_ALLOWED_HOSTS            = join(", ", ["*"])
   SETTINGS_AWS_ACCESS_KEY_ID        = aws_ssm_parameter.AWS_ACCESS_KEY_ID.value
   SETTINGS_AWS_SECRET_ACCESS_KEY    = aws_ssm_parameter.AWS_SECRET_ACCESS_KEY.value
@@ -1440,7 +1454,6 @@ data "template_file" "task_definition" {
   vars = {
     ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
     log_group                           = aws_cloudwatch_log_group.ecs.name
-    SETTINGS_CLOUDFRONT_ID              = local.SETTINGS_CLOUDFRONT_ID
     name                                = "${local.environment_name}-${local.project_name}"
     port                                = local.service_contrainer_port
     region                              = local.region
@@ -1953,6 +1966,16 @@ resource "aws_cloudfront_distribution" "dynamic" {
     cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
+    path_pattern             = "/en/eu-jobs/"
+  } 
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/overseas-travel/advice/*"
   }
   ordered_cache_behavior {
@@ -2072,6 +2095,7 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
                         "52.18.199.206/32",
                         "52.209.191.79/32",
                         "176.58.117.51/32",
+                        "37.228.206.182/32",
                         "80.85.87.84/32",
                         "88.80.184.34/32",
                         "178.79.136.28/32",
