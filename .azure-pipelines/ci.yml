@@ -34,7 +34,7 @@ stages:
         sudo apt-get update
         sudo apt-get install -y libjpeg-dev zlib1g-dev
         pip install -r requirements.txt
-        displayName: Install Requirements
+      displayName: Install Requirements
 
     - script: |
         cat .azure-pipelines/.env_pipeline > app/.env
