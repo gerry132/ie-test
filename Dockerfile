@@ -24,7 +24,6 @@ RUN apk --no-cache --update add \
     gettext \
     postgresql-client \
     postgresql-dev \
-    libjpeg-dev \
     python3 \
     libxml2-dev \
     python3-dev \
