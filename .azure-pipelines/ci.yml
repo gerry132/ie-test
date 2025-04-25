@@ -3,7 +3,7 @@ trigger: none
 pr: none
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: ubuntu-22.04
 
 resources:
   repositories:
@@ -30,10 +30,7 @@ stages:
 
   - job: Test
     steps:
-    - script: | 
-        sudo apt-get update
-        sudo apt-get install -y libjpeg-dev zlib1g-dev
-        pip install -r requirements.txt
+    - script: pip install -r requirements.txt
       displayName: Install Requirements
 
     - script: |
@@ -52,7 +49,6 @@ stages:
         versionSpec: 14
 
     - script: |
-        sudo apt-get install -y libjpeg-dev zlib1g-dev
         npm install
         npm run build:prod
       displayName: Build Static Files
@@ -87,19 +83,6 @@ stages:
           inputs:
             targetType: inline
             script: |
-              sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
-              wget -O- https://apt.releases.hashicorp.com/gpg | \
-              gpg --dearmor | \
-              sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
-              gpg --no-default-keyring \
-              --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg \
-              --fingerprint
-              echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
-              https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
-              sudo tee /etc/apt/sources.list.d/hashicorp.list
-
-              sudo apt update
-              sudo apt-get install -y terraform
               cd infrastructure/terraform/aws/$(env)/
               terraform init -input=false -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY"
               terraform apply -input=false -auto-approve
