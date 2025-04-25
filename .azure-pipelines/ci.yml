@@ -14,12 +14,6 @@ resources:
     ref: refs/heads/develop
 
 stages:
-- stage: test
-  - script: |
-    sudo apt-get update
-    sudo apt-get install -y libjpeg-dev zlib1g-dev
-  displayName: Install system dependencies
-
   displayName: Check the Code
   jobs:
   - template: templates/python-bandit.yml@azure-pipelines-templates
@@ -39,6 +33,8 @@ stages:
       displayName: Install Requirements
 
     - script: |
+        sudo apt-get update
+        sudo apt-get install -y libjpeg-dev zlib1g-dev
         cat .azure-pipelines/.env_pipeline > app/.env
         python manage.py test
       displayName: Unit Tests
