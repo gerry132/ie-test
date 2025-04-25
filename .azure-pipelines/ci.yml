@@ -78,11 +78,6 @@ stages:
   jobs:
     - job: runTerraform
       steps:
-        - script: |
-          sudo apt update
-          sudo apt-get install -y terraform
-          npm install
-          npm run build:prod
         - checkout: self
           submodules: true
           persistCredentials: true
@@ -92,6 +87,8 @@ stages:
           inputs:
             targetType: inline
             script: |
+              sudo apt update
+              sudo apt-get install -y terraform
               cd infrastructure/terraform/aws/$(env)/
               terraform init -input=false -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY"
               terraform apply -input=false -auto-approve
