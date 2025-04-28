@@ -13,9 +13,9 @@ class CustomImage(AbstractImage):
         super().clean()
 
         if self.file:
-            filename = os.path.basename(self.file.name)
+            filename = os.path.basename(self.file.name).lower()
+            existing = CustomImage.objects.filter(file__iexact=filename)
 
-            existing = CustomImage.objects.filter(file__icontains=filename)
             if self.pk:
                 existing = existing.exclude(pk=self.pk)
 
