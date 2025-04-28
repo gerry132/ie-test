@@ -74,11 +74,11 @@ locals {
     },
     gerry_dev = {
       description = "Gerry Mcbride - OGCIO"
-      cidr_blocks = ["95.44.14.48/32", "37.228.234.227/32"]
+      cidr_blocks = ["95.44.14.48/32", "37.228.234.184/32"]
     },
     jaikiran_dev = {
       description = "Jaikiran - OGCIO"
-      cidr_blocks = ["137.191.233.222/32"]
+      cidr_blocks = ["137.191.233.222/32", "37.228.206.182/32"]
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
@@ -99,6 +99,20 @@ locals {
 # -----------------------------------------------------------------------------
 # Values to fill after running terraform is ran, used for codebuild and secrets
 # -----------------------------------------------------------------------------
+
+
+resource "aws_ssm_parameter" "CLOUDFRONT_ID" {
+  name        = "${local.environment_name}_CLOUDFRONT_ID"
+  description = "For use in Codebuild buildspec - ${local.environment_name}"
+  type        = "SecureString"
+  value       = aws_cloudfront_distribution.dynamic.id
+
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
 
 
 resource "aws_ssm_parameter" "DOCKER_IMAGE_URL" {
@@ -233,6 +247,7 @@ module "network" {
 # Security groups
 # -----------------------------------------------------------------------------
 
+
 resource "aws_security_group" "lb" {
     name    = "${local.environment_name}-lb"
     vpc_id  = module.network.vpc_id
@@ -294,7 +309,6 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips" {
 
 # Public access rules
 
-
 resource "aws_security_group_rule" "internet_to_lb_80" {
   for_each = local.non_gov_network_cird_blocks
   type                      = "ingress"
@@ -307,13 +321,12 @@ resource "aws_security_group_rule" "internet_to_lb_80" {
 
 
 resource "aws_security_group_rule" "internet_to_lb_443" {
-  for_each = local.non_gov_network_cird_blocks
   type                      = "ingress"
   from_port                 = 443
   to_port                   = 443
   protocol                  = "tcp"
   security_group_id         = aws_security_group.lb.id
-  cidr_blocks               = each.value.cidr_blocks
+  cidr_blocks               = ["0.0.0.0/0"]
 }
 
 
@@ -1109,6 +1122,9 @@ data "aws_ssm_parameter" "random_db_password" {
   ]
 }
 
+
+
+
 # Database
 
 module "database" {
@@ -1383,7 +1399,7 @@ resource "aws_iam_user_policy_attachment" "smtp_user_attach" {
 # Task definition
 
 locals {
-  SETTINGS_CLOUDFRONT_ID            = 0
+  SETTINGS_CLOUDFRONT_ID            = aws_ssm_parameter.CLOUDFRONT_ID.value
   SETTINGS_ALLOWED_HOSTS            = join(", ", ["*"])
   SETTINGS_AWS_ACCESS_KEY_ID        = aws_ssm_parameter.AWS_ACCESS_KEY_ID.value
   SETTINGS_AWS_SECRET_ACCESS_KEY    = aws_ssm_parameter.AWS_SECRET_ACCESS_KEY.value
@@ -1438,7 +1454,6 @@ data "template_file" "task_definition" {
   vars = {
     ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
     log_group                           = aws_cloudwatch_log_group.ecs.name
-    SETTINGS_CLOUDFRONT_ID              = local.SETTINGS_CLOUDFRONT_ID
     name                                = "${local.environment_name}-${local.project_name}"
     port                                = local.service_contrainer_port
     region                              = local.region
@@ -1906,6 +1921,266 @@ data "aws_region" "current" {}
 
 locals {
   cloudfront_s3_origin_id = "AssetsS3Origin"
+}
+
+
+resource "aws_cloudfront_distribution" "dynamic" {
+  web_acl_id    = aws_wafv2_web_acl.ireland_ie_waf_cloudfront.arn
+  origin {
+    domain_name = aws_lb.public_sites.dns_name
+    origin_id   = aws_lb.public_sites.name
+
+    custom_origin_config {
+      origin_read_timeout      = 60
+      origin_keepalive_timeout = 60
+      http_port                = 80
+      https_port               = 443
+      origin_protocol_policy   = "https-only"
+      origin_ssl_protocols     = ["TLSv1", "TLSv1.1", "TLSv1.2"]
+    }
+  }
+  enabled = true
+  comment = "Website and CMS Assets Distribution."
+  aliases = ["www.${local.domain_ireland_ie}"]
+
+  logging_config {
+    include_cookies = false
+    bucket          = aws_s3_bucket.cf-logs.bucket_domain_name
+    prefix          = "${local.domain_ireland_ie}-cloudfront"
+  }
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "/search/*"
+  } 
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "/en/eu-jobs/"
+  } 
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/overseas-travel/advice/*"
+  }
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/publication-index/*"
+  }  
+
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4cc15a8a-d715-48a4-82b8-cc0b614638fe"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/news-archive/"
+  } 
+
+
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/news-and-events/*"
+  } 
+
+
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/news-and-speeches/*"
+  } 
+
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/annual-reports/*"
+  } 
+
+  default_cache_behavior {
+    allowed_methods  = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = aws_lb.public_sites.name
+
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    cache_policy_id          = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+    viewer_protocol_policy   = "allow-all"
+    min_ttl                  = 0
+    default_ttl              = 3600
+    max_ttl                  = 86400
+
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.assets_cors.id
+  }
+
+  price_class = "PriceClass_100"
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
+
+  viewer_certificate {
+    acm_certificate_arn            = aws_acm_certificate.dynamic_cert.arn
+    ssl_support_method             = "sni-only"
+    minimum_protocol_version       = "TLSv1.2_2021"
+    cloudfront_default_certificate = false
+  }
+
+  depends_on = [
+    aws_acm_certificate.dynamic_cert
+  ]
+}
+
+
+resource "aws_acm_certificate" "dynamic_cert" {
+  domain_name               = "www.${local.domain_ireland_ie}"
+  validation_method         = "DNS"
+  provider                  = aws.virginia
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
+  name               = "${local.environment_name}-${local.project_name}-ip-set-cloudfront"
+  description        = "IPs"
+  provider                  = aws.virginia
+  scope              = "CLOUDFRONT"
+  ip_address_version = "IPV4"
+  addresses          = ["161.35.72.212/32",
+                        "46.101.124.44/32",
+                        "46.101.116.160/32",
+                        "85.208.98.128/25",
+                        "164.90.168.210/32",
+                        "52.18.199.206/32",
+                        "52.209.191.79/32",
+                        "176.58.117.51/32",
+                        "37.228.206.182/32",
+                        "80.85.87.84/32",
+                        "88.80.184.34/32",
+                        "178.79.136.28/32",
+                        "169.254.192.0/18",
+                        "137.191.224.0/19",
+                        "193.178.64.0/19",
+                        "193.178.96.0/20",
+                        "139.162.239.108/32"]
+}
+
+
+resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
+  name  = "${local.project_name}-waf-cloudfront"
+  provider                  = aws.virginia
+  scope = "CLOUDFRONT"
+
+  default_action {
+    block {}
+  }
+ rule {
+    name     = "AllowWhitelistedIPs"
+    priority = 1
+
+    action {
+      allow {}
+    }
+
+    statement {
+      ip_set_reference_statement {
+        arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "whitelistIPs"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "${local.project_name}-waf-metrics"
+    sampled_requests_enabled   = true
+  }
+}
+
+
+resource "aws_cloudwatch_log_group" "example" {
+  provider = aws.virginia
+  name = "aws-waf-logs-ireland-ie"
+}
+
+resource "aws_wafv2_web_acl_logging_configuration" "example" {
+  provider = aws.virginia
+  log_destination_configs = [aws_cloudwatch_log_group.example.arn]
+  resource_arn            = aws_wafv2_web_acl.ireland_ie_waf_cloudfront.arn
+}
+
+resource "aws_cloudwatch_log_resource_policy" "example" {
+  policy_document = data.aws_iam_policy_document.example.json
+  policy_name     = "webacl-policy-uniq-name"
+}
+
+data "aws_iam_policy_document" "example" {
+  version = "2012-10-17"
+  statement {
+    effect = "Allow"
+    principals {
+      identifiers = ["delivery.logs.amazonaws.com"]
+      type        = "Service"
+    }
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.example.arn}:*"]
+    condition {
+      test     = "ArnLike"
+      values   = ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"]
+      variable = "aws:SourceArn"
+    }
+    condition {
+      test     = "StringEquals"
+      values   = [tostring(data.aws_caller_identity.current.account_id)]
+      variable = "aws:SourceAccount"
+    }
+  }
 }
 
 resource "aws_acm_certificate" "assets_cert" {

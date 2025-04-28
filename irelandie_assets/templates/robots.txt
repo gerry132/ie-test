@@ -5,4 +5,4 @@ User-Agent: SiteAuditBot
 Disallow:
 Crawl-delay: 30
 
-Sitemap: https://ireland.ie/sitemap/root_map/
+Sitemap: https://www.ireland.ie/sitemap.xml

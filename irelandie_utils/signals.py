@@ -1,11 +1,19 @@
 from django.dispatch import receiver
+from django.db.models.signals import post_save
+from irelandie_documents.models import CustomDocument
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from django.dispatch import Signal
 from wagtail.core.signals import page_published
 
-from irelandie_utils.cache_invalidation import invalidate_snippet_cache
+from irelandie_utils.cache_invalidation import invalidate_cache
 
 snippet_published = Signal()
+
+
+@receiver(post_save, sender=CustomDocument)
+def document_updated(sender, instance, created, **kwargs):
+    if not created:
+        invalidate_cache(instance)
 
 
 @receiver(snippet_published)
@@ -17,7 +25,7 @@ def handle_snippet_published(sender, instance, **kwargs):
         purge_batch.add_url(page.url)
     purge_batch.purge()
 
-    invalidate_snippet_cache(instance)
+    invalidate_cache(instance)
 
 
 @receiver(page_published)

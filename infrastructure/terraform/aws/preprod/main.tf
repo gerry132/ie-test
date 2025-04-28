@@ -265,6 +265,27 @@ resource "aws_security_group" "opensearch" {
 # Public access rules
 
 
+resource "aws_security_group_rule" "gov_to_lb_80" {
+  type                      = "ingress"
+  from_port                 = 80
+  to_port                   = 80
+  protocol                  = "tcp"
+  security_group_id         = aws_security_group.lb.id
+  cidr_blocks               = local.gov_network_cird_blocks
+}
+
+
+resource "aws_security_group_rule" "gov_to_lb_443" {
+  type                      = "ingress"
+  from_port                 = 443
+  to_port                   = 443
+  protocol                  = "tcp"
+  security_group_id         = aws_security_group.lb.id
+  cidr_blocks               = local.gov_network_cird_blocks
+}
+
+
+
 resource "aws_security_group_rule" "internet_to_lb_80" {
   for_each = local.non_gov_network_cird_blocks
   type                      = "ingress"
