@@ -20,19 +20,30 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("resize", fixMobileParallax);
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    function adjustDoubleFeatureHeight() {
-        let doubleFeatureChildren = document.querySelectorAll(".double-feature--child");
-        doubleFeatureChildren.forEach(child => {
-            child.style.height = "100vh"; // Force full height
-        });
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const targetId = this.getAttribute('href').substring(1);
+    let target;
+
+    // Check if on mobile
+    if (window.innerWidth <= 768) {
+      // For mobile, search inside .mobile--parallax
+      target = document.querySelector(`.mobile--parallax #${targetId}`);
+    } else {
+      // For desktop, search in the entire document
+      target = document.getElementById(targetId);
     }
 
-    // Run when the page loads
-    adjustDoubleFeatureHeight();
-
-    // Run again if the window resizes
-    window.addEventListener("resize", adjustDoubleFeatureHeight);
+    if (target) {
+      e.preventDefault();
+      setTimeout(() => {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }, 100);
+    }
+  });
 });
 </script>
 
@@ -72,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
     left: 0;
 }
 
-.jarallax--double, 
+.jarallax--double,
 .double-feature {
     min-height: 100vh; /* Ensures full viewport height */
     height: 100%;
@@ -99,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
     height: 100%;
     z-index: 1;
     max-width: 25%;
-    
+
 }
 
 .rich-text {
@@ -142,22 +153,14 @@ document.addEventListener("DOMContentLoaded", function () {
     {% for block in core_blocks %}
         <div class="double-feature--child"
              style="{% if block.value.background_color %}background-color: {{ block.value.background_color }};{% endif %}">
-             
              {% if forloop.first and gradient_alignment == 'right' or forloop.last and gradient_alignment == 'left' or forloop.counter == 2 and gradient_alignment == 'left' %}
              <div class="double--feature-gradient-overlay"
                   style="background: linear-gradient(
-                         {% if forloop.first %}to left{% elif forloop.counter == 2 and gradient_alignment == 'left' %}to right{% else %}to right{% endif %}, 
+                         {% if forloop.first %}to left{% elif forloop.counter == 2 and gradient_alignment == 'left' %}to right{% else %}to right{% endif %},
                          {{ gradient_colour }}, transparent);
                          {% if forloop.first %}right: 0; left: auto; max-width: 25%;{% elif forloop.counter == 2 and gradient_alignment == 'left' %}left: 0; right: auto; max-width: 25%;{% elif forloop.last and gradient_alignment == 'left' %}right: 0; left: auto; max-width: 25%;{% else %}right: 0; left: auto; max-width: 25%;{% endif %}">
              </div>
          {% endif %}
-         
-         
-         
-         
-         
-         
-        
             {% if block.block_type == 'rich_text' %}
                 {% include "patterns/molecules/streamfield/blocks/parallax_advanced_richtext_block.html" with value=block.value double_feature=1 %}
             {% elif block.block_type == 'image_video' %}
