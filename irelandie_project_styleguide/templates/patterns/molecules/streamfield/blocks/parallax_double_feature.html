@@ -20,6 +20,21 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("resize", fixMobileParallax);
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    function adjustDoubleFeatureHeight() {
+        let doubleFeatureChildren = document.querySelectorAll(".double-feature--child");
+        doubleFeatureChildren.forEach(child => {
+            child.style.height = "100vh"; // Force full height
+        });
+    }
+
+    // Run when the page loads
+    adjustDoubleFeatureHeight();
+
+    // Run again if the window resizes
+    window.addEventListener("resize", adjustDoubleFeatureHeight);
+});
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     const targetId = this.getAttribute('href').substring(1);
