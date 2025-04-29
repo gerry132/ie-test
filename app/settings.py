@@ -460,6 +460,7 @@ if USE_S3 is True:
             "https://www.google-analytics.com",
             "https://ajax.googleapis.com",
             "https://stats.ciboard.ie",
+            "https://cdn.cookielaw.org",
             "'unsafe-inline'"
         )
     CSP_SCRIPT_SRC_ELEM = CSP_SCRIPT_SRC
@@ -483,6 +484,7 @@ if USE_S3 is True:
         "https://region1.google-analytics.com",
         "https://www.googletagmanager.com",
         "https://stats.ciboard.ie",
+        "https://cdn.rawgit.com",
         "https://releases.wagtail.org"
     )
     CSP_FONT_SRC = (
@@ -495,6 +497,7 @@ if USE_S3 is True:
 
     CSP_FRAME_SRC = (
             "'self'",
+            "https://youtube.com",
             "https://youtube.com",
             "https://player.vimeo.com",
             "https://www.google.com"
