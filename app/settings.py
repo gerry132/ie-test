@@ -502,7 +502,6 @@ if USE_S3 is True:
 
     CSP_MEDIA_SRC = ("'self'", f"https://{AWS_S3_CUSTOM_DOMAIN}")
 
-
     # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
 else:
     None
