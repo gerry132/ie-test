@@ -7,7 +7,7 @@
     align-items: center;
     z-index: 0;
 
-    
+
     /* Video container to fit the full background */
     &__video {
         width: 100%;
@@ -123,8 +123,11 @@
         background: transparent;
         padding: 40px 20px 0px;
     }
+    &__button {
+        align-items: center;
+    }
 
-    
+
     &__button_text {
         display: flex;
 
@@ -135,7 +138,7 @@
             flex-wrap: wrap;
         }
     }
-    
+
     &__video-toggle-double {
         color: white;
         border: none;
@@ -146,7 +149,7 @@
         margin-top: 20px;
         transition: background 0.3s;
     }
-    
+
 
 }
 .gradient-overlay{
