@@ -61,7 +61,7 @@
         <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
     {% endif %}
     <div class="jarallax-video-container">
-            <video loop playsinline preload="metadata" data-video-parallax class="jarallax-video" title="{{ value.alt_text }}"  poster="{% if value.video.thumbnail %}{{ value.video.thumbnail.url }}{% endif %}">
+            <video loop playsinline data-video-parallax class="jarallax-video" title="{{ value.alt_text }}"  poster="{% if value.video.thumbnail %}{{ value.video.thumbnail.url }}{% endif %}">
                 <source src="{{ value.video.url }}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
