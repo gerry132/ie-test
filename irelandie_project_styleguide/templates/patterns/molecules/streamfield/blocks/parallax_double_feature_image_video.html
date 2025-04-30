@@ -14,7 +14,7 @@ style="background-image: url('{{ desktop_image.url }}'); background-size: cover;
                 <p>{{ value.subtitle|richtext }}</p>
             </div>
     </div>
-    
+
 {% else %}
 <style>
 html, body {
@@ -31,24 +31,26 @@ html, body {
     <div class="parallax-section-double jarallax jarallax__video">
         <!-- Video Background (Manually Inserted) -->
         <div class="jarallax__video-container">
-            <video id="jarallaxVideo" loop controls playsinline title="{{ value.alt_text }}">
+            <video id="jarallaxVideo" loop playsinline title="{{ value.alt_text }}" poster="{% if value.video.thumbnail %}{{ value.video.thumbnail.url }}{% endif %}">
                 <source src="{{ value.video.url }}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
-    
+
         <!-- Parallax Content -->
         <div class="parallax__content">
-            <div class="parallax__button_text">
+            <div class="{% if value.heading or value.subtitle %}parallax__button_text{% else %}parallax__button{% endif %}">
                 <button id="playPauseButton" aria-label="{% trans 'Toggle video playback' %}" role="button" class="parallax__video-toggle-double">
                     {% include "patterns/atoms/icons/icon.html" with name="play-button" classname="playButton" %}
                     {% include "patterns/atoms/icons/icon.html" with name="pause-button" classname="pauseButton" %}
                 </button>
-                <div class="rich-text content" style="text-align: {{value.text_alignment}}; color: {{value.text_color}};">
-                    <h2>{{ value.heading }}</h2>
-                    <p>{{ value.subtitle|richtext }}</p>
-                </div>
-            </div>        
+                {% if value.heading or value.subtitle %}
+                    <div class="rich-text content" style="text-align: {{value.text_alignment}}; color: {{value.text_color}};">
+                        <h2>{{ value.heading }}</h2>
+                        <p>{{ value.subtitle|richtext }}</p>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
     {% endif %}
