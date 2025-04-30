@@ -114,17 +114,12 @@
         padding: 10px 20px;
         cursor: pointer;
         font-size: 1rem;
-        margin-top: 20px;
         transition: background 0.3s;
     }
     &__video-toggle {
         border: 0;
         padding: 0;
         background: transparent;
-        padding: 40px 20px 0px;
-    }
-    &__button {
-        align-items: center;
     }
 
 
@@ -133,6 +128,7 @@
 
         align-items: center;
         column-gap: 80px;
+        justify-content: center;
 
         @include media-query(max-large) {
             flex-wrap: wrap;
