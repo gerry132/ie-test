@@ -63,6 +63,7 @@ class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
 
 
 class ParallaxImageVideoBlock(blocks.StructBlock):
+    section_id = blocks.CharBlock(required=False)
     gradient_image_video = blocks.CharBlock(max_length=7, default='#000', required=False)
     image = ImageChooserBlock(required=False)
     video = CustomVideoChooserBlock(required=False)
@@ -164,6 +165,7 @@ class ParallaxLinkCardsBlock(blocks.StructBlock):
 
 
 class ParallaxYoutubeVimeoBlock(blocks.StructBlock):
+    section_id = blocks.CharBlock(required=False)
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_alignment = blocks.ChoiceBlock(
         required=False,
