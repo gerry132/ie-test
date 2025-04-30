@@ -66,7 +66,7 @@
                 Your browser does not support the video tag.
             </video>
     </div>
-    <div class="{% if value.heading or value.subtitle %}parallax__button_text{% else %}parallax__button{% endif %}">
+    <div class="parallax__button_text">
         <button aria-label="{% trans 'Toggle video playback' %}" role="button" class="parallax__video-toggle"
                         data-video-parallax-toggle>
             {% include "patterns/atoms/icons/icon.html" with name="play-button" classname="playButton" %}

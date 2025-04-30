@@ -39,7 +39,7 @@ html, body {
 
         <!-- Parallax Content -->
         <div class="parallax__content">
-            <div class="{% if value.heading or value.subtitle %}parallax__button_text{% else %}parallax__button{% endif %}">
+            <div class="parallax__button_text">
                 <button id="playPauseButton" aria-label="{% trans 'Toggle video playback' %}" role="button" class="parallax__video-toggle-double">
                     {% include "patterns/atoms/icons/icon.html" with name="play-button" classname="playButton" %}
                     {% include "patterns/atoms/icons/icon.html" with name="pause-button" classname="pauseButton" %}
