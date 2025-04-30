@@ -42,7 +42,7 @@
                     {% include_block value.timeline_photo_gallery %}
                 </div>
             {% elif value.youtube_or_vimeo_video %}
-                <div class="content" style="color: {{value.text_color}}; text-align: {{value.text_alignment}};">
+                <div class="content" style="color: {{value.text_color}}; text-align: {{value.text_alignment}};" {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
                     {% include_block value.youtube_or_vimeo_video %}
                 </div>
             {% else %}
