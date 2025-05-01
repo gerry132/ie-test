@@ -1,5 +1,5 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
-<div {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
+
 {% if value.image %}
         {% image value.image original as desktop_image %}
         <style>
@@ -43,7 +43,7 @@
 
 
     </style>
-    <div data-jarallax class="jarallax" id="jarallax1" {% if not double_feature %}  data-speed="0.2" {% endif %}>
+    <div {% if value.section_id %} id="{{value.section_id}}" {% endif %} data-jarallax class="jarallax" id="jarallax1" {% if not double_feature %}  data-speed="0.2" {% endif %}>
         {% if value.image_video_credits %}
             <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
         {% endif %}
@@ -56,7 +56,7 @@
     </div>
 
 {% else %}
-<div class="parallax-section" style="min-height: 100vh; display: flex;" data-speed="0.4" data-video-parallax-container>
+<div {% if value.section_id %} id="{{value.section_id}}" {% endif %}class="parallax-section" style="min-height: 100vh; display: flex;" data-speed="0.4" data-video-parallax-container>
     {% if value.image_video_credits %}
         <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
     {% endif %}
@@ -81,4 +81,3 @@
         </div>
     </div>
 {% endif %}
-</div>
