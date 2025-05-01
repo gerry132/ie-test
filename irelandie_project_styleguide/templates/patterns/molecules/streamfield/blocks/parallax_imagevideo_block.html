@@ -1,26 +1,26 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
-
+<div {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
 {% if value.image %}
         {% image value.image original as desktop_image %}
         <style>
-.jarallax-video-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        .jarallax-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
 
-.jarallax-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures the video fills the container while maintaining aspect ratio */
-}
+        .jarallax-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the video fills the container while maintaining aspect ratio */
+        }
         .gradient-overlay {
             content: '';
             background: linear-gradient(0deg,
@@ -43,7 +43,7 @@
 
 
     </style>
-    <div {% if value.section_id %} id="{{value.section_id}}" {% endif %} data-jarallax class="jarallax" id="jarallax1" {% if not double_feature %}  data-speed="0.2" {% endif %}>
+    <div data-jarallax class="jarallax" id="jarallax1" {% if not double_feature %}  data-speed="0.2" {% endif %}>
         {% if value.image_video_credits %}
             <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
         {% endif %}
@@ -81,3 +81,4 @@
         </div>
     </div>
 {% endif %}
+</div>
