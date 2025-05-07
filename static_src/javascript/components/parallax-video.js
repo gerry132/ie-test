@@ -4,13 +4,20 @@ class VideoToggleParallax {
     }
 
     constructor(node) {
-        this.videoContainer = node;
-        this.video = this.videoContainer.querySelector('[data-video-parallax]');
-        this.videoToggle = this.videoContainer.querySelector(
-            '[data-video-parallax-toggle]',
-        );
-        this.bindEvents();
-    }
+    this.videoContainer = node;
+    this.videos = this.videoContainer.querySelectorAll('[data-video-parallax]');
+    this.videoToggle = this.videoContainer.querySelector(
+        '[data-video-parallax-toggle]',
+    );
+
+    // Find the visible video (only one is visible due to media queries)
+    this.video = Array.from(this.videos).find(video => {
+        return window.getComputedStyle(video).display !== 'none';
+    });
+
+    this.bindEvents();
+}
+
 
     playPause() {
 
