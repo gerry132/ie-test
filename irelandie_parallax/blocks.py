@@ -66,7 +66,9 @@ class ParallaxImageVideoBlock(blocks.StructBlock):
     section_id = blocks.CharBlock(required=False)
     gradient_image_video = blocks.CharBlock(max_length=7, default='#000', required=False)
     image = ImageChooserBlock(required=False)
+    mobile_image = ImageChooserBlock(required=False)
     video = CustomVideoChooserBlock(required=False)
+    mobile_video = CustomVideoChooserBlock(required=False)
     alt_text = blocks.CharBlock(
         required=True,
         help_text=_(ALT_HELP_TEXT_IMG_VIDEO),
@@ -83,8 +85,10 @@ class ParallaxImageVideoBlock(blocks.StructBlock):
 
     def clean(self, value):
         errors = {}
-        video = value.get('video')
         image = value.get('image')
+        video = value.get('video')
+        mobile_image = value.get('mobile_image')
+        mobile_video = value.get('mobile_video')
 
         if not (bool(image) ^ bool(video)):
             msg = "You can't choose both an image and a video. Choose an image or a video"
@@ -95,6 +99,23 @@ class ParallaxImageVideoBlock(blocks.StructBlock):
             msg = "You have to choose either an image or a video."
             errors['image'] = ErrorList([msg])
             errors['video'] = ErrorList([msg])
+
+        if image and mobile_video:
+            msg = ("You've selected a desktop image and a mobile video. You must match types — image with "
+                   "mobile_image or video with mobile_video.")
+            errors['mobile_video'] = ErrorList([msg])
+            errors['image'] = ErrorList([msg])
+
+        if video and mobile_image:
+            msg = ("You've selected a desktop video and a mobile image. You must match types — video with mobile_video "
+                   "or image with mobile_image.")
+            errors['mobile_image'] = ErrorList([msg])
+            errors['video'] = ErrorList([msg])
+
+        if mobile_image and mobile_video:
+            msg = "You've added both a mobile image and video. Only one will be shown on mobile."
+            errors['mobile_image'] = ErrorList([msg])
+            errors['mobile_video'] = ErrorList([msg])
 
         if errors:
             raise StructBlockValidationError(errors)
