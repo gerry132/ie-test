@@ -18,7 +18,7 @@
     <div style="{% if value.background_color %} background-color: {{value.background_color}}; {% endif %}" class="jarallax-color"></div>
 
     <div class="rich-text rich-text__content"
-        style="text-align: {{value.text_alignment}}; --link-color: {{ value.text_color }}"
+        style="text-align: {{value.text_alignment}}; --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};"
         {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
 
         {% if value.heading %}

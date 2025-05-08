@@ -33,6 +33,10 @@ class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
         default=TextAlignment.CENTER,
     )
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
+    link_color = blocks.CharBlock(
+        max_length=7, required=False, default="#004d46",
+        help_text="Hex color for hyperlinks in this block"
+    )
     heading = blocks.CharBlock(required=False)
     rich_text = blocks.RichTextBlock(
         features=["h2", "h3", "h4", "blockquote", "bold", "link", "document-link", "ul", "ol"], required=False,
@@ -80,6 +84,10 @@ class ParallaxImageVideoBlock(blocks.StructBlock):
         default=TextAlignment.CENTER,
     )
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
+    link_color = blocks.CharBlock(
+        max_length=7, required=False, default="#004d46",
+        help_text="Hex color for hyperlinks in this block"
+    )
     heading = blocks.CharBlock(blank=True, required=False)
     subtitle = blocks.RichTextBlock(blank=True, required=False)
 
@@ -129,6 +137,10 @@ class ParallaxImageVideoBlock(blocks.StructBlock):
 
 class ParallaxLogoCardsBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    link_color = blocks.CharBlock(
+        max_length=7, required=False, default="#004d46",
+        help_text="Hex color for hyperlinks in this block"
+    )
     text_alignment = blocks.ChoiceBlock(
         required=False,
         choices=TextAlignment.choices,
@@ -143,6 +155,10 @@ class ParallaxLogoCardsBlock(blocks.StructBlock):
 
 class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    link_color = blocks.CharBlock(
+        max_length=7, required=False, default="#004d46",
+        help_text="Hex color for hyperlinks in this block"
+    )
     text_alignment = blocks.ChoiceBlock(
         required=False,
         choices=TextAlignment.choices,
@@ -157,6 +173,10 @@ class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
 
 class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    link_color = blocks.CharBlock(
+        max_length=7, required=False, default="#004d46",
+        help_text="Hex color for hyperlinks in this block"
+    )
     text_alignment = blocks.ChoiceBlock(
         required=False,
         choices=TextAlignment.choices,
@@ -172,6 +192,10 @@ class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
 class ParallaxLinkCardsBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
+    link_color = blocks.CharBlock(
+        max_length=7, required=False, default="#004d46",
+        help_text="Hex color for hyperlinks in this block"
+    )
     text_alignment = blocks.ChoiceBlock(
         required=False,
         choices=TextAlignment.choices,
