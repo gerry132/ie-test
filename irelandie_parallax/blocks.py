@@ -33,6 +33,10 @@ class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
         default=TextAlignment.CENTER,
     )
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
+    link_color = blocks.CharBlock(
+        max_length=7, required=False, default="#004d46",
+        help_text="Hex color for hyperlinks in this block"
+    )
     heading = blocks.CharBlock(required=False)
     rich_text = blocks.RichTextBlock(
         features=["h2", "h3", "h4", "blockquote", "bold", "link", "document-link", "ul", "ol"], required=False,
@@ -65,10 +69,10 @@ class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
 class ParallaxImageVideoBlock(blocks.StructBlock):
     section_id = blocks.CharBlock(required=False)
     gradient_image_video = blocks.CharBlock(max_length=7, default='#000', required=False)
-    image = ImageChooserBlock(required=False)
+    image = ImageChooserBlock(required=False, label="Desktop Image")
     mobile_image = ImageChooserBlock(required=False)
-    video = CustomVideoChooserBlock(required=False)
-    mobile_video = CustomVideoChooserBlock(required=False)
+    video = CustomVideoChooserBlock(required=False, label="Desktop Video")
+    mobile_video = CustomVideoChooserBlock(required=False, label="Mobile Video")
     alt_text = blocks.CharBlock(
         required=True,
         help_text=_(ALT_HELP_TEXT_IMG_VIDEO),
@@ -80,11 +84,16 @@ class ParallaxImageVideoBlock(blocks.StructBlock):
         default=TextAlignment.CENTER,
     )
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
+    link_color = blocks.CharBlock(
+        max_length=7, required=False, default="#004d46",
+        help_text="Hex color for hyperlinks in this block"
+    )
     heading = blocks.CharBlock(blank=True, required=False)
     subtitle = blocks.RichTextBlock(blank=True, required=False)
 
     def clean(self, value):
         errors = {}
+
         image = value.get('image')
         video = value.get('video')
         mobile_image = value.get('mobile_image')
@@ -101,19 +110,17 @@ class ParallaxImageVideoBlock(blocks.StructBlock):
             errors['video'] = ErrorList([msg])
 
         if image and mobile_video:
-            msg = ("You've selected a desktop image and a mobile video. You must match types — image with "
-                   "mobile_image or video with mobile_video.")
+            msg = "You selected an image for desktop and a video for mobile. Please use an image or a video."
             errors['mobile_video'] = ErrorList([msg])
             errors['image'] = ErrorList([msg])
 
         if video and mobile_image:
-            msg = ("You've selected a desktop video and a mobile image. You must match types — video with mobile_video "
-                   "or image with mobile_image.")
+            msg = "You selected a video for desktop and an image for mobile. Please use a video or an image."
             errors['mobile_image'] = ErrorList([msg])
             errors['video'] = ErrorList([msg])
 
         if mobile_image and mobile_video:
-            msg = "You've added both a mobile image and video. Only one will be shown on mobile."
+            msg = "You added both a mobile image and a mobile video. Please choose only one for mobile."
             errors['mobile_image'] = ErrorList([msg])
             errors['mobile_video'] = ErrorList([msg])
 
@@ -129,6 +136,11 @@ class ParallaxImageVideoBlock(blocks.StructBlock):
 
 class ParallaxLogoCardsBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
+    link_color = blocks.CharBlock(
+        max_length=7, required=False, default="#004d46",
+        help_text="Hex color for hyperlinks in this block"
+    )
     text_alignment = blocks.ChoiceBlock(
         required=False,
         choices=TextAlignment.choices,
@@ -143,6 +155,11 @@ class ParallaxLogoCardsBlock(blocks.StructBlock):
 
 class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
+    link_color = blocks.CharBlock(
+        max_length=7, required=False, default="#004d46",
+        help_text="Hex color for hyperlinks in this block"
+    )
     text_alignment = blocks.ChoiceBlock(
         required=False,
         choices=TextAlignment.choices,
@@ -157,6 +174,11 @@ class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
 
 class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
+    link_color = blocks.CharBlock(
+        max_length=7, required=False, default="#004d46",
+        help_text="Hex color for hyperlinks in this block"
+    )
     text_alignment = blocks.ChoiceBlock(
         required=False,
         choices=TextAlignment.choices,
@@ -172,6 +194,10 @@ class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
 class ParallaxLinkCardsBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
+    link_color = blocks.CharBlock(
+        max_length=7, required=False, default="#004d46",
+        help_text="Hex color for hyperlinks in this block"
+    )
     text_alignment = blocks.ChoiceBlock(
         required=False,
         choices=TextAlignment.choices,
@@ -188,6 +214,7 @@ class ParallaxLinkCardsBlock(blocks.StructBlock):
 class ParallaxYoutubeVimeoBlock(blocks.StructBlock):
     section_id = blocks.CharBlock(required=False)
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
     text_alignment = blocks.ChoiceBlock(
         required=False,
         choices=TextAlignment.choices,

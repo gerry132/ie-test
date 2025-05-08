@@ -39,15 +39,10 @@
         top: 0;
         z-index: 1;
     }
-    .rich-text.content h2,
-    .rich-text.content h3,
-    .rich-text.content h4 {
-        color: var(--text-color);
-    }
 
 </style>
 {% if value.image or value.mobile_image %}
-    <div {% if value.section_id %} id="{{value.section_id}}" {% endif %} data-jarallax class="jarallax" id="jarallax1" {% if not double_feature %}  data-speed="0.2" {% endif %}>
+    <div {% if value.section_id %} id="{{value.section_id}}" {% endif %} data-jarallax class="parallax jarallax" id="jarallax1" {% if not double_feature %}  data-speed="0.2" {% endif %}>
         {% if value.image_video_credits %}
             <div class="story__image-credit visible" style="z-index:2;">
                 {{ value.image_video_credits }}
@@ -72,7 +67,8 @@
         <div class="rich-text content"
              style="text-align: {{ value.text_alignment }};
                     color: {{ value.text_color }};
-                    --text-color: {{ value.text_color }};">
+                    --text-color: {{ value.text_color }};
+                    --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};">
             <h2>{{ value.heading }}</h2>
             <p>{{ value.subtitle|richtext }}</p>
         </div>
@@ -80,7 +76,7 @@
 
 {% elif value.video or value.mobile_video %}
     <div {% if value.section_id %}id="{{ value.section_id }}"{% endif %}
-         class="parallax-section"
+         class="parallax parallax-section"
          style="min-height: 100vh; display: flex; position: relative;"
          data-speed="0.4"
          data-video-parallax-container>
@@ -129,7 +125,8 @@
                 <div class="rich-text content"
                      style="text-align: {{ value.text_alignment }};
                             color: {{ value.text_color }};
-                            --text-color: {{ value.text_color }};">
+                            --text-color: {{ value.text_color }};
+                            --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};">
                     <h2>{{ value.heading }}</h2>
                     <p>{{ value.subtitle|richtext }}</p>
                 </div>
