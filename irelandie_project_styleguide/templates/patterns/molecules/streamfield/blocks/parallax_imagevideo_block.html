@@ -39,19 +39,10 @@
         top: 0;
         z-index: 1;
     }
-    .rich-text.content h2,
-    .rich-text.content h3,
-    .rich-text.content h4 {
-        color: var(--text-color);
-    }
-
-    .rich-text.content a{
-        color: var(--link-color, inherit);
-    }
 
 </style>
 {% if value.image or value.mobile_image %}
-    <div {% if value.section_id %} id="{{value.section_id}}" {% endif %} data-jarallax class="jarallax" id="jarallax1" {% if not double_feature %}  data-speed="0.2" {% endif %}>
+    <div {% if value.section_id %} id="{{value.section_id}}" {% endif %} data-jarallax class="parallax jarallax" id="jarallax1" {% if not double_feature %}  data-speed="0.2" {% endif %}>
         {% if value.image_video_credits %}
             <div class="story__image-credit visible" style="z-index:2;">
                 {{ value.image_video_credits }}
@@ -85,7 +76,7 @@
 
 {% elif value.video or value.mobile_video %}
     <div {% if value.section_id %}id="{{ value.section_id }}"{% endif %}
-         class="parallax-section"
+         class="parallax parallax-section"
          style="min-height: 100vh; display: flex; position: relative;"
          data-speed="0.4"
          data-video-parallax-container>

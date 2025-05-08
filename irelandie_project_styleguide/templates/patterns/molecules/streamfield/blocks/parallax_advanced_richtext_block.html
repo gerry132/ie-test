@@ -1,24 +1,16 @@
 {% load wagtailcore_tags i18n %}
 <style>
-    .rich-text.rich-text__content a{
-        color: var(--link-color, inherit);
-    }
-    .rich-text.rich-text__content h2,
-    .rich-text.rich-text__content h3,
-    .rich-text.rich-text__content h4 {
-       color: var(--link-color);
-    }
 
     .rich-text.rich-text__content {
         padding-left: 20px;
         padding-right: 20px;
     }
 </style>
-<div class="parallax-section jarallax text-parallax" id="jarallax3"{% if not double_feature %}  data-speed="0.2" {% endif %}>
+<div class="parallax parallax-section jarallax text-parallax" id="jarallax3"{% if not double_feature %}  data-speed="0.2" {% endif %}>
     <div style="{% if value.background_color %} background-color: {{value.background_color}}; {% endif %}" class="jarallax-color"></div>
 
     <div class="rich-text rich-text__content"
-        style="text-align: {{value.text_alignment}}; --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};"
+        style="text-align: {{value.text_alignment}}; --text-color: {{ value.text_color }}; --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};"
         {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
 
         {% if value.heading %}

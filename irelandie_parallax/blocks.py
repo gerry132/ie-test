@@ -137,6 +137,7 @@ class ParallaxImageVideoBlock(blocks.StructBlock):
 
 class ParallaxLogoCardsBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
     link_color = blocks.CharBlock(
         max_length=7, required=False, default="#004d46",
         help_text="Hex color for hyperlinks in this block"
@@ -155,6 +156,7 @@ class ParallaxLogoCardsBlock(blocks.StructBlock):
 
 class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
     link_color = blocks.CharBlock(
         max_length=7, required=False, default="#004d46",
         help_text="Hex color for hyperlinks in this block"
@@ -173,6 +175,7 @@ class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
 
 class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
     link_color = blocks.CharBlock(
         max_length=7, required=False, default="#004d46",
         help_text="Hex color for hyperlinks in this block"
@@ -212,6 +215,7 @@ class ParallaxLinkCardsBlock(blocks.StructBlock):
 class ParallaxYoutubeVimeoBlock(blocks.StructBlock):
     section_id = blocks.CharBlock(required=False)
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
     text_alignment = blocks.ChoiceBlock(
         required=False,
         choices=TextAlignment.choices,

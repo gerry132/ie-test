@@ -1,11 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 <style>
-    .content .rich-text h2 {
-       color: var(--text-color-link-cards);
-    }
-    .content .rich-text a{
-        color: var(--link-color, inherit);
-    }
+
     .card__content {
         background-color: var(--background-color-link-cards);
     }
@@ -15,12 +10,9 @@
     .content .article-cards .card {
          background-color: var(--background-color-link-cards);
     }
-    .rich_text__summary a{
-        color: var(--link-color, inherit);
-    }
 
 </style>
-<div class="parallax-section" id="jarallax4" data-speed="0.2">
+<div class="parallax parallax-section" id="jarallax4" data-speed="0.2">
     <div style="{% if value.background_color %} background-color: {{value.background_color}}; {% endif %}" class="jarallax-color"></div>
             {% if value.logo_cards %}
             <div class="content" style="color: {{value.text_color}}; text-align: {{value.text_alignment}}; --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};">
@@ -44,15 +36,15 @@
                         {% endif %}
             </div>
             {% elif value.timeline_photo_gallery %}
-                <div class="content" style="color: {{value.text_color}}; text-align: {{value.text_alignment}}; --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};">
+                <div class="content" style="color: {{value.text_color}}; --text-color: {{value.text_color}}; text-align: {{value.text_alignment}}; --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};">
                     {% include_block value.timeline_photo_gallery %}
                 </div>
             {% elif value.youtube_or_vimeo_video %}
-                <div class="content" style="color: {{value.text_color}}; text-align: {{value.text_alignment}}; --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};" {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
+                <div class="content" style="color: {{value.text_color}}; --text-color: {{value.text_color}}; text-align: {{value.text_alignment}}; --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};" {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
                     {% include_block value.youtube_or_vimeo_video %}
                 </div>
             {% else %}
-                <div style="padding: 80px 0px; text-align: {{value.text_alignment}}; --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};">
+                <div style="color: {{value.text_color}}; padding: 80px 0px; --text-color: {{value.text_color}}; text-align: {{value.text_alignment}}; --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};">
                     {% include_block value.story_photo_gallery %}
                 </div>
             {% endif %}
