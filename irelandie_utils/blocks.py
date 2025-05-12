@@ -82,6 +82,30 @@ class BaseBlockLinkContext(blocks.StructBlock):
         return context
 
 
+class PullQuoteBlock(blocks.StructBlock):
+    STYLE_CHOICES = [
+        ('green-light', 'State Green Light'),
+        ('green-dark', 'State Green Dark'),
+        ('neon-green', 'Neon Green'),
+        ('gold', 'State Gold'),
+    ]
+
+    paragraph_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=ParagraphAlignment.choices,
+        default=ParagraphAlignment.NARROW,
+    )
+    quote = blocks.TextBlock(required=True, help_text="The quote text.")
+    attribution = blocks.CharBlock(required=False, help_text="Person the quote is attributed to.")
+    style = blocks.ChoiceBlock(choices=STYLE_CHOICES, required=True, default='green-light',
+                               help_text="Select style for border and icon.")
+
+    class Meta:
+        icon = "openquote"
+        label = "Pull Quote"
+        template = "patterns/molecules/streamfield/blocks/pull_quote.html"
+
+
 class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     page = blocks.PageChooserBlock(required=False)
     icon = blocks.ChoiceBlock(
@@ -987,6 +1011,7 @@ class ArticleStoryBlock(blocks.StreamBlock):
 class MinimalArticleStoryBlock(blocks.StreamBlock):
     rich_text = RichTextBlock(group="Base")
     rich_text_advanced = AdvancedRichTextBlock(group="Base")
+    pull_quote = PullQuoteBlock(group="Base")
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
     html = blocks.RawHTMLBlock(
@@ -1138,6 +1163,7 @@ class AccordionEmbassyBlock(blocks.StructBlock):
 
 
 class FreeFormBlocksBase(blocks.StreamBlock):
+    pull_quote = PullQuoteBlock(group="Base")
     pinned_stories = blocks.StructBlock(
         [
             ("pinned_story_hero", PinnedStoryHeroBlock()),
@@ -1234,6 +1260,7 @@ class InfoAtAGlanceBlock(blocks.StructBlock):
 
 class GeneralContentBlocks(blocks.StreamBlock):
     rich_text = AdvancedRichTextBlock(group="Base")
+    pull_quote = PullQuoteBlock(group="Base")
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
     html = blocks.RawHTMLBlock(
