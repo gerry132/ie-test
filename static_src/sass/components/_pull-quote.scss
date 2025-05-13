@@ -1,6 +1,6 @@
 .pull-quote-wrapper {
   margin: 20px 0;
-  padding: 20px;
+  padding: 49px 57px;
   background: transparent;
 
   &.green-light {
@@ -28,7 +28,7 @@
   border-left: 8px solid;
   font-family: Lato, sans-serif;
   color: inherit;
-  padding: 20px;
+  padding: 20px 0px 20px 37px;
 
   blockquote {
     margin: 0;
@@ -48,9 +48,11 @@
 
   footer {
     margin-top: 0.5rem;
-    font-size: 1rem;
-    font-weight: 400;
-    color: inherit;
+    font-family: Lato;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 140%;
   }
 
   .quote_icon {
@@ -125,14 +127,14 @@
   @media (max-width: 768px) {
     .pull-quote-wrapper {
       margin: 10px 0;
-      padding: 10px;
+      padding: 49px 27px;
     }
 
     .pull-quote {
-      padding: 10px;
+      padding: 10px 0px 10px 25px;
     }
 
     .pull-quote .quote-text {
-      font-size: 30px; /* Mobile font size */
+      font-size: 30px;
     }
   }
