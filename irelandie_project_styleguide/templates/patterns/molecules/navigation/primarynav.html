@@ -36,144 +36,183 @@
                             {% endcomment %}
                             <li class="sub-nav__item sub-nav__link" style="font-weight: 600;">{{ link.value.title }}</li>
                             {% for links in link.value.mega_menu %}
-                            {% for column_1 in links.value.column_1 %}
-                             {% for child in column_1.value.mega_menu_links %}
-                             {% if child.value.mega_menu_sub_links %}
-                                <div class="mega_menu_sub_links" data-sub-links>
-                                    <li class="sub-nav__item sub-nav__item--secondary">
-                                        <div role="button" class="sub_links__button" data-sub-links-question aria-haspopup="true" aria-expanded="false">
-                                        <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
-                                            {% if child.value.title %}
-                                                {{ child.value.title }}
-                                            {% else %}
-                                                {{ child.value.page.title }}
-                                            {% endif %}
-                                        </a>
-                                            {% if child.value.mega_menu_sub_links %}
-                                                {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="sub_links__icon" alt="expand" %}
-                                            {% endif %}
-                                        </div>
-
-                                            <div class="mega_menu_nav__item_sub_links" style="padding:0 30px;" data-sub-links-answer aria-hidden="true">
-                                                {% for blocks in child.value.mega_menu_sub_links %}
-                                                    <a class="grid_item_sub_links"
-                                                       href="{% if blocks.value.page %}{{ blocks.value.page.url }}{% else %}{{ blocks.value.url }}{% endif %}" aria-label="{% trans 'Grid item sub links' %}">
-                                                        {% if blocks.value.title %}
-                                                        {{ blocks.value.title }}
+                                {% for column_1 in links.value.column_1 %}
+                                     {% for child in column_1.value.mega_menu_links %}
+                                         {% if child.value.mega_menu_sub_links %}
+                                            <div class="mega_menu_sub_links" data-sub-links>
+                                                <li class="sub-nav__item sub-nav__item--secondary">
+                                                    <div role="button" class="sub_links__button" data-sub-links-question aria-haspopup="true" aria-expanded="false">
+                                                    <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                                        {% if child.value.title %}
+                                                            {{ child.value.title }}
                                                         {% else %}
-                                                        {{ blocks.value.page.title }}
+                                                            {{ child.value.page.title }}
                                                         {% endif %}
                                                     </a>
-                                                {% endfor %}
-                                            </div>
-
-                                    </li>
-                                </div>
-                            {% else %}
-                                 <li class="sub-nav__item sub-nav__item--secondary">
-                                    <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
-                                        {% if child.value.title %}
-                                            {{ child.value.title }}
-                                        {% else %}
-                                            {{ child.value.page.title }}
-                                        {% endif %}
-                                    </a>
-                                </li>
-                            {% endif %}
-                            {% endfor %}
-                            {% endfor %}
-                            {% for column_2 in links.value.column_2 %}
-                             {% for child in column_2.value.mega_menu_links %}
-                                {% if child.value.mega_menu_sub_links %}
-                                <div class="mega_menu_sub_links" data-sub-links>
-                                    <li class="sub-nav__item sub-nav__item--secondary">
-                                        <div role="button" class="sub_links__button" data-sub-links-question aria-haspopup="true" aria-expanded="false">
-                                        <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
-                                            {% if child.value.title %}
-                                                {{ child.value.title }}
-                                            {% else %}
-                                                {{ child.value.page.title }}
-                                            {% endif %}
-                                        </a>
-                                            {% if child.value.mega_menu_sub_links %}
-                                                {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="sub_links__icon" alt="expand" %}
-                                            {% endif %}
-                                        </div>
-
-                                            <div class="mega_menu_nav__item_sub_links" style="padding:0 30px;" data-sub-links-answer aria-hidden="true">
-                                                {% for blocks in child.value.mega_menu_sub_links %}
-                                                    <a class="grid_item_sub_links"
-                                                       href="{% if blocks.value.page %}{{ blocks.value.page.url }}{% else %}{{ blocks.value.url }}{% endif %}" aria-label="{% trans 'Grid item sub links' %}">
-                                                        {% if blocks.value.title %}
-                                                        {{ blocks.value.title }}
-                                                        {% else %}
-                                                        {{ blocks.value.page.title }}
+                                                        {% if child.value.mega_menu_sub_links %}
+                                                            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="sub_links__icon" alt="expand" %}
                                                         {% endif %}
-                                                    </a>
-                                                {% endfor %}
-                                            </div>
+                                                    </div>
 
-                                    </li>
-                                </div>
-                            {% else %}
-                                 <li class="sub-nav__item sub-nav__item--secondary">
-                                    <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
-                                        {% if child.value.title %}
-                                            {{ child.value.title }}
+                                                        <div class="mega_menu_nav__item_sub_links" style="padding:0 30px;" data-sub-links-answer aria-hidden="true">
+                                                            {% for blocks in child.value.mega_menu_sub_links %}
+                                                                <a class="grid_item_sub_links"
+                                                                   href="{% if blocks.value.page %}{{ blocks.value.page.url }}{% else %}{{ blocks.value.url }}{% endif %}" aria-label="{% trans 'Grid item sub links' %}">
+                                                                    {% if blocks.value.title %}
+                                                                    {{ blocks.value.title }}
+                                                                    {% else %}
+                                                                    {{ blocks.value.page.title }}
+                                                                    {% endif %}
+                                                                </a>
+                                                            {% endfor %}
+                                                        </div>
+
+                                                </li>
+                                            </div>
                                         {% else %}
-                                            {{ child.value.page.title }}
+                                             <li class="sub-nav__item sub-nav__item--secondary">
+                                                <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                                    {% if child.value.title %}
+                                                        {{ child.value.title }}
+                                                    {% else %}
+                                                        {{ child.value.page.title }}
+                                                    {% endif %}
+                                                </a>
+                                            </li>
                                         {% endif %}
-                                    </a>
-                                </li>
-                            {% endif %}
-                            {% endfor %}
-                            {% endfor %}
-                            {% for column_3 in links.value.column_3 %}
-                             {% for child in column_3.value.mega_menu_links %}
-                                {% if child.value.mega_menu_sub_links %}
-                                <div class="mega_menu_sub_links" data-sub-links>
-                                    <li class="sub-nav__item sub-nav__item--secondary">
-                                        <div role="button" class="sub_links__button" data-sub-links-question aria-haspopup="true" aria-expanded="false">
-                                        <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
-                                            {% if child.value.title %}
-                                                {{ child.value.title }}
-                                            {% else %}
-                                                {{ child.value.page.title }}
+                                    {% endfor %}
+                                    {% for rich_block in column_1.value.richtext_and_images %}
+                                        {% if rich_block.block_type == "advanced_rich_text" %}
+                                            {% if rich_block.value.button_link %}
+                                                {% for button in rich_block.value.button_link %}
+                                                    <li class="sub-nav__item sub-nav__item--secondary">
+                                                        <a class="sub-nav__link" aria-label="Nav link" href="{% if button.value.page %}{{ button.value.page.url }}{% else %}{{ button.value.url }}{% endif %}" class="button-link">
+                                                            {{ button.value.message }}
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
                                             {% endif %}
-                                        </a>
-                                            {% if child.value.mega_menu_sub_links %}
-                                                {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="sub_links__icon" alt="expand" %}
-                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                                {% for column_2 in links.value.column_2 %}
+                                     {% for child in column_2.value.mega_menu_links %}
+                                        {% if child.value.mega_menu_sub_links %}
+                                        <div class="mega_menu_sub_links" data-sub-links>
+                                            <li class="sub-nav__item sub-nav__item--secondary">
+                                                <div role="button" class="sub_links__button" data-sub-links-question aria-haspopup="true" aria-expanded="false">
+                                                <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                                    {% if child.value.title %}
+                                                        {{ child.value.title }}
+                                                    {% else %}
+                                                        {{ child.value.page.title }}
+                                                    {% endif %}
+                                                </a>
+                                                    {% if child.value.mega_menu_sub_links %}
+                                                        {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="sub_links__icon" alt="expand" %}
+                                                    {% endif %}
+                                                </div>
+
+                                                    <div class="mega_menu_nav__item_sub_links" style="padding:0 30px;" data-sub-links-answer aria-hidden="true">
+                                                        {% for blocks in child.value.mega_menu_sub_links %}
+                                                            <a class="grid_item_sub_links"
+                                                               href="{% if blocks.value.page %}{{ blocks.value.page.url }}{% else %}{{ blocks.value.url }}{% endif %}" aria-label="{% trans 'Grid item sub links' %}">
+                                                                {% if blocks.value.title %}
+                                                                {{ blocks.value.title }}
+                                                                {% else %}
+                                                                {{ blocks.value.page.title }}
+                                                                {% endif %}
+                                                            </a>
+                                                        {% endfor %}
+                                                    </div>
+
+                                            </li>
                                         </div>
-
-                                            <div class="mega_menu_nav__item_sub_links" style="padding:0 30px;" data-sub-links-answer aria-hidden="true">
-                                                {% for blocks in child.value.mega_menu_sub_links %}
-                                                    <a class="grid_item_sub_links"
-                                                       href="{% if blocks.value.page %}{{ blocks.value.page.url }}{% else %}{{ blocks.value.url }}{% endif %}" aria-label="{% trans 'Grid item sub links' %}">
-                                                        {% if blocks.value.title %}
-                                                        {{ blocks.value.title }}
-                                                        {% else %}
-                                                        {{ blocks.value.page.title }}
-                                                        {% endif %}
-                                                    </a>
-                                                {% endfor %}
-                                            </div>
-
-                                    </li>
-                                </div>
-                            {% else %}
-                                 <li class="sub-nav__item sub-nav__item--secondary">
-                                    <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
-                                        {% if child.value.title %}
-                                            {{ child.value.title }}
                                         {% else %}
-                                            {{ child.value.page.title }}
+                                             <li class="sub-nav__item sub-nav__item--secondary">
+                                                <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                                    {% if child.value.title %}
+                                                        {{ child.value.title }}
+                                                    {% else %}
+                                                        {{ child.value.page.title }}
+                                                    {% endif %}
+                                                </a>
+                                            </li>
                                         {% endif %}
-                                    </a>
-                                </li>
-                            {% endif %}
-                            {% endfor %}
-                            {% endfor %}
+                                    {% endfor %}
+                                    {% for rich_block in column_2.value.richtext_and_images %}
+                                        {% if rich_block.block_type == "advanced_rich_text" %}
+                                            {% if rich_block.value.button_link %}
+                                                {% for button in rich_block.value.button_link %}
+                                                    <li class="sub-nav__item sub-nav__item--secondary">
+                                                        <a class="sub-nav__link" aria-label="Nav link" href="{% if button.value.page %}{{ button.value.page.url }}{% else %}{{ button.value.url }}{% endif %}" class="button-link">
+                                                            {{ button.value.message }}
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                                {% for column_3 in links.value.column_3 %}
+                                     {% for child in column_3.value.mega_menu_links %}
+                                        {% if child.value.mega_menu_sub_links %}
+                                        <div class="mega_menu_sub_links" data-sub-links>
+                                            <li class="sub-nav__item sub-nav__item--secondary">
+                                                <div role="button" class="sub_links__button" data-sub-links-question aria-haspopup="true" aria-expanded="false">
+                                                <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                                    {% if child.value.title %}
+                                                        {{ child.value.title }}
+                                                    {% else %}
+                                                        {{ child.value.page.title }}
+                                                    {% endif %}
+                                                </a>
+                                                    {% if child.value.mega_menu_sub_links %}
+                                                        {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="sub_links__icon" alt="expand" %}
+                                                    {% endif %}
+                                                </div>
+
+                                                    <div class="mega_menu_nav__item_sub_links" style="padding:0 30px;" data-sub-links-answer aria-hidden="true">
+                                                        {% for blocks in child.value.mega_menu_sub_links %}
+                                                            <a class="grid_item_sub_links"
+                                                               href="{% if blocks.value.page %}{{ blocks.value.page.url }}{% else %}{{ blocks.value.url }}{% endif %}" aria-label="{% trans 'Grid item sub links' %}">
+                                                                {% if blocks.value.title %}
+                                                                {{ blocks.value.title }}
+                                                                {% else %}
+                                                                {{ blocks.value.page.title }}
+                                                                {% endif %}
+                                                            </a>
+                                                        {% endfor %}
+                                                    </div>
+
+                                            </li>
+                                        </div>
+                                        {% else %}
+                                             <li class="sub-nav__item sub-nav__item--secondary">
+                                                <a class="sub-nav__link" aria-label="{% trans 'Nav link' %}" href="{% if child.value.page %}{{ child.value.page.url }}{% else %}{{ child.value.url }}{% endif %}">
+                                                    {% if child.value.title %}
+                                                        {{ child.value.title }}
+                                                    {% else %}
+                                                        {{ child.value.page.title }}
+                                                    {% endif %}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% for rich_block in column_3.value.richtext_and_images %}
+                                        {% if rich_block.block_type == "advanced_rich_text" %}
+                                            {% if rich_block.value.button_link %}
+                                                {% for button in rich_block.value.button_link %}
+                                                    <li class="sub-nav__item sub-nav__item--secondary">
+                                                        <a class="sub-nav__link" aria-label="Nav link" href="{% if button.value.page %}{{ button.value.page.url }}{% else %}{{ button.value.url }}{% endif %}" class="button-link">
+                                                            {{ button.value.message }}
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
                             {% endfor %}
                         </ul>
                     {% endif %}
@@ -217,8 +256,8 @@
                             <li class="sub-nav__item sub-nav__link" style="font-weight: 600;">{{ link.value.title }}</li>
                             {% for links in link.value.mega_menu %}
                             {% for column_1 in links.value.column_1 %}
-                             {% for child in column_1.value.mega_menu_links %}
-                                 {% if child.value.mega_menu_sub_links %}
+                            {% for child in column_1.value.mega_menu_links %}
+                            {% if child.value.mega_menu_sub_links %}
                                 <div class="mega_menu_sub_links" data-sub-links>
                                     <li class="sub-nav__item sub-nav__item--secondary">
                                         <div role="button" class="sub_links__button" data-sub-links-question aria-haspopup="true" aria-expanded="false">
