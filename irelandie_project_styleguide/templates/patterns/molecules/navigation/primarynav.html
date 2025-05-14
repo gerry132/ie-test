@@ -300,6 +300,19 @@
                                 </li>
                             {% endif %}
                             {% endfor %}
+                            {% for rich_block in column_1.value.richtext_and_images %}
+                                        {% if rich_block.block_type == "advanced_rich_text" %}
+                                            {% if rich_block.value.button_link %}
+                                                {% for button in rich_block.value.button_link %}
+                                                    <li class="sub-nav__item sub-nav__item--secondary">
+                                                        <a class="sub-nav__link" aria-label="Nav link" href="{% if button.value.page %}{{ button.value.page.url }}{% else %}{{ button.value.url }}{% endif %}" class="button-link">
+                                                            {{ button.value.message }}
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
                             {% endfor %}
                             {% for column_2 in links.value.column_2 %}
                              {% for child in column_2.value.mega_menu_links %}
@@ -342,6 +355,19 @@
                                 </li>
                             {% endif %}
                             {% endfor %}
+                            {% for rich_block in column_2.value.richtext_and_images %}
+                                        {% if rich_block.block_type == "advanced_rich_text" %}
+                                            {% if rich_block.value.button_link %}
+                                                {% for button in rich_block.value.button_link %}
+                                                    <li class="sub-nav__item sub-nav__item--secondary">
+                                                        <a class="sub-nav__link" aria-label="Nav link" href="{% if button.value.page %}{{ button.value.page.url }}{% else %}{{ button.value.url }}{% endif %}" class="button-link">
+                                                            {{ button.value.message }}
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
                             {% endfor %}
                             {% for column_3 in links.value.column_3 %}
                              {% for child in column_3.value.mega_menu_links %}
@@ -384,6 +410,19 @@
                                 </li>
                             {% endif %}
                             {% endfor %}
+                            {% for rich_block in column_3.value.richtext_and_images %}
+                                        {% if rich_block.block_type == "advanced_rich_text" %}
+                                            {% if rich_block.value.button_link %}
+                                                {% for button in rich_block.value.button_link %}
+                                                    <li class="sub-nav__item sub-nav__item--secondary">
+                                                        <a class="sub-nav__link" aria-label="Nav link" href="{% if button.value.page %}{{ button.value.page.url }}{% else %}{{ button.value.url }}{% endif %}" class="button-link">
+                                                            {{ button.value.message }}
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
                             {% endfor %}
                             {% endfor %}
                         </ul>
