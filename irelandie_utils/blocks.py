@@ -95,8 +95,8 @@ class PullQuoteBlock(blocks.StructBlock):
         choices=ParagraphAlignment.choices,
         default=ParagraphAlignment.NARROW,
     )
-    quote = blocks.CharBlock(required=True, max_length=255, help_text="The quote text.")
-    attribution = blocks.CharBlock(required=False, max_length=150, help_text="Person the quote is attributed to.")
+    quote = blocks.CharBlock(required=True, help_text="The quote text.")
+    attribution = blocks.CharBlock(required=False, help_text="Person the quote is attributed to.")
     style = blocks.ChoiceBlock(choices=STYLE_CHOICES, required=True, default='green-light')
 
     class Meta:
