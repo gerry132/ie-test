@@ -2106,7 +2106,7 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
                         "139.162.239.108/32", # gov_network_cird_blocks
 
                         "86.132.244.46/32",   # Sina
-                        "62.23.128.137/32"    # DFA
+                        "62.23.128.137/32",    # DFA
                         "37.228.206.182/32",  # jaikiran_dev
                         ]
 }
