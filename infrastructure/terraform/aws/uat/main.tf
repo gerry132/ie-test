@@ -87,7 +87,7 @@ locals {
 
     sina_dev = {
       description = "Sina - Sidero"
-      cidr_blocks  = ["81.159.191.109/32"]
+      cidr_blocks  = ["86.132.244.46/32"]
     },
     joe_dev = {
       description = "Joe D - Sidero"
@@ -1957,7 +1957,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "/search/*"
-  } 
+  }
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods           = ["GET", "HEAD"]
@@ -1967,7 +1967,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "/en/eu-jobs/"
-  } 
+  }
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods           = ["GET", "HEAD"]
@@ -1987,7 +1987,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/publication-index/*"
-  }  
+  }
 
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
@@ -1998,7 +1998,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/news-archive/"
-  } 
+  }
 
 
   ordered_cache_behavior {
@@ -2010,7 +2010,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/news-and-events/*"
-  } 
+  }
 
 
   ordered_cache_behavior {
@@ -2022,7 +2022,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/news-and-speeches/*"
-  } 
+  }
 
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
@@ -2033,7 +2033,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/annual-reports/*"
-  } 
+  }
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
