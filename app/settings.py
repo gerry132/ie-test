@@ -501,6 +501,7 @@ if USE_S3 is True:
             "'self'",
             "https://youtube.com",
             "https://www.youtube.com",
+            "https://www.youtube-nocookie.com"
             "https://player.vimeo.com",
             "https://www.google.com"
         )
