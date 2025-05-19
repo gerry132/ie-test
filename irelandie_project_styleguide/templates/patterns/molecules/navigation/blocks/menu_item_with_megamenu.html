@@ -31,8 +31,8 @@
                     {% if link.value.column_3 %}
                     <div class="col_items">
                         {% for links in link.value.column_3 %}
-                        {% if links.value.mega_menu_links %}
-                        {% include_block links with links=links col='col_3' %}
+                        {% if links.value.mega_menu_links or links.value.richtext_and_images  %}
+                            {% include_block links with links=links col='col_3' %}
                         {% else %}
                         <figure class="image-block">
                             {% if links.value.image_alt %}

@@ -3,17 +3,18 @@
 {% load static %}
 {% load util_tags %}
 {% load i18n %}
-
-{% if value.summary_richtext.content.heading or value.summary_richtext.content.rich_text %}
-<div class="logo-card__intro">
-    <div class="intro__description">{% include_block value.summary_richtext.content %}</div>
-</div>
-{% endif %}
-<div class="logo-card__richtext">
-<div class="logo-cards logo-card__featured-blocks {% if value.summary_richtext.content.paragraph_alignment == 'narrow' %}rich-text__narrow{% endif %}">
-    {% for card in value.cards %}
-        {% include_block card %}
-    {% endfor %}
-</div>
+<div {% if value.summary_richtext.content.section_id %} id="{{value.summary_richtext.content.section_id}}" {% endif %}>
+    {% if value.summary_richtext.content.heading or value.summary_richtext.content.rich_text %}
+    <div class="logo-card__intro">
+        <div class="intro__description">{% include_block value.summary_richtext.content %}</div>
+    </div>
+    {% endif %}
+    <div class="logo-card__richtext">
+    <div class="logo-cards logo-card__featured-blocks {% if value.summary_richtext.content.paragraph_alignment == 'narrow' %}rich-text__narrow{% endif %}">
+        {% for card in value.cards %}
+            {% include_block card %}
+        {% endfor %}
+    </div>
+    </div>
 </div>
 

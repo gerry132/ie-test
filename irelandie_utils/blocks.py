@@ -82,6 +82,29 @@ class BaseBlockLinkContext(blocks.StructBlock):
         return context
 
 
+class PullQuoteBlock(blocks.StructBlock):
+    STYLE_CHOICES = [
+        ('green-light', 'State Green Light'),
+        ('green-dark', 'State Green Dark'),
+        ('neon-green', 'Neon Green'),
+        ('gold', 'State Gold'),
+    ]
+
+    paragraph_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=ParagraphAlignment.choices,
+        default=ParagraphAlignment.NARROW,
+    )
+    quote = blocks.CharBlock(required=True, help_text="The quote text.")
+    attribution = blocks.CharBlock(required=False, help_text="Person the quote is attributed to.")
+    style = blocks.ChoiceBlock(choices=STYLE_CHOICES, required=True, default='green-light')
+
+    class Meta:
+        icon = "openquote"
+        label = "Pull Quote"
+        template = "patterns/molecules/streamfield/blocks/pull_quote.html"
+
+
 class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     page = blocks.PageChooserBlock(required=False)
     icon = blocks.ChoiceBlock(
@@ -540,8 +563,8 @@ class YoutubeVideoBlock(blocks.StructBlock):
         default=YoutubeSize.LARGE,
     )
     url = blocks.CharBlock(help_text=_("Please remember to use 'no cookie' versions of YouTube links to ensure users "
-                                       "who reject cookies can view the video. Guidance on how to do this is "
-                                       "available on:"
+                                       "who reject cookies can view the video. And use 'youtube.com' links for "
+                                       "livestreams or premieres. Guidance on how to do this is available on:"
                                        "https://dfai/SupportServices/Communications/Websites/Pages/Tips.aspx"))
     slido_embed = blocks.TextBlock(
         required=False,
@@ -987,6 +1010,7 @@ class ArticleStoryBlock(blocks.StreamBlock):
 class MinimalArticleStoryBlock(blocks.StreamBlock):
     rich_text = RichTextBlock(group="Base")
     rich_text_advanced = AdvancedRichTextBlock(group="Base")
+    pull_quote = PullQuoteBlock(group="Base")
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
     html = blocks.RawHTMLBlock(
@@ -1138,6 +1162,7 @@ class AccordionEmbassyBlock(blocks.StructBlock):
 
 
 class FreeFormBlocksBase(blocks.StreamBlock):
+    pull_quote = PullQuoteBlock(group="Base")
     pinned_stories = blocks.StructBlock(
         [
             ("pinned_story_hero", PinnedStoryHeroBlock()),
@@ -1234,6 +1259,7 @@ class InfoAtAGlanceBlock(blocks.StructBlock):
 
 class GeneralContentBlocks(blocks.StreamBlock):
     rich_text = AdvancedRichTextBlock(group="Base")
+    pull_quote = PullQuoteBlock(group="Base")
     image = ImageBlock(group="Base")
     document = DocumentBlock(group="Base")
     html = blocks.RawHTMLBlock(
@@ -1642,13 +1668,11 @@ class StoryVideoBlock(blocks.StructBlock):
         choices=YoutubeSize.choices,
         default=YoutubeSize.LARGE,
     )
-    youtube_or_vimeo_embed = blocks.CharBlock(required=False, help_text=_("Please remember to use 'no cookie' "
-                                                                          "versions of YouTube links to ensure users"
-                                                                          "who reject cookies can view the video. "
-                                                                          "Guidance on how to do this is"
-                                                                          "available on:"
-                                                                          "https://dfai/SupportServices"
-                                                                          "/Communications/Websites/Pages/Tips.aspx"))
+    youtube_or_vimeo_embed = blocks.CharBlock(required=False, help_text=_(
+        "Please remember to use 'no cookie' versions of YouTube links to ensure users "
+        "who reject cookies can view the video. And use 'youtube.com' links for "
+        "livestreams or premieres. Guidance on how to do this is available on:"
+        "https://dfai/SupportServices/Communications/Websites/Pages/Tips.aspx"))
     video = CustomVideoChooserBlock(required=False)
     video_alt = blocks.CharBlock(
         required=True,
@@ -1842,12 +1866,11 @@ class HomepageFeatureImageVideoBlock(blocks.StructBlock):
         required=False,
         help_text=_(ALT_IMAGE),
     )
-    youtube_or_vimeo_embed = blocks.CharBlock(required=False, help_text=_("Please remember to use 'no cookie' "
-                                                                          "versions of YouTube links to ensure users"
-                                                                          "who reject cookies can view the video. "
-                                                                          "Guidance on how to do this is available on:"
-                                                                          "https://dfai/SupportServices"
-                                                                          "/Communications/Websites/Pages/Tips.aspx"))
+    youtube_or_vimeo_embed = blocks.CharBlock(required=False, help_text=_(
+        "Please remember to use 'no cookie' versions of YouTube links to ensure users "
+        "who reject cookies can view the video. And use 'youtube.com' links for "
+        "livestreams or premieres. Guidance on how to do this is available on:"
+        "https://dfai/SupportServices/Communications/Websites/Pages/Tips.aspx"))
 
     def clean(self, value):
         errors = {}

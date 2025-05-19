@@ -87,7 +87,7 @@ locals {
 
     sina_dev = {
       description = "Sina - Sidero"
-      cidr_blocks  = ["81.159.191.109/32"]
+      cidr_blocks  = ["86.132.244.46/32"]
     },
     joe_dev = {
       description = "Joe D - Sidero"
@@ -1957,7 +1957,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "/search/*"
-  } 
+  }
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods           = ["GET", "HEAD"]
@@ -1967,7 +1967,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "/en/eu-jobs/"
-  } 
+  }
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods           = ["GET", "HEAD"]
@@ -1987,7 +1987,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/publication-index/*"
-  }  
+  }
 
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
@@ -1998,7 +1998,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/news-archive/"
-  } 
+  }
 
 
   ordered_cache_behavior {
@@ -2010,7 +2010,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/news-and-events/*"
-  } 
+  }
 
 
   ordered_cache_behavior {
@@ -2022,7 +2022,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/news-and-speeches/*"
-  } 
+  }
 
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
@@ -2033,7 +2033,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/annual-reports/*"
-  } 
+  }
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
@@ -2087,23 +2087,28 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
   provider                  = aws.virginia
   scope              = "CLOUDFRONT"
   ip_address_version = "IPV4"
-  addresses          = ["161.35.72.212/32",
-                        "46.101.124.44/32",
-                        "46.101.116.160/32",
-                        "85.208.98.128/25",
-                        "164.90.168.210/32",
+  addresses          = ["161.35.72.212/32",   # ireland_ie_ips
+                        "46.101.124.44/32",   # ireland_ie_ips
+                        "46.101.116.160/32",  # ireland_ie_ips
+                        "85.208.98.128/25",   # ireland_ie_ips
+                        "164.90.168.210/32",  # ireland_ie_ips
                         "52.18.199.206/32",
                         "52.209.191.79/32",
-                        "176.58.117.51/32",
-                        "37.228.206.182/32",
-                        "80.85.87.84/32",
-                        "88.80.184.34/32",
-                        "178.79.136.28/32",
-                        "169.254.192.0/18",
-                        "137.191.224.0/19",
-                        "193.178.64.0/19",
-                        "193.178.96.0/20",
-                        "139.162.239.108/32"]
+                        "176.58.117.51/32",   # ireland_ie_ips
+                        "80.85.87.84/32",     # ireland_ie_ips
+                        "88.80.184.34/32",    # ireland_ie_ips
+                        "178.79.136.28/32",   # ireland_ie_ips
+
+                        "169.254.192.0/18",   # gov_network_cird_blocks
+                        "137.191.224.0/19",   # gov_network_cird_blocks
+                        "193.178.64.0/19",    # gov_network_cird_blocks
+                        "193.178.96.0/20",    # gov_network_cird_blocks
+                        "139.162.239.108/32", # gov_network_cird_blocks
+
+                        "86.132.244.46/32",   # Sina
+                        "62.23.128.137/32",    # DFA
+                        "37.228.206.182/32",  # jaikiran_dev
+                        ]
 }
 
 

@@ -1,81 +1,136 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 
-{% if value.image %}
-        {% image value.image original as desktop_image %}
-        <style>
-.jarallax-video-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+<style>
+    .jarallax-video-desktop { display: block; }
+    .jarallax-video-mobile { display: none; }
 
+    @media (max-width: 767px) {
+    .jarallax-video-desktop { display: none; }
+    .jarallax-video-mobile { display: block; }
 
-.jarallax-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures the video fills the container while maintaining aspect ratio */
-}
-        .gradient-overlay {
-            content: '';
-            background: linear-gradient(0deg,
-                                    var(--linear-gradient, inherit) 0%,
-                                    rgba(0, 0, 0, 0)
-                                    {% if page.transparency %} {{page.transparency}}% {% else %}100% {% endif %});
-            display: block;
-            left: 0;
+    }
+    .jarallax-video-container {
             position: absolute;
-            height: 100%;
-            width: 100%;
             top: 0;
-            z-index: 1;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-            .rich-text.content h2,
-            .rich-text.content h3,
-            .rich-text.content h4 {
-            color: var(--text-color);
-            }
+    .jarallax-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    .gradient-overlay {
+        content: '';
+        background: linear-gradient(0deg,
+            var(--linear-gradient, inherit) 0%,
+            rgba(0, 0, 0, 0) {% if page.transparency %} {{page.transparency}}% {% else %}100% {% endif %}
+        );
+        display: block;
+        left: 0;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        z-index: 1;
+    }
 
-
-    </style>
-    <div data-jarallax class="jarallax" id="jarallax1" {% if not double_feature %}  data-speed="0.2" {% endif %}>
+</style>
+{% if value.image or value.mobile_image %}
+    <div {% if value.section_id %} id="{{value.section_id}}" {% endif %} data-jarallax class="parallax jarallax" id="jarallax1" {% if not double_feature %}  data-speed="0.2" {% endif %}>
         {% if value.image_video_credits %}
-            <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
-        {% endif %}
-        <div class="gradient-overlay" style="{% if value.gradient_image_video %}--linear-gradient: {{ value.gradient_image_video }} {% else %} black {% endif %}"></div>
-            <img class="jarallax-img" src="{{ desktop_image.url }}" alt="{{ value.alt_text }}">
-            <div class="rich-text content" style="text-align: {{value.text_alignment}}; color: {{value.text_color}}; --text-color: {{value.text_color}};">
-                <h2>{{ value.heading }}</h2>
-                <p>{{ value.subtitle|richtext }}</p>
+            <div class="story__image-credit visible" style="z-index:2;">
+                {{ value.image_video_credits }}
             </div>
-    </div>
-    
-{% else %}
-<div class="parallax-section" style="min-height: 100vh; display: flex;" data-speed="0.4" data-video-parallax-container>
-    {% if value.image_video_credits %}
-        <div class="story__image-credit visible" style="z-index:2;">{{ value.image_video_credits }}</div>
-    {% endif %}
-    <div class="jarallax-video-container">
-            <video loop controls data-video-parallax class="jarallax-video" title="{{ value.alt_text }}">
-                <source src="{{ value.video.url }}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-    </div>
-    <div class="parallax__button_text">
-        <button aria-label="{% trans 'Toggle video playback' %}" role="button" class="parallax__video-toggle"
-                        data-video-parallax-toggle>
-            {% include "patterns/atoms/icons/icon.html" with name="play-button" classname="playButton" %}
-            {% include "patterns/atoms/icons/icon.html" with name="pause-button" classname="pauseButton" %}
-        </button>
-        <div class="rich-text content" style="text-align: {{value.text_alignment}}; color: {{value.text_color}}; --text-color: {{value.text_color}};">
+        {% endif %}
+
+        <div class="gradient-overlay"
+             style="{% if value.gradient_image_video %}--linear-gradient: {{ value.gradient_image_video }}{% else %}black{% endif %}">
+        </div>
+
+
+        <picture class="jarallax-img">
+          {% if value.mobile_image %}
+            {% image value.mobile_image original as mobile_img %}
+            <source media="(max-width: 767px)" srcset="{{ mobile_img.url }}">
+          {% endif %}
+          {% image value.image original as desktop_img %}
+          <img src="{{ desktop_img.url }}" alt="{{ value.alt_text }}">
+        </picture>
+
+
+        <div class="rich-text content"
+             style="text-align: {{ value.text_alignment }};
+                    color: {{ value.text_color }};
+                    --text-color: {{ value.text_color }};
+                    --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};">
             <h2>{{ value.heading }}</h2>
             <p>{{ value.subtitle|richtext }}</p>
         </div>
+    </div>
+
+{% elif value.video or value.mobile_video %}
+    <div {% if value.section_id %}id="{{ value.section_id }}"{% endif %}
+         class="parallax parallax-section"
+         style="min-height: 100vh; display: flex; position: relative;"
+         data-speed="0.4"
+         data-video-parallax-container>
+
+        {% if value.image_video_credits %}
+            <div class="story__image-credit visible" style="z-index:2;">
+                {{ value.image_video_credits }}
+            </div>
+        {% endif %}
+
+        <div class="jarallax-video-container">
+            {% if value.video %}
+                <video class="jarallax-video jarallax-video-desktop"
+                       loop playsinline data-video-parallax
+                       title="{{ value.alt_text }}"
+                       poster="{% if value.video.thumbnail %}{{ value.video.thumbnail.url }}{% endif %}">
+                    <source src="{{ value.video.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            {% endif %}
+
+            {# Mobile Video: fallback to desktop if not provided #}
+            {% with value.mobile_video|default:value.video as active_video %}
+                {% if active_video %}
+                    <video class="jarallax-video jarallax-video-mobile"
+                           loop playsinline data-video-parallax
+                           title="{{ value.alt_text }}"
+                           poster="{% if active_video.thumbnail %}{{ active_video.thumbnail.url }}{% endif %}">
+                        <source src="{{ active_video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <div class="parallax__button_text" style="z-index:3;">
+            <button aria-label="{% trans 'Toggle video playback' %}"
+                    role="button"
+                    class="parallax__video-toggle"
+                    data-video-parallax-toggle>
+                {% include "patterns/atoms/icons/icon.html" with name="play-button" classname="playButton" %}
+                {% include "patterns/atoms/icons/icon.html" with name="pause-button" classname="pauseButton" %}
+            </button>
+
+            {% if value.heading or value.subtitle %}
+                <div class="rich-text content"
+                     style="text-align: {{ value.text_alignment }};
+                            color: {{ value.text_color }};
+                            --text-color: {{ value.text_color }};
+                            --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};">
+                    <h2>{{ value.heading }}</h2>
+                    <p>{{ value.subtitle|richtext }}</p>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endif %}

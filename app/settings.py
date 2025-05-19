@@ -460,6 +460,8 @@ if USE_S3 is True:
             "https://www.google-analytics.com",
             "https://ajax.googleapis.com",
             "https://stats.ciboard.ie",
+            "https://cdn.cookielaw.org",
+            "https://cdn.rawgit.com",
             "'unsafe-inline'"
         )
     CSP_SCRIPT_SRC_ELEM = CSP_SCRIPT_SRC
@@ -483,6 +485,8 @@ if USE_S3 is True:
         "https://region1.google-analytics.com",
         "https://www.googletagmanager.com",
         "https://stats.ciboard.ie",
+        "https://cdn.rawgit.com",
+        "https://cdn.cookielaw.org",
         "https://releases.wagtail.org"
     )
     CSP_FONT_SRC = (
@@ -496,6 +500,7 @@ if USE_S3 is True:
     CSP_FRAME_SRC = (
             "'self'",
             "https://youtube.com",
+            "https://www.youtube.com",
             "https://player.vimeo.com",
             "https://www.google.com"
         )
@@ -514,7 +519,7 @@ WAGTAIL_I18N_ENABLED = True
 
 PREFIX_DEFAULT_LANGUAGE = True
 
-AWS_S3_FILE_OVERWRITE = True
+AWS_S3_FILE_OVERWRITE = False
 
 WAGTAILADMIN_COMMENTS_ENABLED = False
 WAGTAIL_MODERATION_ENABLED = False
