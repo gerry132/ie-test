@@ -481,7 +481,8 @@ if USE_S3 is True:
                    "data:",
                    f"https://{AWS_S3_CUSTOM_DOMAIN}",
                    "https://www.google-analytics.com",
-                   "https://www.gravatar.com")
+                   "https://www.gravatar.com",
+                   "https://cdn.edgetier.com")
     CSP_CONNECT_SRC = (
         "'self'",
         "https://www.google-analytics.com",
