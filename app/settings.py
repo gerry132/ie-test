@@ -488,6 +488,7 @@ if USE_S3 is True:
         "https://stats.ciboard.ie",
         "https://cdn.rawgit.com",
         "https://cdn.cookielaw.org",
+        "https://cdn.edgetier.com/dfa.js",
         "https://releases.wagtail.org"
     )
     CSP_FONT_SRC = (
