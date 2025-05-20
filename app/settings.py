@@ -496,6 +496,7 @@ if USE_S3 is True:
         "https://dfa.edgetier.com",
         "https://lightning.production.helium.servismatrixcdn.com",
         "https://api.production.helium.servismatrix.com",
+        "https://o1008192.ingest.sentry.io",
         "https://releases.wagtail.org"
     )
     CSP_FONT_SRC = (
