@@ -135,7 +135,7 @@
                                         onchange="updatePageLink('language-switcher-mob')"
                                         class="language-switcher">
                                     {% get_language_info for LANGUAGE_CODE as current_lang %}
-                                     <option value="{{ current_lang.code }}"{% if current_lang == language_code %} selected{% endif %}>
+                                     <option value="{{ current_lang.code }}" lang="{{ current_lang.code }}" {% if current_lang == language_code %} selected{% endif %}>
                                             {{ current_lang.name_local }}
                                      </option>
                                      {% for translation in page.get_translations.live %}
