@@ -474,6 +474,7 @@ if USE_S3 is True:
             "https://cdn.jsdelivr.net",
             "https://cdnjs.cloudflare.com",
             "https://fonts.googleapis.com",
+            "https://cdn.edgetier.com",
             "'unsafe-inline'"
         )
 
