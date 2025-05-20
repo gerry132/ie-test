@@ -463,6 +463,7 @@ if USE_S3 is True:
             "https://cdn.cookielaw.org",
             "https://cdn.rawgit.com",
             "https://cdn.edgetier.com",
+            "https://dfa.edgetier.com",
             "https://lightning.production.helium.servismatrixcdn.com/v2/latest/bundle-messenger.js",
             "'unsafe-inline'"
         )
