@@ -80,6 +80,10 @@ locals {
       description = "Jaikiran - OGCIO"
       cidr_blocks = ["137.191.233.222/32", "37.228.206.182/32"]
     },
+    fergal_dev = {
+      description = "Fergal - OGCIO"
+      cidr_blocks = ["51.182.250.11/32"]
+    },
     deekshana_dev = {
       description = "Deekshana - Sidero"
       cidr_blocks  = ["62.77.170.200/32"]
@@ -2106,6 +2110,7 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
                         "139.162.239.108/32", # gov_network_cird_blocks
 
                         "86.132.244.46/32",   # Sina
+                        "51.182.250.11/32",   # Fergal
                         "62.23.128.137/32",    # DFA
                         "37.228.206.182/32",  # jaikiran_dev
                         ]
