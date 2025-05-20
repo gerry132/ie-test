@@ -464,7 +464,7 @@ if USE_S3 is True:
             "https://cdn.rawgit.com",
             "https://cdn.edgetier.com",
             "https://dfa.edgetier.com",
-            "https://lightning.production.helium.servismatrixcdn.com/v2/latest/bundle-messenger.js",
+            "https://lightning.production.helium.servismatrixcdn.com",
             "'unsafe-inline'"
         )
     CSP_SCRIPT_SRC_ELEM = CSP_SCRIPT_SRC
@@ -492,7 +492,7 @@ if USE_S3 is True:
         "https://cdn.cookielaw.org",
         "https://cdn.edgetier.com",
         "https://dfa.edgetier.com",
-        "https://lightning.production.helium.servismatrixcdn.com/v2/latest/servisbot-utils.js",
+        "https://lightning.production.helium.servismatrixcdn.com",
         "https://releases.wagtail.org"
     )
     CSP_FONT_SRC = (
@@ -512,7 +512,7 @@ if USE_S3 is True:
             "https://www.google.com"
         )
 
-    CSP_MEDIA_SRC = ("'self'", f"https://{AWS_S3_CUSTOM_DOMAIN}")
+    CSP_MEDIA_SRC = ("'self'", f"https://{AWS_S3_CUSTOM_DOMAIN}", "https://cdn.edgetier.com")
 
     # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
 else:
