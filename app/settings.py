@@ -497,6 +497,8 @@ if USE_S3 is True:
         "https://lightning.production.helium.servismatrixcdn.com",
         "https://api.production.helium.servismatrix.com",
         "https://o1008192.ingest.sentry.io",
+        "https://cognito-identity.eu-west-1.amazonaws.com"
+        "https://sborg-heupper-dfasfo.s3.amazonaws.com",
         "https://releases.wagtail.org"
     )
     CSP_FONT_SRC = (
