@@ -119,6 +119,7 @@
             &.is-visible {
                 transform: translate3d(0%, 0%, 0);
                 overflow-y: auto;
+                overflow-x: hidden;
             }
 
             nav {
