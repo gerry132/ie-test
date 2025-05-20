@@ -483,6 +483,7 @@ if USE_S3 is True:
                    f"https://{AWS_S3_CUSTOM_DOMAIN}",
                    "https://www.google-analytics.com",
                    "https://www.gravatar.com",
+                   "https://sborg-heupper-dfasfo.s3.amazonaws.com",
                    "https://cdn.edgetier.com")
     CSP_CONNECT_SRC = (
         "'self'",
@@ -497,7 +498,7 @@ if USE_S3 is True:
         "https://lightning.production.helium.servismatrixcdn.com",
         "https://api.production.helium.servismatrix.com",
         "https://o1008192.ingest.sentry.io",
-        "https://cognito-identity.eu-west-1.amazonaws.com"
+        "https://cognito-identity.eu-west-1.amazonaws.com",
         "https://sborg-heupper-dfasfo.s3.amazonaws.com",
         "https://releases.wagtail.org"
     )
