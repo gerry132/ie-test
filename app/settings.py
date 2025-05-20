@@ -462,7 +462,7 @@ if USE_S3 is True:
             "https://stats.ciboard.ie",
             "https://cdn.cookielaw.org",
             "https://cdn.rawgit.com",
-            "https://cdn.edgetier.com/dfa.js",
+            "https://cdn.edgetier.com",
             "'unsafe-inline'"
         )
     CSP_SCRIPT_SRC_ELEM = CSP_SCRIPT_SRC
@@ -488,7 +488,7 @@ if USE_S3 is True:
         "https://stats.ciboard.ie",
         "https://cdn.rawgit.com",
         "https://cdn.cookielaw.org",
-        "https://cdn.edgetier.com/dfa.js",
+        "https://cdn.edgetier.com",
         "https://releases.wagtail.org"
     )
     CSP_FONT_SRC = (
