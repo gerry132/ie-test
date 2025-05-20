@@ -463,6 +463,7 @@ if USE_S3 is True:
             "https://cdn.cookielaw.org",
             "https://cdn.rawgit.com",
             "https://cdn.edgetier.com",
+            "https://lightning.production.helium.servismatrixcdn.com/v2/latest/bundle-messenger.js",
             "'unsafe-inline'"
         )
     CSP_SCRIPT_SRC_ELEM = CSP_SCRIPT_SRC
@@ -489,6 +490,8 @@ if USE_S3 is True:
         "https://cdn.rawgit.com",
         "https://cdn.cookielaw.org",
         "https://cdn.edgetier.com",
+        "https://dfa.edgetier.com",
+        "https://lightning.production.helium.servismatrixcdn.com/v2/latest/servisbot-utils.js",
         "https://releases.wagtail.org"
     )
     CSP_FONT_SRC = (
