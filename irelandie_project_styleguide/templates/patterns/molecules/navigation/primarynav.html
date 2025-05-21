@@ -6,10 +6,10 @@
             {% with children=link.value.page.get_children.live.public.in_menu %}
                 <li
                     class="primary-nav__item {% if link.value.mega_menu %}primary-nav__item--is-parent{% endif %}"
-                    {% if link.value.mega_menu %}data-has-subnav role="menubar"{% endif %}
+                    {% if link.value.mega_menu %}data-has-subnav {% endif %}role="menubar"
                 >
                     {% include_block link with nav_type="primary-nav" %}
-                    <a class="sub-nav-hidden primary-nav__link" {% if link.value.mega_menu %}data-open-subnav{% endif %} href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}" aria-label="{% trans 'Nav link' %}" {% if link.value.mega_menu %}aria-haspopup="true" aria-expanded="false"{% endif %}>
+                    <a class="sub-nav-hidden primary-nav__link" {% if link.value.mega_menu %}data-open-subnav{% endif %} href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}" aria-label="{% trans 'Nav link' %}" {% if link.value.mega_menu %}aria-haspopup="true" aria-expanded="false" {% endif %}role="menuitem">
                         {% if link.value.title %}
                             {{ link.value.title }}
                         {% else %}
@@ -225,10 +225,10 @@
             {% with children=link.value.page.get_children.live.public.in_menu %}
                 <li
                     class="primary-nav__item {% if not customnav.links %}primary-nav__item_desk {% endif %}{% if link.value.mega_menu %}primary-nav__item--is-parent{% endif %}"
-                    {% if link.value.mega_menu %}data-has-subnav role="menubar"{% endif %}
+                    {% if link.value.mega_menu %}data-has-subnav {% endif %}role="menubar"
                 >
                     {% include_block link with nav_type="primary-nav" %}
-                    <a class="sub-nav-hidden primary-nav__link" aria-label="{% trans 'Nav link' %}" {% if link.value.mega_menu %}data-open-subnav{% endif %} href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}" {% if link.value.mega_menu %}aria-haspopup="true" aria-expanded="false"{% endif %}>
+                    <a class="sub-nav-hidden primary-nav__link" aria-label="{% trans 'Nav link' %}" {% if link.value.mega_menu %}data-open-subnav{% endif %} href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}" {% if link.value.mega_menu %}aria-haspopup="true" aria-expanded="false" {% endif %} role="menuitem">
                         {% if link.value.title %}
                             {{ link.value.title }}
                         {% else %}

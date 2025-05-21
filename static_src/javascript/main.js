@@ -157,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.addEventListener("DOMContentLoaded", function () {
+ if (typeof jarallax === "function") {
     jarallax(document.querySelectorAll(".jarallax"), {
         videoPlayOnlyVisible: false // Ensures video does NOT autoplay
     });
@@ -194,5 +195,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+    }
 });
 
