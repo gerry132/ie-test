@@ -11,8 +11,7 @@
         max-width: 400px;
     }
 
-    &:hover,
-    &:focus {
+    &:hover {
 
         @include media-query(medium) {
             #{$root}__logo-container {
@@ -20,6 +19,15 @@
             }
         }
     }
+
+     &:focus {
+            outline: 3px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
+     }
 
     .featured-blocks & {
         margin-bottom: $grid;

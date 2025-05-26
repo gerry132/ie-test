@@ -91,6 +91,13 @@
     text-align: center;
     background: #edece5;
     }
+
+    .travel-buttons-country:focus {
+        outline: 3px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow: 0 0 0 6px #000000;
+    }
+
     .input__label__text{
         font-weight: 400;
         font-size: 20px;
