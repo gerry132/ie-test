@@ -41,13 +41,25 @@
         font-style: normal;
         font-weight: 400;
         line-height: 26.58px; /* 132.9% */
+        margin: 0;
     }
     &__link_content {
         padding-top: 20px;
-        padding-bottom: 10px;
+        padding-bottom: 30px;
+    }
+    &__content_focusable {
         position: relative;
         display: flex;
         flex-direction: row;
         color: #292929;
+
+        &:focus {
+            outline: 3px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
+        }
     }
 }

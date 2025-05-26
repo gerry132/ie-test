@@ -62,6 +62,15 @@
             a {
                 margin-left: 0;
             }
+            a:focus {
+                outline: 2px #FFD740 solid;
+                outline-offset: 0;
+                box-shadow:
+                0 0 0 4px #000000,
+                -4px 6px 0 0 #000000,
+                4px 6px 0 0 #000000;
+        }
+
         }
 
         &:last-child {
@@ -94,6 +103,15 @@
 
         &:hover {
             cursor: pointer;
+        }
+
+        &:focus {
+            outline: 2px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
         }
 
         @include media-query(medium) {

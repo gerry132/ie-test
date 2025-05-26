@@ -41,7 +41,7 @@
     position:relative;
     margin-bottom:30px;
 }
-.slider-arrow{
+.slider-arrow {
     cursor: pointer;
     position: absolute;
     top: 50%;
@@ -55,6 +55,14 @@
     border: 1px solid #004D44;
     background: #ECE8E6;
 }
+.slider-arrow:focus {
+        outline: 2px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow:
+        0 0 0 4px #000000,
+        -4px 6px 0 0 #000000,
+        4px 6px 0 0 #000000;
+    }
 .slider-arrow.background--dark {
     color: #000;
     background: #A39161;

@@ -43,6 +43,14 @@
         display: block;
         overflow: hidden;
         max-width: 500px;
+        &:focus {
+        outline: 2px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow:
+        0 0 0 4px #000000,
+        -4px 6px 0 0 #000000,
+        4px 6px 0 0 #000000;
+    }
     }
     &_card__title{
         color: var(--d---colour, #101010);
@@ -99,11 +107,17 @@
     display: none;
  }
 
-.starter_button, .starter_button_1{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    cursor: pointer;
+.starter_button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  outline: none;
 }
+
+
+.starter_button:focus .focus-ring {
+  opacity: 1;
+}
+

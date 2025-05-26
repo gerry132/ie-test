@@ -135,17 +135,27 @@
     }
 
     &__video-toggle-double {
-        color: white;
         border: none;
-        padding: 10px 20px;
+        background: transparent;
         cursor: pointer;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 128px;
+        height: 128px;
+        transition: box-shadow 0.3s ease;
+        outline: none; /* remove default */
         background: transparent;
         font-size: 1rem;
-        margin-top: 20px;
         transition: background 0.3s;
+
+       &:focus {
+           outline: 3px solid #FFD740;
+          outline-offset: -6px; /* negative to pull inward */
+          box-shadow: 0 0 0 4px #000000;
+        }
     }
-
-
 }
 .gradient-overlay{
     &__double-feature-video {

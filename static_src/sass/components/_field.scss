@@ -78,4 +78,15 @@
         width: 100%;
         padding: 10px;
     }
+
+    input:not([type='checkbox']):not([type='radio']):not([type='submit']):focus,
+    textarea:focus,
+    select:focus,
+    input[type="checkbox"]:focus + label::before,
+    input[type=radio]:focus + label:before{
+        border: 3px #FFD740 solid;
+        outline: 3px #000000 solid;
+        outline-offset: 0;
+    }
+
 }

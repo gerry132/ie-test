@@ -25,18 +25,42 @@
   }
 }
 
+.searchBarSelect:focus, .searchBarNews:focus {
+          outline: 3px #FFD740 solid;
+          outline-offset: 0;
+          box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
+        }
+
 .searchButton {
-    border-radius: 1.625rem;
     color: white;
     padding-left: 20px;
     padding-right: 20px;
-    border: #004D46;
-    background-color: #004D46;
+    border-radius: 23.5px;
+    border: 0px solid #082F2A;
+    background: #082F2A;
     height: 80%;
     @media only screen and (max-width: 415px) {
       padding-left: 10px;
       padding-right: 10px;
   }
+}
+
+.searchButton:hover, .searchButton:focus:hover {
+    cursor: pointer;
+    background: #004D44;
+ }
+
+.searchButton:active, .searchButton:focus:active {
+    background-color: #008931;
+ }
+
+.searchButton:focus {
+    outline: 3px #FFD740 solid;
+    outline-offset: 0;
+    box-shadow: 0 0 0 6px #000000;
 }
 
 #searchQueryInput {
@@ -52,6 +76,11 @@
       padding: 0%;
   }
 }
+#searchQueryInput:focus {
+    border: 3px #FFD740 solid;
+    outline: 3px #000000 solid;
+    outline-offset: 0;
+    }
 
 .select-contain {
     padding-right: 10px;
