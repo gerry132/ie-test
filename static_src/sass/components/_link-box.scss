@@ -1,6 +1,15 @@
 .link-box {
     $root: &;
 
+    &:focus-within .link-box__heading-text {
+          outline: 3px #FFD740 solid;
+          outline-offset: 0;
+          box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
+        }
+
     &__main{
     @media only screen and (min-width: 699px) {
         margin-left: auto;
@@ -28,7 +37,7 @@
         margin-right: 20px;
     }
 
-    &__heading{
+    &__heading {
         font-family: 'Inter';
         font-style: normal;
         font-weight: 700;
@@ -36,7 +45,11 @@
         line-height: 29px;
         text-decoration-line: underline;
 
-    }
+        &-text {
+          display: inline-block;
+          text-decoration-line: underline;
+        }
+      }
     &__heading1{
         margin-left: auto;
         margin-right: auto;

@@ -155,7 +155,7 @@
                             {% if page.related_content %}
                                 <h4 class="header--related-content">Related content</h4>
                                 {% for p in page.related_content %}
-                                                <a href="{% if p.value.page.url %}{{p.value.page.url}}{% else %}{{p.value.url}}{% endif %}" aria-label="{{p.value.title}}"><h2 class="toc-contents">{{p.value.title}}</h2></a>
+                                                <a href="{% if p.value.page.url %}{{p.value.page.url}}{% else %}{{p.value.url}}{% endif %}" aria-label="{{p.value.title}}"><h2 tabindex="0" class="toc-contents">{{p.value.title}}</h2></a>
                                 {% endfor %}
                             {% endif %}
                         </div>

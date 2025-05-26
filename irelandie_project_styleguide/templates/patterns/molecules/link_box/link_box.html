@@ -2,7 +2,9 @@
 <a href="{{ link_url }}" aria-label="{% trans 'link_box' %}" class="link-box">
     <div class="link-box__content">
         <div class="link-box__container">
-            <h3 class="link-box__heading heading--3">{{ value.heading }}</h3>
+            <h3 class="link-box__heading heading--3" tabindex="0">
+                <span class="link-box__heading-text">{{ value.heading }}</span>
+            </h3>
            <div style="max-width:unset;" class="rich-text">
                 {{ value.introduction|richtext }}
             </div>

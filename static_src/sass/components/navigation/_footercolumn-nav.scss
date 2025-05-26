@@ -31,6 +31,14 @@
             color: lighten($color--secondary, 20%);
             border-bottom: 1px solid $color--secondary;
         }
+        &:focus {
+             outline: 3px solid #0028BF;
+          outline-offset: 0;
+          box-shadow:
+            0 0 0 4px #FFFFFF,
+            -4px 6px 0 0 #FFFFFF,
+            4px 6px 0 0 #FFFFFF;
+        }
 
         @include media-query(medium) {
             padding: 5px 0 0;

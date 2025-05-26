@@ -100,7 +100,7 @@ getNewsArticles();
         <div id="right">
             <div class="related-content">
                 <h3 class="intro__title">{% translate "Select year:" %}</h3>
-                <select  aria-label="{% trans 'Select year' %}"class="searchBarNews" id="news-list-mobile" onchange="getNewsArticles(this.value); " style="width: 100%;">
+                <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list-mobile" onchange="getNewsArticles(this.value); " style="width: 100%;">
                     <option value="all"><p>{% trans "All" context "custom-context" %}</p></option>
                     {% for p in page.get_years %}
                     <option value="{{p}}">{{p}}</option>

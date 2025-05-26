@@ -4,6 +4,15 @@
     font-size: 24px;
 }
 
+.mega_menu_dropbtn:focus, .grid_item_sub_links:focus {
+        outline: 2px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow:
+        0 0 0 4px #000000,
+        -4px 6px 0 0 #000000,
+        4px 6px 0 0 #000000;
+    }
+
     .mega_menu_nav__item_sub_links {
         width: 100%;
         text-align: left;
@@ -35,7 +44,7 @@
             flex-direction: column;
         }
     }
-    .grid_item_sub_links{
+    .grid_item_sub_links {
         color: var(--d---colour, #101010);
         font-family: Lato;
         font-size: 20px;

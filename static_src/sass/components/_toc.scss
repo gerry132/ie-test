@@ -101,6 +101,14 @@
     color: #1D70B8;
 
 }
+.back_to_top:focus, .toc-contents:focus {
+        outline: 2px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow:
+        0 0 0 4px #000000,
+        -4px 6px 0 0 #000000,
+        4px 6px 0 0 #000000;
+    }
 
 #wrapper {
     display: grid;

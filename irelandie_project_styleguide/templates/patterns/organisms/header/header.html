@@ -55,33 +55,33 @@
                 {% if custom_header_settings.site_settings.site_logo %}
                     {% if custom_header_settings.site_settings.site_logo_alt %}
                         {% if custom_header.links %}
-                            {% image custom_header_settings.site_settings.mobile_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
+                            {% image custom_header_settings.site_settings.mobile_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt tabindex="0" %}
                         {% else %}
                             {% if custom_header_settings.site_settings.mobile_logo and custom_header_settings.site_settings.site_logo %}
-                                    {% image custom_header_settings.site_settings.site_logo original class="header__logo desktop__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
-                                    {% image custom_header_settings.site_settings.mobile_logo original class="header__logo mobile__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
+                                    {% image custom_header_settings.site_settings.site_logo original class="header__logo desktop__logo" alt=custom_header_settings.site_settings.site_logo_alt tabindex="0" %}
+                                    {% image custom_header_settings.site_settings.mobile_logo original class="header__logo mobile__logo" alt=custom_header_settings.site_settings.site_logo_alt tabindex="0" %}
                             {% else %}
-                                    {% image custom_header_settings.site_settings.site_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
+                                    {% image custom_header_settings.site_settings.site_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt tabindex="0" %}
                             {% endif %}
 
                         {% endif %}
                     {% else %}
                         {% if custom_header.links %}
-                            {% image custom_header_settings.site_settings.mobile_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo.alt_default %}
+                            {% image custom_header_settings.site_settings.mobile_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo.alt_default tabindex="0" %}
                         {% else %}
                             {% if custom_header_settings.site_settings.mobile_logo and custom_header_settings.site_settings.site_logo %}
-                                    {% image custom_header_settings.site_settings.site_logo original class="header__logo desktop__logo" alt=custom_header_settings.site_settings.site_logo_alt_default %}
-                                    {% image custom_header_settings.site_settings.mobile_logo original class="header__logo mobile__logo" alt=custom_header_settings.site_settings.site_logo_alt_default %}
+                                    {% image custom_header_settings.site_settings.site_logo original class="header__logo desktop__logo" tabindex="0" alt=custom_header_settings.site_settings.site_logo_alt_default %}
+                                    {% image custom_header_settings.site_settings.mobile_logo original class="header__logo mobile__logo" tabindex="0" alt=custom_header_settings.site_settings.site_logo_alt_default %}
                             {% else %}
-                                    {% image custom_header_settings.site_settings.site_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt_default %}
+                                    {% image custom_header_settings.site_settings.site_logo original class="header__logo" tabindex="0" alt=custom_header_settings.site_settings.site_logo_alt_default %}
                             {% endif %}
                         {% endif %}
                     {% endif %}
                 {% else %}
                     {% if custom_header.links %}
-                        {% image custom_header_settings.site_settings.mobile_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
+                        {% image custom_header_settings.site_settings.mobile_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt tabindex="0" %}
                     {% endif %}
-                    {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
+                    {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" tabindex="0" %}
                     {% endif %}
                 </a>
 
@@ -153,11 +153,11 @@
                     <!-- End of the locale selector -->
                     {% endif %}
                     <button class="header__search-toggle" role="search" aria-label="{% trans 'Search' %}" data-toggle-search>
-                        <svg class="header__search-icon" aria-hidden="true">
+                        <svg tabindex="0" role="button" aria-label="Start" class="header__search-icon" aria-hidden="true">
                             <use href="#magnifying-glass"></use>
                         </svg>
 
-                        <svg class="header__search-icon header__search-icon--close" aria-hidden="true">
+                        <svg tabindex="0" role="button" aria-label="Start" class="header__search-icon header__search-icon--close" aria-hidden="true">
                             <use xlink:href="#close"></use>
                         </svg>
                     </button>
@@ -212,25 +212,25 @@
                         {% endfor %}
                     {% endif %}
                     {% if custom_header_settings.site_settings.site_logo and not custom_header.logo %}
-                        {% image custom_header_settings.site_settings.site_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
+                        {% image custom_header_settings.site_settings.site_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt tabindex="0" %}
                     {% elif custom_header.logo %}
                         {% if custom_header.logo.logo_alt %}
                             {% if custom_header.mobile_logo and custom_header.logo %}
-                                {% image custom_header.logo original class="header__logo desktop__logo" alt=custom_header.logo_alt %}
-                                {% image custom_header.mobile_logo original class="header__logo mobile__logo" alt=custom_header.logo_alt %}
+                                {% image custom_header.logo original class="header__logo desktop__logo" alt=custom_header.logo_alt tabindex="0" %}
+                                {% image custom_header.mobile_logo original class="header__logo mobile__logo" alt=custom_header.logo_alt tabindex="0" %}
                             {% else %}
-                                {% image custom_header.logo original class="header__logo" alt=custom_header.logo_alt %}
+                                {% image custom_header.logo original class="header__logo" alt=custom_header.logo_alt tabindex="0" %}
                             {% endif %}
                         {% else %}
                             {% if custom_header.mobile_logo and custom_header.logo %}
-                                {% image custom_header.logo original class="header__logo desktop__logo" alt=custom_header.logo.alt_default %}
-                                {% image custom_header.mobile_logo original class="header__logo mobile__logo" alt=custom_header.logo.alt_default %}
+                                {% image custom_header.logo original class="header__logo desktop__logo" alt=custom_header.logo.alt_default tabindex="0" %}
+                                {% image custom_header.mobile_logo original class="header__logo mobile__logo" alt=custom_header.logo.alt_default tabindex="0" %}
                             {% else %}
-                                {% image custom_header.logo original class="header__logo" alt=custom_header.logo.alt_default %}
+                                {% image custom_header.logo original class="header__logo" alt=custom_header.logo.alt_default tabindex="0" %}
                             {% endif %}
                         {% endif %}
                     {% else %}
-                            {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
+                            {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" tabindex="0" %}
                     {% endif %}
                     </a>
 
@@ -286,11 +286,11 @@
                         <!-- End of the locale selector -->
                         {% endif %}
                         <button class="header__search-toggle header__search-toggle--mobile" role="search" aria-label="{% trans 'Search' %}" data-toggle-search>
-                            <svg class="header__search-icon" aria-hidden="true">
+                            <svg tabindex="0" role="button" aria-label="Start" class="header__search-icon" aria-hidden="true">
                                 <use href="#magnifying-glass"></use>
                             </svg>
 
-                            <svg class="header__search-icon header__search-icon--close" aria-hidden="true">
+                            <svg tabindex="0" role="button" aria-label="Start" class="header__search-icon header__search-icon--close" aria-hidden="true">
                                 <use xlink:href="#close"></use>
                             </svg>
                         </button>

@@ -51,6 +51,15 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
+        &:focus {
+            outline: 2px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
+        }
     }
 
     &__title {
@@ -63,6 +72,8 @@
         #{$root}:hover & {
             text-decoration: underline;
         }
+
+
     }
 
     &__summary {
@@ -130,6 +141,15 @@
     font-size: 18px;
   }
 
+  .btn:focus {
+        outline: 2px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow:
+        0 0 0 4px #000000,
+        -4px 6px 0 0 #000000,
+        4px 6px 0 0 #000000;
+    }
+
   .btn:active {
     transform: scale(1.1);
   }
@@ -146,3 +166,13 @@
     right: -3%;
     background-image: url('../images/cssBackgrounds/navigation_right.png');
   }
+
+.story-link:focus .story-link__title,
+.story-link:focus-visible .story-link__title {
+    outline: 2px solid #FFD740;
+    outline-offset: 0;
+    box-shadow:
+        0 0 0 4px #000000,
+        -4px 6px 0 0 #000000,
+        4px 6px 0 0 #000000;
+}

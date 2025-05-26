@@ -5,7 +5,9 @@
 <a href="{{ value.url }}" aria-label="{% trans 'Link box' %}" class="link-box">
     <div class="link-box__content">
         <div class="link-box__container">
-            <h3 class="link-box__heading heading--3">{{ value.title }}</h3>
+            <h3 class="link-box__heading heading--3" tabindex="0">
+                <span class="link-box__heading-text">{{ value.title }}</span>
+            </h3>
             {% format_date value.publication_date %}
            <div style="max-width:unset;" class="rich-text">
                 {{ value.subtitle|richtext }}

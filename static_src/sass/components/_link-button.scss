@@ -1,11 +1,28 @@
 .link-button {
     $root: &;
     display: block;
-    border-radius: $border-radius;
     box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
     overflow: hidden;
-    background-color: #004D46;
+    border-radius: 23.5px;
+    border: 0px solid #082F2A;
+    background: #082F2A;
     position: relative;
+
+    &:hover, &:focus:hover {
+        cursor: pointer;
+        background: #004D44;
+        color: $color--white;
+    }
+
+    &:active, &:focus:active {
+        background-color: #008931;
+    }
+
+    &:focus {
+        outline: 3px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow: 0 0 0 6px #000000;
+    }
 
 
     @include media-query(medium) {
@@ -62,11 +79,26 @@
     &__button{
         width: 253px;
         height: 41px;
-        border: 1px solid #323B4B;
-        border-radius: 10px;
-        background-color: transparent;
-        cursor: pointer;
+        color: white;
+        border-radius: 23.5px;
+        border: 0px solid #082F2A;
+        background: #082F2A;
     }
+
+   &__button:hover, &__button:focus:hover {
+        background: #004D44;
+     }
+
+   &__button_text:active, &__button:focus:active {
+        background-color: #008931;
+   }
+
+    &__button:focus {
+        outline: 3px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow: 0 0 0 6px #000000;
+    }
+
     &__container{
         padding: 40px 0;
         text-align: center;

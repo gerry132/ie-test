@@ -21,6 +21,15 @@
     font-weight: 400;
     }
 
+    .embassy_accordion__title:focus {
+            outline: 2px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
+        }
+
     .embassy_accordion__container {
         width: 100%;
         min-width: 230px;
