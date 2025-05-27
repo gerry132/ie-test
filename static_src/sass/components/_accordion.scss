@@ -35,11 +35,14 @@
             cursor: pointer;
         }
 
-        /* stylelint-disable */
-        &:focus {
-            outline: 0; // focus style implemented directly on text instead
+        &:focus-within .accordion__title {
+            outline: 2px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
         }
-        /* stylelint-enable */
     }
 
     &__header {
@@ -64,18 +67,9 @@
         font-size: 22px;
         line-height: 26px;
         letter-spacing: -1.35px;
-        margin: 0;
-        padding: 0 20px 0 40px;
+        margin: 0 20px 0 40px;
         font-weight: 400;
 
-        &:focus {
-            outline: 2px #FFD740 solid;
-            outline-offset: 0;
-            box-shadow:
-            0 0 0 4px #000000,
-            -4px 6px 0 0 #000000,
-            4px 6px 0 0 #000000;
-        }
     }
     &__btn_content{
         width: 40px;

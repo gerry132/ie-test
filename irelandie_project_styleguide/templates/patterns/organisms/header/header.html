@@ -51,7 +51,7 @@
                 The default is the app provided SVG
                 {% endcomment %}
 
-                <a href="/{{ language_code }}/" role="link" aria-label="Ireland.ie" class="header__logo-wrapper">
+                <a href="/{{ language_code }}/" role="link" aria-label="Ireland.ie" class="header__logo-wrapper" tabindex="-1">
                 {% if custom_header_settings.site_settings.site_logo %}
                     {% if custom_header_settings.site_settings.site_logo_alt %}
                         {% if custom_header.links %}
@@ -152,7 +152,7 @@
                         </div>
                     <!-- End of the locale selector -->
                     {% endif %}
-                    <button class="header__search-toggle" role="search" aria-label="{% trans 'Search' %}" data-toggle-search>
+                    <button tabindex="-1" class="header__search-toggle" role="search" aria-label="{% trans 'Search' %}" data-toggle-search>
                         <svg tabindex="0" role="button" aria-label="Start" class="header__search-icon" aria-hidden="true">
                             <use href="#magnifying-glass"></use>
                         </svg>
@@ -205,10 +205,10 @@
                 <div class="header__container">
 
                     {% if custom_header.url %}
-                        <a href="{{ custom_header.url }}" role="link" aria-label="Ireland.ie" class="header__logo-wrapper">
+                        <a href="{{ custom_header.url }}" role="link" aria-label="Ireland.ie" class="header__logo-wrapper" tabindex="-1">
                     {% elif custom_header.link_page %}
                         {% for block in custom_header.link_page %}
-                            <a href="{{block.value.page.url}}" role="link" aria-label="Ireland.ie" class="header__logo-wrapper">
+                            <a href="{{block.value.page.url}}" role="link" aria-label="Ireland.ie" class="header__logo-wrapper" tabindex="-1">
                         {% endfor %}
                     {% endif %}
                     {% if custom_header_settings.site_settings.site_logo and not custom_header.logo %}
@@ -235,7 +235,7 @@
                     </a>
 
                     <div class="header__menus header__menus--desktop">
-                        <nav class="custom-nav" aria-label="Main Navigation" role="navigation" tabindex="0">
+                        <nav class="custom-nav" aria-label="Main Navigation" role="navigation">
                             <ul class="custom-nav__links" role="menubar">
                                 {% for link in custom_header.links %}
                                 <li class="custom-nav__item" role="none">
@@ -247,7 +247,7 @@
                     </div>
 
                     <div class="header__menus header__menus--mobile" style="{% if settings.irelandie_navigation.SiteSettings.website_header_strapline %}top:130px; {% endif %}" data-mobile-menu>
-                        <nav class="custom-nav" aria-label="Main Navigation" role="navigation" tabindex="0" >
+                        <nav class="custom-nav" aria-label="Main Navigation" role="navigation" >
                             <ul class="custom-nav__links" role="menubar">
                                 {% for link in custom_header.links %}
                                 <li class="custom-nav__item" role="none">
@@ -285,7 +285,7 @@
                             </div>
                         <!-- End of the locale selector -->
                         {% endif %}
-                        <button class="header__search-toggle header__search-toggle--mobile" role="search" aria-label="{% trans 'Search' %}" data-toggle-search>
+                        <button tabindex="-1" class="header__search-toggle header__search-toggle--mobile" role="search" aria-label="{% trans 'Search' %}" data-toggle-search>
                             <svg tabindex="0" role="button" aria-label="Start" class="header__search-icon" aria-hidden="true">
                                 <use href="#magnifying-glass"></use>
                             </svg>

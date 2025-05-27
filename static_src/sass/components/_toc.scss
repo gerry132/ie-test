@@ -19,8 +19,25 @@
     font-style: normal;
     font-size: 20px;
     line-height: 22px;
+    color: #082F2A;
     text-decoration: underline;
+    text-decoration-color: #008931;
+    text-decoration-thickness: 0.065rem;
+    text-underline-offset: 0.19em;
     font-weight: 500;
+    padding-bottom: 5px;
+
+}
+.toc-contents:hover, .toc-contents:focus:hover {
+    color: #004d44;
+    text-decoration-color: #004d44;
+    text-decoration-thickness: 0.2rem;
+}
+.toc-contents:active, .toc-contents:focus:active {
+      color: #008931;
+      text-decoration: underline;
+      text-decoration-color: #008931;
+      text-decoration-thickness: 0.3rem;
 
 }
 .toc-contents-number{
