@@ -53,7 +53,11 @@
     }
     }
     &_card__title{
-        color: var(--d---colour, #101010);
+        color: #082F2A;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.065rem;
+        text-underline-offset: 0.19em;
         /* H4 */
         font-family: Inter;
         font-size: 24px;
@@ -61,9 +65,17 @@
         font-weight: 700;
         line-height: normal;
 
-        &:hover {
-            text-decoration: underline;
+        &:hover, &:focus:hover {
+            color: #004d44;
+            text-decoration-color: #004d44;
+            text-decoration-thickness: 0.2rem;
         }
+        &:active, &:focus:active {
+            color: #008931;
+            text-decoration: underline;
+            text-decoration-color: #008931;
+            text-decoration-thickness: 0.3rem;
+            }
     }
     &_card__summary{
         color: var(--d---colour, #101010);

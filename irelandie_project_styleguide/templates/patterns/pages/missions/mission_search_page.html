@@ -29,8 +29,8 @@
                                             aria-label="{% trans 'Region Expand' %}"
                                             aria-controls="region-list-{{ forloop.counter }}"
                                             aria-expanded="false"
-                                            role="button">
-                                            <span class="accordion__title" tabindex="0">
+                                            role="button" tabindex="0">
+                                            <span class="accordion__title">
                                                 {{ region }}
                                             </span>
                                             {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="accordion__icon" alt="expand" %}

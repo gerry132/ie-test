@@ -27,13 +27,13 @@ Responsive hero images
         <div class="tag__news">
         <ul class="tag__slide">
             {% for tags_category, tag_links in tagging_links %}
-                <li class="tag__slide-item" tabindex="0"><a href="{{ tag_links }}" aria-label="{% trans 'Tag label' %}">{{ tags_category.specific.tag_label }}</a></li>
+                <li class="tag__slide-item" tabindex="0"><a tabindex="-1" href="{{ tag_links }}" aria-label="{% trans 'Tag label' %}">{{ tags_category.specific.tag_label }}</a></li>
             {% endfor %}
             {% for tags_category in tags_no_links %}
                 <li class="tag__slide-item" tabindex="0">{{ tags_category.specific.tag_label }}</li>
             {% endfor %}
             {% for tags_destination, tag_links in destination_tag_links %}
-                <li class="tag__slide-item" tabindex="0"><a href="{{ tag_links.url }}" aria-label="{% trans 'Tag label' %}">{{ tags_destination }}</a></li>
+                <li class="tag__slide-item" tabindex="0"><a tabindex="-1" href="{{ tag_links.url }}" aria-label="{% trans 'Tag label' %}">{{ tags_destination }}</a></li>
             {% endfor %}
         </ul>
         </div>

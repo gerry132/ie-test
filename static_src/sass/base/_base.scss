@@ -48,13 +48,16 @@ textarea {
 }
 
 a {
-    color: $color--primary;
+    color: #082F2A;
     text-decoration: none;
     transition: color $transition;
 
-    &:hover {
-        color: darken($color--primary, 20%);
+    &:hover, &:focus:hover {
+        color: #004d44;
         cursor: pointer;
+    }
+    &:active, &:focus:active {
+        color: #008931;
     }
 }
 

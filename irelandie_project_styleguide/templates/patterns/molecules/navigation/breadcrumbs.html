@@ -13,7 +13,7 @@
                                 <a class="breadcrumbs-nav__link" href="{% pageurl ancestor_page %}" aria-label="{% trans 'Breadcrumbs title' %}">{{ ancestor_page.title }}</a>
 
                             </li>
-                           <li><a href="{% pageurl ancestor_page %}" role="link" aria-label="{% trans 'arrow-next' %}" class="arrow-next"></a></li>
+                           <li><div aria-label="{% trans 'arrow-next' %}" class="arrow-next"></div></li>
                         {% else %}
                             <li class="breadcrumbs-nav__item">
                                 <a class="nav__link nav__link--breadcrumb" style="padding-right: 5px;" href="/" aria-label="{% trans 'Nav link' %}">
@@ -21,7 +21,7 @@
                                 </a>
 
                             </li>
-                           <li><a href="/" role="link" aria-label="{% trans 'arrow-next' %}" class="arrow-next"></a></li>
+                           <li><div aria-label="{% trans 'arrow-next' %}" class="arrow-next"></div></li>
                         {% endif %}
                     {% endif %}
 

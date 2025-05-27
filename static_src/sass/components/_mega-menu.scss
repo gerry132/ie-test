@@ -35,6 +35,14 @@
     justify-content: space-between;
     max-width: 500px;
     }
+    .sub_links__button:focus-within .grid_item {
+            outline: 3px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
+        }
     .mega_menu_sub_links.is-open {
         .sub_links__icon {
             transform: rotate(180deg);
@@ -45,13 +53,16 @@
         }
     }
     .grid_item_sub_links {
-        color: var(--d---colour, #101010);
+        color: #082F2A;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.065rem;
+        text-underline-offset: 0.19em;
         font-family: Lato;
         font-size: 20px;
         font-style: normal;
         font-weight: 400;
         line-height: 34.58px; /* 172.9% */
-        text-decoration-line: underline;
     }
 
 .grid_item .underline:hover {
@@ -61,17 +72,25 @@
 }
 
 .grid_item {
-  color: #000000;
+    color: #082F2A;
+    text-decoration: underline;
+    text-decoration-color: #008931;
+    text-decoration-thickness: 0.065rem;
+    text-underline-offset: 0.19em;
     font-weight: 700;
     font-size: 24px;
 }
-.grid_item:focus {
-            outline: 3px #FFD740 solid;
-            outline-offset: 0;
-            box-shadow:
-            0 0 0 4px #000000,
-            -4px 6px 0 0 #000000,
-            4px 6px 0 0 #000000;
+.sub_links__button:hover .grid_item, .sub_links__button:focus:hover .grid_item, .grid_item_sub_links:hover, .grid_item_sub_links:focus:hover {
+            color: #004d44;
+            text-decoration-color: #004d44;
+            text-decoration-thickness: 0.2rem;
+        }
+
+        .sub_links__button:active .grid_item, .sub_links__button:focus:active .grid_item, .grid_item_sub_links:active, .grid_item_sub_links:focus:active {
+            color: #008931;
+            text-decoration: underline;
+            text-decoration-color: #008931;
+            text-decoration-thickness: 0.3rem;
         }
 
 .mega_menu_dropdown-content {

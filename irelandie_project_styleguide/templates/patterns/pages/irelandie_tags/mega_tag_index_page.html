@@ -25,7 +25,7 @@
                 <div class="tag__line"></div>
                 {% for card in stories %}
                 <div class="tag__link-box" >
-                    <a href="{{ card.url }}" aria-label="{{card.alt_text}}">
+                    <a href="{{ card.url }}" aria-label="{{card.alt_text}}" class="tag__link-box_image">
                     {% if card.hero_image %}
                         {% if card.alt_text %}
                             {% image card.hero_image fill-500x300 class="tag__image" alt=card.alt_text %}
@@ -44,7 +44,7 @@
                     </a>
                     <div class="tag__content">
                         <div class="link-box__container">
-                            <a href="{{ card.url }}" aria-label="{{ card.title }}">
+                            <a href="{{ card.url }}" aria-label="{{ card.title }}" tabindex="-1">
                                 <h3 class="link-box__heading heading--3" tabindex="0">
                                      <span class="link-box__heading-text">{{ card.title }}</span>
                                 </h3>
@@ -55,7 +55,7 @@
                             <ul class="tag__slide">
                                             {% compare_tags tags card.related_tags self as tagging_links %}
                                                         {% for tag, url in tagging_links.0 %}
-                                                            <li class="tag__slide-item" tabindex="0"><a aria-label="{% trans 'Tag label' %}" href="{{ url }}">{{ tag }}</a></li>
+                                                            <li class="tag__slide-item" tabindex="0"><a tabindex="-1" aria-label="{% trans 'Tag label' %}" href="{{ url }}">{{ tag }}</a></li>
                                                         {% endfor %}
 
                                                         {% for tag_page in tagging_links.1 %}
@@ -64,7 +64,7 @@
 
                                                 {% get_destination_tag_links card.related_destination_tags as tag_destination_links %}
                                                 {% for tags_destination, tag_links in tag_destination_links|slice:":1" %}
-                                                       <li class="tag__slide-item" tabindex="0"><a aria-label="{% trans 'Tag label' %}" href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
+                                                       <li class="tag__slide-item" tabindex="0"><a tabindex="-1" aria-label="{% trans 'Tag label' %}" href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
                                                 {% endfor %}
                                         </ul>
                         </div>
