@@ -304,7 +304,7 @@
         }
     }
 }
-.twitter-embed_link{
+.twitter-embed_link {
     color: #004D44;
     font-family: Lato;
     font-size: 20px;
@@ -315,6 +315,15 @@
     padding-bottom: 20px;
 
 }
+.twitter-embed_link:focus {
+            outline: 3px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
+        }
+
 .twitter-hidden-on-mobile{
     @include media-query(max-medium){
         display: none;

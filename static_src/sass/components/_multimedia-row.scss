@@ -21,6 +21,11 @@
             cursor: pointer;
             transform: translate(-50%,-50%) scale(1.1);
         }
+    &:focus {
+        outline: 3px solid #ffd740;
+        outline-offset: -2px;
+        box-shadow: 0 0 0 4px #000;
+        }
     }
     &__video-control-button-icon {
         color: $color--white;
