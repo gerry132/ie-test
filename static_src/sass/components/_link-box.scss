@@ -1,5 +1,7 @@
 .link-box {
     $root: &;
+     padding: 20px 0;
+     display: block;
 
     &:focus-within .link-box__content {
           outline: 3px #FFD740 solid;
@@ -36,7 +38,6 @@
     }
     }
     &__content{
-        padding: 20px 0px;
         position: relative;
         display: flex;
         flex-direction: row;

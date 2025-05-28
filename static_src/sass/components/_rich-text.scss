@@ -22,16 +22,19 @@
     }
     a.button_text:hover, a.button_text:focus:hover {
         background: #004D44;
+        color: white;
      }
 
     a.button_text:active, a.button_text:focus:active {
         background-color: #008931;
+        color: white;
     }
 
     a.button_text:focus {
         outline: 3px #FFD740 solid;
         outline-offset: 0;
         box-shadow: 0 0 0 6px #000000;
+        color: white;
     }
 
     a {
