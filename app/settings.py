@@ -72,7 +72,6 @@ INSTALLED_APPS = [
     #
     "wagtail_cloudfront_invalidate",
     "app",
-    "csp",
     "robots_txt",
     "health_check",
     "accview_non_admin",
@@ -155,7 +154,6 @@ if DEBUG_TOOLBAR is True:
 
 MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "csp.middleware.CSPMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
