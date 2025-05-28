@@ -119,7 +119,7 @@
     text-underline-offset: 2px;
     font-size: 20px;
 }
-.a-z-listing__alphabet_letters > li a:focus, .country-listing a:focus {
+.a-z-listing__alphabet_letters > li a:focus, .country-listing a:focus, .form--contain:focus {
     outline: 2px #FFD740 solid;
     outline-offset: 0;
     box-shadow:
@@ -208,8 +208,7 @@
 }
 
 .form--contain {
-    padding-bottom: 26px;
-    display: flex;
+    display: inline-flex;
     cursor: pointer;
 }
 

@@ -37,32 +37,53 @@
 
     }
 
-    &__link {
+    &__title {
         @include font-size(l);
-        color: #000;
+        color: #082F2A;
         display: flex;
         line-height: 1.75;
         justify-content: flex-start;
         align-items: center;
-        border-bottom: 1px solid transparent;
         padding: 10px 30px;
-        width: 100%;
+        width: max-content;
+        transition: background-color transition;
+        }
+
+    &__link {
+        @include font-size(l);
+        color: #082F2A;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.065rem;
+        text-underline-offset: 0.19em;
+        display: flex;
+        line-height: 1.75;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 10px 30px;
+        width: max-content;
         transition: background-color transition;
 
         &:hover {
-            cursor: pointer;
-            color: #000;
-            background-color: rgba($color--white, 0.1);
+            color: #004d44;
+            text-decoration-color: #004d44;
+            text-decoration-thickness: 0.2rem;
+        }
+        &:focus {
+            outline: 2px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
+        }
+        &:active {
+            color: #008931;
+            text-decoration: underline;
+            text-decoration-color: #008931;
+            text-decoration-thickness: 0.3rem;
         }
 
-        @include media-query(large) {
-            color: #000;
-
-            &:hover {
-                color: lighten(#000, 20%);
-                border-bottom: 1px solid $color--secondary;
-            }
-        }
     }
 
     &__icon {

@@ -8,7 +8,7 @@
             <h3 class="link-box__heading heading--3">
                 <span class="link-box__heading-text">{{ value.title }}</span>
             </h3>
-            {% format_date value.publication_date %}
+            <p>{% format_date value.publication_date %}</p>
            <div style="max-width:unset;" class="rich-text">
                 {{ value.subtitle|richtext }}
             </div>
