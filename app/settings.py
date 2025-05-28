@@ -443,7 +443,6 @@ if USE_S3 is True:
 
     AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STATIC_BUCKET_NAME", "")
     AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
-
     AWS_S3_REGION_NAME = "eu-west-1"
     CSP_DEFAULT_SRC = ("'self'",)
     CSP_INCLUDE_NONCE_IN = [
