@@ -72,7 +72,6 @@ INSTALLED_APPS = [
     #
     "wagtail_cloudfront_invalidate",
     "app",
-    "csp",
     "robots_txt",
     "health_check",
     "accview_non_admin",
@@ -155,7 +154,6 @@ if DEBUG_TOOLBAR is True:
 
 MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "csp.middleware.CSPMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -445,69 +443,7 @@ if USE_S3 is True:
     AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
 
     AWS_S3_REGION_NAME = "eu-west-1"
-    CSP_DEFAULT_SRC = ("'self'",)
-    CSP_INCLUDE_NONCE_IN = [
-        'script-src',
-        'script-src-elem'
-    ]
-    CSP_SCRIPT_SRC = (
-            "'self'",
-            f"https://{AWS_S3_CUSTOM_DOMAIN}",
-            "https://unpkg.com",
-            "https://cdn.jsdelivr.net",
-            "https://cdnjs.cloudflare.com",
-            "https://www.googletagmanager.com",
-            "https://www.google-analytics.com",
-            "https://ajax.googleapis.com",
-            "https://stats.ciboard.ie",
-            "https://cdn.cookielaw.org",
-            "https://cdn.rawgit.com",
-            "'unsafe-inline'"
-        )
-    CSP_SCRIPT_SRC_ELEM = CSP_SCRIPT_SRC
-    CSP_STYLE_SRC = (
-            "'self'",
-            f"https://{AWS_S3_CUSTOM_DOMAIN}",
-            "https://cdn.jsdelivr.net",
-            "https://cdnjs.cloudflare.com",
-            "https://fonts.googleapis.com",
-            "'unsafe-inline'"
-        )
-
-    CSP_IMG_SRC = ("'self'",
-                   "data:",
-                   f"https://{AWS_S3_CUSTOM_DOMAIN}",
-                   "https://www.google-analytics.com",
-                   "https://www.gravatar.com")
-    CSP_CONNECT_SRC = (
-        "'self'",
-        "https://www.google-analytics.com",
-        "https://region1.google-analytics.com",
-        "https://www.googletagmanager.com",
-        "https://stats.ciboard.ie",
-        "https://cdn.rawgit.com",
-        "https://cdn.cookielaw.org",
-        "https://releases.wagtail.org"
-    )
-    CSP_FONT_SRC = (
-            "'self'",
-            "https://fonts.googleapis.com",
-            "https://fonts.gstatic.com",
-            "https://cdnjs.cloudflare.com",
-            f"https://{AWS_S3_CUSTOM_DOMAIN}"
-        )
-
-    CSP_FRAME_SRC = (
-            "'self'",
-            "https://youtube.com",
-            "https://www.youtube.com",
-            "https://www.youtube-nocookie.com",
-            "https://player.vimeo.com",
-            "https://www.google.com"
-        )
-
-    CSP_MEDIA_SRC = ("'self'", f"https://{AWS_S3_CUSTOM_DOMAIN}")
-
+    
     # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
 else:
     None
