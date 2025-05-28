@@ -25,6 +25,7 @@
   gtag('config', 'G-8SKCHMSHZP');
 </script>
 
+    <!-- End Google Tag Manager -->
     {% if GOOGLE_TAG_MANAGER_ID %}
         {# To enable GTM code you need to specify GOOGLE_TAG_MANAGER_ID in Django settings #}
         <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -32,14 +33,7 @@
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','{{ GOOGLE_TAG_MANAGER_ID|escapejs }}');</script>
-    {% else %}
-        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-TLNFN8D');</script>
     {% endif %}
-<!-- End Google Tag Manager -->
 
     {% comment %}
         Twitter summary card - see https://dev.twitter.com/cards/types/summary
