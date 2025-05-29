@@ -173,12 +173,16 @@ a.primary-nav__link, .primary-nav__link.mega_menu {
 @media only screen and (min-width: 1023px){
 .sub-nav-hidden.primary-nav__link {
   display: none !important;
+  visibility: hidden;
+  pointer-events: none;
 }
 }
 .sub-nav-hidden.primary-nav__link {
      $root: &;
      &.is-visible {
          display: flex !important;
+         visibility: visible;
+        pointer-events: auto;
      }
 }
 

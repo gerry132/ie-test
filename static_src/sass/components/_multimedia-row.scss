@@ -87,6 +87,27 @@
         &--three{
             flex: 0 1 380px;
         }
+    &:focus {
+        outline: 2px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow:
+        0 0 0 4px #000000,
+        -4px 6px 0 0 #000000,
+        4px 6px 0 0 #000000;
+        }
+
+    &:hover .multimedia__card__title, &:focus:hover .multimedia__card__title {
+            color: #004d44;
+            text-decoration-color: #004d44;
+            text-decoration-thickness: 0.2rem;
+    }
+
+    &:active .multimedia__card__title, &:focus:active .multimedia__card__title {
+            color: #008931;
+            text-decoration: underline;
+            text-decoration-color: #008931;
+            text-decoration-thickness: 0.3rem;
+    }
     }
     &__card__image-container {
     position: relative;
@@ -100,6 +121,11 @@
     &__card__title{
 
     font-family: 'Inter';
+    color: #082F2A;
+    text-decoration: underline;
+    text-decoration-color: #008931;
+    text-decoration-thickness: 0.065rem;
+    text-underline-offset: 0.19em;
     }
     &__card__summary{
         font-weight: 400;

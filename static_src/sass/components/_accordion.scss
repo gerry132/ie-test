@@ -30,12 +30,14 @@
         transition: color 0.2s ease;
         text-decoration: none;
         width: 100%;
+        outline: none;
 
         &:hover {
             cursor: pointer;
         }
 
-        &:focus-within .accordion__title {
+        &:focus .accordion__title,
+        &:focus-visible .accordion__title{
             outline: 2px #FFD740 solid;
             outline-offset: 0;
             box-shadow:

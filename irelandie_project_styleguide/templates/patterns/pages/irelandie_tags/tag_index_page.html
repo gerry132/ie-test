@@ -73,11 +73,11 @@
                                             <li class="tag__slide-item" tabindex="0"><a tabindex="-1" href="{{ tag_links }}" aria-label="{% trans 'Tag label' %}">{{ tags_category.specific.tag_label }}</a></li>
                                         {% endfor %}
                                         {% for tags_category in tag_category_no_link|slice:":1" %}
-                                            <li class="tag__slide-item" tabindex="0">{{ tags_category.specific.tag_label }}</li>
+                                            <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
                                         {% endfor %}
                                     {% else %}
                                         {% for tags_category in tag_category_no_link|slice:":2" %}
-                                            <li class="tag__slide-item" tabindex="0">{{ tags_category.specific.tag_label }}</li>
+                                            <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
                                         {% endfor %}
                                     {% endif %}
                                 {% else %}
@@ -87,11 +87,11 @@
                                         {% endfor %}
                                     {% elif tag_category|length > 1 %}
                                         {% for tags in tag_category|slice:":1" %}
-                                            <li class="tag__slide-item" tabindex="0">{{ tags.specific.tag_label }}</li>
+                                            <li class="tag__slide-item">{{ tags.specific.tag_label }}</li>
                                         {% endfor %}
                                     {% else %}
                                         {% if tag_category %}
-                                            <li class="tag__slide-item" tabindex="0">{{ tag_category.specific.tag_label }}</li>
+                                            <li class="tag__slide-item">{{ tag_category.specific.tag_label }}</li>
                                         {% endif %}
                                     {% endif %}
                                     {% for tags_destination, tag_links in tag_destination_links|slice:":1" %}
