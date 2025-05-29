@@ -32,7 +32,7 @@
         }
 
         #{$root}--condensed & {
-            padding: 10px 30px;
+            padding: 2px;
             justify-content: space-between;
         }
     }
@@ -137,23 +137,13 @@
         @include media-query(large) {
             #{$root}--condensed & {
             margin: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
         }
         }
-        &:focus {
-                outline: 3px #FFD740 solid;
-                outline-offset: 0;
-                box-shadow:
-                    0 0 0 4px #000,
-                    -4px 6px 0 0 #000,
-                    4px 6px 0 0 #000;
-            }
     }
 
     &__logo-wrapper {
+        outline: none;
         z-index: 150;
         @include media-query(v-small-min) {
             #{$root}--condensed & {
@@ -295,4 +285,12 @@
             display: none;
         }
     }
+}
+.header__logo-wrapper:focus .header__logo,
+.header__logo-wrapper:focus-visible .header__logo {
+  outline: 3px #FFD740 solid;
+  outline-offset: 0;
+  box-shadow: 0 0 0 4px #000,
+          -4px 6px 0 0 #000,
+          4px 6px 0 0 #000;
 }

@@ -50,6 +50,12 @@
         outline: 0;
         border-bottom: 1px solid $color--grey;
         color: $color--grey;
+
+        &:focus {
+            border: 3px #FFD740 solid;
+            outline: 3px #000000 solid;
+            outline-offset: 0;
+            }
     }
 
     &__button {

@@ -6,6 +6,11 @@
     box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
     width: 100%;
     padding: 10px;
+    &:focus-visible {
+        border: 3px #FFD740 solid;
+        outline: 3px #000000 solid;
+        outline-offset: 0;
+        }
 }
 
 .form {

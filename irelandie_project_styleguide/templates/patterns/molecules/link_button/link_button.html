@@ -4,7 +4,7 @@
         <a href="{{ link_url }}" aria-label="{% trans 'link button' %}" class="link-button ">
             <div class="link-button__content">
                 <h3 class="link-button__title">{{ value.heading }}</h3>
-                <button class="link-button__arrow" role="button" aria-label="{% if value.link_button_alt %}{{ value.link_button_alt }}{% else %}link-button__arrow{% endif %}"></button>
+                <button class="link-button__arrow" role="button" aria-label="{% if value.link_button_alt %}{{ value.link_button_alt }}{% else %}link-button__arrow{% endif %}" tabindex="-1"></button>
             </div>
         </a>
     </div>

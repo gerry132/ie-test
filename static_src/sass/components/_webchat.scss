@@ -4,3 +4,11 @@
     padding: 30px 0;
     cursor: pointer;
 }
+.webchat img:focus {
+  outline: 2px solid #FFD740;
+  outline-offset: 0;
+  box-shadow:
+       0 0 0 4px #000,
+       -4px 6px 0 0 #000,
+       4px 6px 0 0 #000;
+}

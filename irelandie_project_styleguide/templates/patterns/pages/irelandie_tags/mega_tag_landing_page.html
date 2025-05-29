@@ -60,7 +60,7 @@
                             {% else %}
                             <div class="grid-item">
                                 <div class="card" tabindex="0">
-                                    <a href="{{ card.url }}" aria-label="{{card.alt_text}}">
+                                    <a href="{{ card.url }}" aria-label="{{card.alt_text}}" tabindex="-1">
                                     <div class="card__image-container">
                                         {% if card.hero_image %}
                                             {% if card.alt_text %}
@@ -105,7 +105,7 @@
                                                         {% endfor %}
 
                                                         {% for tag_page in tagging_links.1 %}
-                                                            <li class="tag__slide-item" tabindex="0">{{ tag_page }}</li>
+                                                            <li class="tag__slide-item">{{ tag_page }}</li>
                                                         {% endfor %}
 
                                                 {% get_destination_tag_links card.related_destination_tags as tag_destination_links %}
@@ -121,7 +121,7 @@
                             {% for card in stories %}
                                 <div class="grid-item">
                                     <div class="card" tabindex="0" aria-label="{{card.alt_text}}">
-                                        <a href="{{ card.url }}" aria-label="{% trans 'card' %}">
+                                        <a href="{{ card.url }}" aria-label="{% trans 'card' %}" tabindex="-1">
                                         <div class="card__image-container">
                                             {% if card.hero_image %}
                                                 {% if card.alt_text %}
@@ -166,7 +166,7 @@
                                                         {% endfor %}
 
                                                         {% for tag_page in tagging_links.1 %}
-                                                            <li class="tag__slide-item" tabindex="0">{{ tag_page }}</li>
+                                                            <li class="tag__slide-item">{{ tag_page }}</li>
                                                         {% endfor %}
 
                                                 {% get_destination_tag_links card.related_destination_tags as tag_destination_links %}
