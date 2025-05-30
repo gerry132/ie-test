@@ -77,7 +77,7 @@
                          <h2 class="wide_feature__link_heading heading--2">{{ block_hero.value.title }}</h2>
                     {% endif %}
                     {% for links in block_hero.value.link_block %}
-                    <a href="{% if links.value.page.url %}{{ links.value.page.url }}{% else %}{{ links.value.url }}{% endif %}" class="link-box" aria-label="{% trans 'Link box' %}">
+                    <a href="{% if links.value.page.url %}{{ links.value.page.url }}{% else %}{{ links.value.url }}{% endif %}" aria-label="{% trans 'Link box' %}">
                         <div class="wide_feature__link_content">
                             <div class="wide_feature__content_focusable" tabindex="0">
                                 <div class="link-box__container">

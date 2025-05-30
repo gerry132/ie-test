@@ -4,7 +4,7 @@
     font-size: 24px;
 }
 
-.mega_menu_dropbtn:focus, .grid_item_sub_links:focus {
+.primary-nav__link:focus, .grid_item_sub_links:focus {
         outline: 2px #FFD740 solid;
         outline-offset: 0;
         box-shadow:
@@ -35,7 +35,7 @@
     justify-content: space-between;
     max-width: 500px;
     }
-    .sub_links__button:focus-within .grid_item {
+    .sub_links__button:focus, a.grid_item:focus, .image__withlinks:focus img, a#clearFilter:focus {
             outline: 3px #FFD740 solid;
             outline-offset: 0;
             box-shadow:
@@ -65,12 +65,6 @@
         line-height: 34.58px; /* 172.9% */
     }
 
-.grid_item .underline:hover {
-
-  text-decoration: underline;
-  text-decoration-color: #292929;
-}
-
 .grid_item {
     color: #082F2A;
     text-decoration: underline;
@@ -80,18 +74,28 @@
     font-weight: 700;
     font-size: 24px;
 }
-.sub_links__button:hover .grid_item, .sub_links__button:focus:hover .grid_item, .grid_item_sub_links:hover, .grid_item_sub_links:focus:hover {
-            color: #004d44;
-            text-decoration-color: #004d44;
-            text-decoration-thickness: 0.2rem;
-        }
+.sub_links__button:hover .grid_item,
+.sub_links__button:focus:hover .grid_item,
+.grid_item_sub_links:hover,
+.grid_item_sub_links:focus:hover,
+.grid_item:hover,
+.grid_item:focus:hover {
+    color: #004d44;
+    text-decoration-color: #004d44;
+    text-decoration-thickness: 0.2rem;
+}
 
-        .sub_links__button:active .grid_item, .sub_links__button:focus:active .grid_item, .grid_item_sub_links:active, .grid_item_sub_links:focus:active {
-            color: #008931;
-            text-decoration: underline;
-            text-decoration-color: #008931;
-            text-decoration-thickness: 0.3rem;
-        }
+.sub_links__button:active .grid_item,
+.sub_links__button:focus:active .grid_item,
+.grid_item_sub_links:active,
+.grid_item_sub_links:focus:active,
+.grid_item:active,
+.grid_item:focus:active {
+     color: #008931;
+     text-decoration: underline;
+     text-decoration-color: #008931;
+     text-decoration-thickness: 0.3rem;
+}
 
 .mega_menu_dropdown-content {
     display: none;
@@ -203,3 +207,4 @@ margin: 0;
     font-size: 20px;
     line-height: 140%;
 }
+

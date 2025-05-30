@@ -50,18 +50,18 @@
                                 <div class="wrapper wrapper--large toc-table">
                                 {% for block in page.admin_body1 %}
                                     {% if block.block_type == 'admin_contents' or block.block_type == 'contact_details' %}
-                                        <a href="#{{block.value.title}}" aria-label="{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter }}. {{block.value.title}}</h2></a>
+                                        <a href="#{{block.value.title}}" aria-label="{{block.value.title}}" tabindex="-1"><h2 tabindex="0" class="toc-contents wrapper--padding">{{ forloop.counter }}. {{block.value.title}}</h2></a>
                                     {% endif %}
 
                                 {% endfor %}
                                 {% for block in page.body %}
                                     {% if block.block_type == 'content' %}
-                                        <a href="#{{block.value.title}}" aria-label="{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length }}. {{block.value.title}}</h2></a>
+                                        <a href="#{{block.value.title}}" aria-label="{{block.value.title}}" tabindex="-1"><h2 tabindex="0" class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length }}. {{block.value.title}}</h2></a>
                                     {% endif %}
                                 {% endfor %}
                                 {% for block in page.admin_body2 %}
                                     {% if block.block_type == 'admin_content'  or block.block_type == 'contact_details'%}
-                                        <a href="#{{block.value.title}}" aria-label="{{block.value.title}}"><h2 class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length|add:content_length }}. {{block.value.title}}</h2></a>
+                                        <a href="#{{block.value.title}}" aria-label="{{block.value.title}}" tabindex="-1"><h2 tabindex="0" class="toc-contents wrapper--padding">{{ forloop.counter|add:admin_content_length|add:content_length }}. {{block.value.title}}</h2></a>
                                     {% endif %}
                                 {% endfor %}
                                 </div>

@@ -80,32 +80,21 @@
         border-bottom: unset;
         color: #000;
     }
-      color: lighten($color--secondary, 20%);
+      font-weight:700;
+      color: #FFFFFF;
       border-bottom: 0.065rem solid #5AFF03;
       background-color: transparent;
 }
-a.primary-nav__link {
+a.primary-nav__link, .primary-nav__link.mega_menu {
   font-size: 24px;
   font-size: 1.5rem;
-  color: #000;
+  color: #FFFFFF;
+  border-bottom: 0.065rem solid #5AFF03;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid transparent;
   width: 100%;
   padding: 10px 30px;
-  transition: color, border 0.25s ease-out;
 
-  &:hover, &:focus:hover {
-    cursor: pointer;
-    background-color: rgba($color--white, 0.1);
-    color: #EDECE5;
-    border-bottom: 0.2rem solid #EDECE5;
-  }
-
-  &:active, &:focus:active {
-    color: #CFD8D1;
-    border-bottom: 0.3rem solid #CFD8D1;
-  }
 
   &:focus {
     outline: 2px solid #FFD740;
@@ -122,29 +111,56 @@ a.primary-nav__link {
     display: inline-block;
     margin: 0 20px;
     padding: 5px 0;
-    color: #fff;
     width: auto;
     max-width: 500px;
 
-    &:hover {
-      background-color: transparent;
-      color: lighten($color--secondary, 20%);
-      border-bottom: 1px solid $color--secondary;
-    }
+    &:hover, &:focus:hover {
+    cursor: pointer;
+    background-color: rgba($color--white, 0.1);
+    color: #EDECE5;
+    border-bottom: 0.2rem solid #EDECE5;
+  }
+
+  &:active, &:focus:active {
+    color: #CFD8D1;
+    border-bottom: 0.3rem solid #CFD8D1;
+  }
 
     .header--condensed &,
     .header__menu--extended & {
       font-size: 1.5rem;
-      color: #000;
+      color: #082F2A;
+      text-decoration: underline;
+      text-decoration-color: #008931;
+      text-decoration-thickness: 0.065rem;
+      text-underline-offset: 0.19em;
       margin: 0;
       padding: 0;
+      border-bottom: unset;
 
       &:hover {
-        color: #000;
-        border-bottom: 1px solid $color--secondary;
+        color: #004d44;
+        text-decoration-color: #004d44;
+        text-decoration-thickness: 0.2rem;
+        border-bottom: unset;
+      }
+      &:active {
+        color: #008931;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.3rem;
+        border-bottom: unset;
       }
     }
   }
+  @include media-query(max-large){
+      border-bottom: unset;
+        color: #082F2A;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.065rem;
+        text-underline-offset: 0.19em;
+    }
 }
 
 .mega_menu {
@@ -157,12 +173,16 @@ a.primary-nav__link {
 @media only screen and (min-width: 1023px){
 .sub-nav-hidden.primary-nav__link {
   display: none !important;
+  visibility: hidden;
+  pointer-events: none;
 }
 }
 .sub-nav-hidden.primary-nav__link {
      $root: &;
      &.is-visible {
          display: flex !important;
+         visibility: visible;
+        pointer-events: auto;
      }
 }
 
