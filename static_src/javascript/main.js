@@ -40,6 +40,7 @@ closestPolyfill();
 // Open the mobile menu callback
 function openMobileMenu() {
     document.querySelector('body').classList.add('no-scroll');
+    document.querySelector('[data-mobile-menu]').classList.remove('is-hidden');
     document.querySelector('[data-mobile-menu]').classList.add('is-visible');
     document.querySelectorAll('[data-mobile-mega-menu]').forEach(function(menu) {
             menu.classList.add('is-hidden');
@@ -52,6 +53,7 @@ function openMobileMenu() {
 // Close the mobile menu callback.
 function closeMobileMenu() {
     document.querySelector('body').classList.remove('no-scroll');
+    document.querySelector('[data-mobile-menu]').classList.add('is-hidden');
     document.querySelector('[data-mobile-menu]').classList.remove('is-visible');
     document.querySelectorAll('[data-mobile-mega-menu]').forEach(function(menus) {
             menus.classList.remove('is-hidden');

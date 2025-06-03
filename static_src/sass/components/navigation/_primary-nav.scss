@@ -138,13 +138,13 @@ a.primary-nav__link, .primary-nav__link.mega_menu {
       padding: 0;
       border-bottom: unset;
 
-      &:hover {
+      &:hover, &:focus:hover {
         color: #004d44;
         text-decoration-color: #004d44;
         text-decoration-thickness: 0.2rem;
         border-bottom: unset;
       }
-      &:active {
+      &:active, &:focus:active {
         color: #008931;
         text-decoration: underline;
         text-decoration-color: #008931;

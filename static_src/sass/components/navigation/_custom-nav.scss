@@ -77,12 +77,12 @@ a.custom-nav__link, .custom-nav__link.mega_menu {
         color: #FFFFFF;
         border-bottom: 0.065rem solid #5AFF03;
 
-        &:hover {
+        &:hover, &:focus:hover {
             cursor: pointer;
             color: #EDECE5;
             border-bottom: 0.2rem solid #EDECE5;
         }
-        &:active {
+        &:active, &:focus:active {
             color: #CFD8D1;
             border-bottom: 0.3rem solid #CFD8D1
             }
