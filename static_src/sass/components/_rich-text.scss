@@ -40,6 +40,9 @@
     a {
         font-weight: $weight--bold;
         text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.065rem;
+        text-underline-offset: 0.19em;
     }
 
 
@@ -51,15 +54,24 @@
         -4px 6px 0 0 #000000,
         4px 6px 0 0 #000000;
     }
-    a:hover, a:focus:hover {
+    a:hover {
         text-decoration-color: #004d44;
         text-decoration-thickness: 0.2rem;
     }
 
-    a:active, a:focus:active {
+    a:active {
         text-decoration: underline;
         text-decoration-color: #008931;
         text-decoration-thickness: 0.3rem;
+    }
+
+    a:hover:focus {
+        text-underline-offset: 3px;
+    }
+
+    a:active:focus {
+        text-decoration-thickness: 0.2rem;
+        text-underline-offset: 3px;
     }
 
     ul {

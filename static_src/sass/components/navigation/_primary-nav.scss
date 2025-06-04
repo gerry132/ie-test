@@ -79,17 +79,18 @@
     @include media-query(max-large){
         border-bottom: unset;
         color: #000;
+        box-shadow: unset;
     }
       font-weight:700;
       color: #FFFFFF;
-      border-bottom: 0.065rem solid #5AFF03;
+      box-shadow: inset 0 -0.065rem 0 0 #5AFF03;
       background-color: transparent;
 }
 a.primary-nav__link, .primary-nav__link.mega_menu {
   font-size: 24px;
   font-size: 1.5rem;
   color: #FFFFFF;
-  border-bottom: 0.065rem solid #5AFF03;
+  box-shadow: inset 0 -0.065rem 0 0 #5AFF03;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -114,17 +115,32 @@ a.primary-nav__link, .primary-nav__link.mega_menu {
     width: auto;
     max-width: 500px;
 
-    &:hover, &:focus:hover {
-    cursor: pointer;
-    background-color: rgba($color--white, 0.1);
-    color: #EDECE5;
-    border-bottom: 0.2rem solid #EDECE5;
-  }
+    &:hover {
+            cursor: pointer;
+            color: #EDECE5;
+            box-shadow: inset 0 -0.2rem 0 0 #EDECE5;
+            background-color: transparent !important;
+        }
+        &:active {
+            color: #CFD8D1;
+            box-shadow: inset 0 -0.3rem 0 0 #CFD8D1;
+            }
 
-  &:active, &:focus:active {
-    color: #CFD8D1;
-    border-bottom: 0.3rem solid #CFD8D1;
-  }
+        &:focus:hover {
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000,
+            inset 0 -0.2rem 0 0 #EDECE5;
+        }
+
+        &:focus:active {
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000,
+            inset 0 -0.3rem 0 0 #CFD8D1;
+            }
 
     .header--condensed &,
     .header__menu--extended & {
@@ -137,21 +153,33 @@ a.primary-nav__link, .primary-nav__link.mega_menu {
       margin: 0;
       padding: 0;
       border-bottom: unset;
+      box-shadow: unset;
 
-      &:hover, &:focus:hover {
+      &:hover {
         color: #004d44;
         text-decoration-color: #004d44;
         text-decoration-thickness: 0.2rem;
         border-bottom: unset;
+        box-shadow: unset;
       }
-      &:active, &:focus:active {
+      &:active {
         color: #008931;
         text-decoration: underline;
         text-decoration-color: #008931;
         text-decoration-thickness: 0.3rem;
         border-bottom: unset;
+        box-shadow: unset;
       }
-    }
+
+       &:focus, &:focus:hover, &:focus:active {
+        outline: 2px solid #FFD740;
+        outline-offset: 0;
+        box-shadow:
+          0 0 0 4px #000,
+          -4px 6px 0 0 #000,
+          4px 6px 0 0 #000;
+      }
+  }
   }
   @include media-query(max-large){
       border-bottom: unset;
@@ -160,7 +188,43 @@ a.primary-nav__link, .primary-nav__link.mega_menu {
         text-decoration-color: #008931;
         text-decoration-thickness: 0.065rem;
         text-underline-offset: 0.19em;
-    }
+        box-shadow: unset;
+
+
+    &:hover {
+        color: #004d44;
+        text-decoration-color: #004d44;
+        text-decoration-thickness: 0.2rem;
+        border-bottom: unset;
+        box-shadow: unset;
+      }
+      &:active {
+        color: #008931;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.3rem;
+        border-bottom: unset;
+        box-shadow: unset;
+      }
+
+       &:focus, &:focus:hover, &:focus:active {
+        outline: 2px solid #FFD740;
+        outline-offset: 0;
+        box-shadow:
+          0 0 0 4px #000,
+          -4px 6px 0 0 #000,
+          4px 6px 0 0 #000;
+      }
+  }
+
+    &:focus {
+    outline: 2px solid #FFD740;
+    outline-offset: 0;
+    box-shadow:
+      0 0 0 4px #000,
+      -4px 6px 0 0 #000,
+      4px 6px 0 0 #000;
+  }
 }
 
 .mega_menu {
