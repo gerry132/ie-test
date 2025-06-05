@@ -26,8 +26,8 @@
                 {% for link in value.subtitle %}
                     {% if link.value.page or link.value.url %}
                             <div class="notice__title"> {{ value.title }}</div>
-                        <a href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}" title="{{ link.value.title }}">
-                            <div class="notice_link">{{ link.value.title }}</div>
+                        <a class="notice_link" href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}" title="{{ link.value.title }}">
+                            {{ link.value.title }}
                         </a>
                     {% else %}
                         <div class="notice__title"> {{ value.title }}</div>

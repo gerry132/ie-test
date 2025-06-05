@@ -60,7 +60,9 @@
 .custom-nav__link[aria-current="page"] {
     @include media-query(max-large){
         border-bottom: unset;
-        color: #000;
+        color: #082f2a;
+        box-shadow: unset;
+        font-weight: unset;
     }
       font-weight:700;
       color: #FFFFFF;

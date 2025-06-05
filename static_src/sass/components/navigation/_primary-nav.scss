@@ -73,13 +73,24 @@
     }
 }
 .header--condensed .primary-nav__link[aria-current="page"]{
-    color: #000;
+   @include media-query(max-large) {
+        border-bottom: unset;
+        color: #082f2a;
+        box-shadow: unset;
+        font-weight: unset;
+    }
+      font-weight:700;
+      color: #FFFFFF;
+      box-shadow: inset 0 -0.065rem 0 0 #5AFF03;
+      background-color: transparent;
 }
+
 .primary-nav__link[aria-current="page"] {
     @include media-query(max-large){
         border-bottom: unset;
-        color: #000;
+        color: #082f2a;
         box-shadow: unset;
+        font-weight: unset;
     }
       font-weight:700;
       color: #FFFFFF;
