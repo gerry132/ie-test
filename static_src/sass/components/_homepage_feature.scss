@@ -39,7 +39,7 @@
              line-height: 86px;
         }
     }
-    &__card{
+    &__card {
         display: block;
         overflow: hidden;
         max-width: 500px;
@@ -52,30 +52,32 @@
         4px 6px 0 0 #000000;
     }
     }
-    &_card__title{
-        color: #082F2A;
-        text-decoration: underline;
-        text-decoration-color: #008931;
-        text-decoration-thickness: 0.065rem;
-        text-underline-offset: 0.19em;
-        /* H4 */
-        font-family: Inter;
-        font-size: 24px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: normal;
-
-        &:hover, &:focus:hover {
-            color: #004d44;
-            text-decoration-color: #004d44;
-            text-decoration-thickness: 0.2rem;
-        }
-        &:active, &:focus:active {
-            color: #008931;
+    &_card__title {
+      font-family: Inter;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      color: var(--d---colour, #101010);
+      a#{$root}__card & {
+            color: #082F2A;
             text-decoration: underline;
             text-decoration-color: #008931;
-            text-decoration-thickness: 0.3rem;
-            }
+            text-decoration-thickness: 0.065rem;
+            text-underline-offset: 0.19em;
+      }
+      a#{$root}__card:hover &,
+      a#{$root}__card:focus:hover & {
+        color: #004d44;
+        text-decoration-color: #004d44;
+        text-decoration-thickness: 0.2rem;
+      }
+      a#{$root}__card:active &,
+      a#{$root}__card:focus:active & {
+        color: #008931;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.3rem;
+      }
     }
     &_card__summary{
         color: var(--d---colour, #101010);

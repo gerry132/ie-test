@@ -75,7 +75,7 @@
         transform: scale(1);
         transition: transform $transition;
     }
-    &__card{
+    &__card {
     display: block;
     background-color: #fff;
     overflow: hidden;
@@ -95,19 +95,6 @@
         -4px 6px 0 0 #000000,
         4px 6px 0 0 #000000;
         }
-
-    &:hover .multimedia__card__title, &:focus:hover .multimedia__card__title {
-            color: #004d44;
-            text-decoration-color: #004d44;
-            text-decoration-thickness: 0.2rem;
-    }
-
-    &:active .multimedia__card__title, &:focus:active .multimedia__card__title {
-            color: #008931;
-            text-decoration: underline;
-            text-decoration-color: #008931;
-            text-decoration-thickness: 0.3rem;
-    }
     }
     &__card__image-container {
     position: relative;
@@ -119,13 +106,27 @@
         padding: 20px;
     }
     &__card__title{
-
     font-family: 'Inter';
-    color: #082F2A;
-    text-decoration: underline;
-    text-decoration-color: #008931;
-    text-decoration-thickness: 0.065rem;
-    text-underline-offset: 0.19em;
+    color: var(--d---colour, #101010);
+    a#{$root}__card & {
+        color: #082F2A;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.065rem;
+        text-underline-offset: 0.19em;
+    }
+    a#{$root}__card:hover &,
+    a#{$root}__card:focus:hover & {
+        color: #004d44;
+        text-decoration-color: #004d44;
+        text-decoration-thickness: 0.2rem;
+      }
+    a#{$root}__card:active &,
+    a#{$root}__card:focus:active & {
+        color: #008931;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.3rem;
+      }
     }
     &__card__summary{
         font-weight: 400;
