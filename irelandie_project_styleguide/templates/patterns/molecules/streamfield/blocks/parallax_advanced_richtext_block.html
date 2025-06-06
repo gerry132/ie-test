@@ -20,24 +20,18 @@
             <div style="color: {{value.text_color}};" class="rich_text__summary">{{ value.rich_text }}</div>
         {% endif %}
 
-        {% if value.button_link %}
+        {% if buttons %}
           <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
-            {% if value.button_link.1.value.page %}
+            {% for button in buttons %}
               <a class="button_text"
-                 href="{{ value.button_link.1.value.page.url }}"
-                 aria-label="{% trans 'Button text' %}"
-                 style="{% if value.button_link.0.value.button_color %} --button-color: {{ value.button_link.0.value.button_color }}; {% endif %}
-    {% if value.button_link.0.value.button_text_color %} --button-text-color: {{ value.button_link.0.value.button_text_color }}; {% endif %}">
-                 {{ value.button_link.1.value.message }}
+                 href="{{ button.page.url|default:button.url }}"
+                 style="
+                   {% if button_color %}--button-color: {{ button_color }};{% endif %}
+                   {% if button_text_color %}--button-text-color: {{ button_text_color }};{% endif %}
+                 ">
+                {{ button.message }}
               </a>
-            {% else %}
-              <a class="button_text"
-                 href="{{ value.button_link.1.value.url }}"
-                 aria-label="{% trans 'Button text' %}"
-                 style="background-color: {{ value.button_link.0.value.button_color }}; color: {{ value.button_link.0.value.button_text_color }};">
-                 {{ value.button_link.1.value.message }}
-              </a>
-            {% endif %}
+            {% endfor %}
           </div>
         {% endif %}
         {% if value.audio %}
