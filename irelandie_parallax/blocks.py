@@ -43,11 +43,18 @@ class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
     )
     button_link = blocks.StreamBlock(
         [
+            ("color", blocks.StructBlock([
+                ("button_color", blocks.CharBlock(max_length=7, required=False)),
+                ("button_text_color", blocks.CharBlock(max_length=7, required=False)),
+            ]
+            )),
             ("button", SecondaryCallToAction())
         ],
         blank=True,
-        max_num=1,
-        min_num=0,
+        block_counts={
+            "button": {"max_num": 1},
+            "color": {"max_num": 1},
+        },
         required=False,
     )
 
@@ -60,6 +67,25 @@ class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
         min_num=0,
         required=False,
     )
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+
+        button_color = None
+        button_text_color = None
+        buttons = []
+        for item in value.get('button_link', []):
+            if item.block_type == "color":
+                button_color = item.value.get('button_color')
+                button_text_color = item.value.get('button_text_color')
+            elif item.block_type == "button":
+                buttons.append(item.value)
+
+        context['button_color'] = button_color
+        context['button_text_color'] = button_text_color
+        context['buttons'] = buttons
+
+        return context
 
     class Meta:
         label = "Parallax Advanced RichTextBlock"
@@ -146,6 +172,14 @@ class ParallaxLogoCardsBlock(blocks.StructBlock):
         choices=TextAlignment.choices,
         default=TextAlignment.CENTER,
     )
+    button_color = blocks.CharBlock(
+        max_length=7, required=False,
+        help_text="Background color for buttons"
+    )
+    button_text_color = blocks.CharBlock(
+        max_length=7, required=False,
+        help_text="Text color for buttons"
+    )
     logo_cards = LogoCardsBlock()
 
     class Meta:
@@ -164,6 +198,14 @@ class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
         required=False,
         choices=TextAlignment.choices,
         default=TextAlignment.CENTER,
+    )
+    button_color = blocks.CharBlock(
+        max_length=7, required=False,
+        help_text="Background color for buttons"
+    )
+    button_text_color = blocks.CharBlock(
+        max_length=7, required=False,
+        help_text="Text color for buttons"
     )
     story_photo_gallery = StoryPhotoGalleriesBlock()
 
@@ -184,6 +226,14 @@ class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
         choices=TextAlignment.choices,
         default=TextAlignment.CENTER,
     )
+    button_color = blocks.CharBlock(
+        max_length=7, required=False,
+        help_text="Background color for buttons"
+    )
+    button_text_color = blocks.CharBlock(
+        max_length=7, required=False,
+        help_text="Text color for buttons"
+    )
     timeline_photo_gallery = TimelinePhotoGalleriesBlock()
 
     class Meta:
@@ -202,6 +252,14 @@ class ParallaxLinkCardsBlock(blocks.StructBlock):
         required=False,
         choices=TextAlignment.choices,
         default=TextAlignment.CENTER,
+    )
+    button_color = blocks.CharBlock(
+        max_length=7, required=False,
+        help_text="Background color for buttons"
+    )
+    button_text_color = blocks.CharBlock(
+        max_length=7, required=False,
+        help_text="Text color for buttons"
     )
     richtext = AdvancedRichTextBlock(required=False)
     link_cards = LinkCardsBlock()

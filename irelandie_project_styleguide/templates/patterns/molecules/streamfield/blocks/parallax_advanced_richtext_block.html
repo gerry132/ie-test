@@ -20,16 +20,19 @@
             <div style="color: {{value.text_color}};" class="rich_text__summary">{{ value.rich_text }}</div>
         {% endif %}
 
-        {% if value.button_link %}
-            <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
-                {% for button in value.button_link %}
-                    {% if button.value.page %}
-                        <a class="button_text" aria-label="{% trans 'Button text' %}" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
-                    {% else %}
-                        <a class="button_text" aria-label="{% trans 'Button text' %}" href="{{ button.value.url }}">{{ button.value.message }}</a>
-                    {% endif %}
-                {% endfor %}
-            </div>
+        {% if buttons %}
+          <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
+            {% for button in buttons %}
+              <a class="button_text"
+                 href="{{ button.page.url|default:button.url }}"
+                 style="
+                   {% if button_color %}--button-color: {{ button_color }};{% endif %}
+                   {% if button_text_color %}--button-text-color: {{ button_text_color }};{% endif %}
+                 ">
+                {{ button.message }}
+              </a>
+            {% endfor %}
+          </div>
         {% endif %}
         {% if value.audio %}
             {{ value.audio|safe }}
