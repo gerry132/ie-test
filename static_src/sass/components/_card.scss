@@ -36,19 +36,6 @@
             text-decoration-thickness: 0.3rem;
     }
 
-    &:hover .card__title, &:focus:hover .card__title {
-            color: #004d44;
-            text-decoration-color: #004d44;
-            text-decoration-thickness: 0.2rem;
-    }
-
-    &:active .card__title, &:focus:active .card__title {
-            color: #008931;
-            text-decoration: underline;
-            text-decoration-color: #008931;
-            text-decoration-thickness: 0.3rem;
-    }
-
     .featured-blocks & {
         margin-bottom: 30px;
 
@@ -95,14 +82,28 @@
     }
 
     &__title {
-        color: #082F2A;
-        text-decoration: underline;
-        text-decoration-color: #008931;
-        text-decoration-thickness: 0.065rem;
-        text-underline-offset: 0.19em;
         #{$root}--no-summary & {
             font-size: 24px;
         }
+        a#{$root} & {
+            color: #082F2A;
+            text-decoration: underline;
+            text-decoration-color: #008931;
+            text-decoration-thickness: 0.065rem;
+            text-underline-offset: 0.19em;
+        }
+        a#{$root}:hover &,
+        a#{$root}:focus:hover & {
+            color: #004d44;
+            text-decoration-color: #004d44;
+            text-decoration-thickness: 0.2rem;
+          }
+        a#{$root}:active &,
+        a#{$root}:focus:active & {
+            color: #008931;
+            text-decoration-color: #008931;
+            text-decoration-thickness: 0.3rem;
+          }
     }
     &__summary {
         overflow-wrap: break-word;

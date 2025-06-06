@@ -380,9 +380,16 @@
     font-weight: 700;
     line-height: normal;
     padding-bottom: 20px;
-
 }
-.twitter-embed_link:focus, .twitter-embed_link a:focus {
+
+a.twitter-timeline {
+    color: #082F2A;
+    text-decoration: underline;
+    text-decoration-color: #008931;
+    text-decoration-thickness: 0.065rem;
+    text-underline-offset: 0.19em;
+}
+.twitter-embed_link:focus, .twitter-embed_link a:focus, a.twitter-timeline:focus {
             outline: 3px #FFD740 solid;
             outline-offset: 0;
             box-shadow:
@@ -391,12 +398,12 @@
             4px 6px 0 0 #000000;
         }
 
-.twitter-embed_link:hover, .twitter-embed_link a:hover {
+.twitter-embed_link:hover, .twitter-embed_link a:hover, a.twitter-timeline:hover {
         color: #004d44;
         text-decoration-color: #004d44;
         text-decoration-thickness: 0.2rem;
 }
-.twitter-embed_link:active, .twitter-embed_link a:active{
+.twitter-embed_link:active, .twitter-embed_link a:active, a.twitter-timeline:active {
         color: #008931;
         text-decoration: underline;
         text-decoration-color: #008931;
