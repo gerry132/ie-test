@@ -21,15 +21,24 @@
         {% endif %}
 
         {% if value.button_link %}
-            <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
-                {% for button in value.button_link %}
-                    {% if button.value.page %}
-                        <a class="button_text" aria-label="{% trans 'Button text' %}" href="{{ button.value.page.url }}">{{ button.value.message }}</a>
-                    {% else %}
-                        <a class="button_text" aria-label="{% trans 'Button text' %}" href="{{ button.value.url }}">{{ button.value.message }}</a>
-                    {% endif %}
-                {% endfor %}
-            </div>
+          <div class="wrapper wrapper--large" style="padding-top: 15px; padding-bottom: 15px;">
+            {% if value.button_link.1.value.page %}
+              <a class="button_text"
+                 href="{{ value.button_link.1.value.page.url }}"
+                 aria-label="{% trans 'Button text' %}"
+                 style="{% if value.button_link.0.value.button_color %} --button-color: {{ value.button_link.0.value.button_color }}; {% endif %}
+    {% if value.button_link.0.value.button_text_color %} --button-text-color: {{ value.button_link.0.value.button_text_color }}; {% endif %}">
+                 {{ value.button_link.1.value.message }}
+              </a>
+            {% else %}
+              <a class="button_text"
+                 href="{{ value.button_link.1.value.url }}"
+                 aria-label="{% trans 'Button text' %}"
+                 style="background-color: {{ value.button_link.0.value.button_color }}; color: {{ value.button_link.0.value.button_text_color }};">
+                 {{ value.button_link.1.value.message }}
+              </a>
+            {% endif %}
+          </div>
         {% endif %}
         {% if value.audio %}
             {{ value.audio|safe }}
