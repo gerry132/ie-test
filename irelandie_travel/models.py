@@ -6,7 +6,7 @@ from irelandie_utils.blocks import AdvancedRichTextBlock, LinkBoxesBlock, LinkCa
 
 from irelandie_utils.models import BasePage, SocialFields, ListingFields
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel, TabbedInterface, ObjectList
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel, TabbedInterface, ObjectList, CommentPanel
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from wagtail.blocks import PageChooserBlock
@@ -70,6 +70,7 @@ class TravelCountryPage(BasePage):
     # seo_content_type = SeoType.ARTICLE
 
     content_panels = BasePage.content_panels + [
+        CommentPanel(),
         FieldPanel('subtitle'),
         FieldPanel('region'),
         FieldPanel('travel_caution_level', heading="Security Status"),
