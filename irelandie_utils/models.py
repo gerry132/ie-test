@@ -676,7 +676,7 @@ class BasePage(SocialFields, ListingFields, Page):
         FieldPanel("custom_header", permission="access_admin")
     ]
 
-    settings_panels = ([
+    settings_panels = Page.settings_panels + ([
                            MultiFieldPanel(
                                [
                                    FieldPanel('go_live_at', permission="access_admin"),
@@ -1132,7 +1132,7 @@ class MinimalArticlePage(BasePage):
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )
-    settings_panels = ([
+    settings_panels = Page.settings_panels + ([
                            MultiFieldPanel(
                                [
                                    FieldPanel("custom_header", permission="access_admin"),
