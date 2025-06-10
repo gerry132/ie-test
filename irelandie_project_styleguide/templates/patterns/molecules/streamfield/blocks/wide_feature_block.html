@@ -16,7 +16,7 @@
                                              xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 78 78" fill="none">
                                             <circle cx="39" cy="39" r="32" stroke="#5AFF03" stroke-width="2"/>
                                             <circle class="focus-ring" cx="39" cy="39" r="34.5" fill="none" stroke="#FFD740" stroke-width="4" opacity="0"/>
-                                            <circle cx="39" cy="39" r="37.5" stroke="black" stroke-width="3" opacity="0"/>
+                                            <circle class="focus-ring" cx="39" cy="39" r="37.5" stroke="black" stroke-width="3" opacity="0"/>
                                             <path d="M36.0449 32.5C36.1579 32.5 36.2662 32.5305 36.3574 32.5869L36.4424 32.6514L42.3525 38.1748C42.4514 38.2673 42.5 38.3851 42.5 38.5C42.5 38.5865 42.4725 38.6744 42.417 38.752L42.3525 38.8252L36.4424 44.3486L36.3574 44.4141C36.1642 44.5333 35.9083 44.5269 35.7227 44.4072L35.6475 44.3486C35.6343 44.3364 35.6225 44.3233 35.6113 44.3105H35.6104C35.5532 44.2448 35.52 44.171 35.5068 44.0967L35.5 44.0225L35.5088 43.9385C35.5217 43.8761 35.5497 43.8132 35.5957 43.7549L35.6475 43.6982L40.8193 38.8652L41.21 38.5L40.8193 38.1348L35.6475 33.3018C35.4755 33.141 35.4541 32.9043 35.583 32.7246L35.6475 32.6514C35.7257 32.5782 35.8252 32.5295 35.9336 32.5098L36.0449 32.5Z" fill="white" stroke="#F5F5F2"/>
                                         </svg>
                                      {% endif %}
@@ -30,7 +30,7 @@
                                              xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 78 78" fill="none">
                                         <circle cx="39" cy="39" r="32" stroke="#5AFF03" stroke-width="2"/>
                                         <circle class="focus-ring" cx="39" cy="39" r="34.5" fill="none" stroke="#FFD740" stroke-width="4" opacity="0"/>
-                                        <circle cx="39" cy="39" r="37.5" stroke="black" stroke-width="3" opacity="0"/>
+                                        <circle class="focus-ring" cx="39" cy="39" r="37.5" stroke="black" stroke-width="3" opacity="0"/>
                                         <path d="M36.0449 32.5C36.1579 32.5 36.2662 32.5305 36.3574 32.5869L36.4424 32.6514L42.3525 38.1748C42.4514 38.2673 42.5 38.3851 42.5 38.5C42.5 38.5865 42.4725 38.6744 42.417 38.752L42.3525 38.8252L36.4424 44.3486L36.3574 44.4141C36.1642 44.5333 35.9083 44.5269 35.7227 44.4072L35.6475 44.3486C35.6343 44.3364 35.6225 44.3233 35.6113 44.3105H35.6104C35.5532 44.2448 35.52 44.171 35.5068 44.0967L35.5 44.0225L35.5088 43.9385C35.5217 43.8761 35.5497 43.8132 35.5957 43.7549L35.6475 43.6982L40.8193 38.8652L41.21 38.5L40.8193 38.1348L35.6475 33.3018C35.4755 33.141 35.4541 32.9043 35.583 32.7246L35.6475 32.6514C35.7257 32.5782 35.8252 32.5295 35.9336 32.5098L36.0449 32.5Z" fill="white" stroke="#F5F5F2"/>
                                     </svg>
                                     {% endif %}
@@ -39,7 +39,7 @@
                         </div>
                     {% else %}
                         {% if block_hero.value.image_link_page or block_hero.value.image_link_url %}
-                            <a aria-label="{% trans 'Image link' %}" href="{% if block_hero.value.image_link_page %}{{block_hero.value.image_link_page.url}}{% else %}{{block_hero.value.image_link_url}}{% endif %}">
+                            <a aria-label="{% trans 'Image link' %}" class="wide_feature__image_link" href="{% if block_hero.value.image_link_page %}{{block_hero.value.image_link_page.url}}{% else %}{{block_hero.value.image_link_url}}{% endif %}">
                                 {% image block_hero.value.image fill-1600x900 class="wide_feature__image" alt=block_hero.value.image_alt %}
                             </a>
                         {% else %}

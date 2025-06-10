@@ -35,12 +35,12 @@
     justify-content: space-between;
     max-width: 500px;
     }
-    .sub_links__button:focus, a.grid_item:focus, .image__withlinks:focus img, a#clearFilter:focus {
+    .sub_links__button:focus, .image__withlinks:focus img, a#clearFilter:focus {
             outline: 3px #FFD740 solid;
             outline-offset: 0;
             box-shadow:
             0 0 0 4px #000000,
-            -4px 6px 0 0 #000000,
+            -4px 6px 0 0 #000000
             4px 6px 0 0 #000000;
         }
     .mega_menu_sub_links.is-open {
