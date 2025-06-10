@@ -184,7 +184,7 @@ class ListingsContentPage(ListingsContents, BasePage):
         FieldPanel('location'),
         FieldPanel('event_details'),
     ]
-    settings_panels = ([
+    settings_panels = Page.settings_panels + ([
                            FieldPanel('go_live_at'),
                            MultiFieldPanel(
                                [
@@ -351,7 +351,7 @@ class ListingsContentUSAPage(ListingsContents, BasePage):
         ListingFields.promote_panels
     )
 
-    settings_panels = ([
+    settings_panels = Page.settings_panels + ([
                            FieldPanel('go_live_at'),
                            MultiFieldPanel(
                                [
@@ -554,7 +554,7 @@ class ListingsFeaturedPage(BasePage):
                              "page/list and from public view once expired."),
         FieldPanel('event_details'),
     ]
-    settings_panels = ([
+    settings_panels = Page.settings_panels + ([
                            FieldPanel('go_live_at'),
                            MultiFieldPanel(
                                [

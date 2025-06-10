@@ -352,7 +352,7 @@ class JobContentPage(BasePage):
         ListingFields.promote_panels
     )
 
-    settings_panels = ([
+    settings_panels = Page.settings_panels + ([
                            MultiFieldPanel(
                                [
                                    FieldPanel("custom_header", permission="access_admin"),
