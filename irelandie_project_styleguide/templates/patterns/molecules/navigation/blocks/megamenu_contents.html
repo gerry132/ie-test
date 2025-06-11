@@ -22,7 +22,7 @@
                       {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="sub_links__icon" alt="expand" %}
         </div>
         {% else %}
-            <a class="grid_item" tabindex="-1"
+            <a class="grid_item_no_button"
                href="{% if block.value.page %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}" role="menuitem" aria-label="{% if block.value.title %}
                     {{ block.value.title }}{% else %}{{ block.value.page.title }}{% endif %}">
                 <span class="{% if block.value.page.url or block.value.url %}underline{% endif %}">
