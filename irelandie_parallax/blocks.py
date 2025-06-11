@@ -316,6 +316,10 @@ class DoubleFeature(StreamBlock):
         gradient_alignment = "none"
         gradient_colour = "none"
         core_blocks = []
+        button_color = None
+        button_text_color = None
+        buttons = []
+
         for block in value:
             if block.block_type == "gradient_alignment":
                 gradient_alignment = block.value  # Store the selected choice
@@ -323,9 +327,21 @@ class DoubleFeature(StreamBlock):
                 gradient_colour = block.value
             else:
                 core_blocks.append(block)
+
+                # If this is your rich_text block, get its context to retrieve buttons
+                if block.block_type == "rich_text":
+                    rich_text_context = block.block.get_context(block.value, parent_context)
+                    button_color = rich_text_context.get("button_color")
+                    button_text_color = rich_text_context.get("button_text_color")
+                    buttons = rich_text_context.get("buttons")
+
         context["core_blocks"] = core_blocks  # Store the non-gradient blocks
         context["gradient_alignment"] = gradient_alignment  # Store the alignment
         context["gradient_colour"] = gradient_colour
+        context["button_color"] = button_color
+        context["button_text_color"] = button_text_color
+        context["buttons"] = buttons
+
         return context
 
     class Meta:

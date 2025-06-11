@@ -35,14 +35,17 @@
     justify-content: space-between;
     max-width: 500px;
     }
-    .sub_links__button:focus, a.grid_item:focus, .image__withlinks:focus img, a#clearFilter:focus {
-            outline: 3px #FFD740 solid;
-            outline-offset: 0;
-            box-shadow:
+    .sub_links__button:focus,
+    .image__withlinks:focus img,
+    a#clearFilter:focus, a.grid_item_no_button:focus {
+        outline: 3px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow:
             0 0 0 4px #000000,
             -4px 6px 0 0 #000000,
-            4px 6px 0 0 #000000;
-        }
+            4px 6px 0 0 #000000 !important;
+    }
+
     .mega_menu_sub_links.is-open {
         .sub_links__icon {
             transform: rotate(180deg);
@@ -65,7 +68,7 @@
         line-height: 34.58px; /* 172.9% */
     }
 
-.grid_item {
+.grid_item, .grid_item_no_button {
     color: #082F2A;
     text-decoration: underline;
     text-decoration-color: #008931;
@@ -79,7 +82,9 @@
 .grid_item_sub_links:hover,
 .grid_item_sub_links:focus:hover,
 .grid_item:hover,
-.grid_item:focus:hover {
+.grid_item:focus:hover,
+.grid_item_no_button:hover,
+.grid_item_no_button:focus:hover {
     color: #004d44;
     text-decoration-color: #004d44;
     text-decoration-thickness: 0.2rem;
@@ -90,7 +95,9 @@
 .grid_item_sub_links:active,
 .grid_item_sub_links:focus:active,
 .grid_item:active,
-.grid_item:focus:active {
+.grid_item:focus:active,
+.grid_item_no_button:active,
+.grid_item_no_button:focus:active {
      color: #008931;
      text-decoration: underline;
      text-decoration-color: #008931;
@@ -163,10 +170,9 @@ margin: 0;
     }
 
 }
-.custom-nav__link.mega_menu.is-open{
+.custom-nav__link.mega_menu.is-open {
     @media only screen and (min-width: 1023px){
         display: inline-block;
-        color: unset;
         border-bottom: 1px solid #fff;
     }
 }
