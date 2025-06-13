@@ -191,7 +191,7 @@ class NewsPage(MinimalArticlePage):
         for p in pages:
             if p.content_type.name in ['mission page', 'Free Form Page']:
                 missions = get_model_info(p.content_type.name, p.id)
-                if missions.root_page:
+                if missions.root_page and hasattr(missions, 'default_image'):
                     context['default_image'] = missions.default_image
                 if missions.root_page and missions.content_type.name == 'mission page':
                     context['mission_web_bot'] = missions.web_bot_script
@@ -307,7 +307,7 @@ class NewsLandingPage(BasePage):
         for p in pages:
             if p.content_type.name in ['mission page', 'Free Form Page']:
                 missions = get_model_info(p.content_type.name, p.id)
-                if missions.root_page:
+                if missions.root_page and hasattr(missions, 'default_image'):
                     context['default_image'] = missions.default_image
                 if missions.root_page and missions.content_type.name == 'mission page':
                     context['mission_web_bot'] = missions.web_bot_script
