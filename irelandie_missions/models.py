@@ -250,6 +250,10 @@ class CountryIndexPage(BasePage):
         blank=True,
         null=True,
     )
+    search_field_name = models.CharField(
+        max_length=255,
+        blank=True,
+    )
     index_body = StreamField(
         wagtail_blocks.StreamBlock(
             [
@@ -259,6 +263,7 @@ class CountryIndexPage(BasePage):
                         [
                             ("section_id", wagtail_blocks.CharBlock(required=False)),
                             ("title", wagtail_blocks.CharBlock(required=False)),
+                            ("subtitle", wagtail_blocks.RichTextBlock(required=False)),
                             ("mini_link_cards", blocks.MiniLinkCardsBlock())
                         ],
                     ),
@@ -283,7 +288,12 @@ class CountryIndexPage(BasePage):
     content_panels = BasePage.content_panels + [
         FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("top_body"),
-        FieldPanel("index_body"),
+        MultiFieldPanel(
+            [
+                FieldPanel("search_field_name"),
+                FieldPanel("index_body"),
+            ], heading="Index Body"
+        ),
         FieldPanel("bottom_body"),
     ]
 
