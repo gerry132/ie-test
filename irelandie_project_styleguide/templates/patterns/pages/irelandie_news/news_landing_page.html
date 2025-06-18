@@ -49,7 +49,7 @@
                                     It will fail silently, here and simply not render an image tag.
                                     To prevent the panel from collapsing still render the container div
                                 {% endcomment %}
-                                <div class="image-container-news">
+                                <div class="card__image-container-news">
                                     {% if article.listing_image %}
                                         {% image article.listing_image fill-600x300-c100 class="card__image-news" %}
                                     {% elif article.hero_image %}
