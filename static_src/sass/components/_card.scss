@@ -76,6 +76,20 @@
         transition: transform $transition;
     }
 
+    &__image-container-news {
+        overflow: hidden;
+        position: relative;
+        height: 170px;
+
+    }
+    &__image-news {
+        position: relative;
+        width: 100%;
+        height: auto;
+        transform: scale(1);
+        transition: transform $transition;
+    }
+
     &__content {
         color: $color--default;
         padding: $grid;
