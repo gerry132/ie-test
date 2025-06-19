@@ -110,7 +110,8 @@ class PersonTag(TaggedItemBase):
 
 
 @register_snippet
-class Person(TranslatableMixin, PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class Person(TranslatableMixin, PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed,
+             ClusterableModel, models.Model):
     tags = TaggableManager(through=PersonTag, blank=True)
     name = models.CharField(max_length=255)
     title = models.CharField(max_length=255, blank=True)
