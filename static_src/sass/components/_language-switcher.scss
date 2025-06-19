@@ -1,10 +1,11 @@
 .language-switcher {
     font-family: $font--secondary;
-    background-image: url('../images/cssBackgrounds/arrow.svg');
+    background-image: url('../images/cssBackgrounds/Globe_language_selector.png'),
+    url('../images/cssBackgrounds/arrow.svg');
     background-color: transparent;
-    background-repeat: no-repeat;
-    background-size: 16px 8px;
-    background-position: right 8px;
+    background-repeat: no-repeat, no-repeat;
+    background-size: 16px 16px, 16px 8px;
+    background-position: left 8px center, right 8px center;
     color: $color--white;
     position: relative;
     display: block;
@@ -12,6 +13,7 @@
     vertical-align: middle;
     border: 0;
     padding-right: 22px;
+    padding-left: 30px;
     @include media-query(max-medium){
         @include font-size(xxs);
     }
