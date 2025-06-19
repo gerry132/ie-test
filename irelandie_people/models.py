@@ -110,7 +110,8 @@ class PersonTag(TaggedItemBase):
 
 
 @register_snippet
-class Person(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class Person(TranslatableMixin, PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed,
+             ClusterableModel, models.Model):
     tags = TaggableManager(through=PersonTag, blank=True)
     name = models.CharField(max_length=255)
     title = models.CharField(max_length=255, blank=True)
@@ -160,9 +161,10 @@ class Person(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, Cl
     )
     _revisions = GenericRelation("wagtailcore.Revision", related_query_name="person")
 
-    class Meta:
+    class Meta(TranslatableMixin.Meta):
         verbose_name = "Person"
         verbose_name_plural = "People"
+        unique_together = ('translation_key', 'locale')
 
     def __str__(self):
         return self.name
