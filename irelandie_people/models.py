@@ -9,7 +9,7 @@ from wagtail.admin.panels import (
     MultiFieldPanel,
 )
 from wagtail.fields import StreamField, RichTextField
-from wagtail.models import Page, TranslatableMixin, PreviewableMixin, BootstrapTranslatableMixin
+from wagtail.models import Page, TranslatableMixin, PreviewableMixin
 
 from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
