@@ -200,3 +200,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+window.addEventListener('DOMContentLoaded', function () {
+  const select = document.querySelector('select[name="schema_type"]');
+  const articles = document.querySelectorAll('.schema-article');
+  const events = document.querySelectorAll('.schema-event');
+
+  function update() {
+    const val = select.value;
+
+    articles.forEach(el => {
+      el.style.display = val === 'article' ? '' : 'none';
+    });
+
+    events.forEach(el => {
+      el.style.display = val === 'event' ? '' : 'none';
+    });
+  }
+
+  if (select) {
+            update();  // Initial call
+            select.addEventListener('change', update);
+        }
+});
+
+

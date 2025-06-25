@@ -11,6 +11,11 @@
             {% if page and secure %}
                 <link rel="canonical" href="{{ page.full_url }}">
             {% endif %}
+        {% if page.get_schema_json %}
+            <script type="application/ld+json">
+              {{ page.get_schema_json|safe }}
+            </script>
+          {% endif %}
         {% endblock %}
         <meta name="description" content="{% if page.search_description %}{{ page.search_description }}{% else %}{{ page.listing_summary }}{% endif %}" />
         <meta charset="utf-8" />
