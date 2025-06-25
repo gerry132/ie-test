@@ -365,7 +365,8 @@ class Parallax(HeroPage):
                                                                         'thumbnail') and video_file.thumbnail
                     else "https://example.com/default-thumbnail.jpg",
                     "uploadDate": video_file.created.strftime('%Y-%m-%dT%H:%M:%S%z') if hasattr(video_file,
-                                                                                                'created') else "2024-01-01T00:00:00+00:00",
+                                                                                                'created') else
+                    "2024-01-01T00:00:00+00:00",
                 }
 
             schemas.append({k: v for k, v in article_schema.items() if v is not None})
