@@ -16,12 +16,12 @@
     <div style="{% if value.background_color %} background-color: {{value.background_color}}; {% endif %}" class="jarallax-color"></div>
             {% if value.logo_cards %}
             <div class="content" style="color: {{value.text_color}}; text-align: {{value.text_alignment}}; --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};
-            {% if value.button_color %}--button-color: {{ value.button_color }};{% endif %}{% if value.button_text_color %}--button-text-color: {{ value.button_text_color }};{% endif %}">
+            {% if value.button_color %}--button-color: {{ value.button_color }};{% endif %}{% if value.button_text_color %}--button-text-color: {{ value.button_text_color }};{% endif %}"{% if value.is_speakable %} data-speakable="true" {% endif %}>
                 {% include_block value.logo_cards %}
             </div>
             {% elif value.link_cards %}
             <div class="content" style="color: {{value.text_color}}; text-align: {{value.text_alignment}}; --text-color-link-cards: {{value.text_color}}; --background-color-link-cards: {{value.background_color}}; --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};
-            {% if value.button_color %}--button-color: {{ value.button_color }};{% endif %}{% if value.button_text_color %}--button-text-color: {{ value.button_text_color }};{% endif %}">
+            {% if value.button_color %}--button-color: {{ value.button_color }};{% endif %}{% if value.button_text_color %}--button-text-color: {{ value.button_text_color }};{% endif %}"{% if value.is_speakable %} data-speakable="true" {% endif %}>
                 {% include_block value.richtext %}
                 {% if value.link_cards.link_cards|length > 2 %}
                         <div class="article-cards featured-blocks featured-blocks--three">
@@ -39,16 +39,16 @@
             </div>
             {% elif value.timeline_photo_gallery %}
                 <div class="content" style="color: {{value.text_color}}; --text-color: {{value.text_color}}; text-align: {{value.text_alignment}}; --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};
-                {% if value.button_color %}--button-color: {{ value.button_color }};{% endif %}{% if value.button_text_color %}--button-text-color: {{ value.button_text_color }};{% endif %}">
+                {% if value.button_color %}--button-color: {{ value.button_color }};{% endif %}{% if value.button_text_color %}--button-text-color: {{ value.button_text_color }};{% endif %}"{% if value.is_speakable %} data-speakable="true" {% endif %}>
                     {% include_block value.timeline_photo_gallery %}
                 </div>
             {% elif value.youtube_or_vimeo_video %}
-                <div class="content" style="color: {{value.text_color}}; --text-color: {{value.text_color}}; text-align: {{value.text_alignment}}; --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};" {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
+                <div class="content" style="color: {{value.text_color}}; --text-color: {{value.text_color}}; text-align: {{value.text_alignment}}; --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};" {% if value.section_id %} id="{{value.section_id}}" {% endif %}{% if value.is_speakable %} data-speakable="true" {% endif %}>
                     {% include_block value.youtube_or_vimeo_video %}
                 </div>
             {% else %}
                 <div style="color: {{value.text_color}}; padding: 80px 0px; --text-color: {{value.text_color}}; text-align: {{value.text_alignment}}; --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};
-                {% if value.button_color %}--button-color: {{ value.button_color }};{% endif %}{% if value.button_text_color %}--button-text-color: {{ value.button_text_color }};{% endif %}">
+                {% if value.button_color %}--button-color: {{ value.button_color }};{% endif %}{% if value.button_text_color %}--button-text-color: {{ value.button_text_color }};{% endif %}"{% if value.is_speakable %} data-speakable="true" {% endif %}>
                     {% include_block value.story_photo_gallery %}
                 </div>
             {% endif %}

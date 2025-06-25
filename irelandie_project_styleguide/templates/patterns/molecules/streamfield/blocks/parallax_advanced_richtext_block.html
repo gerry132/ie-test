@@ -6,7 +6,7 @@
         padding-right: 20px;
     }
 </style>
-<div class="parallax parallax-section jarallax text-parallax" id="jarallax3"{% if not double_feature %}  data-speed="0.2" {% endif %}>
+<div class="parallax parallax-section jarallax text-parallax" id="jarallax3"{% if not double_feature %}  data-speed="0.2" {% endif %}{% if value.is_speakable %} data-speakable="true" {% endif %}>
     <div style="{% if value.background_color %} background-color: {{value.background_color}}; {% endif %}" class="jarallax-color"></div>
 
     <div class="rich-text rich-text__content"
