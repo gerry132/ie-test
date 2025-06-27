@@ -1,6 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 
-<div style="{% if value.background_color %} background-color: {{value.background_color}}; padding: 20px 0;{% endif %}">
+<div style="{% if value.background_color %} background-color: {{value.background_color}}; padding: 20px 0;{% endif %}"{% if value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
 <div class="wrapper wrapper--large wrapper--padding">
     <div class="wide_feature__container{% if value.image_or_video_alignment == 'right' %} wide_feature__container__right-aligned{% endif %}">
             <div class="wide_feature__featured">

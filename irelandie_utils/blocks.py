@@ -89,7 +89,7 @@ class PullQuoteBlock(blocks.StructBlock):
         ('neon-green', 'Neon Green'),
         ('gold', 'State Gold'),
     ]
-
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     paragraph_alignment = blocks.ChoiceBlock(
         required=False,
         choices=ParagraphAlignment.choices,
@@ -191,6 +191,7 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 
 
 class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     image = ImageChooserBlock(required=False)
     image_alt = blocks.CharBlock(
         required=False,
@@ -400,6 +401,7 @@ class ImageBlock(blocks.StructBlock):
 class DocumentBlock(blocks.StructBlock):
     document = DocumentChooserBlock()
     title = blocks.CharBlock(required=False)
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
 
     class Meta:
         icon = "doc-full-inverse"
@@ -475,6 +477,7 @@ class RichTextBlock(blocks.RichTextBlock):
 
 
 class AdvancedRichTextBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     section_id = blocks.CharBlock(required=False)
     paragraph_alignment = blocks.ChoiceBlock(
         required=False,
@@ -545,6 +548,8 @@ class RoleBlock(blocks.PageChooserBlock):
 
 
 class TableBlock(WagtailTableBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
+
     class Meta:
         label = "TableBlock"
 
@@ -647,6 +652,7 @@ class LogoCardBlock(blocks.StructBlock):
 
 
 class LogoCardsBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     summary_richtext = blocks.StructBlock(
         [
             ("content", AdvancedRichTextBlock())
@@ -719,6 +725,7 @@ class ArticleCardBlock(blocks.StructBlock):
 
 
 class ArticleCardsBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     title = blocks.CharBlock(required=False)
     summary = blocks.TextBlock(required=False)
     summary_richtext = AdvancedRichTextBlock(required=False)
@@ -763,6 +770,7 @@ class StatBlock(blocks.StructBlock):
 
 
 class StatsBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     richtext = AdvancedRichTextBlock(required=False)
 
     stats = blocks.StreamBlock([("stats", StatBlock())])
@@ -827,6 +835,7 @@ class LinkCardBlock(blocks.StructBlock):
 
 
 class LinkCardsBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     link_cards = blocks.StreamBlock([("link_card", LinkCardBlock())])
 
     class Meta:
@@ -971,6 +980,7 @@ class TimelinePhotoBlock(blocks.StructBlock):
 
 
 class TimelinePhotoGalleriesBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     richtext = AdvancedRichTextBlock(required=False)
     story_photo_gallery = blocks.StreamBlock([("timeline_photo_gallery", TimelinePhotoBlock())])
 
@@ -1003,6 +1013,7 @@ class StoryPhotoGalleryBlock(blocks.StructBlock):
 
 
 class StoryPhotoGalleriesBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     richtext = AdvancedRichTextBlock(required=False)
     story_photo_gallery = blocks.StreamBlock([("story_photo_gallery", StoryPhotoGalleryBlock())])
 
@@ -1075,6 +1086,7 @@ class MapBlock(blocks.StructBlock):
 
 
 class AccordionBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     title = blocks.CharBlock(required=False)
     summary = blocks.RichTextBlock(
         features=["h3", "blockquote", "bold", "link", "document-link", "ul"],
@@ -1233,6 +1245,7 @@ class TocBlocks(blocks.StreamBlock):
 
 
 class OverviewPullOutTextBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     section_id = blocks.CharBlock(required=False)
     heading = blocks.CharBlock(required=False)
     body = blocks.StreamBlock(
@@ -1249,6 +1262,7 @@ class OverviewPullOutTextBlock(blocks.StructBlock):
 
 
 class PolicyDocumentBoxBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     document_image = ImageChooserBlock(required=False)
     document_title = blocks.CharBlock(required=False)
     document = DocumentChooserBlock(required=False)
@@ -1262,6 +1276,7 @@ class PolicyDocumentBoxBlock(blocks.StructBlock):
 
 
 class InfoAtAGlanceBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     info_at_a_glance = blocks.StreamBlock(
         [
             ("label_and_statistic", blocks.StructBlock(
@@ -1690,6 +1705,7 @@ class YoutubeVimeoLinkValue(blocks.StructValue):
 
 
 class StoryVideoBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     youtube_or_vimeo_size_alignment = blocks.ChoiceBlock(
         required=False,
         choices=YoutubeSize.choices,
@@ -1758,6 +1774,7 @@ class VideoBlock(blocks.StructBlock):
 
 
 class MultimediaRowBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     richtext = AdvancedRichTextBlock(required=False)
     multimedia = blocks.StreamBlock(
         [
@@ -1813,6 +1830,7 @@ class FeaturedTaggedStoryBlock(blocks.StructBlock):
 
 
 class FeaturedTaggedStoriesBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     title = blocks.CharBlock(required=False)
     summary = blocks.RichTextBlock(required=False)
 
@@ -1977,6 +1995,7 @@ class WideFeatureLinkBlock(blocks.StructBlock):
 
 
 class WideFeatureBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     background_color = blocks.CharBlock(required=False, default='#FFF')
     image_or_video_alignment = blocks.ChoiceBlock(
         required=True,

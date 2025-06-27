@@ -3,6 +3,7 @@ import mimetypes
 
 from django.db import models
 from django.utils.formats import date_format
+from django.utils.text import slugify
 from wagtail.images import get_image_model_string
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
@@ -269,20 +270,23 @@ class Parallax(HeroPage):
     def get_speakable_selectors(self):
         selectors = []
         index = 1
+        double_index = 1
 
         for block in self.body:
+            # For DoubleFeature blocks, loop their sub_blocks too
             if block.block_type == 'DoubleFeature':
                 for sub_block in block.value:
                     value = getattr(sub_block, 'value', {})
+                    slug = slugify('DoubleFeature')
                     if hasattr(value, 'get') and value.get('is_speakable', False):
-                        selector = f".double-feature--child[data-index='{index}'] [data-speakable='true']"
+                        selector = f"[data-speakable='{slug}-{double_index}']"
                         selectors.append(selector)
-                        index += 1
+                        double_index += 1
             else:
                 value = getattr(block, 'value', {})
+                slug = slugify(block.block_type)
                 if hasattr(value, 'get') and value.get('is_speakable', False):
-                    block_type = block.block.__class__.__name__
-                    selector = f".block-{block_type}[data-index='{index}'] [data-speakable='true']"
+                    selector = f"[data-speakable='{slug}-{index}']"
                     selectors.append(selector)
                     index += 1
 
