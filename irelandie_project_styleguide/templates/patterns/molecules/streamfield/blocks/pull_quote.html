@@ -1,6 +1,6 @@
-{% load static %}
+{% load static util_tags %}
 
-<div class="rich-text {% if value.paragraph_alignment == 'narrow' %}rich-text__narrow{% endif %}">
+<div class="rich-text {% if value.paragraph_alignment == 'narrow' %}rich-text__narrow{% endif %}"{% if value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
   <div class="pull-quote-wrapper {{ self.style }}">
   <div class="pull-quote">
     {% include "patterns/atoms/icons/icon.html" with name="open-quote" classname="quote_icon top" %}

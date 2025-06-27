@@ -2,52 +2,14 @@
 {% load util_tags wagtailcore_tags wagtailimages_tags static %}
 
 {% block main %}
-    {{ page.body }}
+     {% for block in page.body %}
+        {% include_block block with block_type=block.block_type %}
+    {% endfor %}
 <script src="https://cdn.jsdelivr.net/npm/jarallax@2.2.1/dist/jarallax.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jarallax@2.2.1/dist/jarallax-video.min.js"></script>
 <script>
 
 document.addEventListener('DOMContentLoaded', function() {
-
-    const blockTypes = [
-      "ParallaxImageVideoBlock",
-      "ParallaxYoutubeVimeoBlock",
-      "ParallaxAdvancedRichTextBlock",
-      "ParallaxLogocards",
-      "ParallaxStoryPhotoGalleryBlock",
-      "ParallaxTimelinePhotoGalleryBlock",
-      "ParallaxLinkCardsBlock"
-    ];
-
-    let speakableBlocks = [];
-
-    // Regular blocks
-    blockTypes.forEach(type => {
-      const blocks = document.querySelectorAll(`.block-${type}`);
-      blocks.forEach(block => {
-        if (block.querySelector('[data-speakable="true"]')) {
-          speakableBlocks.push(block);
-        }
-      });
-    });
-
-    // DoubleFeature blocks
-    const doubleFeatures = document.querySelectorAll('.double-feature--child');
-    doubleFeatures.forEach(child => {
-      if (child.querySelector('[data-speakable="true"]')) {
-        speakableBlocks.push(child);
-      }
-    });
-
-    // Sort in DOM order
-    speakableBlocks.sort((a, b) => {
-      return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_PRECEDING ? 1 : -1;
-    });
-
-    // Assign data-index
-    speakableBlocks.forEach((block, i) => {
-      block.setAttribute('data-index', i + 1);
-    });
     // Initialize Jarallax for each element with the 'jarallax' class
     jarallax(document.querySelectorAll('.jarallax'));
 

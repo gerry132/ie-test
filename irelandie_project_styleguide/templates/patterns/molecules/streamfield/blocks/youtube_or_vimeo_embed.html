@@ -1,6 +1,6 @@
 {% load wagtailcore_tags i18n %}
 {% load util_tags navigation_tags wagtailimages_tags %}
-<div class="wrapper wrapper--large wrapper--padding">
+<div class="wrapper wrapper--large wrapper--padding"{% if value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
     {% if value.video %}
     {% if value.youtube_or_vimeo_size_alignment == 'large' %}
     {% if value.title or value.summary %}
