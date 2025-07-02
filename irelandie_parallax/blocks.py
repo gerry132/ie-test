@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.images.blocks import ImageChooserBlock
 from irelandie_utils.constants import ParagraphAlignment, TextAlignment
 from irelandie_utils.blocks import (
-    StoryVideoBlock, TimelinePhotoGalleriesBlock, ImageButtonBlock,
+    StoryVideoBlock, TimelinePhotoGalleriesBlock,
     CustomVideoChooserBlock, StoryPhotoGalleriesBlock, LogoCardsBlock,
     AdvancedRichTextBlock, LinkCardsBlock, ALT_HELP_TEXT_IMG_VIDEO)
 from wagtail.blocks.struct_block import StructBlockValidationError
@@ -56,16 +56,6 @@ class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
             "button": {"max_num": 1},
             "color": {"max_num": 1},
         },
-        required=False,
-    )
-
-    image_link = blocks.StreamBlock(
-        [
-            ("image_button", ImageButtonBlock())
-        ],
-        blank=True,
-        max_num=1,
-        min_num=0,
         required=False,
     )
 
