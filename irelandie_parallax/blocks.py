@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.images.blocks import ImageChooserBlock
 from irelandie_utils.constants import ParagraphAlignment, TextAlignment
 from irelandie_utils.blocks import (
-    StoryVideoBlock, TimelinePhotoGalleriesBlock, ImageButtonBlock,
+    StoryVideoBlock, TimelinePhotoGalleriesBlock,
     CustomVideoChooserBlock, StoryPhotoGalleriesBlock, LogoCardsBlock,
     AdvancedRichTextBlock, LinkCardsBlock, ALT_HELP_TEXT_IMG_VIDEO)
 from wagtail.blocks.struct_block import StructBlockValidationError
