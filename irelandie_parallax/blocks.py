@@ -59,16 +59,6 @@ class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
         required=False,
     )
 
-    image_link = blocks.StreamBlock(
-        [
-            ("image_button", ImageButtonBlock())
-        ],
-        blank=True,
-        max_num=1,
-        min_num=0,
-        required=False,
-    )
-
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
 

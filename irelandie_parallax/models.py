@@ -285,7 +285,17 @@ class Parallax(HeroPage):
             else:
                 value = getattr(block, 'value', {})
                 slug = slugify(block.block_type)
+
                 if hasattr(value, 'get') and value.get('is_speakable', False):
+                    # Apply heading/subtitle check only for ParallaxImageVideoBlock
+                    if block.block_type == "ParallaxImageVideoBlock":
+                        heading = value.get('heading', '')
+                        subtitle = value.get('subtitle', '')
+
+                        if not (str(heading).strip() or str(subtitle).strip()):
+                            index += 1
+                            continue
+
                     selector = f"[data-speakable='{slug}-{index}']"
                     selectors.append(selector)
                     index += 1
