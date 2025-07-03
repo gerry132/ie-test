@@ -250,7 +250,7 @@ class FreeFormPage(FreeFormPageBase):
                 "@type": "GovernmentOrganization",
                 "name": self.title,
                 "url": self.full_url,
-                "sameAs": self.same_as_links,  # assume this returns list of URLs
+                "sameAs": self.same_as_links,
                 "mainEntityOfPage": {
                     "@type": "WebPage",
                     "@id": self.full_url,
@@ -274,7 +274,8 @@ class FreeFormPage(FreeFormPageBase):
             self.generic_hero and self.five_panel_block and self.hero_image or
             self.generic_hero and self.five_panel_block and self.hero_video or
             self.generic_hero and self.five_panel_block or self.hero_image and self.five_panel_block or
-            self.hero_video and self.five_panel_block):
+            self.hero_video and self.five_panel_block
+        ):
             raise ValidationError(
                 {
                     "five_panel_block": ValidationError(
