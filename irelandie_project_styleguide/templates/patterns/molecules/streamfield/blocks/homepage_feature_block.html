@@ -1,6 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 <section aria-labelledby="hero-title">
-<div class="wrapper wrapper--large wrapper--padding">
+<div class="wrapper wrapper--large wrapper--padding" {% if value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
     <div class="homepage_feature__container">
             <div class="homepage_feature__featured" role="region" aria-labelledby="hero-main-content">
                 {% for block_hero in value.homepage_featured_hero %}

@@ -305,6 +305,7 @@ class TopStoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 
 
 class FeaturedStoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -321,6 +322,7 @@ class FeaturedStoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 
 
 class EmbassyStory(BaseBlockLinkValidation, BaseBlockLinkContext):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     image = ImageChooserBlock(required=True)
     page = blocks.PageChooserBlock(
         required=False,
@@ -449,6 +451,7 @@ class JumpboxBlock(blocks.StructBlock):
 
 
 class PersonBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     person = SnippetChooserBlock(target_model="irelandie_people.Person")
 
     class Meta:
@@ -548,8 +551,6 @@ class RoleBlock(blocks.PageChooserBlock):
 
 
 class TableBlock(WagtailTableBlock):
-    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
-
     class Meta:
         label = "TableBlock"
 
@@ -906,6 +907,7 @@ class MiniLinkCardsBlock(blocks.StructBlock):
 
 
 class FeaturedArticlesBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     title = blocks.CharBlock()
     summary = blocks.TextBlock()
     articles = blocks.ListBlock(
@@ -1203,6 +1205,8 @@ class FreeFormBlocksBase(blocks.StreamBlock):
     pull_quote = PullQuoteBlock(group="Base")
     pinned_stories = blocks.StructBlock(
         [
+            ("is_speakable", blocks.BooleanBlock(required=False, default=False,
+                                                 help_text="Mark if this block is speakable")),
             ("pinned_story_hero", PinnedStoryHeroBlock()),
         ],
         template="patterns/molecules/pinned-stories/pinned_stories.html", group="Module"
@@ -1553,6 +1557,7 @@ class LinkBoxBlock(blocks.StructBlock):
 
 
 class LinkBoxesBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     link_boxes = blocks.StreamBlock([("link_box", LinkBoxBlock())])
 
     class Meta:
@@ -1613,6 +1618,7 @@ class LinkButtonBlock(blocks.StructBlock):
 
 
 class LinkButtonsBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     link_buttons = blocks.StreamBlock([("link_button", LinkButtonBlock())])
 
     class Meta:
@@ -1955,6 +1961,7 @@ class HomepageFeatureImageVideoBlock(blocks.StructBlock):
 
 
 class HomepageFeatureBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     homepage_featured_hero = blocks.StreamBlock(
         [
             ("image_or_video_block", HomepageFeatureImageVideoBlock(required=False)),

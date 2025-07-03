@@ -1,7 +1,7 @@
 {% load wagtailimages_tags i18n %}
 
 {% if link_url %}
-<a href="{{ link_url }}" aria-label="{% trans 'Featured contents' %}" class="featured-block">
+<a href="{{ link_url }}" aria-label="{% trans 'Featured contents' %}" class="featured-block" {% if featured_block.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
     {% image featured_block.image width-1240 as featured_image %}
     <div class="featured-block__image" style="background-image:url({{ featured_image.url }}); {{ featured_image.background_position_style }}"></div>
     {% if featured_block.primary_title or featured_block.title or link_url %}

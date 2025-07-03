@@ -27,13 +27,13 @@
     {% elif block.block_type == 'html' or block.block_type == 'youtube_video' %}
         {% include_block block %}
     {% elif block.block_type == 'logos' %}
-        <div class="wrapper wrapper--large wrapper--padding" style="padding-bottom:20px;">
-                {% include_block block %}
+        <div class="wrapper wrapper--large wrapper--padding" style="padding-bottom:20px;" {% if block.value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
+                {% include_block block with parent_is_speakable=True %}
         </div>
     {% elif block.block_type == 'accordion' %}
-        <div class="wrapper wrapper--padding">
+        <div class="wrapper wrapper--padding" {% if block.value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
             <div style="padding: 20px 0;">
-                {% include_block block %}
+                {% include_block block with parent_is_speakable=True %}
             </div>
         </div>
     {% elif block.block_type == 'rich_text_advanced' %}
@@ -46,8 +46,10 @@
             {% include_block block %}
             </div>
         </div>
-    {% elif block.block_type == 'story_photo_gallery' %}
-        {% include_block block %}
+    {% elif block.block_type == 'story_photo_gallery' or block.block_type == 'timeline_photo_gallery' or block.block_type == 'multimedia_row' or block.block_type == 'stats_block' %}
+        <div {% if block.value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
+            {% include_block block with parent_is_speakable=True %}
+        </div>
     {% elif block.block_type == 'person' %}
          {% include "patterns/snippets/peoplesnippet.html" with object=block.value.person %}
     {% else %}

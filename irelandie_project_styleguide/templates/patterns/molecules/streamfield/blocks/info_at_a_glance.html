@@ -1,5 +1,5 @@
 
-<div class="section section--padding">
+<div class="section section--padding" {% if value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
 <hr style="border: 2px solid #000;">
 <div id="flexContainer" style="display: flex; flex-direction: column;">
     {% for block in value.info_at_a_glance %}

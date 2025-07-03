@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
+import json
+
 from django.db import models
 from django.forms import ValidationError
 from django.utils.functional import cached_property
+from django.utils.text import slugify
 
 from wagtail.fields import StreamField
 from wagtail.admin.panels import TabbedInterface, ObjectList, FieldPanel, MultiFieldPanel, InlinePanel
@@ -117,6 +120,25 @@ class FreeFormPage(FreeFormPageBase):
         min_num=0,
         max_num=1,
     )
+
+    twitter_url = models.URLField(blank=True, help_text="Full Twitter profile URL")
+    facebook_url = models.URLField(blank=True, help_text="Full Facebook page URL")
+    youtube_url = models.URLField(blank=True, help_text="Full YouTube channel URL")
+    linkedin_url = models.URLField(blank=True, help_text="Full LinkedIn profile URL")
+    instagram_url = models.URLField(blank=True, help_text="Full Instagram profile URL")
+    weibo_url = models.URLField(blank=True, help_text="Full Weibo profile URL")
+
+    social_media_panels = MultiFieldPanel(
+        [
+            FieldPanel("twitter_url"),
+            FieldPanel("facebook_url"),
+            FieldPanel("youtube_url"),
+            FieldPanel("linkedin_url"),
+            FieldPanel("instagram_url"),
+            FieldPanel("weibo_url"),
+        ],
+        heading="Social Media URLs",
+    )
     content_panels = [FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block")] + [
         FieldPanel("subtitle", help_text="Please include a brief description of this page/article. This will not "
                                          "appear live on the page, but will appear publicly as a subtitle in other "
@@ -149,10 +171,12 @@ class FreeFormPage(FreeFormPageBase):
 
     )
 
+    promote_panels = FreeFormPageBase.promote_panels + [social_media_panels]
+
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
-        ObjectList(FreeFormPageBase.promote_panels, heading='Promote', permission="superuser"),
+        ObjectList(promote_panels, heading='Promote', permission="superuser"),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -188,13 +212,69 @@ class FreeFormPage(FreeFormPageBase):
             .specific()
         )
 
+    def get_speakable_selectors(self):
+        selectors = []
+        for idx, block in enumerate(self.body, start=1):
+            value = getattr(block, 'value', {})
+            slug = slugify(block.block_type)
+            if hasattr(value, 'get') and value.get('is_speakable', False):
+                selector = f"[data-speakable='{slug}-{idx}']"
+                selectors.append(selector)
+
+        return selectors
+
+    @property
+    def same_as_links(self):
+        return list(filter(None, [
+            self.twitter_url,
+            self.facebook_url,
+            self.youtube_url,
+            self.linkedin_url,
+            self.instagram_url,
+            self.weibo_url,
+        ]))
+
+    def get_schema_json(self):
+        allowed_paths = [
+            "/en/about/",
+            "/en/dfa/",
+            "/en/irish-aid/",
+        ]
+        print(self.full_url)
+
+        if self.full_url and any(self.full_url.endswith(path) for path in allowed_paths):
+            speakable_selectors = self.get_speakable_selectors()
+
+            schema = {
+                "@context": "https://schema.org",
+                "@type": "GovernmentOrganization",
+                "name": self.title,
+                "url": self.full_url,
+                "sameAs": self.same_as_links,  # assume this returns list of URLs
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": self.full_url,
+                },
+            }
+
+            # Add speakable only if selectors exist
+            if speakable_selectors:
+                schema["mainEntityOfPage"]["speakable"] = {
+                    "@type": "SpeakableSpecification",
+                    "cssSelector": speakable_selectors
+                }
+
+            return json.dumps(schema, indent=2)
+
+        return ""
+
     def clean(self):
         if (
             self.generic_hero and self.hero_image or self.generic_hero and self.hero_video or
             self.generic_hero and self.five_panel_block and self.hero_image or
             self.generic_hero and self.five_panel_block and self.hero_video or
             self.generic_hero and self.five_panel_block or self.hero_image and self.five_panel_block or
-                self.hero_video and self.five_panel_block):
+            self.hero_video and self.five_panel_block):
             raise ValidationError(
                 {
                     "five_panel_block": ValidationError(
