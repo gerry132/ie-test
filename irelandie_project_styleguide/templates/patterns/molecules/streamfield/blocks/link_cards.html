@@ -6,7 +6,7 @@
         }
         }
 </style>
-<div class="section section--padding padding">
+<div class="section section--padding padding" {% if value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
     <div class="wrapper wrapper--large">
         {% if value.link_cards|length > 2 %}
         <div class="article-cards featured-blocks featured-blocks--three">
