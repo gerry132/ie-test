@@ -224,7 +224,11 @@ class FreeFormPage(FreeFormPageBase):
         return selectors
 
     def get_breadcrumb_schema(self):
-        ancestors = list(self.get_ancestors(inclusive=True).filter(depth__gte=3, live=True))
+        ancestors = list(
+            self.get_ancestors(inclusive=True)
+            .filter(depth__gte=1)
+            .live()
+        )
         ancestors = ancestors[-6:]
 
         item_list = []
