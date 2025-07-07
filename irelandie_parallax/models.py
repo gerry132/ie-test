@@ -304,9 +304,7 @@ class Parallax(HeroPage):
 
     def get_breadcrumb_schema(self):
         ancestors = list(
-            self.get_ancestors(inclusive=True)
-            .filter(depth__gte=1)
-            .live()
+            self.get_ancestors(inclusive=True).live().filter(depth__gte=1)
         )
         ancestors = ancestors[-6:]
 
