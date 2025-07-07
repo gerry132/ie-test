@@ -223,6 +223,25 @@ class FreeFormPage(FreeFormPageBase):
 
         return selectors
 
+    def get_breadcrumb_schema(self):
+        ancestors = list(self.get_ancestors(inclusive=True).filter(depth__gte=3))
+        ancestors = ancestors[-4:]
+
+        item_list = []
+        for position, ancestor in enumerate(ancestors, start=1):
+            item_list.append({
+                "@type": "ListItem",
+                "position": position,
+                "name": ancestor.title,
+                "item": ancestor.full_url
+            })
+
+        return {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": item_list
+        }
+
     @property
     def same_as_links(self):
         return list(filter(None, [
@@ -240,12 +259,11 @@ class FreeFormPage(FreeFormPageBase):
             "/en/dfa/",
             "/en/irish-aid/",
         ]
-        print(self.full_url)
 
         if self.full_url and any(self.full_url.endswith(path) for path in allowed_paths):
             speakable_selectors = self.get_speakable_selectors()
 
-            schema = {
+            main_schema = {
                 "@context": "https://schema.org",
                 "@type": "GovernmentOrganization",
                 "name": self.title,
@@ -259,12 +277,19 @@ class FreeFormPage(FreeFormPageBase):
 
             # Add speakable only if selectors exist
             if speakable_selectors:
-                schema["mainEntityOfPage"]["speakable"] = {
+                main_schema["mainEntityOfPage"]["speakable"] = {
                     "@type": "SpeakableSpecification",
                     "cssSelector": speakable_selectors
                 }
 
-            return json.dumps(schema, indent=2)
+            # Build schema list
+            schemas = [main_schema]
+
+            # Add breadcrumb schema
+            breadcrumb_schema = self.get_breadcrumb_schema()
+            schemas.append(breadcrumb_schema)
+
+            return json.dumps(schemas, indent=2)
 
         return ""
 
