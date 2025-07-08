@@ -303,8 +303,10 @@ class Parallax(HeroPage):
         return selectors
 
     def get_breadcrumb_schema(self):
-        ancestors = list(self.get_ancestors(inclusive=True).filter(depth__gte=3))
-        ancestors = ancestors[-4:]
+        ancestors = list(
+            self.get_ancestors(inclusive=True).live().filter(depth__gte=1)
+        )
+        ancestors = ancestors[-6:]
 
         item_list = []
         for position, ancestor in enumerate(ancestors, start=1):
