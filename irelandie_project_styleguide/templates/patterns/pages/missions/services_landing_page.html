@@ -27,29 +27,39 @@
 
     {% block main %}
         <!-- Body -->
-<div class="{% if page.generic_hero %} section section--padding {% endif %} wrapper wrapper--large wrapper--padding">
-            {% if page.rich_text %}
+<div class="{% if page.generic_hero %}section section--padding{% endif %} wrapper wrapper--large wrapper--padding">
+    {% if page.related_content %}
+        <div class="flex-layout-service-landing">
+            <div class="main-content-service-landing">
+                {% if page.rich_text %}
                     {% include_block page.rich_text %}
                 {% endif %}
-</div>
-<div class="section--master">
-            <div id="{% if page.related_content %}link-box_wrapper{% endif %}" class="wrapper wrapper--large wrapper--padding">
-                    {% include_block page.body %}
-                    <div class="link-box__related-content">
-                    {% if page.related_content %}
-                        <h4 class="header--related-content">{% translate "Related content" %}</h4>
-                        {% for p in page.related_content %}
-                            <a href="{% if p.value.page.url %}{{p.value.page.url}}{% else %}{{p.value.url}}{% endif %}" aria-label="{{p.value.title}}"><h2 class="toc-contents' %}">{{p.value.title}}</h2></a>
-                        {% endfor %}
-                    {% endif %}
+                {% include_block page.body %}
+                {% if page.additional_rich_text %}
+                    <div style="padding-top:40px;">
+                        {% include_block page.additional_rich_text %}
                     </div>
+                {% endif %}
+            </div>
+            <div class="related-content-service-landing">
+                <h4 class="header--related-content">{% translate "Related content" %}</h4>
+                    {% for p in page.related_content %}
+                        <a href="{% if p.value.page.url %}{{p.value.page.url}}{% else %}{{p.value.url}}{% endif %}" aria-label="{{p.value.title}}" tabindex="-1"><h2 tabindex="0" class="toc-contents">{{p.value.title}}</h2></a>
+                    {% endfor %}
+            </div>
         </div>
+    {% else %}
+        {% if page.rich_text %}
+            {% include_block page.rich_text %}
+        {% endif %}
+        {% include_block page.body %}
         {% if page.additional_rich_text %}
-            <div class="wrapper wrapper--large wrapper--padding" style="padding-top:40px;">
+            <div style="padding-top:40px;">
                 {% include_block page.additional_rich_text %}
             </div>
         {% endif %}
-    </div>
+    {% endif %}
+</div>
 <div style="padding-bottom: 40px;"></div>
     {% endblock %}
 {% endblock %}
