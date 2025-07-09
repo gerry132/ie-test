@@ -295,9 +295,9 @@ def get_travel_warning_by_locale(warning, locale):
             "English": "Avoid Non-Essential Travel",
             "Irish": "Seachain Taisteal Neamhriachtanach",
         },
-        "do not travel/ná taistil": {
+        "do not travel/ná taisteal": {
             "English": "Do Not Travel",
-            "Irish": "Ná Taistil",
+            "Irish": "Ná Taisteal",
         },
     }
 
