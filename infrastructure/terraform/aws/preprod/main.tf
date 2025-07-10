@@ -73,7 +73,7 @@ locals {
     },
     gerry_dev = {
       description = "Gerry Mcbride - OGCIO"
-      cidr_blocks = ["37.228.234.227/32"]
+      cidr_blocks = ["37.228.225.101/32"]
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
@@ -558,8 +558,6 @@ resource "aws_route_table_association" "nlb" {
 }
 
 resource "aws_eip" "nlb" {
-  vpc = true
-
   tags = {
     Name = "front_lb"
   }
