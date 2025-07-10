@@ -26,7 +26,7 @@
     text-underline-offset: 0.19em;
     font-weight: 500;
     padding-bottom: 5px;
-
+    width: fit-content;
 }
 .toc-contents:hover, .toc-contents:focus:hover {
     color: #004d44;
@@ -157,3 +157,29 @@
         display: none;
     }
   }
+    .flex-layout-service-landing {
+    display: flex;
+    gap: 30px;
+}
+
+.main-content-service-landing {
+    flex: 0 0 75%;
+    max-width: 75%;
+}
+
+.related-content-service-landing {
+    flex: 0 0 25%;
+    max-width: 25%;
+}
+
+@media (max-width: 768px) {
+    .main-content-service-landing,
+    .related-content-service-landing {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .flex-layout-service-landing {
+        flex-wrap: wrap;
+    }
+}
