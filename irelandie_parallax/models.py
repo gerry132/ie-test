@@ -13,9 +13,9 @@ from irelandie_utils.models import HeroPage, SocialFields, ListingFields
 from irelandie_utils.blocks import GenericHeroBlock
 from irelandie_parallax.blocks import ParallaxAdvancedRichTextBlock, ParallaxImageVideoBlock, \
     ParallaxLogoCardsBlock, ParallaxStoryPhotoGalleryBlock, ParallaxTimelinePhotoGalleryBlock, ParallaxLinkCardsBlock, \
-    ParallaxYoutubeVimeoBlock, DoubleFeature
+    ParallaxYoutubeVimeoBlock, DoubleFeature, ParallaxHTMLBlock
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel, InlinePanel
 
 IMAGE_MODEL = get_image_model_string()
 
@@ -38,6 +38,7 @@ class Parallax(HeroPage):
             ("ParallaxAdvancedRichTextBlock", ParallaxAdvancedRichTextBlock()),
             ("ParallaxImageVideoBlock", ParallaxImageVideoBlock()),
             ("ParallaxYoutubeVimeoBlock", ParallaxYoutubeVimeoBlock()),
+            ("ParallaxHTMLBlock", ParallaxHTMLBlock()),
             ("ParallaxLogocards", ParallaxLogoCardsBlock()),
             ("ParallaxStoryPhotoGalleryBlock", ParallaxStoryPhotoGalleryBlock()),
             ("ParallaxTimelinePhotoGalleryBlock", ParallaxTimelinePhotoGalleryBlock()),
@@ -198,6 +199,8 @@ class Parallax(HeroPage):
                                          "areas of the site that link to this page."),
         FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("body"),
+        InlinePanel('page_related_tags', label="Related category tags"),
+        InlinePanel('page_related_destination_tags', label="Related destination"),
     ]
     COMMON_PROMOTE_PANELS = (
         FieldPanel('slug'),
@@ -266,6 +269,19 @@ class Parallax(HeroPage):
         ObjectList(promote_panels, heading='Promote'),
         ObjectList(HeroPage.settings_panels, heading='Settings', classname="settings"),
     ])
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        from irelandie_utils.templatetags.util_tags import get_tag_links
+        from irelandie_utils.templatetags.util_tags import get_destination_tag_links
+        destination_tags = self.related_destination_tags
+        context["destination_tag_links"] = get_destination_tag_links(destination_tags)
+        tag = self.related_tags
+        tagging_links = get_tag_links(tag, self)[0]
+        tags_no_links = get_tag_links(tag, self)[1]
+        context["tagging_links"] = tagging_links
+        context["tags_no_links"] = tags_no_links
+        return context
 
     def get_speakable_selectors(self):
         selectors = []

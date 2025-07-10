@@ -3,6 +3,7 @@ from operator import attrgetter
 from django.db.models import F
 
 from irelandie_news.models import NewsPage
+from irelandie_parallax.models import Parallax
 
 
 def get_tagged_items(self, tag):
@@ -25,9 +26,12 @@ def get_tagged_items(self, tag):
     news_content = NewsPage.objects.live().filter(
         page_related_tags__page=tag, locale=self.locale).specific().distinct().annotate(
         published=F('last_published_at'))
+    parallax_content = Parallax.objects.live().filter(
+        page_related_tags__page=tag, locale=self.locale).specific().distinct().annotate(
+        published=F('last_published_at'))
 
     results = sorted(
-        chain(stories, freeform, general_content, news_content),
+        chain(stories, freeform, general_content, news_content, parallax_content),
         key=attrgetter('published'),
         reverse=True
     )
