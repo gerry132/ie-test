@@ -282,6 +282,31 @@ class ParallaxYoutubeVimeoBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/parallax_blocks.html"
 
 
+class ParallaxHTMLBlock(blocks.StructBlock):
+    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
+    section_id = blocks.CharBlock(required=False)
+    background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
+    text_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=TextAlignment.choices,
+        default=TextAlignment.CENTER,
+    )
+    text_link_color = blocks.CharBlock(
+        max_length=7, required=False, default="#004d46",
+        help_text="Hex color for hyperlinks in this block"
+    )
+    title = blocks.CharBlock(blank=True, required=False)
+    summary = blocks.RichTextBlock(blank=True, required=False)
+    parallax_html_embed = blocks.RawHTMLBlock(
+        help_text="Add title attribute value to iframe for accessibility. Please use only iframes.",
+    )
+
+    class Meta:
+        label = 'Parallax HTML Embed'
+        template = "patterns/molecules/streamfield/blocks/parallax_html_embed.html"
+
+
 class DoubleFeature(StreamBlock):
     rich_text = ParallaxAdvancedRichTextBlock()
     image_video = ParallaxImageVideoBlock()

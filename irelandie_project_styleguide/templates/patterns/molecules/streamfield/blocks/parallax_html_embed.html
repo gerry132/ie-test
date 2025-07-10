@@ -1,0 +1,22 @@
+{% load wagtailcore_tags i18n %}
+
+    <div {% if value.section_id %} id="{{value.section_id}}" {% endif %} data-jarallax class="parallax parallax-section" id="jarallax4" {% if not double_feature %}  data-speed="0.2" {% endif %}{% if value.is_speakable %}
+        {% if value.title or value.summary %}
+            data-speakable="{{ block_type|slugify }}-{{ forloop.counter }}"
+        {% endif %}{% endif %}>
+        <div style="{% if value.background_color %} background-color: {{value.background_color}}; {% endif %}" class="jarallax-color"></div>
+
+
+        <div class="rich-text content"
+             style="text-align: {{ value.text_alignment }};
+                    color: {{ value.text_color }};
+                    --text-color: {{ value.text_color }};
+                    --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};">
+            <h2>{{ value.title }}</h2>
+            <p>{{ value.summary|richtext }}</p>
+        </div>
+        <div class="wrapper wrapper--large wrapper--padding">
+            {{ value.parallax_html_embed|safe }}
+        </div>
+    </div>
+
