@@ -12,6 +12,26 @@ from irelandie_utils.blocks import (
 from wagtail.blocks.struct_block import StructBlockValidationError
 from irelandie_home.blocks import SecondaryCallToAction
 
+LINK_BUTTON_THEMES = [
+    ("standard", "Standard"),
+    ("light_grey", "Light Grey"),
+    ("beige", "Beige"),
+    ("cyan", "Cyan"),
+    ("green", "Green"),
+    ("olive", "Olive"),
+    ("orange", "Orange"),
+    ("red", "Red"),
+    ("magenta", "Magenta"),
+    ("violet", "Violet"),
+    ("purple", "Purple"),
+    ("indigo", "Indigo"),
+    ("blue", "Blue"),
+    ("navy", "Navy"),
+    ("gold", "Gold"),
+    ("brown", "Brown"),
+    ("dark_grey", "Dark Grey"),
+]
+
 
 class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
     is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
@@ -34,9 +54,11 @@ class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
         default=TextAlignment.CENTER,
     )
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
-    link_color = blocks.CharBlock(
-        max_length=7, required=False, default="#004d46",
-        help_text="Hex color for hyperlinks in this block"
+    link_button_theme = blocks.ChoiceBlock(
+        choices=LINK_BUTTON_THEMES,
+        required=False,
+        default="standard",
+        help_text="Select a color theme for both links and buttons."
     )
     heading = blocks.CharBlock(required=False)
     rich_text = blocks.RichTextBlock(
@@ -44,17 +66,11 @@ class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
     )
     button_link = blocks.StreamBlock(
         [
-            ("color", blocks.StructBlock([
-                ("button_color", blocks.CharBlock(max_length=7, required=False)),
-                ("button_text_color", blocks.CharBlock(max_length=7, required=False)),
-            ]
-            )),
             ("button", SecondaryCallToAction())
         ],
         blank=True,
         block_counts={
             "button": {"max_num": 1},
-            "color": {"max_num": 1},
         },
         required=False,
     )
@@ -62,18 +78,10 @@ class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
 
-        button_color = None
-        button_text_color = None
         buttons = []
         for item in value.get('button_link', []):
-            if item.block_type == "color":
-                button_color = item.value.get('button_color')
-                button_text_color = item.value.get('button_text_color')
-            elif item.block_type == "button":
+            if item.block_type == "button":
                 buttons.append(item.value)
-
-        context['button_color'] = button_color
-        context['button_text_color'] = button_text_color
         context['buttons'] = buttons
 
         return context
@@ -102,9 +110,11 @@ class ParallaxImageVideoBlock(blocks.StructBlock):
         default=TextAlignment.CENTER,
     )
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
-    link_color = blocks.CharBlock(
-        max_length=7, required=False, default="#004d46",
-        help_text="Hex color for hyperlinks in this block"
+    link_button_theme = blocks.ChoiceBlock(
+        choices=LINK_BUTTON_THEMES,
+        required=False,
+        default="standard",
+        help_text="Select a color theme for both links and buttons."
     )
     heading = blocks.CharBlock(blank=True, required=False)
     subtitle = blocks.RichTextBlock(blank=True, required=False)
@@ -156,22 +166,16 @@ class ParallaxLogoCardsBlock(blocks.StructBlock):
     is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
-    link_color = blocks.CharBlock(
-        max_length=7, required=False, default="#004d46",
-        help_text="Hex color for hyperlinks in this block"
+    link_button_theme = blocks.ChoiceBlock(
+        choices=LINK_BUTTON_THEMES,
+        required=False,
+        default="standard",
+        help_text="Select a color theme for both links and buttons."
     )
     text_alignment = blocks.ChoiceBlock(
         required=False,
         choices=TextAlignment.choices,
         default=TextAlignment.CENTER,
-    )
-    button_color = blocks.CharBlock(
-        max_length=7, required=False,
-        help_text="Background color for buttons"
-    )
-    button_text_color = blocks.CharBlock(
-        max_length=7, required=False,
-        help_text="Text color for buttons"
     )
     logo_cards = LogoCardsBlock()
 
@@ -184,22 +188,16 @@ class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
     is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
-    link_color = blocks.CharBlock(
-        max_length=7, required=False, default="#004d46",
-        help_text="Hex color for hyperlinks in this block"
+    link_button_theme = blocks.ChoiceBlock(
+        choices=LINK_BUTTON_THEMES,
+        required=False,
+        default="standard",
+        help_text="Select a color theme for both links and buttons."
     )
     text_alignment = blocks.ChoiceBlock(
         required=False,
         choices=TextAlignment.choices,
         default=TextAlignment.CENTER,
-    )
-    button_color = blocks.CharBlock(
-        max_length=7, required=False,
-        help_text="Background color for buttons"
-    )
-    button_text_color = blocks.CharBlock(
-        max_length=7, required=False,
-        help_text="Text color for buttons"
     )
     story_photo_gallery = StoryPhotoGalleriesBlock()
 
@@ -212,22 +210,16 @@ class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
     is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
-    link_color = blocks.CharBlock(
-        max_length=7, required=False, default="#004d46",
-        help_text="Hex color for hyperlinks in this block"
+    link_button_theme = blocks.ChoiceBlock(
+        choices=LINK_BUTTON_THEMES,
+        required=False,
+        default="standard",
+        help_text="Select a color theme for both links and buttons."
     )
     text_alignment = blocks.ChoiceBlock(
         required=False,
         choices=TextAlignment.choices,
         default=TextAlignment.CENTER,
-    )
-    button_color = blocks.CharBlock(
-        max_length=7, required=False,
-        help_text="Background color for buttons"
-    )
-    button_text_color = blocks.CharBlock(
-        max_length=7, required=False,
-        help_text="Text color for buttons"
     )
     timeline_photo_gallery = TimelinePhotoGalleriesBlock()
 
@@ -240,22 +232,16 @@ class ParallaxLinkCardsBlock(blocks.StructBlock):
     is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
-    link_color = blocks.CharBlock(
-        max_length=7, required=False, default="#004d46",
-        help_text="Hex color for hyperlinks in this block"
+    link_button_theme = blocks.ChoiceBlock(
+        choices=LINK_BUTTON_THEMES,
+        required=False,
+        default="standard",
+        help_text="Select a color theme for both links and buttons."
     )
     text_alignment = blocks.ChoiceBlock(
         required=False,
         choices=TextAlignment.choices,
         default=TextAlignment.CENTER,
-    )
-    button_color = blocks.CharBlock(
-        max_length=7, required=False,
-        help_text="Background color for buttons"
-    )
-    button_text_color = blocks.CharBlock(
-        max_length=7, required=False,
-        help_text="Text color for buttons"
     )
     richtext = AdvancedRichTextBlock(required=False)
     link_cards = LinkCardsBlock()
@@ -292,9 +278,11 @@ class ParallaxHTMLBlock(blocks.StructBlock):
         choices=TextAlignment.choices,
         default=TextAlignment.CENTER,
     )
-    text_link_color = blocks.CharBlock(
-        max_length=7, required=False, default="#004d46",
-        help_text="Hex color for hyperlinks in this block"
+    link_button_theme = blocks.ChoiceBlock(
+        choices=LINK_BUTTON_THEMES,
+        required=False,
+        default="standard",
+        help_text="Select a color theme for both links and buttons."
     )
     title = blocks.CharBlock(blank=True, required=False)
     summary = blocks.RichTextBlock(blank=True, required=False)
@@ -338,8 +326,6 @@ class DoubleFeature(StreamBlock):
         gradient_alignment = "none"
         gradient_colour = "none"
         core_blocks = []
-        button_color = None
-        button_text_color = None
         buttons = []
 
         for block in value:
@@ -353,15 +339,11 @@ class DoubleFeature(StreamBlock):
                 # If this is your rich_text block, get its context to retrieve buttons
                 if block.block_type == "rich_text":
                     rich_text_context = block.block.get_context(block.value, parent_context)
-                    button_color = rich_text_context.get("button_color")
-                    button_text_color = rich_text_context.get("button_text_color")
                     buttons = rich_text_context.get("buttons")
 
         context["core_blocks"] = core_blocks  # Store the non-gradient blocks
         context["gradient_alignment"] = gradient_alignment  # Store the alignment
         context["gradient_colour"] = gradient_colour
-        context["button_color"] = button_color
-        context["button_text_color"] = button_text_color
         context["buttons"] = buttons
 
         return context
