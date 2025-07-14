@@ -121,6 +121,27 @@ class FreeFormPage(FreeFormPageBase):
         max_num=1,
     )
 
+    organization_name = models.CharField(
+        max_length=255,
+        default="Department of Foreign Affairs and Trade",
+        blank=True
+    )
+
+    organization_description = models.CharField(blank=True, max_length=255)
+
+    organization_logo = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    mainEntityOfPage_name = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    mainEntityOfPage_description = models.CharField(blank=True, max_length=255)
+
     twitter_url = models.URLField(blank=True, help_text="Full Twitter profile URL")
     facebook_url = models.URLField(blank=True, help_text="Full Facebook page URL")
     youtube_url = models.URLField(blank=True, help_text="Full YouTube channel URL")
@@ -171,7 +192,19 @@ class FreeFormPage(FreeFormPageBase):
 
     )
 
-    promote_panels = FreeFormPageBase.promote_panels + [social_media_panels]
+    promote_panels = (FreeFormPageBase.promote_panels +
+                      [
+                          MultiFieldPanel([
+                              FieldPanel("organization_name"),
+                              FieldPanel("organization_description"),
+                              FieldPanel("organization_logo"),
+                          ], heading="Organization Schema Settings"),
+                          MultiFieldPanel([
+                              FieldPanel("mainEntityOfPage_name"),
+                              FieldPanel("mainEntityOfPage_description"),
+                          ], heading="mainEntityOfPage")
+                      ]
+                      + [social_media_panels])
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
@@ -225,7 +258,7 @@ class FreeFormPage(FreeFormPageBase):
 
     def get_breadcrumb_schema(self):
         ancestors = list(
-            self.get_ancestors(inclusive=True).live().filter(depth__gte=1)
+            self.get_ancestors(inclusive=True).live().filter(depth__gte=2)
         )
         ancestors = ancestors[-6:]
 
@@ -268,30 +301,28 @@ class FreeFormPage(FreeFormPageBase):
             main_schema = {
                 "@context": "https://schema.org",
                 "@type": "GovernmentOrganization",
-                "name": self.title,
+                "name": self.organization_name,
                 "url": self.full_url,
+                "description": self.organization_description or "",
+                "logo": self.organization_logo.get_rendition("original").url if self.organization_logo else "",
                 "sameAs": self.same_as_links,
                 "mainEntityOfPage": {
                     "@type": "WebPage",
                     "@id": self.full_url,
+                    "name": self.mainEntityOfPage_name,
+                    "description": self.mainEntityOfPage_description or "",
                 },
             }
 
-            # Add speakable only if selectors exist
             if speakable_selectors:
                 main_schema["mainEntityOfPage"]["speakable"] = {
                     "@type": "SpeakableSpecification",
                     "cssSelector": speakable_selectors
                 }
 
-            # Build schema list
-            schemas = [main_schema]
-
-            # Add breadcrumb schema
             breadcrumb_schema = self.get_breadcrumb_schema()
-            schemas.append(breadcrumb_schema)
 
-            return json.dumps(schemas, indent=2)
+            return json.dumps([main_schema, breadcrumb_schema], indent=2)
 
         return ""
 
