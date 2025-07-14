@@ -186,7 +186,7 @@ class StoryPage(HeroPage):
 
     def get_breadcrumb_schema(self):
         ancestors = list(
-            self.get_ancestors(inclusive=True).live().filter(depth__gte=1)
+            self.get_ancestors(inclusive=True).live().filter(depth__gte=2)
         )
         ancestors = ancestors[-6:]
 

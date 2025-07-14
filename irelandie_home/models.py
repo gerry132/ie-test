@@ -51,6 +51,27 @@ class HomePage(FreeFormPageBase):
         }
     )
 
+    organization_name = models.CharField(
+        max_length=255,
+        default="Department of Foreign Affairs and Trade",
+        blank=True
+    )
+
+    organization_description = models.CharField(blank=True, max_length=255)
+
+    organization_logo = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    mainEntityOfPage_name = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    mainEntityOfPage_description = models.CharField(blank=True, max_length=255)
+
     twitter_url = models.URLField(blank=True, help_text="Full Twitter profile URL")
     facebook_url = models.URLField(blank=True, help_text="Full Facebook page URL")
     youtube_url = models.URLField(blank=True, help_text="Full YouTube channel URL")
@@ -72,6 +93,15 @@ class HomePage(FreeFormPageBase):
 
     promote_panels = FreeFormPageBase.promote_panels + [
         FieldPanel("top_story"),
+        MultiFieldPanel([
+            FieldPanel("organization_name"),
+            FieldPanel("organization_description"),
+            FieldPanel("organization_logo"),
+        ], heading="Organization Schema Settings"),
+        MultiFieldPanel([
+            FieldPanel("mainEntityOfPage_name"),
+            FieldPanel("mainEntityOfPage_description"),
+        ], heading="mainEntityOfPage")
     ] + [social_media_panels]
     settings_panels = ([
         FieldPanel("favicon", permission="access_admin"),
@@ -149,12 +179,16 @@ class HomePage(FreeFormPageBase):
         schema = {
             "@context": "https://schema.org",
             "@type": "GovernmentOrganization",
-            "name": self.title,
+            "name": self.organization_name,
             "url": self.full_url,
+            "description": self.organization_description or "",
+            "logo": self.organization_logo.get_rendition("original").url if self.organization_logo else "",
             "sameAs": self.same_as_links,
             "mainEntityOfPage": {
                 "@type": "WebPage",
                 "@id": self.full_url,
+                "name": self.mainEntityOfPage_name,
+                "description": self.mainEntityOfPage_description or "",
             },
         }
 
