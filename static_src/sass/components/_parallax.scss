@@ -223,9 +223,7 @@
 .parallax .rich-text p, .parallax .intro, .parallax .intro h2 {
     color: var(--text-color, inherit);
 }
-.parallax .rich-text a{
-        color: var(--link-color, inherit);
-    }
+
 
 .jarallax.text-parallax {
     min-height: auto;
@@ -235,4 +233,531 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+/* === BASE LINK STYLES === */
+.rich-text.rich-text__content a,
+.theme--standard .rich-text  a {
+  text-decoration-thickness: 5%;
+  text-underline-offset: 27%;
+}
+.rich-text.rich-text__content a:hover,
+.theme--standard .rich-text a:hover {
+  text-decoration-thickness: 15%;
+}
+.rich-text.rich-text__content a:active,
+.theme--standard .rich-text a:active {
+  text-decoration-thickness: 20%;
+}
+.rich-text a.button_text {
+    text-decoration: none;
+    }
+/* ==== 1. STANDARD ==== */
+.theme--standard .rich-text a,
+.rich-text.rich-text__content.theme--standard a {
+  color: #082F2A;
+  text-decoration-color: #008931;
+}
+.theme--standard .rich-text a:hover,
+.rich-text.rich-text__content.theme--standard a:hover {
+  color: #004D44;
+  text-decoration-color: #004D44;
+}
+.theme--standard .rich-text a:active,
+.rich-text.rich-text__content.theme--standard a:active {
+  color: #008931;
+  text-decoration-color: #008931;
+}
+.theme--standard .rich-text a.button_text,
+.rich-text.rich-text__content.theme--standard a.button_text {
+  background: #082F2A;
+  color: #FFF;
+}
+.theme--standard .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--standard a.button_text:hover {
+  background: #004D44;
+}
+.theme--standard .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--standard a.button_text:active {
+  background: #008931;
+}
+
+/* ==== 2. LIGHT GREY ==== */
+.theme--light_grey .rich-text a,
+.rich-text.rich-text__content.theme--light_grey a {
+  color: #F5F5F2;
+  text-decoration-color: #F5F5F2;
+}
+.theme--light_grey .rich-text a:hover,
+.rich-text.rich-text__content.theme--light_grey a:hover {
+  color: #EDECE5;
+  text-decoration-color: #EDECE5;
+}
+.theme--light_grey .rich-text a:active,
+.rich-text.rich-text__content.theme--light_grey a:active {
+  color: #CACAC3;
+  text-decoration-color: #CACAC3;
+}
+.theme--light_grey .rich-text a.button_text,
+.rich-text.rich-text__content.theme--light_grey a.button_text {
+  background: #F5F5F2;
+  color: #101010;
+}
+.theme--light_grey .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--light_grey a.button_text:hover {
+  background: #EDECE5;
+}
+.theme--light_grey .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--light_grey a.button_text:active {
+  background: #CACAC3;
+}
+
+/* ==== 3. BEIGE ==== */
+.theme--beige .rich-text a,
+.rich-text.rich-text__content.theme--beige a {
+  color: #FFF;
+  text-decoration-color: #FFF;
+}
+.theme--beige .rich-text a:hover,
+.rich-text.rich-text__content.theme--beige a:hover {
+  color: #D7CBB0;
+  text-decoration-color: #D7CBB0;
+}
+.theme--beige .rich-text a:active,
+.rich-text.rich-text__content.theme--beige a:active {
+  color: #C8B898;
+  text-decoration-color: #C8B898;
+}
+.theme--beige .rich-text a.button_text,
+.rich-text.rich-text__content.theme--beige a.button_text {
+  background: #EDE5D4;
+  color: #101010;
+}
+.theme--beige .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--beige a.button_text:hover {
+  background: #D7CBB0;
+}
+.theme--beige .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--beige a.button_text:active {
+  background: #C8B898;
+}
+
+/* ==== 4. CYAN ==== */
+.theme--cyan .rich-text a,
+.rich-text.rich-text__content.theme--cyan a {
+  color: #007E8A;
+  text-decoration-color: #007E8A;
+}
+.theme--cyan .rich-text a:hover,
+.rich-text.rich-text__content.theme--cyan a:hover {
+  color: #008591;
+  text-decoration-color: #008591;
+}
+.theme--cyan .rich-text a:active,
+.rich-text.rich-text__content.theme--cyan a:active {
+  color: #0093A1;
+  text-decoration-color: #0093A1;
+}
+.theme--cyan .rich-text a.button_text,
+.rich-text.rich-text__content.theme--cyan a.button_text {
+  background: #007E8A;
+  color: #FFF;
+}
+.theme--cyan .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--cyan a.button_text:hover {
+  background: #008591;
+}
+.theme--cyan .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--cyan a.button_text:active {
+  background: #0093A1;
+}
+
+/* ==== 5. GREEN ==== */
+.theme--green .rich-text a,
+.rich-text.rich-text__content.theme--green a {
+  color: #1F6B4C;
+  text-decoration-color: #1F6B4C;
+}
+.theme--green .rich-text a:hover,
+.rich-text.rich-text__content.theme--green a:hover {
+  color: #277D5B;
+  text-decoration-color: #277D5B;
+}
+.theme--green .rich-text a:active,
+.rich-text.rich-text__content.theme--green a:active {
+  color: #2F8F66;
+  text-decoration-color: #2F8F66;
+}
+.theme--green .rich-text a.button_text,
+.rich-text.rich-text__content.theme--green a.button_text {
+  background: #1F6B4C;
+  color: #FFF;
+}
+.theme--green .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--green a.button_text:hover {
+  background: #277D5B;
+}
+.theme--green .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--green a.button_text:active {
+  background: #2F8F66;
+}
+
+/* ==== 6. OLIVE ==== */
+.theme--olive .rich-text a,
+.rich-text.rich-text__content.theme--olive a {
+  color: #5A7A1E;
+  text-decoration-color: #5A7A1E;
+}
+.theme--olive .rich-text a:hover,
+.rich-text.rich-text__content.theme--olive a:hover {
+  color: #4E841D;
+  text-decoration-color: #4E841D;
+}
+.theme--olive .rich-text a:active,
+.rich-text.rich-text__content.theme--olive a:active {
+  color: #6F9725;
+  text-decoration-color: #6F9725;
+}
+.theme--olive .rich-text a.button_text,
+.rich-text.rich-text__content.theme--olive a.button_text {
+  background: #5A7A1E;
+  color: #FFF;
+}
+.theme--olive .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--olive a.button_text:hover {
+  background: #4E841D;
+}
+.theme--olive .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--olive a.button_text:active {
+  background: #6F9725;
+}
+
+/* ==== 7. ORANGE ==== */
+.theme--orange .rich-text a,
+.rich-text.rich-text__content.theme--orange a {
+  color: #B84F00;
+  text-decoration-color: #B84F00;
+}
+.theme--orange .rich-text a:hover,
+.rich-text.rich-text__content.theme--orange a:hover {
+  color: #B85900;
+  text-decoration-color: #B85900;
+}
+.theme--orange .rich-text a:active,
+.rich-text.rich-text__content.theme--orange a:active {
+  color: #D35E00;
+  text-decoration-color: #D35E00;
+}
+.theme--orange .rich-text a.button_text,
+.rich-text.rich-text__content.theme--orange a.button_text {
+  background: #B84F00;
+  color: #FFF;
+}
+.theme--orange .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--orange a.button_text:hover {
+  background: #B85900;
+}
+.theme--orange .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--orange a.button_text:active {
+  background: #D35E00;
+}
+
+/* ==== 8. RED ==== */
+.theme--red .rich-text a,
+.rich-text.rich-text__content.theme--red a {
+  color: #9C1F1F;
+  text-decoration-color: #9C1F1F;
+}
+.theme--red .rich-text a:hover,
+.rich-text.rich-text__content.theme--red a:hover {
+  color: #C02B2B;
+  text-decoration-color: #C02B2B;
+}
+.theme--red .rich-text a:active,
+.rich-text.rich-text__content.theme--red a:active {
+  color: #CC3333;
+  text-decoration-color: #CC3333;
+}
+.theme--red .rich-text a.button_text,
+.rich-text.rich-text__content.theme--red a.button_text {
+  background: #9C1F1F;
+  color: #FFF;
+}
+.theme--red .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--red a.button_text:hover {
+  background: #C02B2B;
+}
+.theme--red .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--red a.button_text:active {
+  background: #CC3333;
+}
+/* === 9. MAGENTA === */
+.theme--magenta .rich-text a,
+.rich-text.rich-text__content.theme--magenta a {
+  color: #C70064;
+  text-decoration-color: #C70064;
+}
+.theme--magenta .rich-text a:hover,
+.rich-text.rich-text__content.theme--magenta a:hover {
+  color: #C8005D;
+  text-decoration-color: #C8005D;
+}
+.theme--magenta .rich-text a:active,
+.rich-text.rich-text__content.theme--magenta a:active {
+  color: #D60070;
+  text-decoration-color: #D60070;
+}
+.theme--magenta .rich-text a.button_text,
+.rich-text.rich-text__content.theme--magenta a.button_text {
+  background: #C70064;
+  color: #FFF;
+}
+.theme--magenta .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--magenta a.button_text:hover {
+  background: #C8005D;
+}
+.theme--magenta .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--magenta a.button_text:active {
+  background: #D60070;
+}
+
+/* === 10. VIOLET === */
+.theme--violet .rich-text a,
+.rich-text.rich-text__content.theme--violet a {
+  color: #8000A1;
+  text-decoration-color: #8000A1;
+}
+.theme--violet .rich-text a:hover,
+.rich-text.rich-text__content.theme--violet a:hover {
+  color: #9500BA;
+  text-decoration-color: #9500BA;
+}
+.theme--violet .rich-text a:active,
+.rich-text.rich-text__content.theme--violet a:active {
+  color: #A100C9;
+  text-decoration-color: #A100C9;
+}
+.theme--violet .rich-text a.button_text,
+.rich-text.rich-text__content.theme--violet a.button_text {
+  background: #8000A1;
+  color: #FFF;
+}
+.theme--violet .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--violet a.button_text:hover {
+  background: #9500BA;
+}
+.theme--violet .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--violet a.button_text:active {
+  background: #A100C9;
+}
+
+/* === 11. PURPLE === */
+.theme--purple .rich-text a,
+.rich-text.rich-text__content.theme--purple a {
+  color: #4B0082;
+  text-decoration-color: #4B0082;
+}
+.theme--purple .rich-text a:hover,
+.rich-text.rich-text__content.theme--purple a:hover {
+  color: #5A009C;
+  text-decoration-color: #5A009C;
+}
+.theme--purple .rich-text a:active,
+.rich-text.rich-text__content.theme--purple a:active {
+  color: #6700B3;
+  text-decoration-color: #6700B3;
+}
+.theme--purple .rich-text a.button_text,
+.rich-text.rich-text__content.theme--purple a.button_text {
+  background: #4B0082;
+  color: #FFF;
+}
+.theme--purple .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--purple a.button_text:hover {
+  background: #5A009C;
+}
+.theme--purple .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--purple a.button_text:active {
+  background: #6700B3;
+}
+
+/* === 12. INDIGO === */
+.theme--indigo .rich-text a,
+.rich-text.rich-text__content.theme--indigo a {
+  color: #3F51B5;
+  text-decoration-color: #3F51B5;
+}
+.theme--indigo .rich-text a:hover,
+.rich-text.rich-text__content.theme--indigo a:hover {
+  color: #5C6BC0;
+  text-decoration-color: #5C6BC0;
+}
+.theme--indigo .rich-text a:active,
+.rich-text.rich-text__content.theme--indigo a:active {
+  color: #7986CB;
+  text-decoration-color: #7986CB;
+}
+.theme--indigo .rich-text a.button_text,
+.rich-text.rich-text__content.theme--indigo a.button_text {
+  background: #3F51B5;
+  color: #FFF;
+}
+.theme--indigo .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--indigo a.button_text:hover {
+  background: #5C6BC0;
+}
+.theme--indigo .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--indigo a.button_text:active {
+  background: #7986CB;
+}
+
+/* === 13. BLUE === */
+.theme--blue .rich-text a,
+.rich-text.rich-text__content.theme--blue a {
+  color: #0072CE;
+  text-decoration-color: #0072CE;
+}
+.theme--blue .rich-text a:hover,
+.rich-text.rich-text__content.theme--blue a:hover {
+  color: #0056A3;
+  text-decoration-color: #0056A3;
+}
+.theme--blue .rich-text a:active,
+.rich-text.rich-text__content.theme--blue a:active {
+  color: #003F7F;
+  text-decoration-color: #003F7F;
+}
+.theme--blue .rich-text a.button_text,
+.rich-text.rich-text__content.theme--blue a.button_text {
+  background: #0072CE;
+  color: #FFF;
+}
+.theme--blue .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--blue a.button_text:hover {
+  background: #0056A3;
+}
+.theme--blue .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--blue a.button_text:active {
+  background: #003F7F;
+}
+
+/* === 14. NAVY === */
+.theme--navy .rich-text a,
+.rich-text.rich-text__content.theme--navy a {
+  color: #001F3F;
+  text-decoration-color: #001F3F;
+}
+.theme--navy .rich-text a:hover,
+.rich-text.rich-text__content.theme--navy a:hover {
+  color: #002F5F;
+  text-decoration-color: #002F5F;
+}
+.theme--navy .rich-text a:active,
+.rich-text.rich-text__content.theme--navy a:active {
+  color: #003F7F;
+  text-decoration-color: #003F7F;
+}
+.theme--navy .rich-text a.button_text,
+.rich-text.rich-text__content.theme--navy a.button_text {
+  background: #001F3F;
+  color: #FFF;
+}
+.theme--navy .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--navy a.button_text:hover {
+  background: #002F5F;
+}
+.theme--navy .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--navy a.button_text:active {
+  background: #003F7F;
+}
+
+/* === 15. GOLD === */
+.theme--gold .rich-text a,
+.rich-text.rich-text__content.theme--gold a {
+  color: #DAA520;
+  text-decoration-color: #DAA520;
+}
+.theme--gold .rich-text a:hover,
+.rich-text.rich-text__content.theme--gold a:hover {
+  color: #C1901B;
+  text-decoration-color: #C1901B;
+}
+.theme--gold .rich-text a:active,
+.rich-text.rich-text__content.theme--gold a:active {
+  color: #B8860B;
+  text-decoration-color: #B8860B;
+}
+.theme--gold .rich-text a.button_text,
+.rich-text.rich-text__content.theme--gold a.button_text {
+  background: #DAA520;
+  color: #101010;
+}
+.theme--gold .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--gold a.button_text:hover {
+  background: #C1901B;
+}
+.theme--gold .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--gold a.button_text:active {
+  background: #B8860B;
+}
+
+/* === 16. BROWN === */
+.theme--brown .rich-text a,
+.rich-text.rich-text__content.theme--brown a {
+  color: #5C4033;
+  text-decoration-color: #5C4033;
+}
+.theme--brown .rich-text a:hover,
+.rich-text.rich-text__content.theme--brown a:hover {
+  color: #704C3A;
+  text-decoration-color: #704C3A;
+}
+.theme--brown .rich-text a:active,
+.rich-text.rich-text__content.theme--brown a:active {
+  color: #8B5E3C;
+  text-decoration-color: #8B5E3C;
+}
+.theme--brown .rich-text a.button_text,
+.rich-text.rich-text__content.theme--brown a.button_text {
+  background: #5C4033;
+  color: #FFF;
+}
+.theme--brown .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--brown a.button_text:hover {
+  background: #704C3A;
+}
+.theme--brown .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--brown a.button_text:active {
+  background: #8B5E3C;
+}
+
+/* === 17. DARK GREY === */
+.theme--dark_grey .rich-text a,
+.rich-text.rich-text__content.theme--dark_grey a {
+  color: #333;
+  text-decoration-color: #333;
+}
+.theme--dark_grey .rich-text a:hover,
+.rich-text.rich-text__content.theme--dark_grey a:hover {
+  color: #222;
+  text-decoration-color: #222;
+}
+.theme--dark_grey .rich-text a:active,
+.rich-text.rich-text__content.theme--dark_grey a:active {
+  color: #111;
+  text-decoration-color: #111;
+}
+.theme--dark_grey .rich-text a.button_text,
+.rich-text.rich-text__content.theme--dark_grey a.button_text {
+  background: #333;
+  color: #FFF;
+}
+.theme--dark_grey .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--dark_grey a.button_text:hover {
+  background: #222;
+}
+.theme--dark_grey .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--dark_grey a.button_text:active {
+  background: #111;
+}
+
 

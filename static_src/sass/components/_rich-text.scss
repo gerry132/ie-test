@@ -20,12 +20,12 @@
         background-color: var(--button-color, #082F2A);
         color: var(--button-text-color, white);
     }
-    a.button_text:hover, a.button_text:focus:hover {
+    a.button_text:hover {
         background: #004D44;
         color: white;
      }
 
-    a.button_text:active, a.button_text:focus:active {
+    a.button_text:active {
         background-color: #008931;
         color: white;
     }

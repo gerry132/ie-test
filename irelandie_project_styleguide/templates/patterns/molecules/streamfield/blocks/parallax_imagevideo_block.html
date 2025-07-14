@@ -68,11 +68,10 @@
         </picture>
 
 
-        <div class="rich-text content"
+        <div class="rich-text content theme--{{ value.link_button_theme|default:'standard' }}"
              style="text-align: {{ value.text_alignment }};
                     color: {{ value.text_color }};
-                    --text-color: {{ value.text_color }};
-                    --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};">
+                    --text-color: {{ value.text_color }};">
             <h2>{{ value.heading }}</h2>
             <p>{{ value.subtitle|richtext }}</p>
         </div>
@@ -127,11 +126,10 @@
             </button>
 
             {% if value.heading or value.subtitle %}
-                <div class="rich-text content"
+                <div class="rich-text content theme--{{ value.link_button_theme|default:'standard' }}"
                      style="text-align: {{ value.text_alignment }};
                             color: {{ value.text_color }};
-                            --text-color: {{ value.text_color }};
-                            --link-color: {% if value.link_color %}{{ value.link_color }}{% elif value.text_color %}{{ value.text_color }}{% endif %};">
+                            --text-color: {{ value.text_color }};">
                     <h2>{{ value.heading }}</h2>
                     <p>{{ value.subtitle|richtext }}</p>
                 </div>
