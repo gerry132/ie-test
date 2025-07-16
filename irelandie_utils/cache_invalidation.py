@@ -5,7 +5,7 @@ from botocore.exceptions import ClientError
 from django.core.cache import cache
 from django.conf import settings
 from django.core.cache.utils import make_template_fragment_key
-from wagtail.models import Site, Page
+from wagtail.models import Page
 
 from irelandie_assets.templatetags.irelandie_assets_tags import check_page_type
 

@@ -1,6 +1,6 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from wagtail.models import Site, Page
+from wagtail.models import Page
 
 from irelandie_documents.models import CustomDocument
 from wagtail.contrib.frontend_cache.utils import PurgeBatch

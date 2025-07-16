@@ -3,7 +3,6 @@ import mimetypes
 
 from django.db import models
 from django.utils.formats import date_format
-from django.utils.text import slugify
 from wagtail.images import get_image_model_string
 from wagtailmedia.edit_handlers import MediaChooserPanel
 

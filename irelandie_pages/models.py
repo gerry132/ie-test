@@ -4,7 +4,6 @@ import json
 from django.db import models
 from django.forms import ValidationError
 from django.utils.functional import cached_property
-from django.utils.text import slugify
 
 from wagtail.fields import StreamField
 from wagtail.admin.panels import TabbedInterface, ObjectList, FieldPanel, MultiFieldPanel, InlinePanel
@@ -285,7 +284,6 @@ class FreeFormPage(FreeFormPageBase):
         ]
 
         if self.full_url and any(self.full_url.endswith(path) for path in allowed_paths):
-
             main_schema = {
                 "@context": "https://schema.org",
                 "@type": "GovernmentOrganization",
@@ -301,7 +299,6 @@ class FreeFormPage(FreeFormPageBase):
                     "description": self.mainEntityOfPage_description or "",
                 },
             }
-
 
             breadcrumb_schema = self.get_breadcrumb_schema()
 

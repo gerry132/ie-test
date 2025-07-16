@@ -4,7 +4,6 @@ from functools import cached_property
 from django.db import models
 from django.core.cache.utils import make_template_fragment_key
 from django.core.cache import cache
-from django.utils.text import slugify
 from wagtail.admin.panels import TabbedInterface, ObjectList, FieldPanel, MultiFieldPanel
 from wagtail import blocks as wagtail_blocks
 from wagtail.fields import StreamField
