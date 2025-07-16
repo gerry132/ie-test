@@ -151,17 +151,6 @@ class HomePage(FreeFormPageBase):
             .specific()
         )
 
-    def get_speakable_selectors(self):
-        selectors = []
-        for idx, block in enumerate(self.body, start=1):
-            value = getattr(block, 'value', {})
-            slug = slugify(block.block_type)
-            if hasattr(value, 'get') and value.get('is_speakable', False):
-                selector = f"[data-speakable='{slug}-{idx}']"
-                selectors.append(selector)
-
-        return selectors
-
     @property
     def same_as_links(self):
         return list(filter(None, [
@@ -174,7 +163,6 @@ class HomePage(FreeFormPageBase):
         ]))
 
     def get_schema_json(self):
-        speakable_selectors = self.get_speakable_selectors()
 
         schema = {
             "@context": "https://schema.org",
@@ -191,13 +179,6 @@ class HomePage(FreeFormPageBase):
                 "description": self.mainEntityOfPage_description or "",
             },
         }
-
-        # Add speakable only if selectors exist
-        if speakable_selectors:
-            schema["mainEntityOfPage"]["speakable"] = {
-                "@type": "SpeakableSpecification",
-                "cssSelector": speakable_selectors
-            }
 
         return json.dumps(schema, indent=2)
 

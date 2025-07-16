@@ -34,7 +34,6 @@ LINK_BUTTON_THEMES = [
 
 
 class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
-    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     section_id = blocks.CharBlock(required=False)
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     audio = blocks.RawHTMLBlock(
@@ -92,7 +91,6 @@ class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
 
 
 class ParallaxImageVideoBlock(blocks.StructBlock):
-    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     section_id = blocks.CharBlock(required=False)
     gradient_image_video = blocks.CharBlock(max_length=7, default='#000', required=False)
     image = ImageChooserBlock(required=False, label="Desktop Image")
@@ -163,7 +161,6 @@ class ParallaxImageVideoBlock(blocks.StructBlock):
 
 
 class ParallaxLogoCardsBlock(blocks.StructBlock):
-    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
     link_button_theme = blocks.ChoiceBlock(
@@ -185,7 +182,6 @@ class ParallaxLogoCardsBlock(blocks.StructBlock):
 
 
 class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
-    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
     link_button_theme = blocks.ChoiceBlock(
@@ -207,7 +203,6 @@ class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
 
 
 class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
-    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
     link_button_theme = blocks.ChoiceBlock(
@@ -229,7 +224,6 @@ class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
 
 
 class ParallaxLinkCardsBlock(blocks.StructBlock):
-    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
     link_button_theme = blocks.ChoiceBlock(
@@ -252,7 +246,6 @@ class ParallaxLinkCardsBlock(blocks.StructBlock):
 
 
 class ParallaxYoutubeVimeoBlock(blocks.StructBlock):
-    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     section_id = blocks.CharBlock(required=False)
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
@@ -269,7 +262,6 @@ class ParallaxYoutubeVimeoBlock(blocks.StructBlock):
 
 
 class ParallaxHTMLBlock(blocks.StructBlock):
-    is_speakable = blocks.BooleanBlock(required=False, default=False, help_text="Mark if this block is speakable")
     section_id = blocks.CharBlock(required=False)
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)

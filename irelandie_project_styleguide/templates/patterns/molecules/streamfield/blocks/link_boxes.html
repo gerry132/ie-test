@@ -1,5 +1,5 @@
 {% load wagtailcore_tags %}
-<div class="section section-padding" {% if value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
+<div class="section section-padding" >
     <div class="link-box__main">
         {% for link_box in value.link_boxes %}
             {% include_block link_box %}

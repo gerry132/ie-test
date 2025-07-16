@@ -1,5 +1,7 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from wagtail.models import Site, Page
+
 from irelandie_documents.models import CustomDocument
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from django.dispatch import Signal
@@ -19,10 +21,11 @@ def document_updated(sender, instance, created, **kwargs):
 @receiver(snippet_published)
 def handle_snippet_published(sender, instance, **kwargs):
     usage = instance.get_usage()
-
     purge_batch = PurgeBatch()
-    for page, _ in usage:
-        purge_batch.add_url(page.url)
+    for obj, _ in usage:
+        if isinstance(obj, Page):
+            purge_batch.add_url(obj.full_url or obj.url)
+
     purge_batch.purge()
 
     invalidate_cache(instance)
