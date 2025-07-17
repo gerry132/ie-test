@@ -1,7 +1,7 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 {% image value.pinned_story_hero.image width-1080 as featured_image %}
 
-<div class="pinned-stories section section--padding" {% if value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
+<div class="pinned-stories section section--padding" >
     <div class="pinned-stories__container">
         {% if value.pinned_story_hero.page %}
             <div class="pinned-stories__featured">

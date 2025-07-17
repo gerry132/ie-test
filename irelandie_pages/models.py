@@ -4,7 +4,6 @@ import json
 from django.db import models
 from django.forms import ValidationError
 from django.utils.functional import cached_property
-from django.utils.text import slugify
 
 from wagtail.fields import StreamField
 from wagtail.admin.panels import TabbedInterface, ObjectList, FieldPanel, MultiFieldPanel, InlinePanel
@@ -245,17 +244,6 @@ class FreeFormPage(FreeFormPageBase):
             .specific()
         )
 
-    def get_speakable_selectors(self):
-        selectors = []
-        for idx, block in enumerate(self.body, start=1):
-            value = getattr(block, 'value', {})
-            slug = slugify(block.block_type)
-            if hasattr(value, 'get') and value.get('is_speakable', False):
-                selector = f"[data-speakable='{slug}-{idx}']"
-                selectors.append(selector)
-
-        return selectors
-
     def get_breadcrumb_schema(self):
         ancestors = list(
             self.get_ancestors(inclusive=True).live().filter(depth__gte=2)
@@ -296,8 +284,6 @@ class FreeFormPage(FreeFormPageBase):
         ]
 
         if self.full_url and any(self.full_url.endswith(path) for path in allowed_paths):
-            speakable_selectors = self.get_speakable_selectors()
-
             main_schema = {
                 "@context": "https://schema.org",
                 "@type": "GovernmentOrganization",
@@ -313,12 +299,6 @@ class FreeFormPage(FreeFormPageBase):
                     "description": self.mainEntityOfPage_description or "",
                 },
             }
-
-            if speakable_selectors:
-                main_schema["mainEntityOfPage"]["speakable"] = {
-                    "@type": "SpeakableSpecification",
-                    "cssSelector": speakable_selectors
-                }
 
             breadcrumb_schema = self.get_breadcrumb_schema()
 

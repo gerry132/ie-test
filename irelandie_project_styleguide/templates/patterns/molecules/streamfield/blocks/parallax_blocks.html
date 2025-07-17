@@ -15,11 +15,11 @@
 <div class="parallax parallax-section" id="jarallax4" data-speed="0.2">
     <div style="{% if value.background_color %} background-color: {{value.background_color}}; {% endif %}" class="jarallax-color"></div>
             {% if value.logo_cards %}
-            <div class="content theme--{{ value.link_button_theme|default:'standard' }}" style="color: {{value.text_color}}; text-align: {{value.text_alignment}};"{% if value.is_speakable %} data-speakable="{{ block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
+            <div class="content theme--{{ value.link_button_theme|default:'standard' }}" style="color: {{value.text_color}}; text-align: {{value.text_alignment}};">
                 {% include_block value.logo_cards %}
             </div>
             {% elif value.link_cards %}
-            <div class="content theme--{{ value.link_button_theme|default:'standard' }}" style="color: {{value.text_color}}; text-align: {{value.text_alignment}}; --text-color-link-cards: {{value.text_color}}; --background-color-link-cards: {{value.background_color}};"{% if value.is_speakable %} data-speakable="{{ block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
+            <div class="content theme--{{ value.link_button_theme|default:'standard' }}" style="color: {{value.text_color}}; text-align: {{value.text_alignment}}; --text-color-link-cards: {{value.text_color}}; --background-color-link-cards: {{value.background_color}};">
                 {% include_block value.richtext %}
                 {% if value.link_cards.link_cards|length > 2 %}
                         <div class="article-cards featured-blocks featured-blocks--three">
@@ -36,15 +36,15 @@
                         {% endif %}
             </div>
             {% elif value.timeline_photo_gallery %}
-                <div class="content theme--{{ value.link_button_theme|default:'standard' }}" style="color: {{value.text_color}}; --text-color: {{value.text_color}}; text-align: {{value.text_alignment}};"{% if value.is_speakable %} data-speakable="{{ block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
+                <div class="content theme--{{ value.link_button_theme|default:'standard' }}" style="color: {{value.text_color}}; --text-color: {{value.text_color}}; text-align: {{value.text_alignment}};">
                     {% include_block value.timeline_photo_gallery %}
                 </div>
             {% elif value.youtube_or_vimeo_video %}
-                <div class="content theme--{{ value.link_button_theme|default:'standard' }}" style="color: {{value.text_color}}; --text-color: {{value.text_color}}; text-align: {{value.text_alignment}};" {% if value.is_speakable %} data-speakable="{{ block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
+                <div class="content theme--{{ value.link_button_theme|default:'standard' }}" style="color: {{value.text_color}}; --text-color: {{value.text_color}}; text-align: {{value.text_alignment}};" >
                     {% include_block value.youtube_or_vimeo_video %}
                 </div>
             {% else %}
-                <div class="content theme--{{ value.link_button_theme|default:'standard' }}" style="color: {{value.text_color}}; padding: 80px 0px; --text-color: {{value.text_color}}; text-align: {{value.text_alignment}};"{% if value.is_speakable %} data-speakable="{{ block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
+                <div class="content theme--{{ value.link_button_theme|default:'standard' }}" style="color: {{value.text_color}}; padding: 80px 0px; --text-color: {{value.text_color}}; text-align: {{value.text_alignment}};">
                     {% include_block value.story_photo_gallery %}
                 </div>
             {% endif %}

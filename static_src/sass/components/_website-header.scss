@@ -1,6 +1,19 @@
 .website-header {
-    background: #E5ECEB;
+    background: #dff2f2;
     padding: 10px 0;
+}
+
+.website-header-container {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.website-header-icon {
+    color: #fff;
+    width: 34px;
+    height: auto;
+    max-height: 30px;
+    flex-shrink: 0;
 }
 .website-header .rich_text {
     color: #000;

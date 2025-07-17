@@ -1,6 +1,6 @@
 {% load wagtailcore_tags util_tags %}
 {% load i18n %}
-<a href="{{ value.document.url }}" class="streamfield document-block" target="_blank" rel="nofollow noreferrer" aria-labelledby="{% trans 'Document link' %}"{% if value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
+<a href="{{ value.document.url }}" class="streamfield document-block" target="_blank" rel="nofollow noreferrer" aria-labelledby="{% trans 'Document link' %}">
     <div class="document-block__content">
         {% include "patterns/atoms/icons/icon.html" with name="file" classname="document-block__icon" %}
 

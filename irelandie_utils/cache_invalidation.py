@@ -5,6 +5,7 @@ from botocore.exceptions import ClientError
 from django.core.cache import cache
 from django.conf import settings
 from django.core.cache.utils import make_template_fragment_key
+from wagtail.models import Page
 
 from irelandie_assets.templatetags.irelandie_assets_tags import check_page_type
 
@@ -50,14 +51,18 @@ def invalidate_page_cache(paths_to_invalidate):
 
 def invalidate_cache(snippet_instance):
     usage = snippet_instance.get_usage()
+    paths_to_invalidate = []
 
-    paths_to_invalidate = [page.url for page, _ in usage]
+    for obj, _ in usage:
+        if isinstance(obj, Page):
+            if obj.url:
+                paths_to_invalidate.append(obj.url)
 
     if paths_to_invalidate:
         invalidate_cloudfront(paths_to_invalidate)
 
-    for page_tuple in usage:
-        page_type = page_tuple[0]
-        if check_page_type(page_type.content_type, 'embassy index page'):
-            key = make_template_fragment_key("embassy_index")
-            cache.delete(key)
+    for obj, _ in usage:
+        if isinstance(obj, Page):
+            if check_page_type(obj.content_type, 'embassy index page'):
+                key = make_template_fragment_key("embassy_index")
+                cache.delete(key)

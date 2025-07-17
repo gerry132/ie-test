@@ -3,7 +3,7 @@
 {% load static %}
 {% load util_tags %}
 {% load i18n %}
-<div class="section section--padding" {% if value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
+<div class="section section--padding" >
 <div class="story{% if value.background == 'dark' %} story--dark{% endif %} ">
     <div class="wrapper wrapper--large wrapper--padding">
         <h2 class="story__heading heading--2">{% translate "Contact Details" %}</h2>
