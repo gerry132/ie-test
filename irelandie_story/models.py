@@ -222,6 +222,12 @@ class StoryPage(HeroPage):
                 }
 
             if self.article_audio:
+                mimetypes.add_type('audio/aac', '.aac')
+                mimetypes.add_type('audio/flac', '.flac')
+                mimetypes.add_type('audio/ogg', '.ogg')
+                mimetypes.add_type('audio/webm', '.webm')
+                mimetypes.add_type('audio/wav', '.wav')
+                mimetypes.add_type('audio/mp4', '.m4a')
                 audio_file = self.article_audio
                 article_schema["audio"] = {
                     "@type": "AudioObject",
