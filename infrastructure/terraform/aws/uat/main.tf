@@ -1489,6 +1489,39 @@ data "template_file" "task_definition" {
   }
 }
 
+module "main_task_definition" {
+  source = "../common/task_definition"
+
+  account_id       = local.account_id
+  
+  project_name                        = local.project_name
+  environment_name                    = local.environment_name
+  assets_s3_bucket                    = aws_s3_bucket.assets.id
+  log_group                           = aws_cloudwatch_log_group.ecs.name
+  ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
+  cache_address                       = local.cache_address
+  SETTINGS_DEBUG                      = local.SETTINGS_DEBUG
+  SETTINGS_DEBUG_TOOLBAR              = local.SETTINGS_DEBUG_TOOLBAR
+  SETTINGS_EMAIL_HOST                 = local.SETTINGS_EMAIL_HOST
+  SETTINGS_DEFAULT_FROM_EMAIL         = local.SETTINGS_DEFAULT_FROM_EMAIL
+  SETTINGS_CORS_ALLOW_ALL_ORIGINS     = local.SETTINGS_CORS_ALLOW_ALL_ORIGINS
+  domain_ireland_ie                   = local.domain_ireland_ie 
+  service_contrainer_port             = 8000 
+  SETTINGS_ALLOWED_HOSTS              = local.SETTINGS_ALLOWED_HOSTS
+  SETTINGS_CLOUDFRONT_ID              = local.SETTINGS_CLOUDFRONT_ID 
+  SETTINGS_AWS_ACCESS_KEY_ID          = local.SETTINGS_AWS_ACCESS_KEY_ID
+  SETTINGS_AWS_SECRET_ACCESS_KEY      = local.SETTINGS_AWS_SECRET_ACCESS_KEY
+  SETTINGS_AWS_STATIC_BUCKET_NAME     = local.SETTINGS_AWS_STATIC_BUCKET_NAME
+  SETTINGS_BASE_URL                   = local.SETTINGS_BASE_URL
+  SETTINGS_DATABASE_URL               = local.SETTINGS_DATABASE_URL
+  SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
+  SETTINGS_OPENSEARCH_KEY             = local.SETTINGS_OPENSEARCH_KEY
+  SETTINGS_OPENSEARCH_SECRET          = local.SETTINGS_OPENSEARCH_SECRET
+  SETTINGS_OPENSEARCH_ENDPOINT        = local.SETTINGS_OPENSEARCH_ENDPOINT
+
+  SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
+}
+
 # Task definition
 
 module "ecs_task_os_index" {
@@ -1504,6 +1537,22 @@ module "ecs_task_os_index" {
   execution_role        = aws_iam_role.task_execution.arn
 }
 
+module "api" {
+  source = "../common/api"
+
+  container_definitions = module.main_task_definition.container_definitions
+  lb_target_group       = aws_lb_target_group.default_admin.arn 
+  project_name                        = local.project_name
+  environment_name      = local.environment_name
+  task_cpu              = "256"
+  task_memory           = "512"
+  api_domain            = "api.${local.domain_ireland_ie}"
+  subnets               = module.network.public_subnet_ids
+  ecs_security_groups   = aws_security_group.ecs.id
+  lb_security_groups    = aws_security_group.lb.id
+  cluster               = aws_ecs_cluster.default
+  execution_role        = aws_iam_role.task_execution.arn
+}
 
 resource "aws_ecs_task_definition" "default" {
   family                   = "${local.environment_name}-${local.project_name}"
