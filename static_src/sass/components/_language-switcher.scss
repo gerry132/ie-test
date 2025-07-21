@@ -5,15 +5,15 @@
     background-color: transparent;
     background-repeat: no-repeat, no-repeat;
     background-size: 16px 16px, 16px 8px;
-    background-position: left 8px center, right 8px center;
+    background-position: left 12px center, right 12px center;
     color: $color--white;
     position: relative;
     display: block;
     appearance: none;
     vertical-align: middle;
     border: 0;
-    padding-right: 22px;
-    padding-left: 30px;
+    padding-right: 28px;
+    padding-left: 38px;
     @include media-query(max-medium){
         @include font-size(xxs);
     }
@@ -30,12 +30,8 @@
         cursor: pointer;
     }
 
-    &:focus {
-        outline: 3px #FFD740 solid;
-        outline-offset: 0;
-        box-shadow:
-            0 0 0 4px #000000,
-            -4px 6px 0 0 #000000,
-            4px 6px 0 0 #000000;
-        }
+    &:focus-visible, &:focus  {
+      outline: none;
+      box-shadow: none;
+    }
 }

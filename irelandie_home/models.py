@@ -4,7 +4,6 @@ from functools import cached_property
 from django.db import models
 from django.core.cache.utils import make_template_fragment_key
 from django.core.cache import cache
-from django.utils.text import slugify
 from wagtail.admin.panels import TabbedInterface, ObjectList, FieldPanel, MultiFieldPanel
 from wagtail import blocks as wagtail_blocks
 from wagtail.fields import StreamField
@@ -51,6 +50,27 @@ class HomePage(FreeFormPageBase):
         }
     )
 
+    organization_name = models.CharField(
+        max_length=255,
+        default="Department of Foreign Affairs and Trade",
+        blank=True
+    )
+
+    organization_description = models.CharField(blank=True, max_length=255)
+
+    organization_logo = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    mainEntityOfPage_name = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    mainEntityOfPage_description = models.CharField(blank=True, max_length=255)
+
     twitter_url = models.URLField(blank=True, help_text="Full Twitter profile URL")
     facebook_url = models.URLField(blank=True, help_text="Full Facebook page URL")
     youtube_url = models.URLField(blank=True, help_text="Full YouTube channel URL")
@@ -72,6 +92,15 @@ class HomePage(FreeFormPageBase):
 
     promote_panels = FreeFormPageBase.promote_panels + [
         FieldPanel("top_story"),
+        MultiFieldPanel([
+            FieldPanel("organization_name"),
+            FieldPanel("organization_description"),
+            FieldPanel("organization_logo"),
+        ], heading="Organization Schema Settings"),
+        MultiFieldPanel([
+            FieldPanel("mainEntityOfPage_name"),
+            FieldPanel("mainEntityOfPage_description"),
+        ], heading="mainEntityOfPage")
     ] + [social_media_panels]
     settings_panels = ([
         FieldPanel("favicon", permission="access_admin"),
@@ -121,17 +150,6 @@ class HomePage(FreeFormPageBase):
             .specific()
         )
 
-    def get_speakable_selectors(self):
-        selectors = []
-        for idx, block in enumerate(self.body, start=1):
-            value = getattr(block, 'value', {})
-            slug = slugify(block.block_type)
-            if hasattr(value, 'get') and value.get('is_speakable', False):
-                selector = f"[data-speakable='{slug}-{idx}']"
-                selectors.append(selector)
-
-        return selectors
-
     @property
     def same_as_links(self):
         return list(filter(None, [
@@ -144,26 +162,22 @@ class HomePage(FreeFormPageBase):
         ]))
 
     def get_schema_json(self):
-        speakable_selectors = self.get_speakable_selectors()
 
         schema = {
             "@context": "https://schema.org",
             "@type": "GovernmentOrganization",
-            "name": self.title,
+            "name": self.organization_name,
             "url": self.full_url,
+            "description": self.organization_description or "",
+            "logo": self.organization_logo.get_rendition("original").url if self.organization_logo else "",
             "sameAs": self.same_as_links,
             "mainEntityOfPage": {
                 "@type": "WebPage",
                 "@id": self.full_url,
+                "name": self.mainEntityOfPage_name,
+                "description": self.mainEntityOfPage_description or "",
             },
         }
-
-        # Add speakable only if selectors exist
-        if speakable_selectors:
-            schema["mainEntityOfPage"]["speakable"] = {
-                "@type": "SpeakableSpecification",
-                "cssSelector": speakable_selectors
-            }
 
         return json.dumps(schema, indent=2)
 

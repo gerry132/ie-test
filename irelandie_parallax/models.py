@@ -3,7 +3,6 @@ import mimetypes
 
 from django.db import models
 from django.utils.formats import date_format
-from django.utils.text import slugify
 from wagtail.images import get_image_model_string
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
@@ -283,44 +282,9 @@ class Parallax(HeroPage):
         context["tags_no_links"] = tags_no_links
         return context
 
-    def get_speakable_selectors(self):
-        selectors = []
-        index = 1
-        double_index = 1
-
-        for block in self.body:
-            # For DoubleFeature blocks, loop their sub_blocks too
-            if block.block_type == 'DoubleFeature':
-                for sub_block in block.value:
-                    value = getattr(sub_block, 'value', {})
-                    slug = slugify('DoubleFeature')
-                    if hasattr(value, 'get') and value.get('is_speakable', False):
-                        selector = f"[data-speakable='{slug}-{double_index}']"
-                        selectors.append(selector)
-                        double_index += 1
-            else:
-                value = getattr(block, 'value', {})
-                slug = slugify(block.block_type)
-
-                if hasattr(value, 'get') and value.get('is_speakable', False):
-                    # Apply heading/subtitle check only for ParallaxImageVideoBlock
-                    if block.block_type == "ParallaxImageVideoBlock":
-                        heading = value.get('heading', '')
-                        subtitle = value.get('subtitle', '')
-
-                        if not (str(heading).strip() or str(subtitle).strip()):
-                            index += 1
-                            continue
-
-                    selector = f"[data-speakable='{slug}-{index}']"
-                    selectors.append(selector)
-                    index += 1
-
-        return selectors
-
     def get_breadcrumb_schema(self):
         ancestors = list(
-            self.get_ancestors(inclusive=True).live().filter(depth__gte=1)
+            self.get_ancestors(inclusive=True).live().filter(depth__gte=2)
         )
         ancestors = ancestors[-6:]
 
@@ -360,12 +324,6 @@ class Parallax(HeroPage):
                 },
                 "image": self.article_image.get_rendition("original").url if self.article_image else None,
             }
-            speakable_selectors = self.get_speakable_selectors()
-            if speakable_selectors:
-                article_schema["speakable"] = {
-                    "@type": "SpeakableSpecification",
-                    "cssSelector": speakable_selectors
-                }
 
             if self.article_publisher_logo:
                 article_schema["publisher"]["logo"] = {
@@ -374,6 +332,12 @@ class Parallax(HeroPage):
                 }
 
             if self.article_audio:
+                mimetypes.add_type('audio/aac', '.aac')
+                mimetypes.add_type('audio/flac', '.flac')
+                mimetypes.add_type('audio/ogg', '.ogg')
+                mimetypes.add_type('audio/webm', '.webm')
+                mimetypes.add_type('audio/wav', '.wav')
+                mimetypes.add_type('audio/mp4', '.m4a')
                 audio_file = self.article_audio
                 article_schema["audio"] = {
                     "@type": "AudioObject",

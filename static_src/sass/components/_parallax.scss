@@ -314,8 +314,8 @@
 /* ==== 3. BEIGE ==== */
 .theme--beige .rich-text a,
 .rich-text.rich-text__content.theme--beige a {
-  color: #FFF;
-  text-decoration-color: #FFF;
+  color: #EDE5D4;
+  text-decoration-color: #EDE5D4;
 }
 .theme--beige .rich-text a:hover,
 .rich-text.rich-text__content.theme--beige a:hover {
@@ -493,271 +493,271 @@
 /* === 9. MAGENTA === */
 .theme--magenta .rich-text a,
 .rich-text.rich-text__content.theme--magenta a {
-  color: #C70064;
-  text-decoration-color: #C70064;
+  color: #9B2150;
+  text-decoration-color: #9B2150;
 }
 .theme--magenta .rich-text a:hover,
 .rich-text.rich-text__content.theme--magenta a:hover {
-  color: #C8005D;
-  text-decoration-color: #C8005D;
+  color: #BF2E65;
+  text-decoration-color: #BF2E65;
 }
 .theme--magenta .rich-text a:active,
 .rich-text.rich-text__content.theme--magenta a:active {
-  color: #D60070;
-  text-decoration-color: #D60070;
+  color: #D03A70;
+  text-decoration-color: #D03A70;
 }
 .theme--magenta .rich-text a.button_text,
 .rich-text.rich-text__content.theme--magenta a.button_text {
-  background: #C70064;
+  background: #9B2150;
   color: #FFF;
 }
 .theme--magenta .rich-text a.button_text:hover,
 .rich-text.rich-text__content.theme--magenta a.button_text:hover {
-  background: #C8005D;
+  background: #BF2E65;
 }
 .theme--magenta .rich-text a.button_text:active,
 .rich-text.rich-text__content.theme--magenta a.button_text:active {
-  background: #D60070;
+  background: #D03A70;
 }
 
 /* === 10. VIOLET === */
 .theme--violet .rich-text a,
 .rich-text.rich-text__content.theme--violet a {
-  color: #8000A1;
-  text-decoration-color: #8000A1;
+  color: #79258C;
+  text-decoration-color: #79258C;
 }
 .theme--violet .rich-text a:hover,
 .rich-text.rich-text__content.theme--violet a:hover {
-  color: #9500BA;
-  text-decoration-color: #9500BA;
+  color: #9430AD;
+  text-decoration-color: #9430AD;
 }
 .theme--violet .rich-text a:active,
 .rich-text.rich-text__content.theme--violet a:active {
-  color: #A100C9;
-  text-decoration-color: #A100C9;
+  color: #9E33C3;
+  text-decoration-color: #9E33C3;
 }
 .theme--violet .rich-text a.button_text,
 .rich-text.rich-text__content.theme--violet a.button_text {
-  background: #8000A1;
+  background: #79258C;
   color: #FFF;
 }
 .theme--violet .rich-text a.button_text:hover,
 .rich-text.rich-text__content.theme--violet a.button_text:hover {
-  background: #9500BA;
+  background: #9430AD;
 }
 .theme--violet .rich-text a.button_text:active,
 .rich-text.rich-text__content.theme--violet a.button_text:active {
-  background: #A100C9;
+  background: #9E33C3;
 }
 
 /* === 11. PURPLE === */
 .theme--purple .rich-text a,
 .rich-text.rich-text__content.theme--purple a {
-  color: #4B0082;
-  text-decoration-color: #4B0082;
+  color: #593391;
+  text-decoration-color: #593391;
 }
 .theme--purple .rich-text a:hover,
 .rich-text.rich-text__content.theme--purple a:hover {
-  color: #5A009C;
-  text-decoration-color: #5A009C;
+  color: #6C42AF;
+  text-decoration-color: #6C42AF;
 }
 .theme--purple .rich-text a:active,
 .rich-text.rich-text__content.theme--purple a:active {
-  color: #6700B3;
-  text-decoration-color: #6700B3;
+  color: #734BC8;
+  text-decoration-color: #734BC8;
 }
 .theme--purple .rich-text a.button_text,
 .rich-text.rich-text__content.theme--purple a.button_text {
-  background: #4B0082;
+  background: #593391;
   color: #FFF;
 }
 .theme--purple .rich-text a.button_text:hover,
 .rich-text.rich-text__content.theme--purple a.button_text:hover {
-  background: #5A009C;
+  background: #6C42AF;
 }
 .theme--purple .rich-text a.button_text:active,
 .rich-text.rich-text__content.theme--purple a.button_text:active {
-  background: #6700B3;
+  background: #734BC8;
 }
 
 /* === 12. INDIGO === */
 .theme--indigo .rich-text a,
 .rich-text.rich-text__content.theme--indigo a {
-  color: #3F51B5;
-  text-decoration-color: #3F51B5;
+  color: #3241A2;
+  text-decoration-color: #3241A2;
 }
 .theme--indigo .rich-text a:hover,
 .rich-text.rich-text__content.theme--indigo a:hover {
-  color: #5C6BC0;
-  text-decoration-color: #5C6BC0;
+  color: #186CC0;
+  text-decoration-color: #186CC0;
 }
 .theme--indigo .rich-text a:active,
 .rich-text.rich-text__content.theme--indigo a:active {
-  color: #7986CB;
-  text-decoration-color: #7986CB;
+  color: #1B6ACB;
+  text-decoration-color: #1B6ACB;
 }
 .theme--indigo .rich-text a.button_text,
 .rich-text.rich-text__content.theme--indigo a.button_text {
-  background: #3F51B5;
+  background: #3241A2;
   color: #FFF;
 }
 .theme--indigo .rich-text a.button_text:hover,
 .rich-text.rich-text__content.theme--indigo a.button_text:hover {
-  background: #5C6BC0;
+  background: #186CC0;
 }
 .theme--indigo .rich-text a.button_text:active,
 .rich-text.rich-text__content.theme--indigo a.button_text:active {
-  background: #7986CB;
+  background: #1B6ACB;
 }
 
 /* === 13. BLUE === */
 .theme--blue .rich-text a,
 .rich-text.rich-text__content.theme--blue a {
-  color: #0072CE;
-  text-decoration-color: #0072CE;
+  color: #1152AC;
+  text-decoration-color: #1152AC;
 }
 .theme--blue .rich-text a:hover,
 .rich-text.rich-text__content.theme--blue a:hover {
-  color: #0056A3;
-  text-decoration-color: #0056A3;
+  color: #186CC0;
+  text-decoration-color: #186CC0;
 }
 .theme--blue .rich-text a:active,
 .rich-text.rich-text__content.theme--blue a:active {
-  color: #003F7F;
-  text-decoration-color: #003F7F;
+  color: #1B6ACB;
+  text-decoration-color: #1B6ACB;
 }
 .theme--blue .rich-text a.button_text,
 .rich-text.rich-text__content.theme--blue a.button_text {
-  background: #0072CE;
+  background: #1152AC;
   color: #FFF;
 }
 .theme--blue .rich-text a.button_text:hover,
 .rich-text.rich-text__content.theme--blue a.button_text:hover {
-  background: #0056A3;
+  background: #186CC0;
 }
 .theme--blue .rich-text a.button_text:active,
 .rich-text.rich-text__content.theme--blue a.button_text:active {
-  background: #003F7F;
+  background: #1B6ACB;
 }
 
 /* === 14. NAVY === */
 .theme--navy .rich-text a,
 .rich-text.rich-text__content.theme--navy a {
-  color: #001F3F;
-  text-decoration-color: #001F3F;
+  color: #1B3550;
+  text-decoration-color: #1B3550;
 }
 .theme--navy .rich-text a:hover,
 .rich-text.rich-text__content.theme--navy a:hover {
-  color: #002F5F;
-  text-decoration-color: #002F5F;
+  color: #24476B;
+  text-decoration-color: #24476B;
 }
 .theme--navy .rich-text a:active,
 .rich-text.rich-text__content.theme--navy a:active {
-  color: #003F7F;
-  text-decoration-color: #003F7F;
+  color: #1F4F7A;
+  text-decoration-color: #1F4F7A;
 }
 .theme--navy .rich-text a.button_text,
 .rich-text.rich-text__content.theme--navy a.button_text {
-  background: #001F3F;
+  background: #1B3550;
   color: #FFF;
 }
 .theme--navy .rich-text a.button_text:hover,
 .rich-text.rich-text__content.theme--navy a.button_text:hover {
-  background: #002F5F;
+  background: #24476B;
 }
 .theme--navy .rich-text a.button_text:active,
 .rich-text.rich-text__content.theme--navy a.button_text:active {
-  background: #003F7F;
+  background: #1F4F7A;
 }
 
 /* === 15. GOLD === */
 .theme--gold .rich-text a,
 .rich-text.rich-text__content.theme--gold a {
-  color: #DAA520;
-  text-decoration-color: #DAA520;
+  color: #6B541A;
+  text-decoration-color: #6B541A;
 }
 .theme--gold .rich-text a:hover,
 .rich-text.rich-text__content.theme--gold a:hover {
-  color: #C1901B;
-  text-decoration-color: #C1901B;
+  color: #7A601B;
+  text-decoration-color: #7A601B;
 }
 .theme--gold .rich-text a:active,
 .rich-text.rich-text__content.theme--gold a:active {
-  color: #B8860B;
-  text-decoration-color: #B8860B;
+  color: #896C1E;
+  text-decoration-color: #896C1E;
 }
 .theme--gold .rich-text a.button_text,
 .rich-text.rich-text__content.theme--gold a.button_text {
-  background: #DAA520;
-  color: #101010;
+  background: #6B541A;
+  color: #FFF;
 }
 .theme--gold .rich-text a.button_text:hover,
 .rich-text.rich-text__content.theme--gold a.button_text:hover {
-  background: #C1901B;
+  background: #7A601B;
 }
 .theme--gold .rich-text a.button_text:active,
 .rich-text.rich-text__content.theme--gold a.button_text:active {
-  background: #B8860B;
+  background: #896C1E;
 }
 
 /* === 16. BROWN === */
 .theme--brown .rich-text a,
 .rich-text.rich-text__content.theme--brown a {
-  color: #5C4033;
-  text-decoration-color: #5C4033;
+  color: #5B3A33;
+  text-decoration-color: #5B3A33;
 }
 .theme--brown .rich-text a:hover,
 .rich-text.rich-text__content.theme--brown a:hover {
-  color: #704C3A;
-  text-decoration-color: #704C3A;
+  color: #7A5149;
+  text-decoration-color: #7A5149;
 }
 .theme--brown .rich-text a:active,
 .rich-text.rich-text__content.theme--brown a:active {
-  color: #8B5E3C;
-  text-decoration-color: #8B5E3C;
+  color: #8D6E63;
+  text-decoration-color: #8D6E63;
 }
 .theme--brown .rich-text a.button_text,
 .rich-text.rich-text__content.theme--brown a.button_text {
-  background: #5C4033;
+  background: #5B3A33;
   color: #FFF;
 }
 .theme--brown .rich-text a.button_text:hover,
 .rich-text.rich-text__content.theme--brown a.button_text:hover {
-  background: #704C3A;
+  background: #7A5149;
 }
 .theme--brown .rich-text a.button_text:active,
 .rich-text.rich-text__content.theme--brown a.button_text:active {
-  background: #8B5E3C;
+  background: #8D6E63;
 }
 
 /* === 17. DARK GREY === */
 .theme--dark_grey .rich-text a,
 .rich-text.rich-text__content.theme--dark_grey a {
-  color: #333;
-  text-decoration-color: #333;
+  color: #4A4A4A;
+  text-decoration-color: #4A4A4A;
 }
 .theme--dark_grey .rich-text a:hover,
 .rich-text.rich-text__content.theme--dark_grey a:hover {
-  color: #222;
-  text-decoration-color: #222;
+  color: #646464;
+  text-decoration-color: #646464;
 }
 .theme--dark_grey .rich-text a:active,
 .rich-text.rich-text__content.theme--dark_grey a:active {
-  color: #111;
-  text-decoration-color: #111;
+  color: #757575;
+  text-decoration-color: #757575;
 }
 .theme--dark_grey .rich-text a.button_text,
 .rich-text.rich-text__content.theme--dark_grey a.button_text {
-  background: #333;
+  background: #4A4A4A;
   color: #FFF;
 }
 .theme--dark_grey .rich-text a.button_text:hover,
 .rich-text.rich-text__content.theme--dark_grey a.button_text:hover {
-  background: #222;
+  background: #646464;
 }
 .theme--dark_grey .rich-text a.button_text:active,
 .rich-text.rich-text__content.theme--dark_grey a.button_text:active {
-  background: #111;
+  background: #757575;
 }
 
 

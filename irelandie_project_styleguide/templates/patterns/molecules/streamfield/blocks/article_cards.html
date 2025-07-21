@@ -1,5 +1,5 @@
 {% load wagtailcore_tags %}
-<div {% if value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
+<div >
     {% if value.title or value.summary %}
     <div class="intro" style="max-width:1024px;">
         <h2 class="intro__title">{{ value.title }}</h2>

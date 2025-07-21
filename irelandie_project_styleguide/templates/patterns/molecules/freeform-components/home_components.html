@@ -26,20 +26,20 @@
     {% elif block.block_type == 'stories' %}
         {% include_block block %}
     {% elif block.block_type == 'logos' %}
-        <div class="wrapper wrapper--large wrapper--padding" {% if block.value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
+        <div class="wrapper wrapper--large wrapper--padding" >
             <div class="section section--padding">
-                {% include_block block with parent_is_speakable=True %}
+                {% include_block block %}
             </div>
         </div>
     {% elif block.block_type == 'accordion' %}
-        <div class="wrapper wrapper--padding" {% if block.value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
+        <div class="wrapper wrapper--padding" >
             <div class="section section--padding">
-                {% include_block block with parent_is_speakable=True %}
+                {% include_block block %}
             </div>
         </div>
     {% elif block.block_type == 'story_photo_gallery' or block.block_type == 'timeline_photo_gallery' or block.block_type == 'multimedia_row' or block.block_type == 'stats_block' %}
-        <div {% if block.value.is_speakable %} data-speakable="{{ block.block_type|slugify }}-{{ forloop.counter }}" {% endif %}>
-            {% include_block block with parent_is_speakable=True %}
+        <div >
+            {% include_block block %}
         </div>
     {% else %}
         <div class="wrapper wrapper--large wrapper--padding">
