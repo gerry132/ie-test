@@ -43,6 +43,12 @@
     transition: $transition;
     padding: 0;
 
+    &:focus,
+    &:focus-visible {
+      outline: none;
+      box-shadow: none;
+    }
+
     .header--condensed & {
         width: 20px;
     }
