@@ -159,27 +159,6 @@ resource "aws_lb_listener" "api_listener" {
     }
   }
 
-resource "aws_lb_listener_rule" "redirect_to_api" {
-  listener_arn = aws_lb_listener.api_listener.arn
-  priority     = 10
-
-  action {
-    type = "redirect"
-    redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-      path        = "/api/"
-    }
-  }
-
-  condition {
-    path_pattern {
-      values = ["/*"]
-    }
-  }
-}
-
 resource "aws_acm_certificate" "api" {
   domain_name                 = var.api_domain
 

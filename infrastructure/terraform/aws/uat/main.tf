@@ -1552,7 +1552,7 @@ module "api" {
   subnets               = module.network.public_subnet_ids
   vpc_id                = module.network.vpc_id
   ecs_security_groups   = aws_security_group.ecs.id
-  lb_security_groups    = aws_security_group.lb.id
+  lb_security_groups    = aws_security_group.lb_gov_network.id
   cluster               = aws_ecs_cluster.default
   execution_role        = aws_iam_role.task_execution.arn
 }
