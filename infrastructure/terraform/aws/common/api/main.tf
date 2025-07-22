@@ -79,7 +79,7 @@ resource "aws_lb" "api" {
 
 
 
-resource "aws_ecs_service" "default" {
+resource "aws_ecs_service" "api" {
   name                    = "${var.environment_name}-api"
   cluster                 = var.cluster.arn
   task_definition         = aws_ecs_task_definition.api_task.arn
@@ -89,7 +89,7 @@ resource "aws_ecs_service" "default" {
 
 
   load_balancer {
-    target_group_arn    = var.lb_target_group
+    target_group_arn    = aws_lb_target_group.api_target_group.arn
     container_name      = "${var.environment_name}-${var.project_name}"
     container_port      = 8000
   }
@@ -102,7 +102,85 @@ resource "aws_ecs_service" "default" {
 }
 
 
-resource "aws_acm_certificate" "ireland_ie_content" {
+resource "aws_lb_listener_certificate" "api_cert" {
+  listener_arn    = aws_lb_listener.api_listener.arn
+  certificate_arn = aws_acm_certificate.api.arn
+}
+
+
+resource "aws_lb_listener_rule" "api_forward" {
+  listener_arn    = aws_lb_listener.api_listener.arn
+  priority        = 2
+
+  action {
+    type                = "forward"
+    target_group_arn    = aws_lb_target_group.api_target_group.arn
+  }
+
+  condition {
+    host_header {
+      values  = [var.api_domain]
+    }
+  }
+}
+
+resource "aws_lb_listener" "api_listener" {
+  load_balancer_arn     = aws_lb.api.arn
+  port                  = 443
+  protocol              = "HTTPS"
+  ssl_policy            = "ELBSecurityPolicy-TLS-1-2-2017-01"
+  certificate_arn       = aws_acm_certificate.api.arn
+
+  default_action {
+    type = "fixed-response"
+    fixed_response {
+      content_type = "text/plain"
+      status_code  = 503
+    }
+  }
+}
+
+
+  resource "aws_lb_target_group" "api_target_group" {
+    name            = "api-target-group"
+    port            = 8000
+    protocol        = "HTTP"
+    target_type     = "ip"
+    vpc_id          = var.vpc_id
+
+    health_check {
+      interval                = 120
+      path                    = "/health-check/"
+      protocol                = "HTTP"
+      timeout                 = 60
+      healthy_threshold       = 2
+      unhealthy_threshold     = 3
+      matcher                 = "200-399"
+    }
+  }
+
+resource "aws_lb_listener_rule" "redirect_to_api" {
+  listener_arn = aws_lb_listener.api_listener.arn
+  priority     = 10
+
+  action {
+    type = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+      path        = "/api/"
+    }
+  }
+
+  condition {
+    path_pattern {
+      values = ["/*"]
+    }
+  }
+}
+
+resource "aws_acm_certificate" "api" {
   domain_name                 = var.api_domain
 
   validation_method           = "DNS"

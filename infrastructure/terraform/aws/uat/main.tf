@@ -706,32 +706,32 @@ resource "aws_lb_target_group" "default" {
 
 # Admin site should point here
 
-resource "aws_lb_target_group" "default_admin" {
-  name            = "${local.environment_name}-${local.project_name}-admin"
-  port            = 80
-  protocol        = "HTTP"
-  target_type     = "ip"
-  vpc_id          = module.network.vpc_id
+  resource "aws_lb_target_group" "default_admin" {
+    name            = "${local.environment_name}-${local.project_name}-admin"
+    port            = 80
+    protocol        = "HTTP"
+    target_type     = "ip"
+    vpc_id          = module.network.vpc_id
 
-  health_check {
-    interval                = 120
-    path                    = local.health_check_path
-    protocol                = "HTTP"
-    timeout                 = 60
-    healthy_threshold       = 2
-    unhealthy_threshold     = 3
-    matcher                 = "200-399"
+    health_check {
+      interval                = 120
+      path                    = local.health_check_path
+      protocol                = "HTTP"
+      timeout                 = 60
+      healthy_threshold       = 2
+      unhealthy_threshold     = 3
+      matcher                 = "200-399"
+    }
+
+    lifecycle {
+      create_before_destroy   = true
+    }
+
+    depends_on  = [
+      aws_lb.default,
+      aws_lb.public_sites,
+    ]
   }
-
-  lifecycle {
-    create_before_destroy   = true
-  }
-
-  depends_on  = [
-    aws_lb.default,
-    aws_lb.public_sites,
-  ]
-}
 
 
 # -----------------------------------------------------------------------------
@@ -1508,6 +1508,8 @@ module "main_task_definition" {
   domain_ireland_ie                   = local.domain_ireland_ie 
   service_contrainer_port             = 8000 
   SETTINGS_ALLOWED_HOSTS              = local.SETTINGS_ALLOWED_HOSTS
+  SETTINGS_USE_CACHE                  = local.SETTINGS_USE_CACHE
+  SETTINGS_USE_S3                     = local.SETTINGS_USE_S3
   SETTINGS_CLOUDFRONT_ID              = local.SETTINGS_CLOUDFRONT_ID 
   SETTINGS_AWS_ACCESS_KEY_ID          = local.SETTINGS_AWS_ACCESS_KEY_ID
   SETTINGS_AWS_SECRET_ACCESS_KEY      = local.SETTINGS_AWS_SECRET_ACCESS_KEY
@@ -1542,12 +1544,13 @@ module "api" {
 
   container_definitions = module.main_task_definition.container_definitions
   lb_target_group       = aws_lb_target_group.default_admin.arn 
-  project_name                        = local.project_name
+  project_name          = local.project_name
   environment_name      = local.environment_name
   task_cpu              = "256"
   task_memory           = "512"
   api_domain            = "api.${local.domain_ireland_ie}"
   subnets               = module.network.public_subnet_ids
+  vpc_id                = module.network.vpc_id
   ecs_security_groups   = aws_security_group.ecs.id
   lb_security_groups    = aws_security_group.lb.id
   cluster               = aws_ecs_cluster.default
