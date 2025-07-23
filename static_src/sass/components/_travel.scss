@@ -130,8 +130,8 @@
 .search-bar--travel-index {
     height: 39px;
     background: #EDECE5;
-    border: none;
-    border-bottom: 2px #565148 solid;
+    border: 1px solid #ccc;
+    border-bottom: 2px solid #565148;
     @include media-query(large) {
         width: 603px !important;
     }
@@ -162,7 +162,8 @@
     left: 118px;
     border-radius: 0px;
     background: #EDECE5;
-    border: 1px #ccc solid;
+    border: 1px solid #ccc;
+    border-bottom: 2px solid #565148;
     @include media-query(large) {
         width: 603px !important;
     }

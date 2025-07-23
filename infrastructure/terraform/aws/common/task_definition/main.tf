@@ -37,8 +37,36 @@ data "template_file" "task_definition" {
   }
 }
 
+data "template_file" "publish_task_definition" {
+  template    = file("../common/templates/publish_scheduled.tpl")
+
+  vars = {
+    ecr_image_url                  = var.ecr_image_url
+    log_group                      = var.log_group
+    name                           = "${var.environment_name}-publish_scheduled"
+    port                           = var.service_container_port
+    region                         = var.region
+    task_cpu                       = var.task_cpu
+    task_memory                    = var.task_memory
+    assets_s3_bucket               = var.assets_s3_bucket
+
+    SETTINGS_ALLOWED_HOSTS         = var.SETTINGS_ALLOWED_HOSTS
+    SETTINGS_OPENSEARCH_MASTER     = var.SETTINGS_OPENSEARCH_MASTER
+    SETTINGS_AWS_ACCESS_KEY_ID     = var.SETTINGS_AWS_ACCESS_KEY_ID
+    SETTINGS_AWS_SECRET_ACCESS_KEY = var.SETTINGS_AWS_SECRET_ACCESS_KEY
+    SETTINGS_AWS_STATIC_BUCKET_NAME = var.SETTINGS_AWS_STATIC_BUCKET_NAME
+    SETTINGS_BASE_URL              = var.SETTINGS_BASE_URL
+    SETTINGS_DATABASE_URL          = var.SETTINGS_DATABASE_URL
+    SETTINGS_SECRET_KEY            = var.SETTINGS_SECRET_KEY
+    SETTINGS_OPENSEARCH_KEY        = var.SETTINGS_OPENSEARCH_KEY
+    SETTINGS_OPENSEARCH_SECRET     = var.SETTINGS_OPENSEARCH_SECRET
+    SETTINGS_OPENSEARCH_ENDPOINT   = var.SETTINGS_OPENSEARCH_ENDPOINT
+    SETTINGS_CORS_ALLOWED_ORIGINS  = var.SETTINGS_CORS_ALLOWED_ORIGINS
+  }
+}
+
 variable "cache_address" {
-  
+
 }
 variable "SETTINGS_DEBUG_TOOLBAR" {}
 variable "SETTINGS_DEBUG" {}
@@ -68,15 +96,19 @@ variable "SETTINGS_USE_CACHE" {}
 variable "SETTINGS_USE_S3" {}
 variable "SETTINGS_SECRET_KEY" {}
 variable "log_group" {
-  
+
 }
 variable "ecr_image_url" {
-  
+
 }
 variable "project_name" {
-  
+
 }
 
 output "container_definitions" {
     value = data.template_file.task_definition.rendered
+}
+
+output "publish_task_definition_rendered" {
+  value = data.template_file.publish_task_definition.rendered
 }
