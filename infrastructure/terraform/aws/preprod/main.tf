@@ -1381,10 +1381,37 @@ data "template_file" "index_task_definition" {
   }
 }
 
+module "main_task_definition" {
+  source                  = "../common/task_definition"
+
+  ecr_image_url           = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
+  log_group               = aws_cloudwatch_log_group.ecs_index.name
+  environment_name        = local.environment_name
+  service_container_port  = local.service_container_port
+  region                  = local.region
+  task_cpu                = local.task_cpu
+  task_memory             = local.task_memory
+  assets_s3_bucket        = aws_s3_bucket.assets.id
+
+  SETTINGS_ALLOWED_HOSTS        = local.SETTINGS_ALLOWED_HOSTS
+  SETTINGS_OPENSEARCH_MASTER    = local.SETTINGS_OPENSEARCH_MASTER
+  SETTINGS_AWS_ACCESS_KEY_ID    = local.SETTINGS_AWS_ACCESS_KEY_ID
+  SETTINGS_AWS_SECRET_ACCESS_KEY= local.SETTINGS_AWS_SECRET_ACCESS_KEY
+  SETTINGS_AWS_STATIC_BUCKET_NAME= local.SETTINGS_AWS_STATIC_BUCKET_NAME
+  SETTINGS_BASE_URL             = local.SETTINGS_BASE_URL
+  SETTINGS_DATABASE_URL         = local.SETTINGS_DATABASE_URL
+  SETTINGS_SECRET_KEY           = local.SETTINGS_SECRET_KEY
+  SETTINGS_OPENSEARCH_KEY       = local.SETTINGS_OPENSEARCH_KEY
+  SETTINGS_OPENSEARCH_SECRET    = local.SETTINGS_OPENSEARCH_SECRET
+  SETTINGS_OPENSEARCH_ENDPOINT  = local.SETTINGS_OPENSEARCH_ENDPOINT
+  SETTINGS_CORS_ALLOWED_ORIGINS = local.SETTINGS_CORS_ALLOWED_ORIGINS
+}
+
+
 module "ecs_task_os_index" {
   source = "../common/utils"
 
-  publish_task_definitions = data.template_file.publish_task_definition.rendered
+  publish_task_definitions = module.main_task_definition.publish_task_definition_rendered
   container_definitions = data.template_file.index_task_definition.rendered
   task_cpu              = "256"
   task_memory           = "512"
