@@ -1,8 +1,6 @@
 #!/bin/sh
 set -e -o pipefail
 
-cd citizensinfo
-
 echo "Publishing scheduled items"
 python manage.py publish_scheduled
 

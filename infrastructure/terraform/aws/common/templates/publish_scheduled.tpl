@@ -1,6 +1,6 @@
 [
     {
-        "name": "index_update",
+        "name": "publish_scheduled",
 		"image": "${ecr_image_url}",
         "assignPublicIp": false,
 		"networkMode": "awsvpc",
@@ -22,28 +22,8 @@
                 "value": "*"
             },
             {
-                "name": "OPENSEARCH_MASTER",
-                "value": "${SETTINGS_OPENSEARCH_MASTER}"
-            },
-            {
                 "name": "AWS_SECRET_ACCESS_KEY",
                 "value": "${SETTINGS_AWS_SECRET_ACCESS_KEY}"
-            },
-            {
-                "name": "OPENSEARCH_ENDPOINT",
-                "value": "${SETTINGS_OPENSEARCH_ENDPOINT}"
-            },
-            {
-                "name": "OPENSEARCH_ENDPOINT",
-                "value": "${SETTINGS_OPENSEARCH_ENDPOINT}"
-            },
-            {
-                "name": "OPENSEARCH_SECRET",
-                "value": "${SETTINGS_OPENSEARCH_SECRET}"
-            },
-                        {
-                "name": "OPENSEARCH_KEY",
-                "value": "${SETTINGS_OPENSEARCH_KEY}"
             },
             {
                 "name": "AWS_ACCESS_KEY_ID",

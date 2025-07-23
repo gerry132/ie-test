@@ -1351,34 +1351,6 @@ resource "aws_iam_user_policy_attachment" "smtp_user_attach" {
 
 # Task definition
 
-data "template_file" "publish_task_definition" {
-  template    = file("../common/templates/publish_scheduled.tpl")
-
-  vars = {
-    ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
-    log_group                           = aws_cloudwatch_log_group.ecs_index.name
-    name                                = "${local.environment_name}-publish_scheduled"
-    port                                = local.service_contrainer_port
-    region                              = local.region
-    task_cpu                            = local.task_cpu
-    task_memory                         = local.task_memory
-    assets_s3_bucket                    = aws_s3_bucket.assets.id
-
-    SETTINGS_ALLOWED_HOSTS              = local.SETTINGS_ALLOWED_HOSTS
-    SETTINGS_OPENSEARCH_MASTER          = local.SETTINGS_OPENSEARCH_MASTER
-    SETTINGS_AWS_ACCESS_KEY_ID          = local.SETTINGS_AWS_ACCESS_KEY_ID
-    SETTINGS_AWS_SECRET_ACCESS_KEY      = local.SETTINGS_AWS_SECRET_ACCESS_KEY
-    SETTINGS_AWS_STATIC_BUCKET_NAME     = local.SETTINGS_AWS_STATIC_BUCKET_NAME
-    SETTINGS_BASE_URL                   = local.SETTINGS_BASE_URL
-    SETTINGS_DATABASE_URL               = local.SETTINGS_DATABASE_URL
-    SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
-    SETTINGS_OPENSEARCH_KEY             = local.SETTINGS_OPENSEARCH_KEY
-    SETTINGS_OPENSEARCH_SECRET          = local.SETTINGS_OPENSEARCH_SECRET
-    SETTINGS_OPENSEARCH_ENDPOINT        = local.SETTINGS_OPENSEARCH_ENDPOINT
-    SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
-  }
-}
-
 
 data "template_file" "index_task_definition" {
   template    = file("../common/templates/update-indexes-task-definition.tpl")
