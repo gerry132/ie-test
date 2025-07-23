@@ -9,6 +9,7 @@ variable "container_definitions" {}
 variable "cluster" {}
 variable "execution_role" {}
 variable "api_domain" {}
+variable "vpc_id" {}
 variable "project_name" {
   
 }
