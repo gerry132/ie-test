@@ -1,3 +1,19 @@
+resource "aws_ecs_task_definition" "publish_task" {
+  family                   = "${var.environment_name}-publish"
+  execution_role_arn       = var.execution_role
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = "256"  # Task-level CPU
+  memory                   = "512"  # Task-level memory
+
+  container_definitions    = var.publish_task_definitions
+}
+
+resource "aws_cloudwatch_event_rule" "hourly_trigger" {
+  name        = "${var.environment_name}-hourly-publish"
+  description = "Triggers the ECS task to publish scheduled pages"
+  schedule_expression = "rate(60 minutes)"
+}
 
 resource "aws_ecs_task_definition" "index_task" {
   family                   = "${var.environment_name}-update-indexes"
@@ -33,7 +49,7 @@ resource "aws_cloudwatch_event_target" "ecs_task_target" {
         subnets             = var.subnets
     }
   }
-    role_arn = aws_iam_role.eventbridge_to_ecs.arn 
+    role_arn = aws_iam_role.eventbridge_to_ecs.arn
 }
 
 resource "aws_iam_role" "eventbridge_to_ecs" {
@@ -80,5 +96,6 @@ variable "task_memory" {}
 variable "subnets" {}
 variable "security_groups" {}
 variable "container_definitions" {}
+variable "publish_task_definitions" {}
 variable "cluster" {}
 variable "execution_role" {}

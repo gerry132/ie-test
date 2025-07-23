@@ -1396,6 +1396,34 @@ resource "aws_iam_user_policy_attachment" "smtp_user_attach" {
 
 # Task definition
 
+data "template_file" "publish_task_definition" {
+  template    = file("../common/templates/publish_scheduled.tpl")
+
+  vars = {
+    ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
+    log_group                           = aws_cloudwatch_log_group.ecs_index.name
+    name                                = "${local.environment_name}-publish_scheduled"
+    port                                = local.service_contrainer_port
+    region                              = local.region
+    task_cpu                            = local.task_cpu
+    task_memory                         = local.task_memory
+    assets_s3_bucket                    = aws_s3_bucket.assets.id
+
+    SETTINGS_ALLOWED_HOSTS              = local.SETTINGS_ALLOWED_HOSTS
+    SETTINGS_OPENSEARCH_MASTER          = local.SETTINGS_OPENSEARCH_MASTER
+    SETTINGS_AWS_ACCESS_KEY_ID          = local.SETTINGS_AWS_ACCESS_KEY_ID
+    SETTINGS_AWS_SECRET_ACCESS_KEY      = local.SETTINGS_AWS_SECRET_ACCESS_KEY
+    SETTINGS_AWS_STATIC_BUCKET_NAME     = local.SETTINGS_AWS_STATIC_BUCKET_NAME
+    SETTINGS_BASE_URL                   = local.SETTINGS_BASE_URL
+    SETTINGS_DATABASE_URL               = local.SETTINGS_DATABASE_URL
+    SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
+    SETTINGS_OPENSEARCH_KEY             = local.SETTINGS_OPENSEARCH_KEY
+    SETTINGS_OPENSEARCH_SECRET          = local.SETTINGS_OPENSEARCH_SECRET
+    SETTINGS_OPENSEARCH_ENDPOINT        = local.SETTINGS_OPENSEARCH_ENDPOINT
+    SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
+  }
+}
+
 data "template_file" "index_task_definition" {
   template    = file("../common/templates/update-indexes-task-definition.tpl")
 
@@ -1428,6 +1456,7 @@ data "template_file" "index_task_definition" {
 module "ecs_task_os_index" {
   source = "../common/utils"
 
+  publish_task_definitions = data.template_file.publish_task_definition.rendered
   container_definitions = data.template_file.index_task_definition.rendered
   task_cpu              = "256"
   task_memory           = "512"
@@ -1625,7 +1654,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
         scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
@@ -1653,12 +1682,12 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
         scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
             }
-        }  
+        }
       }
     }
 
@@ -1668,7 +1697,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
       sampled_requests_enabled   = true
     }
   }
-  
+
   rule {
     name     = "AWS-AWSManagedRulesAmazonIpReputationList"
     priority = 2
@@ -1683,7 +1712,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
                 scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
@@ -1712,7 +1741,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
         scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
@@ -1748,7 +1777,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
                 scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
@@ -1777,7 +1806,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
         scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
@@ -1806,7 +1835,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
         scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
@@ -1841,7 +1870,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
         scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
@@ -1954,7 +1983,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "/search/*"
-  } 
+  }
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods           = ["GET", "HEAD"]
@@ -1994,7 +2023,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/publication-index/*"
-  }  
+  }
 
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
@@ -2005,7 +2034,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/news-archive/"
-  } 
+  }
 
 
   ordered_cache_behavior {
@@ -2017,7 +2046,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/news-and-events/*"
-  } 
+  }
 
 
   ordered_cache_behavior {
@@ -2029,7 +2058,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/news-and-speeches/*"
-  } 
+  }
 
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
@@ -2040,7 +2069,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/annual-reports/*"
-  } 
+  }
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
@@ -2229,15 +2258,15 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
         scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips.arn
                 }
                }
             }
         }
       }
-    
-      
+
+
     }
     visibility_config {
       cloudwatch_metrics_enabled = true
@@ -2248,7 +2277,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
   rule {
     name     = "AWS-AWSManagedRulesBotControlRuleSet"
     priority = 0
-    
+
     override_action {
       none {
       }
@@ -2261,7 +2290,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
         scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips.arn
                 }
                }
