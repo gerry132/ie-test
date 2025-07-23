@@ -44,14 +44,13 @@ data "template_file" "publish_task_definition" {
     ecr_image_url                  = var.ecr_image_url
     log_group                      = var.log_group
     name                           = "${var.environment_name}-publish_scheduled"
-    port                           = var.service_container_port
+    port                           = var.service_contrainer_port
     region                         = var.region
     task_cpu                       = var.task_cpu
     task_memory                    = var.task_memory
     assets_s3_bucket               = var.assets_s3_bucket
 
     SETTINGS_ALLOWED_HOSTS         = var.SETTINGS_ALLOWED_HOSTS
-    SETTINGS_OPENSEARCH_MASTER     = var.SETTINGS_OPENSEARCH_MASTER
     SETTINGS_AWS_ACCESS_KEY_ID     = var.SETTINGS_AWS_ACCESS_KEY_ID
     SETTINGS_AWS_SECRET_ACCESS_KEY = var.SETTINGS_AWS_SECRET_ACCESS_KEY
     SETTINGS_AWS_STATIC_BUCKET_NAME = var.SETTINGS_AWS_STATIC_BUCKET_NAME
