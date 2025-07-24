@@ -1431,7 +1431,7 @@ module "main_task_definition" {
   ecr_image_url           = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
   log_group               = aws_cloudwatch_log_group.ecs_index.name
   environment_name        = local.environment_name
-  service_container_port  = local.service_container_port
+  service_container_port  = local.service_contrainer_port
   region                  = local.region
   task_cpu                = local.task_cpu
   task_memory             = local.task_memory
