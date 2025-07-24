@@ -2,8 +2,8 @@
   {
     "name": "publish_scheduled",
     "image": "${ecr_image_url}",
-    "cpu": ${task_cpu},
-    "memory": ${task_memory},
+    "cpu": "${task_cpu},
+    "memory": "${task_memory}",
     "networkMode": "awsvpc",
     "assignPublicIp": false,
     "entryPoint": [
