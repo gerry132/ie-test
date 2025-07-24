@@ -2,8 +2,8 @@
   {
     "name": "publish_scheduled",
     "image": "${ecr_image_url}",
-    "cpu": "${task_cpu}",
-    "memory": "${task_memory}",
+    "cpu": ${task_cpu},
+    "memory": ${task_memory},
     "networkMode": "awsvpc",
     "assignPublicIp": false,
     "entryPoint": [
@@ -63,5 +63,4 @@
     "secrets": []
   }
 ]
-variable "task_memory" { default = "512" }
-variable "task_cpu" { default = "256" }
+
