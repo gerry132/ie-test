@@ -1499,7 +1499,7 @@ module "main_task_definition" {
   log_group               = aws_cloudwatch_log_group.ecs.name
   ecr_image_url           = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
   cache_address           = local.cache_address
-  service_container_port  = local.service_container_port
+  service_contrainer_port  = local.service_contrainer_port
   region                  = local.region
   task_cpu                = local.task_cpu
   task_memory             = local.task_memory
@@ -1525,7 +1525,6 @@ module "main_task_definition" {
   SETTINGS_OPENSEARCH_KEY      = local.SETTINGS_OPENSEARCH_KEY
   SETTINGS_OPENSEARCH_SECRET   = local.SETTINGS_OPENSEARCH_SECRET
   SETTINGS_OPENSEARCH_ENDPOINT = local.SETTINGS_OPENSEARCH_ENDPOINT
-  SETTINGS_OPENSEARCH_MASTER   = local.SETTINGS_OPENSEARCH_MASTER
   SETTINGS_CORS_ALLOWED_ORIGINS = local.SETTINGS_CORS_ALLOWED_ORIGINS
 }
 
