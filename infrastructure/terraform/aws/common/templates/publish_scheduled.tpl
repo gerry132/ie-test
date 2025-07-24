@@ -63,5 +63,4 @@
     "secrets": []
   }
 ]
-variable "task_memory" { default = "512" }
-variable "task_cpu" { default = "256" }
+
