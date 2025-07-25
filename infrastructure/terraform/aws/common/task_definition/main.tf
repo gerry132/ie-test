@@ -1,4 +1,4 @@
-data "template_file" "task_definition" {
+data "template_file" "task_definition_api" {
   template    = file("../common/templates/task_definition.tpl")
 
   vars = {
@@ -7,9 +7,10 @@ data "template_file" "task_definition" {
     name                                = "${var.environment_name}-${var.project_name}"
     port                                = var.service_contrainer_port
     region                              = var.region
-    task_cpu                            = var.task_cpu
+
+    task_cpu                            = 256
+    task_memory                         = 512
     SETTINGS_CLOUDFRONT_ID              = var.SETTINGS_CLOUDFRONT_ID
-    task_memory                         = var.task_memory
     assets_url                          = "assets.${var.domain_ireland_ie}"
     assets_s3_bucket                    = var.assets_s3_bucket
 
@@ -41,32 +42,30 @@ data "template_file" "publish_task_definition" {
   template    = file("../common/templates/publish_scheduled.tpl")
 
   vars = {
-    ecr_image_url                  = var.ecr_image_url
-    log_group                      = var.log_group
-    name                           = "${var.environment_name}-publish_scheduled"
-    port                           = var.service_contrainer_port
-    region                         = var.region
-    task_cpu                       = var.task_cpu
-    task_memory                    = var.task_memory
-    assets_s3_bucket               = var.assets_s3_bucket
+    ecr_image_url                   = var.ecr_image_url
+    log_group                       = var.log_group
+    name                            = "${var.environment_name}-publish_scheduled"
+    port                            = var.service_contrainer_port
+    region                          = var.region
+    task_cpu                        = 256
+    task_memory                     = 512
+    assets_s3_bucket                = var.assets_s3_bucket
 
-    SETTINGS_ALLOWED_HOSTS         = var.SETTINGS_ALLOWED_HOSTS
-    SETTINGS_AWS_ACCESS_KEY_ID     = var.SETTINGS_AWS_ACCESS_KEY_ID
-    SETTINGS_AWS_SECRET_ACCESS_KEY = var.SETTINGS_AWS_SECRET_ACCESS_KEY
+    SETTINGS_ALLOWED_HOSTS          = var.SETTINGS_ALLOWED_HOSTS
+    SETTINGS_AWS_ACCESS_KEY_ID      = var.SETTINGS_AWS_ACCESS_KEY_ID
+    SETTINGS_AWS_SECRET_ACCESS_KEY  = var.SETTINGS_AWS_SECRET_ACCESS_KEY
     SETTINGS_AWS_STATIC_BUCKET_NAME = var.SETTINGS_AWS_STATIC_BUCKET_NAME
-    SETTINGS_BASE_URL              = var.SETTINGS_BASE_URL
-    SETTINGS_DATABASE_URL          = var.SETTINGS_DATABASE_URL
-    SETTINGS_SECRET_KEY            = var.SETTINGS_SECRET_KEY
-    SETTINGS_OPENSEARCH_KEY        = var.SETTINGS_OPENSEARCH_KEY
-    SETTINGS_OPENSEARCH_SECRET     = var.SETTINGS_OPENSEARCH_SECRET
-    SETTINGS_OPENSEARCH_ENDPOINT   = var.SETTINGS_OPENSEARCH_ENDPOINT
-    SETTINGS_CORS_ALLOWED_ORIGINS  = var.SETTINGS_CORS_ALLOWED_ORIGINS
+    SETTINGS_BASE_URL               = var.SETTINGS_BASE_URL
+    SETTINGS_DATABASE_URL           = var.SETTINGS_DATABASE_URL
+    SETTINGS_SECRET_KEY             = var.SETTINGS_SECRET_KEY
+    SETTINGS_OPENSEARCH_KEY         = var.SETTINGS_OPENSEARCH_KEY
+    SETTINGS_OPENSEARCH_SECRET      = var.SETTINGS_OPENSEARCH_SECRET
+    SETTINGS_OPENSEARCH_ENDPOINT    = var.SETTINGS_OPENSEARCH_ENDPOINT
+    SETTINGS_CORS_ALLOWED_ORIGINS   = var.SETTINGS_CORS_ALLOWED_ORIGINS
   }
 }
 
-variable "cache_address" {
-
-}
+variable "cache_address" {}
 variable "SETTINGS_DEBUG_TOOLBAR" {}
 variable "SETTINGS_DEBUG" {}
 variable "account_id" {}
@@ -94,20 +93,9 @@ variable "SETTINGS_OPENSEARCH_KEY" {}
 variable "SETTINGS_USE_CACHE" {}
 variable "SETTINGS_USE_S3" {}
 variable "SETTINGS_SECRET_KEY" {}
-variable "log_group" {
+variable "log_group" {}
+variable "ecr_image_url" {}
+variable "project_name" {}
 
-}
-variable "ecr_image_url" {
-
-}
-variable "project_name" {
-
-}
-
-output "container_definitions" {
-    value = data.template_file.task_definition.rendered
-}
-
-output "publish_task_definition_rendered" {
-  value = data.template_file.publish_task_definition.rendered
-}
+output "container_definitions" {value = data.template_file.task_definition_api.rendered}
+output "publish_task_definition_rendered" {value = data.template_file.publish_task_definition.rendered}

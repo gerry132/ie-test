@@ -9,12 +9,6 @@ resource "aws_ecs_task_definition" "publish_task" {
   container_definitions    = var.publish_task_definitions
 }
 
-resource "aws_cloudwatch_event_rule" "hourly_trigger" {
-  name        = "${var.environment_name}-hourly-publish"
-  description = "Triggers the ECS task to publish scheduled pages"
-  schedule_expression = "rate(60 minutes)"
-}
-
 resource "aws_ecs_task_definition" "index_task" {
   family                   = "${var.environment_name}-update-indexes"
   execution_role_arn       = var.execution_role
@@ -26,6 +20,12 @@ resource "aws_ecs_task_definition" "index_task" {
   container_definitions    = var.container_definitions
 }
 
+# hourly event trigger
+resource "aws_cloudwatch_event_rule" "hourly_trigger" {
+  name        = "${var.environment_name}-hourly-publish"
+  description = "Triggers the ECS task to publish scheduled pages"
+  schedule_expression = "rate(5 minutes)"
+}
 
 # event bridge weekly trigger
 
@@ -34,6 +34,24 @@ resource "aws_cloudwatch_event_rule" "weekly_trigger" {
   description = "Triggers the ECS task to update indexes once per week"
   schedule_expression = "cron(0 3 ? * 1 *)" # Adjust cron expression as needed
 }
+
+resource "aws_cloudwatch_event_target" "ecs_task_target_publish" {
+  rule      = aws_cloudwatch_event_rule.hourly_trigger.name
+  target_id = "publish-task"
+  arn       = var.cluster.arn
+
+  ecs_target {
+    task_definition_arn = aws_ecs_task_definition.publish_task.arn
+    launch_type         = "FARGATE"
+
+    network_configuration {
+        security_groups     = [var.security_groups]
+        subnets             = var.subnets
+    }
+  }
+    role_arn = aws_iam_role.eventbridge_to_ecs.arn
+}
+
 
 resource "aws_cloudwatch_event_target" "ecs_task_target" {
   rule      = aws_cloudwatch_event_rule.weekly_trigger.name
@@ -81,6 +99,7 @@ resource "aws_iam_role_policy" "eventbridge_to_ecs_policy" {
         ]
         Resource = [
           aws_ecs_task_definition.index_task.arn,
+          aws_ecs_task_definition.publish_task.arn,
           var.execution_role
         ]
       }
