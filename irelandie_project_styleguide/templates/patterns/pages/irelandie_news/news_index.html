@@ -1,7 +1,9 @@
 {% extends "patterns/base_page.html" %}
 {% load wagtailcore_tags i18n %}
 {% load util_tags wagtailcore_tags navigation_tags %}
+{% load sites %}
 
+{% get_current_site as current_site %}
 {% block content %}
 
 <script async>
@@ -17,7 +19,7 @@ function getNewsArticles(year=null) {
     }
 
     $.ajax({
-            url : 'https://api.'+'{{ current_site.full_url }}',
+            url : 'https://api.'+'{{ current_site.hostname }}',
             type : 'GET',
             data : {
                 'year' : year
