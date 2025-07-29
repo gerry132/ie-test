@@ -17,7 +17,7 @@ function getNewsArticles(year=null) {
     }
 
     $.ajax({
-            url : 'https://api.{{ current_site.full_url }}',
+            url : 'https://api.'+'{{ current_site.full_url }}',
             type : 'GET',
             data : {
                 'year' : year
