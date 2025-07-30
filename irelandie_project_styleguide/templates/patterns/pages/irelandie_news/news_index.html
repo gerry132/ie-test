@@ -1,16 +1,42 @@
 {% extends "patterns/base_page.html" %}
 {% load wagtailcore_tags i18n %}
 {% load util_tags wagtailcore_tags navigation_tags %}
-{% load sites %}
 
-{% get_current_site as current_site %}
 {% block content %}
 
 <script async>
-function getNewsArticles(year=null) {
+window.addEventListener("DOMContentLoaded", function () {
+    const params = new URLSearchParams(window.location.search);
+    const year = params.get("year");
+    const select = document.getElementById("news-list");
+
+    if (year) {
+        select.value = year;
+    } else {
+        select.value = "all";
+    }
+});
+
+function reloadWithYear(year) {
+    const url = new URL(window.location.href);
+    if (year === "all") {
+        url.searchParams.delete("year");
+    } else {
+        url.searchParams.set("year", year);
+    }
+    console.log(url.toString())
+    window.location.href = url.toString();
+}
+
+function getNewsArticles() {
     let params = (new URL(document.location)).searchParams;
     let redirect = params.get("redirect");
 
+    let year = params.get("year");
+    
+    const page = params.get("page") || 1;
+    const offset = page * 10
+    
     if (redirect && year===null) {
         year = params.get("year_r");
     }
@@ -18,14 +44,41 @@ function getNewsArticles(year=null) {
         year = null;
     }
 
+    console.log(year);
+    
     $.ajax({
-            url : 'https://api.'+'{{ current_site.hostname }}',
+            url : `https://api.uat.ireland.ie/api/v2/news_pages/?type=irelandie_news.NewsPage&fields=last_published_at,subtitle,publication_date&offset=${offset}&limit=10`,
             type : 'GET',
             data : {
                 'year' : year
             },
             success : function(data) {
-                document.getElementById('news--wrapper').innerHTML = data;
+                document.getElementById('news--wrapper').replaceChildren();
+                for(let d in data.items) {
+                    const url = data.items[d].meta.html_url;
+                    const title = data.items[d].title;
+                    const last_published_at = data.items[d].last_published_at;
+                    const subtitle = data.items[d].subtitle;
+                    let x = `
+                <a href="${url}" aria-label="Link box" class="link-box">
+    <div class="link-box__content">
+        <div class="link-box__container">
+            <h3 class="link-box__heading heading--3">${title}</h3>
+            ${last_published_at}
+           <div style="max-width:unset;" class="rich-text">
+                ${subtitle}
+            </div>
+        </div>
+        <button class="link-box__btn link-box__title" aria-label="Link box"></button>
+    </div>
+    <br>
+    <div class="link-box__line"></div>
+</a>
+                `
+                
+                document.getElementById('news--wrapper').insertAdjacentHTML('beforeend', x);
+                }
+                //console.log(data);
                 if (year) {
                     document.getElementById('news-list').value = year;
                     document.getElementById('news-list-mobile').value = year;
@@ -49,7 +102,7 @@ getNewsArticles();
     <div class="wrapper--large--toc" style="padding-bottom: 40px;">
         <div class="wrapper--padding related-content--mobile">
             <h3 class="intro__title">{% translate "Select year:" %}</h3>
-            <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list" onchange="getNewsArticles(this.value); " style="width: 100%;">
+ <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list" onchange="reloadWithYear(this.value);" style="width: 100%;">
                 <option value="all"><p>{% trans "All" context "custom-context" %}</p></option>
                 {% for p in page.get_years %}
                 <option value="{{p}}">{{p}}</option>
@@ -66,7 +119,7 @@ getNewsArticles();
         </div>
         <div class="related-content">
             <h3 class="intro__title">{% translate "Select year:" %}</h3>
-            <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list-mobile" onchange="getNewsArticles(this.value); " style="width: 100%;">
+            <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list-mobile" onchange="reloadWithYear(this.value);" style="width: 100%;">
                 <option value="all"><p>{% trans "All" context "custom-context" %}</p></option>
                 {% for p in page.get_years %}
                 <option value="{{p}}">{{p}}</option>
@@ -90,7 +143,7 @@ getNewsArticles();
                 </div>
                 <div class="wrapper--padding related-content--mobile">
                     <h3 class="intro__title">{% translate "Select year:" %}</h3>
-                    <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list" onchange="getNewsArticles(this.value); " style="width: 100%;">
+                    <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list" onchange="reloadWithYear(this.value); " style="width: 100%;">
                         <option value="all"><p>{% trans "All" context "custom-context" %}</p></option>
                         {% for p in page.get_years %}
                         <option value="{{p}}">{{p}}</option>
@@ -102,7 +155,7 @@ getNewsArticles();
         <div id="right">
             <div class="related-content">
                 <h3 class="intro__title">{% translate "Select year:" %}</h3>
-                <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list-mobile" onchange="getNewsArticles(this.value); " style="width: 100%;">
+                <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list-mobile" onchange="reloadWithYear(this.value);" style="width: 100%;">
                     <option value="all"><p>{% trans "All" context "custom-context" %}</p></option>
                     {% for p in page.get_years %}
                     <option value="{{p}}">{{p}}</option>
