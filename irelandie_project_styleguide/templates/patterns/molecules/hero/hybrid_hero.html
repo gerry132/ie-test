@@ -111,3 +111,40 @@
 
 {% endfor %}
 
+<script>
+    let iicon = document.querySelectorAll('.mini-hero__button-image-credit');
+    let imagecredit = document.querySelectorAll('.mini-hero__image-credit_mobile');
+
+    for (let i = 0; i < iicon.length; i++) {
+        iicon[i].addEventListener('click', function() {
+            imagecredit[i].classList.toggle('visible');
+        });
+    }
+    const muteIconDiv = document.querySelector(".mute__icon");
+    const muteIcon = document.querySelector(".mini-hero__mute");
+    const unmuteIconRight = document.querySelector(".mini-hero__unmute--right");
+     const unmuteIconLeft = document.querySelector(".mini-hero__unmute--left");
+    muteIconDiv.addEventListener('click', () => {
+      muteIcon.classList.toggle('mute__hidden')
+    });
+    muteIconDiv.addEventListener('click', () => {
+      unmuteIconRight.classList.toggle('mini-hero__unmute__active__right')
+    });
+    muteIconDiv.addEventListener('click', () => {
+      unmuteIconLeft.classList.toggle('mini-hero__unmute__active__left')
+    });
+
+    function toggleMute() {
+
+        var myvideo=document.getElementById("myVideo")
+
+        if(myvideo.muted){
+            myvideo.muted = false;
+        } else {
+            myvideo.muted = true;
+        }
+
+        }
+
+</script>
+
