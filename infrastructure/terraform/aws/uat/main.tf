@@ -58,6 +58,7 @@ locals {
   gov_network_cird_blocks       = [
     "169.254.192.0/18",
     "137.191.224.0/19",
+    "37.228.225.101/32", # gerry 
     "193.178.64.0/19",
     "193.178.96.0/20",
     "139.162.239.108/32",
@@ -1415,7 +1416,7 @@ locals {
   SETTINGS_CACHE_ADDRESS            = local.cache_address
   SETTINGS_DATABASE_URL             = local.db_master_url
   SETTINGS_SECRET_KEY               = data.aws_ssm_parameter.random_secret_key.value
-  SETTINGS_CORS_ALLOWED_ORIGINS     = local.SETTINGS_BASE_URL
+  SETTINGS_CORS_ALLOWED_ORIGINS     = "${local.SETTINGS_BASE_URL},https://api.${local.domain_ireland_ie},https://www.${local.domain_ireland_ie}"
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
   SETTINGS_EMAIL_HOST               = "email.${local.region}.amazonaws.com"
   SETTINGS_DEFAULT_FROM_EMAIL       = aws_ssm_parameter.DEFAULT_FROM_EMAIL.value
