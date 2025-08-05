@@ -1453,43 +1453,6 @@ data "template_file" "index_task_definition" {
   }
 }
 
-data "template_file" "task_definition" {
-  template    = file("../common/templates/task_definition.tpl")
-
-  vars = {
-    ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
-    log_group                           = aws_cloudwatch_log_group.ecs.name
-    name                                = "${local.environment_name}-${local.project_name}"
-    port                                = local.service_contrainer_port
-    region                              = local.region
-    task_cpu                            = local.task_cpu
-    SETTINGS_CLOUDFRONT_ID              = local.SETTINGS_CLOUDFRONT_ID
-    task_memory                         = local.task_memory
-    assets_url                          = "assets.${local.domain_ireland_ie}"
-    assets_s3_bucket                    = aws_s3_bucket.assets.id
-
-    SETTINGS_ALLOWED_HOSTS              = local.SETTINGS_ALLOWED_HOSTS
-    SETTINGS_AWS_ACCESS_KEY_ID          = local.SETTINGS_AWS_ACCESS_KEY_ID
-    SETTINGS_AWS_SECRET_ACCESS_KEY      = local.SETTINGS_AWS_SECRET_ACCESS_KEY
-    SETTINGS_AWS_STATIC_BUCKET_NAME     = local.SETTINGS_AWS_STATIC_BUCKET_NAME
-    SETTINGS_BASE_URL                   = local.SETTINGS_BASE_URL
-    SETTINGS_CACHE_ADDRESS              = local.SETTINGS_CACHE_ADDRESS
-    SETTINGS_DATABASE_URL               = local.SETTINGS_DATABASE_URL
-    SETTINGS_DEBUG                      = local.SETTINGS_DEBUG
-    SETTINGS_DEBUG_TOOLBAR              = local.SETTINGS_DEBUG_TOOLBAR
-    SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
-    SETTINGS_OPENSEARCH_KEY             = local.SETTINGS_OPENSEARCH_KEY
-    SETTINGS_OPENSEARCH_SECRET          = local.SETTINGS_OPENSEARCH_SECRET
-    SETTINGS_OPENSEARCH_ENDPOINT        = local.SETTINGS_OPENSEARCH_ENDPOINT
-    SETTINGS_USE_CACHE                  = local.SETTINGS_USE_CACHE
-    SETTINGS_USE_S3                     = local.SETTINGS_USE_S3
-    SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
-    SETTINGS_CORS_ALLOW_ALL_ORIGINS     = local.SETTINGS_CORS_ALLOW_ALL_ORIGINS
-    SETTINGS_EMAIL_HOST                 = local.SETTINGS_EMAIL_HOST
-    SETTINGS_DEFAULT_FROM_EMAIL         = local.SETTINGS_DEFAULT_FROM_EMAIL
-  }
-}
-
 module "main_task_definition" {
   source = "../common/task_definition"
 
@@ -1569,7 +1532,7 @@ resource "aws_ecs_task_definition" "default" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = local.task_cpu
   memory                   = local.task_memory
-  container_definitions    = data.template_file.task_definition.rendered
+  container_definitions    = module.main_task_definition.task_definition.rendered 
 }
 
 resource "aws_ecs_service" "default" {
