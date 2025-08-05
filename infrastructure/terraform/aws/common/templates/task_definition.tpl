@@ -70,7 +70,7 @@
                 "value": "${SETTINGS_BASE_URL}"
             },
             {
-                "name": "API_DOMAIN",
+                "name": "API_ORIGIN,
                 "value": "${api_domain}"
             },
             {

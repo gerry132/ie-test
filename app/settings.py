@@ -452,10 +452,7 @@ WAGTAIL_SITE_NAME = "Ireland.ie"
 
 BASE_URL = os.environ.get("BASE_URL", "http://localhost:8000")
 
-if BASE_URL != "http://localhost:8000":
-    API_ORIGIN = "api.{}".format(BASE_URL)
-else:
-    API_ORIGIN = "localhost:8000"
+API_ORIGIN = os.environ.get("API_ORIGIN", "localhost:8000")
 
 WAGTAIL_I18N_ENABLED = True
 
