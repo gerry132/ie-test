@@ -27,6 +27,7 @@
         {% if self.seo_og_type != "article" %}
         <meta property="website:published_time" content="{{ self.seo_published_at|date:'c' }}" />
         <meta property="website:modified_time" content="{{ self.last_published_at|date:'c' }}" />
+        <meta name="api-origin" content="{{ settings.API_ORIGIN }}" />
         {% endif %}
 
         {% block meta_tags %}{% endblock %}
@@ -53,7 +54,8 @@
         <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 
         {% block extra_css %}{% endblock %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 
     </head>
     {% verify_path as path_info %}

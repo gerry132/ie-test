@@ -36,7 +36,8 @@ function getNewsArticles() {
     
     const page = params.get("page") || 1;
     const offset = page * 10
-    
+    const apiOrigin = window.API_ORIGIN || document.querySelector('meta[name="api-origin"]').content;
+
     if (redirect && year===null) {
         year = params.get("year_r");
     }
@@ -44,10 +45,8 @@ function getNewsArticles() {
         year = null;
     }
 
-    console.log(year);
-    
     $.ajax({
-            url : `https://api.uat.ireland.ie/api/v2/news_pages/?type=irelandie_news.NewsPage&fields=last_published_at,subtitle,publication_date&offset=${offset}&limit=10`,
+            url : `https://${apiOrigin}/api/v2/news_pages/?type=irelandie_news.NewsPage&fields=last_published_at,subtitle,publication_date&offset=${offset}&limit=10`,
             type : 'GET',
             data : {
                 'year' : year
@@ -96,6 +95,7 @@ function getNewsArticles() {
 getNewsArticles();
 
 </script>
+
 {% if page.generic_hero %}
 {% include "patterns/molecules/hero/hybrid_hero.html" with page=page %}
 <div class="section--master">
