@@ -33,6 +33,7 @@ locals {
   app_aws_username              = "UAT_APP_USER"
   project_domain                = "content.uat.ireland.ie"
   domain_ireland_ie             = "uat.ireland.ie"
+  api_domain                    = "api.uat.ireland.ie"
   africa_day_domain             = "africaday.uat.ireland.ie"
   project_name                  = "g2g"
   region                        = "eu-west-1"
@@ -1453,6 +1454,44 @@ data "template_file" "index_task_definition" {
   }
 }
 
+data "template_file" "task_definition" {
+  template    = file("../common/templates/task_definition.tpl")
+
+  vars = {
+    ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
+    log_group                           = aws_cloudwatch_log_group.ecs.name
+    name                                = "${local.environment_name}-${local.project_name}"
+    api_domain                          = local.api_domain
+    port                                = local.service_contrainer_port
+    region                              = local.region
+    task_cpu                            = local.task_cpu
+    SETTINGS_CLOUDFRONT_ID              = local.SETTINGS_CLOUDFRONT_ID
+    task_memory                         = local.task_memory
+    assets_url                          = "assets.${local.domain_ireland_ie}"
+    assets_s3_bucket                    = aws_s3_bucket.assets.id
+
+    SETTINGS_ALLOWED_HOSTS              = local.SETTINGS_ALLOWED_HOSTS
+    SETTINGS_AWS_ACCESS_KEY_ID          = local.SETTINGS_AWS_ACCESS_KEY_ID
+    SETTINGS_AWS_SECRET_ACCESS_KEY      = local.SETTINGS_AWS_SECRET_ACCESS_KEY
+    SETTINGS_AWS_STATIC_BUCKET_NAME     = local.SETTINGS_AWS_STATIC_BUCKET_NAME
+    SETTINGS_BASE_URL                   = local.SETTINGS_BASE_URL
+    SETTINGS_CACHE_ADDRESS              = local.SETTINGS_CACHE_ADDRESS
+    SETTINGS_DATABASE_URL               = local.SETTINGS_DATABASE_URL
+    SETTINGS_DEBUG                      = local.SETTINGS_DEBUG
+    SETTINGS_DEBUG_TOOLBAR              = local.SETTINGS_DEBUG_TOOLBAR
+    SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
+    SETTINGS_OPENSEARCH_KEY             = local.SETTINGS_OPENSEARCH_KEY
+    SETTINGS_OPENSEARCH_SECRET          = local.SETTINGS_OPENSEARCH_SECRET
+    SETTINGS_OPENSEARCH_ENDPOINT        = local.SETTINGS_OPENSEARCH_ENDPOINT
+    SETTINGS_USE_CACHE                  = local.SETTINGS_USE_CACHE
+    SETTINGS_USE_S3                     = local.SETTINGS_USE_S3
+    SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
+    SETTINGS_CORS_ALLOW_ALL_ORIGINS     = local.SETTINGS_CORS_ALLOW_ALL_ORIGINS
+    SETTINGS_EMAIL_HOST                 = local.SETTINGS_EMAIL_HOST
+    SETTINGS_DEFAULT_FROM_EMAIL         = local.SETTINGS_DEFAULT_FROM_EMAIL
+  }
+}
+
 module "main_task_definition" {
   source = "../common/task_definition"
 
@@ -1516,7 +1555,7 @@ module "api" {
   environment_name      = local.environment_name
   task_cpu              = "256"
   task_memory           = "512"
-  api_domain            = "api.${local.domain_ireland_ie}"
+  api_domain            = local.api_domain
   subnets               = module.network.public_subnet_ids
   vpc_id                = module.network.vpc_id
   ecs_security_groups   = aws_security_group.ecs.id
@@ -1532,7 +1571,7 @@ resource "aws_ecs_task_definition" "default" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = local.task_cpu
   memory                   = local.task_memory
-  container_definitions    = module.main_task_definition.publish_task_definition_rendered
+  container_definitions    = data.template_file.task_definition.rendered 
 }
 
 resource "aws_ecs_service" "default" {

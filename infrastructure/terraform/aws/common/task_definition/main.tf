@@ -1,3 +1,4 @@
+
 data "template_file" "task_definition_api" {
   template    = file("../common/templates/task_definition.tpl")
 
@@ -7,6 +8,7 @@ data "template_file" "task_definition_api" {
     name                                = "${var.environment_name}-${var.project_name}"
     port                                = var.service_contrainer_port
     region                              = var.region
+    api_domain                          = "api.${var.domain_ireland_ie}"
 
     task_cpu                            = 256
     task_memory                         = 512
