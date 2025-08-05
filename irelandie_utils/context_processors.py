@@ -1,4 +1,5 @@
 import unicodedata
+from django.conf import settings
 
 from django.utils.translation import get_language_info
 from wagtail.models import Locale as Locale
@@ -18,4 +19,11 @@ def local_languages(request):
     return {
         "local_languages": sorted(
             languages, key=lambda x: locale.strxfrm(unicodedata.normalize('NFD', x[1])).casefold())
+    }
+
+
+
+def api_origin(request): # noqa
+    return {
+        'API_ORIGIN': settings.API_ORIGIN
     }

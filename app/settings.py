@@ -219,6 +219,7 @@ TEMPLATES = [
                 "django.template.context_processors.i18n",
                 # custom processors
                 "irelandie_utils.context_processors.local_languages",
+                "irelandie_utils.context_processors.api_origin",
             ],
             "builtins": ["pattern_library.loader_tags"],
         },
@@ -450,6 +451,11 @@ else:
 WAGTAIL_SITE_NAME = "Ireland.ie"
 
 BASE_URL = os.environ.get("BASE_URL", "http://localhost:8000")
+
+if BASE_URL != "http://localhost:8000":
+    API_ORIGIN = "api.{}".format(BASE_URL)
+else:
+    API_ORIGIN = "localhost:8000"
 
 WAGTAIL_I18N_ENABLED = True
 

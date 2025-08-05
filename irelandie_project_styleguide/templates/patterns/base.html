@@ -27,7 +27,7 @@
         {% if self.seo_og_type != "article" %}
         <meta property="website:published_time" content="{{ self.seo_published_at|date:'c' }}" />
         <meta property="website:modified_time" content="{{ self.last_published_at|date:'c' }}" />
-        <meta name="api-origin" content="{{ settings.API_ORIGIN }}" />
+        <meta name="api-origin" content="{{ API_ORIGIN }}" />
         {% endif %}
 
         {% block meta_tags %}{% endblock %}
