@@ -1532,7 +1532,7 @@ resource "aws_ecs_task_definition" "default" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = local.task_cpu
   memory                   = local.task_memory
-  container_definitions    = module.main_task_definition.task_definition.rendered 
+  container_definitions    = module.main_task_definition.publish_task_definition_rendered
 }
 
 resource "aws_ecs_service" "default" {
