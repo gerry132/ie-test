@@ -21,8 +21,8 @@ class NewsPageFieldFilter(BaseFilterBackend):
                 year = request.GET[self.year]
                 if year not in ['', None]:
                     date_range = self.get_date_range(int(year))
-                    queryset = queryset.filter(publication_date__gte=date_range['low'])
-                    queryset = queryset.filter(publication_date__lte=date_range['high'])
+                    queryset = queryset.filter(last_published_at__gte=date_range['low'])
+                    queryset = queryset.filter(last_published_at__lte=date_range['high'])
 
         return queryset
 
