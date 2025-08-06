@@ -24,4 +24,3 @@ def api_pagination_partial(request: HttpRequest):
     }
 
     return render(request, "patterns/molecules/pagination/api-pagination.html", context)
-
