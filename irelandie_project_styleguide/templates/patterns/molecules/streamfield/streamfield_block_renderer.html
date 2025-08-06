@@ -1,0 +1,140 @@
+{% load wagtailcore_tags i18n %}
+{% load util_tags navigation_tags wagtailimages_tags irelandie_assets_tags %}
+{% load static %}
+
+{% check_page_type page.content_type 'Free Form Page Base' as HomePage %}
+{% check_page_type page.content_type 'general content page' as GeneralContentPage %}
+{% check_page_type page.content_type 'Free Form Page' as FreeFormPage %}
+{% check_page_type page.content_type 'destination page' as DestinationPage %}
+
+    {# === Table Blocks === #}
+    {% if block.block_type == 'table' or block.block_type == 'advanced_table_block' %}
+        <div class="wrapper wrapper--small wrapper--padding">
+            {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}
+        </div>
+
+    {# === Heading and Rich Text === #}
+    {% elif block.block_type == 'heading' or block.block_type == 'rich_text' %}
+        <div class="wrapper wrapper--large wrapper--padding">
+            {% include_block block %}
+        </div>
+
+    {# === Image and Document === #}
+    {% elif block.block_type == 'image' or block.block_type == 'document' %}
+        <div class="wrapper wrapper--small wrapper--padding">
+            {% include_block block %}
+        </div>
+
+    {# === Logos === #}
+    {% elif block.block_type == 'logos' or block.block_type == 'logo_cards'%}
+        {% if FreeFormPage %}
+            <div class="wrapper wrapper--large wrapper--padding" style="padding-bottom:20px;">
+                {% include_block block %}
+            </div>
+        {% elif GeneralContentPage %}
+            <div class="wrapper wrapper--large wrapper--padding">
+                {% include_block block %}
+            </div>
+        {% else %}
+            <div class="section section--padding">
+                <div class="wrapper wrapper--large wrapper--padding">
+                    {% include_block block %}
+                </div>
+            </div>
+        {% endif %}
+
+    {# === Accordion === #}
+    {% elif block.block_type == 'accordion' %}
+        {% if HomePage %}
+            <div class="wrapper wrapper--padding">
+                <div class="section section--padding">
+                    {% include_block block %}
+                </div>
+            </div>
+        {% elif FreeFormPage %}
+            <div class="wrapper wrapper--padding">
+                <div style="padding: 20px 0;">
+                    {% include_block block %}
+                </div>
+            </div>
+        {% elif GeneralContentPage %}
+            <div class="wrapper wrapper--padding">
+                <div class="rich-text">
+                    {% include_block block %}
+                </div>
+            </div>
+        {% endif %}
+
+    {# === Link Box === #}
+    {% elif block.block_type == 'link_box' %}
+        {% if FreeFormPage %}
+            <div class="section section--padding">
+                <div class="wrapper wrapper--large wrapper--padding">
+                    {% include_block block %}
+                </div>
+            </div>
+        {% else %}
+            <div class="wrapper wrapper--large wrapper--padding">
+                {% include_block block %}
+            </div>
+        {% endif %}
+
+    {# === Multimedia Blocks (photo gallery, stats, etc.) === #}
+    {% elif block.block_type == 'story_photo_gallery' or block.block_type == 'timeline_photo_gallery' or block.block_type == 'multimedia_row' or block.block_type == 'stats_block' %}
+        <div>
+            {% include_block block %}
+        </div>
+
+    {# === Person Snippet === #}
+    {% elif block.block_type == 'person' %}
+        {% include "patterns/snippets/peoplesnippet.html" with object=block.value.person %}
+
+    {# === Feature Blocks === #}
+    {% elif block.block_type == 'wide_feature' or block.block_type == 'homepage_feature' %}
+        <div class="section section--padding">
+            {% include_block block %}
+        </div>
+
+    {# === Pinned Stories, Stories, HTML, Video, etc. (no wrapper change) === #}
+    {% elif block.block_type == 'pinned_stories' or block.block_type == 'stories' or block.block_type == 'html' or block.block_type == 'youtube_video' %}
+        {% include_block block %}
+
+    {# === Rich Text Advanced === #}
+    {% elif block.block_type == 'rich_text_advanced' %}
+        {% if FreeFormPage %}
+            <div class="wrapper wrapper--padding" style="padding-top: 30px;">
+                {% include_block block %}
+            </div>
+        {% elif DestinationPage %}
+            <div style="padding-bottom: unset;" class="section section--padding">
+                <div class="wrapper wrapper--padding">
+                    {% include_block block %}
+                </div>
+            </div>
+        {% else %}
+            <div class="wrapper wrapper--large wrapper--padding">
+                {% include_block block %}
+            </div>
+        {% endif %}
+    {% elif block.block_type == 'advanced_rich_text_snippet' %}
+        <div class="section section--padding">
+            <div class="wrapper wrapper--padding">
+                {% for elem in block.value.AdvancedRichtext.advanced_rich_text %}
+                     {% include_block elem %}
+                {% endfor %}
+            </div>
+        </div>
+    {% elif block.block_type == 'Featured_tagged_stories' %}
+            <div class="wrapper wrapper--large wrapper--padding">
+                    {% include_block block %}
+            </div>
+    {% elif block.block_type == 'video' %}
+        {% include "patterns/molecules/streamfield/streamfield_video_block.html" with block=block %}
+
+    {# === Default fallback for all other blocks === #}
+    {% else %}
+        <div class="wrapper wrapper--large wrapper--padding">
+            {% include_block block %}
+        </div>
+    {% endif %}
+

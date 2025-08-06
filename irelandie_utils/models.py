@@ -682,13 +682,6 @@ class BasePage(SocialFields, ListingFields, Page):
     settings_panels = Page.settings_panels + ([
                            MultiFieldPanel(
                                [
-                                   FieldPanel('go_live_at', permission="access_admin"),
-                                   FieldPanel('expire_at', permission="access_admin"),
-                               ],
-                               "Scheduled publishing"
-                           ),
-                           MultiFieldPanel(
-                               [
                                    FieldPanel("custom_header", permission="access_admin"),
                                    FieldPanel("custom_footer", permission="access_admin")
                                ],
@@ -1100,13 +1093,6 @@ class MinimalArticlePage(BasePage):
                 FieldPanel("caption"),
             ],
             "hero",
-        ),
-        MultiFieldPanel(
-            [
-                FieldPanel('go_live_at'),
-                FieldPanel('expire_at'),
-            ],
-            "Scheduled publishing"
         ),
         FieldPanel("publication_date"),
         FieldPanel("body"),

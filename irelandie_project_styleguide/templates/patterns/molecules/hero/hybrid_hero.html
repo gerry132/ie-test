@@ -124,6 +124,7 @@
     const muteIcon = document.querySelector(".mini-hero__mute");
     const unmuteIconRight = document.querySelector(".mini-hero__unmute--right");
      const unmuteIconLeft = document.querySelector(".mini-hero__unmute--left");
+    if(muteIconDiv) {
     muteIconDiv.addEventListener('click', () => {
       muteIcon.classList.toggle('mute__hidden')
     });
@@ -133,6 +134,7 @@
     muteIconDiv.addEventListener('click', () => {
       unmuteIconLeft.classList.toggle('mini-hero__unmute__active__left')
     });
+    }
 
     function toggleMute() {
 
