@@ -91,7 +91,7 @@ class NewsPageAPIEndpoint(PagesAPIViewSet):
         NewsPageFieldFilter,
     ] + PagesAPIViewSet.filter_backends
     known_query_parameters = PagesAPIViewSet.known_query_parameters.union(
-        ["year", "country", "country_group"]
+        ["year", "country", "country_group", "publication_date"]
     )
 
 
