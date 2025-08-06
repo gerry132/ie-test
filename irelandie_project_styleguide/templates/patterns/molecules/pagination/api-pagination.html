@@ -1,0 +1,38 @@
+{% load querystring_modify static wagtailcore_tags wagtailsearchpromotions_tags i18n %}
+{% if num_pages > 1 %}
+
+<nav aria-label="{% trans 'Pagination' %}" class="pagination" role="navigation">
+    <ul class="pagination__list">
+        {% if paginator_page.has_previous %}
+            <li>
+            {% if year %}
+                <a href="{% querystring_modify page=paginator_page.previous_page_number year=year %}" class="next pagination__link" rel="next" aria-label="{% trans 'Go to next page' %}">
+            {% else %}
+                <a href="{% querystring_modify page=paginator_page.previous_page_number %}" class="next pagination__link" rel="next" aria-label="{% trans 'Go to next page' %}">
+            {% endif %}
+                    {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="pagination__icon pagination__icon--prev" %}
+                </a>
+            </li>
+        {% endif %}
+
+        <li class="current" aria-current="page">
+            <a href="{% querystring_modify page=page %}" class="pagination__link pagination__link--active" aria-label="{% blocktrans %} Current Page, Page {{ paginator_page.number }} of {{ paginator_page.paginator.num_pages }} pages {% endblocktrans %}" aria-current="page">
+                {{ paginator_page.number }}
+            </a>
+        </li>
+
+        {% if paginator_page.has_next %}
+            <li>
+            {% if year %}
+                <a href="{% querystring_modify page=paginator_page.next_page_number year=year %}" class="next pagination__link" rel="next" aria-label="{% trans 'Go to next page' %}">
+            {% else %}
+                <a href="{% querystring_modify page=paginator_page.next_page_number %}" class="next pagination__link" rel="next" aria-label="{% trans 'Go to next page' %}">
+            {% endif %}
+                    {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="pagination__icon pagination__icon--next" %}
+                </a>
+
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
