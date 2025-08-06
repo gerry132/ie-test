@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     "accview_non_admin",
     # "wagtail_sitemap_seo",
     "irelandie_admin",
+    "irelandie_api",
     "irelandie_assets",
     "irelandie_documents",
     # 'irelandie_forms',
@@ -364,7 +365,9 @@ if USE_CACHE is True:
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",
-    )
+    ),
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
 }
 # https://pypi.org/project/django-cors-headers/
 CORS_ALLOW_ALL_ORIGINS = os.environ.get("CORS_ALLOW_ALL_ORIGINS", False) in TRUE
@@ -452,7 +455,7 @@ WAGTAIL_SITE_NAME = "Ireland.ie"
 
 BASE_URL = os.environ.get("BASE_URL", "http://localhost:8000")
 
-API_ORIGIN = os.environ.get("API_ORIGIN", "localhost:8000")
+API_ORIGIN = os.environ.get("API_ORIGIN")
 
 WAGTAIL_I18N_ENABLED = True
 

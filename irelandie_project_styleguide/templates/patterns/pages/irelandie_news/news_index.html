@@ -28,36 +28,50 @@ function reloadWithYear(year) {
     window.location.href = url.toString();
 }
 
+function convertDate(dateString) {
+    const date = new Date(dateString);
+    const options = { day: '2-digit', month: 'long', year: 'numeric' };
+    const formattedDate = date.toLocaleDateString('en-GB', options);
+
+    return formattedDate;
+
+}
+
+
 function getNewsArticles() {
     let params = (new URL(document.location)).searchParams;
     let redirect = params.get("redirect");
 
     let year = params.get("year");
     
-    const page = params.get("page") || 1;
-    const offset = page * 10
+    const page = parseInt(params.get("page") || "1", 10);
+    const offset = (page - 1) * 10;
+
     const apiOrigin = window.API_ORIGIN || document.querySelector('meta[name="api-origin"]').content;
 
+    
     if (redirect && year===null) {
         year = params.get("year_r");
     }
     else if (year===null) {
         year = null;
     }
+    console.log(year)
 
     $.ajax({
-            url : `https://${apiOrigin}/api/v2/news_pages/?type=irelandie_news.NewsPage&fields=last_published_at,subtitle,publication_date&offset=${offset}&limit=10`,
+            url : `http://${apiOrigin}/api/v2/news/?offset=${offset}&limit=10`,
             type : 'GET',
             data : {
                 'year' : year
             },
             success : function(data) {
                 document.getElementById('news--wrapper').replaceChildren();
-                for(let d in data.items) {
-                    const url = data.items[d].meta.html_url;
-                    const title = data.items[d].title;
-                    const last_published_at = data.items[d].last_published_at;
-                    const subtitle = data.items[d].subtitle;
+
+                for(let d in data.results) {
+                    const url = data.results[d].full_url;
+                    const title = data.results[d].title;
+                    const publication_date = convertDate(data.results[d].publication_date);
+                    const subtitle = data.results[d].subtitle;
                     let x = `
                 <a href="${url}" aria-label="Link box" class="link-box">
     <div class="link-box__content">
@@ -85,6 +99,18 @@ function getNewsArticles() {
                     document.getElementById('news-list').value = 'all';
                     document.getElementById('news-list-mobile').value = 'all';
                 }
+                const count = data.count || data.meta?.total_count || 0;
+                let paginationUrl = `/api/v2/api-pagination/?page=${page}`
+                
+                if (typeof year === 'number') {
+                    paginationUrl+=`&year=${year}`
+                }
+
+                fetch(paginationUrl)
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('api-pagination-wrapper').innerHTML = html;
+                });
             },
             error : function(request,error)
             {
@@ -114,7 +140,8 @@ getNewsArticles();
         <div class="link-box__main">
             <div style="padding-bottom: 20px;">
                 <div id="news--wrapper" style="padding-bottom: 10%"></div>
-                {% include "patterns/molecules/pagination/pagination.html" with paginator_page=related_articles %}
+                <div id="api-pagination-wrapper"></div>
+
             </div>
         </div>
         <div class="related-content">
@@ -170,7 +197,8 @@ getNewsArticles();
         <div class="wrapper wrapper--large--toc wrapper--padding">
             <div style="padding-bottom: 20px;">
                 <div id="news--wrapper" style="padding-bottom: 10%"></div>
-                {% include "patterns/molecules/pagination/pagination.html" with paginator_page=related_articles %}
+                <div id="api-pagination-wrapper"></div>
+
             </div>
         </div>
     </div>
