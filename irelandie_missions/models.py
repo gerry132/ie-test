@@ -3,7 +3,7 @@
 from django.db import models
 from wagtail.core.models import Page
 from django.utils.functional import cached_property
-from wagtail.admin.panels import InlinePanel, FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel, HelpPanel
+from wagtail.admin.panels import InlinePanel, FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
 from wagtail.fields import StreamField, RichTextField
 from wagtail import blocks as wagtail_blocks
 from django.core.cache import cache
