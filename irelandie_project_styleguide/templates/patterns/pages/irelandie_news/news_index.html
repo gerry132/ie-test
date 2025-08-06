@@ -59,7 +59,7 @@ function getNewsArticles() {
     console.log(year)
 
     $.ajax({
-            url : `http://${apiOrigin}/api/v2/news/?offset=${offset}&limit=10`,
+            url : `https://${apiOrigin}/api/v2/news/?offset=${offset}&limit=10`,
             type : 'GET',
             data : {
                 'year' : year
