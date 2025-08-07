@@ -55,7 +55,7 @@ function getNewsArticles(page=1, year=null) {
     const offset = (page - 1) * 10;
 
     const apiOrigin = window.API_ORIGIN || document.querySelector('meta[name="api-origin"]').content;
-    const loadingHTML = `<div id="news-loading" style="text-align:center;"><img src="{% static 'images/cssBackgrounds/Loading_icon.gif' %}" alt="Loading..." /></div>`;
+    const loadingHTML = `<div id="news-loading" style="text-align:center;"><img src="{% static 'cssBackgrounds/Loading_icon.gif' %}" alt="Loading..." /></div>`;
     const wrapper = document.getElementById('news--wrapper');
 
     wrapper.innerHTML = loadingHTML;
