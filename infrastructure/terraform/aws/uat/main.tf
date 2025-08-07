@@ -33,7 +33,7 @@ locals {
   app_aws_username              = "UAT_APP_USER"
   project_domain                = "content.uat.ireland.ie"
   domain_ireland_ie             = "uat.ireland.ie"
-  api_domain                    = "api.uat.ireland.ie"
+  api_domain                    = "https://api.uat.ireland.ie"
   africa_day_domain             = "africaday.uat.ireland.ie"
   project_name                  = "g2g"
   region                        = "eu-west-1"

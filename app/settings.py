@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 DEBUG_TOOLBAR = os.environ.get("DEBUG_TOOLBAR", "0") in TRUE
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ["SECRET_KEY"]
+SECRET_KEY = os.environ.get("SECRET_KEY", "dev_secret_key")
 
 # X-Frame-Options
 X_FRAME_OPTIONS = 'DENY'
@@ -61,7 +61,7 @@ if debug_on == '0':
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
 
 # to disable the check
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
@@ -455,7 +455,7 @@ WAGTAIL_SITE_NAME = "Ireland.ie"
 
 BASE_URL = os.environ.get("BASE_URL", "http://localhost:8000")
 
-API_ORIGIN = os.environ.get("API_ORIGIN")
+API_ORIGIN = os.environ.get("API_ORIGIN", "http://localhost:8000")
 
 WAGTAIL_I18N_ENABLED = True
 

@@ -1,6 +1,7 @@
 {% extends "patterns/base_page.html" %}
 {% load wagtailcore_tags i18n %}
 {% load util_tags wagtailcore_tags navigation_tags %}
+{% load static %}
 
 {% block content %}
 
@@ -10,6 +11,9 @@ window.addEventListener("DOMContentLoaded", function () {
     const year = params.get("year");
     const select = document.getElementById("news-list");
 
+    getNewsArticles();
+    attachPaginationHandlers();
+
     if (year) {
         select.value = year;
     } else {
@@ -17,16 +21,22 @@ window.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-function reloadWithYear(year) {
-    const url = new URL(window.location.href);
-    if (year === "all") {
-        url.searchParams.delete("year");
-    } else {
-        url.searchParams.set("year", year);
-    }
-    console.log(url.toString())
-    window.location.href = url.toString();
+function attachPaginationHandlers() {
+    const paginationLinks = document.querySelectorAll('#api-pagination-wrapper a');
+
+    paginationLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault(); // prevent default link behavior
+
+            const url = new URL(link.href);
+            const page = parseInt(url.searchParams.get('page') || "1", 10);
+            const year = url.searchParams.get('year');
+
+            getNewsArticles(page, year);
+        });
+    });
 }
+
 
 function convertDate(dateString) {
     const date = new Date(dateString);
@@ -38,28 +48,21 @@ function convertDate(dateString) {
 }
 
 
-function getNewsArticles() {
+function getNewsArticles(page=1, year=null) {
     let params = (new URL(document.location)).searchParams;
     let redirect = params.get("redirect");
 
-    let year = params.get("year");
-    
-    const page = parseInt(params.get("page") || "1", 10);
     const offset = (page - 1) * 10;
 
     const apiOrigin = window.API_ORIGIN || document.querySelector('meta[name="api-origin"]').content;
+    const loadingHTML = `<div id="news-loading" style="text-align:center;"><img src="{% static 'images/cssBackgrounds/Loading_icon.gif' %}" alt="Loading..." /></div>`;
+    const wrapper = document.getElementById('news--wrapper');
 
-    
-    if (redirect && year===null) {
-        year = params.get("year_r");
-    }
-    else if (year===null) {
-        year = null;
-    }
-    console.log(year)
+    wrapper.innerHTML = loadingHTML;
+
 
     $.ajax({
-            url : `https://${apiOrigin}/api/v2/news/?offset=${offset}&limit=10`,
+            url : `${apiOrigin}/api/v2/news/?offset=${offset}&limit=10`,
             type : 'GET',
             data : {
                 'year' : year
@@ -91,7 +94,7 @@ function getNewsArticles() {
                 
                 document.getElementById('news--wrapper').insertAdjacentHTML('beforeend', x);
                 }
-                //console.log(data);
+
                 if (year) {
                     document.getElementById('news-list').value = year;
                     document.getElementById('news-list-mobile').value = year;
@@ -101,8 +104,9 @@ function getNewsArticles() {
                 }
                 const count = data.count || data.meta?.total_count || 0;
                 let paginationUrl = `/api/v2/api-pagination/?page=${page}`
-                
-                if (typeof year === 'number') {
+
+             
+                if (year) {
                     paginationUrl+=`&year=${year}`
                 }
 
@@ -110,15 +114,15 @@ function getNewsArticles() {
                 .then(res => res.text())
                 .then(html => {
                     document.getElementById('api-pagination-wrapper').innerHTML = html;
+                    attachPaginationHandlers();
                 });
+
             },
             error : function(request,error)
             {
             }
     });
 }
-
-getNewsArticles();
 
 </script>
 
@@ -128,7 +132,7 @@ getNewsArticles();
     <div class="wrapper--large--toc" style="padding-bottom: 40px;">
         <div class="wrapper--padding related-content--mobile">
             <h3 class="intro__title">{% translate "Select year:" %}</h3>
- <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list" onchange="reloadWithYear(this.value);" style="width: 100%;">
+ <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list" onchange="getNewsArticles(1, this.value);" style="width: 100%;">
                 <option value="all"><p>{% trans "All" context "custom-context" %}</p></option>
                 {% for p in page.get_years %}
                 <option value="{{p}}">{{p}}</option>
@@ -139,14 +143,15 @@ getNewsArticles();
     <div class="wrapper--large--toc" id="link-box_wrapper">
         <div class="link-box__main">
             <div style="padding-bottom: 20px;">
-                <div id="news--wrapper" style="padding-bottom: 10%"></div>
+                <div id="news--wrapper" style="padding-bottom: 10%">
+                </div>
                 <div id="api-pagination-wrapper"></div>
 
             </div>
         </div>
         <div class="related-content">
             <h3 class="intro__title">{% translate "Select year:" %}</h3>
-            <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list-mobile" onchange="reloadWithYear(this.value);" style="width: 100%;">
+            <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list-mobile" onchange="getNewsArticles(1, this.value);" style="width: 100%;">
                 <option value="all"><p>{% trans "All" context "custom-context" %}</p></option>
                 {% for p in page.get_years %}
                 <option value="{{p}}">{{p}}</option>
@@ -170,7 +175,7 @@ getNewsArticles();
                 </div>
                 <div class="wrapper--padding related-content--mobile">
                     <h3 class="intro__title">{% translate "Select year:" %}</h3>
-                    <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list" onchange="reloadWithYear(this.value); " style="width: 100%;">
+                    <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list" onchange="getNewsArticles(1, this.value); " style="width: 100%;">
                         <option value="all"><p>{% trans "All" context "custom-context" %}</p></option>
                         {% for p in page.get_years %}
                         <option value="{{p}}">{{p}}</option>
@@ -182,7 +187,7 @@ getNewsArticles();
         <div id="right">
             <div class="related-content">
                 <h3 class="intro__title">{% translate "Select year:" %}</h3>
-                <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list-mobile" onchange="reloadWithYear(this.value);" style="width: 100%;">
+                <select  aria-label="{% trans 'Select year' %}" class="searchBarNews" id="news-list-mobile" onchange="getNewsArticles(1, this.value);" style="width: 100%;">
                     <option value="all"><p>{% trans "All" context "custom-context" %}</p></option>
                     {% for p in page.get_years %}
                     <option value="{{p}}">{{p}}</option>
