@@ -312,6 +312,11 @@
   background: #CACAC3;
 }
 
+.theme--light_grey .rich-text a.button_text:focus,
+.rich-text.rich-text__content.theme--light_grey a.button_text:focus {
+    color: #101010;
+}
+
 /* ==== 3. BEIGE ==== */
 .theme--beige .rich-text a,
 .rich-text.rich-text__content.theme--beige a {
@@ -341,6 +346,10 @@
 .theme--beige .rich-text a.button_text:active,
 .rich-text.rich-text__content.theme--beige a.button_text:active {
   background: #C8B898;
+}
+.theme--beige .rich-text a.button_text:focus,
+.rich-text.rich-text__content.theme--beige a.button_text:focus {
+    color: #101010;
 }
 
 /* ==== 4. CYAN ==== */
