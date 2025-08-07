@@ -34,6 +34,7 @@ locals {
   project_domain                = "content.uat.ireland.ie"
   domain_ireland_ie             = "uat.ireland.ie"
   api_domain                    = "https://api.uat.ireland.ie"
+  api_domain_plain              = "api.uat.ireland.ie"
   africa_day_domain             = "africaday.uat.ireland.ie"
   project_name                  = "g2g"
   region                        = "eu-west-1"
@@ -1555,7 +1556,7 @@ module "api" {
   environment_name      = local.environment_name
   task_cpu              = "256"
   task_memory           = "512"
-  api_domain            = local.api_domain
+  api_domain            = local.api_domain_plain
   subnets               = module.network.public_subnet_ids
   vpc_id                = module.network.vpc_id
   ecs_security_groups   = aws_security_group.ecs.id
