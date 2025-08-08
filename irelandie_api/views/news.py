@@ -15,6 +15,6 @@ class NewsPageAPIView(ListAPIView):
     def get_queryset(self):
         year = self.request.query_params.get("year")
         qs = NewsPage.objects.live().public().order_by("-publication_date")
-        if year:
+        if year and year != "All":
             qs = qs.filter(publication_date__year=year)
         return qs
