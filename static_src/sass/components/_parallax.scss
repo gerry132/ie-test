@@ -248,9 +248,10 @@
 .theme--standard .rich-text a:active {
   text-decoration-thickness: 20%;
 }
-.rich-text a.button_text {
+.rich-text a.button_text, .rich-text.rich-text__content a.button_text {
     text-decoration: none;
     }
+
 /* ==== 1. STANDARD ==== */
 .theme--standard .rich-text a,
 .rich-text.rich-text__content.theme--standard a {
@@ -599,12 +600,12 @@
 }
 .theme--indigo .rich-text a:hover,
 .rich-text.rich-text__content.theme--indigo a:hover {
-  color: #186CC0;
+  color: #445ACB;
   text-decoration-color: #186CC0;
 }
 .theme--indigo .rich-text a:active,
 .rich-text.rich-text__content.theme--indigo a:active {
-  color: #1B6ACB;
+  color: #556CD6;
   text-decoration-color: #1B6ACB;
 }
 .theme--indigo .rich-text a.button_text,
@@ -614,11 +615,11 @@
 }
 .theme--indigo .rich-text a.button_text:hover,
 .rich-text.rich-text__content.theme--indigo a.button_text:hover {
-  background: #186CC0;
+  background: #445ACB;
 }
 .theme--indigo .rich-text a.button_text:active,
 .rich-text.rich-text__content.theme--indigo a.button_text:active {
-  background: #1B6ACB;
+  background: #556CD6;
 }
 
 /* === 13. BLUE === */

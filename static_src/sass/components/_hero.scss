@@ -75,9 +75,11 @@
         @include font-size(xl);
         line-height: 52px;
         font-weight: $weight--extrabold;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
         white-space: normal;
+        hyphens: auto;
+        overflow-wrap: break-word;
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
 
         @include media-query(medium) {
             @include font-size(xxl);
