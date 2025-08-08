@@ -53,7 +53,7 @@ function getNewsArticles(page=1, year=null) {
     let redirect = params.get("redirect");
 
     const offset = (page - 1) * 10;
-
+    console.log(page)
     const apiOrigin = window.API_ORIGIN || document.querySelector('meta[name="api-origin"]').content;
     const loadingHTML = `<div id="news-loading" style="text-align:center;"><img src="{% static 'cssBackgrounds/Loading_icon.gif' %}" alt="Loading..." /></div>`;
     const wrapper = document.getElementById('news--wrapper');
@@ -69,7 +69,7 @@ function getNewsArticles(page=1, year=null) {
             },
             success : function(data) {
                 document.getElementById('news--wrapper').replaceChildren();
-
+                
                 for(let d in data.results) {
                     const url = data.results[d].full_url;
                     const title = data.results[d].title;
