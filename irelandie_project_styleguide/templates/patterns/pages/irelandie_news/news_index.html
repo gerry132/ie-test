@@ -5,41 +5,29 @@
 
 {% block content %}
 
-<script async>
+
+<script>
 window.addEventListener("DOMContentLoaded", function () {
-    const params = new URLSearchParams(window.location.search);
-    const year = params.get("year");
-    const select = document.getElementById("news-list");
+  const params = new URLSearchParams(window.location.search);
+  const year = params.get("year");
+  const select = document.getElementById("news-list");
 
-    getNewsArticles();
-    attachPaginationHandlers();
+  getNewsArticles();
+  // One-time delegated handler (no need to re-attach after HTML swaps)
+  const pager = document.getElementById('api-pagination-wrapper');
+  pager.addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (!link || !pager.contains(link)) return;
 
-    if (year) {
-        select.value = year;
-    } else {
-        select.value = "all";
-    }
+    e.preventDefault();
+    const url = new URL(link.href, window.location.origin);
+    const page = parseInt(url.searchParams.get('page') || "1", 10);
+    const year = url.searchParams.get('year');
+    getNewsArticles(page, year);
+  });
+
+  select.value = year ? year : "all";
 });
-
-function attachPaginationHandlers() {
-    const paginationLinks = document.querySelectorAll('#api-pagination-wrapper a');
-
-    paginationLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault(); // prevent default link behavior
-
-            const url = new URL(link.href);
-            const page = parseInt(url.searchParams.get('page') || "1", 10);
-            console.log('page passed through')
-            console.log(page)
-            console.log('page passed through')
-            const year = url.searchParams.get('year');
-
-            getNewsArticles(page, year);
-        });
-    });
-}
-
 
 function convertDate(dateString) {
     const date = new Date(dateString);
@@ -117,7 +105,6 @@ function getNewsArticles(page=1, year=null) {
                 .then(res => res.text())
                 .then(html => {
                     document.getElementById('api-pagination-wrapper').innerHTML = html;
-                    attachPaginationHandlers();
                 });
 
             },
