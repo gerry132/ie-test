@@ -30,6 +30,9 @@ function attachPaginationHandlers() {
 
             const url = new URL(link.href);
             const page = parseInt(url.searchParams.get('page') || "1", 10);
+            console.log('page passed through')
+            console.log(page)
+            console.log('page passed through')
             const year = url.searchParams.get('year');
 
             getNewsArticles(page, year);
