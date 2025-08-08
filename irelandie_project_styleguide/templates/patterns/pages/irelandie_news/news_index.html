@@ -94,7 +94,7 @@ function getNewsArticles(page=1, year=null) {
                     document.getElementById('news-list-mobile').value = 'all';
                 }
                 const count = data.count || data.meta?.total_count || 0;
-                let paginationUrl = `/api/v2/api-pagination/?page=${page}`
+                let paginationUrl = `${apiOrigin}/api/v2/api-pagination/?page=${page}`
 
              
                 if (year) {
