@@ -2,7 +2,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.pagination import LimitOffsetPagination
 from irelandie_news.models import NewsPage
 from irelandie_api.serializers.news import NewsPageSerializer
-
+from irelandie_api.views.utils import get_queryset
 
 class NewsPagePagination(LimitOffsetPagination):
     default_limit = 10
@@ -13,9 +13,11 @@ class NewsPageAPIView(ListAPIView):
     pagination_class = NewsPagePagination
 
     def get_queryset(self):
-        year = self.request.query_params.get("year")
+        params = self.request.query_params
+        year = params.get("year")
+        locale_code = params.get("locale")
+        parent_id = params.get("child_of")
 
-        qs = NewsPage.objects.live().public().order_by("-publication_date")
-        if year and year != "all":
-            qs = qs.filter(publication_date__year=year)
+        qs = get_queryset(year, locale_code, parent_id, NewsPage)
         return qs
+

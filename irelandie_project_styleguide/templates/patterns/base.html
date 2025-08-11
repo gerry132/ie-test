@@ -19,6 +19,8 @@
         {% endblock %}
         <meta name="description" content="{% if page.search_description %}{{ page.search_description }}{% else %}{{ page.listing_summary }}{% endif %}" />
         <meta charset="utf-8" />
+        <meta name="current-page-id" content="{{ page.id }}">
+        <meta name="current-page-locale" content="{{ page.locale.language_code }}">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {% if self.seo_og_type != "article" and self.seo_author %}
