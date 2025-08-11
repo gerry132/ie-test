@@ -4,6 +4,7 @@ from irelandie_news.models import NewsPage
 from irelandie_api.serializers.news import NewsPageSerializer
 from irelandie_api.views.utils import get_queryset
 
+
 class NewsPagePagination(LimitOffsetPagination):
     default_limit = 10
 
@@ -20,4 +21,3 @@ class NewsPageAPIView(ListAPIView):
 
         qs = get_queryset(year, locale_code, parent_id, NewsPage)
         return qs
-
