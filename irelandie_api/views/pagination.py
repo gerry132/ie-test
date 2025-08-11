@@ -8,8 +8,8 @@ from irelandie_news.models import NewsPage
 def api_pagination_partial(request: HttpRequest):
     page_number = int(request.GET.get("page", 1))
     year = request.GET.get("year")
-
     queryset = NewsPage.objects.live().public()
+
     if year and year != "all":
         queryset = queryset.filter(publication_date__year=year)
 
