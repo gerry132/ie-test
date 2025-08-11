@@ -10,7 +10,7 @@ def api_pagination_partial(request: HttpRequest):
     year = request.GET.get("year")
 
     queryset = NewsPage.objects.live().public()
-    if year:
+    if year and year != "all":
         queryset = queryset.filter(publication_date__year=year)
 
     paginator = Paginator(queryset, 10)
