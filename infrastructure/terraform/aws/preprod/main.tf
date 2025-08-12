@@ -34,6 +34,8 @@ locals {
   app_aws_username              = "PREPROD_APP_USER"
   project_domain                = "content.preprod.ireland.ie"
   domain_ireland_ie             = "preprod.ireland.ie"
+  api_domain                    = "https://api.preprod.ireland.ie"
+  api_domain_plain              = "api.preprod.ireland.ie"
   project_name                  = "ireie"
   region                        = "eu-west-1"
   # DB
@@ -61,6 +63,8 @@ locals {
     "193.178.64.0/19",
     "193.178.96.0/20",
     "139.162.239.108/32",
+    "37.228.225.101/32", # gerry
+    "137.191.233.222/32" # browserstack
   ]
   non_gov_network_cird_blocks   = {
     dfa_main = {
@@ -1377,35 +1381,48 @@ data "template_file" "index_task_definition" {
     SETTINGS_OPENSEARCH_KEY             = local.SETTINGS_OPENSEARCH_KEY
     SETTINGS_OPENSEARCH_SECRET          = local.SETTINGS_OPENSEARCH_SECRET
     SETTINGS_OPENSEARCH_ENDPOINT        = local.SETTINGS_OPENSEARCH_ENDPOINT
-    SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
+    api_domain                          = local.api_domain
+    SETTINGS_CORS_ALLOWED_ORIGINS = "${local.SETTINGS_BASE_URL},https://api.${local.domain_ireland_ie},https://www.${local.domain_ireland_ie}"
   }
 }
 
 module "main_task_definition" {
-  source                  = "../common/task_definition"
+  source = "../common/task_definition"
 
-  ecr_image_url           = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
-  log_group               = aws_cloudwatch_log_group.ecs_index.name
+  account_id              = local.account_id
+  project_name            = local.project_name
   environment_name        = local.environment_name
-  service_contrainer_port  = local.service_contrainer_port
+  assets_s3_bucket        = aws_s3_bucket.assets.id
+  log_group               = aws_cloudwatch_log_group.ecs.name
+  ecr_image_url           = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
+  cache_address           = local.cache_address
   region                  = local.region
   task_cpu                = local.task_cpu
   task_memory             = local.task_memory
-  assets_s3_bucket        = aws_s3_bucket.assets.id
+  domain_ireland_ie       = local.domain_ireland_ie
+  service_contrainer_port = 8000
 
-  SETTINGS_ALLOWED_HOSTS        = local.SETTINGS_ALLOWED_HOSTS
-  SETTINGS_AWS_ACCESS_KEY_ID    = local.SETTINGS_AWS_ACCESS_KEY_ID
-  SETTINGS_AWS_SECRET_ACCESS_KEY= local.SETTINGS_AWS_SECRET_ACCESS_KEY
-  SETTINGS_AWS_STATIC_BUCKET_NAME= local.SETTINGS_AWS_STATIC_BUCKET_NAME
-  SETTINGS_BASE_URL             = local.SETTINGS_BASE_URL
-  SETTINGS_DATABASE_URL         = local.SETTINGS_DATABASE_URL
-  SETTINGS_SECRET_KEY           = local.SETTINGS_SECRET_KEY
-  SETTINGS_OPENSEARCH_KEY       = local.SETTINGS_OPENSEARCH_KEY
-  SETTINGS_OPENSEARCH_SECRET    = local.SETTINGS_OPENSEARCH_SECRET
-  SETTINGS_OPENSEARCH_ENDPOINT  = local.SETTINGS_OPENSEARCH_ENDPOINT
+  SETTINGS_DEBUG               = local.SETTINGS_DEBUG
+  SETTINGS_DEBUG_TOOLBAR       = local.SETTINGS_DEBUG_TOOLBAR
+  SETTINGS_EMAIL_HOST          = local.SETTINGS_EMAIL_HOST
+  SETTINGS_DEFAULT_FROM_EMAIL  = local.SETTINGS_DEFAULT_FROM_EMAIL
+  SETTINGS_CORS_ALLOW_ALL_ORIGINS = local.SETTINGS_CORS_ALLOW_ALL_ORIGINS
+
+  SETTINGS_ALLOWED_HOSTS       = local.SETTINGS_ALLOWED_HOSTS
+  SETTINGS_USE_CACHE           = local.SETTINGS_USE_CACHE
+  SETTINGS_USE_S3              = local.SETTINGS_USE_S3
+  SETTINGS_CLOUDFRONT_ID       = local.SETTINGS_CLOUDFRONT_ID
+  SETTINGS_AWS_ACCESS_KEY_ID   = local.SETTINGS_AWS_ACCESS_KEY_ID
+  SETTINGS_AWS_SECRET_ACCESS_KEY = local.SETTINGS_AWS_SECRET_ACCESS_KEY
+  SETTINGS_AWS_STATIC_BUCKET_NAME = local.SETTINGS_AWS_STATIC_BUCKET_NAME
+  SETTINGS_BASE_URL            = local.SETTINGS_BASE_URL
+  SETTINGS_DATABASE_URL        = local.SETTINGS_DATABASE_URL
+  SETTINGS_SECRET_KEY          = local.SETTINGS_SECRET_KEY
+  SETTINGS_OPENSEARCH_KEY      = local.SETTINGS_OPENSEARCH_KEY
+  SETTINGS_OPENSEARCH_SECRET   = local.SETTINGS_OPENSEARCH_SECRET
+  SETTINGS_OPENSEARCH_ENDPOINT = local.SETTINGS_OPENSEARCH_ENDPOINT
   SETTINGS_CORS_ALLOWED_ORIGINS = local.SETTINGS_CORS_ALLOWED_ORIGINS
 }
-
 
 module "ecs_task_os_index" {
   source = "../common/utils"
@@ -1417,6 +1434,25 @@ module "ecs_task_os_index" {
   subnets               = module.network.private_subnet_ids
   security_groups       = aws_security_group.ecs.id
   environment_name      = local.environment_name
+  cluster               = aws_ecs_cluster.default
+  execution_role        = aws_iam_role.task_execution.arn
+}
+
+
+module "api" {
+  source = "../common/api"
+
+  container_definitions = module.main_task_definition.container_definitions
+  lb_target_group       = aws_lb_target_group.default_admin.arn
+  project_name          = local.project_name
+  environment_name      = local.environment_name
+  task_cpu              = "256"
+  task_memory           = "512"
+  api_domain            = local.api_domain_plain
+  subnets               = module.network.public_subnet_ids
+  vpc_id                = module.network.vpc_id
+  ecs_security_groups   = aws_security_group.ecs.id
+  lb_security_groups    = aws_security_group.lb_gov_network.id
   cluster               = aws_ecs_cluster.default
   execution_role        = aws_iam_role.task_execution.arn
 }
