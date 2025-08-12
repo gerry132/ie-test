@@ -60,7 +60,7 @@ locals {
   gov_network_cird_blocks       = [
     "169.254.192.0/18",
     "137.191.224.0/19",
-    "37.228.225.101/32", # gerry 
+    "37.228.225.101/32", # gerry
     "193.178.64.0/19",
     "193.178.96.0/20",
     "139.162.239.108/32",
@@ -94,7 +94,7 @@ locals {
 
     sina_dev = {
       description = "Sina - Sidero"
-      cidr_blocks  = ["86.132.244.46/32"]
+      cidr_blocks  = ["31.53.148.201/32"]
     },
     joe_dev = {
       description = "Joe D - Sidero"
@@ -1572,7 +1572,7 @@ resource "aws_ecs_task_definition" "default" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = local.task_cpu
   memory                   = local.task_memory
-  container_definitions    = data.template_file.task_definition.rendered 
+  container_definitions    = data.template_file.task_definition.rendered
 }
 
 resource "aws_ecs_service" "default" {
@@ -2158,7 +2158,7 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
                         "193.178.96.0/20",    # gov_network_cird_blocks
                         "139.162.239.108/32", # gov_network_cird_blocks
 
-                        "86.132.244.46/32",   # Sina
+                        "31.53.148.201/32",   # Sina
                         "51.182.250.11/32",   # Fergal
                         "62.23.128.137/32",    # DFA
                         "37.228.206.182/32",  # jaikiran_dev
