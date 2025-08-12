@@ -89,7 +89,7 @@ locals {
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["62.77.170.200/32"]
+      cidr_blocks  = ["51.183.41.207/32"]
     },
 
     sina_dev = {
@@ -2159,6 +2159,7 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
                         "139.162.239.108/32", # gov_network_cird_blocks
 
                         "31.53.148.201/32",   # Sina
+                        "51.183.41.207/32",   # Deekshana
                         "51.182.250.11/32",   # Fergal
                         "62.23.128.137/32",    # DFA
                         "37.228.206.182/32",  # jaikiran_dev
