@@ -75,10 +75,6 @@ locals {
       description = "Reinaldo Sanches - OGCIO"
       cidr_blocks = ["172.105.95.186/32", "89.101.167.251/32"]
     },
-    gerry_dev = {
-      description = "Gerry Mcbride - OGCIO"
-      cidr_blocks = ["37.228.225.101/32"]
-    },
     deekshana_dev = {
       description = "Deekshana - Sidero"
       cidr_blocks  = ["80.233.53.212/32", "80.233.57.212/32"]
@@ -1482,6 +1478,7 @@ data "template_file" "task_definition" {
   vars = {
     ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
     log_group                           = aws_cloudwatch_log_group.ecs.name
+    api_domain                          = local.api_domain
     name                                = "${local.environment_name}-${local.project_name}"
     port                                = local.service_contrainer_port
     region                              = local.region
