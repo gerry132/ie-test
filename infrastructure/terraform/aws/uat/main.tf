@@ -2070,17 +2070,6 @@ resource "aws_cloudfront_distribution" "dynamic" {
     cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
-    path_pattern             = "*/news-archive/*"
-  }
-
-  ordered_cache_behavior {
-    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
-    cached_methods           = ["GET", "HEAD"]
-    target_origin_id         = aws_lb.public_sites.name
-
-    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
-    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
-    viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/news-and-speeches/*"
   }
 
