@@ -143,7 +143,7 @@ resource "aws_lb_listener" "api_listener" {
 
   resource "aws_lb_target_group" "api_target_group" {
     name            = "api-target-group"
-    port            = 8000
+    port            = 443
     protocol        = "HTTP"
     target_type     = "ip"
     vpc_id          = var.vpc_id
