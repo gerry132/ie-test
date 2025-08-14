@@ -78,7 +78,7 @@ locals {
     },
     reinaldo_dev = {
       description = "Reinaldo Sanches - OGCIO"
-      cidr_blocks = ["172.105.95.186/32", "89.101.167.251/32"]
+      cidr_blocks = ["172.105.95.186/32", "86.41.9.222/32"]
     },
     gerry_dev = {
       description = "Gerry Mcbride - OGCIO"
@@ -1117,6 +1117,7 @@ module "database" {
   db_password           = data.aws_ssm_parameter.random_db_password.value
   db_instance_class     = local.db_instance_class
   db_engine_version     = "15.10"
+
   create_snapshot       = false
   name                  = "${local.environment_name}-db"
   subnets               = module.network.public_subnet_ids
@@ -1640,14 +1641,17 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips" {
                         "80.85.87.84/32",
                         "88.80.184.34/32",
                         "178.79.136.28/32",
+
                         "185.18.139.74",#inystful ips
                         "185.18.139.107",#inystful ips
                         "185.18.139.14",#inystful ips
                         "185.18.139.76",#inystful ips
                         "185.18.138.28",#inystful ips
                         "185.18.138.29",#inystful ips
-                        "185.18.138.30"#inystful ips
-                        ]
+                        "185.18.138.30",#inystful ips
+                        "52.49.7.9/32"  # OGCIO AWS SharedServices Account NAT Gateway IP
+  ]
+
 }
 
 
