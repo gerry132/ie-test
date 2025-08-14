@@ -958,9 +958,9 @@ class ConsulatePage(FreeFormPageBase):
 
     content_panels = FreeFormPageBase.content_panels + [
         MultiFieldPanel([
-            FieldPanel("twitter_title"),
-            FieldPanel("twitter_feed"),
-        ], heading="Twitter feed"),
+            FieldPanel("twitter_title", heading="X Title"),
+            FieldPanel("twitter_feed", heading="X Feed"),
+        ], heading="X feed"),
     ]
 
     secondary_cta_panel = [
@@ -1008,9 +1008,9 @@ class EmbassyPage(FreeFormPageBase):
 
     content_panels = FreeFormPageBase.content_panels + [
         MultiFieldPanel([
-            FieldPanel("twitter_title"),
-            FieldPanel("twitter_feed"),
-        ], heading="Twitter feed"),
+            FieldPanel("twitter_title", heading="X Title"),
+            FieldPanel("twitter_feed", heading="X Feed"),
+        ], heading="X feed"),
     ]
 
     secondary_cta_panel = [
