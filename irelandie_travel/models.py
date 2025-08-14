@@ -132,9 +132,9 @@ class TravelLandingPage(BasePage):
         FieldPanel('body'),
         FieldPanel('advanced_rich_text'),
         MultiFieldPanel([
-            FieldPanel("twitter_title"),
-            FieldPanel("twitter_username"),
-        ], heading="Twitter feed"),
+            FieldPanel("twitter_title", heading="X Title"),
+            FieldPanel("twitter_username", heading="X Username"),
+        ], heading="X feed"),
     ]
     settings_panels = (
         [

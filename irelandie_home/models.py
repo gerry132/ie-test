@@ -71,7 +71,7 @@ class HomePage(FreeFormPageBase):
     )
     mainEntityOfPage_description = models.CharField(blank=True, max_length=255)
 
-    twitter_url = models.URLField(blank=True, help_text="Full Twitter profile URL")
+    twitter_url = models.URLField(blank=True, help_text="Full X profile URL")
     facebook_url = models.URLField(blank=True, help_text="Full Facebook page URL")
     youtube_url = models.URLField(blank=True, help_text="Full YouTube channel URL")
     linkedin_url = models.URLField(blank=True, help_text="Full LinkedIn profile URL")
@@ -80,7 +80,7 @@ class HomePage(FreeFormPageBase):
 
     social_media_panels = MultiFieldPanel(
         [
-            FieldPanel("twitter_url"),
+            FieldPanel("twitter_url", heading="X url"),
             FieldPanel("facebook_url"),
             FieldPanel("youtube_url"),
             FieldPanel("linkedin_url"),

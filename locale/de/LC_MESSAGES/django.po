@@ -671,7 +671,7 @@ msgstr ""
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:177
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:153
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:169
-msgid "Keep up to date with the latest tweets from"
+msgid "Keep up to date with the latest posts from"
 msgstr "Bleiben Sie auf dem Laufenden mit den neuesten Posts von"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_link_block.html:4

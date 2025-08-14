@@ -607,12 +607,12 @@ msgid "Share this page"
 msgstr "Roinn an leathanach seo"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:17
-msgid "Share this page on Twitter"
-msgstr "Roinn an leathanach seo ar Twitter"
+msgid "Share this page on X"
+msgstr "Roinn an leathanach seo ar X"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:17
-msgid "Share on Twitter"
-msgstr "Roinn ar Twitter"
+msgid "Share on X"
+msgstr "Roinn ar X"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:24
 msgid "Share this page on LinkedIn"
@@ -677,15 +677,15 @@ msgstr "Mír roghchláir roimhe seo"
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:168
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:172
 #: irelandie_project_styleguide/templates/patterns/snippets/twitterembedsnippet.html:10
-msgid "Twitter timeline"
-msgstr "Amlíne Twitter"
+msgid "X timeline"
+msgstr "Amlíne X"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:134
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:177
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:153
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:169
-msgid "Keep up to date with the latest tweets from"
-msgstr "Coinnigh suas chun dáta leis na tweetanna is déanaí ó "
+msgid "Keep up to date with the latest posts from"
+msgstr "Coinnigh suas chun dáta leis na poist is déanaí ó "
 
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_link_block.html:4
 #, fuzzy
@@ -777,8 +777,8 @@ msgid "Find us on Facebook"
 msgstr "Faigh sinn ar Facebook"
 
 #: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:65
-msgid "Follow us on Twitter"
-msgstr "Lean muid ar Twitter"
+msgid "Follow us on X"
+msgstr "Lean muid ar X"
 
 #: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:71
 msgid "Find us on Instagram"
@@ -988,8 +988,8 @@ msgstr "Réigiún"
 #: irelandie_project_styleguide/templates/patterns/pages/irelandie_travel/travel_landing.html:147
 #, fuzzy
 #| msgid "Twitter timeline"
-msgid "Twitter title"
-msgstr "Amlíne Twitter"
+msgid "X title"
+msgstr "Amlíne X"
 
 #: irelandie_project_styleguide/templates/patterns/pages/missions/embassy_index_page.html:24
 #, fuzzy
