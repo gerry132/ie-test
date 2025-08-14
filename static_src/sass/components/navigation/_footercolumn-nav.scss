@@ -21,15 +21,29 @@
         }
     }
 
-    &__link {
-        border-bottom: 1px solid transparent;
+
+}
+a.footercolumn-nav__link {
         transition: color, border $transition;
-        color: $color--secondary;
+        color: #FFFFFF;
+        border-bottom: 0.1rem solid #EDECE5;
 
         &:hover {
             cursor: pointer;
-            color: lighten($color--secondary, 20%);
-            border-bottom: 1px solid $color--secondary;
+            color: #EDECE5;
+            border-bottom: 0.2rem solid #EDECE5;
+        }
+        &:active {
+            color: #CFD8D1;
+            border-bottom: 0.3rem solid #CFD8D1;
+            }
+        &:focus {
+             outline: 3px solid #0028BF;
+          outline-offset: 0;
+          box-shadow:
+            0 0 0 4px #FFFFFF,
+            -4px 6px 0 0 #FFFFFF,
+            4px 6px 0 0 #FFFFFF;
         }
 
         @include media-query(medium) {
@@ -40,4 +54,3 @@
             font-size: 18px;
         }
     }
-}

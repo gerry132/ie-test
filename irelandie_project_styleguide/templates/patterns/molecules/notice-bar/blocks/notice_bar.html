@@ -26,8 +26,8 @@
                 {% for link in value.subtitle %}
                     {% if link.value.page or link.value.url %}
                             <div class="notice__title"> {{ value.title }}</div>
-                        <a href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}" title="{{ link.value.title }}">
-                            <div class="notice_link">{{ link.value.title }}</div>
+                        <a class="notice_link" href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}" title="{{ link.value.title }}">
+                            {{ link.value.title }}
                         </a>
                     {% else %}
                         <div class="notice__title"> {{ value.title }}</div>
@@ -51,9 +51,9 @@
                 {% for link in value.subtitle %}
                     {% if link.value.page or link.value.url %}
                         <div class="notice__icon">
-                            <a href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}" title="Notice Link">
+                            <a href="{% if link.value.page %}{{ link.value.page.url }}{% else %}{{ link.value.url }}{% endif %}" title="Notice Link" class="notice-link">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="58" viewBox="0 0 32 58" fill="none">
-                                    <path d="M4 54L28 28.9984L4 4" stroke="#004D44" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path class="arrow-path" d="M4 54L28 28.9984L4 4" stroke="#004D44" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </a>
                         </div>

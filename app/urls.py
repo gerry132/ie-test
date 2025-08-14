@@ -37,7 +37,8 @@ urlpatterns = [
     path("search/", search_views.search, name="search"),
     path('sitemap.xml', sitemap),
     path('', include(wagtaildocs_urls)),
-    path("api/v2/", api_router.urls),
+    # path("api/v2/", api_router.urls),
+    path("api/v2/", include("irelandie_api.urls")),
 ]
 
 if dj_settings.DEBUG_TOOLBAR is True:

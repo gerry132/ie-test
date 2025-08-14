@@ -70,6 +70,10 @@
                 "value": "${SETTINGS_BASE_URL}"
             },
             {
+                "name": "API_ORIGIN",
+                "value": "${api_domain}"
+            },
+            {
                 "name": "CACHE_ADDRESS",
                 "value": "${SETTINGS_CACHE_ADDRESS}"
             },

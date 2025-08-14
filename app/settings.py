@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 DEBUG_TOOLBAR = os.environ.get("DEBUG_TOOLBAR", "0") in TRUE
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ["SECRET_KEY"]
+SECRET_KEY = os.environ.get("SECRET_KEY", "dev_secret_key")
 
 # X-Frame-Options
 X_FRAME_OPTIONS = 'DENY'
@@ -61,7 +61,7 @@ if debug_on == '0':
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
 
 # to disable the check
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     "accview_non_admin",
     # "wagtail_sitemap_seo",
     "irelandie_admin",
+    "irelandie_api",
     "irelandie_assets",
     "irelandie_documents",
     # 'irelandie_forms',
@@ -155,7 +156,6 @@ if DEBUG_TOOLBAR is True:
 
 MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
-    # "csp.middleware.CSPMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -221,6 +221,7 @@ TEMPLATES = [
                 "django.template.context_processors.i18n",
                 # custom processors
                 "irelandie_utils.context_processors.local_languages",
+                "irelandie_utils.context_processors.api_origin",
             ],
             "builtins": ["pattern_library.loader_tags"],
         },
@@ -305,6 +306,7 @@ STATICFILES_FINDERS = [
 
 STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, "static_compiled/"),
+    os.path.join(PROJECT_DIR, "static_src/images/")
 ]
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
@@ -365,7 +367,9 @@ if USE_CACHE is True:
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",
-    )
+    ),
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
 }
 # https://pypi.org/project/django-cors-headers/
 CORS_ALLOW_ALL_ORIGINS = os.environ.get("CORS_ALLOW_ALL_ORIGINS", False) in TRUE
@@ -445,82 +449,6 @@ if USE_S3 is True:
     AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
 
     AWS_S3_REGION_NAME = "eu-west-1"
-    CSP_DEFAULT_SRC = ("'self'",)
-    CSP_INCLUDE_NONCE_IN = [
-        'script-src',
-        'script-src-elem'
-    ]
-    CSP_SCRIPT_SRC = (
-            "'self'",
-            f"https://{AWS_S3_CUSTOM_DOMAIN}",
-            "https://unpkg.com",
-            "https://cdn.jsdelivr.net",
-            "https://cdnjs.cloudflare.com",
-            "https://www.googletagmanager.com",
-            "https://www.google-analytics.com",
-            "https://ajax.googleapis.com",
-            "https://stats.ciboard.ie",
-            "https://cdn.cookielaw.org",
-            "https://cdn.rawgit.com",
-            "https://cdn.edgetier.com",
-            "https://dfa.edgetier.com",
-            "https://lightning.production.helium.servismatrixcdn.com",
-            "'unsafe-inline'"
-        )
-    CSP_SCRIPT_SRC_ELEM = CSP_SCRIPT_SRC
-    CSP_STYLE_SRC = (
-            "'self'",
-            f"https://{AWS_S3_CUSTOM_DOMAIN}",
-            "https://cdn.jsdelivr.net",
-            "https://cdnjs.cloudflare.com",
-            "https://fonts.googleapis.com",
-            "https://cdn.edgetier.com",
-            "'unsafe-inline'"
-        )
-
-    CSP_IMG_SRC = ("'self'",
-                   "data:",
-                   f"https://{AWS_S3_CUSTOM_DOMAIN}",
-                   "https://www.google-analytics.com",
-                   "https://www.gravatar.com",
-                   "https://sborg-heupper-dfasfo.s3.amazonaws.com",
-                   "https://cdn.edgetier.com")
-    CSP_CONNECT_SRC = (
-        "'self'",
-        "https://www.google-analytics.com",
-        "https://region1.google-analytics.com",
-        "https://www.googletagmanager.com",
-        "https://stats.ciboard.ie",
-        "https://cdn.rawgit.com",
-        "https://cdn.cookielaw.org",
-        "https://cdn.edgetier.com",
-        "https://dfa.edgetier.com",
-        "https://lightning.production.helium.servismatrixcdn.com",
-        "https://api.production.helium.servismatrix.com",
-        "https://o1008192.ingest.sentry.io",
-        "https://cognito-identity.eu-west-1.amazonaws.com",
-        "https://sborg-heupper-dfasfo.s3.amazonaws.com",
-        "https://releases.wagtail.org"
-    )
-    CSP_FONT_SRC = (
-            "'self'",
-            "https://fonts.googleapis.com",
-            "https://fonts.gstatic.com",
-            "https://cdnjs.cloudflare.com",
-            f"https://{AWS_S3_CUSTOM_DOMAIN}"
-        )
-
-    CSP_FRAME_SRC = (
-            "'self'",
-            "https://youtube.com",
-            "https://www.youtube.com",
-            "https://www.youtube-nocookie.com",
-            "https://player.vimeo.com",
-            "https://www.google.com"
-        )
-
-    CSP_MEDIA_SRC = ("'self'", f"https://{AWS_S3_CUSTOM_DOMAIN}", "https://cdn.edgetier.com")
-
     # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
 else:
     None
@@ -529,17 +457,25 @@ WAGTAIL_SITE_NAME = "Ireland.ie"
 
 BASE_URL = os.environ.get("BASE_URL", "http://localhost:8000")
 
+API_ORIGIN = os.environ.get("API_ORIGIN", "http://localhost:8000")
+
 WAGTAIL_I18N_ENABLED = True
 
 PREFIX_DEFAULT_LANGUAGE = True
 
 AWS_S3_FILE_OVERWRITE = False
 
-WAGTAILADMIN_COMMENTS_ENABLED = False
-WAGTAIL_MODERATION_ENABLED = False
+WAGTAILADMIN_COMMENTS_ENABLED = True
 WAGTAILIMAGES_IMAGE_MODEL = "irelandie_images.CustomImage"
 WAGTAILIMAGES_FEATURE_DETECTION_ENABLED = False
 WAGTAILDOCS_DOCUMENT_MODEL = "irelandie_documents.CustomDocument"
+
+WAGTAIL_MODERATION_ENABLED = TRUE
+WAGTAIL_WORKFLOW_ENABLED = TRUE
+WAGTAIL_WORKFLOW_REQUIRE_REAPPROVAL_ON_EDIT = False
+WAGTAIL_FINISH_WORKFLOW_ACTION = 'wagtail.workflows.publish_workflow_state'
+WAGTAIL_WORKFLOW_CANCEL_ON_PUBLISH = True
+WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = os.environ.get("WAGTAILADMIN_NOTIFICATION_FROM_EMAIL")
 
 if OPENSEARCH_KEY and OPENSEARCH_SECRET and OPENSEARCH_ENDPOINT != 'CHANGE':
     from elasticsearch import RequestsHttpConnection

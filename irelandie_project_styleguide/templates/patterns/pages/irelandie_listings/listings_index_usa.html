@@ -6,7 +6,7 @@
 
 {% block content %}
 <style>
-    .listings_filter{
+    .listings_filter {
         background: #EBE9E1;
         width: 250px;
         height: 55px;
@@ -18,6 +18,14 @@
         font-weight: 400;
         line-height: normal;
       }
+      .listings_filter:focus {
+          outline: 3px #FFD740 solid;
+          outline-offset: 0;
+          box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
+        }
 
     .filter__title{
         color: #000;

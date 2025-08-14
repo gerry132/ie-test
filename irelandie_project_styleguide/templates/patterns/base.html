@@ -11,9 +11,16 @@
             {% if page and secure %}
                 <link rel="canonical" href="{{ page.full_url }}">
             {% endif %}
+        {% if page.get_schema_json %}
+            <script type="application/ld+json">
+              {{ page.get_schema_json|safe }}
+            </script>
+          {% endif %}
         {% endblock %}
         <meta name="description" content="{% if page.search_description %}{{ page.search_description }}{% else %}{{ page.listing_summary }}{% endif %}" />
         <meta charset="utf-8" />
+        <meta name="current-page-id" content="{{ page.id }}">
+        <meta name="current-page-locale" content="{{ page.locale.language_code }}">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {% if self.seo_og_type != "article" and self.seo_author %}
@@ -22,6 +29,7 @@
         {% if self.seo_og_type != "article" %}
         <meta property="website:published_time" content="{{ self.seo_published_at|date:'c' }}" />
         <meta property="website:modified_time" content="{{ self.last_published_at|date:'c' }}" />
+        <meta name="api-origin" content="{{ API_ORIGIN }}" />
         {% endif %}
 
         {% block meta_tags %}{% endblock %}
@@ -48,7 +56,8 @@
         <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 
         {% block extra_css %}{% endblock %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 
     </head>
     {% verify_path as path_info %}

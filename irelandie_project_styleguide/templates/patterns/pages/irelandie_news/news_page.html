@@ -27,13 +27,13 @@ Responsive hero images
         <div class="tag__news">
         <ul class="tag__slide">
             {% for tags_category, tag_links in tagging_links %}
-                <li class="tag__slide-item"><a href="{{ tag_links }}" aria-label="{% trans 'Tag label' %}">{{ tags_category.specific.tag_label }}</a></li>
+                <li class="tag__slide-item" tabindex="0"><a tabindex="-1" href="{{ tag_links }}" aria-label="{% trans 'Tag label' %}">{{ tags_category.specific.tag_label }}</a></li>
             {% endfor %}
             {% for tags_category in tags_no_links %}
                 <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
             {% endfor %}
             {% for tags_destination, tag_links in destination_tag_links %}
-                <li class="tag__slide-item"><a href="{{ tag_links.url }}" aria-label="{% trans 'Tag label' %}">{{ tags_destination }}</a></li>
+                <li class="tag__slide-item" tabindex="0"><a tabindex="-1" href="{{ tag_links.url }}" aria-label="{% trans 'Tag label' %}">{{ tags_destination }}</a></li>
             {% endfor %}
         </ul>
         </div>
@@ -73,32 +73,7 @@ Responsive hero images
         </figure>
     </div>
     {% for block in page.body %}
-    {% if block.block_type == 'table' or block.block_type == 'advanced_table_block' %}
-    <div class="wrapper wrapper--small wrapper--padding">
-        {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}
-    </div>
-    {% elif block.block_type == 'person' %}
-    <div class="wrapper wrapper--large wrapper--padding">
-        {% include_block block %}
-    </div>
-    {% elif block.block_type == 'heading' or block.block_type == 'rich_text' or block.block_type == 'rich_text_advanced' %}
-    <div class="wrapper wrapper--large wrapper--padding">
-        {% include_block block %}
-    </div>
-    {% elif block.block_type == 'logos' %}
-    <div class="section section--padding">
-        <div class="wrapper wrapper--large wrapper--padding">
-            {% include_block block %}
-        </div>
-    </div>
-    {% elif block.block_type == 'story_photo_gallery' %}
-    {% include_block block %}
-
-    {% else %}
-    <div class="wrapper wrapper--small wrapper--padding">
-        {% include_block block %}
-    </div>
-    {% endif %}
+        {% include "patterns/molecules/streamfield/streamfield_block_renderer.html" with block=block %}
     {% endfor %}
 </div>
 

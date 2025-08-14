@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import json
+
 from django.db import models
 from django.forms import ValidationError
 from django.utils.functional import cached_property
@@ -117,6 +119,46 @@ class FreeFormPage(FreeFormPageBase):
         min_num=0,
         max_num=1,
     )
+
+    organization_name = models.CharField(
+        max_length=255,
+        default="Department of Foreign Affairs and Trade",
+        blank=True
+    )
+
+    organization_description = models.CharField(blank=True, max_length=255)
+
+    organization_logo = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    mainEntityOfPage_name = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    mainEntityOfPage_description = models.CharField(blank=True, max_length=255)
+
+    twitter_url = models.URLField(blank=True, help_text="Full Twitter profile URL")
+    facebook_url = models.URLField(blank=True, help_text="Full Facebook page URL")
+    youtube_url = models.URLField(blank=True, help_text="Full YouTube channel URL")
+    linkedin_url = models.URLField(blank=True, help_text="Full LinkedIn profile URL")
+    instagram_url = models.URLField(blank=True, help_text="Full Instagram profile URL")
+    weibo_url = models.URLField(blank=True, help_text="Full Weibo profile URL")
+
+    social_media_panels = MultiFieldPanel(
+        [
+            FieldPanel("twitter_url"),
+            FieldPanel("facebook_url"),
+            FieldPanel("youtube_url"),
+            FieldPanel("linkedin_url"),
+            FieldPanel("instagram_url"),
+            FieldPanel("weibo_url"),
+        ],
+        heading="Social Media URLs",
+    )
     content_panels = [FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block")] + [
         FieldPanel("subtitle", help_text="Please include a brief description of this page/article. This will not "
                                          "appear live on the page, but will appear publicly as a subtitle in other "
@@ -149,10 +191,24 @@ class FreeFormPage(FreeFormPageBase):
 
     )
 
+    promote_panels = (FreeFormPageBase.promote_panels +
+                      [
+                          MultiFieldPanel([
+                              FieldPanel("organization_name"),
+                              FieldPanel("organization_description"),
+                              FieldPanel("organization_logo"),
+                          ], heading="Organization Schema Settings"),
+                          MultiFieldPanel([
+                              FieldPanel("mainEntityOfPage_name"),
+                              FieldPanel("mainEntityOfPage_description"),
+                          ], heading="mainEntityOfPage")
+                      ]
+                      + [social_media_panels])
+
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(FreeFormPageBase.hero_panel, heading='Hero'),
-        ObjectList(FreeFormPageBase.promote_panels, heading='Promote', permission="superuser"),
+        ObjectList(promote_panels, heading='Promote', permission="superuser"),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -188,13 +244,76 @@ class FreeFormPage(FreeFormPageBase):
             .specific()
         )
 
+    def get_breadcrumb_schema(self):
+        ancestors = list(
+            self.get_ancestors(inclusive=True).live().filter(depth__gte=2)
+        )
+        ancestors = ancestors[-6:]
+
+        item_list = []
+        for position, ancestor in enumerate(ancestors, start=1):
+            item_list.append({
+                "@type": "ListItem",
+                "position": position,
+                "name": ancestor.title,
+                "item": ancestor.full_url
+            })
+
+        return {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": item_list
+        }
+
+    @property
+    def same_as_links(self):
+        return list(filter(None, [
+            self.twitter_url,
+            self.facebook_url,
+            self.youtube_url,
+            self.linkedin_url,
+            self.instagram_url,
+            self.weibo_url,
+        ]))
+
+    def get_schema_json(self):
+        allowed_paths = [
+            "/en/about/",
+            "/en/dfa/",
+            "/en/irish-aid/",
+        ]
+
+        if self.full_url and any(self.full_url.endswith(path) for path in allowed_paths):
+            main_schema = {
+                "@context": "https://schema.org",
+                "@type": "GovernmentOrganization",
+                "name": self.organization_name,
+                "url": self.full_url,
+                "description": self.organization_description or "",
+                "logo": self.organization_logo.get_rendition("original").url if self.organization_logo else "",
+                "sameAs": self.same_as_links,
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": self.full_url,
+                    "name": self.mainEntityOfPage_name,
+                    "description": self.mainEntityOfPage_description or "",
+                },
+            }
+
+            breadcrumb_schema = self.get_breadcrumb_schema()
+
+            return json.dumps([main_schema, breadcrumb_schema], indent=2)
+
+        return ""
+
     def clean(self):
         if (
             self.generic_hero and self.hero_image or self.generic_hero and self.hero_video or
             self.generic_hero and self.five_panel_block and self.hero_image or
             self.generic_hero and self.five_panel_block and self.hero_video or
             self.generic_hero and self.five_panel_block or self.hero_image and self.five_panel_block or
-                self.hero_video and self.five_panel_block):
+            self.hero_video and self.five_panel_block
+        ):
             raise ValidationError(
                 {
                     "five_panel_block": ValidationError(

@@ -36,7 +36,8 @@ locals {
   domain_ireland_ie             = "ireland.ie"
   africa_day_domain             = "africaday.ie"
   project_name                  = "ireland-ie"
-
+  api_domain                    = "https://api.ireland.ie"
+  api_domain_plain              = "api.ireland.ie"
   region                        = "eu-west-1"
   # DB
   db_instance_class             = "db.m6g.large"
@@ -63,6 +64,8 @@ locals {
     "193.178.64.0/19",
     "193.178.96.0/20",
     "139.162.239.108/32",
+    "37.228.225.101/32", # gerry
+    "137.191.233.222/32" # browserstack
   ]
   non_gov_network_cird_blocks   = {
     dfa_main = {
@@ -1113,6 +1116,8 @@ module "database" {
   db_username           = "${local.environment_name}_ireland_ie_username"
   db_password           = data.aws_ssm_parameter.random_db_password.value
   db_instance_class     = local.db_instance_class
+  db_engine_version     = "15.10"
+
   create_snapshot       = false
   name                  = "${local.environment_name}-db"
   subnets               = module.network.public_subnet_ids
@@ -1421,18 +1426,77 @@ data "template_file" "index_task_definition" {
     SETTINGS_OPENSEARCH_SECRET          = local.SETTINGS_OPENSEARCH_SECRET
     SETTINGS_OPENSEARCH_ENDPOINT        = local.SETTINGS_OPENSEARCH_ENDPOINT
     SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
+    api_domain                          = local.api_domain
   }
+}
+
+
+module "main_task_definition" {
+  source = "../common/task_definition"
+
+  account_id              = local.account_id
+  project_name            = local.project_name
+  environment_name        = local.environment_name
+  assets_s3_bucket        = aws_s3_bucket.assets.id
+  log_group               = aws_cloudwatch_log_group.ecs.name
+  ecr_image_url           = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
+  cache_address           = local.cache_address
+  region                  = local.region
+  task_cpu                = local.task_cpu
+  task_memory             = local.task_memory
+  domain_ireland_ie       = local.domain_ireland_ie
+  service_contrainer_port = 8000
+
+  SETTINGS_DEBUG               = local.SETTINGS_DEBUG
+  SETTINGS_DEBUG_TOOLBAR       = local.SETTINGS_DEBUG_TOOLBAR
+  SETTINGS_EMAIL_HOST          = local.SETTINGS_EMAIL_HOST
+  SETTINGS_DEFAULT_FROM_EMAIL  = local.SETTINGS_DEFAULT_FROM_EMAIL
+  SETTINGS_CORS_ALLOW_ALL_ORIGINS = local.SETTINGS_CORS_ALLOW_ALL_ORIGINS
+
+  SETTINGS_ALLOWED_HOSTS       = local.SETTINGS_ALLOWED_HOSTS
+  SETTINGS_USE_CACHE           = local.SETTINGS_USE_CACHE
+  SETTINGS_USE_S3              = local.SETTINGS_USE_S3
+  SETTINGS_CLOUDFRONT_ID       = local.SETTINGS_CLOUDFRONT_ID
+  SETTINGS_AWS_ACCESS_KEY_ID   = local.SETTINGS_AWS_ACCESS_KEY_ID
+  SETTINGS_AWS_SECRET_ACCESS_KEY = local.SETTINGS_AWS_SECRET_ACCESS_KEY
+  SETTINGS_AWS_STATIC_BUCKET_NAME = local.SETTINGS_AWS_STATIC_BUCKET_NAME
+  SETTINGS_BASE_URL            = local.SETTINGS_BASE_URL
+  SETTINGS_DATABASE_URL        = local.SETTINGS_DATABASE_URL
+  SETTINGS_SECRET_KEY          = local.SETTINGS_SECRET_KEY
+  SETTINGS_OPENSEARCH_KEY      = local.SETTINGS_OPENSEARCH_KEY
+  SETTINGS_OPENSEARCH_SECRET   = local.SETTINGS_OPENSEARCH_SECRET
+  SETTINGS_OPENSEARCH_ENDPOINT = local.SETTINGS_OPENSEARCH_ENDPOINT
+  SETTINGS_CORS_ALLOWED_ORIGINS = local.SETTINGS_CORS_ALLOWED_ORIGINS
 }
 
 module "ecs_task_os_index" {
   source = "../common/utils"
 
+  publish_task_definitions = module.main_task_definition.publish_task_definition_rendered
   container_definitions = data.template_file.index_task_definition.rendered
   task_cpu              = "256"
   task_memory           = "512"
   subnets               = module.network.private_subnet_ids
   security_groups       = aws_security_group.ecs.id
   environment_name      = local.environment_name
+  cluster               = aws_ecs_cluster.default
+  execution_role        = aws_iam_role.task_execution.arn
+}
+
+module "api" {
+  source = "../common/api"
+
+  container_definitions = module.main_task_definition.container_definitions
+  lb_target_group       = aws_lb_target_group.default_admin.arn
+  project_name          = local.project_name
+  environment_name      = local.environment_name
+  task_cpu              = "256"
+  task_memory           = "512"
+  api_domain            = local.api_domain_plain
+  subnets               = module.network.public_subnet_ids
+  vpc_id                = module.network.vpc_id
+  ecs_security_groups   = aws_security_group.ecs.id
+  lb_security_groups    = aws_security_group.lb_gov_network.id
   cluster               = aws_ecs_cluster.default
   execution_role        = aws_iam_role.task_execution.arn
 }
@@ -1450,7 +1514,7 @@ locals {
   SETTINGS_CACHE_ADDRESS            = local.cache_address
   SETTINGS_DATABASE_URL             = local.db_master_url
   SETTINGS_SECRET_KEY               = data.aws_ssm_parameter.random_secret_key.value
-  SETTINGS_CORS_ALLOWED_ORIGINS     = "${local.SETTINGS_BASE_URL},https://www.${local.project_domain}"
+  SETTINGS_CORS_ALLOWED_ORIGINS = "${local.SETTINGS_BASE_URL},https://api.${local.domain_ireland_ie},https://www.${local.domain_ireland_ie}"
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
   SETTINGS_EMAIL_HOST               = "email.${local.region}.amazonaws.com"
   SETTINGS_DEFAULT_FROM_EMAIL       = aws_ssm_parameter.DEFAULT_FROM_EMAIL.value
@@ -1464,6 +1528,7 @@ data "template_file" "task_definition" {
     log_group                           = aws_cloudwatch_log_group.ecs.name
     name                                = "${local.environment_name}-${local.project_name}"
     port                                = local.service_contrainer_port
+    api_domain                          = local.api_domain
     region                              = local.region
     task_cpu                            = local.task_cpu
     task_memory                         = local.task_memory
@@ -1626,7 +1691,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
         scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
@@ -1654,12 +1719,12 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
         scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
             }
-        }  
+        }
       }
     }
 
@@ -1669,7 +1734,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
       sampled_requests_enabled   = true
     }
   }
-  
+
   rule {
     name     = "AWS-AWSManagedRulesAmazonIpReputationList"
     priority = 2
@@ -1684,7 +1749,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
                 scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
@@ -1713,7 +1778,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
         scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
@@ -1749,7 +1814,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
                 scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
@@ -1778,7 +1843,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
         scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
@@ -1807,7 +1872,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
         scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
@@ -1842,7 +1907,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
         scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
                 }
                }
@@ -1955,7 +2020,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "/search/*"
-  } 
+  }
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods           = ["GET", "HEAD"]
@@ -1974,8 +2039,28 @@ resource "aws_cloudfront_distribution" "dynamic" {
     cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/archives-des-actualites/*"
+  }
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
+    path_pattern             = "*/whats-on/*"
+  }
+  ordered_cache_behavior {
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = aws_lb.public_sites.name
+
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
+    viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/publication-index/*"
-  }  
+  }
 
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
@@ -1986,7 +2071,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/news-archive/"
-  } 
+  }
 
 
   ordered_cache_behavior {
@@ -1998,7 +2083,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/news-and-events/*"
-  } 
+  }
 
 
   ordered_cache_behavior {
@@ -2010,7 +2095,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/news-and-speeches/*"
-  } 
+  }
 
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
@@ -2021,7 +2106,7 @@ resource "aws_cloudfront_distribution" "dynamic" {
     origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/annual-reports/*"
-  } 
+  }
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
@@ -2210,15 +2295,15 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
         scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips.arn
                 }
                }
             }
         }
       }
-    
-      
+
+
     }
     visibility_config {
       cloudwatch_metrics_enabled = true
@@ -2229,7 +2314,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
   rule {
     name     = "AWS-AWSManagedRulesBotControlRuleSet"
     priority = 0
-    
+
     override_action {
       none {
       }
@@ -2242,7 +2327,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
         scope_down_statement {
             not_statement {
               statement {
-                ip_set_reference_statement { 
+                ip_set_reference_statement {
                   arn = aws_wafv2_ip_set.ireland_ie_ips.arn
                 }
                }

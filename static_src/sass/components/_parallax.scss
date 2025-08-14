@@ -114,6 +114,20 @@
         cursor: pointer;
         font-size: 1rem;
         transition: background 0.3s;
+        background: transparent;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 128px;
+        height: 128px;
+        outline: none;
+
+        &:focus {
+           outline: 3px solid #FFD740;
+          outline-offset: 0px;
+          box-shadow: 0 0 0 6px #000000;
+        }
     }
     &__video-toggle {
         border: 0;
@@ -135,17 +149,27 @@
     }
 
     &__video-toggle-double {
-        color: white;
         border: none;
-        padding: 10px 20px;
+        background: transparent;
         cursor: pointer;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 128px;
+        height: 128px;
+        transition: box-shadow 0.3s ease;
+        outline: none; /* remove default */
         background: transparent;
         font-size: 1rem;
-        margin-top: 20px;
         transition: background 0.3s;
+
+       &:focus {
+           outline: 3px solid #FFD740;
+          outline-offset: -6px; /* negative to pull inward */
+          box-shadow: 0 0 0 4px #000000;
+        }
     }
-
-
 }
 .gradient-overlay{
     &__double-feature-video {
@@ -199,9 +223,7 @@
 .parallax .rich-text p, .parallax .intro, .parallax .intro h2 {
     color: var(--text-color, inherit);
 }
-.parallax .rich-text a{
-        color: var(--link-color, inherit);
-    }
+
 
 .jarallax.text-parallax {
     min-height: auto;
@@ -211,4 +233,543 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+/* === BASE LINK STYLES === */
+.rich-text.rich-text__content a,
+.theme--standard .rich-text  a {
+  text-decoration-thickness: 5%;
+  text-underline-offset: 27%;
+}
+.rich-text.rich-text__content a:hover,
+.theme--standard .rich-text a:hover {
+  text-decoration-thickness: 15%;
+}
+.rich-text.rich-text__content a:active,
+.theme--standard .rich-text a:active {
+  text-decoration-thickness: 20%;
+}
+.rich-text a.button_text, .rich-text.rich-text__content a.button_text {
+    text-decoration: none;
+    }
+
+/* ==== 1. STANDARD ==== */
+.theme--standard .rich-text a,
+.rich-text.rich-text__content.theme--standard a {
+  color: #082F2A;
+  text-decoration-color: #008931;
+}
+.theme--standard .rich-text a:hover,
+.rich-text.rich-text__content.theme--standard a:hover {
+  color: #004D44;
+  text-decoration-color: #004D44;
+}
+.theme--standard .rich-text a:active,
+.rich-text.rich-text__content.theme--standard a:active {
+  color: #008931;
+  text-decoration-color: #008931;
+}
+.theme--standard .rich-text a.button_text,
+.rich-text.rich-text__content.theme--standard a.button_text {
+  background: #082F2A;
+  color: #FFF;
+}
+.theme--standard .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--standard a.button_text:hover {
+  background: #004D44;
+}
+.theme--standard .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--standard a.button_text:active {
+  background: #008931;
+}
+
+/* ==== 2. LIGHT GREY ==== */
+.theme--light_grey .rich-text a,
+.rich-text.rich-text__content.theme--light_grey a {
+  color: #F5F5F2;
+  text-decoration-color: #F5F5F2;
+}
+.theme--light_grey .rich-text a:hover,
+.rich-text.rich-text__content.theme--light_grey a:hover {
+  color: #EDECE5;
+  text-decoration-color: #EDECE5;
+}
+.theme--light_grey .rich-text a:active,
+.rich-text.rich-text__content.theme--light_grey a:active {
+  color: #CACAC3;
+  text-decoration-color: #CACAC3;
+}
+.theme--light_grey .rich-text a.button_text,
+.rich-text.rich-text__content.theme--light_grey a.button_text {
+  background: #F5F5F2;
+  color: #101010;
+}
+.theme--light_grey .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--light_grey a.button_text:hover {
+  background: #EDECE5;
+  color: #101010;
+}
+.theme--light_grey .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--light_grey a.button_text:active {
+  background: #CACAC3;
+}
+
+.theme--light_grey .rich-text a.button_text:focus,
+.rich-text.rich-text__content.theme--light_grey a.button_text:focus {
+    color: #101010;
+}
+
+/* ==== 3. BEIGE ==== */
+.theme--beige .rich-text a,
+.rich-text.rich-text__content.theme--beige a {
+  color: #EDE5D4;
+  text-decoration-color: #EDE5D4;
+}
+.theme--beige .rich-text a:hover,
+.rich-text.rich-text__content.theme--beige a:hover {
+  color: #D7CBB0;
+  text-decoration-color: #D7CBB0;
+}
+.theme--beige .rich-text a:active,
+.rich-text.rich-text__content.theme--beige a:active {
+  color: #C8B898;
+  text-decoration-color: #C8B898;
+}
+.theme--beige .rich-text a.button_text,
+.rich-text.rich-text__content.theme--beige a.button_text {
+  background: #EDE5D4;
+  color: #101010;
+}
+.theme--beige .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--beige a.button_text:hover {
+  background: #D7CBB0;
+  color: #101010;
+}
+.theme--beige .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--beige a.button_text:active {
+  background: #C8B898;
+}
+.theme--beige .rich-text a.button_text:focus,
+.rich-text.rich-text__content.theme--beige a.button_text:focus {
+    color: #101010;
+}
+
+/* ==== 4. CYAN ==== */
+.theme--cyan .rich-text a,
+.rich-text.rich-text__content.theme--cyan a {
+  color: #007E8A;
+  text-decoration-color: #007E8A;
+}
+.theme--cyan .rich-text a:hover,
+.rich-text.rich-text__content.theme--cyan a:hover {
+  color: #008591;
+  text-decoration-color: #008591;
+}
+.theme--cyan .rich-text a:active,
+.rich-text.rich-text__content.theme--cyan a:active {
+  color: #0093A1;
+  text-decoration-color: #0093A1;
+}
+.theme--cyan .rich-text a.button_text,
+.rich-text.rich-text__content.theme--cyan a.button_text {
+  background: #007E8A;
+  color: #FFF;
+}
+.theme--cyan .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--cyan a.button_text:hover {
+  background: #008591;
+}
+.theme--cyan .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--cyan a.button_text:active {
+  background: #0093A1;
+}
+
+/* ==== 5. GREEN ==== */
+.theme--green .rich-text a,
+.rich-text.rich-text__content.theme--green a {
+  color: #1F6B4C;
+  text-decoration-color: #1F6B4C;
+}
+.theme--green .rich-text a:hover,
+.rich-text.rich-text__content.theme--green a:hover {
+  color: #277D5B;
+  text-decoration-color: #277D5B;
+}
+.theme--green .rich-text a:active,
+.rich-text.rich-text__content.theme--green a:active {
+  color: #2F8F66;
+  text-decoration-color: #2F8F66;
+}
+.theme--green .rich-text a.button_text,
+.rich-text.rich-text__content.theme--green a.button_text {
+  background: #1F6B4C;
+  color: #FFF;
+}
+.theme--green .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--green a.button_text:hover {
+  background: #277D5B;
+}
+.theme--green .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--green a.button_text:active {
+  background: #2F8F66;
+}
+
+/* ==== 6. OLIVE ==== */
+.theme--olive .rich-text a,
+.rich-text.rich-text__content.theme--olive a {
+  color: #5A7A1E;
+  text-decoration-color: #5A7A1E;
+}
+.theme--olive .rich-text a:hover,
+.rich-text.rich-text__content.theme--olive a:hover {
+  color: #4E841D;
+  text-decoration-color: #4E841D;
+}
+.theme--olive .rich-text a:active,
+.rich-text.rich-text__content.theme--olive a:active {
+  color: #6F9725;
+  text-decoration-color: #6F9725;
+}
+.theme--olive .rich-text a.button_text,
+.rich-text.rich-text__content.theme--olive a.button_text {
+  background: #5A7A1E;
+  color: #FFF;
+}
+.theme--olive .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--olive a.button_text:hover {
+  background: #4E841D;
+}
+.theme--olive .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--olive a.button_text:active {
+  background: #6F9725;
+}
+
+/* ==== 7. ORANGE ==== */
+.theme--orange .rich-text a,
+.rich-text.rich-text__content.theme--orange a {
+  color: #B84F00;
+  text-decoration-color: #B84F00;
+}
+.theme--orange .rich-text a:hover,
+.rich-text.rich-text__content.theme--orange a:hover {
+  color: #B85900;
+  text-decoration-color: #B85900;
+}
+.theme--orange .rich-text a:active,
+.rich-text.rich-text__content.theme--orange a:active {
+  color: #D35E00;
+  text-decoration-color: #D35E00;
+}
+.theme--orange .rich-text a.button_text,
+.rich-text.rich-text__content.theme--orange a.button_text {
+  background: #B84F00;
+  color: #FFF;
+}
+.theme--orange .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--orange a.button_text:hover {
+  background: #B85900;
+}
+.theme--orange .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--orange a.button_text:active {
+  background: #D35E00;
+}
+
+/* ==== 8. RED ==== */
+.theme--red .rich-text a,
+.rich-text.rich-text__content.theme--red a {
+  color: #9C1F1F;
+  text-decoration-color: #9C1F1F;
+}
+.theme--red .rich-text a:hover,
+.rich-text.rich-text__content.theme--red a:hover {
+  color: #C02B2B;
+  text-decoration-color: #C02B2B;
+}
+.theme--red .rich-text a:active,
+.rich-text.rich-text__content.theme--red a:active {
+  color: #CC3333;
+  text-decoration-color: #CC3333;
+}
+.theme--red .rich-text a.button_text,
+.rich-text.rich-text__content.theme--red a.button_text {
+  background: #9C1F1F;
+  color: #FFF;
+}
+.theme--red .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--red a.button_text:hover {
+  background: #C02B2B;
+}
+.theme--red .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--red a.button_text:active {
+  background: #CC3333;
+}
+/* === 9. MAGENTA === */
+.theme--magenta .rich-text a,
+.rich-text.rich-text__content.theme--magenta a {
+  color: #9B2150;
+  text-decoration-color: #9B2150;
+}
+.theme--magenta .rich-text a:hover,
+.rich-text.rich-text__content.theme--magenta a:hover {
+  color: #BF2E65;
+  text-decoration-color: #BF2E65;
+}
+.theme--magenta .rich-text a:active,
+.rich-text.rich-text__content.theme--magenta a:active {
+  color: #D03A70;
+  text-decoration-color: #D03A70;
+}
+.theme--magenta .rich-text a.button_text,
+.rich-text.rich-text__content.theme--magenta a.button_text {
+  background: #9B2150;
+  color: #FFF;
+}
+.theme--magenta .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--magenta a.button_text:hover {
+  background: #BF2E65;
+}
+.theme--magenta .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--magenta a.button_text:active {
+  background: #D03A70;
+}
+
+/* === 10. VIOLET === */
+.theme--violet .rich-text a,
+.rich-text.rich-text__content.theme--violet a {
+  color: #79258C;
+  text-decoration-color: #79258C;
+}
+.theme--violet .rich-text a:hover,
+.rich-text.rich-text__content.theme--violet a:hover {
+  color: #9430AD;
+  text-decoration-color: #9430AD;
+}
+.theme--violet .rich-text a:active,
+.rich-text.rich-text__content.theme--violet a:active {
+  color: #9E33C3;
+  text-decoration-color: #9E33C3;
+}
+.theme--violet .rich-text a.button_text,
+.rich-text.rich-text__content.theme--violet a.button_text {
+  background: #79258C;
+  color: #FFF;
+}
+.theme--violet .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--violet a.button_text:hover {
+  background: #9430AD;
+}
+.theme--violet .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--violet a.button_text:active {
+  background: #9E33C3;
+}
+
+/* === 11. PURPLE === */
+.theme--purple .rich-text a,
+.rich-text.rich-text__content.theme--purple a {
+  color: #593391;
+  text-decoration-color: #593391;
+}
+.theme--purple .rich-text a:hover,
+.rich-text.rich-text__content.theme--purple a:hover {
+  color: #6C42AF;
+  text-decoration-color: #6C42AF;
+}
+.theme--purple .rich-text a:active,
+.rich-text.rich-text__content.theme--purple a:active {
+  color: #734BC8;
+  text-decoration-color: #734BC8;
+}
+.theme--purple .rich-text a.button_text,
+.rich-text.rich-text__content.theme--purple a.button_text {
+  background: #593391;
+  color: #FFF;
+}
+.theme--purple .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--purple a.button_text:hover {
+  background: #6C42AF;
+}
+.theme--purple .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--purple a.button_text:active {
+  background: #734BC8;
+}
+
+/* === 12. INDIGO === */
+.theme--indigo .rich-text a,
+.rich-text.rich-text__content.theme--indigo a {
+  color: #3241A2;
+  text-decoration-color: #3241A2;
+}
+.theme--indigo .rich-text a:hover,
+.rich-text.rich-text__content.theme--indigo a:hover {
+  color: #445ACB;
+  text-decoration-color: #186CC0;
+}
+.theme--indigo .rich-text a:active,
+.rich-text.rich-text__content.theme--indigo a:active {
+  color: #556CD6;
+  text-decoration-color: #1B6ACB;
+}
+.theme--indigo .rich-text a.button_text,
+.rich-text.rich-text__content.theme--indigo a.button_text {
+  background: #3241A2;
+  color: #FFF;
+}
+.theme--indigo .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--indigo a.button_text:hover {
+  background: #445ACB;
+}
+.theme--indigo .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--indigo a.button_text:active {
+  background: #556CD6;
+}
+
+/* === 13. BLUE === */
+.theme--blue .rich-text a,
+.rich-text.rich-text__content.theme--blue a {
+  color: #1152AC;
+  text-decoration-color: #1152AC;
+}
+.theme--blue .rich-text a:hover,
+.rich-text.rich-text__content.theme--blue a:hover {
+  color: #186CC0;
+  text-decoration-color: #186CC0;
+}
+.theme--blue .rich-text a:active,
+.rich-text.rich-text__content.theme--blue a:active {
+  color: #1B6ACB;
+  text-decoration-color: #1B6ACB;
+}
+.theme--blue .rich-text a.button_text,
+.rich-text.rich-text__content.theme--blue a.button_text {
+  background: #1152AC;
+  color: #FFF;
+}
+.theme--blue .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--blue a.button_text:hover {
+  background: #186CC0;
+}
+.theme--blue .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--blue a.button_text:active {
+  background: #1B6ACB;
+}
+
+/* === 14. NAVY === */
+.theme--navy .rich-text a,
+.rich-text.rich-text__content.theme--navy a {
+  color: #1B3550;
+  text-decoration-color: #1B3550;
+}
+.theme--navy .rich-text a:hover,
+.rich-text.rich-text__content.theme--navy a:hover {
+  color: #24476B;
+  text-decoration-color: #24476B;
+}
+.theme--navy .rich-text a:active,
+.rich-text.rich-text__content.theme--navy a:active {
+  color: #1F4F7A;
+  text-decoration-color: #1F4F7A;
+}
+.theme--navy .rich-text a.button_text,
+.rich-text.rich-text__content.theme--navy a.button_text {
+  background: #1B3550;
+  color: #FFF;
+}
+.theme--navy .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--navy a.button_text:hover {
+  background: #24476B;
+}
+.theme--navy .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--navy a.button_text:active {
+  background: #1F4F7A;
+}
+
+/* === 15. GOLD === */
+.theme--gold .rich-text a,
+.rich-text.rich-text__content.theme--gold a {
+  color: #6B541A;
+  text-decoration-color: #6B541A;
+}
+.theme--gold .rich-text a:hover,
+.rich-text.rich-text__content.theme--gold a:hover {
+  color: #7A601B;
+  text-decoration-color: #7A601B;
+}
+.theme--gold .rich-text a:active,
+.rich-text.rich-text__content.theme--gold a:active {
+  color: #896C1E;
+  text-decoration-color: #896C1E;
+}
+.theme--gold .rich-text a.button_text,
+.rich-text.rich-text__content.theme--gold a.button_text {
+  background: #6B541A;
+  color: #FFF;
+}
+.theme--gold .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--gold a.button_text:hover {
+  background: #7A601B;
+}
+.theme--gold .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--gold a.button_text:active {
+  background: #896C1E;
+}
+
+/* === 16. BROWN === */
+.theme--brown .rich-text a,
+.rich-text.rich-text__content.theme--brown a {
+  color: #5B3A33;
+  text-decoration-color: #5B3A33;
+}
+.theme--brown .rich-text a:hover,
+.rich-text.rich-text__content.theme--brown a:hover {
+  color: #7A5149;
+  text-decoration-color: #7A5149;
+}
+.theme--brown .rich-text a:active,
+.rich-text.rich-text__content.theme--brown a:active {
+  color: #8D6E63;
+  text-decoration-color: #8D6E63;
+}
+.theme--brown .rich-text a.button_text,
+.rich-text.rich-text__content.theme--brown a.button_text {
+  background: #5B3A33;
+  color: #FFF;
+}
+.theme--brown .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--brown a.button_text:hover {
+  background: #7A5149;
+}
+.theme--brown .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--brown a.button_text:active {
+  background: #8D6E63;
+}
+
+/* === 17. DARK GREY === */
+.theme--dark_grey .rich-text a,
+.rich-text.rich-text__content.theme--dark_grey a {
+  color: #4A4A4A;
+  text-decoration-color: #4A4A4A;
+}
+.theme--dark_grey .rich-text a:hover,
+.rich-text.rich-text__content.theme--dark_grey a:hover {
+  color: #646464;
+  text-decoration-color: #646464;
+}
+.theme--dark_grey .rich-text a:active,
+.rich-text.rich-text__content.theme--dark_grey a:active {
+  color: #757575;
+  text-decoration-color: #757575;
+}
+.theme--dark_grey .rich-text a.button_text,
+.rich-text.rich-text__content.theme--dark_grey a.button_text {
+  background: #4A4A4A;
+  color: #FFF;
+}
+.theme--dark_grey .rich-text a.button_text:hover,
+.rich-text.rich-text__content.theme--dark_grey a.button_text:hover {
+  background: #646464;
+}
+.theme--dark_grey .rich-text a.button_text:active,
+.rich-text.rich-text__content.theme--dark_grey a.button_text:active {
+  background: #757575;
+}
+
 

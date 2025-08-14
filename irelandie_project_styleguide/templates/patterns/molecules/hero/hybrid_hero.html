@@ -94,13 +94,13 @@
              {% if GeneralContentPage or StoryPage or FreeFormPage or ListingsPageIndex or ListingsPageIndexUSA %}
          <ul class="tag__slide">
             {% for tags_category, tag_links in tagging_links %}
-                <li class="tag__slide-item"><a href="{{ tag_links }}" aria-label="{% trans 'Tag label' %}">{{ tags_category.specific.tag_label }}</a></li>
+                <li class="tag__slide-item" tabindex="0"><a tabindex="-1" href="{{ tag_links }}" aria-label="{% trans 'Tag label' %}">{{ tags_category.specific.tag_label }}</a></li>
             {% endfor %}
             {% for tags_category in tags_no_links %}
                 <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
             {% endfor %}
             {% for tags_destination, tag_links in destination_tag_links %}
-                <li class="tag__slide-item"><a href="{{ tag_links.url }}" aria-label="{% trans 'Tag label' %}">{{ tags_destination }}</a></li>
+                <li class="tag__slide-item" tabindex="0"><a tabindex="-1" href="{{ tag_links.url }}" aria-label="{% trans 'Tag label' %}">{{ tags_destination }}</a></li>
             {% endfor %}
          </ul>
             {% endif %}
@@ -124,6 +124,7 @@
     const muteIcon = document.querySelector(".mini-hero__mute");
     const unmuteIconRight = document.querySelector(".mini-hero__unmute--right");
      const unmuteIconLeft = document.querySelector(".mini-hero__unmute--left");
+    if(muteIconDiv) {
     muteIconDiv.addEventListener('click', () => {
       muteIcon.classList.toggle('mute__hidden')
     });
@@ -133,6 +134,7 @@
     muteIconDiv.addEventListener('click', () => {
       unmuteIconLeft.classList.toggle('mini-hero__unmute__active__left')
     });
+    }
 
     function toggleMute() {
 

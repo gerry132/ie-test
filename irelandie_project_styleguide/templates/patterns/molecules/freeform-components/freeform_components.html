@@ -1,60 +1,7 @@
 {% load wagtailcore_tags wagtailimages_tags static %}
 
 {% for block in page.body %}
-    {% if block.block_type == 'heading' or block.block_type == 'rich_text' or block.block_type == 'image' or block.block_type == 'document' or block.block_type == 'advanced_table_block' or block.block_type == 'table' %}
-
-            {% if block.block_type == 'table' or block.block_type == 'advanced_table_block' %}
-                <div class="wrapper wrapper--small wrapper--padding">
-                    {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}
-                </div>
-            {% elif block.block_type == 'heading' or block.block_type == 'rich_text' %}
-                <div class="wrapper wrapper--large wrapper--padding">
-                    {% include_block block %}
-                </div>
-            {% else %}
-                <div class="wrapper wrapper--small wrapper--padding">
-                    {% include_block block %}
-                </div>
-            {% endif %}
-    {% elif block.block_type == 'pinned_stories' %}
-        {% include_block block %}
-    {% elif block.block_type == 'wide_feature' or block.block_type == 'homepage_feature' %}
-    <div class="section section--padding">
-        {% include_block block %}
-    </div>
-    {% elif block.block_type == 'stories' %}
-        {% include_block block %}
-    {% elif block.block_type == 'html' or block.block_type == 'youtube_video' %}
-        {% include_block block %}
-    {% elif block.block_type == 'logos' %}
-        <div class="wrapper wrapper--large wrapper--padding" style="padding-bottom:20px;">
-                {% include_block block %}
-        </div>
-    {% elif block.block_type == 'accordion' %}
-        <div class="wrapper wrapper--padding">
-            <div style="padding: 20px 0;">
-                {% include_block block %}
-            </div>
-        </div>
-    {% elif block.block_type == 'rich_text_advanced' %}
-<div class="wrapper wrapper--padding" style="padding-top: 30px;">
-        {% include_block block %}
-</div>
-    {% elif block.block_type == 'link_box' %}
-        <div class="section section--padding">
-            <div class="wrapper wrapper--large wrapper--padding">
-            {% include_block block %}
-            </div>
-        </div>
-    {% elif block.block_type == 'story_photo_gallery' %}
-        {% include_block block %}
-    {% elif block.block_type == 'person' %}
-         {% include "patterns/snippets/peoplesnippet.html" with object=block.value.person %}
-    {% else %}
-        <div style="padding-bottom: 30px;" class="wrapper wrapper--large wrapper--padding">
-            {% include_block block %}
-        </div>
-    {% endif %}
+    {% include "patterns/molecules/streamfield/streamfield_block_renderer.html" with block=block %}
 {% endfor %}
 
 

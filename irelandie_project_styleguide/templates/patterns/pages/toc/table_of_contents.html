@@ -88,18 +88,18 @@
                                 <div class="wrapper wrapper--large toc-table">
                                 {% for block in page.admin_body1 %}
                                     {% if block.block_type == 'admin_contents' or block.block_type == 'contact_details' %}
-                                       <div class="toc-contents-number wrapper--padding">—<a href="#{{block.value.title}}" aria-label="{{block.value.title}}"><h2 class="toc-contents"> {{block.value.title}}</h2></a></div>
+                                       <div class="toc-contents-number wrapper--padding">—<a href="#{{block.value.title}}" aria-label="{{block.value.title}}" tabindex="-1"><h2 tabindex="0" class="toc-contents"> {{block.value.title}}</h2></a></div>
                                     {% endif %}
 
                                 {% endfor %}
                                 {% for block in page.body %}
                                     {% if block.block_type == 'content' %}
-                                    <div class="toc-contents-number wrapper--padding">—<a href="#{{block.value.title}}" aria-label="{{block.value.title}}"><h2 class="toc-contents"> {{block.value.title}}</h2></a></div>
+                                    <div class="toc-contents-number wrapper--padding">—<a href="#{{block.value.title}}" aria-label="{{block.value.title}}" tabindex="-1"><h2 tabindex="0" class="toc-contents"> {{block.value.title}}</h2></a></div>
                                     {% endif %}
                                 {% endfor %}
                                 {% for block in page.admin_body2 %}
                                     {% if block.block_type == 'admin_content'  or block.block_type == 'contact_details'%}
-                                     <div class="toc-contents-number wrapper--padding">—<a href="#{{block.value.title}}" aria-label="{{block.value.title}}"><h2 class="toc-contents"> {{block.value.title}}</h2></a></div>
+                                     <div class="toc-contents-number wrapper--padding">—<a href="#{{block.value.title}}" aria-label="{{block.value.title}}" tabindex="-1"><h2 tabindex="0" class="toc-contents"> {{block.value.title}}</h2></a></div>
                                     {% endif %}
                                 {% endfor %}
                                 </div>
@@ -138,11 +138,11 @@
                                     {% endfor %}
                                 </div>
                                 {% if content_length_count > 1 %}
-                                <a href="#top" class="back_to_top_align" aria-label="{% trans 'Back to Top' %}">
+                                <a href="#top" class="back_to_top_align" aria-label="{% trans 'Back to Top' %}" tabindex="-1">
                                     <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15.6471 9.55362C15.6767 5.64172 12.5295 2.44651 8.61758 2.41693C4.70568 2.38735 1.51047 5.5346 1.48089 9.4465C1.45387 13.019 4.07631 15.9937 7.51102 16.5056L7.5565 10.49L5.70812 12.3107L4.30465 10.8858L7.87299 7.371L8.58543 6.66927L9.28716 7.3817L12.802 10.95L11.3771 12.3535L9.55645 10.5051L9.51096 16.5207C12.953 16.0609 15.6201 13.1261 15.6471 9.55362Z" fill="#1D70B8"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15.6471 9.55362C15.6767 5.64172 12.5295 2.44651 8.61758 2.41693C4.70568 2.38735 1.51047 5.5346 1.48089 9.4465C1.45387 13.019 4.07631 15.9937 7.51102 16.5056L7.5565 10.49L5.70812 12.3107L4.30465 10.8858L7.87299 7.371L8.58543 6.66927L9.28716 7.3817L12.802 10.95L11.3771 12.3535L9.55645 10.5051L9.51096 16.5207C12.953 16.0609 15.6201 13.1261 15.6471 9.55362Z" fill="#00002A"/>
                                     </svg>
-                                   <div class="back_to_top">{% translate "Back to top" %}</div>
+                                   <div tabindex="0" class="back_to_top">{% translate "Back to top" %}</div>
                                 </a>
                                 {% endif %}
                             {% endif %}
@@ -156,11 +156,11 @@
                             {% endfor %}
                         </div>
                                 {% if content_length_count > 1 %}
-                                <a href="#top" class="back_to_top_align" aria-label="{% trans 'Back to Top' %}">
+                                <a href="#top" class="back_to_top_align" aria-label="{% trans 'Back to Top' %}" tabindex="-1">
                                     <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15.6471 9.55362C15.6767 5.64172 12.5295 2.44651 8.61758 2.41693C4.70568 2.38735 1.51047 5.5346 1.48089 9.4465C1.45387 13.019 4.07631 15.9937 7.51102 16.5056L7.5565 10.49L5.70812 12.3107L4.30465 10.8858L7.87299 7.371L8.58543 6.66927L9.28716 7.3817L12.802 10.95L11.3771 12.3535L9.55645 10.5051L9.51096 16.5207C12.953 16.0609 15.6201 13.1261 15.6471 9.55362Z" fill="#1D70B8"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15.6471 9.55362C15.6767 5.64172 12.5295 2.44651 8.61758 2.41693C4.70568 2.38735 1.51047 5.5346 1.48089 9.4465C1.45387 13.019 4.07631 15.9937 7.51102 16.5056L7.5565 10.49L5.70812 12.3107L4.30465 10.8858L7.87299 7.371L8.58543 6.66927L9.28716 7.3817L12.802 10.95L11.3771 12.3535L9.55645 10.5051L9.51096 16.5207C12.953 16.0609 15.6201 13.1261 15.6471 9.55362Z" fill="#00002A"/>
                                     </svg>
-                                   <div class="back_to_top">{% translate "Back to top" %}</div>
+                                   <div tabindex="0" class="back_to_top">{% translate "Back to top" %}</div>
                                 </a>
                                 {% endif %}
                         {% endif %}
@@ -194,11 +194,11 @@
 
                                 </div>
                                 {% if content_length_count > 1 %}
-                                <a href="#top" class="back_to_top_align" aria-label="{% trans 'Back to Top' %}">
+                                <a href="#top" class="back_to_top_align" aria-label="{% trans 'Back to Top' %}" tabindex="-1">
                                     <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15.6471 9.55362C15.6767 5.64172 12.5295 2.44651 8.61758 2.41693C4.70568 2.38735 1.51047 5.5346 1.48089 9.4465C1.45387 13.019 4.07631 15.9937 7.51102 16.5056L7.5565 10.49L5.70812 12.3107L4.30465 10.8858L7.87299 7.371L8.58543 6.66927L9.28716 7.3817L12.802 10.95L11.3771 12.3535L9.55645 10.5051L9.51096 16.5207C12.953 16.0609 15.6201 13.1261 15.6471 9.55362Z" fill="#1D70B8"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15.6471 9.55362C15.6767 5.64172 12.5295 2.44651 8.61758 2.41693C4.70568 2.38735 1.51047 5.5346 1.48089 9.4465C1.45387 13.019 4.07631 15.9937 7.51102 16.5056L7.5565 10.49L5.70812 12.3107L4.30465 10.8858L7.87299 7.371L8.58543 6.66927L9.28716 7.3817L12.802 10.95L11.3771 12.3535L9.55645 10.5051L9.51096 16.5207C12.953 16.0609 15.6201 13.1261 15.6471 9.55362Z" fill="#00002A"/>
                                     </svg>
-                                   <div class="back_to_top">{% translate "Back to top" %}</div>
+                                   <div tabindex="0" class="back_to_top">{% translate "Back to top" %}</div>
                                 </a>
                                 {% endif %}
                             {% endif %}
@@ -217,7 +217,7 @@
                             {% if page.related_content %}
                                 <h4 class="header--related-content">{% translate "Related content" %}</h4>
                                 {% for p in page.related_content %}
-                                    <a href="{% if p.value.page.url %}{{p.value.page.url}}{% else %}{{p.value.url}}{% endif %}" aria-label="{{p.value.title}}"><h2 class="toc-contents">{{p.value.title}}</h2></a>
+                                    <a href="{% if p.value.page.url %}{{p.value.page.url}}{% else %}{{p.value.url}}{% endif %}" aria-label="{{p.value.title}}" tabindex="-1"><h2 tabindex="0" class="toc-contents">{{p.value.title}}</h2></a>
                                 {% endfor %}
                             {% endif %}
                         </div>

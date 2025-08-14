@@ -59,8 +59,8 @@
                             </div>
                             {% else %}
                             <div class="grid-item">
-                                <div class="card">
-                                    <a href="{{ card.url }}" aria-label="{{card.alt_text}}">
+                                <div class="card" tabindex="0">
+                                    <a href="{{ card.url }}" aria-label="{{card.alt_text}}" tabindex="-1">
                                     <div class="card__image-container">
                                         {% if card.hero_image %}
                                             {% if card.alt_text %}
@@ -92,16 +92,16 @@
                                             {% endif %}
                                         {% endif %}
                                     </div>
-                                        </a>
                                     <div class="card__content">
-                                        <a href="{{ card.url }}" aria-label="{{ card.title }}">
                                             <h3 class="tag__card__title">{{ card.title }}</h3>
                                             <p class="tag__card__summary">{{ card.subtitle }}</p>
-                                        </a>
-                                        <ul class="tag__slide">
+                                    </div>
+                                    </a>
+                                    </div>
+                                    <ul class="tag__slide" style="padding: 20px;">
                                             {% compare_tags tags card.related_tags self as tagging_links %}
                                                         {% for tag, url in tagging_links.0 %}
-                                                            <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ url }}">{{ tag }}</a></li>
+                                                            <li class="tag__slide-item" tabindex="0"><a tabindex="-1" aria-label="{% trans 'Tag label' %}" href="{{ url }}">{{ tag }}</a></li>
                                                         {% endfor %}
 
                                                         {% for tag_page in tagging_links.1 %}
@@ -110,11 +110,9 @@
 
                                                 {% get_destination_tag_links card.related_destination_tags as tag_destination_links %}
                                                 {% for tags_destination, tag_links in tag_destination_links|slice:":1" %}
-                                                       <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
+                                                       <li class="tag__slide-item" tabindex="0"><a tabindex="-1" aria-label="{% trans 'Tag label' %}" href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
                                                 {% endfor %}
                                         </ul>
-                                    </div>
-                                </div>
                             </div>
                             {% endif %}
                         {% endfor %}
@@ -122,8 +120,8 @@
                         <div class="grid_masonry">
                             {% for card in stories %}
                                 <div class="grid-item">
-                                    <div class="card" aria-label="{{card.alt_text}}">
-                                        <a href="{{ card.url }}" aria-label="{% trans 'card' %}">
+                                    <div class="card" tabindex="0" aria-label="{{card.alt_text}}">
+                                        <a href="{{ card.url }}" aria-label="{% trans 'card' %}" tabindex="-1">
                                         <div class="card__image-container">
                                             {% if card.hero_image %}
                                                 {% if card.alt_text %}
@@ -155,16 +153,16 @@
                                                 {% endif %}
                                             {% endif %}
                                         </div>
-                                            </a>
                                         <div class="card__content">
-                                            <a href="{{ card.url }}" aria-label="{{ card.title }}">
                                                 <h3 class="tag__card__title">{{ card.title }}</h3>
                                                 <p class="tag__card__summary">{{ card.subtitle }}</p>
-                                            </a>
-                                            <ul class="tag__slide">
+                                        </div>
+                                        </a>
+                                    </div>
+                                    <ul class="tag__slide" style="padding: 20px;">
                                             {% compare_tags tags card.related_tags self as tagging_links %}
                                                         {% for tag, url in tagging_links.0 %}
-                                                            <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ url }}">{{ tag }}</a></li>
+                                                            <li class="tag__slide-item" tabindex="0"><a tabindex="-1" aria-label="{% trans 'Tag label' %}" href="{{ url }}">{{ tag }}</a></li>
                                                         {% endfor %}
 
                                                         {% for tag_page in tagging_links.1 %}
@@ -173,11 +171,9 @@
 
                                                 {% get_destination_tag_links card.related_destination_tags as tag_destination_links %}
                                                 {% for tags_destination, tag_links in tag_destination_links|slice:":1" %}
-                                                       <li class="tag__slide-item"><a aria-label="{% trans 'Tag label' %}" href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
+                                                       <li class="tag__slide-item" tabindex="0"><a tabindex="-1" aria-label="{% trans 'Tag label' %}" href="{{ tag_links.url }}">{{ tags_destination }}</a></li>
                                                 {% endfor %}
                                         </ul>
-                                        </div>
-                                    </div>
                                 </div>
                             {% endfor %}
                         </div>

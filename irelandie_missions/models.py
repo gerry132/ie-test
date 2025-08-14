@@ -3,7 +3,7 @@
 from django.db import models
 from wagtail.core.models import Page
 from django.utils.functional import cached_property
-from wagtail.admin.panels import InlinePanel, FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel, HelpPanel
+from wagtail.admin.panels import InlinePanel, FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
 from wagtail.fields import StreamField, RichTextField
 from wagtail import blocks as wagtail_blocks
 from django.core.cache import cache
@@ -250,6 +250,10 @@ class CountryIndexPage(BasePage):
         blank=True,
         null=True,
     )
+    search_field_name = models.CharField(
+        max_length=255,
+        blank=True,
+    )
     index_body = StreamField(
         wagtail_blocks.StreamBlock(
             [
@@ -259,6 +263,7 @@ class CountryIndexPage(BasePage):
                         [
                             ("section_id", wagtail_blocks.CharBlock(required=False)),
                             ("title", wagtail_blocks.CharBlock(required=False)),
+                            ("subtitle", wagtail_blocks.RichTextBlock(required=False)),
                             ("mini_link_cards", blocks.MiniLinkCardsBlock())
                         ],
                     ),
@@ -283,7 +288,12 @@ class CountryIndexPage(BasePage):
     content_panels = BasePage.content_panels + [
         FieldPanel("generic_hero", permission="access_admin", heading="Mini Hero Block"),
         FieldPanel("top_body"),
-        FieldPanel("index_body"),
+        MultiFieldPanel(
+            [
+                FieldPanel("search_field_name"),
+                FieldPanel("index_body"),
+            ], heading="Index Body"
+        ),
         FieldPanel("bottom_body"),
     ]
 
@@ -319,19 +329,6 @@ class JobContentPage(BasePage):
 
     content_panels = BasePage.content_panels + [
         FieldPanel("subtitle", permission="access_admin"),
-        MultiFieldPanel(
-            [
-                HelpPanel(content='help_text', template='patterns/molecules/streamfield/'
-                                                        'help_text_scheduled_publishing.html', heading='',
-                          classname=''),
-                FieldPanel('go_live_at'),
-                FieldPanel('expire_at'),
-            ],
-            heading="Scheduled publishing", help_text="The expiry date you select will unpublish the job advert on "
-                                                      "the selected date. It will also automatically output the "
-                                                      "selected date as the 'Closing date:' on the published job "
-                                                      "advert. "
-        ),
         FieldPanel("job_index_page_summary"),
         FieldPanel("body"),
         FieldPanel("privacy_policy", permission="access_admin"),
@@ -352,7 +349,7 @@ class JobContentPage(BasePage):
         ListingFields.promote_panels
     )
 
-    settings_panels = ([
+    settings_panels = Page.settings_panels + ([
                            MultiFieldPanel(
                                [
                                    FieldPanel("custom_header", permission="access_admin"),

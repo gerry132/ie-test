@@ -72,3 +72,16 @@
     .banner_mobile{
         width: 100%;
     }
+.banner_hero__image-credit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-radius: 20px 0 0px 0;
+    opacity: 0.85;
+    background: rgba(236, 232, 230, 0.80);
+    color: #000;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    max-width: 90%;
+    z-index: 10;
+    }

@@ -11,18 +11,67 @@
         margin-right: auto;
         max-width: 780px;
     }
-    .button_text{
+    a.button_text {
         display: inline-block;
         padding: 0.6em 1em;
-        border-radius: 1.625rem;
         text-decoration: none;
+        border-radius: 23.5px;
+        border: 0px solid #082F2A;
+        background-color: var(--button-color, #082F2A);
+        color: var(--button-text-color, white);
+    }
+    a.button_text:hover {
+        background: #004D44;
         color: white;
-        background-color: #004d46;
+     }
+
+    a.button_text:active {
+        background-color: #008931;
+        color: white;
+    }
+
+    a.button_text:focus {
+        outline: 3px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow: 0 0 0 6px #000000;
+        color: white;
     }
 
     a {
         font-weight: $weight--bold;
         text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.1rem;
+        text-underline-offset: 0.19em;
+    }
+
+
+    a:focus {
+        outline: 2px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow:
+        0 0 0 4px #000000,
+        -4px 6px 0 0 #000000,
+        4px 6px 0 0 #000000;
+    }
+    a:hover {
+        text-decoration-color: #004d44;
+        text-decoration-thickness: 0.2rem;
+    }
+
+    a:active {
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.3rem;
+    }
+
+    a:hover:focus {
+        text-underline-offset: 3px;
+    }
+
+    a:active:focus {
+        text-decoration-thickness: 0.2rem;
+        text-underline-offset: 3px;
     }
 
     ul {

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
+import json
 from functools import cached_property
 from django.db import models
 from django.core.cache.utils import make_template_fragment_key
 from django.core.cache import cache
-from wagtail.admin.panels import TabbedInterface, ObjectList, FieldPanel
+from wagtail.admin.panels import TabbedInterface, ObjectList, FieldPanel, MultiFieldPanel
 from wagtail import blocks as wagtail_blocks
 from wagtail.fields import StreamField
 
@@ -16,12 +17,10 @@ from irelandie_pages.models import FreeFormPageBase
 from wagtail.images import get_image_model_string
 from wagtail.models import Site
 
-
 IMAGE_MODEL = get_image_model_string()
 
 
 class HomePage(FreeFormPageBase):
-
     max_count = 1
     template = "patterns/pages/home/home_page.html"
     favicon = models.ForeignKey(
@@ -51,9 +50,58 @@ class HomePage(FreeFormPageBase):
         }
     )
 
+    organization_name = models.CharField(
+        max_length=255,
+        default="Department of Foreign Affairs and Trade",
+        blank=True
+    )
+
+    organization_description = models.CharField(blank=True, max_length=255)
+
+    organization_logo = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    mainEntityOfPage_name = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    mainEntityOfPage_description = models.CharField(blank=True, max_length=255)
+
+    twitter_url = models.URLField(blank=True, help_text="Full Twitter profile URL")
+    facebook_url = models.URLField(blank=True, help_text="Full Facebook page URL")
+    youtube_url = models.URLField(blank=True, help_text="Full YouTube channel URL")
+    linkedin_url = models.URLField(blank=True, help_text="Full LinkedIn profile URL")
+    instagram_url = models.URLField(blank=True, help_text="Full Instagram profile URL")
+    weibo_url = models.URLField(blank=True, help_text="Full Weibo profile URL")
+
+    social_media_panels = MultiFieldPanel(
+        [
+            FieldPanel("twitter_url"),
+            FieldPanel("facebook_url"),
+            FieldPanel("youtube_url"),
+            FieldPanel("linkedin_url"),
+            FieldPanel("instagram_url"),
+            FieldPanel("weibo_url"),
+        ],
+        heading="Social Media URLs",
+    )
+
     promote_panels = FreeFormPageBase.promote_panels + [
         FieldPanel("top_story"),
-    ]
+        MultiFieldPanel([
+            FieldPanel("organization_name"),
+            FieldPanel("organization_description"),
+            FieldPanel("organization_logo"),
+        ], heading="Organization Schema Settings"),
+        MultiFieldPanel([
+            FieldPanel("mainEntityOfPage_name"),
+            FieldPanel("mainEntityOfPage_description"),
+        ], heading="mainEntityOfPage")
+    ] + [social_media_panels]
     settings_panels = ([
         FieldPanel("favicon", permission="access_admin"),
         FieldPanel("default_image", permission="access_admin"),
@@ -101,6 +149,41 @@ class HomePage(FreeFormPageBase):
             .order_by("-publication_date")[:4]
             .specific()
         )
+
+    @property
+    def same_as_links(self):
+        return list(filter(None, [
+            self.twitter_url,
+            self.facebook_url,
+            self.youtube_url,
+            self.linkedin_url,
+            self.instagram_url,
+            self.weibo_url,
+        ]))
+
+    def get_schema_json(self):
+
+        schema = {
+            "@context": "https://schema.org",
+            "@type": "GovernmentOrganization",
+            "name": self.organization_name,
+            "url": self.full_url,
+            "description": self.organization_description or "",
+            "logo": self.organization_logo.get_rendition("original").url if self.organization_logo else "",
+            "sameAs": self.same_as_links,
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": self.full_url,
+                "name": self.mainEntityOfPage_name,
+                "description": self.mainEntityOfPage_description or "",
+            },
+        }
+
+        return json.dumps(schema, indent=2)
+
+    @property
+    def schema_json(self):
+        return self.get_schema_json()
 
 
 class CampaignPage(HeroPage):
@@ -242,7 +325,6 @@ class TopicPage(HeroPage):
         return context
 
     def save(self, *args, **kwargs):
-
         key = make_template_fragment_key("topic_page")
         cache.delete(key)
 

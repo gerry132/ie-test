@@ -1,45 +1,5 @@
 {% load wagtailcore_tags wagtailimages_tags static %}
 
 {% for block in page.body %}
-    {% if block.block_type == 'heading' or block.block_type == 'rich_text' or block.block_type == 'image' or block.block_type == 'document' or block.block_type == 'table' %}
-
-            {% if block.block_type == 'table' %}
-                <div class="wrapper wrapper--small wrapper--padding">
-                    {% include "patterns/molecules/streamfield/blocks/table_block.html" with data=block %}
-                </div>
-            {% elif block.block_type == 'heading' or block.block_type == 'rich_text' %}
-                <div class="wrapper wrapper--large wrapper--padding">
-                    {% include_block block %}
-                </div>
-            {% else %}
-                <div class="wrapper wrapper--small wrapper--padding">
-                    {% include_block block %}
-                </div>
-            {% endif %}
-        </div>
-    {% elif block.block_type == 'wide_feature' or block.block_type == 'homepage_feature' %}
-        <div class="section section--padding">
-            {% include_block block %}
-        </div>
-    {% elif block.block_type == 'pinned_stories' %}
-        {% include_block block %}
-    {% elif block.block_type == 'stories' %}
-        {% include_block block %}
-    {% elif block.block_type == 'logos' %}
-        <div class="wrapper wrapper--large wrapper--padding">
-            <div class="section section--padding">
-                {% include_block block %}
-            </div>
-        </div>
-    {% elif block.block_type == 'accordion' %}
-        <div class="wrapper wrapper--padding">
-            <div class="section section--padding">
-                {% include_block block %}
-            </div>
-        </div>
-    {% else %}
-        <div class="wrapper wrapper--large wrapper--padding">
-            {% include_block block %}
-        </div>
-    {% endif %}
+    {% include "patterns/molecules/streamfield/streamfield_block_renderer.html" with block=block %}
 {% endfor %}

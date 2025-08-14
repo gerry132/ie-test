@@ -119,11 +119,19 @@
     text-underline-offset: 2px;
     font-size: 20px;
 }
-
+.a-z-listing__alphabet_letters > li a:focus, .country-listing a:focus, .form--contain:focus {
+    outline: 2px #FFD740 solid;
+    outline-offset: 0;
+    box-shadow:
+    0 0 0 4px #000000,
+    -4px 6px 0 0 #000000,
+    4px 6px 0 0 #000000;
+}
 .search-bar--travel-index {
     height: 39px;
     background: #EDECE5;
-    border: none;
+    border: 1px solid #ccc;
+    border-bottom: 2px solid #565148;
     @include media-query(large) {
         width: 603px !important;
     }
@@ -133,6 +141,11 @@
     @include media-query(small) {
         width: 100%;
     }
+}
+.search-bar--travel-index:focus, .search-bar--travel-index option:focus {
+    border: 3px #FFD740 solid;
+    outline: 3px #000000 solid;
+    outline-offset: 0;
 }
 
 .form--heading {
@@ -149,7 +162,8 @@
     left: 118px;
     border-radius: 0px;
     background: #EDECE5;
-    border: none;
+    border: 1px solid #ccc;
+    border-bottom: 2px solid #565148;
     @include media-query(large) {
         width: 603px !important;
     }
@@ -160,6 +174,11 @@
         width: 100%;
     }
 }
+.form--input:focus {
+        border: 3px #FFD740 solid;
+        outline: 3px #000000 solid;
+        outline-offset: 0;
+    }
 
 .form--elem {
     padding-bottom: 30px;
@@ -191,8 +210,7 @@
 }
 
 .form--contain {
-    padding-bottom: 26px;
-    display: flex;
+    display: inline-flex;
     cursor: pointer;
 }
 

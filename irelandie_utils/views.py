@@ -7,6 +7,7 @@ from django.views import defaults
 from django.views.decorators.http import require_http_methods
 from wagtail.api.v2.serializers import PageSerializer
 from wagtail.api.v2.views import PagesAPIViewSet
+from rest_framework.generics import ListAPIView
 from wagtail.models import Page
 
 from irelandie_missions.filters import MissionPageFieldFilter
@@ -84,15 +85,13 @@ class PagesAPIEndpoint(PagesAPIViewSet):
         return context
 
 
-class NewsPageAPIEndpoint(PagesAPIViewSet):
+class NewsPageAPIEndpoint(ListAPIView):
     model = NewsPage
     filter_backends = [
         # NOTE: filters should be listed before the SearchFilter
         NewsPageFieldFilter,
-    ] + PagesAPIViewSet.filter_backends
-    known_query_parameters = PagesAPIViewSet.known_query_parameters.union(
-        ["year", "country", "country_group"]
-    )
+    ]
+    known_query_parameters = ["year", "country", "country_group", "publication_date"]
 
 
 @require_http_methods(["POST"])

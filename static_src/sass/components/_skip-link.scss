@@ -3,11 +3,33 @@
     position: absolute;
     top: -200px;
     left: 0;
-    color: $color--black;
     background-color: $color--white;
     padding: $grid;
+    color: #082F2A;
+    text-decoration: underline;
+    text-decoration-color: #008931;
+    text-decoration-thickness: 0.1rem;
+    text-underline-offset: 0.19em;
 
     &:focus {
         top: 0;
+        outline: 2px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow:
+        0 0 0 4px #000000,
+        -4px 6px 0 0 #000000,
+        4px 6px 0 0 #000000;
+    }
+    &:hover {
+        color: #004d44;
+        text-decoration-color: #004d44;
+        text-decoration-thickness: 0.2rem;
+    }
+
+    &:active {
+        color: #008931;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.3rem;
     }
 }

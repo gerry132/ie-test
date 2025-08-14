@@ -19,8 +19,25 @@
     font-style: normal;
     font-size: 20px;
     line-height: 22px;
+    color: #082F2A;
     text-decoration: underline;
+    text-decoration-color: #008931;
+    text-decoration-thickness: 0.1rem;
+    text-underline-offset: 0.19em;
     font-weight: 500;
+    padding-bottom: 5px;
+    width: fit-content;
+}
+.toc-contents:hover, .toc-contents:focus:hover {
+    color: #004d44;
+    text-decoration-color: #004d44;
+    text-decoration-thickness: 0.2rem;
+}
+.toc-contents:active, .toc-contents:focus:active {
+      color: #008931;
+      text-decoration: underline;
+      text-decoration-color: #008931;
+      text-decoration-thickness: 0.3rem;
 
 }
 .toc-contents-number{
@@ -88,7 +105,6 @@
     display: inline-flex;
     gap: 4px;
     padding-bottom: 30px;
-    text-decoration: underline;
 }
 .back_to_top {
     font-family: $font--primary;
@@ -96,11 +112,29 @@
     font-weight: 400;
     font-size: 20px;
     line-height: 17px;
-    text-decoration-line: underline;
-
-    color: #1D70B8;
+    color: #00002A;
+    text-decoration: underline;
+    text-decoration-thickness: 0.1rem;
+    text-underline-offset: 0.19em;
 
 }
+.back_to_top:focus, .toc-contents:focus {
+        outline: 2px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow:
+        0 0 0 4px #000000,
+        -4px 6px 0 0 #000000,
+        4px 6px 0 0 #000000;
+    }
+.back_to_top:hover, .back_to_top:focus:hover  {
+    color: #000044;
+    text-decoration-thickness: 0.2rem;
+    }
+
+.back_to_top:active, .back_to_top:focus:active {
+    color: #000089;
+    text-decoration-thickness: 0.3rem;
+  }
 
 #wrapper {
     display: grid;
@@ -123,3 +157,29 @@
         display: none;
     }
   }
+    .flex-layout-service-landing {
+    display: flex;
+    gap: 30px;
+}
+
+.main-content-service-landing {
+    flex: 0 0 75%;
+    max-width: 75%;
+}
+
+.related-content-service-landing {
+    flex: 0 0 25%;
+    max-width: 25%;
+}
+
+@media (max-width: 768px) {
+    .main-content-service-landing,
+    .related-content-service-landing {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .flex-layout-service-landing {
+        flex-wrap: wrap;
+    }
+}

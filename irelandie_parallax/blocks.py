@@ -6,11 +6,31 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.images.blocks import ImageChooserBlock
 from irelandie_utils.constants import ParagraphAlignment, TextAlignment
 from irelandie_utils.blocks import (
-    StoryVideoBlock, TimelinePhotoGalleriesBlock, ImageButtonBlock,
+    StoryVideoBlock, TimelinePhotoGalleriesBlock,
     CustomVideoChooserBlock, StoryPhotoGalleriesBlock, LogoCardsBlock,
     AdvancedRichTextBlock, LinkCardsBlock, ALT_HELP_TEXT_IMG_VIDEO)
 from wagtail.blocks.struct_block import StructBlockValidationError
 from irelandie_home.blocks import SecondaryCallToAction
+
+LINK_BUTTON_THEMES = [
+    ("standard", "Standard"),
+    ("light_grey", "Light Grey"),
+    ("beige", "Beige"),
+    ("cyan", "Cyan"),
+    ("green", "Green"),
+    ("olive", "Olive"),
+    ("orange", "Orange"),
+    ("red", "Red"),
+    ("magenta", "Magenta"),
+    ("violet", "Violet"),
+    ("purple", "Purple"),
+    ("indigo", "Indigo"),
+    ("blue", "Blue"),
+    ("navy", "Navy"),
+    ("gold", "Gold"),
+    ("brown", "Brown"),
+    ("dark_grey", "Dark Grey"),
+]
 
 
 class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
@@ -33,9 +53,11 @@ class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
         default=TextAlignment.CENTER,
     )
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
-    link_color = blocks.CharBlock(
-        max_length=7, required=False, default="#004d46",
-        help_text="Hex color for hyperlinks in this block"
+    link_button_theme = blocks.ChoiceBlock(
+        choices=LINK_BUTTON_THEMES,
+        required=False,
+        default="standard",
+        help_text="Select a color theme for both links and buttons."
     )
     heading = blocks.CharBlock(required=False)
     rich_text = blocks.RichTextBlock(
@@ -46,20 +68,22 @@ class ParallaxAdvancedRichTextBlock(blocks.StructBlock):
             ("button", SecondaryCallToAction())
         ],
         blank=True,
-        max_num=1,
-        min_num=0,
+        block_counts={
+            "button": {"max_num": 1},
+        },
         required=False,
     )
 
-    image_link = blocks.StreamBlock(
-        [
-            ("image_button", ImageButtonBlock())
-        ],
-        blank=True,
-        max_num=1,
-        min_num=0,
-        required=False,
-    )
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+
+        buttons = []
+        for item in value.get('button_link', []):
+            if item.block_type == "button":
+                buttons.append(item.value)
+        context['buttons'] = buttons
+
+        return context
 
     class Meta:
         label = "Parallax Advanced RichTextBlock"
@@ -84,9 +108,11 @@ class ParallaxImageVideoBlock(blocks.StructBlock):
         default=TextAlignment.CENTER,
     )
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
-    link_color = blocks.CharBlock(
-        max_length=7, required=False, default="#004d46",
-        help_text="Hex color for hyperlinks in this block"
+    link_button_theme = blocks.ChoiceBlock(
+        choices=LINK_BUTTON_THEMES,
+        required=False,
+        default="standard",
+        help_text="Select a color theme for both links and buttons."
     )
     heading = blocks.CharBlock(blank=True, required=False)
     subtitle = blocks.RichTextBlock(blank=True, required=False)
@@ -137,9 +163,11 @@ class ParallaxImageVideoBlock(blocks.StructBlock):
 class ParallaxLogoCardsBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
-    link_color = blocks.CharBlock(
-        max_length=7, required=False, default="#004d46",
-        help_text="Hex color for hyperlinks in this block"
+    link_button_theme = blocks.ChoiceBlock(
+        choices=LINK_BUTTON_THEMES,
+        required=False,
+        default="standard",
+        help_text="Select a color theme for both links and buttons."
     )
     text_alignment = blocks.ChoiceBlock(
         required=False,
@@ -156,9 +184,11 @@ class ParallaxLogoCardsBlock(blocks.StructBlock):
 class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
-    link_color = blocks.CharBlock(
-        max_length=7, required=False, default="#004d46",
-        help_text="Hex color for hyperlinks in this block"
+    link_button_theme = blocks.ChoiceBlock(
+        choices=LINK_BUTTON_THEMES,
+        required=False,
+        default="standard",
+        help_text="Select a color theme for both links and buttons."
     )
     text_alignment = blocks.ChoiceBlock(
         required=False,
@@ -175,9 +205,11 @@ class ParallaxStoryPhotoGalleryBlock(blocks.StructBlock):
 class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
-    link_color = blocks.CharBlock(
-        max_length=7, required=False, default="#004d46",
-        help_text="Hex color for hyperlinks in this block"
+    link_button_theme = blocks.ChoiceBlock(
+        choices=LINK_BUTTON_THEMES,
+        required=False,
+        default="standard",
+        help_text="Select a color theme for both links and buttons."
     )
     text_alignment = blocks.ChoiceBlock(
         required=False,
@@ -194,9 +226,11 @@ class ParallaxTimelinePhotoGalleryBlock(blocks.StructBlock):
 class ParallaxLinkCardsBlock(blocks.StructBlock):
     background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
     text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
-    link_color = blocks.CharBlock(
-        max_length=7, required=False, default="#004d46",
-        help_text="Hex color for hyperlinks in this block"
+    link_button_theme = blocks.ChoiceBlock(
+        choices=LINK_BUTTON_THEMES,
+        required=False,
+        default="standard",
+        help_text="Select a color theme for both links and buttons."
     )
     text_alignment = blocks.ChoiceBlock(
         required=False,
@@ -225,6 +259,32 @@ class ParallaxYoutubeVimeoBlock(blocks.StructBlock):
     class Meta:
         label = 'Parallax Youtube/Vimeo Embed'
         template = "patterns/molecules/streamfield/blocks/parallax_blocks.html"
+
+
+class ParallaxHTMLBlock(blocks.StructBlock):
+    section_id = blocks.CharBlock(required=False)
+    background_color = blocks.CharBlock(max_length=7, default='#ffffff', required=False)
+    text_color = blocks.CharBlock(max_length=7, default='#020202', required=False)
+    text_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=TextAlignment.choices,
+        default=TextAlignment.CENTER,
+    )
+    link_button_theme = blocks.ChoiceBlock(
+        choices=LINK_BUTTON_THEMES,
+        required=False,
+        default="standard",
+        help_text="Select a color theme for both links and buttons."
+    )
+    title = blocks.CharBlock(blank=True, required=False)
+    summary = blocks.RichTextBlock(blank=True, required=False)
+    parallax_html_embed = blocks.RawHTMLBlock(
+        help_text="Add title attribute value to iframe for accessibility. Please use only iframes.",
+    )
+
+    class Meta:
+        label = 'Parallax HTML Embed'
+        template = "patterns/molecules/streamfield/blocks/parallax_html_embed.html"
 
 
 class DoubleFeature(StreamBlock):
@@ -258,6 +318,8 @@ class DoubleFeature(StreamBlock):
         gradient_alignment = "none"
         gradient_colour = "none"
         core_blocks = []
+        buttons = []
+
         for block in value:
             if block.block_type == "gradient_alignment":
                 gradient_alignment = block.value  # Store the selected choice
@@ -265,9 +327,17 @@ class DoubleFeature(StreamBlock):
                 gradient_colour = block.value
             else:
                 core_blocks.append(block)
+
+                # If this is your rich_text block, get its context to retrieve buttons
+                if block.block_type == "rich_text":
+                    rich_text_context = block.block.get_context(block.value, parent_context)
+                    buttons = rich_text_context.get("buttons")
+
         context["core_blocks"] = core_blocks  # Store the non-gradient blocks
         context["gradient_alignment"] = gradient_alignment  # Store the alignment
         context["gradient_colour"] = gradient_colour
+        context["buttons"] = buttons
+
         return context
 
     class Meta:

@@ -106,3 +106,11 @@
         }
     }
 }
+a.pinned-stories__featured-content-wrapper:focus {
+        outline: 2px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow:
+        0 0 0 4px #000000,
+        -4px 6px 0 0 #000000,
+        4px 6px 0 0 #000000;
+    }

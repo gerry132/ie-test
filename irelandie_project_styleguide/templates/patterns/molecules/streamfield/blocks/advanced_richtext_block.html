@@ -1,4 +1,4 @@
-{% load wagtailcore_tags i18n %}
+{% load wagtailcore_tags i18n util_tags %}
 <div class="rich-text" {% if value.section_id %} id="{{value.section_id}}" {% endif %}>
     {% if value.paragraph_alignment == 'narrow' %}
         <div class="rich-text rich-text__narrow">

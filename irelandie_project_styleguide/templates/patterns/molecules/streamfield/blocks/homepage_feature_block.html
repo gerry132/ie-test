@@ -1,6 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags i18n %}
 <section aria-labelledby="hero-title">
-<div class="wrapper wrapper--large wrapper--padding">
+<div class="wrapper wrapper--large wrapper--padding" >
     <div class="homepage_feature__container">
             <div class="homepage_feature__featured" role="region" aria-labelledby="hero-main-content">
                 {% for block_hero in value.homepage_featured_hero %}
@@ -12,9 +12,12 @@
                                     <iframe title="{% if block_hero.value.heading %}{{ block_hero.value.heading }}{% else %}homefeature_vimeo_player{% endif %}" class="vimeo_player" src="{{ block_hero.value.embedding_url }}" allow="autoplay" allowfullscreen></iframe>
                                      {% if block_hero.value.image_for_video %}
                                         {% image block_hero.value.image_for_video fill-1600x900 class="starter" alt=block_hero.value.image_for_video_image_alt %}
-                                        <svg class="starter_button" xmlns="http://www.w3.org/2000/svg" width="66" height="66" viewBox="0 0 66 66" fill="none">
-                                            <circle cx="33" cy="33" r="32" stroke="#5AFF03" stroke-width="2"/>
-                                            <path d="M30.4423 26.6513L36.3525 32.1748L29.5 38.0227C29.5001 37.9945 29.503 37.9663 29.5087 37.9386L29.5087 37.9385C29.526 37.8554 29.5696 37.7712 29.6474 37.6984C29.6474 37.6984 29.6474 37.6984 29.6475 37.6984L34.819 32.8653L35.2099 32.5L34.819 32.1347L29.6474 27.3016C29.6474 27.3016 29.6474 27.3016 29.6474 27.3016C29.4509 27.1179 29.4509 26.835 29.6474 26.6513L29.6474 26.6513C29.7518 26.5537 29.8943 26.5 30.0448 26.5H30.0448C30.1953 26.5 30.3378 26.5537 30.4423 26.6513C30.4423 26.6513 30.4423 26.6513 30.4423 26.6513ZM36.3526 32.1748C36.4515 32.2673 36.5 32.385 36.5 32.5C36.5 32.6151 36.4514 32.7328 36.3526 32.8251L36.6549 33.1486L36.3526 32.8251L30.4426 38.3484C30.4425 38.3485 30.4424 38.3486 30.4424 38.3486C30.4157 38.3735 30.3872 38.3951 30.357 38.4138C30.136 38.55 29.8335 38.5226 29.6474 38.3487L29.6474 38.3487C29.6343 38.3364 29.6222 38.3239 29.611 38.3111C29.5345 38.2234 29.4998 38.1213 29.5 38.0227L36.3526 32.1748Z" fill="white" stroke="#F5F5F2"/>
+                                        <svg class="starter_button" tabindex="0" role="button" aria-label="Start"
+                                             xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 78 78" fill="none">
+                                            <circle cx="39" cy="39" r="32" stroke="#5AFF03" stroke-width="2"/>
+                                            <circle class="focus-ring" cx="39" cy="39" r="34.5" fill="none" stroke="#FFD740" stroke-width="4" opacity="0"/>
+                                            <circle class="focus-ring" cx="39" cy="39" r="37.5" stroke="black" stroke-width="3" opacity="0"/>
+                                            <path d="M36.0449 32.5C36.1579 32.5 36.2662 32.5305 36.3574 32.5869L36.4424 32.6514L42.3525 38.1748C42.4514 38.2673 42.5 38.3851 42.5 38.5C42.5 38.5865 42.4725 38.6744 42.417 38.752L42.3525 38.8252L36.4424 44.3486L36.3574 44.4141C36.1642 44.5333 35.9083 44.5269 35.7227 44.4072L35.6475 44.3486C35.6343 44.3364 35.6225 44.3233 35.6113 44.3105H35.6104C35.5532 44.2448 35.52 44.171 35.5068 44.0967L35.5 44.0225L35.5088 43.9385C35.5217 43.8761 35.5497 43.8132 35.5957 43.7549L35.6475 43.6982L40.8193 38.8652L41.21 38.5L40.8193 38.1348L35.6475 33.3018C35.4755 33.141 35.4541 32.9043 35.583 32.7246L35.6475 32.6514C35.7257 32.5782 35.8252 32.5295 35.9336 32.5098L36.0449 32.5Z" fill="white" stroke="#F5F5F2"/>
                                         </svg>
                                      {% endif %}
                                 </div>
@@ -23,9 +26,12 @@
                                     <iframe title="{% if block_hero.value.heading %}{{ block_hero.value.heading }}{% else %}homefeature_youtube_player{% endif %}" class="youtube_player" src="{{ block_hero.value.embedding_url }}?enablejsapi=1&html5=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                     {% if block_hero.value.image_for_video %}
                                     {% image block_hero.value.image_for_video fill-1600x900 class="starter" alt=block_hero.value.image_for_video_image_alt %}
-                                    <svg class="starter_button" xmlns="http://www.w3.org/2000/svg" width="66" height="66" viewBox="0 0 66 66" fill="none">
-                                        <circle cx="33" cy="33" r="32" stroke="#5AFF03" stroke-width="2"/>
-                                        <path d="M30.4423 26.6513L36.3525 32.1748L29.5 38.0227C29.5001 37.9945 29.503 37.9663 29.5087 37.9386L29.5087 37.9385C29.526 37.8554 29.5696 37.7712 29.6474 37.6984C29.6474 37.6984 29.6474 37.6984 29.6475 37.6984L34.819 32.8653L35.2099 32.5L34.819 32.1347L29.6474 27.3016C29.6474 27.3016 29.6474 27.3016 29.6474 27.3016C29.4509 27.1179 29.4509 26.835 29.6474 26.6513L29.6474 26.6513C29.7518 26.5537 29.8943 26.5 30.0448 26.5H30.0448C30.1953 26.5 30.3378 26.5537 30.4423 26.6513C30.4423 26.6513 30.4423 26.6513 30.4423 26.6513ZM36.3526 32.1748C36.4515 32.2673 36.5 32.385 36.5 32.5C36.5 32.6151 36.4514 32.7328 36.3526 32.8251L36.6549 33.1486L36.3526 32.8251L30.4426 38.3484C30.4425 38.3485 30.4424 38.3486 30.4424 38.3486C30.4157 38.3735 30.3872 38.3951 30.357 38.4138C30.136 38.55 29.8335 38.5226 29.6474 38.3487L29.6474 38.3487C29.6343 38.3364 29.6222 38.3239 29.611 38.3111C29.5345 38.2234 29.4998 38.1213 29.5 38.0227L36.3526 32.1748Z" fill="white" stroke="#F5F5F2"/>
+                                    <svg class="starter_button" tabindex="0" role="button" aria-label="Start"
+                                             xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 78 78" fill="none">
+                                        <circle cx="39" cy="39" r="32" stroke="#5AFF03" stroke-width="2"/>
+                                        <circle class="focus-ring" cx="39" cy="39" r="34.5" fill="none" stroke="#FFD740" stroke-width="4" opacity="0"/>
+                                        <circle class="focus-ring" cx="39" cy="39" r="37.5" stroke="black" stroke-width="3" opacity="0"/>
+                                        <path d="M36.0449 32.5C36.1579 32.5 36.2662 32.5305 36.3574 32.5869L36.4424 32.6514L42.3525 38.1748C42.4514 38.2673 42.5 38.3851 42.5 38.5C42.5 38.5865 42.4725 38.6744 42.417 38.752L42.3525 38.8252L36.4424 44.3486L36.3574 44.4141C36.1642 44.5333 35.9083 44.5269 35.7227 44.4072L35.6475 44.3486C35.6343 44.3364 35.6225 44.3233 35.6113 44.3105H35.6104C35.5532 44.2448 35.52 44.171 35.5068 44.0967L35.5 44.0225L35.5088 43.9385C35.5217 43.8761 35.5497 43.8132 35.5957 43.7549L35.6475 43.6982L40.8193 38.8652L41.21 38.5L40.8193 38.1348L35.6475 33.3018C35.4755 33.141 35.4541 32.9043 35.583 32.7246L35.6475 32.6514C35.7257 32.5782 35.8252 32.5295 35.9336 32.5098L36.0449 32.5Z" fill="white" stroke="#F5F5F2"/>
                                     </svg>
                                     {% endif %}
                                 </div>

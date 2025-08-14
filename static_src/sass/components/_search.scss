@@ -50,6 +50,12 @@
         outline: 0;
         border-bottom: 1px solid $color--grey;
         color: $color--grey;
+
+        &:focus {
+            border: 3px #FFD740 solid;
+            outline: 3px #000000 solid;
+            outline-offset: 0;
+            }
     }
 
     &__button {
@@ -62,6 +68,14 @@
 
         &:hover {
             cursor: pointer;
+        }
+        &:focus {
+            outline: 2px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
         }
     }
 

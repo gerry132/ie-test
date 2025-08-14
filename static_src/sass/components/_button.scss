@@ -1,25 +1,32 @@
 .button {
-    background-color: $color--primary;
+    background: #082F2A;
     color: $color--white;
     display: inline-block;
     font-weight: $weight--normal;
     font-family: $font--secondary;
     background-image: none;
-    border-radius: $border-radius;
-    border: 0;
+    border-radius: 0;
+    border: 0px solid #082F2A;
     box-shadow: none;
     padding: 10px 25px;
     transition: background-color $transition;
 
-    &:hover {
+    &:hover, &:focus:hover {
         cursor: pointer;
-        background-color: $color--white;
-        color: $color--primary;
+        background: #004D44;
+        color: $color--white;
     }
 
-    &--border {
-        border: 1px solid $color--primary;
+    &:active, &:focus:active {
+        background-color: #008931;
     }
+
+    &:focus {
+        outline: 3px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow: 0 0 0 6px #000000;
+    }
+
 }
 
 .button-menu-toggle {
@@ -35,6 +42,12 @@
     transform: rotate(0deg);
     transition: $transition;
     padding: 0;
+
+    &:focus,
+    &:focus-visible {
+      outline: none;
+      box-shadow: none;
+    }
 
     .header--condensed & {
         width: 20px;

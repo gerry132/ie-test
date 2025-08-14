@@ -33,6 +33,8 @@ locals {
   app_aws_username              = "UAT_APP_USER"
   project_domain                = "content.uat.ireland.ie"
   domain_ireland_ie             = "uat.ireland.ie"
+  api_domain                    = "https://api.uat.ireland.ie"
+  api_domain_plain              = "api.uat.ireland.ie"
   africa_day_domain             = "africaday.uat.ireland.ie"
   project_name                  = "g2g"
   region                        = "eu-west-1"
@@ -58,9 +60,11 @@ locals {
   gov_network_cird_blocks       = [
     "169.254.192.0/18",
     "137.191.224.0/19",
+    "37.228.225.101/32", # gerry
     "193.178.64.0/19",
     "193.178.96.0/20",
     "139.162.239.108/32",
+    "137.191.233.222/32" # browserstack
 
   ]
   non_gov_network_cird_blocks   = {
@@ -76,22 +80,18 @@ locals {
       description = "Gerry Mcbride - OGCIO"
       cidr_blocks = ["95.44.14.48/32", "37.228.234.184/32"]
     },
-    jaikiran_dev = {
-      description = "Jaikiran - OGCIO"
-      cidr_blocks = ["137.191.233.222/32", "37.228.206.182/32"]
-    },
     fergal_dev = {
       description = "Fergal - OGCIO"
       cidr_blocks = ["51.182.250.11/32"]
     },
     deekshana_dev = {
       description = "Deekshana - Sidero"
-      cidr_blocks  = ["62.77.170.200/32"]
+      cidr_blocks  = ["51.183.41.207/32"]
     },
 
     sina_dev = {
       description = "Sina - Sidero"
-      cidr_blocks  = ["86.132.244.46/32"]
+      cidr_blocks  = ["31.53.148.201/32"]
     },
     joe_dev = {
       description = "Joe D - Sidero"
@@ -706,32 +706,32 @@ resource "aws_lb_target_group" "default" {
 
 # Admin site should point here
 
-resource "aws_lb_target_group" "default_admin" {
-  name            = "${local.environment_name}-${local.project_name}-admin"
-  port            = 80
-  protocol        = "HTTP"
-  target_type     = "ip"
-  vpc_id          = module.network.vpc_id
+  resource "aws_lb_target_group" "default_admin" {
+    name            = "${local.environment_name}-${local.project_name}-admin"
+    port            = 80
+    protocol        = "HTTP"
+    target_type     = "ip"
+    vpc_id          = module.network.vpc_id
 
-  health_check {
-    interval                = 120
-    path                    = local.health_check_path
-    protocol                = "HTTP"
-    timeout                 = 60
-    healthy_threshold       = 2
-    unhealthy_threshold     = 3
-    matcher                 = "200-399"
+    health_check {
+      interval                = 120
+      path                    = local.health_check_path
+      protocol                = "HTTP"
+      timeout                 = 60
+      healthy_threshold       = 2
+      unhealthy_threshold     = 3
+      matcher                 = "200-399"
+    }
+
+    lifecycle {
+      create_before_destroy   = true
+    }
+
+    depends_on  = [
+      aws_lb.default,
+      aws_lb.public_sites,
+    ]
   }
-
-  lifecycle {
-    create_before_destroy   = true
-  }
-
-  depends_on  = [
-    aws_lb.default,
-    aws_lb.public_sites,
-  ]
-}
 
 
 # -----------------------------------------------------------------------------
@@ -1415,7 +1415,7 @@ locals {
   SETTINGS_CACHE_ADDRESS            = local.cache_address
   SETTINGS_DATABASE_URL             = local.db_master_url
   SETTINGS_SECRET_KEY               = data.aws_ssm_parameter.random_secret_key.value
-  SETTINGS_CORS_ALLOWED_ORIGINS     = local.SETTINGS_BASE_URL
+  SETTINGS_CORS_ALLOWED_ORIGINS     = "${local.SETTINGS_BASE_URL},https://api.${local.domain_ireland_ie},https://www.${local.domain_ireland_ie}"
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
   SETTINGS_EMAIL_HOST               = "email.${local.region}.amazonaws.com"
   SETTINGS_DEFAULT_FROM_EMAIL       = aws_ssm_parameter.DEFAULT_FROM_EMAIL.value
@@ -1459,6 +1459,7 @@ data "template_file" "task_definition" {
     ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
     log_group                           = aws_cloudwatch_log_group.ecs.name
     name                                = "${local.environment_name}-${local.project_name}"
+    api_domain                          = local.api_domain
     port                                = local.service_contrainer_port
     region                              = local.region
     task_cpu                            = local.task_cpu
@@ -1489,11 +1490,50 @@ data "template_file" "task_definition" {
   }
 }
 
+module "main_task_definition" {
+  source = "../common/task_definition"
+
+  account_id              = local.account_id
+  project_name            = local.project_name
+  environment_name        = local.environment_name
+  assets_s3_bucket        = aws_s3_bucket.assets.id
+  log_group               = aws_cloudwatch_log_group.ecs.name
+  ecr_image_url           = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
+  cache_address           = local.cache_address
+  region                  = local.region
+  task_cpu                = local.task_cpu
+  task_memory             = local.task_memory
+  domain_ireland_ie       = local.domain_ireland_ie
+  service_contrainer_port = 8000
+
+  SETTINGS_DEBUG               = local.SETTINGS_DEBUG
+  SETTINGS_DEBUG_TOOLBAR       = local.SETTINGS_DEBUG_TOOLBAR
+  SETTINGS_EMAIL_HOST          = local.SETTINGS_EMAIL_HOST
+  SETTINGS_DEFAULT_FROM_EMAIL  = local.SETTINGS_DEFAULT_FROM_EMAIL
+  SETTINGS_CORS_ALLOW_ALL_ORIGINS = local.SETTINGS_CORS_ALLOW_ALL_ORIGINS
+
+  SETTINGS_ALLOWED_HOSTS       = local.SETTINGS_ALLOWED_HOSTS
+  SETTINGS_USE_CACHE           = local.SETTINGS_USE_CACHE
+  SETTINGS_USE_S3              = local.SETTINGS_USE_S3
+  SETTINGS_CLOUDFRONT_ID       = local.SETTINGS_CLOUDFRONT_ID
+  SETTINGS_AWS_ACCESS_KEY_ID   = local.SETTINGS_AWS_ACCESS_KEY_ID
+  SETTINGS_AWS_SECRET_ACCESS_KEY = local.SETTINGS_AWS_SECRET_ACCESS_KEY
+  SETTINGS_AWS_STATIC_BUCKET_NAME = local.SETTINGS_AWS_STATIC_BUCKET_NAME
+  SETTINGS_BASE_URL            = local.SETTINGS_BASE_URL
+  SETTINGS_DATABASE_URL        = local.SETTINGS_DATABASE_URL
+  SETTINGS_SECRET_KEY          = local.SETTINGS_SECRET_KEY
+  SETTINGS_OPENSEARCH_KEY      = local.SETTINGS_OPENSEARCH_KEY
+  SETTINGS_OPENSEARCH_SECRET   = local.SETTINGS_OPENSEARCH_SECRET
+  SETTINGS_OPENSEARCH_ENDPOINT = local.SETTINGS_OPENSEARCH_ENDPOINT
+  SETTINGS_CORS_ALLOWED_ORIGINS = local.SETTINGS_CORS_ALLOWED_ORIGINS
+}
+
 # Task definition
 
 module "ecs_task_os_index" {
   source = "../common/utils"
 
+  publish_task_definitions = module.main_task_definition.publish_task_definition_rendered
   container_definitions = data.template_file.index_task_definition.rendered
   task_cpu              = "256"
   task_memory           = "512"
@@ -1504,6 +1544,23 @@ module "ecs_task_os_index" {
   execution_role        = aws_iam_role.task_execution.arn
 }
 
+module "api" {
+  source = "../common/api"
+
+  container_definitions = module.main_task_definition.container_definitions
+  lb_target_group       = aws_lb_target_group.default_admin.arn
+  project_name          = local.project_name
+  environment_name      = local.environment_name
+  task_cpu              = "256"
+  task_memory           = "512"
+  api_domain            = local.api_domain_plain
+  subnets               = module.network.public_subnet_ids
+  vpc_id                = module.network.vpc_id
+  ecs_security_groups   = aws_security_group.ecs.id
+  lb_security_groups    = aws_security_group.lb_gov_network.id
+  cluster               = aws_ecs_cluster.default
+  execution_role        = aws_iam_role.task_execution.arn
+}
 
 resource "aws_ecs_task_definition" "default" {
   family                   = "${local.environment_name}-${local.project_name}"
@@ -1993,17 +2050,6 @@ resource "aws_cloudfront_distribution" "dynamic" {
     path_pattern             = "*/publication-index/*"
   }
 
-  ordered_cache_behavior {
-    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
-    cached_methods           = ["GET", "HEAD"]
-    target_origin_id         = aws_lb.public_sites.name
-
-    cache_policy_id          = "4cc15a8a-d715-48a4-82b8-cc0b614638fe"
-    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc"
-    viewer_protocol_policy   = "allow-all"
-    path_pattern             = "*/news-archive/"
-  }
-
 
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
@@ -2015,7 +2061,6 @@ resource "aws_cloudfront_distribution" "dynamic" {
     viewer_protocol_policy   = "allow-all"
     path_pattern             = "*/news-and-events/*"
   }
-
 
   ordered_cache_behavior {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
@@ -2109,7 +2154,8 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
                         "193.178.96.0/20",    # gov_network_cird_blocks
                         "139.162.239.108/32", # gov_network_cird_blocks
 
-                        "86.132.244.46/32",   # Sina
+                        "31.53.148.201/32",   # Sina
+                        "51.183.41.207/32",   # Deekshana
                         "51.182.250.11/32",   # Fergal
                         "62.23.128.137/32",    # DFA
                         "37.228.206.182/32",  # jaikiran_dev

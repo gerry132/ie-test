@@ -49,14 +49,14 @@
                                     It will fail silently, here and simply not render an image tag.
                                     To prevent the panel from collapsing still render the container div
                                 {% endcomment %}
-                                <div class="card__image-container">
+                                <div class="card__image-container-news">
                                     {% if article.listing_image %}
-                                        {% image article.listing_image fill-400x200 class="card__image" %}
+                                        {% image article.listing_image fill-400x200-c100 class="card__image-news" %}
                                     {% elif article.hero_image %}
-                                        {% image article.hero_image fill-400x200 class="card__image" %}
+                                        {% image article.hero_image fill-400x200-c100 class="card__image-news" %}
                                     {% else %}
                                     {% for block in default_image %}
-                                         {% image block.value.image fill-400x200 class="card__image"  alt=block.value.image_alt %}
+                                         {% image block.value.image fill-400x200-c100 class="card__image-news"  alt=block.value.image_alt %}
                                     {% endfor %}
                                     {% endif %}
                                 </div>

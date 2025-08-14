@@ -34,20 +34,60 @@
         font-weight: 700;
         line-height: 44px; /* 137.5% */
     }
-    &__link_title{
-        color: #101010;
+    &__link_title {
+        color: #082F2A;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.1rem;
+        text-underline-offset: 0.19em;
         font-family: Lato;
         font-size: 20px;
         font-style: normal;
         font-weight: 400;
         line-height: 26.58px; /* 132.9% */
+        margin: 0;
+
+        &:hover, &:focus:hover {
+            color: #004d44;
+            text-decoration-color: #004d44;
+            text-decoration-thickness: 0.2rem;
+        }
+
+        &:active, &:focus:active {
+            color: #008931;
+            text-decoration: underline;
+            text-decoration-color: #008931;
+            text-decoration-thickness: 0.3rem;
+        }
     }
     &__link_content {
         padding-top: 20px;
-        padding-bottom: 10px;
+        padding-bottom: 30px;
+    }
+    &__content_focusable {
         position: relative;
         display: flex;
         flex-direction: row;
         color: #292929;
+
+        &:focus {
+            outline: 3px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
+        }
     }
 }
+
+        a.wide_feature__image_link:focus {
+            display: block;
+            outline: 2px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+            0 0 0 6px #000000,
+            -6px 8px 0 0 #000000,
+            6px 8px 0 0 #000000;
+          }
+

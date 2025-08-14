@@ -129,13 +129,13 @@
                     {% if page.get_translations.live %}
 
                         <div>
-                            <div class="header__language-switcher">
+                            <div class="header__language-switcher" tabindex="0">
                                 <label for="language-switcher-mob" class="u-sr-only">{% trans 'Select default language' %}</label>
-                                <select name="language" id="language-switcher-mob"
+                                <select tabindex="-1" name="language" id="language-switcher-mob"
                                         onchange="updatePageLink('language-switcher-mob')"
                                         class="language-switcher">
                                     {% get_language_info for LANGUAGE_CODE as current_lang %}
-                                     <option value="{{ current_lang.code }}"{% if current_lang == language_code %} selected{% endif %}>
+                                     <option value="{{ current_lang.code }}" lang="{{ current_lang.code }}" {% if current_lang == language_code %} selected{% endif %}>
                                             {{ current_lang.name_local }}
                                      </option>
                                      {% for translation in page.get_translations.live %}
@@ -152,18 +152,18 @@
                         </div>
                     <!-- End of the locale selector -->
                     {% endif %}
-                    <button class="header__search-toggle" role="search" aria-label="{% trans 'Search' %}" data-toggle-search>
-                        <svg class="header__search-icon" aria-hidden="true">
+                    <button tabindex="0" class="header__search-toggle" role="search" aria-label="{% trans 'Search' %}" data-toggle-search>
+                        <svg role="button" aria-label="Start" class="header__search-icon" aria-hidden="true">
                             <use href="#magnifying-glass"></use>
                         </svg>
 
-                        <svg class="header__search-icon header__search-icon--close" aria-hidden="true">
+                        <svg role="button" aria-label="Start" class="header__search-icon header__search-icon--close" aria-hidden="true">
                             <use xlink:href="#close"></use>
                         </svg>
                     </button>
 
-                <div class="header__menu-toggle header__menu-toggle--desk{% if shownav %} header__menu-toggle--desktop{% endif %}">
-                    <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" role="menu" aria-label="{% trans 'Mobile menu toggle' %}">
+                <div tabindex="0" class="header__menu-toggle header__menu-toggle--desk{% if shownav %} header__menu-toggle--desktop{% endif %}">
+                    <button tabindex="-1" class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" role="menu" aria-label="{% trans 'Mobile menu toggle' %}">
                         <span class="button-menu-toggle__line"></span>
                         <span class="button-menu-toggle__line"></span>
                         <span class="button-menu-toggle__line"></span>
@@ -235,7 +235,7 @@
                     </a>
 
                     <div class="header__menus header__menus--desktop">
-                        <nav class="custom-nav" aria-label="Main Navigation" role="navigation" tabindex="0">
+                        <nav class="custom-nav" aria-label="Main Navigation" role="navigation">
                             <ul class="custom-nav__links" role="menubar">
                                 {% for link in custom_header.links %}
                                 <li class="custom-nav__item" role="none">
@@ -247,7 +247,7 @@
                     </div>
 
                     <div class="header__menus header__menus--mobile" style="{% if settings.irelandie_navigation.SiteSettings.website_header_strapline %}top:130px; {% endif %}" data-mobile-menu>
-                        <nav class="custom-nav" aria-label="Main Navigation" role="navigation" tabindex="0" >
+                        <nav class="custom-nav" aria-label="Main Navigation" role="navigation" >
                             <ul class="custom-nav__links" role="menubar">
                                 {% for link in custom_header.links %}
                                 <li class="custom-nav__item" role="none">
@@ -261,9 +261,9 @@
                         <!-- Start of the locale selector -->
                             {% if page.get_translations.live %}
                             <div>
-                                <div class="header__language-switcher">
+                                <div class="header__language-switcher" tabindex="0">
                                     <label for="language-switcher" class="u-sr-only">{% trans 'Select default language' %}</label>
-                                    <select name="language" id="language-switcher"
+                                    <select tabindex="-1" name="language" id="language-switcher"
                                             onchange="updatePageLink('language-switcher')"
                                             class="language-switcher">
                                         {% get_language_info for LANGUAGE_CODE as current_lang %}
@@ -285,18 +285,18 @@
                             </div>
                         <!-- End of the locale selector -->
                         {% endif %}
-                        <button class="header__search-toggle header__search-toggle--mobile" role="search" aria-label="{% trans 'Search' %}" data-toggle-search>
-                            <svg class="header__search-icon" aria-hidden="true">
+                        <button tabindex="0" class="header__search-toggle header__search-toggle--mobile" role="search" aria-label="{% trans 'Search' %}" data-toggle-search>
+                            <svg role="button" aria-label="Start" class="header__search-icon" aria-hidden="true">
                                 <use href="#magnifying-glass"></use>
                             </svg>
 
-                            <svg class="header__search-icon header__search-icon--close" aria-hidden="true">
+                            <svg role="button" aria-label="Start" class="header__search-icon header__search-icon--close" aria-hidden="true">
                                 <use xlink:href="#close"></use>
                             </svg>
                         </button>
 
-                    <div class="header__menu-toggle--mobile header__menu-toggle header__menu-toggle--desktop">
-                        <button class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" role="button" aria-label="{% trans 'Mobile menu toggle' %}">
+                    <div tabindex="0" class="header__menu-toggle--mobile header__menu-toggle header__menu-toggle--desktop">
+                        <button tabindex="-1" class="button button-menu-toggle" data-mobile-menu-toggle aria-haspopup="true" role="button" aria-label="{% trans 'Mobile menu toggle' %}">
                             <span class="button-menu-toggle__line"></span>
                             <span class="button-menu-toggle__line"></span>
                             <span class="button-menu-toggle__line"></span>

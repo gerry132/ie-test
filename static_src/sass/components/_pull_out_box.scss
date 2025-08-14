@@ -51,6 +51,26 @@
             flex-direction: column;
         }
     }
+    .document__button:focus {
+        outline: 3px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
+    }
+.document__button:hover, .document__button:focus:hover {
+    color: #004d44;
+    text-decoration-color: #004d44;
+    text-decoration-thickness: 0.2rem;
+}
+.document__button:active, .document__button:focus:active {
+      color: #008931;
+      text-decoration: underline;
+      text-decoration-color: #008931;
+      text-decoration-thickness: 0.3rem;
+
+}
     .document__content {
         color: $color--off-black;
         display: flex;

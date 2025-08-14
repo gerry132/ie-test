@@ -1,15 +1,18 @@
 .tag {
     $root: &;
-    &__card__title{
-        font-size: 32px;
-        line-height: 39px;
+    &__card__title {
+        color: #082F2A;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.1rem;
+        text-underline-offset: 0.19em;
     }
     &__card__summary{
         font-size: 20px;
         line-height: 24px;
         color: #292929;
     }
-    &__stats{
+    &__stats {
         padding: 30px;
     }
      &__vertical-line{
@@ -23,21 +26,54 @@
             padding-bottom: 10px;
             flex-wrap: wrap;
     }
-    &__slide-item{
+    &__slide-item {
             background-color: #EDECE5;
-            padding: 1px 10px;
+            padding: 5px 10px;
             color: #292929;
             font-size: 20px;
             line-height: 24px;
+
+            &:focus-within {
+                outline: 3px #FFD740 solid;
+                outline-offset: 0;
+                box-shadow:
+                0 0 0 4px #000000,
+                -4px 6px 0 0 #000000,
+                4px 6px 0 0 #000000;
+            }
     }
-    &__slide-item a{
-        color: #292929;
+    &__slide-item a {
+        color: #082F2A;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.1rem;
+        text-underline-offset: 0.19em;
+
+        &:hover, &:focus:hover {
+            color: #004d44;
+            text-decoration-color: #004d44;
+            text-decoration-thickness: 0.2rem;
+        }
+        &:active, &:focus:active {
+            color: #008931;
+            text-decoration: underline;
+            text-decoration-color: #008931;
+            text-decoration-thickness: 0.3rem;
+            }
     }
      &__link-box{
         display: flex;
         padding: 20px;
         position: relative;
         align-items: center;
+        .link-box__heading:focus, &_image:focus {
+            outline: 3px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+              0 0 0 4px #000000,
+              -4px 6px 0 0 #000000,
+              4px 6px 0 0 #000000;
+        }
     }
     &__image {
         position: relative;

@@ -61,12 +61,40 @@
         &:first-child {
             a {
                 margin-left: 0;
+                padding: 5px 0;
+                color: #082F2A;
+                text-decoration: underline;
+                text-decoration-color: #008931;
+                text-decoration-thickness: 0.1rem;
+                text-underline-offset: 0.19em;
             }
+            a:hover {
+                cursor: pointer;
+                color: #004d44;
+                text-decoration-color: #004d44;
+                text-decoration-thickness: 0.2rem;
+            }
+            a:active{
+                color: #008931;
+                text-decoration: underline;
+                text-decoration-color: #008931;
+                text-decoration-thickness: 0.3rem;
+            }
+            a:focus {
+                outline: 2px #FFD740 solid;
+                outline-offset: 0;
+                box-shadow:
+                0 0 0 4px #000000,
+                -4px 6px 0 0 #000000,
+                4px 6px 0 0 #000000;
+        }
+
         }
 
         &:last-child {
+            color: #082F2A;
             margin-left: 10px;
-            border-bottom: 1px solid;
+            font-weight:700;
         }
 
         @include media-query(medium) {
@@ -88,12 +116,33 @@
     }
 
     &__link {
-        color: $color--primary;
-        border-bottom: 1px solid transparent;
-        transition: color, border $transition;
+        color: #082F2A;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.1rem;
+        text-underline-offset: 0.19em;
 
         &:hover {
             cursor: pointer;
+            color: #004d44;
+            text-decoration-color: #004d44;
+            text-decoration-thickness: 0.2rem;
+        }
+
+        &:active{
+                color: #008931;
+                text-decoration: underline;
+                text-decoration-color: #008931;
+                text-decoration-thickness: 0.3rem;
+        }
+
+        &:focus {
+            outline: 2px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
         }
 
         @include media-query(medium) {

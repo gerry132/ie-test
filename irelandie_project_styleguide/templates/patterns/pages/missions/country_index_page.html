@@ -44,12 +44,14 @@
         {% endfor %}
         {% if page.index_body %}
         <div class="wrapper wrapper--large wrapper--padding">
-            <label for="myInput" class="a-z-listing__filter__label__text">{% trans 'Search by country name:' %}</label>
-                <div><input id="myInput" class="form--input" type="text"></div>
-            <div class="a-z-listing__filters__clear-all">
-                <a id="clearFilter" class="input__label__text" aria-label="{% trans 'Clear Filter' %}">
-                    <div class="close_vector"></div>
-                    Clear filter</a>
+            <div class="mini_link_cards__search">
+                <label for="myInput" class="a-z-listing__filter__label__text"> {{ page.search_field_name|default:_("Search by country name:") }}</label>
+                    <div><input id="myInput" class="form--input" type="text"></div>
+                <div class="a-z-listing__filters__clear-all">
+                    <a id="clearFilter" class="input__label__text" aria-label="{% trans 'Clear Filter' %}" tabindex="0">
+                        <span class="close_vector"></span>
+                        Clear filter</a>
+                </div>
             </div>
             <div class="section section--padding">
             {% for block in page.index_body %}
@@ -57,6 +59,9 @@
                 <div class="mini_link_cards_container">
                     {% if block.value.title %}
                         <h2 class="mini_link_cards_title" id="{{block.value.section_id}}">{{ block.value.title }}</h2>
+                    {% endif %}
+                    {% if block.value.subtitle %}
+                        <div style="max-width:unset;" class="rich-text">{{ block.value.subtitle|richtext }}</div>
                     {% endif %}
                 <div class="mini_link_filter_cards">
                            {% include_block block.value.mini_link_cards %}

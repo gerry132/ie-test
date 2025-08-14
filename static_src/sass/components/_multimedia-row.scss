@@ -21,6 +21,11 @@
             cursor: pointer;
             transform: translate(-50%,-50%) scale(1.1);
         }
+    &:focus {
+        outline: 3px solid #ffd740;
+        outline-offset: -2px;
+        box-shadow: 0 0 0 4px #000;
+        }
     }
     &__video-control-button-icon {
         color: $color--white;
@@ -70,7 +75,7 @@
         transform: scale(1);
         transition: transform $transition;
     }
-    &__card{
+    &__card {
     display: block;
     background-color: #fff;
     overflow: hidden;
@@ -81,6 +86,14 @@
         }
         &--three{
             flex: 0 1 380px;
+        }
+    &:focus {
+        outline: 2px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow:
+        0 0 0 4px #000000,
+        -4px 6px 0 0 #000000,
+        4px 6px 0 0 #000000;
         }
     }
     &__card__image-container {
@@ -93,8 +106,27 @@
         padding: 20px;
     }
     &__card__title{
-
     font-family: 'Inter';
+    color: var(--d---colour, #101010);
+    a#{$root}__card & {
+        color: #082F2A;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.1rem;
+        text-underline-offset: 0.19em;
+    }
+    a#{$root}__card:hover &,
+    a#{$root}__card:focus:hover & {
+        color: #004d44;
+        text-decoration-color: #004d44;
+        text-decoration-thickness: 0.2rem;
+      }
+    a#{$root}__card:active &,
+    a#{$root}__card:focus:active & {
+        color: #008931;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.3rem;
+      }
     }
     &__card__summary{
         font-weight: 400;

@@ -27,6 +27,15 @@
         color: $color--off-black;
         font-weight: $weight--semibold;
         text-decoration: underline;
+
+    &:focus {
+            outline: 3px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
+        }
     }
 
     &__summary {

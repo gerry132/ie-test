@@ -30,16 +30,21 @@
         transition: color 0.2s ease;
         text-decoration: none;
         width: 100%;
+        outline: none;
 
         &:hover {
             cursor: pointer;
         }
 
-        /* stylelint-disable */
-        &:focus {
-            outline: 0; // focus style implemented directly on text instead
+        &:focus .accordion__title,
+        &:focus-visible .accordion__title{
+            outline: 2px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
         }
-        /* stylelint-enable */
     }
 
     &__header {
@@ -64,9 +69,9 @@
         font-size: 22px;
         line-height: 26px;
         letter-spacing: -1.35px;
-        margin: 0;
-        padding: 0 20px 0 40px;
+        margin: 0 20px 0 40px;
         font-weight: 400;
+
     }
     &__btn_content{
         width: 40px;
@@ -112,6 +117,33 @@
         &:last-of-type {
             border-bottom: 0;
             padding-bottom: 0;
+        }
+        a {
+            color: #082F2A;
+            text-decoration: underline;
+            text-decoration-color: #008931;
+            text-decoration-thickness: 0.1rem;
+            text-underline-offset: 0.19em;
+        }
+        a:focus {
+            outline: 3px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
+        }
+
+        a:hover {
+            color: #004d44;
+            text-decoration-color: #004d44;
+            text-decoration-thickness: 0.2rem;
+        }
+        a:active {
+            color: #008931;
+            text-decoration: underline;
+            text-decoration-color: #008931;
+            text-decoration-thickness: 0.3rem;
         }
     }
 

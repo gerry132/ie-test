@@ -10,7 +10,6 @@
     }
 
     &__header {
-        filter: invert(9%) sepia(98%) saturate(0%) hue-rotate(203deg) brightness(100%) contrast(102%);
         border-bottom: 1px solid rgba($color--border, 0.3);
         padding-bottom: 30px;
 
@@ -24,10 +23,21 @@
     }
 
     &__logo {
+        filter: invert(9%) sepia(98%) saturate(0%) hue-rotate(203deg) brightness(100%) contrast(102%);
 
         &--svg {
             height: 40px;
             width: 160px;
+        }
+    }
+    &__logo_link, &__social-link {
+        &:focus {
+          outline: 3px solid #0028BF;
+          outline-offset: 0;
+          box-shadow:
+            0 0 0 4px #FFFFFF,
+            -4px 6px 0 0 #FFFFFF,
+            4px 6px 0 0 #FFFFFF;
         }
     }
 

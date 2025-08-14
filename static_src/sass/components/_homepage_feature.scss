@@ -39,23 +39,45 @@
              line-height: 86px;
         }
     }
-    &__card{
+    &__card {
         display: block;
         overflow: hidden;
         max-width: 500px;
+        &:focus {
+        outline: 2px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow:
+        0 0 0 4px #000000,
+        -4px 6px 0 0 #000000,
+        4px 6px 0 0 #000000;
     }
-    &_card__title{
-        color: var(--d---colour, #101010);
-        /* H4 */
-        font-family: Inter;
-        font-size: 24px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: normal;
-
-        &:hover {
+    }
+    &_card__title {
+      font-family: Inter;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      color: var(--d---colour, #101010);
+      a#{$root}__card & {
+            color: #082F2A;
             text-decoration: underline;
-        }
+            text-decoration-color: #008931;
+            text-decoration-thickness: 0.1rem;
+            text-underline-offset: 0.19em;
+      }
+      a#{$root}__card:hover &,
+      a#{$root}__card:focus:hover & {
+        color: #004d44;
+        text-decoration-color: #004d44;
+        text-decoration-thickness: 0.2rem;
+      }
+      a#{$root}__card:active &,
+      a#{$root}__card:focus:active & {
+        color: #008931;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.3rem;
+      }
     }
     &_card__summary{
         color: var(--d---colour, #101010);
@@ -99,11 +121,17 @@
     display: none;
  }
 
-.starter_button, .starter_button_1{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    cursor: pointer;
+.starter_button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  outline: none;
 }
+
+
+.starter_button:focus .focus-ring {
+  opacity: 1;
+}
+

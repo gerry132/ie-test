@@ -141,15 +141,6 @@ class ListingsContentPage(ListingsContents, BasePage):
                 }
             )
 
-        if not self.expire_at:
-            raise ValidationError(
-                {
-                    "expire_at": ValidationError(
-                        "You must specify expiry date/time"
-                    ),
-                }
-            )
-
     content_panels = BasePage.content_panels + [
         MultiFieldPanel(
             [
@@ -176,26 +167,21 @@ class ListingsContentPage(ListingsContents, BasePage):
             ],
             heading="Event Date"
         ),
-        FieldPanel('expire_at',
-                   help_text="The date set here will set the expiry for this "
-                             "listing. It will be removed from the main listing "
-                             "page/list and from public view once expired."),
         FieldPanel('venue'),
         FieldPanel('location'),
         FieldPanel('event_details'),
     ]
-    settings_panels = ([
-                           FieldPanel('go_live_at'),
-                           MultiFieldPanel(
-                               [
-                                   FieldPanel("custom_header", permission="access_admin"),
-                                   FieldPanel("custom_footer", permission="access_admin")
-                               ],
-                               "Root Navigation"
-                           ),
-                       ] +
-                       BasePage.webchat_panel
-                       )
+    settings_panels = Page.settings_panels + ([
+                                                  MultiFieldPanel(
+                                                      [
+                                                          FieldPanel("custom_header", permission="access_admin"),
+                                                          FieldPanel("custom_footer", permission="access_admin")
+                                                      ],
+                                                      "Root Navigation"
+                                                  ),
+                                              ] +
+                                              BasePage.webchat_panel
+                                              )
     COMMON_PROMOTE_PANELS = (
         FieldPanel('slug'),
         FieldPanel('seo_title'),
@@ -287,15 +273,6 @@ class ListingsContentUSAPage(ListingsContents, BasePage):
                 }
             )
 
-        if not self.expire_at:
-            raise ValidationError(
-                {
-                    "expire_at": ValidationError(
-                        "You must specify expiry date/time"
-                    ),
-                }
-            )
-
     content_panels = BasePage.content_panels + [
         MultiFieldPanel(
             [
@@ -322,10 +299,6 @@ class ListingsContentUSAPage(ListingsContents, BasePage):
             ],
             heading="Event Date"
         ),
-        FieldPanel('expire_at',
-                   help_text="The date set here will set the expiry for this "
-                             "listing. It will be removed from the main listing "
-                             "page/list and from public view once expired."),
         FieldPanel('venue'),
         MultiFieldPanel(
             [
@@ -351,18 +324,17 @@ class ListingsContentUSAPage(ListingsContents, BasePage):
         ListingFields.promote_panels
     )
 
-    settings_panels = ([
-                           FieldPanel('go_live_at'),
-                           MultiFieldPanel(
-                               [
-                                   FieldPanel("custom_header", permission="access_admin"),
-                                   FieldPanel("custom_footer", permission="access_admin")
-                               ],
-                               "Root Navigation"
-                           ),
-                       ] +
-                       BasePage.webchat_panel
-                       )
+    settings_panels = Page.settings_panels + ([
+                                                  MultiFieldPanel(
+                                                      [
+                                                          FieldPanel("custom_header", permission="access_admin"),
+                                                          FieldPanel("custom_footer", permission="access_admin")
+                                                      ],
+                                                      "Root Navigation"
+                                                  ),
+                                              ] +
+                                              BasePage.webchat_panel
+                                              )
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
@@ -498,14 +470,6 @@ class ListingsFeaturedPage(BasePage):
                     ),
                 }
             )
-        if not self.expire_at:
-            raise ValidationError(
-                {
-                    "expire_at": ValidationError(
-                        "You must specify expiry date/time"
-                    ),
-                }
-            )
 
     def embedding_url(self):
 
@@ -548,24 +512,19 @@ class ListingsFeaturedPage(BasePage):
             ],
             heading="Event Title"
         ),
-        FieldPanel('expire_at',
-                   help_text="The date set here will set the expiry for this "
-                             "listing. It will be removed from the main listing "
-                             "page/list and from public view once expired."),
         FieldPanel('event_details'),
     ]
-    settings_panels = ([
-                           FieldPanel('go_live_at'),
-                           MultiFieldPanel(
-                               [
-                                   FieldPanel("custom_header", permission="access_admin"),
-                                   FieldPanel("custom_footer", permission="access_admin")
-                               ],
-                               "Root Navigation"
-                           ),
-                       ] +
-                       BasePage.webchat_panel
-                       )
+    settings_panels = Page.settings_panels + ([
+                                                  MultiFieldPanel(
+                                                      [
+                                                          FieldPanel("custom_header", permission="access_admin"),
+                                                          FieldPanel("custom_footer", permission="access_admin")
+                                                      ],
+                                                      "Root Navigation"
+                                                  ),
+                                              ] +
+                                              BasePage.webchat_panel
+                                              )
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),

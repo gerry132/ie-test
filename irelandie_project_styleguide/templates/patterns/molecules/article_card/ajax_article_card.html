@@ -2,16 +2,18 @@
 {% load util_tags %}
 
 {% for value in related_articles %}
-<a href="{{ value.url }}" aria-label="{% trans 'Link box' %}" class="link-box">
-    <div class="link-box__content">
+<a href="{{ value.url }}" aria-label="{% trans 'Link box' %}" class="link-box" tabindex="-1">
+    <div class="link-box__content" tabindex="0">
         <div class="link-box__container">
-            <h3 class="link-box__heading heading--3">{{ value.title }}</h3>
-            {% format_date value.publication_date %}
+            <h3 class="link-box__heading heading--3">
+                <span class="link-box__heading-text">{{ value.title }}</span>
+            </h3>
+            <p>{% format_date value.publication_date %}</p>
            <div style="max-width:unset;" class="rich-text">
                 {{ value.subtitle|richtext }}
             </div>
         </div>
-        <button class="link-box__btn{% if value.subtitle %} link-box__title_subtitle{% else %} link-box__title{% endif %}" aria-label="{% trans 'Link box' %}"></button>
+        <button tabindex="-1" class="link-box__btn{% if value.subtitle %} link-box__title_subtitle{% else %} link-box__title{% endif %}" aria-label="{% trans 'Link box' %}"></button>
     </div>
     <br>
     <div class="link-box__line"></div>

@@ -13,7 +13,7 @@
     max-width: 1280px;
     margin: 0 auto;
 }
-.notice-bar--contents{
+.notice-bar--contents {
     display: flex;
     align-items: flex-start;
     gap: 10px;
@@ -21,6 +21,34 @@
     justify-content: center;
 
 }
+
+a.notice_link {
+    color: #082F2A;
+    text-decoration: underline;
+    text-decoration-color: #008931;
+    text-decoration-thickness: 0.1rem;
+    text-underline-offset: 0.19em;
+    }
+    a.notice_link:hover {
+        color: #004d44;
+        text-decoration-color: #004d44;
+        text-decoration-thickness: 0.2rem;
+    }
+
+    a.notice_link:active {
+        color: #008931;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.3rem;
+    }
+    a.notice_link:focus {
+            outline: 3px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow:
+              0 0 0 4px #000000,
+              -4px 6px 0 0 #000000,
+              4px 6px 0 0 #000000;
+        }
 .notice-bar__hidden {
       display: none;
     }
@@ -33,14 +61,12 @@
     }
 }
 
-.notice_link{
+.notice_link {
+        padding: 2px 0;
     font-weight: 400;
     font-size: 18px;
     line-height: 22px;
-    text-decoration-line: underline;
     text-align: left;
-
-    color: #004D44;
     display: flex;
     gap: 6px;
     align-items: center;
@@ -56,8 +82,8 @@
     gap: 6px;
     align-items: center;
 }
-.notice_button {
-    background-color: #004d46;
+a.notice_button {
+    background-color: #082F2A;
     color: #fff;
     display: inline-block;
     font-weight: 400;
@@ -69,16 +95,28 @@
     box-shadow: none;
     padding: 5px 15px;
     transition: background-color .25s ease-out;
-    &:hover {
-        cursor: pointer;
-        color: #fff;
     }
-}
+    a.notice_button:hover, a.notice_button:focus:hover {
+        cursor: pointer;
+        background: #004D44;
+        color: $color--white;
+    }
+
+    a.notice_button:active, a.notice_button:focus:active {
+        background-color: #008931;
+    }
+
+    a.notice_button:focus {
+        outline: 3px #FFD740 solid;
+        outline-offset: 0;
+        box-shadow: 0 0 0 6px #000000;
+    }
+
 .wrapper__notice-bar{
     max-width: 900px;
     margin: 0 auto;
 }
-.notice__icon{
+.notice__icon {
     display: flex;
     align-self: center;
 }
@@ -86,6 +124,19 @@
     display: flex;
     gap: 20px;
 }
+.notice-link {
+  display: inline-block;
+  outline: none;
+}
+
+.notice-link:focus {
+  outline: 3px solid #FFD740;
+  outline-offset: 0;
+  box-shadow: 0 0 0 6px #000000;
+  border-radius: 0; /* avoid rounding */
+}
+
+
 .informationDivider {
             position: absolute;
             height: 95%;

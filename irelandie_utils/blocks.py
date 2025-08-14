@@ -89,7 +89,6 @@ class PullQuoteBlock(blocks.StructBlock):
         ('neon-green', 'Neon Green'),
         ('gold', 'State Gold'),
     ]
-
     paragraph_alignment = blocks.ChoiceBlock(
         required=False,
         choices=ParagraphAlignment.choices,
@@ -475,6 +474,32 @@ class RichTextBlock(blocks.RichTextBlock):
 
 
 class AdvancedRichTextBlock(blocks.StructBlock):
+    section_id = blocks.CharBlock(required=False)
+    paragraph_alignment = blocks.ChoiceBlock(
+        required=False,
+        choices=ParagraphAlignment.choices,
+        default=ParagraphAlignment.NARROW,
+    )
+    heading = blocks.CharBlock(required=False)
+    rich_text = blocks.RichTextBlock(
+        features=["h2", "h3", "h4", "blockquote", "bold", "link", "document-link", "ul", "ol"], required=False,
+    )
+    button_link = blocks.StreamBlock(
+        [
+            ("button", SecondaryCallToAction())
+        ],
+        blank=True,
+        max_num=1,
+        min_num=0,
+        required=False,
+    )
+
+    class Meta:
+        label = "Advanced RichTextBlock"
+        template = "patterns/molecules/streamfield/blocks/advanced_richtext_block.html"
+
+
+class AdvancedRichTextWithImageLinkBlock(blocks.StructBlock):
     section_id = blocks.CharBlock(required=False)
     paragraph_alignment = blocks.ChoiceBlock(
         required=False,
@@ -1629,6 +1654,7 @@ class BannerImageBlock(blocks.StructBlock):
         required=True,
         help_text=_(ALT_IMAGE),
     )
+    banner_image_credit = blocks.CharBlock(required=False, max_length=255)
 
     banner_title = blocks.CharBlock(required=True, max_length=120)
     subtitle = blocks.CharBlock(required=False)
@@ -1755,7 +1781,7 @@ class FeaturedTaggedStoryBlock(blocks.StructBlock):
     page = blocks.PageChooserBlock(required=False, page_type=["irelandie_pages.FreeFormPage",
                                                               "irelandie_story.StoryPage",
                                                               "irelandie_missions.GeneralContentPage",
-                                                              "irelandie_news.NewsPage"])
+                                                              "irelandie_news.NewsPage", "irelandie_parallax.Parallax"])
     link_text = blocks.CharBlock(
         max_length=32, blank=True, required=False, default="Read Story", help_text='Call To Action Text'
     )
@@ -1913,7 +1939,7 @@ class HomepageFeatureBlock(blocks.StructBlock):
     homepage_featured_hero = blocks.StreamBlock(
         [
             ("image_or_video_block", HomepageFeatureImageVideoBlock(required=False)),
-            ("advanced_rich_text", AdvancedRichTextBlock()),
+            ("advanced_rich_text", AdvancedRichTextWithImageLinkBlock()),
         ],
         block_counts={
             'image_or_video_block': {'max_num': 1, 'min_num': 0},

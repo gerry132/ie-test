@@ -75,6 +75,11 @@
         @include font-size(xl);
         line-height: 52px;
         font-weight: $weight--extrabold;
+        white-space: normal;
+        hyphens: auto;
+        overflow-wrap: break-word;
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
 
         @include media-query(medium) {
             @include font-size(xxl);
@@ -200,8 +205,8 @@
         justify-content: center;
         align-items: center;
         border-radius: 100%;
-        border: 0;
-        background-color: $color--primary;
+        border: 0px solid #082F2A;
+        background: #082F2A;
         color: $color--white;
         justify-self: center;
         height: 40px;
@@ -210,9 +215,19 @@
         transform: scale(1);
         transition: transform $transition;
 
-        &:hover {
+        &:hover, &:focus:hover {
             cursor: pointer;
-            transform: scale(1.1);
+            background: #004D44;
+        }
+
+        &:active, &:focus:active {
+            background-color: #008931;
+        }
+
+        &:focus {
+            outline: 3px #FFD740 solid;
+            outline-offset: 0;
+            box-shadow: 0 0 0 6px #000000;
         }
 
         @include media-query(medium) {

@@ -1,5 +1,29 @@
 .link-box {
     $root: &;
+     padding: 20px 0;
+     display: block;
+
+    &:focus-within .link-box__content {
+          outline: 3px #FFD740 solid;
+          outline-offset: 0;
+          box-shadow:
+            0 0 0 4px #000000,
+            -4px 6px 0 0 #000000,
+            4px 6px 0 0 #000000;
+        }
+
+    &:hover .link-box__heading-text, &:focus:hover .link-box__heading-text {
+            color: #004d44;
+            text-decoration-color: #004d44;
+            text-decoration-thickness: 0.2rem;
+    }
+
+    &:active .link-box__heading-text, &:focus:active .link-box__heading-text {
+            color: #008931;
+            text-decoration: underline;
+            text-decoration-color: #008931;
+            text-decoration-thickness: 0.3rem;
+    }
 
     &__main{
     @media only screen and (min-width: 699px) {
@@ -14,7 +38,6 @@
     }
     }
     &__content{
-        padding: 20px 0px;
         position: relative;
         display: flex;
         flex-direction: row;
@@ -28,7 +51,7 @@
         margin-right: 20px;
     }
 
-    &__heading{
+    &__heading {
         font-family: 'Inter';
         font-style: normal;
         font-weight: 700;
@@ -36,7 +59,15 @@
         line-height: 29px;
         text-decoration-line: underline;
 
-    }
+        &-text {
+          display: inline-block;
+          color: #082F2A;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.1rem;
+        text-underline-offset: 0.19em;
+        }
+      }
     &__heading1{
         margin-left: auto;
         margin-right: auto;
@@ -110,5 +141,17 @@
 
 }
 
+.tag__content .link-box__heading-text:hover, .tag__content .link-box__heading-text:focus:hover {
+            color: #004d44;
+            text-decoration-color: #004d44;
+            text-decoration-thickness: 0.2rem;
+    }
+
+    .tag__content .link-box__heading-text:active, .tag__content .link-box__heading-text:focus:active {
+            color: #008931;
+            text-decoration: underline;
+            text-decoration-color: #008931;
+            text-decoration-thickness: 0.3rem;
+    }
 
 

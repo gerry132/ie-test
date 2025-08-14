@@ -24,8 +24,8 @@
         <label for="myInput" class="a-z-listing__filter__label__text">{% trans 'Type country name:' %}</label>
         <input id="myInput" class="form--input" type="text">
         <div class="a-z-listing__filters__clear-all">
-            <a class="input__label__text" aria-label="{% trans 'Clear Filter' %}">
-                <div class="close_vector"></div>
+            <a id="clearFilter" class="input__label__text" aria-label="{% trans 'Clear Filter' %}" tabindex="0">
+                <span class="close_vector"></span>
                 Clear filter</a>
         </div>
         <div class="section section--padding ">
@@ -33,7 +33,7 @@
                 <div class="a-z-listing__filter__label__text">Jump to:</div>
                 <div style="display: flex;gap: 10px;flex-wrap: wrap;padding-right: 20px; ">
                     {% for block in page.body %}
-                    <div class="toc-contents-number"><a href="#{{ block.value.title }}" aria-label="{{ block.value.title }}"><h2 class="toc-contents">
+                    <div class="toc-contents-number"><a href="#{{ block.value.title }}" aria-label="{{ block.value.title }}" tabindex="-1"><h2 tabindex="0" class="toc-contents">
                         {{block.value.title}}</h2></a></div>
                     {% endfor %}
                 </div>

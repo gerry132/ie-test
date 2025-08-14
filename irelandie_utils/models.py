@@ -257,7 +257,8 @@ class ContactSnippetTag(TaggedItemBase):
 
 
 @register_snippet
-class ContactSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class ContactSnippet(TranslatableMixin, PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed,
+                     ClusterableModel, models.Model):
     tags = TaggableManager(through=ContactSnippetTag, blank=True)
     title = models.CharField(max_length=255)
     body = StreamField(
@@ -299,7 +300,8 @@ class CallToActionSnippetTag(TaggedItemBase):
 
 
 @register_snippet
-class CallToActionSnippet(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class CallToActionSnippet(TranslatableMixin, DraftStateMixin, RevisionMixin, index.Indexed,
+                          ClusterableModel, models.Model):
     tags = TaggableManager(through=CallToActionSnippetTag, blank=True)
     title = models.CharField(max_length=255)
     summary = RichTextField(blank=True, max_length=255)
@@ -401,8 +403,8 @@ class PrivacyPolicySnippetTag(TaggedItemBase):
 
 
 @register_snippet
-class PrivacyPolicySnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
-                           models.Model):
+class PrivacyPolicySnippet(TranslatableMixin, PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed,
+                           ClusterableModel, models.Model):
     tags = TaggableManager(through=PrivacyPolicySnippetTag, blank=True)
     title = models.CharField(max_length=255)
     privacy_snippet = StreamField(
@@ -446,8 +448,8 @@ class AdvancedRichtextSnippetTag(TaggedItemBase):
 
 
 @register_snippet
-class AdvancedRichtextSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
-                              models.Model):
+class AdvancedRichtextSnippet(TranslatableMixin, PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed,
+                              ClusterableModel, models.Model):
     tags = TaggableManager(through=AdvancedRichtextSnippetTag, blank=True)
     title = models.CharField(max_length=255)
     advanced_rich_text = StreamField(
@@ -490,8 +492,8 @@ class EmbassySnippetTag(TaggedItemBase):
 
 
 @register_snippet
-class EmbassySnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
-                     models.Model):
+class EmbassySnippet(TranslatableMixin, PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed,
+                     ClusterableModel, models.Model):
     tags = TaggableManager(through=EmbassySnippetTag, blank=True)
     title = models.CharField(max_length=255)
     advanced_rich_text = StreamField(
@@ -534,7 +536,8 @@ class AccordionTag(TaggedItemBase):
 
 
 @register_snippet
-class Accordion(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class Accordion(TranslatableMixin, PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed,
+                ClusterableModel, models.Model):
     tags = TaggableManager(through=AccordionTag, blank=True)
     title = models.CharField(max_length=255)
     accordions = StreamField(
@@ -676,14 +679,7 @@ class BasePage(SocialFields, ListingFields, Page):
         FieldPanel("custom_header", permission="access_admin")
     ]
 
-    settings_panels = ([
-                           MultiFieldPanel(
-                               [
-                                   FieldPanel('go_live_at', permission="access_admin"),
-                                   FieldPanel('expire_at', permission="access_admin"),
-                               ],
-                               "Scheduled publishing"
-                           ),
+    settings_panels = Page.settings_panels + ([
                            MultiFieldPanel(
                                [
                                    FieldPanel("custom_header", permission="access_admin"),
@@ -1098,13 +1094,6 @@ class MinimalArticlePage(BasePage):
             ],
             "hero",
         ),
-        MultiFieldPanel(
-            [
-                FieldPanel('go_live_at'),
-                FieldPanel('expire_at'),
-            ],
-            "Scheduled publishing"
-        ),
         FieldPanel("publication_date"),
         FieldPanel("body"),
         FieldPanel("related_articles_active", heading="Featured News Checkbox",
@@ -1132,7 +1121,7 @@ class MinimalArticlePage(BasePage):
         SocialFields.promote_panels +
         ListingFields.promote_panels
     )
-    settings_panels = ([
+    settings_panels = Page.settings_panels + ([
                            MultiFieldPanel(
                                [
                                    FieldPanel("custom_header", permission="access_admin"),
@@ -1172,7 +1161,7 @@ class CountryGroupTag(TaggedItemBase):
 
 
 @register_snippet
-class CountryGroup(DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class CountryGroup(TranslatableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
     tags = TaggableManager(through=CountryGroupTag, blank=True)
     title = models.CharField(max_length=255, blank=True)
     region = models.CharField(max_length=100)
@@ -1271,7 +1260,8 @@ class VisaTag(TaggedItemBase):
 
 
 @register_snippet
-class Visa(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class Visa(TranslatableMixin, PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed,
+           ClusterableModel, models.Model):
     tags = TaggableManager(through=VisaTag, blank=True)
     title = models.CharField(max_length=255)
     body = StreamField(
@@ -1313,7 +1303,8 @@ class PassportTag(TaggedItemBase):
 
 
 @register_snippet
-class Passport(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class Passport(TranslatableMixin, PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed,
+               ClusterableModel, models.Model):
     tags = TaggableManager(through=PassportTag, blank=True)
     title = models.CharField(max_length=255)
     body = StreamField(
@@ -1355,7 +1346,8 @@ class AuthenticationTag(TaggedItemBase):
 
 
 @register_snippet
-class Authentication(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class Authentication(TranslatableMixin, PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed,
+                     ClusterableModel, models.Model):
     tags = TaggableManager(through=AuthenticationTag, blank=True)
     title = models.CharField(max_length=255)
     body = StreamField(
@@ -1397,7 +1389,8 @@ class MarriageTag(TaggedItemBase):
 
 
 @register_snippet
-class Marriage(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class Marriage(TranslatableMixin, PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
+               models.Model):
     tags = TaggableManager(through=MarriageTag, blank=True)
     title = models.CharField(max_length=255)
     body = StreamField(
@@ -1439,7 +1432,8 @@ class TravelSnippetTag(TaggedItemBase):
 
 
 @register_snippet
-class TravelSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel, models.Model):
+class TravelSnippet(TranslatableMixin, PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed,
+                    ClusterableModel, models.Model):
     tags = TaggableManager(through=TravelSnippetTag, blank=True)
     title = models.CharField(max_length=255)
     body = StreamField(
@@ -1483,8 +1477,8 @@ class BetaSnippetTag(TaggedItemBase):
 
 
 @register_snippet
-class BetaSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
-                  models.Model):
+class BetaSnippet(TranslatableMixin, PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed,
+                  ClusterableModel, models.Model):
     tags = TaggableManager(through=BetaSnippetTag, blank=True)
     title = models.CharField(max_length=255)
     rich_text = RichTextField(features=["h3", "h4", "h5", "bold", "italic", "link", "document-link"],
@@ -1522,8 +1516,8 @@ class WebsiteHeaderStraplineSnippetTag(TaggedItemBase):
 
 
 @register_snippet
-class WebsiteHeaderStraplineSnippet(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel,
-                                    models.Model):
+class WebsiteHeaderStraplineSnippet(TranslatableMixin, PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed,
+                                    ClusterableModel, models.Model):
     tags = TaggableManager(through=WebsiteHeaderStraplineSnippetTag, blank=True)
     title = models.CharField(max_length=255)
     rich_text = RichTextField(features=["h3", "h4", "h5", "bold", "italic", "link", "document-link"],

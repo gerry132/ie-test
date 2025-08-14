@@ -9,12 +9,13 @@
     {% check_page_type page.content_type 'Free Form Page' as FreeFormPage %}
     {% check_page_type page.content_type 'Free Form Page Base' as FreeFormPageBase %}
     {% check_page_type page.content_type 'mission page' as MissionPage %}
+    {% check_page_type page.content_type 'Parallax page' as Parallaxpage %}
     {% if MissionPage %}
     <div class="wrapper wrapper--large">
+        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
         {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
 
         {% include "patterns/molecules/hero/hero.html" with page=page %}
-        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
         {% if page.secondary_title %}
             <div class="wrapper wrapper--large wrapper--padding">
                 <h2 class="secondary-title">{{ page.secondary_title }}</h2>
@@ -24,10 +25,15 @@
     {% elif page.hero_image and page.hero_size == "half hero" or page.hero_video and page.hero_size == "half hero" %}
         {% include "patterns/molecules/hero/half_hero.html" with page=page %}
     {% elif page.hero_image or page.hero_video %}
+        {% if Parallaxpage %}
+            {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+        {% endif %}
         {% include "patterns/atoms/image/hero_image.html" with hero_image=page.hero_image %}
 
         {% include "patterns/molecules/hero/hero.html" with page=page %}
-        {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+        {% if not Parallaxpage %}
+            {% include "patterns/molecules/navigation/breadcrumbs.html" with page=page %}
+         {% endif %}
         {% if page.secondary_title %}
             <div class="wrapper wrapper--large wrapper--padding">
                 <h2 class="secondary-title">{{ page.secondary_title }}</h2>
@@ -51,13 +57,13 @@
                         {% if tagging_links %}
                         <ul class="tag__slide" style="margin-left: 3%;">
                                 {% for tags_category, tag_links in tagging_links %}
-                                    <li class="tag__slide-item"><a href="{{ tag_links }}" aria-label="{% trans 'Tag label' %}">{{ tags_category.specific.tag_label }}</a></li>
+                                    <li class="tag__slide-item" tabindex="0"><a tabindex="-1" href="{{ tag_links }}" aria-label="{% trans 'Tag label' %}">{{ tags_category.specific.tag_label }}</a></li>
                                 {% endfor %}
                                 {% for tags_category in tags_no_links %}
                                     <li class="tag__slide-item">{{ tags_category.specific.tag_label }}</li>
                                 {% endfor %}
                                 {% for tags_destination, tag_links in destination_tag_links %}
-                                    <li class="tag__slide-item"><a href="{{ tag_links.url }}" aria-label="{% trans 'Tag label' %}">{{ tags_destination }}</a></li>
+                                    <li class="tag__slide-item" tabindex="0"><a tabindex="-1" href="{{ tag_links.url }}" aria-label="{% trans 'Tag label' %}">{{ tags_destination }}</a></li>
                                 {% endfor %}
                              </ul>
                          {% endif %}
