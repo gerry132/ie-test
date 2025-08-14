@@ -1639,7 +1639,15 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips" {
                         "176.58.117.51/32",
                         "80.85.87.84/32",
                         "88.80.184.34/32",
-                        "178.79.136.28/32"]
+                        "178.79.136.28/32",
+                        "185.18.139.74",#inystful ips
+                        "185.18.139.107",#inystful ips
+                        "185.18.139.14",#inystful ips
+                        "185.18.139.76",#inystful ips
+                        "185.18.138.28",#inystful ips
+                        "185.18.138.29",#inystful ips
+                        "185.18.138.30"#inystful ips
+                        ]
 }
 
 
