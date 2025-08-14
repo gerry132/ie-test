@@ -143,16 +143,16 @@ resource "aws_lb_listener" "api_listener" {
 
   resource "aws_lb_target_group" "api_target_group" {
     name            = "api-target-group"
-    port            = 443
+    port            = 8000
     protocol        = "HTTP"
     target_type     = "ip"
     vpc_id          = var.vpc_id
 
     health_check {
-      interval                = 120
+      interval                = 240
       path                    = "/health-check/"
       protocol                = "HTTP"
-      timeout                 = 60
+      timeout                 = 120
       healthy_threshold       = 2
       unhealthy_threshold     = 3
       matcher                 = "200-399"

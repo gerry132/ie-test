@@ -1424,7 +1424,7 @@ data "template_file" "index_task_definition" {
     SETTINGS_OPENSEARCH_KEY             = local.SETTINGS_OPENSEARCH_KEY
     SETTINGS_OPENSEARCH_SECRET          = local.SETTINGS_OPENSEARCH_SECRET
     SETTINGS_OPENSEARCH_ENDPOINT        = local.SETTINGS_OPENSEARCH_ENDPOINT
-    SETTINGS_CORS_ALLOWED_ORIGINS       = "${local.SETTINGS_BASE_URL},https://api.${local.domain_ireland_ie},https://www.${local.domain_ireland_ie}"
+    SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
     api_domain                          = local.api_domain
   }
 }
@@ -1513,7 +1513,7 @@ locals {
   SETTINGS_CACHE_ADDRESS            = local.cache_address
   SETTINGS_DATABASE_URL             = local.db_master_url
   SETTINGS_SECRET_KEY               = data.aws_ssm_parameter.random_secret_key.value
-  SETTINGS_CORS_ALLOWED_ORIGINS     = "${local.SETTINGS_BASE_URL},https://www.${local.project_domain}"
+  SETTINGS_CORS_ALLOWED_ORIGINS = "${local.SETTINGS_BASE_URL},https://api.${local.domain_ireland_ie},https://www.${local.domain_ireland_ie}"
   SETTINGS_CORS_ALLOW_ALL_ORIGINS   = 0
   SETTINGS_EMAIL_HOST               = "email.${local.region}.amazonaws.com"
   SETTINGS_DEFAULT_FROM_EMAIL       = aws_ssm_parameter.DEFAULT_FROM_EMAIL.value
@@ -1527,6 +1527,7 @@ data "template_file" "task_definition" {
     log_group                           = aws_cloudwatch_log_group.ecs.name
     name                                = "${local.environment_name}-${local.project_name}"
     port                                = local.service_contrainer_port
+    api_domain                          = local.api_domain
     region                              = local.region
     task_cpu                            = local.task_cpu
     task_memory                         = local.task_memory

@@ -63,7 +63,7 @@ locals {
     "193.178.64.0/19",
     "193.178.96.0/20",
     "139.162.239.108/32",
-    "37.228.225.101/32", # gerry
+    #"37.228.225.101/32", # gerry
     "137.191.233.222/32" # browserstack
   ]
   non_gov_network_cird_blocks   = {
@@ -328,6 +328,17 @@ resource "aws_security_group_rule" "non_gov_network_to_lb_443" {
   protocol                  = "all"
   security_group_id         = aws_security_group.lb_gov_network.id
   cidr_blocks               = each.value.cidr_blocks
+}
+
+resource "aws_security_group_rule" "gov_network_to_lb_443" {
+
+  description               = "Gov networks"
+  type                      = "ingress"
+  from_port                 = 0
+  to_port                   = 0
+  protocol                  = "all"
+  security_group_id         = aws_security_group.lb_gov_network.id
+  cidr_blocks               = local.gov_network_cird_blocks
 }
 
 # Internal thing rules
@@ -1865,7 +1876,7 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
                         "51.183.41.207/32",   # Deekshana
                         "51.182.250.11/32",   # Fergal
                         "62.23.128.137/32",    # DFA
-                        "37.228.206.182/32",  # jaikiran_dev
+                        # "37.228.225.101/32", # gerry
                         ]
 }
 
@@ -1876,7 +1887,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
   scope = "CLOUDFRONT"
 
   default_action {
-    allow {}
+    block {}
   }
  rule {
     name     = "AllowWhitelistedIPs"
