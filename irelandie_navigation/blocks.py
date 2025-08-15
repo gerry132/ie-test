@@ -22,7 +22,7 @@ class LinkBlock(BaseBlockLinkContext):
         template = ("patterns/molecules/navigation/blocks/menu_item.html",)
 
 
-class LinkBlockWithURL(BaseBlockLinkContext):
+class LinkBlockWithURL(BaseBlockLinkContext, BaseBlockLinkValidation):
     page = blocks.PageChooserBlock(required=False)
     title = blocks.CharBlock(
         help_text=_("Leave blank to use the page's own title"), required=False
@@ -34,7 +34,7 @@ class LinkBlockWithURL(BaseBlockLinkContext):
     )
 
 
-class LinkWithURLANDSubLinks(BaseBlockLinkContext):
+class LinkWithURLANDSubLinks(BaseBlockLinkContext, BaseBlockLinkValidation):
     page = blocks.PageChooserBlock(required=False)
     title = blocks.CharBlock(
         help_text=_("Leave blank to use the page's own title"), required=False

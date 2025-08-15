@@ -36,23 +36,24 @@ ALT_BUTTON = ALT_HELP_TEXT % 'button'
 class BaseBlockLinkValidation(blocks.StructBlock):
     def clean(self, value):
         errors = {}
-        values = [value["page"], value["url"]]
-        # Set only a Page OR a URL or both can be blank
-        if all(values):
-            message = "Please choose only a page or set a URL."
+        page = value.get("page")
+        url = value.get("url")
+        title = value.get("title")
+        heading = value.get("heading")
 
+        if page and url:
+            message = "Please choose only a page or set a URL."
             errors["page"] = ErrorList([message])
             errors["url"] = ErrorList([message])
 
-        # A URL must have title
-        if value["url"] and not value["title"]:
-            errors["title"] = ErrorList(["Please set a title for the URL"])
-
-        if value["url"] and not value["heading"]:
-            errors["heading"] = ErrorList(["Please set a title for the URL"])
+        if url:
+            if "title" in value and not title:
+                errors["title"] = ErrorList(["Please set a title for the URL"])
+            elif "title" not in value and "heading" in value and not heading:
+                errors["heading"] = ErrorList(["Please set a heading for the URL"])
 
         if errors:
-            raise StructBlockValidationError(errors)
+            raise StructBlockValidationError(block_errors=errors)
 
         return super().clean(value)
 
