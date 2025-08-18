@@ -123,6 +123,17 @@ stages:
         IMAGE_TAG: $(image_tag)
 
     - template: templates/ecs-update-service.yml
+  
       parameters:
         clusterName: $(image_name)
         serviceName: $(image_name)
+
+
+  - job: DeployAPI
+    steps:
+      - template: templates/ecs-update-service.yml
+        parameters:
+          clusterName: $(image_name)
+          serviceName: $(env)-api
+          imageTag: $(image_tag)
+          region: $(aws_region)
