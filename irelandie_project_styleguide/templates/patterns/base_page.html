@@ -42,21 +42,21 @@
 <!-- End Google Tag Manager -->
 
     {% comment %}
-        Twitter summary card - see https://dev.twitter.com/cards/types/summary
+        X summary card - see https://dev.twitter.com/cards/types/summary
         and https://dev.twitter.com/cards/getting-started
     {% endcomment %}
     {% if page.social_image  %}
         {% image page.social_image width-1000 as social_img %}
         {# This will give a full path to the image when on staging or production because S3 storage is used. If testing locally, make sure you use the default localhost:8000 url. Testing via :3000 will give peculiar results. #}
-        <meta name="twitter:image" content="{{ social_img.url }}">
+        <meta name="x:image" content="{{ social_img.url }}">
         {% if social_img.alt %}
-            <meta name="twitter:image:alt" content="{{ social_img.alt }}">
+            <meta name="x:image:alt" content="{{ social_img.alt }}">
         {% endif %}
     {% else %}
         {% comment %}
         An example of how to add a default image to use for social sharing in case one is not provided on the page.
         Note that you need to explicitly add the root url here as the static path will not include it
-        <meta name="twitter:image" content="{{ current_site.root_url }}{% static 'images/social-image.png' %}">
+        <meta name="x:image" content="{{ current_site.root_url }}{% static 'images/social-image.png' %}">
         {% endcomment %}
     {% endif %}
 

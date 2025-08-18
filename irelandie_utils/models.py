@@ -1205,7 +1205,7 @@ class TwitterEmbed(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
     )
     username = models.CharField(
         max_length=100,
-        help_text="Twitter username",
+        help_text="X username",
     )
     width = models.PositiveIntegerField(
         default=0,
@@ -1252,6 +1252,7 @@ class TwitterEmbed(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
 
     class Meta:
         unique_together = ('translation_key', 'locale')
+        verbose_name = "X Embed"
 
 
 class VisaTag(TaggedItemBase):

@@ -19,8 +19,9 @@ class SocialMediaFieldsMixin(models.Model):
     twitter_handle = models.CharField(
         max_length=255,
         blank=True,
-        help_text="Your Twitter username without the @, e.g. katyperry",
-        validators=[validate_hostname]
+        help_text="Your X username without the @, e.g. katyperry",
+        validators=[validate_hostname],
+        verbose_name="X handle"
     )
     facebook_app_id = models.CharField(
         max_length=255, blank=True, help_text="Your Facebook app ID.",

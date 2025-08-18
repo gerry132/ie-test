@@ -382,8 +382,8 @@ msgstr "联系方式"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:129
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:168
-msgid "Keep up to date with the latest tweets from"
-msgstr "及时了解最新推文"
+msgid "Keep up to date with the latest posts from"
+msgstr "及时了解最新帖子"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/twitter_embed.html:6
 #: irelandie_project_styleguide/templates/patterns/snippets/twitterembedsnippet.html:7

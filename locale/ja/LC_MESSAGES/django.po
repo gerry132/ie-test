@@ -349,11 +349,11 @@ msgid "Share this page"
 msgstr ""
 
 #: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:17
-msgid "Share this page on Twitter"
+msgid "Share this page on X"
 msgstr ""
 
 #: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:17
-msgid "Share on Twitter"
+msgid "Share on X"
 msgstr ""
 
 #: irelandie_project_styleguide/templates/patterns/molecules/share/share.html:24
@@ -382,7 +382,7 @@ msgstr "お問い合わせ"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:129
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/person_block.html:168
-msgid "Keep up to date with the latest tweets from"
+msgid "Keep up to date with the latest posts from"
 msgstr "駐日アイルランド大使館公式X（旧ツイッター）アカウント"
 
 #: irelandie_project_styleguide/templates/patterns/molecules/streamfield/blocks/twitter_embed.html:6
@@ -415,7 +415,7 @@ msgid "Find us on Facebook"
 msgstr ""
 
 #: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:59
-msgid "Follow us on Twitter"
+msgid "Follow us on X"
 msgstr ""
 
 #: irelandie_project_styleguide/templates/patterns/organisms/footer/footer.html:65

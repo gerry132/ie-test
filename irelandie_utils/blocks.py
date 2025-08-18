@@ -36,20 +36,24 @@ ALT_BUTTON = ALT_HELP_TEXT % 'button'
 class BaseBlockLinkValidation(blocks.StructBlock):
     def clean(self, value):
         errors = {}
-        values = [value["page"], value["url"]]
-        # Set only a Page OR a URL or both can be blank
-        if all(values):
-            message = "Please choose only a page or set a URL."
+        page = value.get("page")
+        url = value.get("url")
+        title = value.get("title")
+        heading = value.get("heading")
 
+        if page and url:
+            message = "Please choose only a page or set a URL."
             errors["page"] = ErrorList([message])
             errors["url"] = ErrorList([message])
 
-        # A URL must have title
-        if value["url"] and not value["title"]:
-            errors["title"] = ErrorList(["Please set a title for the URL"])
+        if url:
+            if "title" in value and not title:
+                errors["title"] = ErrorList(["Please set a title for the URL"])
+            elif "title" not in value and "heading" in value and not heading:
+                errors["heading"] = ErrorList(["Please set a heading for the URL"])
 
         if errors:
-            raise StructBlockValidationError(errors)
+            raise StructBlockValidationError(block_errors=errors)
 
         return super().clean(value)
 
@@ -152,38 +156,6 @@ class StoryLinkBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         required=False,
         help_text="An external link.",
     )
-
-    def clean(self, value):
-        errors = {}
-        values = [value["page"], value["url"]]
-        # Set only a Page OR a URL
-        if sum(value is not None and value != "" for value in values) != 1:
-            message = "Please choose a page or set a URL."
-
-            errors["page"] = ErrorList([message])
-            errors["url"] = ErrorList([message])
-
-        # A URL must have title
-        if value["url"] and not value["title"]:
-            errors["title"] = ErrorList(["Please set a title for the URL"])
-
-        if errors:
-            raise StructBlockValidationError(errors)
-
-        return super().clean(value)
-
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context=parent_context)
-        try:
-            # A block may not have a page or url field
-            if value["url"]:
-                context["link_url"] = value["url"]
-            elif value["page"]:
-                context["link_url"] = value["page"].url
-
-        except KeyError:
-            context["link_url"] = None
-        return context
 
     class Meta:
         template = "patterns/molecules/streamfield/blocks/story_link_block.html"
@@ -661,7 +633,7 @@ class LogoCardsBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/logo_cards.html"
 
 
-class ArticleCardBlock(blocks.StructBlock):
+class ArticleCardBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
         required=True,
@@ -683,38 +655,6 @@ class ArticleCardBlock(blocks.StructBlock):
         icon = "image"
         label = "Article Card"
         template = "patterns/molecules/article_card/article_card.html"
-
-    def clean(self, value):
-        errors = {}
-        values = [value["page"], value["url"]]
-        # Set only a Page OR a URL
-        if sum(value is not None and value != "" for value in values) != 1:
-            message = "Please choose only a page or set a URL."
-
-            errors["page"] = ErrorList([message])
-            errors["url"] = ErrorList([message])
-
-        # A URL must have title
-        if value["url"] and not value["title"]:
-            errors["title"] = ErrorList(["Please set a title for the URL"])
-
-        if errors:
-            raise StructBlockValidationError(errors)
-
-        return super().clean(value)
-
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context=parent_context)
-        try:
-            # A block may not have a page or url field
-            if value["url"]:
-                context["link_url"] = value["url"]
-            elif value["page"]:
-                context["link_url"] = value["page"].url
-
-        except KeyError:
-            context["link_url"] = None
-        return context
 
 
 class ArticleCardsBlock(blocks.StructBlock):
@@ -772,7 +712,7 @@ class StatsBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/stats_block.html"
 
 
-class LinkCardBlock(blocks.StructBlock):
+class LinkCardBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
         required=True,
@@ -792,38 +732,6 @@ class LinkCardBlock(blocks.StructBlock):
         label = "Link Card"
         template = "patterns/molecules/link_card/link_card.html"
 
-    def clean(self, value):
-        errors = {}
-        values = [value["page"], value["url"]]
-        # Set only a Page OR a URL
-        if sum(value is not None and value != "" for value in values) != 1:
-            message = "Please choose only a page or set a URL."
-
-            errors["page"] = ErrorList([message])
-            errors["url"] = ErrorList([message])
-
-        # A URL must have title
-        if value["url"] and not value["title"]:
-            errors["title"] = ErrorList(["Please set a title for the URL"])
-
-        if errors:
-            raise StructBlockValidationError(errors)
-
-        return super().clean(value)
-
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context=parent_context)
-        try:
-            # A block may not have a page or url field
-            if value["url"]:
-                context["link_url"] = value["url"]
-            elif value["page"]:
-                context["link_url"] = value["page"].url
-
-        except KeyError:
-            context["link_url"] = None
-        return context
-
 
 class LinkCardsBlock(blocks.StructBlock):
     link_cards = blocks.StreamBlock([("link_card", LinkCardBlock())])
@@ -834,7 +742,7 @@ class LinkCardsBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/link_cards.html"
 
 
-class MiniLinkCardBlock(blocks.StructBlock):
+class MiniLinkCardBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
         required=True,
@@ -852,38 +760,6 @@ class MiniLinkCardBlock(blocks.StructBlock):
         icon = "image"
         label = "Mini Link Card"
         template = "patterns/molecules/streamfield/blocks/mini_link_card.html"
-
-    def clean(self, value):
-        errors = {}
-        values = [value["page"], value["url"]]
-        # Set only a Page OR a URL
-        if sum(value is not None and value != "" for value in values) != 1:
-            message = "Please choose only a page or set a URL."
-
-            errors["page"] = ErrorList([message])
-            errors["url"] = ErrorList([message])
-
-        # A URL must have title
-        if value["url"] and not value["title"]:
-            errors["title"] = ErrorList(["Please set a title for the URL"])
-
-        if errors:
-            raise StructBlockValidationError(errors)
-
-        return super().clean(value)
-
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context=parent_context)
-        try:
-            # A block may not have a page or url field
-            if value["url"]:
-                context["link_url"] = value["url"]
-            elif value["page"]:
-                context["link_url"] = value["page"].url
-
-        except KeyError:
-            context["link_url"] = None
-        return context
 
 
 class MiniLinkCardsBlock(blocks.StructBlock):
@@ -1351,9 +1227,10 @@ class AdditionalSocialBlock(blocks.StructBlock):
 
 
 class SocialFieldBlock(blocks.StructBlock):
-    hide_twitter_timeline = blocks.BooleanBlock(required=False, default=True)
-    twitter_title = blocks.CharBlock(required=False)
-    twitter_username = blocks.CharBlock(max_length=100, required=False, help_text="Twitter username")
+    hide_twitter_timeline = blocks.BooleanBlock(required=False, default=True, label="Hide X Timeline")
+    twitter_title = blocks.CharBlock(required=False, label="X Title")
+    twitter_username = blocks.CharBlock(max_length=100, required=False, help_text="X username",
+                                        label="X Username")
     additional_social_feed = blocks.StreamBlock(
         [
             ("additional_social_feed", AdditionalSocialBlock())
@@ -1447,7 +1324,7 @@ class PersonSocialBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/person_block.html"
 
 
-class LinkBoxBlock(blocks.StructBlock):
+class LinkBoxBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     # icon = blocks.ChoiceBlock(
     #     choices=(
     #         ("", "Choose an icon (optional)"),
@@ -1504,37 +1381,6 @@ class LinkBoxBlock(blocks.StructBlock):
         label = "Link Box"
         template = "patterns/molecules/link_box/link_box.html"
 
-    def clean(self, value):
-        errors = {}
-        values = [value["page"], value["url"]]
-        # Set only a Page OR a URL
-        if sum(value is not None and value != "" for value in values) != 1:
-            message = "Please choose only a page or set a URL."
-
-            errors["page"] = ErrorList([message])
-            errors["url"] = ErrorList([message])
-
-        # A URL must have title
-        if value["url"] and not value["heading"]:
-            errors["heading"] = ErrorList(["Please set a title for the URL"])
-
-        if errors:
-            raise StructBlockValidationError(errors)
-
-        return super().clean(value)
-
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context=parent_context)
-        try:
-            # A block may not have a page or url field
-            if value["url"]:
-                context["link_url"] = value["url"]
-            elif value["page"]:
-                context["link_url"] = value["page"].url
-        except KeyError:
-            context["link_url"] = None
-        return context
-
 
 class LinkBoxesBlock(blocks.StructBlock):
     link_boxes = blocks.StreamBlock([("link_box", LinkBoxBlock())])
@@ -1545,7 +1391,7 @@ class LinkBoxesBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/link_boxes.html"
 
 
-class LinkButtonBlock(blocks.StructBlock):
+class LinkButtonBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     heading = blocks.CharBlock(max_length=25)
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(
@@ -1562,38 +1408,6 @@ class LinkButtonBlock(blocks.StructBlock):
         icon = "image"
         label = "Link Button"
         template = "patterns/molecules/link_button/link_button.html"
-
-    def clean(self, value):
-        errors = {}
-        values = [value["page"], value["url"]]
-        # Set only a Page OR a URL
-        if sum(value is not None and value != "" for value in values) != 1:
-            message = "Please choose only a page or set a URL."
-
-            errors["page"] = ErrorList([message])
-            errors["url"] = ErrorList([message])
-
-        # A URL must have title
-        if value["url"] and not value["heading"]:
-            errors["heading"] = ErrorList(["Please set a title for the URL"])
-
-        if errors:
-            raise StructBlockValidationError(errors)
-
-        return super().clean(value)
-
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context=parent_context)
-        try:
-            # A block may not have a page or url field
-            if value["url"]:
-                context["link_url"] = value["url"]
-            elif value["page"]:
-                context["link_url"] = value["page"].url
-
-        except KeyError:
-            context["link_url"] = None
-        return context
 
 
 class LinkButtonsBlock(blocks.StructBlock):
