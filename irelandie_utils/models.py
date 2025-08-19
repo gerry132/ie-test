@@ -1608,4 +1608,3 @@ class TravelCautionStatus(PreviewableMixin, DraftStateMixin, RevisionMixin, inde
 
     def __str__(self):
         return f"{self.level} ({self.lang})"
-

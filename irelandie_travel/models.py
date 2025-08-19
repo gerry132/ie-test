@@ -6,7 +6,7 @@ from irelandie_utils.blocks import AdvancedRichTextBlock, LinkBoxesBlock, LinkCa
 
 from irelandie_utils.models import BasePage, SocialFields, ListingFields
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel, TabbedInterface, ObjectList, PageChooserPanel, HelpPanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel, TabbedInterface, ObjectList, PageChooserPanel
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from wagtail.blocks import PageChooserBlock
@@ -258,7 +258,7 @@ class TravelIndexPage(BasePage):
 
             index = page.title[0]
             if (self.locale.language_code == 'ga' and len(page_prefix[0]) == 2 and
-                (page_prefix[0] in ['An', 'Na', 'La'])):
+               (page_prefix[0] in ['An', 'Na', 'La'])):
 
                 if page.title[3].islower():
                     index = page.title[4]
