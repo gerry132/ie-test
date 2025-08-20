@@ -8,7 +8,7 @@ from django.utils.text import camel_case_to_spaces, slugify
 from irelandie_home.models import HomePage
 from irelandie_missions.models import MissionPage
 from irelandie_pages.models import FreeFormPage
-from irelandie_utils.models import SocialMediaSettings
+from irelandie_utils.models import SocialMediaSettings, TravelCautionStatus
 
 from datetime import datetime
 
@@ -241,7 +241,6 @@ def get_destination_tag_links(tag):
 
 @register.simple_tag
 def compare_tags(tag_landing_page_tags, freeform_page_tags, page):
-
     matches = [tag for tag in tag_landing_page_tags if tag in freeform_page_tags]
 
     if len(matches) >= 2:
@@ -280,6 +279,20 @@ def verify_path(context):
                 'host': content_url_map[request.get_host()]}
 
 
+def get_travel_caution_profile(level_str, locale):
+    """
+    Returns a TravelCautionStatus object for the given level and locale.
+    """
+    locale_code = getattr(locale, "language_code", str(locale)).capitalize()  # "English" / "Irish"
+    level_str_clean = level_str.lower().strip()
+    try:
+        return TravelCautionStatus.objects.get(level__iexact=level_str_clean, lang__iexact=locale_code)
+    except TravelCautionStatus.DoesNotExist:
+        return None
+    except TravelCautionStatus.MultipleObjectsReturned:
+        return TravelCautionStatus.objects.filter(level__iexact=level_str_clean, lang__iexact=locale_code).first()
+
+
 @register.simple_tag
 def get_travel_warning_by_locale(warning, locale):
     warning_map = {
@@ -301,11 +314,17 @@ def get_travel_warning_by_locale(warning, locale):
         },
     }
 
-    reg = re.compile(r'<dd>.*<\/dd>')
-    res = re.search(reg, str(warning))
-    if res:
-        res = re.sub(r'<.*?>', '', res.group(0))
-        return warning_map[res][str(locale)]
+    # Extract the level string
+    reg = re.compile(r'<dd>(.*?)<\/dd>')
+    match = re.search(reg, str(warning))
+    level_str = match.group(1).strip() if match else str(warning).strip()
+
+    profile = get_travel_caution_profile(level_str, locale)
+
+    res = re.sub(r'<.*?>', '', match.group(0))
+    warning_text = warning_map[res][str(locale)]
+
+    return warning_text, profile
 
 
 @register.simple_tag
@@ -360,3 +379,17 @@ def is_document_accessible(document, domain):
         return response.status_code == 200
     except Exception:
         return False
+
+
+@register.filter
+def explainer_text_by_locale(profile, locale):
+    """
+    Returns explainer text for the snippet based on locale.
+    """
+    if not profile:
+        return ""
+    # get language code
+    locale_code = getattr(locale, "language_code", str(locale)).lower()
+    if profile.lang.lower() == locale_code:
+        return profile.explainer_text
+    return ""

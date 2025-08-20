@@ -35,7 +35,7 @@ from irelandie_utils.blocks import (
     AccordionBlock,
     ContactBlock, MinimalArticleStoryBlock, GeneralContentBlocks, ImageBlock, LinkButtonsBlock
 )
-from irelandie_utils.constants import HeroSize
+from irelandie_utils.constants import HeroSize, TravelCautionLevel
 from irelandie_utils.query import order_by_pk_position
 import django.utils.timezone
 from wagtail.models import DraftStateMixin, RevisionMixin
@@ -680,16 +680,16 @@ class BasePage(SocialFields, ListingFields, Page):
     ]
 
     settings_panels = Page.settings_panels + ([
-                           MultiFieldPanel(
-                               [
-                                   FieldPanel("custom_header", permission="access_admin"),
-                                   FieldPanel("custom_footer", permission="access_admin")
-                               ],
-                               "Root Navigation"
-                           ),
-                       ] +
-                       webchat_panel
-                       )
+                                                  MultiFieldPanel(
+                                                      [
+                                                          FieldPanel("custom_header", permission="access_admin"),
+                                                          FieldPanel("custom_footer", permission="access_admin")
+                                                      ],
+                                                      "Root Navigation"
+                                                  ),
+                                              ] +
+                                              webchat_panel
+                                              )
 
     search_fields = Page.search_fields + [
         index.SearchField("listing_title"),
@@ -1122,16 +1122,16 @@ class MinimalArticlePage(BasePage):
         ListingFields.promote_panels
     )
     settings_panels = Page.settings_panels + ([
-                           MultiFieldPanel(
-                               [
-                                   FieldPanel("custom_header", permission="access_admin"),
-                                   FieldPanel("custom_footer", permission="access_admin")
-                               ],
-                               "Root Navigation"
-                           ),
-                       ] +
-                       BasePage.webchat_panel
-                       )
+                                                  MultiFieldPanel(
+                                                      [
+                                                          FieldPanel("custom_header", permission="access_admin"),
+                                                          FieldPanel("custom_footer", permission="access_admin")
+                                                      ],
+                                                      "Root Navigation"
+                                                  ),
+                                              ] +
+                                              BasePage.webchat_panel
+                                              )
 
     search_fields = BasePage.search_fields + [
         index.SearchField("introduction"),
@@ -1548,3 +1548,63 @@ class WebsiteHeaderStraplineSnippet(TranslatableMixin, PreviewableMixin, DraftSt
 
     def __str__(self):
         return self.title
+
+
+class TravelCautionStatusTag(TaggedItemBase):
+    content_object = ParentalKey(
+        'utils.TravelCautionStatus',
+        on_delete=models.CASCADE,
+        related_name='tagged_items'
+    )
+
+
+@register_snippet
+class TravelCautionStatus(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Indexed, ClusterableModel):
+    tags = TaggableManager(through=TravelCautionStatusTag, blank=True)
+
+    lang = models.CharField(
+        max_length=10,
+        verbose_name=_("Language"),
+        help_text=_("Language code, e.g., 'en' or 'ga'")
+    )
+
+    level = models.CharField(
+        max_length=100,
+        choices=TravelCautionLevel.choices,
+        verbose_name=_("Travel Caution Level")
+    )
+
+    explainer_text = RichTextField(verbose_name=_("Explainer Text"))
+
+    _revisions = GenericRelation(
+        "wagtailcore.Revision", related_query_name="travelcautionstatus"
+    )
+
+    panels = [
+        FieldPanel("lang"),
+        FieldPanel("level"),
+        FieldPanel("explainer_text"),
+        FieldPanel("tags"),
+        PublishingPanel(),
+    ]
+
+    search_fields = [
+        index.SearchField("level", partial_match=True),
+        index.SearchField("explainer_text"),
+    ]
+
+    class Meta:
+        unique_together = ("lang", "level")
+        verbose_name = _("Travel Caution Profile")
+        verbose_name_plural = _("Travel Caution Profiles")
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        snippet_published.send(sender=self.__class__, instance=self)
+
+    @property
+    def revisions(self):
+        return self._revisions
+
+    def __str__(self):
+        return f"{self.level} ({self.lang})"
