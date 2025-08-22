@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from modelcluster.fields import ParentalKey
 
 # from wagtailseo.models import SeoMixin, SeoType
 
 from irelandie_utils.blocks import AdvancedRichTextBlock, LinkBoxesBlock, LinkCardsBlock
-from irelandie_utils.constants import TravelCautionLevel
 
 from irelandie_utils.models import BasePage, SocialFields, ListingFields
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel, TabbedInterface, ObjectList, PageChooserPanel, InlinePanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel, TabbedInterface, ObjectList, PageChooserPanel
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from wagtail.blocks import PageChooserBlock
@@ -272,7 +270,7 @@ class TravelIndexPage(BasePage):
 
             index = page.title[0]
             if (self.locale.language_code == 'ga' and len(page_prefix[0]) == 2 and
-                (page_prefix[0] in ['An', 'Na', 'La'])):
+               (page_prefix[0] in ['An', 'Na', 'La'])):
 
                 if page.title[3].islower():
                     index = page.title[4]

@@ -1,5 +1,6 @@
 from wagtail import hooks
 
+
 @hooks.register("insert_editor_js")
 def editor_js():
     return """
