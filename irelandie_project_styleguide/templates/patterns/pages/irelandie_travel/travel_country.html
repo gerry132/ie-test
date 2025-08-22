@@ -26,7 +26,8 @@
                                 <div class="update-text" style="margin: 0 0 1rem;">Updated on: {% format_date page.last_published_at %}</div>
                             {% endif %}
                         </div>
-                        {% include "patterns/pages/irelandie_travel/greyed_alert.html" with page=page heading="Security Status" %}
+                        {% include "patterns/pages/irelandie_travel/greyed_alert.html" with page=page %}
+
             </div>
             {% include "patterns/pages/irelandie_travel/toc.html" with page=page %}
         <div class="section section--padding">

@@ -426,3 +426,36 @@
     outline-offset: 0;
     box-shadow: 0 0 0 6px #000;
 }
+ .accordion_travel .accordion__content a {
+        font-weight: $weight--bold;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.1rem;
+        text-underline-offset: 0.19em;
+    }
+
+ .accordion_travel .accordion__content a:focus {
+    outline: 2px solid #ffd740 !important;
+    outline-offset: 0 !important;
+    box-shadow: 0 0 0 4px #000, -4px 6px 0 0 #000, 4px 6px 0 0 #000 !important;
+}
+
+    .accordion_travel .accordion__content a:hover {
+        text-decoration-color: #004d44;
+        text-decoration-thickness: 0.2rem;
+    }
+
+    .accordion_travel .accordion__content a:active {
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.3rem;
+    }
+
+    .accordion_travel .accordion__content a:hover:focus {
+        text-underline-offset: 3px;
+    }
+
+    .accordion_travel .accordion__content a:active:focus {
+        text-decoration-thickness: 0.2rem;
+        text-underline-offset: 3px;
+    }

@@ -8,7 +8,7 @@ from django.utils.text import camel_case_to_spaces, slugify
 from irelandie_home.models import HomePage
 from irelandie_missions.models import MissionPage
 from irelandie_pages.models import FreeFormPage
-from irelandie_utils.models import SocialMediaSettings, TravelCautionStatus
+from irelandie_utils.models import SocialMediaSettings, TravelCautionStatus, RegionalAdvisoriesStatus
 
 from datetime import datetime
 
@@ -279,22 +279,30 @@ def verify_path(context):
                 'host': content_url_map[request.get_host()]}
 
 
-def get_travel_caution_profile(level_str, locale):
+def get_profile(model, level_str, locale):
     """
-    Returns a TravelCautionStatus object for the given level and locale.
+    Generic lookup for TravelCautionStatus or RegionalAdvisoriesStatus.
     """
-    locale_code = getattr(locale, "language_code", str(locale)).capitalize()  # "English" / "Irish"
+    locale_code = getattr(locale, "language_code", str(locale)).capitalize()
     level_str_clean = level_str.lower().strip()
     try:
-        return TravelCautionStatus.objects.get(level__iexact=level_str_clean, lang__iexact=locale_code)
-    except TravelCautionStatus.DoesNotExist:
+        return model.objects.get(level__iexact=level_str_clean, lang__iexact=locale_code)  # type: ignore
+    except model.DoesNotExist:  # type: ignore
         return None
-    except TravelCautionStatus.MultipleObjectsReturned:
-        return TravelCautionStatus.objects.filter(level__iexact=level_str_clean, lang__iexact=locale_code).first()
+    except model.MultipleObjectsReturned:  # type: ignore
+        return model.objects.filter(level__iexact=level_str_clean, lang__iexact=locale_code).first()
+
+
+def get_travel_caution_profile(level_str, locale):
+    return get_profile(TravelCautionStatus, level_str, locale)
+
+
+def get_regional_advisory_profile(level_str, locale):
+    return get_profile(RegionalAdvisoriesStatus, level_str, locale)
 
 
 @register.simple_tag
-def get_travel_warning_by_locale(warning, locale):
+def get_travel_warning_by_locale(warning, locale, advisory_type="travel"):
     warning_map = {
         "normal precautions/gnáth-réamhchúraimí": {
             "English": "Normal Precautions",
@@ -314,15 +322,23 @@ def get_travel_warning_by_locale(warning, locale):
         },
     }
 
-    # Extract the level string
-    reg = re.compile(r'<dd>(.*?)<\/dd>')
-    match = re.search(reg, str(warning))
-    level_str = match.group(1).strip() if match else str(warning).strip()
+    warning_str = str(warning).strip()
 
-    profile = get_travel_caution_profile(level_str, locale)
+    # Try to extract the value inside <dd> if present
+    match = re.search(r'<dd>(.*?)<\/dd>', warning_str)
+    level_str = match.group(1).strip() if match else warning_str
 
-    res = re.sub(r'<.*?>', '', match.group(0))
-    warning_text = warning_map[res][str(locale)]
+    # Remove any HTML tags
+    clean_level_str = re.sub(r'<.*?>', '', level_str).lower()
+
+    # Get profile (function assumed defined elsewhere)
+    if advisory_type == "regional":
+        profile = get_regional_advisory_profile(clean_level_str, locale)
+    else:
+        profile = get_travel_caution_profile(clean_level_str, locale)
+
+    # Find localized text from map, fallback to clean_level_str
+    warning_text = warning_map.get(clean_level_str, {}).get(str(locale), clean_level_str)
 
     return warning_text, profile
 
