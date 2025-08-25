@@ -1,5 +1,5 @@
 {% load static navigation_tags util_tags i18n wagtailcore_tags %}
-
+{% if page.travel_caution_level %}
 <div class="wrapper wrapper--large wrapper--padding">
 
     {% with index_page=page.get_parent.specific %}
@@ -16,7 +16,7 @@
             </div>
     {% endwith %}
 
-{% get_travel_warning_by_locale page.travel_caution_level page.locale as warning_profile %}
+{% get_travel_warning_by_locale page.travel_caution_level page.locale "travel" as warning_profile %}
     {% with warning_text=warning_profile.0 profile=warning_profile.1 %}
         {% if warning_text %}
             <div class="accordion_travel {{ warning_text|slugify }} accordion {% if profile and profile.explainer_text %} is-open {% endif %}" data-accordion>
@@ -49,3 +49,48 @@
     {% endwith %}
 
 </div>
+{% endif %}
+
+{% if page.regional_advisories %}
+    <div class="wrapper wrapper--large wrapper--padding">
+        <div class="regional-advisories-heading">
+            <h3 class="travel_country_security">{% translate "Regional Advisories" %}</h3>
+        </div>
+
+        {% for advisory in page.regional_advisories.0.value %}
+            {% get_travel_warning_by_locale advisory.travel_caution_level page.locale "regional" as warning_profile %}
+            {% with warning_text=warning_profile.0 profile=warning_profile.1 %}
+                {% if warning_text %}
+                    <div class="accordion_travel {{ warning_text|slugify }} accordion" data-accordion>
+                        <div class="accordion_travel__header">
+                            <div
+                                id="regional_advisory_{{ forloop.counter }}"
+                                class="accordion__button"
+                                {% if profile %}data-accordion-question role="button"{% endif %}
+                                {% if profile %}aria-controls="regional_advisory_answer_{{ forloop.counter }}" aria-expanded="false" tabindex="0"{% endif %}>
+                                <span class="status-icon"></span>
+                                <h3 class="accordion__title">{{ warning_text }} {% trans "regions" %}</h3>
+                                {% if profile %}
+                                    {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="accordion__icon" alt="expand" %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        {% if profile and profile.explainer_text %}
+                            <div
+                                id="regional_advisory_answer_{{ forloop.counter }}"
+                                class="accordion__content"
+                                data-accordion-answer
+                                aria-labelledby="regional_advisory_{{ forloop.counter }}"
+                                aria-hidden="true">
+                                {{ profile|explainer_text_by_locale:page.locale|safe }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                {% endif %}
+            {% endwith %}
+        {% endfor %}
+    </div>
+{% endif %}
+

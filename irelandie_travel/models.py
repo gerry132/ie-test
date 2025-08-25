@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+
 # from wagtailseo.models import SeoMixin, SeoType
 
 from irelandie_utils.blocks import AdvancedRichTextBlock, LinkBoxesBlock, LinkCardsBlock
@@ -11,7 +12,8 @@ from wagtail.snippets.blocks import SnippetChooserBlock
 
 from wagtail.blocks import PageChooserBlock
 
-from .blocks import TravelCautionBlock, ButtonBlock, InformationBlock, TravelRegionBlock, TravelIndexOuterBlockBool
+from .blocks import TravelCautionBlock, ButtonBlock, InformationBlock, TravelRegionBlock, TravelIndexOuterBlockBool, \
+    RegionalAdvisoriesBlock
 
 from irelandie_utils.blocks import AccordionBlock
 
@@ -50,6 +52,15 @@ class TravelCountryPage(BasePage):
         blank=False,
     )
 
+    regional_advisories = StreamField(
+        [("regional_advisories", RegionalAdvisoriesBlock())],
+        use_json_field=True,
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
+    )
+
     body = StreamField(
         [
             ("accordions", AccordionBlock()),
@@ -75,6 +86,7 @@ class TravelCountryPage(BasePage):
         FieldPanel('subtitle'),
         FieldPanel('region'),
         FieldPanel('travel_caution_level', heading="Security Status"),
+        FieldPanel('regional_advisories'),
         FieldPanel('body'),
         FieldPanel('outer_body'),
     ]
