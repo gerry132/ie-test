@@ -43,9 +43,15 @@
             </div>
             <div class="related-content-service-landing">
                 <h4 class="header--related-content">{% translate "Related content" %}</h4>
+                <ul>
                     {% for p in page.related_content %}
-                        <a href="{% if p.value.page.url %}{{p.value.page.url}}{% else %}{{p.value.url}}{% endif %}" aria-label="{{p.value.title}}" tabindex="-1"><h2 tabindex="0" class="toc-contents">{{p.value.title}}</h2></a>
+                        <li class="related-contents-number">
+                            <a class="toc-contents" href="{% if p.value.page.url %}{{ p.value.page.url }}{% else %}{{ p.value.url }}{% endif %}" aria-label="{{ p.value.title }}">
+                                {{ p.value.title }}
+                            </a>
+                        </li>
                     {% endfor %}
+                </ul>
             </div>
         </div>
     {% else %}

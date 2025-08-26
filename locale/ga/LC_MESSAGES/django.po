@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-21 16:20+0100\n"
+"POT-Creation-Date: 2025-08-26 11:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -900,8 +900,9 @@ msgstr "Leathnú Réigiún"
 msgid "Country URL"
 msgstr "URL tíre"
 
+#: irelandie_project_styleguide/templates/patterns/pages/missions/notice_page.html:174
 #: irelandie_project_styleguide/templates/patterns/pages/missions/services_landing_page.html:45
-#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:218
+#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:240
 msgid "Related content"
 msgstr "Ábhar gaolmhar"
 
@@ -917,15 +918,15 @@ msgstr "Torthaí"
 msgid "No results found."
 msgstr "Níor aimsíodh aon torthaí"
 
-#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:141
-#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:159
-#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:197
+#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:163
+#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:181
+#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:219
 msgid "Back to Top"
 msgstr "Ar Ais go Barr"
 
-#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:145
-#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:163
-#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:201
+#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:167
+#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:185
+#: irelandie_project_styleguide/templates/patterns/pages/toc/table_of_contents.html:223
 msgid "Back to top"
 msgstr "Ar Ais go Barr"
 
