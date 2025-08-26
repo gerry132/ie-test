@@ -1,10 +1,19 @@
 {% load static navigation_tags util_tags %}
 <div class="wrapper wrapper--large wrapper--padding">
-        <div class="wrapper wrapper--large travel-toc-table">
-            {% for block in page.body %}
-                {% for val in block.value.accordions %}
-                    <div class="toc-contents-number wrapper--padding">—<a href="#{{ val.value.title }}" aria-label="{{ val.value.title }}" tabindex="-1"><h2 tabindex="0" class="toc-contents"> {{val.value.title}}</h2></a></div>
+    <div class="wrapper wrapper--large travel-toc-table">
+        <nav aria-label="Table of contents">
+            <h2 class="visually-hidden">Contents</h2>
+            <ul>
+                {% for block in page.body %}
+                    {% for val in block.value.accordions %}
+                        <li class="toc-contents-number">
+                            —<a class="toc-contents" href="#{{ val.value.title|slugify }}" aria-label="{{ val.value.title }}">
+                                <span>{{ val.value.title }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-        </div>
+            </ul>
+        </nav>
+    </div>
 </div>
