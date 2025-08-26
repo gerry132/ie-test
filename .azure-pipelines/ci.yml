@@ -17,9 +17,6 @@ stages:
 - stage: test
   displayName: Check the Code
   jobs:
-  - template: templates/python-bandit.yml@azure-pipelines-templates
-    parameters:
-      srcDir: irelandie_*
   - job: Bandit
     displayName: Bandit (security checks)
     pool:
@@ -35,6 +32,9 @@ stages:
         pip install --upgrade bandit
         bandit -r irelandie_* -x tests,migrations
       displayName: Install & Run Bandit
+    - template: templates/python-bandit.yml@azure-pipelines-templates
+    parameters:
+      srcDir: irelandie_*
   - job: Lint
     steps:
     - script: |
