@@ -26,7 +26,8 @@
                                 <div class="update-text" style="margin: 0 0 1rem;">Updated on: {% format_date page.last_published_at %}</div>
                             {% endif %}
                         </div>
-                        {% include "patterns/pages/irelandie_travel/greyed_alert.html" with page=page heading="Security Status" %}
+                        {% include "patterns/pages/irelandie_travel/greyed_alert.html" with page=page %}
+
             </div>
             {% include "patterns/pages/irelandie_travel/toc.html" with page=page %}
         <div class="section section--padding">
@@ -53,7 +54,18 @@
     {% endblock %}
 
 <script>
-    document.getElementById('question-1').setAttribute("aria-expanded", true);
-    document.querySelector("[accordian='1']").classList.add('is-open');
+    const question1 = document.getElementById('question-1');
+    const accordion1 = document.querySelector("[accordian='1']");
+
+    if (question1 && accordion1) {
+        if (!question1.hasAttribute("aria-expanded") || question1.getAttribute("aria-expanded") === "false") {
+            question1.setAttribute("aria-expanded", true);
+            accordion1.classList.add('is-open');
+        }
+        else {
+            question1.setAttribute("aria-expanded", false);
+            accordion1.classList.remove('is-open');
+        }
+    }
 </script>
 {% endblock %}

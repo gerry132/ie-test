@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+
 # from wagtailseo.models import SeoMixin, SeoType
 
 from irelandie_utils.blocks import AdvancedRichTextBlock, LinkBoxesBlock, LinkCardsBlock
 
 from irelandie_utils.models import BasePage, SocialFields, ListingFields
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel, TabbedInterface, ObjectList
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel, TabbedInterface, ObjectList, PageChooserPanel
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from wagtail.blocks import PageChooserBlock
 
-from .blocks import TravelCautionBlock, ButtonBlock, InformationBlock, TravelRegionBlock, TravelIndexOuterBlockBool
+from .blocks import TravelCautionBlock, ButtonBlock, InformationBlock, TravelRegionBlock, TravelIndexOuterBlockBool, \
+    RegionalAdvisoriesBlock
 
 from irelandie_utils.blocks import AccordionBlock
 
@@ -41,11 +43,22 @@ class TravelCountryPage(BasePage):
 
     travel_caution_level = StreamField(
         [
-            ('security_status', TravelCautionBlock())
+            ('security_status', TravelCautionBlock(help_text="Please add a 'Travel Caution profile snippet' for each "
+                                                             "status to display with explainer text in English and "
+                                                             "Irish."))
         ],
         max_num=1,
         null=True,
-        blank=False
+        blank=False,
+    )
+
+    regional_advisories = StreamField(
+        [("regional_advisories", RegionalAdvisoriesBlock())],
+        use_json_field=True,
+        blank=True,
+        null=True,
+        min_num=0,
+        max_num=1,
     )
 
     body = StreamField(
@@ -73,6 +86,7 @@ class TravelCountryPage(BasePage):
         FieldPanel('subtitle'),
         FieldPanel('region'),
         FieldPanel('travel_caution_level', heading="Security Status"),
+        FieldPanel('regional_advisories'),
         FieldPanel('body'),
         FieldPanel('outer_body'),
     ]
@@ -179,15 +193,56 @@ class TravelIndexPage(BasePage):
         blank=True
     )
 
+    security_heading_button_text = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        help_text="The button text shown beside the 'Security Status' heading on all Travel Country pages."
+    )
+    security_heading_button_page = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text="Choose an internal page for the button link."
+    )
+    security_heading_button_url = models.URLField(
+        blank=True,
+        null=True,
+        help_text="Or enter an external URL for the button link. "
+    )
+
     content_panels = BasePage.content_panels + [
         FieldPanel('subtitle'),
         FieldPanel('quick_links'),
         FieldPanel('body'),
+        MultiFieldPanel(
+            [
+                FieldPanel("security_heading_button_text"),
+                PageChooserPanel("security_heading_button_page"),
+                FieldPanel("security_heading_button_url"),
+            ],
+            heading="Security Status Heading Button",
+        )
     ]
 
     subpage_types = [
         'TravelCountryPage',
     ]
+
+    def clean(self):
+        super().clean()
+        if self.security_heading_button_page and self.security_heading_button_url:
+            raise ValidationError("Please set either a page OR a URL, not both.")
+
+    def get_security_button_link(self):
+        """Return the resolved URL for the button if text + link exist, else None."""
+        if not self.security_heading_button_text:
+            return None
+        if self.security_heading_button_page:
+            return self.security_heading_button_page.url
+        return self.security_heading_button_url
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
@@ -207,15 +262,15 @@ class TravelIndexPage(BasePage):
         for page in travel_pages:
             page_prefix = page.title.split()
             eng_ga_map = {
-                    'Í': 'I',
-                    'É': 'E',
-                    'Ú': 'U',
-                    'Ó': 'O'
-                }
+                'Í': 'I',
+                'É': 'E',
+                'Ú': 'U',
+                'Ó': 'O'
+            }
 
             index = page.title[0]
             if (self.locale.language_code == 'ga' and len(page_prefix[0]) == 2 and
-                    (page_prefix[0] in ['An', 'Na', 'La'])):
+               (page_prefix[0] in ['An', 'Na', 'La'])):
 
                 if page.title[3].islower():
                     index = page.title[4]
