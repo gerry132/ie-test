@@ -863,11 +863,8 @@ resource "aws_lb_listener" "public_sites_443" {
   certificate_arn       = aws_acm_certificate.ireland_ie_ssl.arn
 
   default_action {
-    type = "fixed-response"
-    fixed_response {
-      content_type = "text/plain"
-      status_code  = 503
-    }
+    type                = "forward"
+    target_group_arn    = aws_lb_target_group.default.arn
   }
 }
 
@@ -1686,7 +1683,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
 
   rule {
     name     = "AWSRateBasedRuleDomesticDOS"
-    priority = 1
+    priority = 10
 
     action {
       captcha {}
@@ -1715,8 +1712,36 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
     }
   }
   rule {
-    name     = "AWS-AWSManagedRulesBotControlRuleSet"
+    name     = "AllowInsytfulBot"
     priority = 0
+    action {
+      allow {}
+    }
+    statement {
+      byte_match_statement {
+        search_string = "InsytfulBot/1.0 (+https://www.insytful.com/about-our-bot)"
+        field_to_match {
+          single_header {
+            name = "user-agent"
+          }
+        }
+        positional_constraint = "CONTAINS"
+        text_transformation {
+          priority = 0
+          type     = "NONE"
+        }
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AllowInsytfulBot"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule {
+    name     = "AWS-AWSManagedRulesBotControlRuleSet"
+    priority = 1
     override_action {
       none {
       }
@@ -1746,7 +1771,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
 
   rule {
     name     = "AWS-AWSManagedRulesAmazonIpReputationList"
-    priority = 2
+    priority = 3
     override_action {
       none {
       }
@@ -1775,7 +1800,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
 
   rule {
     name     = "AWS-AWSManagedRulesAnonymousIpList"
-    priority = 3
+    priority = 4
     override_action {
       none {
       }
@@ -1811,7 +1836,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
 
   rule {
     name     = "AWS-AWSManagedRulesKnownBadInputsRuleSet"
-    priority = 4
+    priority = 5
     override_action {
       none {
       }
@@ -1840,7 +1865,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
 
   rule {
     name     = "AWS-AWSManagedRulesUnixRuleSet"
-    priority = 5
+    priority = 6
     override_action {
       none {
       }
@@ -1869,7 +1894,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
 
   rule {
     name     = "AWS-AWSManagedRulesWindowsRuleSet"
-    priority = 6
+    priority = 7
     override_action {
       none {
       }
@@ -1904,7 +1929,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
   }
   rule {
     name     = "AWS-AWSManagedRulesSQLiRuleSet"
-    priority = 7
+    priority = 8
     override_action {
       none {
       }
@@ -2290,8 +2315,36 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
     allow {}
   }
   rule {
+    name     = "AllowInsytfulBot"
+    priority = 0
+    action {
+      allow {}
+    }
+    statement {
+      byte_match_statement {
+        search_string = "InsytfulBot/1.0 (+https://www.insytful.com/about-our-bot)"
+        field_to_match {
+          single_header {
+            name = "user-agent"
+          }
+        }
+        positional_constraint = "CONTAINS"
+        text_transformation {
+          priority = 0
+          type     = "NONE"
+        }
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AllowInsytfulBot"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule {
     name     = "AWSRateBasedRuleDomesticDOS"
-    priority = 1
+    priority = 2
     action {
       captcha {}
     }
@@ -2322,7 +2375,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
   }
   rule {
     name     = "AWS-AWSManagedRulesBotControlRuleSet"
-    priority = 0
+    priority = 1
 
     override_action {
       none {
