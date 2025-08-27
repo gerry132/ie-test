@@ -43,7 +43,7 @@ class TravelCautionLevel(models.TextChoices):
                                  'seachain taisteal neamhriachtanach', 'Avoid Non-Essential Travel/Seachain Taisteal ' \
                                                                        'Neamhriachtanach'
     DO_NOT_TRAVEL = 'do not travel/' \
-                    'ná taisteal', 'Do Not Travel/Ná Taisteal'
+                    'ná taistil', 'Do Not Travel/Ná Taistil'
 
 
 class NoticeIcon(models.TextChoices):
