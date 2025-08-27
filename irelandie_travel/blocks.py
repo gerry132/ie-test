@@ -87,7 +87,6 @@ class RegionalAdvisoriesBlock(blocks.ListBlock):
         levels = [item.get("travel_caution_level") for item in cleaned]
         dupes = {lvl for lvl in levels if levels.count(lvl) > 1}
         if dupes:
-            from django.core.exceptions import ValidationError
             errors = []
             for item in cleaned:
                 if item.get("travel_caution_level") in dupes:
