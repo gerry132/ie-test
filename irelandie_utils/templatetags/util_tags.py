@@ -318,7 +318,7 @@ def get_travel_warning_by_locale(warning, locale, advisory_type="travel"):
         },
     }
 
-    warning_str = str(warning).strip()
+    warning_str = str(warning or "").strip()
 
     # Try to extract the value inside <dd> if present
     match = re.search(r'<dd>(.*?)<\/dd>', warning_str)
@@ -329,21 +329,15 @@ def get_travel_warning_by_locale(warning, locale, advisory_type="travel"):
     }
 
     # Remove any HTML tags
-    clean_level_str = re.sub(r'<.*?>', '', level_str).lower()
-
+    clean_level_str = re.sub(r'<.*?>', '', level_str or "").lower()
     clean_level_str = NORMALIZATION_MAP.get(clean_level_str, clean_level_str)
-
-    # Map locale code to English/Irish
-    locale_map = {"en": "English", "ga": "Irish"}
-    locale_code = locale_map.get(getattr(locale, "language_code", str(locale)), "English")
 
     if advisory_type == "travel":
         profile = get_travel_caution_profile(clean_level_str, locale)
-        warning_text = warning_map.get(clean_level_str, {}).get(locale_code, clean_level_str)
+        warning_text = warning_map.get(clean_level_str, {}).get(str(locale), clean_level_str)
         return warning_text, profile
     else:
-        # regional: only return localized text
-        warning_text = warning_map.get(clean_level_str, {}).get(locale_code, clean_level_str)
+        warning_text = warning_map.get(clean_level_str, {}).get(str(locale), clean_level_str)
         return warning_text
 
 
