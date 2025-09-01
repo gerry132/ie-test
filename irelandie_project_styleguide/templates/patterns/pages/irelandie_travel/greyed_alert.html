@@ -67,37 +67,28 @@
                             <div
                                 id="regional_advisory_{{ forloop.counter }}"
                                 class="accordion__button"
-                                {% if advisory.explainer_text_ga or advisory.explainer_text_en %}
-                                data-accordion-question role="button"
-                                aria-controls="regional_advisory_answer_{{ forloop.counter }}"
-                                aria-expanded="false"
-                                tabindex="0"
-                            {% endif %}>
+                                {% if advisory.explainer_text %}
+                                    data-accordion-question role="button"
+                                    aria-controls="regional_advisory_answer_{{ forloop.counter }}"
+                                    aria-expanded="false"
+                                    tabindex="0"
+                                {% endif %}>
                                 <span class="status-icon"></span>
                                 <h3 class="accordion__title">{{ warning_text }} {% trans "regions" %}</h3>
-                                {% if advisory.explainer_text_ga or advisory.explainer_text_en %}
+                                {% if advisory.explainer_text %}
                                     {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="accordion__icon" alt="expand" %}
                                 {% endif %}
                             </div>
                         </div>
 
-                        {% if page.locale.language_code == "ga" and advisory.explainer_text_ga %}
+                        {% if advisory.explainer_text %}
                             <div
                                 id="regional_advisory_answer_{{ forloop.counter }}"
                                 class="accordion__content"
                                 data-accordion-answer
                                 aria-labelledby="regional_advisory_{{ forloop.counter }}"
                                 aria-hidden="true">
-                                {{ advisory.explainer_text_ga|safe }}
-                            </div>
-                        {% elif advisory.explainer_text_en %}
-                            <div
-                                id="regional_advisory_answer_{{ forloop.counter }}"
-                                class="accordion__content"
-                                data-accordion-answer
-                                aria-labelledby="regional_advisory_{{ forloop.counter }}"
-                                aria-hidden="true">
-                                {{ advisory.explainer_text_en|safe }}
+                                {{ advisory.explainer_text|safe }}
                             </div>
                         {% endif %}
                     </div>

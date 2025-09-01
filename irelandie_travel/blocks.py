@@ -65,13 +65,8 @@ class RegionalAdvisoryBlock(blocks.StructBlock):
         choices=TravelCautionLevel.choices,
         label="Advisory level"
     )
-    explainer_text_en = blocks.RichTextBlock(
-        required=False,
-        label="Explainer (English)",
-    )
-    explainer_text_ga = blocks.RichTextBlock(
-        required=False,
-        label="Explainer (Irish)",
+    explainer_text = blocks.RichTextBlock(
+        required=True,
     )
 
     class Meta:
