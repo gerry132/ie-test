@@ -222,7 +222,7 @@ def news_page_changed(news_page):
 
             paginated_urls = []
             for i in range(1, total_pages + 1):
-                paginated_url = f"{news_index_page.full_url}?page={i}"
+                paginated_url = f"{news_index_page.url}?page={i}"
                 paginated_urls.append(paginated_url)
 
             batch = PurgeBatch()
