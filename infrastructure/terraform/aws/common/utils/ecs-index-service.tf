@@ -24,7 +24,7 @@ resource "aws_ecs_task_definition" "index_task" {
 resource "aws_cloudwatch_event_rule" "hourly_trigger" {
   name        = "${var.environment_name}-hourly-publish"
   description = "Triggers the ECS task to publish scheduled pages"
-  schedule_expression = "rate(60 minutes)"
+  schedule_expression = "cron(0 * * * ? *)"
 }
 
 # event bridge weekly trigger

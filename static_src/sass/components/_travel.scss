@@ -372,28 +372,28 @@
 
 /* Do Not Travel */
 .accordion_travel.do-not-travel,
-.accordion_travel.na-taisteal {
+.accordion_travel.na-taistil {
     border-color: #F00000;
 }
 
 .accordion_travel.do-not-travel .accordion_travel__header,
-.accordion_travel.na-taisteal .accordion_travel__header {
+.accordion_travel.na-taistil .accordion_travel__header {
     background-color: #F00000;
     color: #FFFFFF;
 }
 
 .accordion_travel.do-not-travel .status-icon,
-.accordion_travel.na-taisteal .status-icon {
+.accordion_travel.na-taistil .status-icon {
     background-image: url('../images/cssBackgrounds/Do_Not_Travel.png');
 }
 
 .accordion_travel.do-not-travel .accordion__title,
-.accordion_travel.na-taisteal .accordion__title {
+.accordion_travel.na-taistil .accordion__title {
     color: #FFFFFF;
 }
 
 .accordion_travel.do-not-travel .accordion__icon,
-.accordion_travel.na-taisteal .accordion__icon {
+.accordion_travel.na-taistil .accordion__icon {
     fill: #FFFFFF;
     color: #FFFFFF;
     stroke: #FFFFFF;

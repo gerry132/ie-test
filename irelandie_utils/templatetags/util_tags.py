@@ -8,7 +8,7 @@ from django.utils.text import camel_case_to_spaces, slugify
 from irelandie_home.models import HomePage
 from irelandie_missions.models import MissionPage
 from irelandie_pages.models import FreeFormPage
-from irelandie_utils.models import SocialMediaSettings, TravelCautionStatus, RegionalAdvisoriesStatus
+from irelandie_utils.models import SocialMediaSettings, TravelCautionStatus
 
 from datetime import datetime
 
@@ -297,10 +297,6 @@ def get_travel_caution_profile(level_str, locale):
     return get_profile(TravelCautionStatus, level_str, locale)
 
 
-def get_regional_advisory_profile(level_str, locale):
-    return get_profile(RegionalAdvisoriesStatus, level_str, locale)
-
-
 @register.simple_tag
 def get_travel_warning_by_locale(warning, locale, advisory_type="travel"):
     warning_map = {
@@ -316,31 +312,33 @@ def get_travel_warning_by_locale(warning, locale, advisory_type="travel"):
             "English": "Avoid Non-Essential Travel",
             "Irish": "Seachain Taisteal Neamhriachtanach",
         },
-        "do not travel/ná taisteal": {
+        "do not travel/ná taistil": {
             "English": "Do Not Travel",
-            "Irish": "Ná Taisteal",
+            "Irish": "Ná Taistil",
         },
     }
 
-    warning_str = str(warning).strip()
+    warning_str = str(warning or "").strip()
 
     # Try to extract the value inside <dd> if present
     match = re.search(r'<dd>(.*?)<\/dd>', warning_str)
     level_str = match.group(1).strip() if match else warning_str
 
+    NORMALIZATION_MAP = {
+        "do not travel/ná taisteal": "do not travel/ná taistil",
+    }
+
     # Remove any HTML tags
-    clean_level_str = re.sub(r'<.*?>', '', level_str).lower()
+    clean_level_str = re.sub(r'<.*?>', '', level_str or "").lower()
+    clean_level_str = NORMALIZATION_MAP.get(clean_level_str, clean_level_str)
 
-    # Get profile (function assumed defined elsewhere)
-    if advisory_type == "regional":
-        profile = get_regional_advisory_profile(clean_level_str, locale)
-    else:
+    if advisory_type == "travel":
         profile = get_travel_caution_profile(clean_level_str, locale)
-
-    # Find localized text from map, fallback to clean_level_str
-    warning_text = warning_map.get(clean_level_str, {}).get(str(locale), clean_level_str)
-
-    return warning_text, profile
+        warning_text = warning_map.get(clean_level_str, {}).get(str(locale), clean_level_str)
+        return warning_text, profile
+    else:
+        warning_text = warning_map.get(clean_level_str, {}).get(str(locale), clean_level_str)
+        return warning_text
 
 
 @register.simple_tag

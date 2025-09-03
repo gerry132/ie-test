@@ -2,7 +2,7 @@
 
 .toc-table{
     background: rgba(0, 77, 70, 0.1);
-    border-radius: 20px;
+    border-radius: 0px;
     padding: 20px 0 2px;
     margin-right: 15% !important;
 
@@ -10,8 +10,20 @@
 
 .travel-toc-table{
     background: rgba(0, 77, 70, 0.1);
-    border-radius: 20px;
+    border-radius: 0px;
     padding: 20px 0 2px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .toc-contents {
@@ -25,7 +37,6 @@
     text-decoration-thickness: 0.1rem;
     text-underline-offset: 0.19em;
     font-weight: 500;
-    padding-bottom: 5px;
     width: fit-content;
 }
 .toc-contents:hover, .toc-contents:focus:hover {
@@ -40,7 +51,7 @@
       text-decoration-thickness: 0.3rem;
 
 }
-.toc-contents-number{
+.toc-contents-number {
     display: flex;
     gap: 5px;
     flex-direction: row;
@@ -50,10 +61,12 @@
     font-size: 20px;
     line-height: 22px;
     font-weight: 500;
-
+    padding: 0px 20px 20px;
 }
 
-
+.related-contents-number {
+    padding-bottom: 1rem;
+    }
 
 .related-content {
     width: 60%;

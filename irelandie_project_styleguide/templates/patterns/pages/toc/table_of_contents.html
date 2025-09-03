@@ -84,25 +84,47 @@
                                     <div class="toc-padding"></div>
                                 {% endif %}
                             {% endfor %}
+                            {% load static navigation_tags util_tags %}
                             <a name="top" title="top"></a>
-                                <div class="wrapper wrapper--large toc-table">
-                                {% for block in page.admin_body1 %}
-                                    {% if block.block_type == 'admin_contents' or block.block_type == 'contact_details' %}
-                                       <div class="toc-contents-number wrapper--padding">—<a href="#{{block.value.title}}" aria-label="{{block.value.title}}" tabindex="-1"><h2 tabindex="0" class="toc-contents"> {{block.value.title}}</h2></a></div>
-                                    {% endif %}
+                            <div class="wrapper wrapper--large wrapper--padding">
+                                <div class="wrapper wrapper--large travel-toc-table">
+                                    <nav aria-label="Table of contents">
+                                        <h2 class="visually-hidden">Contents</h2>
+                                        <ul>
+                                            {% for block in page.admin_body1 %}
+                                                {% if block.block_type == 'admin_contents' or block.block_type == 'contact_details' %}
+                                                    <li class="toc-contents-number">
+                                                        —<a class="toc-contents" href="#{{ block.value.title|slugify }}" aria-label="{{ block.value.title }}">
+                                                            <span>{{ block.value.title }}</span>
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
 
-                                {% endfor %}
-                                {% for block in page.body %}
-                                    {% if block.block_type == 'content' %}
-                                    <div class="toc-contents-number wrapper--padding">—<a href="#{{block.value.title}}" aria-label="{{block.value.title}}" tabindex="-1"><h2 tabindex="0" class="toc-contents"> {{block.value.title}}</h2></a></div>
-                                    {% endif %}
-                                {% endfor %}
-                                {% for block in page.admin_body2 %}
-                                    {% if block.block_type == 'admin_content'  or block.block_type == 'contact_details'%}
-                                     <div class="toc-contents-number wrapper--padding">—<a href="#{{block.value.title}}" aria-label="{{block.value.title}}" tabindex="-1"><h2 tabindex="0" class="toc-contents"> {{block.value.title}}</h2></a></div>
-                                    {% endif %}
-                                {% endfor %}
+                                            {% for block in page.body %}
+                                                {% if block.block_type == 'content' %}
+                                                    <li class="toc-contents-number">
+                                                        —<a class="toc-contents" href="#{{ block.value.title|slugify }}" aria-label="{{ block.value.title }}">
+                                                            <span>{{ block.value.title }}</span>
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                            {% for block in page.admin_body2 %}
+                                                {% if block.block_type == 'admin_content' or block.block_type == 'contact_details' %}
+                                                    <li class="toc-contents-number">
+                                                        —<a class="toc-contents" href="#{{ block.value.title|slugify }}" aria-label="{{ block.value.title }}">
+                                                            <span>{{ block.value.title }}</span>
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </nav>
                                 </div>
+                            </div>
+
                             {% endif %}
                             {% if page.introduction %}
                                 <div class="wrapper wrapper--large content--padding" style="padding-top:20px;">
@@ -214,13 +236,19 @@
                     </div>
                     <!--start of  col-md-12 col-lg-3 -->
                     <div class="col-sm-12 col-md-12 col-lg-3 wrapper">
-                            {% if page.related_content %}
-                                <h4 class="header--related-content">{% translate "Related content" %}</h4>
+                        {% if page.related_content %}
+                            <h4 class="header--related-content">{% translate "Related content" %}</h4>
+                            <ul>
                                 {% for p in page.related_content %}
-                                    <a href="{% if p.value.page.url %}{{p.value.page.url}}{% else %}{{p.value.url}}{% endif %}" aria-label="{{p.value.title}}" tabindex="-1"><h2 tabindex="0" class="toc-contents">{{p.value.title}}</h2></a>
+                                    <li class="related-contents-number">
+                                        <a class="toc-contents" href="{% if p.value.page.url %}{{ p.value.page.url }}{% else %}{{ p.value.url }}{% endif %}" aria-label="{{ p.value.title }}">
+                                            {{ p.value.title }}
+                                        </a>
+                                    </li>
                                 {% endfor %}
-                            {% endif %}
-                        </div>
+                            </ul>
+                        {% endif %}
+                    </div>
                     <!--end of  col-md-12 col-lg-3 -->
                 </div>
             </div>

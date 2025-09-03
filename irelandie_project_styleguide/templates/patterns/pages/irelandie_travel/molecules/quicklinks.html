@@ -1,10 +1,13 @@
 {% load i18n %}
-<div class="container--quick--link featured-blocks--eight ">
+<ul class="container--quick--link featured-blocks--eight">
     {% for link in page.quick_links %}
-    <a href="{{link.value.url}}" aria-label="{% trans 'Quick link' %}" class="travel-buttons-country">
-                <h3 class="quick--link--text">
+        <li>
+            <a href="{{ link.value.url }}" aria-label="{% trans 'Quick link' %}" class="travel-buttons-country">
+                <span class="quick--link--text">
                     {{link.value}}
-                </h3>
-    </a>
+                </span>
+            </a>
+        </li>
     {% endfor %}
-</div>
+</ul>
+
