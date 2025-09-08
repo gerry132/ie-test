@@ -240,15 +240,6 @@ def news_page_changed(news_page):
             # Purge all added pages
             batch.purge()
 
-            paginated_urls.append(news_index_page.url)
-            paginated_urls.append(news_landing_page.url)
-            if home_page:
-                paginated_urls.append(home_page.url)
-
-            # Invalidate cache individually
-            for url in paginated_urls:
-                invalidate_page_cache(url)
-
 
 @receiver(page_published, sender=NewsPage)
 def news_published_handler(instance, **kwargs):
