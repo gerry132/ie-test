@@ -8,7 +8,6 @@ from wagtail.fields import StreamField
 # from wagtailseo.models import SeoType
 
 from irelandie_utils import blocks
-from irelandie_utils.cache_invalidation import invalidate_page_cache
 from irelandie_utils.utils import get_model_info
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
