@@ -8,7 +8,6 @@ from wagtail.fields import StreamField
 # from wagtailseo.models import SeoType
 
 from irelandie_utils import blocks
-from irelandie_utils.cache_invalidation import invalidate_page_cache
 from irelandie_utils.utils import get_model_info
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -239,15 +238,6 @@ def news_page_changed(news_page):
 
             # Purge all added pages
             batch.purge()
-
-            paginated_urls.append(news_index_page.url)
-            paginated_urls.append(news_landing_page.url)
-            if home_page:
-                paginated_urls.append(home_page.url)
-
-            # Invalidate cache individually
-            for url in paginated_urls:
-                invalidate_page_cache(url)
 
 
 @receiver(page_published, sender=NewsPage)

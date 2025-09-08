@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-DRY_RUN = True # DO NOT RUN AS FALSE ON PROD....EVER!!!!
+DRY_RUN = True  # DO NOT RUN AS FALSE ON PROD....EVER!!!!
 INCLUDE_INACTIVE = True
 
 qs = User.objects.filter(is_superuser=False)
