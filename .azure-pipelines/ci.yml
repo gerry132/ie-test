@@ -66,6 +66,33 @@ stages:
 
     - script: pip install -r requirements.txt
       displayName: Install Requirements
+    - script: |
+        cat .azure-pipelines/.env_pipeline > app/.env
+        export USE_S3=1
+        export AWS_DEFAULT_REGION=$(aws_region)
+
+        # Who am I + quick probe
+        aws sts get-caller-identity
+        echo hi >/tmp/_probe.txt
+        aws s3api put-object --bucket preprod-ireie-assets --key static/_probe.txt --body /tmp/_probe.txt
+        aws s3api head-object --bucket preprod-ireie-assets --key static/_probe.txt
+
+        # Show what Django actually sees
+        python - <<'PY'
+        import os
+        print("BUCKET=", os.getenv("AWS_STORAGE_BUCKET_NAME"))
+        print("LOCATION=", os.getenv("AWS_LOCATION"))
+        print("REGION=", os.getenv("AWS_S3_REGION_NAME"))
+
+
+        python manage.py collectstatic --noinput -v 3
+        displayName: Upload Static Files to S3
+        env:
+          AWS_ACCESS_KEY_ID: $(aws_access_key)
+          AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
+          AWS_S3_REGION_NAME: $(aws_region)
+          AWS_STORAGE_BUCKET_NAME: preprod-ireie-assets
+          AWS_LOCATION: static
 
     - script: |
         cat .azure-pipelines/.env_pipeline > app/.env
