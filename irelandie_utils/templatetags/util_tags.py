@@ -8,7 +8,7 @@ from django.utils.text import camel_case_to_spaces, slugify
 from irelandie_home.models import HomePage
 from irelandie_missions.models import MissionPage
 from irelandie_pages.models import FreeFormPage
-from irelandie_utils.models import SocialMediaSettings
+from irelandie_utils.models import SocialMediaSettings, TravelCautionStatus
 
 from datetime import datetime
 
@@ -241,7 +241,6 @@ def get_destination_tag_links(tag):
 
 @register.simple_tag
 def compare_tags(tag_landing_page_tags, freeform_page_tags, page):
-
     matches = [tag for tag in tag_landing_page_tags if tag in freeform_page_tags]
 
     if len(matches) >= 2:
@@ -280,8 +279,26 @@ def verify_path(context):
                 'host': content_url_map[request.get_host()]}
 
 
+def get_profile(model, level_str, locale):
+    """
+    Generic lookup for TravelCautionStatus or RegionalAdvisoriesStatus.
+    """
+    locale_code = getattr(locale, "language_code", str(locale)).capitalize()
+    level_str_clean = level_str.lower().strip()
+    try:
+        return model.objects.get(level__iexact=level_str_clean, lang__iexact=locale_code)  # type: ignore
+    except model.DoesNotExist:  # type: ignore
+        return None
+    except model.MultipleObjectsReturned:  # type: ignore
+        return model.objects.filter(level__iexact=level_str_clean, lang__iexact=locale_code).first()
+
+
+def get_travel_caution_profile(level_str, locale):
+    return get_profile(TravelCautionStatus, level_str, locale)
+
+
 @register.simple_tag
-def get_travel_warning_by_locale(warning, locale):
+def get_travel_warning_by_locale(warning, locale, advisory_type="travel"):
     warning_map = {
         "normal precautions/gnáth-réamhchúraimí": {
             "English": "Normal Precautions",
@@ -295,17 +312,33 @@ def get_travel_warning_by_locale(warning, locale):
             "English": "Avoid Non-Essential Travel",
             "Irish": "Seachain Taisteal Neamhriachtanach",
         },
-        "do not travel/ná taisteal": {
+        "do not travel/ná taistil": {
             "English": "Do Not Travel",
-            "Irish": "Ná Taisteal",
+            "Irish": "Ná Taistil",
         },
     }
 
-    reg = re.compile(r'<dd>.*<\/dd>')
-    res = re.search(reg, str(warning))
-    if res:
-        res = re.sub(r'<.*?>', '', res.group(0))
-        return warning_map[res][str(locale)]
+    warning_str = str(warning or "").strip()
+
+    # Try to extract the value inside <dd> if present
+    match = re.search(r'<dd>(.*?)<\/dd>', warning_str)
+    level_str = match.group(1).strip() if match else warning_str
+
+    NORMALIZATION_MAP = {
+        "do not travel/ná taisteal": "do not travel/ná taistil",
+    }
+
+    # Remove any HTML tags
+    clean_level_str = re.sub(r'<.*?>', '', level_str or "").lower()
+    clean_level_str = NORMALIZATION_MAP.get(clean_level_str, clean_level_str)
+
+    if advisory_type == "travel":
+        profile = get_travel_caution_profile(clean_level_str, locale)
+        warning_text = warning_map.get(clean_level_str, {}).get(str(locale), clean_level_str)
+        return warning_text, profile
+    else:
+        warning_text = warning_map.get(clean_level_str, {}).get(str(locale), clean_level_str)
+        return warning_text
 
 
 @register.simple_tag
@@ -360,3 +393,17 @@ def is_document_accessible(document, domain):
         return response.status_code == 200
     except Exception:
         return False
+
+
+@register.filter
+def explainer_text_by_locale(profile, locale):
+    """
+    Returns explainer text for the snippet based on locale.
+    """
+    if not profile:
+        return ""
+    # get language code
+    locale_code = getattr(locale, "language_code", str(locale)).lower()
+    if profile.lang.lower() == locale_code:
+        return profile.explainer_text
+    return ""

@@ -60,9 +60,18 @@
     border: 1px solid #d3d3d3;
 }
 }
-.travel_country_security{
+.travel_country_security {
     font-weight: 700;
     font-size: 28px;
+    line-height: 34px;
+    margin-bottom: 0.5rem;
+
+    color: #004D44;
+}
+
+.travel_regional_country_security {
+    font-weight: 700;
+    font-size: 24px;
     line-height: 34px;
     margin-bottom: 0.5rem;
 
@@ -248,3 +257,214 @@
     color: #004D44;
 }
 
+.accordion_travel {
+    max-width: unset;
+    margin-bottom: 20px;
+    border-style: solid;
+    border-radius: 0px;
+}
+
+.accordion_travel__header {
+    margin: 0;
+    padding: 0;
+    border-radius: 0px;
+}
+
+.accordion_travel .accordion__button {
+    height: 65px;
+    justify-content: unset;
+}
+
+.accordion_travel .accordion__content {
+    border-radius: 0px;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 0 20px;
+}
+
+.accordion_travel .accordion__title {
+    margin: 0 20px 0 10px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-weight: 600;
+}
+
+.accordion_travel .status-icon {
+    display: inline-block;
+    width: 47px;
+    height: 44px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 10px;
+}
+
+.accordion_travel .accordion__icon {
+    margin-left: auto;
+}
+
+/* Normal Precautions */
+.accordion_travel.normal-precautions,
+.accordion_travel.gnath-reamhchuraimi {
+    border-color: #00BA42;
+}
+
+.accordion_travel.normal-precautions .accordion_travel__header,
+.accordion_travel.gnath-reamhchuraimi .accordion_travel__header {
+    background-color: #00BA42;
+    color: #020202;
+}
+
+.accordion_travel.normal-precautions .status-icon,
+.accordion_travel.gnath-reamhchuraimi .status-icon {
+    background-image: url('../images/cssBackgrounds/Normal_Precautions.png');
+}
+
+.accordion_travel.normal-precautions .accordion__icon,
+.accordion_travel.gnath-reamhchuraimi .accordion__icon {
+    fill: #020202;
+    color: #020202;
+    stroke: #020202;
+}
+
+/* High Degree of Caution */
+.accordion_travel.high-degree-of-caution,
+.accordion_travel.bi-an-churamach {
+    border-color: #FFC300;
+}
+
+.accordion_travel.high-degree-of-caution .accordion_travel__header,
+.accordion_travel.bi-an-churamach .accordion_travel__header {
+    background-color: #FFC300;
+    color: #020202;
+}
+
+.accordion_travel.high-degree-of-caution .status-icon,
+.accordion_travel.bi-an-churamach .status-icon {
+    background-image: url('../images/cssBackgrounds/High_Degree_Of_Caution.png');
+}
+
+.accordion_travel.high-degree-of-caution .accordion__icon,
+.accordion_travel.bi-an-churamach .accordion__icon {
+    fill: #020202;
+    color: #020202;
+    stroke: #020202;
+}
+
+/* Avoid Non-Essential Travel */
+.accordion_travel.avoid-non-essential-travel,
+.accordion_travel.seachain-taisteal-neamhriachtanach {
+    border-color: #F07400;
+}
+
+.accordion_travel.avoid-non-essential-travel .accordion_travel__header,
+.accordion_travel.seachain-taisteal-neamhriachtanach .accordion_travel__header {
+    background-color: #F07400;
+    color: #FFFFFF;
+}
+
+.accordion_travel.avoid-non-essential-travel .status-icon,
+.accordion_travel.seachain-taisteal-neamhriachtanach .status-icon {
+    background-image: url('../images/cssBackgrounds/Avoid_Non_Essential_Travel.png');
+}
+
+.accordion_travel.avoid-non-essential-travel .accordion__title,
+.accordion_travel.seachain-taisteal-neamhriachtanach .accordion__title {
+    color: #FFFFFF;
+}
+
+.accordion_travel.avoid-non-essential-travel .accordion__icon,
+.accordion_travel.seachain-taisteal-neamhriachtanach .accordion__icon {
+    fill: #FFFFFF;
+    color: #FFFFFF;
+    stroke: #FFFFFF;
+}
+
+/* Do Not Travel */
+.accordion_travel.do-not-travel,
+.accordion_travel.na-taistil {
+    border-color: #F00000;
+}
+
+.accordion_travel.do-not-travel .accordion_travel__header,
+.accordion_travel.na-taistil .accordion_travel__header {
+    background-color: #F00000;
+    color: #FFFFFF;
+}
+
+.accordion_travel.do-not-travel .status-icon,
+.accordion_travel.na-taistil .status-icon {
+    background-image: url('../images/cssBackgrounds/Do_Not_Travel.png');
+}
+
+.accordion_travel.do-not-travel .accordion__title,
+.accordion_travel.na-taistil .accordion__title {
+    color: #FFFFFF;
+}
+
+.accordion_travel.do-not-travel .accordion__icon,
+.accordion_travel.na-taistil .accordion__icon {
+    fill: #FFFFFF;
+    color: #FFFFFF;
+    stroke: #FFFFFF;
+}
+
+/* Security Heading & Button */
+.security-status-heading {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 10px;
+}
+
+.explainer-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #ECE8E6;
+    color: #004D44;
+    font-size: 20px;
+    font-weight: 700;
+    text-decoration: underline;
+    padding: 6px 10px;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+}
+
+.explainer-button:focus {
+    outline: 3px solid #ffd740;
+    outline-offset: 0;
+    box-shadow: 0 0 0 6px #000;
+}
+ .accordion_travel .accordion__content a {
+        font-weight: $weight--bold;
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.1rem;
+        text-underline-offset: 0.19em;
+    }
+
+ .accordion_travel .accordion__content a:focus {
+    outline: 2px solid #ffd740 !important;
+    outline-offset: 0 !important;
+    box-shadow: 0 0 0 4px #000, -4px 6px 0 0 #000, 4px 6px 0 0 #000 !important;
+}
+
+    .accordion_travel .accordion__content a:hover {
+        text-decoration-color: #004d44;
+        text-decoration-thickness: 0.2rem;
+    }
+
+    .accordion_travel .accordion__content a:active {
+        text-decoration: underline;
+        text-decoration-color: #008931;
+        text-decoration-thickness: 0.3rem;
+    }
+
+    .accordion_travel .accordion__content a:hover:focus {
+        text-underline-offset: 3px;
+    }
+
+    .accordion_travel .accordion__content a:active:focus {
+        text-decoration-thickness: 0.2rem;
+        text-underline-offset: 3px;
+    }

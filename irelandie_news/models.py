@@ -8,7 +8,6 @@ from wagtail.fields import StreamField
 # from wagtailseo.models import SeoType
 
 from irelandie_utils import blocks
-from irelandie_utils.cache_invalidation import invalidate_page_cache
 from irelandie_utils.utils import get_model_info
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -208,6 +207,12 @@ def news_page_changed(news_page):
 
     if news_index_page:
         news_landing_page = Page.objects.live().type(NewsLandingPage).ancestor_of(news_index_page).specific().first()
+        home_page = None
+
+        # Only consider homepage if the news page is featured on home
+        if getattr(news_page, "featured_home", False):
+            from irelandie_home.models import HomePage
+            home_page = Page.objects.live().type(HomePage).first()
 
         if news_landing_page:
             # Find and purge paginated URLs
@@ -216,7 +221,7 @@ def news_page_changed(news_page):
 
             paginated_urls = []
             for i in range(1, total_pages + 1):
-                paginated_url = f"{news_index_page.full_url}?page={i}"
+                paginated_url = f"{news_index_page.url}?page={i}"
                 paginated_urls.append(paginated_url)
 
             batch = PurgeBatch()
@@ -225,17 +230,14 @@ def news_page_changed(news_page):
 
             batch.add_page(news_index_page)
 
+            if home_page:
+                batch.add_page(home_page)
+
             for url in paginated_urls:
                 batch.add_url(url)
 
             # Purge all added pages
             batch.purge()
-
-            paginated_urls.append(news_index_page.url)
-            paginated_urls.append(news_landing_page.url)
-            # Handle cache invalidation for paginated URLs
-            for url in paginated_urls:
-                invalidate_page_cache(paginated_urls)
 
 
 @receiver(page_published, sender=NewsPage)

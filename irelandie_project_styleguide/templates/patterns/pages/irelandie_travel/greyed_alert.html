@@ -1,9 +1,101 @@
-{% load static navigation_tags util_tags i18n %}
+{% load static navigation_tags util_tags i18n wagtailcore_tags %}
+{% if page.travel_caution_level %}
 <div class="wrapper wrapper--large wrapper--padding">
-        <div class="wrapper wrapper--large travel-wrapper--grey">
-            <div class="travel-warning--contain">
-                <h3 class="travel_country_security">{% translate "Security Status" %}</h3>
-                <div class="travel-landing--summary">{% get_travel_warning_by_locale page.travel_caution_level page.locale %}</div>
+
+    {% with index_page=page.get_parent.specific %}
+        <div class="security-status-heading">
+            <h2 class="travel_country_security">{% translate "Security Status" %}</h2>
+            {% if index_page.security_heading_button_text and index_page.get_security_button_link %}
+                <a href="{{ index_page.get_security_button_link }}" class="explainer-button">
+                    {{ index_page.security_heading_button_text }}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
+                        <path d="M1.39822 1.00002L6.82324 8.25781L1.42496 14.9885" stroke="#004D44" stroke-width="2" stroke-miterlimit="10"/>
+                    </svg>
+                </a>
+            {% endif %}
+        </div>
+    {% endwith %}
+
+{% get_travel_warning_by_locale page.travel_caution_level page.locale "travel" as warning_profile %}
+    {% with warning_text=warning_profile.0 profile=warning_profile.1 %}
+        {% if warning_text %}
+            <div class="accordion_travel {{ warning_text|slugify }} accordion {% if profile and profile.explainer_text %} is-open {% endif %}" data-accordion>
+                <div class="accordion_travel__header">
+                    <div
+                        id="travel_caution_question"
+                        class="accordion__button"
+                        {% if profile %}data-accordion-question role="button"{% endif %}
+                        {% if profile %}aria-controls="travel_caution_answer" aria-expanded="true" tabindex="0"{% endif %}>
+                        <span class="status-icon"></span>
+                        <h3 class="accordion__title">{{ warning_text }}</h3>
+                        {% if profile %}
+                            {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="accordion__icon" alt="expand" %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if profile and profile.explainer_text %}
+                    <div
+                        id="travel_caution_answer"
+                        class="accordion__content"
+                        data-accordion-answer
+                        aria-labelledby="travel_caution_question"
+                        aria-hidden="false">
+                        {{ profile|explainer_text_by_locale:page.locale|safe }}
+                    </div>
+                {% endif %}
             </div>
+        {% endif %}
+    {% endwith %}
+
 </div>
+{% endif %}
+
+{% if page.regional_advisories %}
+<div class="wrapper wrapper--large wrapper--padding">
+    <div class="regional-advisories-heading">
+        <h3 class="travel_regional_country_security">{% translate "Regional Advisories" %}</h3>
+    </div>
+
+    {% for block in page.regional_advisories %}
+        {% if block.block_type == "regional_advisories" %}
+            {% for advisory in block.value %}
+                {% get_travel_warning_by_locale advisory.travel_caution_level page.locale "regional" as warning_text %}
+                {% if warning_text %}
+                    <div class="accordion_travel {{ warning_text|slugify }} accordion" data-accordion>
+                        <div class="accordion_travel__header">
+                            <div
+                                id="regional_advisory_{{ forloop.counter }}"
+                                class="accordion__button"
+                                {% if advisory.explainer_text %}
+                                    data-accordion-question role="button"
+                                    aria-controls="regional_advisory_answer_{{ forloop.counter }}"
+                                    aria-expanded="false"
+                                    tabindex="0"
+                                {% endif %}>
+                                <span class="status-icon"></span>
+                                <h3 class="accordion__title">{{ warning_text }} {% trans "regions" %}</h3>
+                                {% if advisory.explainer_text %}
+                                    {% include "patterns/atoms/icons/icon.html" with name="arrow" classname="accordion__icon" alt="expand" %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        {% if advisory.explainer_text %}
+                            <div
+                                id="regional_advisory_answer_{{ forloop.counter }}"
+                                class="accordion__content"
+                                data-accordion-answer
+                                aria-labelledby="regional_advisory_{{ forloop.counter }}"
+                                aria-hidden="true">
+                                {{ advisory.explainer_text|safe }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
 </div>
+{% endif %}
+

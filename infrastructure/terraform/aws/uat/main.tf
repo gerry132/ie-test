@@ -25,6 +25,14 @@ data "aws_caller_identity" "current" {}
 
 data "aws_elb_service_account" "elb" {}
 
+data "aws_ssm_parameter" "master_url" {
+  name = "master_url"
+}
+
+locals {
+    db_master_url   = data.aws_ssm_parameter.master_url.value
+}
+
 
 locals {
   account_id                    = data.aws_caller_identity.current.account_id
@@ -1124,27 +1132,6 @@ data "aws_ssm_parameter" "random_db_password" {
   depends_on = [
     aws_ssm_parameter.random_db_password
   ]
-}
-
-
-
-
-# Database
-
-module "database" {
-  source                = "github.com/ogcio/wagtail-site-database"
-  db_name               = "${local.environment_name}_ireland_ie"
-  db_username           = "${local.environment_name}_ireland_ie_username"
-  db_password           = data.aws_ssm_parameter.random_db_password.value
-  db_instance_class     = local.db_instance_class
-  name                  = "${local.environment_name}-db"
-  subnets               = module.network.public_subnet_ids
-  security_group_ids    = [aws_security_group.db.id]
-}
-
-
-locals {
-    db_master_url   = "postgres://${module.database.db_username}:${data.aws_ssm_parameter.random_db_password.value}@${module.database.address}:${module.database.db_port}/${module.database.db_name}"
 }
 
 

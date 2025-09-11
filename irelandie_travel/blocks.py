@@ -1,8 +1,9 @@
+from django.core.exceptions import ValidationError
+
 from irelandie_home.blocks import SecondaryCallToAction
 from irelandie_utils.blocks import AdvancedRichTextBlock, LinkButtonBlock, ImageChooserBlock
 from wagtail import blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
-
 
 from irelandie_utils.constants import TravelCautionLevel, TravelRegions
 
@@ -19,7 +20,6 @@ class AlteredAvancedRichTextBlock(AdvancedRichTextBlock):
 
 
 class InformationBlock(blocks.StreamBlock):
-
     richtext = AdvancedRichTextBlock()
 
 
@@ -52,3 +52,43 @@ class TravelIndexOuterBlock(blocks.StreamBlock):
 class TravelIndexOuterBlockBool(blocks.StructBlock):
     travel = TravelIndexOuterBlock()
     apply_color = blocks.BooleanBlock(required=False)
+
+
+class UniqueChoiceBlock(blocks.ChoiceBlock):
+    class Meta:
+        form_classname = "unique-choice-block"
+
+
+class RegionalAdvisoryBlock(blocks.StructBlock):
+    travel_caution_level = UniqueChoiceBlock(
+        required=True,
+        choices=TravelCautionLevel.choices,
+        label="Advisory level"
+    )
+    explainer_text = blocks.RichTextBlock(
+        required=True,
+    )
+
+    class Meta:
+        icon = "warning"
+
+
+class RegionalAdvisoriesBlock(blocks.ListBlock):
+    def __init__(self, **kwargs):
+        super().__init__(RegionalAdvisoryBlock(), min_num=0, max_num=4, **kwargs)
+
+    def clean(self, value):
+        cleaned = super().clean(value)
+        levels = [item.get("travel_caution_level") for item in cleaned]
+        dupes = {lvl for lvl in levels if levels.count(lvl) > 1}
+        if dupes:
+            errors = []
+            for item in cleaned:
+                if item.get("travel_caution_level") in dupes:
+                    errors.append(ValidationError({
+                        "travel_caution_level": ValidationError("This advisory level is duplicated.")
+                    }))
+                else:
+                    errors.append(None)
+            raise ValidationError(errors)
+        return cleaned
