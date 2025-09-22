@@ -267,6 +267,33 @@ class StoryPage(HeroPage):
     def schema_json(self):
         return self.get_schema_json()
 
+    SCHEMA_FIELDS = [
+        "article_headline",
+        "article_image",
+        "article_description",
+        "article_date_published",
+        "article_date_modified",
+        "article_author_type",
+        "article_author",
+        "article_publisher_type",
+        "article_publisher_name",
+        "article_publisher_url",
+        "article_publisher_logo",
+        "article_audio",
+        "article_video",
+        "schema_type",
+    ]
+
+    def save_revision(self, *args, **kwargs):
+        if self.pk:
+            old_page = self.__class__.objects.get(pk=self.pk)
+            for field in self.SCHEMA_FIELDS:
+                current_value = getattr(self, field)
+                # Preserve the old value only if the current value is blank/None
+                if current_value in [None, ""]:
+                    setattr(self, field, getattr(old_page, field))
+        return super().save_revision(*args, **kwargs)
+
     def save(self, *args, **kwargs):
         from wagtail.core.signals import page_published
         super().save(*args, **kwargs)
