@@ -134,7 +134,7 @@
                             <div style="padding-top:20px;">
                                 {% for blocks_admin in page.admin_body1 %}
                                 {% if blocks_admin.block_type == 'admin_contents' %}
-                                <div id="{{blocks_admin.value.title}}">
+                                <div id="{{blocks_admin.value.title|slugify}}">
                                     {% for block_admins in blocks_admin.value.content %}
                                         {% if block_admins.block_type == 'content' %}
                                             {% for subblock in block_admins.value %}
@@ -144,7 +144,7 @@
                                     {% elif block_admins.block_type == 'snippets' %}
                                         {% for block_snippets in block_admins.value %}
                                             {% if block_snippets.block_type == 'contact_details' %}
-                                            <div id="{{block_admin.title}}" class="wrapper wrapper--large  content--padding">
+                                            <div id="{{block_admin.title|slugify}}" class="wrapper wrapper--large  content--padding">
                                                 {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
                                             </div>
                                              {% else %}
@@ -172,7 +172,7 @@
 
                         {% for blocks in page.body %}
                             {% if blocks.block_type == 'content' %}
-                            <div id="{{blocks.value.title}}">
+                            <div id="{{blocks.value.title|slugify}}">
                                 {% for block in blocks.value.content %}
                                     {% include  "patterns/pages/toc/general_blocks.html" with subblock=block %}
                             {% endfor %}
@@ -189,7 +189,7 @@
                         {% endfor %}
                             {% for blocks_admin in page.admin_body2 %}
                                 {% if blocks_admin.block_type == 'admin_content' %}
-                                <div id="{{blocks_admin.value.title}}">
+                                <div id="{{blocks_admin.value.title|slugify}}">
                                     {% for block_admins in blocks_admin.value.content %}
                                         {% if block_admins.block_type == 'content' %}
                                             {% for subblock in block_admins.value %}
@@ -199,7 +199,7 @@
                                     {% elif block_admins.block_type == 'snippets' %}
                                         {% for block_snippets in block_admins.value %}
                                             {% if block_snippets.block_type == 'contact_details' %}
-                                            <div id="{{block_admin.title}}" class="wrapper wrapper--large  content--padding">
+                                            <div id="{{block_admin.title|slugify}}" class="wrapper wrapper--large  content--padding">
                                                 {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
                                             </div>
                                              {% else %}

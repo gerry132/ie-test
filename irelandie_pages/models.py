@@ -328,6 +328,28 @@ class FreeFormPage(FreeFormPageBase):
                 }
             )
 
+    SCHEMA_FIELDS = [
+        "organization_name",
+        "organization_description",
+        "organization_logo",
+        "mainEntityOfPage_name",
+        "mainEntityOfPage_description",
+        "twitter_url",
+        "facebook_url",
+        "youtube_url",
+        "linkedin_url",
+        "instagram_url",
+        "weibo_url",
+    ]
+
+    def save_revision(self, *args, **kwargs):
+        if self.pk:
+            old_page = self.__class__.objects.get(pk=self.pk)
+            for field in self.SCHEMA_FIELDS:
+                if not getattr(self, field):
+                    setattr(self, field, getattr(old_page, field))
+        return super().save_revision(*args, **kwargs)
+
     def save(self, *args, **kwargs):
         from wagtail.signals import page_published
         super().save(*args, **kwargs)

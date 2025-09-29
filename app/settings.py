@@ -397,6 +397,16 @@ if "DEFAULT_FROM_EMAIL" in os.environ:
 
 # Wagtail settings
 
+WAGTAILIMAGES_EXTENSIONS = {
+    'bmp': 'BMP',
+    'gif': 'GIF',
+    'jpeg': 'JPEG',
+    'jpg': 'JPEG',
+    'png': 'PNG',
+    'tif': 'TIFF',
+    'tiff': 'TIFF',
+}
+
 WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
     ("ar", "Arabic"),
     ("zh-hans", "Chinese"),
