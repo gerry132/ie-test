@@ -306,8 +306,6 @@ STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, "static_src/images/")
 ]
 
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
-
 STATIC_ROOT = os.path.join(PROJECT_DIR, "static")
 
 STATIC_URL = "/static/"
@@ -449,9 +447,6 @@ if True:
 
     # AWS_LOCATION = "static"
 
-    STATICFILES_STORAGE = "storages.backends.s3.S3Storage"
-    DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
-
     AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STATIC_BUCKET_NAME", "")
     AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
     print(AWS_S3_CUSTOM_DOMAIN)
@@ -480,6 +475,25 @@ if True:
     print(AWS_S3_CUSTOM_DOMAIN)
     print(AWS_S3_CUSTOM_DOMAIN)
     AWS_S3_REGION_NAME = "eu-west-1"
+    STORAGES = {
+        "default": {  # MEDIA (used by Wagtail images, documents, uploads)
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+            "OPTIONS": {
+                "bucket_name": AWS_STORAGE_BUCKET_NAME,
+                "custom_domain": AWS_S3_CUSTOM_DOMAIN,
+                "location": "media",
+            },
+        },
+        "staticfiles": {  # STATIC (served by collectstatic)
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+            "OPTIONS": {
+                "bucket_name": AWS_STORAGE_BUCKET_NAME,
+                "custom_domain": AWS_S3_CUSTOM_DOMAIN,
+                "location": "static",
+            },
+        },
+    }
+
     # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
 else:
     None
