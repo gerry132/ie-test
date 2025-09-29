@@ -329,7 +329,7 @@ class FreeFormPage(FreeFormPageBase):
             )
 
     def save(self, *args, **kwargs):
-        from wagtail.core.signals import page_published
+        from wagtail.signals import page_published
         super().save(*args, **kwargs)
         if self.live:  # Ensure the page is published
             page_published.send(sender=self.__class__, instance=self)

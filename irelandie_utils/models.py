@@ -16,7 +16,7 @@ from wagtail.admin.panels import (
 # from wagtailseo.models import SeoMixin, TwitterCard, SeoType
 
 from irelandie_utils.cache import get_default_cache_control_decorator
-from wagtail.contrib.settings.models import BaseSetting, register_setting
+from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail import blocks
 from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Orderable, Page, TranslatableMixin, PreviewableMixin
@@ -575,7 +575,7 @@ class Accordion(TranslatableMixin, PreviewableMixin, DraftStateMixin, RevisionMi
 
 
 @register_setting
-class SocialMediaSettings(SocialMediaFieldsMixin, BaseSetting):
+class SocialMediaSettings(SocialMediaFieldsMixin, BaseSiteSetting):
     # social media fields come from the SocialMediaFieldsMixin
     default_sharing_text = models.CharField(
         max_length=255,
@@ -591,7 +591,7 @@ class SocialMediaSettings(SocialMediaFieldsMixin, BaseSetting):
 
 
 @register_setting
-class SystemMessagesSettings(BaseSetting):
+class SystemMessagesSettings(BaseSiteSetting):
     class Meta:
         verbose_name = "system messages"
 
@@ -790,7 +790,7 @@ BasePage._meta.get_field("search_description").verbose_name = SEARCH_DESCRIPTION
 
 
 @register_setting(icon="view")
-class Tracking(BaseSetting):
+class Tracking(BaseSiteSetting):
     google_tag_manager_id = models.CharField(
         max_length=255,
         blank="True",

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from wagtail.core.models import Page
+from wagtail.models import Page
 from django.utils.functional import cached_property
 from wagtail.admin.panels import InlinePanel, FieldPanel, TabbedInterface, ObjectList, MultiFieldPanel
 from wagtail.fields import StreamField, RichTextField
@@ -1111,7 +1111,7 @@ class GeneralContentPage(HeroPage):
         return context
 
     def save(self, *args, **kwargs):
-        from wagtail.core.signals import page_published
+        from wagtail.signals import page_published
         super().save(*args, **kwargs)
         if self.live:  # Ensure the page is published
             page_published.send(sender=self.__class__, instance=self)
@@ -1186,7 +1186,7 @@ class GeneralContentIrishAid(HeroPage):
             )
 
     def save(self, *args, **kwargs):
-        from wagtail.core.signals import page_published
+        from wagtail.signals import page_published
         super().save(*args, **kwargs)
         if self.live:  # Ensure the page is published
             page_published.send(sender=self.__class__, instance=self)

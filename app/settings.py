@@ -59,7 +59,7 @@ debug_on = os.environ.get("DEBUG")
 if debug_on == '0':
     DEBUG = True
 else:
-    DEBUG = False
+    DEBUG = True
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
 
@@ -69,8 +69,6 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 # Application definition
 
 INSTALLED_APPS = [
-    #
-    "wagtail_cloudfront_invalidate",
     "app",
     # "csp",
     "robots_txt",
@@ -111,7 +109,7 @@ INSTALLED_APPS = [
     "wagtail_localize",
     "wagtail.locales",
     "wagtail.contrib.forms",
-    "wagtail.contrib.modeladmin",
+    "wagtail_modeladmin",
     "wagtail.contrib.redirects",
     "wagtail.contrib.routable_page",
     "wagtail.contrib.settings",
@@ -181,7 +179,6 @@ CLOUDFRONT_ID = os.environ.get("CLOUDFRONT_ID")
 
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
 
-WAGTAIL_CLOUDFRONT_INVALIDATE_ENABLED = True
 
 if CLOUDFRONT_ID and CLOUDFRONT_ID != 'CHANGE-ME':
     CLOUDFRONT_DISTRIBUTION_ID = CLOUDFRONT_ID
@@ -372,7 +369,7 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
 }
 # https://pypi.org/project/django-cors-headers/
-CORS_ALLOW_ALL_ORIGINS = os.environ.get("CORS_ALLOW_ALL_ORIGINS", False) in TRUE
+CORS_ALLOW_ALL_ORIGINS = True
 if CORS_ALLOW_ALL_ORIGINS is False:
     CORS_ALLOWED_ORIGINS = os.environ["CORS_ALLOWED_ORIGINS"].split(",")
 

@@ -5,7 +5,7 @@ from wagtail.models import Page
 from irelandie_documents.models import CustomDocument
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from django.dispatch import Signal
-from wagtail.core.signals import page_published
+from wagtail.signals import page_published
 
 from irelandie_utils.cache_invalidation import invalidate_cache
 
