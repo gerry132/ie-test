@@ -444,7 +444,7 @@ OPENSEARCH_ENDPOINT = os.environ.get("OPENSEARCH_ENDPOINT")
 
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
 
-if USE_S3 is True:
+if True:
     INSTALLED_APPS = INSTALLED_APPS + ["storages"]
 
     # AWS_LOCATION = "static"
