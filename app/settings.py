@@ -177,6 +177,8 @@ if DEBUG_TOOLBAR is True:
 
 CLOUDFRONT_ID = os.environ.get("CLOUDFRONT_ID")
 
+MEDIA_URL = "/media/"
+
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
 
 
