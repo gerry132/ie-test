@@ -209,6 +209,8 @@ TEMPLATES = [
                 ]),
             ],
             "context_processors": [
+                "django.template.context_processors.static",
+                "django.template.context_processors.media",
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
@@ -307,11 +309,7 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(PROJECT_DIR, "static")
-
-STATIC_URL = "/static/"
-
 MEDIA_ROOT = os.path.join(PROJECT_DIR, "media")
-MEDIA_URL = "/media/"
 
 #
 
@@ -442,7 +440,7 @@ OPENSEARCH_ENDPOINT = os.environ.get("OPENSEARCH_ENDPOINT")
 
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
 
-if True:
+if USE_S3:
     INSTALLED_APPS = INSTALLED_APPS + ["storages"]
 
     # AWS_LOCATION = "static"
@@ -493,10 +491,13 @@ if True:
             },
         },
         }
-    MEDIA_URL  = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
     # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
 else:
+    STATIC_URL = "/static/"
+    MEDIA_ROOT = os.path.join(PROJECT_DIR, "media")
+    MEDIA_URL = "/media/"
     None
 
 from django.conf import settings
