@@ -445,37 +445,15 @@ USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
 if USE_S3:
     INSTALLED_APPS = INSTALLED_APPS + ["storages"]
 
-    # AWS_LOCATION = "static"
+        # AWS_LOCATION = "static"
+    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STATIC_BUCKET_NAME")
+    AWS_S3_CUSTOM_DOMAIN   = os.getenv("AWS_S3_CUSTOM_DOMAIN")  # e.g. assets.uat.ireland.ie
+    AWS_S3_REGION_NAME     = "eu-west-1"
+    AWS_QUERYSTRING_AUTH   = False
+    AWS_S3_FILE_OVERWRITE  = False
 
-    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STATIC_BUCKET_NAME", "")
-    AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    print(AWS_S3_CUSTOM_DOMAIN)
-    AWS_S3_REGION_NAME = "eu-west-1"
     STORAGES = {
+        # MEDIA (Wagtail uploads) at bucket root: images/, original_images/, documents/
         "default": {
             "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
             "OPTIONS": {
@@ -484,19 +462,21 @@ if USE_S3:
                 # no "location"
             },
         },
+        # STATIC at bucket root too (so files land in css/, js/, fonts/, etc.)
+        # Use Manifest storage so templates get hashed assets automatically.
         "staticfiles": {
-            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+            "BACKEND": "storages.backends.s3boto3.S3ManifestStaticStorage",
             "OPTIONS": {
                 "bucket_name": AWS_STORAGE_BUCKET_NAME,
                 "custom_domain": AWS_S3_CUSTOM_DOMAIN,
-                # optional: "location": "static" if you want a static/ prefix only for static
+                # no "location"
             },
         },
     }
-    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
-    # MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
-    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
-    # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
+
+    # URLs at domain root (no /static, no /media)
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
+    MEDIA_URL  = f"https://{AWS_S3_CUSTOM_DOMAIN}/"    # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
 else:
     STATIC_URL = "/static/"
     MEDIA_ROOT = os.path.join(PROJECT_DIR, "media")
