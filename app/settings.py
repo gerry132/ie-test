@@ -476,23 +476,24 @@ if USE_S3:
     print(AWS_S3_CUSTOM_DOMAIN)
     AWS_S3_REGION_NAME = "eu-west-1"
     STORAGES = {
-        "default": {  # MEDIA (used by Wagtail images, documents, uploads)
+        "default": {
             "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
             "OPTIONS": {
                 "bucket_name": AWS_STORAGE_BUCKET_NAME,
                 "custom_domain": AWS_S3_CUSTOM_DOMAIN,
-                "location": "media",
+                # no "location"
             },
         },
-        "staticfiles": {  # STATIC (served by collectstatic)
+        "staticfiles": {
             "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
             "OPTIONS": {
                 "bucket_name": AWS_STORAGE_BUCKET_NAME,
                 "custom_domain": AWS_S3_CUSTOM_DOMAIN,
-                "location": "static",
+                # optional: "location": "static" if you want a static/ prefix only for static
             },
         },
-        }
+    }
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
     # MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
     # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
