@@ -15,16 +15,6 @@ import os
 import sys
 from dotenv import load_dotenv
 
-
-from django.conf import settings
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.files.storage import default_storage
-
-staticfiles_storage.url("css/main.css")   # should start https://assets.uat.ireland.ie/static/...
-default_storage.url("images/test.png")    # should start https://assets.uat.ireland.ie/media/...
-
-
-
 TRUE = ["1", "True", "true", 1, True]
 
 load_dotenv()
@@ -502,8 +492,8 @@ if True:
                 "location": "static",
             },
         },
-    }
-    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
+        }
+    MEDIA_URL  = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
     # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
 else:
