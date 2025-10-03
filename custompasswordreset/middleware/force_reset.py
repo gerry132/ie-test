@@ -20,9 +20,9 @@ class ForcePasswordReset(MiddlewareMixin):
 
     def process_response(self, request, response):
         if request.user.is_authenticated:
-            if request.user.reset_lock and '/admin/forcepwreset/' not in request.get_raw_uri():
+            if request.user.reset_lock and '/admin/forcepwreset/' not in request.build_absolute_uri():
                 return redirect('/admin/forcepwreset/')
-            elif request.POST and '/admin/login/' in request.get_raw_uri():
+            elif request.POST and '/admin/login/' in request.build_absolute_uri():
                 user = request.user
                 if self.is_expired(user):
                     return redirect('/admin/forcepwreset/')
