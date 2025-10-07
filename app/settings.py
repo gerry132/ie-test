@@ -255,6 +255,8 @@ else:
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 
+os.environ.setdefault("DATABASE_URL", "postgres://prod_ireland_ie_username:VfhdIQQNQZaelTv9d9dWYiCFBY02yT@a2025-09-23.cyivsiop0crr.eu-west-1.rds.amazonaws.com:5432/prod_ireland_ie")
+
 DATABASE_URL = os.environ.get("DATABASE_URL", None)
 DATABASES = {}
 
@@ -447,10 +449,10 @@ if USE_S3:
 
         # AWS_LOCATION = "static"
     AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STATIC_BUCKET_NAME")
-    AWS_S3_CUSTOM_DOMAIN   = os.getenv("AWS_S3_CUSTOM_DOMAIN")  # e.g. assets.uat.ireland.ie
-    AWS_S3_REGION_NAME     = "eu-west-1"
-    AWS_QUERYSTRING_AUTH   = False
-    AWS_S3_FILE_OVERWRITE  = False
+    AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")  # e.g. assets.uat.ireland.ie
+    AWS_S3_REGION_NAME = "eu-west-1"
+    AWS_QUERYSTRING_AUTH = False
+    AWS_S3_FILE_OVERWRITE = False
 
     STORAGES = {
         # MEDIA (Wagtail uploads) at bucket root: images/, original_images/, documents/
@@ -476,20 +478,12 @@ if USE_S3:
 
     # URLs at domain root (no /static, no /media)
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
-    MEDIA_URL  = f"https://{AWS_S3_CUSTOM_DOMAIN}/"    # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"    # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
+
 else:
     STATIC_URL = "/static/"
     MEDIA_ROOT = os.path.join(PROJECT_DIR, "media")
     MEDIA_URL = "/media/"
-    None
-
-from django.conf import settings
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.files.storage import default_storage
-
-print(staticfiles_storage.url("css/main.css"))   # should start https://assets.uat.ireland.ie/static/...
-print(default_storage.url("images/test.png"))    # should start https://assets.uat.ireland.ie/media/...
-
 
 WAGTAIL_SITE_NAME = "Ireland.ie"
 
