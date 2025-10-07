@@ -10,11 +10,4 @@ class ReplaceViewsMiddleware(MiddlewareMixin):
     }
 
     def process_view(self, request, view_func, view_args, view_kwargs):
-        replacement = self.replacements.get(request.resolver_match.view_name)
-        if replacement:
-            view = (
-                replacement.as_view()
-                if hasattr(replacement, "as_view")
-                else replacement
-            )
-            return require_admin_access(view)(request, *view_args, **view_kwargs)
+        pass
