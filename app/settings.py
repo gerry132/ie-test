@@ -189,7 +189,7 @@ if CLOUDFRONT_ID and CLOUDFRONT_ID != 'CHANGE-ME':
 WAGTAILFRONTENDCACHE = {
     'cloudfront': {
         'BACKEND': 'wagtail.contrib.frontend_cache.backends.CloudfrontBackend',
-        'DISTRIBUTION_ID': 'd1myit6n7hwrr1.cloudfront.net',
+        'DISTRIBUTION_ID': CLOUDFRONT_ID,
     },
 }
 
@@ -253,9 +253,6 @@ else:
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-
-os.environ.setdefault("DATABASE_URL", "postgres://prod_ireland_ie_username:VfhdIQQNQZaelTv9d9dWYiCFBY02yT@a2025-09-23.cyivsiop0crr.eu-west-1.rds.amazonaws.com:5432/prod_ireland_ie")
 
 DATABASE_URL = os.environ.get("DATABASE_URL", None)
 DATABASES = {}
