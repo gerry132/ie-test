@@ -1,6 +1,6 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from wagtail.models import Page
+from wagtail.models import Page, ReferenceIndex
 
 from irelandie_documents.models import CustomDocument
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
@@ -20,7 +20,7 @@ def document_updated(sender, instance, created, **kwargs):
 
 @receiver(snippet_published)
 def handle_snippet_published(sender, instance, **kwargs):
-    usage = instance.get_usage()
+    usage = ReferenceIndex.get_grouped_references_to(instance)
     purge_batch = PurgeBatch()
     for obj, _ in usage:
         if isinstance(obj, Page):
