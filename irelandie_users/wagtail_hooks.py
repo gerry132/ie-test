@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from django.templatetags.static import static
-from django.utils.html import format_html
+# from django.templatetags.static import static
+# from django.utils.html import format_html
 from wagtail.admin.menu import MenuItem
-from wagtail import hooks
+# from wagtail import hooks
 
 
 # Register shortcut to access django-defender's blocked list view within django admin
