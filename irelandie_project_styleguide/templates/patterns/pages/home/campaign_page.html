@@ -1,5 +1,5 @@
 {% extends "patterns/hero_page.html" %}
-{% load wagtailcore_tags wagtailimages_tags static %}
+{% load wagtailcore_tags wagtailimages_tags static cache %}
 
 {% cache 3600 campaign_page %}
 {% block main %}
