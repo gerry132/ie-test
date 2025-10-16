@@ -59,7 +59,7 @@ debug_on = os.environ.get("DEBUG")
 if debug_on == '0':
     DEBUG = True
 else:
-    DEBUG = False
+    DEBUG = True
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
 
@@ -69,8 +69,6 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 # Application definition
 
 INSTALLED_APPS = [
-    #
-    "wagtail_cloudfront_invalidate",
     "app",
     # "csp",
     "robots_txt",
@@ -111,7 +109,7 @@ INSTALLED_APPS = [
     "wagtail_localize",
     "wagtail.locales",
     "wagtail.contrib.forms",
-    "wagtail.contrib.modeladmin",
+    "wagtail_modeladmin",
     "wagtail.contrib.redirects",
     "wagtail.contrib.routable_page",
     "wagtail.contrib.settings",
@@ -179,9 +177,10 @@ if DEBUG_TOOLBAR is True:
 
 CLOUDFRONT_ID = os.environ.get("CLOUDFRONT_ID")
 
+MEDIA_URL = "/media/"
+
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
 
-WAGTAIL_CLOUDFRONT_INVALIDATE_ENABLED = True
 
 if CLOUDFRONT_ID and CLOUDFRONT_ID != 'CHANGE-ME':
     CLOUDFRONT_DISTRIBUTION_ID = CLOUDFRONT_ID
@@ -190,7 +189,7 @@ if CLOUDFRONT_ID and CLOUDFRONT_ID != 'CHANGE-ME':
 WAGTAILFRONTENDCACHE = {
     'cloudfront': {
         'BACKEND': 'wagtail.contrib.frontend_cache.backends.CloudfrontBackend',
-        'DISTRIBUTION_ID': 'd1myit6n7hwrr1.cloudfront.net',
+        'DISTRIBUTION_ID': CLOUDFRONT_ID,
     },
 }
 
@@ -212,6 +211,8 @@ TEMPLATES = [
                 ]),
             ],
             "context_processors": [
+                "django.template.context_processors.static",
+                "django.template.context_processors.media",
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
@@ -252,7 +253,6 @@ else:
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
 
 DATABASE_URL = os.environ.get("DATABASE_URL", None)
 DATABASES = {}
@@ -309,14 +309,8 @@ STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, "static_src/images/")
 ]
 
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
-
 STATIC_ROOT = os.path.join(PROJECT_DIR, "static")
-
-STATIC_URL = "/static/"
-
 MEDIA_ROOT = os.path.join(PROJECT_DIR, "media")
-MEDIA_URL = "/media/"
 
 #
 
@@ -372,7 +366,7 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
 }
 # https://pypi.org/project/django-cors-headers/
-CORS_ALLOW_ALL_ORIGINS = os.environ.get("CORS_ALLOW_ALL_ORIGINS", False) in TRUE
+CORS_ALLOW_ALL_ORIGINS = True
 if CORS_ALLOW_ALL_ORIGINS is False:
     CORS_ALLOWED_ORIGINS = os.environ["CORS_ALLOWED_ORIGINS"].split(",")
 
@@ -447,21 +441,47 @@ OPENSEARCH_ENDPOINT = os.environ.get("OPENSEARCH_ENDPOINT")
 
 USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
 
-if USE_S3 is True:
+if USE_S3:
     INSTALLED_APPS = INSTALLED_APPS + ["storages"]
 
     # AWS_LOCATION = "static"
-
-    STATICFILES_STORAGE = "storages.backends.s3.S3Storage"
-    DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
-
-    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STATIC_BUCKET_NAME", "")
-    AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
-
+    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STATIC_BUCKET_NAME")
+    AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")  # e.g. assets.uat.ireland.ie
     AWS_S3_REGION_NAME = "eu-west-1"
+    AWS_QUERYSTRING_AUTH = False
+    AWS_S3_FILE_OVERWRITE = False
+
+    STORAGES = {
+        # MEDIA (Wagtail uploads) at bucket root: images/, original_images/, documents/
+        "default": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+            "OPTIONS": {
+                "bucket_name": AWS_STORAGE_BUCKET_NAME,
+                "custom_domain": AWS_S3_CUSTOM_DOMAIN,
+                # no "location"
+            },
+        },
+        # STATIC at bucket root too (so files land in css/, js/, fonts/, etc.)
+        # Use Manifest storage so templates get hashed assets automatically.
+        "staticfiles": {
+            "BACKEND": "storages.backends.s3boto3.S3ManifestStaticStorage",
+            "OPTIONS": {
+                "bucket_name": AWS_STORAGE_BUCKET_NAME,
+                "custom_domain": AWS_S3_CUSTOM_DOMAIN,
+                # no "location"
+            },
+        },
+    }
+
+    # URLs at domain root (no /static, no /media)
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
     # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
+
 else:
-    None
+    STATIC_URL = "/static/"
+    MEDIA_ROOT = os.path.join(PROJECT_DIR, "media")
+    MEDIA_URL = "/media/"
 
 WAGTAIL_SITE_NAME = "Ireland.ie"
 

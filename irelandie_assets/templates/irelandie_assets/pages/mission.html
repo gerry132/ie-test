@@ -2,6 +2,7 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% load static %}
+{% load cache %}
 
 {% cache 3600 mission_page page.id %}
 

@@ -1,5 +1,5 @@
 from wagtail import blocks
-from wagtail.core.blocks import StreamBlock, ChoiceBlock
+from wagtail.blocks import StreamBlock, ChoiceBlock
 from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
 from django.utils.translation import gettext_lazy as _

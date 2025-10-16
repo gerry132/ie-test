@@ -14,6 +14,11 @@ class CustomImage(AbstractImage):
                                                                                 "titles that match the content of the "
                                                                                 "image.")
     admin_form_fields = Image.admin_form_fields
+    description = models.TextField(
+        blank=True,
+        verbose_name=_("description"),
+        help_text=_("Used as the default alt text when inserting images.")
+    )
 
     def clean(self):
         super().clean()

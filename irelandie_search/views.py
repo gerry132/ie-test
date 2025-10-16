@@ -36,7 +36,7 @@ def search(request):
                 Page.objects.live().public()
                     .descendant_of(root_page)
                     .not_exact_type(TagPage, ListingsContentPage, DestinationTagPage,  ListingsFeaturedPage)
-                    .search(Fuzzy(search_query), partial_match=False)
+                    .search(Fuzzy(search_query))
             )
             try:
                 search_term = SearchTerm.objects.get(search_term=search_query)

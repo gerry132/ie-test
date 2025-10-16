@@ -1,6 +1,6 @@
 from .root_builder import RootBuilder
 from wagtail.models import Page
-from wagtail.core.models import Locale
+from wagtail.models import Locale
 from datetime import datetime
 
 import xml.etree.cElementTree as ET

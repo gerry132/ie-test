@@ -5,7 +5,7 @@ from botocore.exceptions import ClientError
 from django.core.cache import cache
 from django.conf import settings
 from django.core.cache.utils import make_template_fragment_key
-from wagtail.models import Page
+from wagtail.models import Page, ReferenceIndex
 
 from irelandie_assets.templatetags.irelandie_assets_tags import check_page_type
 
@@ -50,7 +50,7 @@ def invalidate_page_cache(paths_to_invalidate):
 
 
 def invalidate_cache(snippet_instance):
-    usage = snippet_instance.get_usage()
+    usage = ReferenceIndex.get_grouped_references_to(snippet_instance)
     paths_to_invalidate = []
 
     for obj, _ in usage:

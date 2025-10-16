@@ -28,7 +28,7 @@ from wagtail.admin.localization import (
     get_available_admin_time_zones,
 )
 from wagtail.log_actions import log
-from wagtail.models import UserPagePermissionsProxy
+from wagtail.permissions import page_permission_policy
 from wagtail.users.models import UserProfile
 from wagtail.utils.loading import get_custom_form
 
@@ -166,8 +166,10 @@ class NotificationsSettingsPanel(BaseSettingsPanel):
 
     def is_active(self):
         # Hide the panel if the user can't edit or publish pages
-        user_perms = UserPagePermissionsProxy(self.request.user)
-        if not user_perms.can_edit_pages() and not user_perms.can_publish_pages():
+        can_edit_any = page_permission_policy.instances_user_has_permission_for(self.request.user, "change").exists()
+        can_publish_any = page_permission_policy.instances_user_has_permission_for(
+            self.request.user, "publish").exists()
+        if not can_edit_any and not can_publish_any:
             return False
 
         # Hide the panel if there are no notification preferences

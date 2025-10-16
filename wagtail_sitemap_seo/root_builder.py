@@ -3,7 +3,7 @@ import csv
 import urllib.request
 
 from wagtail.models import Page
-from wagtail.core.models import Locale
+from wagtail.models import Locale
 
 from django.conf import settings
 

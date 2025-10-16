@@ -14,7 +14,7 @@ from irelandie_missions.filters import MissionPageFieldFilter
 from irelandie_news.filters import NewsPageFieldFilter
 from irelandie_news.models import NewsPage
 from irelandie_utils.models import SystemMessagesSettings
-from wagtail.core.models import Site
+from wagtail.models import Site
 from irelandie_utils.utils import get_locale_from_language_code_or_default
 
 

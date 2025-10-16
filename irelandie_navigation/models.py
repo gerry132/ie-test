@@ -5,7 +5,7 @@ from django.forms import ValidationError
 from django.utils.translation import gettext_lazy as _
 from modelcluster.models import ClusterableModel
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
-from wagtail.contrib.settings.models import BaseSetting, register_setting
+from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.fields import StreamField
 from wagtail.models import TranslatableMixin, PreviewableMixin
 
@@ -39,7 +39,7 @@ ALT_IMAGE = ALT_HELP_TEXT % 'image'
 
 
 @register_setting(icon="list-ul")
-class SiteSettings(BaseSetting, ClusterableModel):
+class SiteSettings(BaseSiteSetting, ClusterableModel):
     # The settings here are currently unused.
     # We may be removing it in the future.
     website_header_strapline = models.ForeignKey(
