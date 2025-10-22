@@ -445,7 +445,7 @@ USE_S3 = eval(os.environ.get("USE_S3", "0")) in TRUE
 if USE_S3:
     INSTALLED_APPS = INSTALLED_APPS + ["storages"]
 
-        # AWS_LOCATION = "static"
+    # AWS_LOCATION = "static"
     AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STATIC_BUCKET_NAME")
     AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")  # e.g. assets.uat.ireland.ie
     AWS_S3_REGION_NAME = "eu-west-1"
@@ -476,7 +476,8 @@ if USE_S3:
 
     # URLs at domain root (no /static, no /media)
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
-    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"    # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"   
+    # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
 
 else:
     STATIC_URL = "/static/"
