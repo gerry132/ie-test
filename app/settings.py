@@ -164,7 +164,7 @@ MIDDLEWARE = [
     # Wagtail extra
     "django.middleware.locale.LocaleMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
-    "irelandie_utils.middleware.ReplaceViewsMiddleware",
+    # "irelandie_utils.middleware.ReplaceViewsMiddleware",
     "custom_logout.middleware.custom_logout.CustomMiddleware",
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
     # "sitemap_downloader.middleware.sitemap_downloader.CustomLoginChecker",
@@ -253,6 +253,7 @@ else:
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+
 
 DATABASE_URL = os.environ.get("DATABASE_URL", None)
 DATABASES = {}
