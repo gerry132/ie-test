@@ -59,7 +59,7 @@ debug_on = os.environ.get("DEBUG")
 if debug_on == '0':
     DEBUG = True
 else:
-    DEBUG = True
+    DEBUG = False
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
 
