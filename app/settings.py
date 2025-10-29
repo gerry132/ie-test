@@ -57,7 +57,7 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 debug_on = os.environ.get("DEBUG")
 
 if debug_on == '0':
-    DEBUG = True
+    DEBUG = False
 else:
     DEBUG = False
 
