@@ -42,16 +42,18 @@
                 {% endif %}
             </div>
             <div class="related-content-service-landing">
-                <h4 class="header--related-content">{% translate "Related content" %}</h4>
-                <ul>
-                    {% for p in page.related_content %}
-                        <li class="related-contents-number">
-                            <a class="toc-contents" href="{% if p.value.page.url %}{{ p.value.page.url }}{% else %}{{ p.value.url }}{% endif %}" aria-label="{{ p.value.title }}">
-                                {{ p.value.title }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
+                <aside aria-labelledby="related-heading">
+                    <h2 id="related-heading" class="header--related-content">{% translate "Related content" %}</h2>
+                    <ul>
+                        {% for p in page.related_content %}
+                            <li class="related-contents-number">
+                                <a class="toc-contents" href="{% if p.value.page.url %}{{ p.value.page.url }}{% else %}{{ p.value.url }}{% endif %}" aria-label="{{ p.value.title }}">
+                                    {{ p.value.title }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </aside>
             </div>
         </div>
     {% else %}
