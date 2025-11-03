@@ -795,6 +795,126 @@ class FeaturedArticlesBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/featured_articles.html"
 
 
+class WideFeatureLinkBlock(blocks.StructBlock):
+    from irelandie_navigation.blocks import LinkBlockWithURL
+    title = blocks.CharBlock(required=False)
+    link_block = blocks.StreamBlock(
+        [
+            ("link_block", LinkBlockWithURL()),
+        ],
+        max_num=3,
+        min_num=0,
+        required=False,
+        help_text="Maximum of 3 links",
+    )
+
+
+class YoutubeVimeoLinkValue(blocks.StructValue):
+    def embedding_url(self):
+
+        url = self.get("youtube_or_vimeo_embed", None)
+        if url is None:
+            return None
+        if "/embed/" in url:
+            return url
+        if 'youtube.com' in url or 'youtu.be' in url:
+            pattern = r"^(http(s)?:\/\/)?(www\.)?((youtu)(be)?)?"
+            pattern += r"(\.(com)|\.(be))?(\/)(watch\?v=)?|(\&.+)?"
+
+            video_id = re.sub(pattern, "", url)
+            video_id = re.sub(r"(&list.+)|((\s)$)", "", video_id)
+
+            return f"https://www.youtube.com/embed/{video_id}"
+        if 'vimeo.com' in url:
+            embed_url = url.replace('vimeo.com', 'player.vimeo.com/video')
+            embed_url_with_parameters = embed_url
+            return embed_url_with_parameters
+        else:
+            return None
+
+
+class WideFeatureImageVideoBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=False)
+    image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_IMAGE),
+    )
+    image_link_page = blocks.PageChooserBlock(required=False)
+    image_link_url = blocks.URLBlock(
+        required=False,
+        help_text="An external link.",
+    )
+    image_for_video = ImageChooserBlock(required=False)
+    image_for_video_image_alt = blocks.CharBlock(
+        required=False,
+        help_text=_(ALT_IMAGE),
+    )
+    youtube_or_vimeo_embed = blocks.CharBlock(required=False)
+
+    def clean(self, value):
+        errors = {}
+        image_for_video = value.get('image_for_video')
+        image_for_video_image_alt = value.get('image_for_video_image_alt')
+        video = value.get('youtube_or_vimeo_embed')
+        image = value.get('image')
+        image_alt = value.get('image_alt')
+
+        if not (bool(image) ^ bool(video)):
+            msg = "You can't choose both an image and a video. Choose an image or a video"
+            errors['image'] = ErrorList([msg])
+            errors['youtube_or_vimeo_embed'] = ErrorList([msg])
+
+        if image_for_video and not image_for_video_image_alt:
+            msg = "You can't have an image for video without alt text."
+            errors['image_for_video'] = ErrorList([msg])
+            errors['image_for_video_image_alt'] = ErrorList([msg])
+
+        if image and not image_alt:
+            msg = "You can't have an image without alt text."
+            errors['image'] = ErrorList([msg])
+            errors['image_alt'] = ErrorList([msg])
+
+        if not (bool(image) | bool(video)):
+            msg = "You have to choose either an image or a video."
+            errors['image'] = ErrorList([msg])
+            errors['youtube_or_vimeo_embed'] = ErrorList([msg])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+
+        return super().clean(value)
+
+    class Meta:
+        value_class = YoutubeVimeoLinkValue
+
+
+class WideFeatureBlock(blocks.StructBlock):
+    background_color = blocks.CharBlock(required=False, default='#FFF')
+    image_or_video_alignment = blocks.ChoiceBlock(
+        required=True,
+        choices=StoryAlignment.choices,
+        default=StoryAlignment.LEFT,
+    )
+    image_or_video_block = blocks.StreamBlock(
+        [
+            ("image_or_video_block", WideFeatureImageVideoBlock(required=False)),
+
+        ],
+        max_num=1,
+    )
+    link_or_advanced_rich_text = blocks.StreamBlock(
+        [
+            ("link_block", WideFeatureLinkBlock(required=False)),
+            ("advanced_rich_text", AdvancedRichTextBlock(required=False)),
+        ],
+        max_num=1
+    )
+
+    class Meta:
+        label = "Wide Feature Component"
+        template = "patterns/molecules/streamfield/blocks/wide_feature_block.html"
+
+
 class ContactBlock(blocks.StructBlock):
     section_id = blocks.CharBlock(required=False)
     heading = blocks.CharBlock(max_length=255, required=False)
@@ -932,6 +1052,8 @@ class MinimalArticleStoryBlock(blocks.StreamBlock):
     youtube_video = YoutubeVideoBlock(group="Module")
     story_photo_gallery = StoryPhotoGalleriesBlock(group="Base")
     timeline_photo_gallery = TimelinePhotoGalleriesBlock(group="Base")
+    two_column_feature = StoryBlock(group="Module")
+    wide_feature = WideFeatureBlock(group="Module")
 
 
 class PinnedStoriesBlock(blocks.StructBlock):
@@ -1186,6 +1308,8 @@ class GeneralContentBlocks(blocks.StreamBlock):
     overview_pull_out_textblock = OverviewPullOutTextBlock(group="Base")
     policy_document_box = PolicyDocumentBoxBlock(group="Base")
     info_at_a_glance = InfoAtAGlanceBlock(group="Base")
+    two_column_feature = StoryBlock(group="Module")
+    wide_feature = WideFeatureBlock(group="Module")
 
 
 class TocBlock(blocks.StructBlock):
@@ -1478,30 +1602,6 @@ class BannerImageBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/generic_hero.html"
 
 
-class YoutubeVimeoLinkValue(blocks.StructValue):
-    def embedding_url(self):
-
-        url = self.get("youtube_or_vimeo_embed", None)
-        if url is None:
-            return None
-        if "/embed/" in url:
-            return url
-        if 'youtube.com' in url or 'youtu.be' in url:
-            pattern = r"^(http(s)?:\/\/)?(www\.)?((youtu)(be)?)?"
-            pattern += r"(\.(com)|\.(be))?(\/)(watch\?v=)?|(\&.+)?"
-
-            video_id = re.sub(pattern, "", url)
-            video_id = re.sub(r"(&list.+)|((\s)$)", "", video_id)
-
-            return f"https://www.youtube.com/embed/{video_id}"
-        if 'vimeo.com' in url:
-            embed_url = url.replace('vimeo.com', 'player.vimeo.com/video')
-            embed_url_with_parameters = embed_url
-            return embed_url_with_parameters
-        else:
-            return None
-
-
 class StoryVideoBlock(blocks.StructBlock):
     youtube_or_vimeo_size_alignment = blocks.ChoiceBlock(
         required=False,
@@ -1640,61 +1740,6 @@ class FeaturedTaggedStoriesBlock(blocks.StructBlock):
         template = "patterns/molecules/streamfield/blocks/featured_tagged_stories.html"
 
 
-class WideFeatureImageVideoBlock(blocks.StructBlock):
-    image = ImageChooserBlock(required=False)
-    image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_(ALT_IMAGE),
-    )
-    image_link_page = blocks.PageChooserBlock(required=False)
-    image_link_url = blocks.URLBlock(
-        required=False,
-        help_text="An external link.",
-    )
-    image_for_video = ImageChooserBlock(required=False)
-    image_for_video_image_alt = blocks.CharBlock(
-        required=False,
-        help_text=_(ALT_IMAGE),
-    )
-    youtube_or_vimeo_embed = blocks.CharBlock(required=False)
-
-    def clean(self, value):
-        errors = {}
-        image_for_video = value.get('image_for_video')
-        image_for_video_image_alt = value.get('image_for_video_image_alt')
-        video = value.get('youtube_or_vimeo_embed')
-        image = value.get('image')
-        image_alt = value.get('image_alt')
-
-        if not (bool(image) ^ bool(video)):
-            msg = "You can't choose both an image and a video. Choose an image or a video"
-            errors['image'] = ErrorList([msg])
-            errors['youtube_or_vimeo_embed'] = ErrorList([msg])
-
-        if image_for_video and not image_for_video_image_alt:
-            msg = "You can't have an image for video without alt text."
-            errors['image_for_video'] = ErrorList([msg])
-            errors['image_for_video_image_alt'] = ErrorList([msg])
-
-        if image and not image_alt:
-            msg = "You can't have an image without alt text."
-            errors['image'] = ErrorList([msg])
-            errors['image_alt'] = ErrorList([msg])
-
-        if not (bool(image) | bool(video)):
-            msg = "You have to choose either an image or a video."
-            errors['image'] = ErrorList([msg])
-            errors['youtube_or_vimeo_embed'] = ErrorList([msg])
-
-        if errors:
-            raise StructBlockValidationError(errors)
-
-        return super().clean(value)
-
-    class Meta:
-        value_class = YoutubeVimeoLinkValue
-
-
 class HomepageFeatureImageVideoBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=False)
     image_alt = blocks.CharBlock(
@@ -1773,47 +1818,6 @@ class HomepageFeatureBlock(blocks.StructBlock):
     class Meta:
         label = "Homepage Feature Component"
         template = "patterns/molecules/streamfield/blocks/homepage_feature_block.html"
-
-
-class WideFeatureLinkBlock(blocks.StructBlock):
-    from irelandie_navigation.blocks import LinkBlockWithURL
-    title = blocks.CharBlock(required=False)
-    link_block = blocks.StreamBlock(
-        [
-            ("link_block", LinkBlockWithURL()),
-        ],
-        max_num=3,
-        min_num=0,
-        required=False,
-        help_text="Maximum of 3 links",
-    )
-
-
-class WideFeatureBlock(blocks.StructBlock):
-    background_color = blocks.CharBlock(required=False, default='#FFF')
-    image_or_video_alignment = blocks.ChoiceBlock(
-        required=True,
-        choices=StoryAlignment.choices,
-        default=StoryAlignment.LEFT,
-    )
-    image_or_video_block = blocks.StreamBlock(
-        [
-            ("image_or_video_block", WideFeatureImageVideoBlock(required=False)),
-
-        ],
-        max_num=1,
-    )
-    link_or_advanced_rich_text = blocks.StreamBlock(
-        [
-            ("link_block", WideFeatureLinkBlock(required=False)),
-            ("advanced_rich_text", AdvancedRichTextBlock(required=False)),
-        ],
-        max_num=1
-    )
-
-    class Meta:
-        label = "Wide Feature Component"
-        template = "patterns/molecules/streamfield/blocks/wide_feature_block.html"
 
 
 class FreeFormBlocks(FreeFormBlocksBase):
