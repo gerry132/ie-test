@@ -75,7 +75,7 @@
                                     {% if 'vimeo.com' in block.value.youtube_or_vimeo_embed %}
                                         <iframe title="youtube_or_vimeo_embed" allowfullscreen class="multimedia__video--block no-button" frameborder="0" src="{{ block.value.embedding_url }}?controls=0"></iframe>
                                     {% else %}
-                                        <iframe title="youtube_or_vimeo_embed" allowfullscreen class="multimedia__video--block no-button" frameborder="0" src="{{ block.value.embedding_url }}"></iframe>
+                                        <iframe title="youtube_or_vimeo_embed" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" class="multimedia__video--block no-button" frameborder="0" src="{{ block.value.embedding_url }}"></iframe>
                                     {% endif %}
                             </a>
                             {% endif %}

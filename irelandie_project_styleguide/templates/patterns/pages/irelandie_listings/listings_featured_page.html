@@ -58,6 +58,7 @@
                     <iframe
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
+                        referrerpolicy="strict-origin-when-cross-origin"
                         frameborder="0"
                         src="{{ page.embedding_url }}"
                         title="{% if page.event_title %}{{ page.event_title }}{% else %}youtube_embed{% endif %}">
