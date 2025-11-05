@@ -98,6 +98,17 @@
                     {% endcomment %}
                     <div class="wrapper wrapper--large wrapper--mobile-menu">
                         <div class="header__menu header__menu--primary">
+                            {% if page.root_page %}
+                                {% if custom_header.links %}
+                                    <ul class="custom-nav-mob">
+                                        {% for link in custom_header.links %}
+                                        <li class="primary-nav__item">
+                                            {% include "patterns/molecules/navigation/includes/mega_menu_item.html" with link=link %}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            {% endif %}
                             {% has_root_override page header=True as override %}
                             {% if override and custom_header.links %}
                                 {% for link in custom_header.links %}
