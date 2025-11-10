@@ -92,7 +92,7 @@
                             <div style="padding-top:20px;">
                                 {% for blocks_admin in page.admin_body1 %}
                                 {% if blocks_admin.block_type == 'admin_contents' %}
-                                <div id="{{blocks_admin.value.title}}">
+                                <div id="{{blocks_admin.value.title|slugify}}">
                                     {% for block_admins in blocks_admin.value.content %}
                                         {% if block_admins.block_type == 'content' %}
                                             {% for subblock in block_admins.value %}
@@ -131,7 +131,7 @@
                         {% endfor %}
                             {% for blocks_admin in page.admin_body2 %}
                                 {% if blocks_admin.block_type == 'admin_content' %}
-                                <div id="{{blocks_admin.value.title}}">
+                                <div id="{{blocks_admin.value.title|slugify}}">
                                     {% for block_admins in blocks_admin.value.content %}
                                         {% if block_admins.block_type == 'content' %}
                                             {% for subblock in block_admins.value %}

@@ -24,24 +24,36 @@ def get_model_info(Model, pk):
     return model_map[Model].objects.get(id=pk)
 
 
-def get_root_info(context, pages):
-    from irelandie_missions.models import MissionPage
+def get_root_info(context, pages, current_page=None):
+    from irelandie_missions.models import MissionPage, DestinationPage
     from irelandie_pages.models import FreeFormPage
-    from irelandie_missions.models import DestinationPage
 
     page_map = {
         'mission page': MissionPage,
         'Free Form Page': FreeFormPage,
-        'destination page': DestinationPage
+        'destination page': DestinationPage,
     }
+
     root_found = False
+
+    if current_page and isinstance(current_page, MissionPage) and getattr(current_page, "root_page", None):
+        if hasattr(current_page, "default_image"):
+            context["default_image"] = current_page.default_image
+        context["mission_web_bot"] = getattr(current_page, "web_bot_script", None)
+        context["root_page"] = current_page
+        return context, True
+
     for p in pages:
-        if p.content_type.name in page_map.keys():
-            missions = page_map[p.content_type.name].objects.get(id=p.id)
-            if missions.root_page:
-                if hasattr(missions, 'default_image'):
-                    context['default_image'] = missions.default_image
-                context['mission_web_bot'] = missions.web_bot_script
-                context['root_page'] = missions
+        if p.content_type.name in page_map:
+            page_cls = page_map[p.content_type.name]
+            page_obj = page_cls.objects.get(id=p.id)
+
+            if getattr(page_obj, "root_page", None):
+                if hasattr(page_obj, "default_image"):
+                    context["default_image"] = page_obj.default_image
+                context["mission_web_bot"] = getattr(page_obj, "web_bot_script", None)
+                context["root_page"] = page_obj
                 root_found = True
+                break
+
     return context, root_found
