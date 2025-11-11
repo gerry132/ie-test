@@ -1741,14 +1741,14 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
     }
   }
   rule {
-    name     = "AllowSemRushBot"
+    name     = "AllowSemrushBots"
     priority = 1
     action {
       allow {}
     }
     statement {
       byte_match_statement {
-        search_string = "Mozilla/5.0 compatible; SemrushBot/7~bl; +http://www.semrush.com/bot.html"
+        search_string = "semrush.com"
         field_to_match {
           single_header {
             name = "user-agent"
@@ -1763,11 +1763,10 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
     }
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "AllowSemRushBot"
+      metric_name                = "AllowSemrushBots"
       sampled_requests_enabled   = true
     }
   }
-
   rule {
     name     = "AWS-AWSManagedRulesBotControlRuleSet"
     priority = 2
@@ -2372,14 +2371,14 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
   }
 
   rule {
-    name     = "AllowSemRushBot"
+    name     = "AllowSemrushBots"
     priority = 1
     action {
       allow {}
     }
     statement {
       byte_match_statement {
-        search_string = "Mozilla/5.0 compatible; SemrushBot/7~bl; +http://www.semrush.com/bot.html"
+        search_string = "semrush.com"
         field_to_match {
           single_header {
             name = "user-agent"
@@ -2394,7 +2393,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
     }
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "AllowSemRushBot"
+      metric_name                = "AllowSemrushBots"
       sampled_requests_enabled   = true
     }
   }

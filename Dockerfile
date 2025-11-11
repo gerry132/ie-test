@@ -37,7 +37,21 @@ RUN apk --no-cache --update add \
     jpeg-dev \
     zlib-dev
 
+ARG AWS_REGION
+ARG AWS_ACCOUNT_ID
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
+
 RUN pip install --upgrade pip --break-system-packages
+RUN pip install awscli --break-system-packages
+
+RUN aws codeartifact login \
+      --tool pip \
+      --repository wagtail-pypi \
+      --domain hydrogen \
+      --domain-owner "$AWS_ACCOUNT_ID" \
+      --region "$AWS_REGION"
+
 RUN pip install -r requirements.txt --break-system-packages
 
 
