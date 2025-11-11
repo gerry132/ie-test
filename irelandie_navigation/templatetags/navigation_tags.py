@@ -64,14 +64,13 @@ def primarynav(context, page, override=None):
             "request": request,
         }
 
-    if not isinstance(page, int) and not isinstance(page, str):
+    if not isinstance(page, (int, str)):
         pages = page.get_ancestors()
-
-        context, root_found = get_root_info(context, pages)
+        context, root_found = get_root_info(context, pages, current_page=page)
 
     try:
         if root_found:
-            custom_header = CustomHeader.objects.get(id=context['root_page'].custom_header.id)
+            custom_header = CustomHeader.objects.get(id=context["root_page"].custom_header.id)
         else:
             custom_header = CustomHeader.objects.get(id=page.custom_header.id)
     except AttributeError:
