@@ -1,5 +1,5 @@
 # requirements needed for the application to run
-Django==5.2.6
+Django==5.2.8
 django-cors-headers==3.11.0
 django-pattern-library
 django-redis==6.0.0
