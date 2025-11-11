@@ -1,5 +1,4 @@
 trigger: none
-
 pr: none
 
 pool:
@@ -7,11 +6,11 @@ pool:
 
 resources:
   repositories:
-  - repository: azure-pipelines-templates
-    type: github
-    endpoint: ogcio
-    name: ogcio/azure-pipelines-templates
-    ref: refs/heads/develop
+    - repository: azure-pipelines-templates
+      type: github
+      endpoint: ogcio
+      name: ogcio/azure-pipelines-templates
+      ref: refs/heads/develop
 
 stages:
 - stage: test
@@ -32,14 +31,17 @@ stages:
         pip install --upgrade bandit
         bandit -r irelandie_* -x tests,migrations
       displayName: Install & Run Bandit
+
   - job: Lint
+    displayName: Lint (PEP8)
     steps:
     - script: |
         python -m pip install flake8
         flake8 .
-      displayName: PEP8 Checks
+      displayName: Run Flake8
 
   - job: Test
+    displayName: Unit Tests
     steps:
     - script: |
         aws codeartifact login \
@@ -47,24 +49,32 @@ stages:
           --repository wagtail-pypi \
           --domain hydrogen \
           --domain-owner "$AWS_ACCOUNT_ID" \
-          --region eu-west-1
-    - script: pip install -r requirements.txt
-      displayName: Install Requirements
+          --region "$AWS_REGION"
+
+        pip install -r requirements.txt
+      displayName: Login to CodeArtifact & Install Requirements
+      env:
+        AWS_ACCESS_KEY_ID: $(aws_access_key)
+        AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
+        AWS_REGION: $(aws_region)
+        AWS_ACCOUNT_ID: $(aws_account_id)
 
     - script: |
         cat .azure-pipelines/.env_pipeline > app/.env
         python manage.py test
-      displayName: Unit Tests
+      displayName: Run Django Tests
+
 
 - stage: statics
   displayName: Static Files
   jobs:
   - job: StaticFiles
+    displayName: Build and Upload Static Files
     steps:
     - task: NodeTool@0
-      displayName: Installing Node.js
+      displayName: Install Node.js
       inputs:
-        versionSpec: 14
+        versionSpec: '14'
 
     - script: |
         npm install
@@ -77,15 +87,19 @@ stages:
           --repository wagtail-pypi \
           --domain hydrogen \
           --domain-owner "$AWS_ACCOUNT_ID" \
-          --region eu-west-1
-  
-    - script: pip install -r requirements.txt
-      displayName: Install Requirements
+          --region "$AWS_REGION"
+
+        pip install -r requirements.txt
+      displayName: Login to CodeArtifact & Install Requirements
+      env:
+        AWS_ACCESS_KEY_ID: $(aws_access_key)
+        AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
+        AWS_REGION: $(aws_region)
+        AWS_ACCOUNT_ID: $(aws_account_id)
 
     - script: |
         cat .azure-pipelines/.env_pipeline > app/.env
         export USE_S3=1
-
         python manage.py collectstatic --noinput
       displayName: Upload Static Files to S3
       env:
@@ -95,71 +109,81 @@ stages:
         AWS_ACCESS_KEY_ID: $(aws_access_key)
         AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
 
+
 - stage: terraform
   displayName: Terraform
   jobs:
-    - job: runTerraform
-      steps:
-        - checkout: self
-          submodules: true
-          persistCredentials: true
-
-        - task: Bash@3
-          displayName: Run Terraform
-          inputs:
-            targetType: inline
-            script: |
-              cd infrastructure/terraform/aws/$(env)/
-              terraform init -input=false -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY"
-              terraform apply -input=false -auto-approve
-              cd ../../../..
-            failOnStderr: true
-          env:
-            AWS_ACCESS_KEY_ID: $(aws_access_key)
-            AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
-            AWS_DEFAULT_REGION: $(aws_region)
-
-- stage: deploy
-  displayName: Deploy
-  jobs:
-  - job: Deploy
+  - job: runTerraform
     steps:
     - checkout: self
       submodules: true
       persistCredentials: true
 
     - task: Bash@3
-      displayName: Build and Push Image
+      displayName: Run Terraform
+      inputs:
+        targetType: inline
+        script: |
+          cd infrastructure/terraform/aws/$(env)/
+          terraform init -input=false \
+            -backend-config="access_key=$AWS_ACCESS_KEY_ID" \
+            -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY"
+          terraform apply -input=false -auto-approve
+          cd ../../../..
+        failOnStderr: true
+      env:
+        AWS_ACCESS_KEY_ID: $(aws_access_key)
+        AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
+        AWS_DEFAULT_REGION: $(aws_region)
+
+
+- stage: deploy
+  displayName: Deploy
+  jobs:
+  - job: Deploy
+    displayName: Build and Deploy ECS Image
+    steps:
+    - checkout: self
+      submodules: true
+      persistCredentials: true
+
+    - task: Bash@3
+      displayName: Build and Push Docker Image
       inputs:
         targetType: inline
         script: |
           aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
-          docker build . -t "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
+
+          docker build . \
+            --build-arg AWS_REGION=$AWS_REGION \
+            --build-arg AWS_ACCOUNT_ID=$AWS_ACCOUNT_ID \
+            --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+            --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+            -t "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
+
           docker push "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
-        failOnStderr: false
       env:
         AWS_ACCESS_KEY_ID: $(aws_access_key)
         AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
         AWS_REGION: $(aws_region)
-        DEBUG: $(debug)
-        OPENSEARCH_KEY: $(opensearch_key)
-        OPENSEARCH_SECRET: $(opensearch_secret)
         AWS_ACCOUNT_ID: $(aws_account_id)
         IMAGE_NAME: $(image_name)
         IMAGE_TAG: $(image_tag)
+        DEBUG: $(debug)
+        OPENSEARCH_KEY: $(opensearch_key)
+        OPENSEARCH_SECRET: $(opensearch_secret)
 
     - template: templates/ecs-update-service.yml
-  
       parameters:
         clusterName: $(image_name)
         serviceName: $(image_name)
 
-
   - job: DeployAPI
+    displayName: Deploy API ECS Service
     steps:
-      - template: templates/ecs-update-service.yml
-        parameters:
-          clusterName: $(image_name)
-          serviceName: $(env)-api
-          imageTag: $(image_tag)
-          region: $(aws_region)
+    - template: templates/ecs-update-service.yml
+      parameters:
+        clusterName: $(image_name)
+        serviceName: $(env)-api
+        imageTag: $(image_tag)
+        region: $(aws_region)
