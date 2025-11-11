@@ -15,15 +15,6 @@ resources:
 
 stages:
 - stage: test
-- script: |
-    aws codeartifact login \
-      --tool pip \
-      --repository wagtail-pypi \
-      --domain hydrogen \
-      --domain-owner "$AWS_ACCOUNT_ID" \
-      --region eu-west-1
-  displayName: Login to CodeArtifact for pip
-
   displayName: Check the Code
   jobs:
   - job: Bandit
@@ -50,14 +41,14 @@ stages:
 
   - job: Test
     steps:
-      - script: |
+    - script: |
         aws codeartifact login \
           --tool pip \
           --repository wagtail-pypi \
           --domain hydrogen \
           --domain-owner "$AWS_ACCOUNT_ID" \
           --region eu-west-1
-          pip install -r requirements.txt
+    - script: pip install -r requirements.txt
       displayName: Install Requirements
 
     - script: |
@@ -80,6 +71,14 @@ stages:
         npm run build:prod
       displayName: Build Static Files
 
+    - script: |
+        aws codeartifact login \
+          --tool pip \
+          --repository wagtail-pypi \
+          --domain hydrogen \
+          --domain-owner "$AWS_ACCOUNT_ID" \
+          --region eu-west-1
+  
     - script: pip install -r requirements.txt
       displayName: Install Requirements
 
