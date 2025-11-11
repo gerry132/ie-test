@@ -10,8 +10,7 @@ wagtail==7.0.0
 wagtail-accessibility==0.2.1
 wagtail-honeypot==1.0.0
 wagtail-modeladmin
-#wagtail-localize
-wagtail-localize-patched==1.12.2.post2
+wagtail-localize
 wagtailmedia
 wagtail-seo
 
