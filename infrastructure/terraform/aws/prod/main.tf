@@ -1639,6 +1639,8 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips" {
                         "88.80.184.34/32",
                         "178.79.136.28/32",
 
+                        "37.228.236.5/32", # gerry Dublin 
+
                         "185.18.139.74/32",#inystful ips
                         "185.18.139.107/32",#inystful ips
                         "185.18.139.14/32",#inystful ips
@@ -1738,10 +1740,36 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
       sampled_requests_enabled   = true
     }
   }
-
+  rule {
+    name     = "AllowSemrushBots"
+    priority = 1
+    action {
+      allow {}
+    }
+    statement {
+      byte_match_statement {
+        search_string = "semrush.com"
+        field_to_match {
+          single_header {
+            name = "user-agent"
+          }
+        }
+        positional_constraint = "CONTAINS"
+        text_transformation {
+          priority = 0
+          type     = "NONE"
+        }
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AllowSemrushBots"
+      sampled_requests_enabled   = true
+    }
+  }
   rule {
     name     = "AWS-AWSManagedRulesBotControlRuleSet"
-    priority = 1
+    priority = 2
     override_action {
       none {
       }
@@ -2343,8 +2371,36 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
   }
 
   rule {
+    name     = "AllowSemrushBots"
+    priority = 1
+    action {
+      allow {}
+    }
+    statement {
+      byte_match_statement {
+        search_string = "semrush.com"
+        field_to_match {
+          single_header {
+            name = "user-agent"
+          }
+        }
+        positional_constraint = "CONTAINS"
+        text_transformation {
+          priority = 0
+          type     = "NONE"
+        }
+      }
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AllowSemrushBots"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule {
     name     = "AWSRateBasedRuleDomesticDOS"
-    priority = 2
+    priority = 3
     action {
       captcha {}
     }
@@ -2375,7 +2431,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf" {
   }
   rule {
     name     = "AWS-AWSManagedRulesBotControlRuleSet"
-    priority = 1
+    priority = 2
 
     override_action {
       none {

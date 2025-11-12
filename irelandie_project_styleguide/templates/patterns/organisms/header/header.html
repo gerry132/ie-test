@@ -91,13 +91,14 @@
                     </div>
                 </div>
 
-                <div class="header__menus header__menus--mobile" style="{% if settings.irelandie_navigation.SiteSettings.website_header_strapline %}top:156px; {% endif %}" data-mobile-menu>
+                <div class="header__menus header__menus--mobile" style="{% if settings.irelandie_navigation.SiteSettings.website_header_strapline %}top:156px; max-height:calc(100vh - 156px); {% endif %}" data-mobile-menu>
                     {% comment %}
                     This is called mobile nav, but actually gets shown at all screen sizes.
                     Only shows the extended primary nav on desktop, then combines all 3 navs (if available) on mobile
                     {% endcomment %}
                     <div class="wrapper wrapper--large wrapper--mobile-menu">
                         <div class="header__menu header__menu--primary">
+
                             {% has_root_override page header=True as override %}
                             {% if override and custom_header.links %}
                                 {% for link in custom_header.links %}

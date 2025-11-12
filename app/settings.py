@@ -167,6 +167,7 @@ MIDDLEWARE = [
     # "irelandie_utils.middleware.ReplaceViewsMiddleware",
     "custom_logout.middleware.custom_logout.CustomMiddleware",
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
+    "irelandie_utils.middleware.ReferrerPolicyMiddleware",
     # "sitemap_downloader.middleware.sitemap_downloader.CustomLoginChecker",
 ]
 

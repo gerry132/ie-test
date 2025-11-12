@@ -92,7 +92,7 @@
                             <div style="padding-top:20px;">
                                 {% for blocks_admin in page.admin_body1 %}
                                 {% if blocks_admin.block_type == 'admin_contents' %}
-                                <div id="{{blocks_admin.value.title}}">
+                                <div id="{{blocks_admin.value.title|slugify}}">
                                     {% for block_admins in blocks_admin.value.content %}
                                         {% if block_admins.block_type == 'content' %}
                                             {% for subblock in block_admins.value %}
@@ -102,7 +102,7 @@
                                     {% elif block_admins.block_type == 'snippets' %}
                                         {% for block_snippets in block_admins.value %}
                                             {% if block_snippets.block_type == 'contact_details' %}
-                                            <div id="{{block_admin.title}}" class="wrapper wrapper--large  content--padding">
+                                            <div id="{{block_admin.title|slugify}}" class="wrapper wrapper--large  content--padding">
                                                 {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
                                             </div>
                                              {% else %}
@@ -122,7 +122,7 @@
 
                         {% for blocks in page.body %}
                             {% if blocks.block_type == 'content' %}
-                            <div id="{{blocks.value.title}}">
+                            <div id="{{blocks.value.title|slugify}}">
                                 {% for block in blocks.value.content %}
                                     {% include  "patterns/pages/toc/general_blocks.html" with subblock=block %}
                             {% endfor %}
@@ -131,7 +131,7 @@
                         {% endfor %}
                             {% for blocks_admin in page.admin_body2 %}
                                 {% if blocks_admin.block_type == 'admin_content' %}
-                                <div id="{{blocks_admin.value.title}}">
+                                <div id="{{blocks_admin.value.title|slugify}}">
                                     {% for block_admins in blocks_admin.value.content %}
                                         {% if block_admins.block_type == 'content' %}
                                             {% for subblock in block_admins.value %}
@@ -141,7 +141,7 @@
                                     {% elif block_admins.block_type == 'snippets' %}
                                         {% for block_snippets in block_admins.value %}
                                             {% if block_snippets.block_type == 'contact_details' %}
-                                            <div id="{{block_admin.title}}" class="wrapper wrapper--large  content--padding">
+                                            <div id="{{block_admin.title|slugify}}" class="wrapper wrapper--large  content--padding">
                                                 {% include  "patterns/molecules/contact_details/contact_details.html" with contact_details=block_snippets.value %}
                                             </div>
                                              {% else %}
@@ -171,16 +171,18 @@
                     <!--start of  col-md-12 col-lg-3 -->
                     <div class="col-sm-12 col-md-12 col-lg-3 wrapper">
                         {% if page.related_content %}
-                            <h4 class="header--related-content">{% translate "Related content" %}</h4>
-                            <ul>
-                                {% for p in page.related_content %}
-                                    <li class="related-contents-number">
-                                        <a class="toc-contents" href="{% if p.value.page.url %}{{ p.value.page.url }}{% else %}{{ p.value.url }}{% endif %}" aria-label="{{ p.value.title }}">
-                                            {{ p.value.title }}
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
+                            <aside aria-labelledby="related-heading">
+                                <h2 id="related-heading" class="header--related-content">{% translate "Related content" %}</h2>
+                                <ul>
+                                    {% for p in page.related_content %}
+                                        <li class="related-contents-number">
+                                            <a class="toc-contents" href="{% if p.value.page.url %}{{ p.value.page.url }}{% else %}{{ p.value.url }}{% endif %}" aria-label="{{ p.value.title }}">
+                                                {{ p.value.title }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </aside>
                         {% endif %}
                     </div>
                     <!--end of  col-md-12 col-lg-3 -->

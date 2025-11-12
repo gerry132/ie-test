@@ -30,7 +30,7 @@
 
         <div class="accordion__container">
             {% for accordion in value.accordions %}
-                <div class="accordion" id="{{ accordion.value.title }}" accordian="{{ forloop.counter }}" data-accordion>
+                <div class="accordion" id="{% if page.content_type.model == 'travelcountrypage' %}{{ accordion.value.title|slugify }}{% else %}{{ accordion.value.title }}{% endif %}" accordion="{{ forloop.counter }}" data-accordion>
                     <h2 class="accordion__header">
                         <div
                             id="question-{{ forloop.counter }}"

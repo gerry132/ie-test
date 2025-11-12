@@ -23,7 +23,7 @@
                                 </div>
                             {% else %}
                                 <div class="homepage_feature__iframe-container">
-                                    <iframe title="{% if block_hero.value.heading %}{{ block_hero.value.heading }}{% else %}homefeature_youtube_player{% endif %}" class="youtube_player" src="{{ block_hero.value.embedding_url }}?enablejsapi=1&html5=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <iframe title="{% if block_hero.value.heading %}{{ block_hero.value.heading }}{% else %}homefeature_youtube_player{% endif %}" class="youtube_player" src="{{ block_hero.value.embedding_url }}?enablejsapi=1&html5=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
                                     {% if block_hero.value.image_for_video %}
                                     {% image block_hero.value.image_for_video fill-1600x900 class="starter" alt=block_hero.value.image_for_video_image_alt %}
                                     <svg class="starter_button" tabindex="0" role="button" aria-label="Start"
