@@ -112,7 +112,15 @@ stages:
     - checkout: self
       submodules: true
       persistCredentials: true
-
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.10'
+    - script: |
+         pip install --upgrade pip; pip install requests
+    - script: |
+          python release/schedule.py
+      displayName: Run schedule.py
+      condition: eq(variables['RELEASE_BUILD'], 'true')
     - task: Bash@3
       displayName: Build and Push Image
       inputs:
