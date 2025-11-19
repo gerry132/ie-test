@@ -45,20 +45,18 @@ class CustomImage(AbstractImage):
                     )
                 })
 
-        if not self.description or not self.description.strip():
-            raise ValidationError({
-                "description": _("Alt text is required. Please describe the image briefly.")
-            })
+        if self.description and self.description.strip():
+            if re.search(r"\.(jpg|jpeg|png|gif|webp)$", self.description, re.IGNORECASE):
+                raise ValidationError({
+                    "description": _("Do not use filenames as alt text.")
+                })
 
-        if re.search(r"\.(jpg|jpeg|png|gif|webp)$", self.description, re.IGNORECASE):
-            raise ValidationError({
-                "description": _("Do not use filenames as alt text.")
-            })
-
-        if not re.search(r"[A-Za-z]", self.description):
-            raise ValidationError({
-                "description": _("Alt text must contain letters.")
-            })
+            if not re.search(r"[A-Za-z]", self.description):
+                raise ValidationError({
+                    "description": _("Alt text must contain letters.")
+                })
+        else:
+            pass
 
 
 class CustomRendition(AbstractRendition):
