@@ -1,5 +1,4 @@
 from .root_builder import RootBuilder
-from wagtail.models import Page
 from wagtail.models import Locale
 from datetime import datetime
 
