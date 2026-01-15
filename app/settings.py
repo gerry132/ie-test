@@ -74,7 +74,7 @@ INSTALLED_APPS = [
     "robots_txt",
     "health_check",
     "accview_non_admin",
-    # "wagtail_sitemap_seo",
+    "wagtail_sitemap_seo",
     "irelandie_admin",
     "irelandie_api",
     "irelandie_assets",
@@ -168,7 +168,7 @@ MIDDLEWARE = [
     "custom_logout.middleware.custom_logout.CustomMiddleware",
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
     "irelandie_utils.middleware.ReferrerPolicyMiddleware",
-    # "sitemap_downloader.middleware.sitemap_downloader.CustomLoginChecker",
+    "sitemap_downloader.middleware.sitemap_downloader.CustomLoginChecker",
 ]
 
 if DEBUG_TOOLBAR is True:
@@ -478,7 +478,7 @@ if USE_S3:
     # URLs at domain root (no /static, no /media)
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
-    # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
+    SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
 
 else:
     STATIC_URL = "/static/"
