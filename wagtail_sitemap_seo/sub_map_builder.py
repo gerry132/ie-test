@@ -1,5 +1,4 @@
 from .root_builder import RootBuilder
-from wagtail.models import Page
 from wagtail.models import Locale
 from datetime import datetime
 
@@ -13,10 +12,9 @@ class MapBuilder(RootBuilder):
 
     def build_map(self, page):
         locale = Locale.objects.get(language_code='en')
-        pages = Page.objects.live().descendant_of(page).filter(locale=locale)
+        pages = page.get_descendants(inclusive=True).live().filter(locale=locale)
+
         new_map = self.site_map_init()
-        elem = self.build_url_elem(page)
-        new_map.append(elem)
         for p in pages:
             elem = self.build_url_elem(p)
             new_map.append(elem)
