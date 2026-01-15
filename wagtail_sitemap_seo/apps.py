@@ -17,3 +17,4 @@ class SitemapSeoConfig(AppConfig):
         print(1111111111111111111)
 
         agent = Agent()
+        print(agent)

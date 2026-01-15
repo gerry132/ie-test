@@ -4,8 +4,7 @@ from wagtail_sitemap_seo.sub_map_builder import MapBuilder
 
 class Agent(RepeatedTimer):
     def __init__(self):
-        super().__init__(600, self.builder_run)
-
+        super().__init__(10, self.builder_run)
 
     def builder_run(self, **kwargs):
         root = MapBuilder('test.csv')
