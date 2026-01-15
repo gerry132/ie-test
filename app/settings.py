@@ -74,7 +74,7 @@ INSTALLED_APPS = [
     "robots_txt",
     "health_check",
     "accview_non_admin",
-    "wagtail_sitemap_seo",
+    # "wagtail_sitemap_seo",
     "irelandie_admin",
     "irelandie_api",
     "irelandie_assets",
