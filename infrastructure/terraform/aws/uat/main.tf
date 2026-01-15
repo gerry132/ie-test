@@ -81,7 +81,7 @@ locals {
     },
     gerry_dev = {
       description = "Gerry Mcbride - OGCIO"
-      cidr_blocks = ["95.44.14.48/32", "37.228.234.184/32"]
+      cidr_blocks = ["95.44.14.48/32", "37.228.229.14/32"]
     },
     fergal_dev = {
       description = "Fergal - OGCIO"
@@ -359,6 +359,16 @@ resource "aws_security_group_rule" "non_gov_network_to_lb_443" {
   protocol                  = "all"
   security_group_id         = aws_security_group.lb_gov_network.id
   cidr_blocks               = each.value.cidr_blocks
+}
+
+
+resource "aws_security_group_rule" "gov_network_to_lb_443" {
+  type                      = "ingress"
+  from_port                 = 0
+  to_port                   = 0
+  protocol                  = "all"
+  security_group_id         = aws_security_group.lb_gov_network.id
+  cidr_blocks               = local.gov_network_cird_blocks
 }
 
 # Internal thing rules
@@ -2135,12 +2145,13 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
                         "193.178.64.0/19",    # gov_network_cird_blocks
                         "193.178.96.0/20",    # gov_network_cird_blocks
                         "139.162.239.108/32", # gov_network_cird_blocks
+                        "155.190.32.0/24",
 
                         "31.53.148.191/32",   # Sina
                         "51.183.41.207/32",   # Deekshana
                         "51.182.250.11/32",   # Fergal
                         "62.23.128.137/32",    # DFA
-                        "37.228.206.182/32",  # jaikiran_dev
+                        "37.228.229.14/32" # Gerry
                         ]
 }
 
