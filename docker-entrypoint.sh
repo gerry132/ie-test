@@ -11,6 +11,9 @@ fi
 
 python3 manage.py fixtree --full --noinput
 
+# Run your alt text command safely
+python manage.py migrate_all_alt_text_to_images
+
 init_username="system_admin"
 init_password="password1234!"
 
