@@ -44,6 +44,10 @@
         "value": "${SETTINGS_BASE_URL}"
       },
       {
+        "name": "USE_S3",
+        "value": "${SETTINGS_USE_S3}"
+      },
+      {
         "name": "DATABASE_URL",
         "value": "${SETTINGS_DATABASE_URL}"
       },
