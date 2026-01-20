@@ -68,12 +68,14 @@ class Command(BaseCommand):
                 self.scan_streamvalue(value, obj, field.name)
 
     def scan_streamvalue(self, stream_value, obj, source):
-        if not isinstance(stream_value, StreamValue): return
+        if not isinstance(stream_value, StreamValue):
+            return
         for child in stream_value:
             self.scan_structvalue(child.value, obj, f"{source}.{child.block.name}")
 
     def scan_structvalue(self, struct_value, obj, source):
-        if not isinstance(struct_value, StructValue): return
+        if not isinstance(struct_value, StructValue):
+            return
 
         image_alt_pairs = []
         images = {}
