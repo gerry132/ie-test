@@ -77,7 +77,6 @@ class Command(BaseCommand):
         if not isinstance(struct_value, StructValue):
             return
 
-        image_alt_pairs = []
         images = {}
         alts = {}
 
@@ -90,15 +89,8 @@ class Command(BaseCommand):
                     alts[key] = text
 
         for img_key, image in images.items():
-            alt_key = f"{img_key}_alt" if img_key != "image" else "image_alt"
-            if alt_key in alts:
-                image_alt_pairs.append((image, img_key, alt_key, alts[alt_key]))
-            elif alts:
-                alt_key = next(iter(alts))
-                image_alt_pairs.append((image, img_key, alt_key, alts[alt_key]))
-
-        for image, img_field, alt_field, alt_text in image_alt_pairs:
-            self.record(image, img_field, alt_field, alt_text, obj, source)
+            for alt_key, alt_text in alts.items():
+                self.record(image, img_key, alt_key, alt_text, obj, source)
 
         for key, val in struct_value.items():
             if isinstance(val, (StructValue, StreamValue)):
