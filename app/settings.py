@@ -478,6 +478,8 @@ if USE_S3:
     # URLs at domain root (no /static, no /media)
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
+    SITEMAP_WRITE_S3 = True
+    SITEMAP_DIR = "sitemaps"
     SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
 
 else:
