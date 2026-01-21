@@ -8,7 +8,7 @@ RUN mkdir /app
 RUN mkdir /static
 WORKDIR /app
 COPY requirements.txt /app/
-COPY tasks /app/
+ADD tasks /app/tasks
 
 # setup
 RUN apk update
