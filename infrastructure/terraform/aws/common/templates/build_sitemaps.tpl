@@ -75,7 +75,7 @@
             },
                         {
                 "name": "USE_S3",
-                "value": "${SETTINGS_USE_S3}"
+                "value": true
             },
             {
                 "name": "CORS_ALLOWED_ORIGINS",
