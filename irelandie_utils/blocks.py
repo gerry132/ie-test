@@ -839,6 +839,7 @@ class WideFeatureImageVideoBlock(blocks.StructBlock):
         required=False,
         help_text=_(ALT_IMAGE),
     )
+    image_credit = blocks.CharBlock(required=False, max_length=255)
     image_link_page = blocks.PageChooserBlock(required=False)
     image_link_url = blocks.URLBlock(
         required=False,
