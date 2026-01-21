@@ -8,9 +8,7 @@ RUN mkdir /app
 RUN mkdir /static
 WORKDIR /app
 COPY requirements.txt /app/
-COPY update_indexes.sh /app/
-COPY docker-entrypoint.sh /app/
-COPY publish_scheduled_items.sh /app/
+COPY tasks /app/
 
 # setup
 RUN apk update
@@ -41,9 +39,9 @@ RUN pip install --upgrade pip --break-system-packages
 RUN pip install -r requirements.txt --break-system-packages
 
 
-RUN ["chmod", "+x", "/app/docker-entrypoint.sh"]
-RUN ["chmod", "+x", "/app/update_indexes.sh"]
-RUN ["chmod", "+x", "/app/publish_scheduled_items.sh"]
+RUN ["chmod", "+x", "/app/tasks/docker-entrypoint.sh"]
+RUN ["chmod", "+x", "/app/tasks/update_indexes.sh"]
+RUN ["chmod", "+x", "/app/tasks/publish_scheduled_items.sh"]
 
 
 

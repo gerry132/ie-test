@@ -6,7 +6,7 @@
 		"networkMode": "awsvpc",
         "entryPoint": [
             "sh",
-            "/app/update_indexes.sh"
+            "/app/tasks/update_indexes.sh"
         ],
 		"logConfiguration": {
 			"logDriver": "awslogs",

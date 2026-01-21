@@ -8,7 +8,7 @@
 		"networkMode": "awsvpc",
         "entryPoint": [
             "sh",
-            "/app/docker-entrypoint.sh"
+            "/app/tasks/docker-entrypoint.sh"
         ],
 		"logConfiguration": {
 			"logDriver": "awslogs",
