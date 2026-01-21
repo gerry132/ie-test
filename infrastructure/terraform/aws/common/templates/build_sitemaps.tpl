@@ -75,7 +75,7 @@
             },
                         {
                 "name": "USE_S3",
-                "value": "true"
+                "value": "True"
             },
             {
                 "name": "CORS_ALLOWED_ORIGINS",
