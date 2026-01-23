@@ -73,11 +73,11 @@ resource "aws_cloudwatch_event_target" "ecs_task_target_publish" {
 
 resource "aws_cloudwatch_event_target" "ecs_task_target_sitemap" {
   rule      = aws_cloudwatch_event_rule.daily_trigger.name
-  target_id = "index-update-task"
+  target_id = "build-site-maps"
   arn       = var.cluster.arn
 
   ecs_target {
-    task_definition_arn = aws_ecs_task_definition.index_task.arn
+    task_definition_arn = aws_ecs_task_definition.ecs_task_build_site_maps.arn
     launch_type         = "FARGATE"
 
     network_configuration {
