@@ -583,6 +583,25 @@ class MissionPage(HeroPage):
         blank=True
     )
 
+    twitter_url = models.URLField(blank=True, help_text="Full X profile URL")
+    facebook_url = models.URLField(blank=True, help_text="Full Facebook page URL")
+    youtube_url = models.URLField(blank=True, help_text="Full YouTube channel URL")
+    linkedin_url = models.URLField(blank=True, help_text="Full LinkedIn profile URL")
+    instagram_url = models.URLField(blank=True, help_text="Full Instagram profile URL")
+    weibo_url = models.URLField(blank=True, help_text="Full Weibo profile URL")
+
+    social_media_panels = MultiFieldPanel(
+        [
+            FieldPanel("twitter_url", heading="X url"),
+            FieldPanel("facebook_url"),
+            FieldPanel("youtube_url"),
+            FieldPanel("linkedin_url"),
+            FieldPanel("instagram_url"),
+            FieldPanel("weibo_url"),
+        ],
+        heading="Social Media URLs",
+    )
+
     content_panels = HeroPage.content_panels + [
         MultiFieldPanel([
             FieldPanel("search_bar", permission="access_admin"),
@@ -624,7 +643,7 @@ class MissionPage(HeroPage):
             ],
             heading="Embassy Schema Settings",
         ),
-    ]
+    ] + [social_media_panels]
 
     settings_panels = (
         [
@@ -650,6 +669,17 @@ class MissionPage(HeroPage):
         cache.delete(key)
 
         return super().save(*args, **kwargs)
+
+    @property
+    def same_as_links(self):
+        return list(filter(None, [
+            self.twitter_url,
+            self.facebook_url,
+            self.youtube_url,
+            self.linkedin_url,
+            self.instagram_url,
+            self.weibo_url,
+        ]))
 
     def get_person_block(self):
         if not self.person:
@@ -726,7 +756,7 @@ class MissionPage(HeroPage):
                 "url": self.parent_organization_url,
             },
             "areaServed": area_served,
-            "sameAs": self.same_as_links if hasattr(self, "same_as_links") else [],
+            "sameAs": self.same_as_links,
         }
 
         if contact:
