@@ -25,8 +25,8 @@ class Command(BaseCommand):
         self.alt_usage = defaultdict(lambda: defaultdict(int))
         self.backup = {}
 
-        # Scan everything
-        for page in Page.objects.live().specific():
+        pages = Page.objects.live().specific().iterator(chunk_size=500)
+        for page in pages:
             self.scan_object(page)
         self.scan_snippets()
         self.scan_site_settings()

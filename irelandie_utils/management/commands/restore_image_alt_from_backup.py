@@ -19,7 +19,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         dry_run = options["dry_run"]
         backup_path = options["path"] or (
-                Path(settings.BASE_DIR) / "backups" / "image_alt_backup.json")
+            Path(settings.BASE_DIR) / "backups" / "image_alt_backup.json")
 
         if not backup_path.exists():
             return
@@ -41,13 +41,13 @@ class Command(BaseCommand):
 
         try:
             if obj_type == "Page":
-                obj = Page.objects.get(id=obj_id)
+                obj = Page.objects.filter(id=obj_id).first()
             else:
-                try:
-                    model = apps.get_model(obj_type)
-                    obj = model.objects.get(id=obj_id)
-                except (LookupError, model.DoesNotExist):
-                    return 0
+                model = apps.get_model(obj_type)
+                obj = model.objects.filter(id=obj_id).first()
+
+            if not obj:
+                return 0
 
             current_val = getattr(obj, alt_field, None)
             if str(current_val or "").strip() == alt_text:
@@ -56,9 +56,7 @@ class Command(BaseCommand):
             if not dry_run:
                 setattr(obj, alt_field, alt_text)
                 obj.save(update_fields=[alt_field])
-                return 1
+            return 1
 
         except Exception as e:
             self.stdout.write(f"Error {obj_type}.{obj_id}.{alt_field}: {e}")
-
-        return 0
