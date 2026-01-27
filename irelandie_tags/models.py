@@ -51,7 +51,11 @@ class DestinationTagPage(BasePage):
 
 class TagLandingPage(BasePage):
     subpage_types = [
-        'TagIndexPage'
+        'TagIndexPage',
+        'irelandie_pages.FreeFormPage',
+        'irelandie_story.StoryPage',
+        'irelandie_parallax.Parallax',
+        'irelandie_missions.GeneralContentPage'
     ]
     template = "patterns/pages/irelandie_tags/tag_landing_page.html"
     generic_hero = StreamField(
