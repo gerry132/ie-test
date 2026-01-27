@@ -289,6 +289,11 @@ class FreeFormPage(FreeFormPageBase):
                 "@type": "GovernmentOrganization",
                 "name": self.organization_name,
                 "url": self.full_url,
+                "parentOrganization": {
+                    "@type": "GovernmentOrganization",
+                    "name": "Government of Ireland",
+                    "url": "https://www.gov.ie",
+                },
                 "description": self.organization_description or "",
                 "logo": self.organization_logo.get_rendition("original").url if self.organization_logo else "",
                 "sameAs": self.same_as_links,
