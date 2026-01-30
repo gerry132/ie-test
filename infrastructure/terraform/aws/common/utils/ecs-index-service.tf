@@ -8,7 +8,7 @@ resource "aws_ecs_task_definition" "alt-migration_task" {
   cpu                      = "256"  # Task-level CPU
   memory                   = "512"  # Task-level memory
 
-  container_definitions    = var.publish_task_definitions
+  container_definitions    = var.alt_migration_defintions
 }
 
 
@@ -172,3 +172,4 @@ variable "sitemap_definitions" {}
 variable "publish_task_definitions" {}
 variable "cluster" {}
 variable "execution_role" {}
+variable "alt_migration_defintions" {}

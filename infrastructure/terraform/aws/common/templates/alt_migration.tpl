@@ -1,6 +1,6 @@
 [
   {
-    "name": "publish_scheduled",
+    "name": "alt_migration",
     "image": "${ecr_image_url}",
     "cpu": ${task_cpu},
     "memory": ${task_memory},
