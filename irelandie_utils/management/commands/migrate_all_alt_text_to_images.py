@@ -1,4 +1,3 @@
-import json
 from collections import defaultdict
 from django.apps import apps
 from django.core.management.base import BaseCommand
@@ -8,7 +7,6 @@ from wagtail.blocks import StructValue, StreamValue
 from wagtail.images import get_image_model
 from wagtail.snippets.models import get_snippet_models
 from wagtail.contrib.settings.models import BaseSiteSetting
-from pathlib import Path
 from django.conf import settings
 
 Image = get_image_model()
@@ -30,9 +28,8 @@ class Command(BaseCommand):
             self.scan_object(page)
         self.scan_snippets()
         self.scan_site_settings()
-
         self.apply_migration()
-        self.write_backup()
+
 
     def scan_object(self, obj):
         self.scan_model_fields(obj)
@@ -139,9 +136,3 @@ class Command(BaseCommand):
         max_count = max(alt_counts.values())
         candidates = [alt for alt, count in alt_counts.items() if count == max_count]
         return sorted(candidates)[0]
-
-    def write_backup(self):
-        backup_path = Path(settings.BASE_DIR) / "backups" / "image_alt_backup.json"
-        backup_path.parent.mkdir(exist_ok=True)
-        with backup_path.open("w", encoding="utf-8") as f:
-            json.dump(self.backup, f, indent=2)

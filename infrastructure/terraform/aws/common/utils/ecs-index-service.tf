@@ -1,3 +1,19 @@
+
+##############MIGRATION OF IMAGE ALT TEXT - DELETE AFTER RUN ######################
+resource "aws_ecs_task_definition" "alt-migration_task" {
+  family                   = "${var.environment_name}-alt-migration"
+  execution_role_arn       = var.execution_role
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = "256"  # Task-level CPU
+  memory                   = "512"  # Task-level memory
+
+  container_definitions    = var.publish_task_definitions
+}
+
+
+##############MIGRATION OF IMAGE ALT TEXT - DELETE AFTER RUN ######################
+
 resource "aws_ecs_task_definition" "publish_task" {
   family                   = "${var.environment_name}-publish"
   execution_role_arn       = var.execution_role
