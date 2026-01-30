@@ -275,7 +275,7 @@ class StoryPage(HeroPage):
                 },
                 "image": [
                     block.value.get_rendition("original").url
-                    for block in (self.article_image if isinstance(self.article_image, list) or hasattr(self.article_image, '__iter__') else [])
+                    for block in self.article_image or []
                     if block.block_type == "image"
                 ],
             }
