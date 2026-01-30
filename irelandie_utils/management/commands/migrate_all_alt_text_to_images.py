@@ -7,7 +7,7 @@ from wagtail.blocks import StructValue, StreamValue
 from wagtail.images import get_image_model
 from wagtail.snippets.models import get_snippet_models
 from wagtail.contrib.settings.models import BaseSiteSetting
-from django.conf import settings
+
 
 Image = get_image_model()
 
@@ -29,7 +29,6 @@ class Command(BaseCommand):
         self.scan_snippets()
         self.scan_site_settings()
         self.apply_migration()
-
 
     def scan_object(self, obj):
         self.scan_model_fields(obj)
