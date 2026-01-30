@@ -8,7 +8,7 @@
     "assignPublicIp": false,
     "entryPoint": [
       "sh",
-      "/app/publish_scheduled_items.sh"
+      "/app/tasks/alt_migration.sh"
     ],
     "logConfiguration": {
       "logDriver": "awslogs",
