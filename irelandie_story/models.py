@@ -48,13 +48,13 @@ class StoryPage(HeroPage):
     )
 
     article_headline = models.CharField(max_length=255, blank=True)
-    article_image = StreamField(
-        [
-            ("image", ImageChooserBlock(required=True)),
-        ],
-        blank=True,
+    article_image = models.ForeignKey(
+        IMAGE_MODEL,
         null=True,
-        use_json_field=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        help_text="Old field",
     )
     article_description = models.TextField(blank=True)
     article_date_published = models.DateTimeField(null=True, blank=True)
@@ -273,11 +273,7 @@ class StoryPage(HeroPage):
                     "name": self.article_publisher_name,
                     "url": self.article_publisher_url,
                 },
-                "image": [
-                    block.value.get_rendition("original").url
-                    for block in self.article_image or []
-                    if block.block_type == "image"
-                ],
+                "image": self.article_image.get_rendition("original").url if self.article_image else None,
             }
 
             if self.article_publisher_logo:
