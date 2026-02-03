@@ -4,6 +4,7 @@ import json
 from django.db import models
 from django.utils.formats import date_format
 from wagtail.images import get_image_model_string
+from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
 import mimetypes
@@ -47,13 +48,13 @@ class StoryPage(HeroPage):
     )
 
     article_headline = models.CharField(max_length=255, blank=True)
-    article_image = models.ForeignKey(
-        IMAGE_MODEL,
-        null=True,
+    article_image = StreamField(
+        [
+            ("image", ImageChooserBlock(required=True)),
+        ],
         blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        help_text="Old field",
+        null=True,
+        use_json_field=True,
     )
     article_description = models.TextField(blank=True)
     article_date_published = models.DateTimeField(null=True, blank=True)
@@ -272,7 +273,11 @@ class StoryPage(HeroPage):
                     "name": self.article_publisher_name,
                     "url": self.article_publisher_url,
                 },
-                "image": self.article_image.get_rendition("original").url if self.article_image else None,
+                "image": [
+                    block.value.get_rendition("original").url
+                    for block in self.article_image or []
+                    if block.block_type == "image"
+                ],
             }
 
             if self.article_publisher_logo:
