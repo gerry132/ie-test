@@ -625,6 +625,11 @@ class SystemMessagesSettings(BaseSiteSetting):
 class BasePage(SocialFields, ListingFields, Page):
     show_in_menus_default = True
 
+    webchat_container = models.TextField(
+        blank=True,
+        help_text="Webchat container HTML (e.g. <div class='webchat' id='chat-button'></div>)"
+    )
+
     webchat_script = models.TextField(
         blank=True,
     )
@@ -635,6 +640,7 @@ class BasePage(SocialFields, ListingFields, Page):
 
     webchat_panel = [
         MultiFieldPanel([
+            FieldPanel("webchat_container", permission="access_admin"),
             FieldPanel("webchat_script", permission="access_admin"),
             FieldPanel("web_bot_script", permission="access_admin"),
         ], "Chatbot")
