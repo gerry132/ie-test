@@ -754,7 +754,7 @@ class MissionPage(HeroPage):
         if not opening_hours:
             return None
 
-        html = expand_db_html(opening_hours)
+        html = expand_db_html(opening_hours.source)
         soup = BeautifulSoup(html, "html.parser")
 
         link = soup.find("a", href=True)

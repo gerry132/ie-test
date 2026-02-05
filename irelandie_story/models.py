@@ -196,6 +196,8 @@ class StoryPage(HeroPage):
         if not self.body:
             return None
 
+        video_schemas = []
+
         for block in self.body or []:
             if block.block_type != "video":
                 continue
@@ -216,7 +218,7 @@ class StoryPage(HeroPage):
                 except Exception:
                     thumbnail_url = "https://example.com/default-thumbnail.jpg"
 
-                return {
+                video_schemas.append({
                     "@type": "VideoObject",
                     "name": getattr(video_file, "title", "Video"),
                     "description": getattr(video_file, "description", "Video content"),
@@ -224,9 +226,9 @@ class StoryPage(HeroPage):
                     "encodingFormat": mimetypes.guess_type(video_file.url)[0],
                     "uploadDate": upload_date,
                     "thumbnailUrl": thumbnail_url,
-                }
+                })
 
-            if value.get("youtube_or_vimeo_embed"):
+            elif value.get("youtube_or_vimeo_embed"):
                 embed_url = value["youtube_or_vimeo_embed"]
 
                 video_id = None
@@ -244,15 +246,18 @@ class StoryPage(HeroPage):
                 thumbnail_url = f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg" if video_id else \
                     "https://example.com/default-thumbnail.jpg"
 
-                return {
+                video_schemas.append({
                     "@type": "VideoObject",
                     "name": value.get("title") or "Video",
                     "description": value.get("summary") or "Video content",
                     "embedUrl": embed_url,
                     "thumbnailUrl": thumbnail_url,
-                }
+                })
 
-        return None
+        if not video_schemas:
+            return None
+
+        return video_schemas[0] if len(video_schemas) == 1 else video_schemas
 
     @property
     def publisher_name(self):
