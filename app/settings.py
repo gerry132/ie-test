@@ -61,6 +61,7 @@ if debug_on == '0':
 else:
     DEBUG = False
 
+
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
 
 # to disable the check
@@ -145,6 +146,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "wagtail.contrib.simple_translation",
+    "import_export",
 ]
 
 if DEBUG_TOOLBAR is True:

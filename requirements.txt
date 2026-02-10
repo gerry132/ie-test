@@ -5,6 +5,7 @@ django-pattern-library
 django-redis==6.0.0
 django-ses==2.6.1
 django-storages==1.14.2
+django-import-export==4.4.0
 python-dotenv==0.17.0
 wagtail==7.0.0
 wagtail-accessibility==0.2.1

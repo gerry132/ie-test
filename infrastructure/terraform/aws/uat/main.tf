@@ -94,7 +94,7 @@ locals {
 
     sina_dev = {
       description = "Sina - Sidero"
-      cidr_blocks  = ["31.53.148.191/32"]
+      cidr_blocks  = ["163.116.177.158/32"]
     },
     joe_dev = {
       description = "Joe D - Sidero"
@@ -1552,7 +1552,7 @@ module "main_task_definition" {
 
 module "ecs_background_tasks" {
   source = "../common/utils"
-  
+
   publish_task_definitions = module.main_task_definition.publish_task_definition_rendered
   alt_migration_defintions = module.main_task_definition.alt_migration_definitions_rendered
   container_definitions = data.template_file.index_task_definition.rendered
@@ -2177,7 +2177,7 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
                         "139.162.239.108/32", # gov_network_cird_blocks
                         "155.190.32.0/24",
 
-                        "31.53.148.191/32",   # Sina
+                        "163.116.177.158/32",   # Sina
                         "51.183.41.207/32",   # Deekshana
                         "51.182.250.11/32",   # Fergal
                         "62.23.128.137/32",    # DFA
