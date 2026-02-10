@@ -1618,6 +1618,7 @@ REGION_CHOICES = [
     ('ROW', 'Rest of World'),
 ]
 
+
 class DiasporaDirectory(models.Model):
 
     main_regions = models.CharField(
