@@ -1,0 +1,257 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags i18n %}
+{% load util_tags wagtailcore_tags navigation_tags %}
+{% load static %}
+
+
+{% block content %}
+<main class="container">
+  <h1>{{ page.title }}</h1>
+
+  {% if page.intro %}
+    <p>{{ page.intro }}</p>
+  {% endif %}
+
+  {% if not configured %}
+    <p>This page is not configured yet. Please select a table and columns in the CMS.</p>
+  {% endif %}
+
+  <section aria-label="Interactive table controls">
+    <label for="table-search">Search</label>
+    <input id="table-search" type="search" inputmode="search" autocomplete="off" placeholder="Search…" />
+
+    {% if filter_cols %}
+      <div class="filters" role="group" aria-label="Filters">
+        {% for col in filter_cols %}
+          <div class="filter">
+            <label for="filter-{{ col }}">{{ col|capfirst }}</label>
+            <select id="filter-{{ col }}" data-filter-name="{{ col }}">
+              <option value="">All</option>
+            </select>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </section>
+
+  <section aria-label="Results">
+    <div role="status" aria-live="polite" id="table-status" class="sr-only"></div>
+
+    <div class="table-wrap" tabindex="0" aria-label="Scrollable results table">
+      <table id="interactive-table">
+        <thead>
+          <tr>
+            <th scope="col" id="col-p1">{{ priority_cols.0|capfirst }}</th>
+            <th scope="col" id="col-p2">{{ priority_cols.1|capfirst }}</th>
+            <th scope="col" class="sr-only">Details</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <nav aria-label="Pagination" class="pagination">
+      <button type="button" id="prev-page">Previous</button>
+      <span id="page-info" aria-live="polite"></span>
+      <button type="button" id="next-page">Next</button>
+    </nav>
+  </section>
+</main>
+
+<script>
+(function () {
+  const dataUrl = "{{ page.url }}data/";
+  const priority1 = "{{ priority_cols.0 }}";
+  const priority2 = "{{ priority_cols.1 }}";
+
+  const searchInput = document.getElementById("table-search");
+  const tbody = document.querySelector("#interactive-table tbody");
+  const statusEl = document.getElementById("table-status");
+  const prevBtn = document.getElementById("prev-page");
+  const nextBtn = document.getElementById("next-page");
+  const pageInfo = document.getElementById("page-info");
+  const filterSelects = Array.from(document.querySelectorAll("select[data-filter-name]"));
+
+  let state = { q: "", page: 1, per_page: 25, filters: {} };
+  let debounceTimer = null;
+
+  function setStatus(msg) { statusEl.textContent = msg || ""; }
+
+  function buildParams() {
+    const params = new URLSearchParams();
+    params.set("q", state.q);
+    params.set("page", String(state.page));
+    params.set("per_page", String(state.per_page));
+
+    const filterCols = Object.keys(state.filters).filter(Boolean);
+    if (filterCols[0]) {
+      params.set("f1_name", filterCols[0]);
+      params.set("f1_val", state.filters[filterCols[0]] || "");
+    }
+    if (filterCols[1]) {
+      params.set("f2_name", filterCols[1]);
+      params.set("f2_val", state.filters[filterCols[1]] || "");
+    }
+    return params;
+  }
+
+  function renderRows(rows, otherColumns) {
+    tbody.innerHTML = "";
+
+    for (const row of rows) {
+      const rowId = row.id;
+      const detailsId = `row-details-${rowId}`;
+
+      const trMain = document.createElement("tr");
+
+      const td1 = document.createElement("td");
+      td1.textContent = row[priority1] || "";
+      td1.setAttribute("headers", "col-p1");
+
+      const td2 = document.createElement("td");
+      td2.textContent = row[priority2] || "";
+      td2.setAttribute("headers", "col-p2");
+
+      const tdActions = document.createElement("td");
+      tdActions.style.textAlign = "right";
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "button button-small";
+      btn.setAttribute("aria-expanded", "false");
+      btn.setAttribute("aria-controls", detailsId);
+      btn.textContent = "Expand";
+
+      tdActions.appendChild(btn);
+
+      trMain.appendChild(td1);
+      trMain.appendChild(td2);
+      trMain.appendChild(tdActions);
+
+      const trDetails = document.createElement("tr");
+      trDetails.id = detailsId;
+      trDetails.hidden = true;
+
+      const tdDetails = document.createElement("td");
+      tdDetails.colSpan = 3;
+
+      const dl = document.createElement("dl");
+      dl.className = "row-details";
+
+      for (const col of otherColumns) {
+        const value = (row[col] ?? "").toString().trim();
+        if (!value) continue;
+
+        const dt = document.createElement("dt");
+        dt.textContent = col.replaceAll("_", " ");
+
+        const dd = document.createElement("dd");
+        dd.textContent = value;
+
+        dl.appendChild(dt);
+        dl.appendChild(dd);
+      }
+
+      if (!dl.childNodes.length) {
+        const p = document.createElement("p");
+        p.textContent = "No additional details.";
+        tdDetails.appendChild(p);
+      } else {
+        tdDetails.appendChild(dl);
+      }
+
+      trDetails.appendChild(tdDetails);
+
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", String(!expanded));
+        btn.textContent = expanded ? "Expand" : "Collapse";
+        trDetails.hidden = expanded;
+      });
+
+      tbody.appendChild(trMain);
+      tbody.appendChild(trDetails);
+    }
+  }
+
+  function updatePagination(p) {
+    prevBtn.disabled = !p.has_prev;
+    nextBtn.disabled = !p.has_next;
+    pageInfo.textContent = `Page ${p.page} of ${p.pages} (${p.count} items)`;
+  }
+
+  async function fetchData() {
+    setStatus("Loading results…");
+    const url = dataUrl + "?" + buildParams().toString();
+    const res = await fetch(url, { headers: { "Accept": "application/json" } });
+    const data = await res.json();
+    renderRows(data.rows, data.other_columns || []);
+    updatePagination(data.pagination || {page:1,pages:1,count:0,has_next:false,has_prev:false});
+    setStatus("Results loaded.");
+  }
+
+  function debouncedFetch() {
+    if (debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      state.page = 1;
+      fetchData().catch(() => setStatus("Failed to load results."));
+    }, 250);
+  }
+
+  async function populateFilterOptionsOnce() {
+    if (!filterSelects.length) return;
+
+    const res = await fetch(dataUrl + "?page=1&per_page=100", { headers: { "Accept": "application/json" } });
+    const data = await res.json();
+
+    for (const sel of filterSelects) {
+      const col = sel.getAttribute("data-filter-name");
+      const values = new Set(data.rows.map(r => (r[col] || "").trim()).filter(Boolean));
+      const current = sel.value;
+
+      sel.innerHTML = '<option value="">All</option>';
+      Array.from(values).sort().forEach(v => {
+        const opt = document.createElement("option");
+        opt.value = v;
+        opt.textContent = v;
+        sel.appendChild(opt);
+      });
+
+      sel.value = current;
+    }
+  }
+
+  searchInput.addEventListener("input", (e) => {
+    state.q = e.target.value || "";
+    debouncedFetch();
+  });
+
+  for (const sel of filterSelects) {
+    const col = sel.getAttribute("data-filter-name");
+    state.filters[col] = "";
+
+    sel.addEventListener("change", () => {
+      state.filters[col] = sel.value || "";
+      state.page = 1;
+      fetchData().catch(() => setStatus("Failed to load results."));
+    });
+  }
+
+  prevBtn.addEventListener("click", () => {
+    if (state.page > 1) {
+      state.page -= 1;
+      fetchData().catch(() => setStatus("Failed to load results."));
+    }
+  });
+
+  nextBtn.addEventListener("click", () => {
+    state.page += 1;
+    fetchData().catch(() => setStatus("Failed to load results."));
+  });
+
+  populateFilterOptionsOnce()
+    .then(() => fetchData())
+    .catch(() => setStatus("Failed to load results."));
+})();
+</script>
+{% endblock %}
