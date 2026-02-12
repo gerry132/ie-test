@@ -17,6 +17,7 @@ from .interactive_tables import get_schema, schema_choices
 def humanize_col(col: str) -> str:
     return col.replace("_", " ").strip().title()
 
+
 class InteractiveDataTablePageForm(WagtailAdminPageForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -52,7 +53,7 @@ class InteractiveDataTablePageForm(WagtailAdminPageForm):
         col_choices = [(c, humanize_col(c)) for c in cols]
         opt_choices = [("", "— None —")] + col_choices
 
-        # --- priority dropdowns (required after schema is selected, but form can be lenient; model clean() enforces) ---
+        # --- priority dropdowns (required after schema is selected; model clean() enforces) ---
         for name in ("priority_col_1", "priority_col_2"):
             old = self.fields[name]
             self.fields[name] = forms.ChoiceField(
@@ -69,7 +70,6 @@ class InteractiveDataTablePageForm(WagtailAdminPageForm):
         if not self.initial["priority_col_2"]:
             self.initial["priority_col_2"] = schema.default_priority[1]
 
-        # --- filter dropdowns (optional) ---
         for name in ("filter_col_1", "filter_col_2"):
             old = self.fields[name]
             self.fields[name] = forms.ChoiceField(
