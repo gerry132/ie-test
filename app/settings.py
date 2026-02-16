@@ -61,7 +61,6 @@ if debug_on == '0':
 else:
     DEBUG = False
 
-
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
 
 # to disable the check
@@ -106,6 +105,7 @@ INSTALLED_APPS = [
     "irelandie_tags",
     "irelandie_travel",
     "irelandie_forms",
+    "irelandie_interactive_tables",
     #
     "wagtail_localize",
     "wagtail.locales",
