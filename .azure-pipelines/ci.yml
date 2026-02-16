@@ -127,7 +127,26 @@ stages:
         targetType: inline
         script: |
           aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
-          docker build . -t "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
+          CODEARTIFACT_REPO_URL=$(aws codeartifact get-repository-endpoint \
+          --domain uat \
+          --domain-owner 100350071169 \
+          --repository python \
+          --format pypi \
+          --region "$AWS_REGION" \
+          --query repositoryEndpoint \
+          --output text)
+
+          CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
+            --domain uat \
+            --domain-owner 100350071169 \
+            --region "$AWS_REGION" \
+            --query authorizationToken \
+            --output text)
+          
+          docker build . \
+            --build-arg CODEARTIFACT_REPO_URL="$CODEARTIFACT_REPO_URL" \
+            --build-arg CODEARTIFACT_AUTH_TOKEN="$CODEARTIFACT_AUTH_TOKEN" \
+            -t "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
           docker push "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
         failOnStderr: false
       env:
