@@ -1642,6 +1642,12 @@ class DiasporaDirectory(models.Model):
     website = models.CharField(blank=True)
     activity = models.CharField(max_length=255)
 
+    # Need to verify and then commit
+    # country = models.CharField(max_length=255, blank=True)
+    # phone_number = models.CharField(max_length=255, blank=True)
+    # email = models.EmailField(blank=True)
+    # seeking_volunteers = models.BooleanField(default=False)
+
     panels = [
         FieldPanel('main_regions'),
         FieldPanel('organisation_name'),
