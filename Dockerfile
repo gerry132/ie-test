@@ -35,6 +35,20 @@ RUN apk --no-cache --update add \
     jpeg-dev \
     zlib-dev
 
+RUN pip install awscli --break-system-packages
+
+ARG CODEARTIFACT_DOMAIN=uat
+ARG CODEARTIFACT_DOMAIN_OWNER=100350071169
+ARG CODEARTIFACT_REPOSITORY=python
+ARG AWS_DEFAULT_REGION=eu-west-1
+
+RUN aws codeartifact login \
+    --tool pip \
+    --domain ${CODEARTIFACT_DOMAIN} \
+    --domain-owner ${CODEARTIFACT_DOMAIN_OWNER} \
+    --repository ${CODEARTIFACT_REPOSITORY} \
+    --region ${AWS_DEFAULT_REGION}
+
 RUN pip install --upgrade pip --break-system-packages
 RUN pip install -r requirements.txt --break-system-packages
 

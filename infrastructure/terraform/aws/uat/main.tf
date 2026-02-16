@@ -1550,11 +1550,18 @@ module "main_task_definition" {
 }
 
 
+module "codeartifact" {
+  source = "../common/codeartifact"
+  environment_name      = local.environment_name
+}
+
+
+
 module "ecs_background_tasks" {
   source = "../common/utils"
 
   publish_task_definitions = module.main_task_definition.publish_task_definition_rendered
-  alt_migration_defintions = module.main_task_definition.alt_migration_definitions_rendered
+  # alt_migration_defintions = module.main_task_definition.alt_migration_definitions_rendered
   container_definitions = data.template_file.index_task_definition.rendered
   sitemap_definitions = data.template_file.sitemap_task_definition.rendered
   task_cpu              = "256"
