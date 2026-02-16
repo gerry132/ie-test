@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
 
-from bs4 import BeautifulSoup
 from django.db import models
 from wagtail.models import Page
 from django.utils.functional import cached_property
@@ -12,7 +11,6 @@ from django.core.cache import cache
 from django.core.cache.utils import make_template_fragment_key
 
 from wagtail.images import get_image_model_string
-from wagtail.rich_text import expand_db_html
 
 # from wagtailseo.models import SeoMixin
 
