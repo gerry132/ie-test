@@ -135,7 +135,7 @@ stages:
           --region "$AWS_REGION" \
           --query repositoryEndpoint \
           --output text)
-
+          CODEARTIFACT_REPO_HOST="${CODEARTIFACT_REPO_URL#https://}"
           CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
             --domain uat \
             --domain-owner 100350071169 \
@@ -144,7 +144,7 @@ stages:
             --output text)
           
           docker build . \
-            --build-arg CODEARTIFACT_REPO_URL="$CODEARTIFACT_REPO_URL" \
+            --build-arg CODEARTIFACT_REPO_HOST="$CODEARTIFACT_REPO_HOST" \
             --build-arg CODEARTIFACT_AUTH_TOKEN="$CODEARTIFACT_AUTH_TOKEN" \
             -t "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
           docker push "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
