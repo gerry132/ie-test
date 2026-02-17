@@ -6,6 +6,7 @@ from aws_synthetics.selenium import synthetics_logger as logger
 def handler(event, context):
     url = os.environ["TARGET_URL"]
 
+    # Fix invalid argument issue (your logs showed uat.ireland.ie)
     if not url.startswith(("http://", "https://")):
         url = "https://" + url
 
@@ -16,14 +17,16 @@ def handler(event, context):
         logger.info(f"Navigating to {url}")
         driver.get(url)
 
-        response = syn_webdriver.get_http_response()
+        # ✅ Correct usage: must pass URL
+        response = syn_webdriver.get_http_response(url)
 
-        if response is None:
-            raise RuntimeError("No HTTP response captured by canary")
+        if not response:
+            raise RuntimeError(f"No HTTP response captured for {url}")
 
         status_code = response.get("statusCode")
-        logger.info(f"HTTP status code: {status_code}")
+        logger.info(f"HTTP status code for {url}: {status_code}")
 
+        # ❌ Fail the canary properly
         if status_code >= 400:
             raise RuntimeError(f"Canary failed: HTTP {status_code} for {url}")
 
