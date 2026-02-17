@@ -107,6 +107,18 @@ locals {
 # Values to fill after running terraform is ran, used for codebuild and secrets
 # -----------------------------------------------------------------------------
 
+resource "aws_ssm_parameter" "sns_phone_number" {
+  name        = "phone"
+  description = "Phone number for sns"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
+
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
 
 resource "aws_ssm_parameter" "CLOUDFRONT_ID" {
   name        = "${local.environment_name}_CLOUDFRONT_ID"
@@ -440,6 +452,18 @@ resource "aws_security_group_rule" "ecs_to_redis_5432" {
 # -----------------------------------------------------------------------------
 # Buckets
 # -----------------------------------------------------------------------------
+resource "aws_s3_bucket" "canaries" {
+  bucket  = "${local.environment_name}-${local.project_name}-canary-code"
+  
+}
+
+resource "aws_s3_bucket_versioning" "canary_code" {
+  bucket = aws_s3_bucket.canaries.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
 
 resource "aws_s3_bucket" "cf-logs" {
   bucket  = "${local.environment_name}-${local.project_name}-cf-logs"
@@ -1555,7 +1579,14 @@ module "codeartifact" {
   environment_name      = local.environment_name
 }
 
-
+module "monitoring" {
+  source = "../common/monitoring"
+  environment_name      = local.environment_name 
+  canary_code_s3_key    = "canary"
+  canary_code_s3_bucket = aws_s3_bucket.canaries.bucket
+  target_url            = local.domain_ireland_ie
+  sms_phone_number      = aws_ssm_parameter.sns_phone_number.value 
+}
 
 module "ecs_background_tasks" {
   source = "../common/utils"
@@ -2215,6 +2246,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
       }
     }
 
+    
     visibility_config {
       cloudwatch_metrics_enabled = true
       metric_name                = "whitelistIPs"

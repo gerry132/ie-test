@@ -90,13 +90,41 @@ stages:
           persistCredentials: true
 
         - task: Bash@3
+          displayName: Build canary zip
+          inputs:
+            targetType: inline
+            script: |
+              set -euo pipefail
+
+              test -f monitoring/canaries/index.py
+
+              ZIP_NAME="site-health-canary.zip"
+              rm -f "$ZIP_NAME"
+
+              cd monitoring/canary
+              zip -r "../../$ZIP_NAME" .
+              cd ../..
+
+              echo "Built $ZIP_NAME"
+              ls -lah "$ZIP_NAME"
+              S3_KEY="canaries/site-health-canary.zip"
+
+              aws s3 cp "$ZIP_NAME" "s3://${CANARY_BUCKET}/${S3_KEY}"
+
+              CANARY_S3_VERSION=$(aws s3api head-object \
+              --bucket "$CANARY_BUCKET" \
+              --key "$S3_KEY" \
+              --query VersionId \
+              --output text)
+              echo "##vso[task.setvariable variable=CANARY_S3_VERSION]$CANARY_S3_VERSION"
+        - task: Bash@3
           displayName: Run Terraform
           inputs:
             targetType: inline
             script: |
               cd infrastructure/terraform/aws/$(env)/
               terraform init -input=false -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY"
-              terraform apply -input=false -auto-approve
+              terraform apply -input=false -auto-approve -var="canary_code_s3_version=$(CANARY_S3_VERSION)"
               cd ../../../..
             failOnStderr: true
           env:
