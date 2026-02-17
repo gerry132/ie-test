@@ -10,9 +10,25 @@ def handler(event, context):
         url = "https://" + url
 
     driver = syn_webdriver.Chrome()
-    driver.get(url)
+    driver.set_page_load_timeout(30)
 
-    title = driver.title or ""
-    logger.info(f"Loaded {url}, title='{title}'")
+    try:
+        logger.info(f"Navigating to {url}")
+        driver.get(url)
 
-    driver.quit()
+        response = syn_webdriver.get_http_response()
+
+        if response is None:
+            raise RuntimeError("No HTTP response captured by canary")
+
+        status_code = response.get("statusCode")
+        logger.info(f"HTTP status code: {status_code}")
+
+        if status_code >= 400:
+            raise RuntimeError(f"Canary failed: HTTP {status_code} for {url}")
+
+        title = driver.title or ""
+        logger.info(f"Loaded {url}, title='{title}'")
+
+    finally:
+        driver.quit()
