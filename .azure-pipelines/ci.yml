@@ -95,8 +95,10 @@ stages:
             targetType: inline
             script: |
               set -euo pipefail
-
+             
               test -f monitoring/canaries/index.py
+              S3_KEY="canaries/site-health-canary.zip"
+
               ZIP_NAME="site-health-canary.zip"
               rm -f "$ZIP_NAME"
               rm -rf _canary_build
