@@ -129,7 +129,7 @@ stages:
             script: |
               cd infrastructure/terraform/aws/$(env)/
               terraform init -input=false -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY"
-              terraform apply -input=false -auto-approve -var="canary_code_s3_version=$(CANARY_S3_VERSION)"
+              terraform apply -input=false -auto-approve
               cd ../../../..
             failOnStderr: true
           env:
@@ -159,6 +159,11 @@ stages:
       inputs:
         targetType: inline
         script: |
+          aws synthetics update-canary \
+          --region eu-west-1 \
+          --name "site-health-canary" \
+          --code "S3Bucket=${BUCKET},S3Key=${KEY},Handler=index.handler" \
+          --runtime-version "syn-python-selenium-8.0"
           aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
           CODEARTIFACT_REPO_URL=$(aws codeartifact get-repository-endpoint \
           --domain uat \
