@@ -95,30 +95,34 @@ stages:
             targetType: inline
             script: |
               set -euo pipefail
-             
-              test -f monitoring/canaries/index.py
+
+              ROOT="$(pwd)"
+              SRC="${ROOT}/monitoring/canaries/index.py"
+              BUILD="${ROOT}/_canary_build"
+              ZIP_NAME="${ROOT}/site-health-canary.zip"
               S3_KEY="canaries/site-health-canary.zip"
 
-              ZIP_NAME="site-health-canary.zip"
+              test -f "$SRC"
+
               rm -f "$ZIP_NAME"
-              mkdir -p _canary_build
+              rm -rf "$BUILD"
+              mkdir -p "$BUILD/python"
 
-              cp monitoring/canaries/index.py _canary_build/index.py
+              # ✅ put the canary file under python/
+              cp "$SRC" "$BUILD/python/index.py"
 
-              (cd _canary_build && zip -r "../$ZIP_NAME" .)
+              # zip should contain python/index.py (not index.py at root, not python/python/index.py)
+              (cd "$BUILD" && zip -r "$ZIP_NAME" python)
 
+              # sanity check: must show python/index.py
               unzip -l "$ZIP_NAME"
-              aws s3 cp "$ZIP_NAME" "s3://${CANARY_BUCKET}/canaries/site-health-canary.zip"
-              # Download the same object the canary will load and inspect it
-              rm -f /tmp/canary.zip
-              aws s3 cp "s3://${CANARY_BUCKET}/canaries/site-health-canary.zip" /tmp/canary.zip
+
+              aws s3 cp "$ZIP_NAME" "s3://${CANARY_BUCKET}/${S3_KEY}"
+
+              # sanity check the *actual* uploaded object
+              aws s3 cp "s3://${CANARY_BUCKET}/${S3_KEY}" /tmp/canary.zip
               unzip -l /tmp/canary.zip
 
-              CANARY_S3_VERSION=$(aws s3api head-object \
-              --bucket "$CANARY_BUCKET" \
-              --key "$S3_KEY" \
-              --query VersionId \
-              --output text)
           env:
             AWS_ACCESS_KEY_ID: $(aws_access_key)
             AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
