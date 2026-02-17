@@ -116,7 +116,7 @@ resource "aws_synthetics_canary" "site" {
 
 
 resource "aws_cloudwatch_metric_alarm" "canary_failed" {
-  alarm_name          = "${var.canary_name}-failed"
+  alarm_name          = "${var.environment_name}${var.canary_name}-failed"
   alarm_description   = "Canary failed for ${var.target_url}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 1
