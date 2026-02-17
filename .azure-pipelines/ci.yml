@@ -101,7 +101,7 @@ stages:
               ZIP_NAME="site-health-canary.zip"
               rm -f "$ZIP_NAME"
 
-              cd monitoring/canary
+              cd monitoring/canaries
               zip -r "../../$ZIP_NAME" .
               cd ../..
 
