@@ -2,11 +2,12 @@ import os
 import json
 from aws_synthetics.selenium import synthetics_webdriver as syn_webdriver
 from aws_synthetics.selenium import synthetics_logger as logger
-from aws_synthetics.common import synthetics_common as common
 
 
 def handler(event, context):
-    url = os.environ["TARGET_URL"]
+    url = os.environ.get("TARGET_URL", "").strip()
+    if not url:
+        raise RuntimeError("TARGET_URL environment variable is not set")
 
     if not url.startswith(("http://", "https://")):
         url = "https://" + url
@@ -16,39 +17,31 @@ def handler(event, context):
 
     try:
         logger.info(f"Navigating to {url}")
+        driver.get(url)
 
-        # Better step visibility in CloudWatch Synthetics
-        common.execute_step("load_page", lambda: driver.get(url))
-
-        # Use final URL in case of redirects (CloudFront/ALB etc.)
         final_url = driver.current_url
         logger.info(f"Final URL: {final_url}")
 
-        raw_response = syn_webdriver.get_http_response(final_url)
-        logger.info(f"Raw response type: {type(raw_response)}")
-        logger.info(f"Raw response: {raw_response}")
+        raw = syn_webdriver.get_http_response(final_url)
+        logger.info(f"HTTP response raw type={type(raw)} raw={raw}")
 
-        if not raw_response:
+        if not raw:
             raise RuntimeError(f"No HTTP response captured for {final_url}")
 
-        # 🔧 Handle string vs dict (fixes your exact error)
-        if isinstance(raw_response, str):
-            response = json.loads(raw_response)
-        else:
-            response = raw_response
+        # get_http_response sometimes returns a JSON string in this runtime
+        response = json.loads(raw) if isinstance(raw, str) else raw
 
         status_code = response.get("statusCode")
         logger.info(f"HTTP status code: {status_code}")
 
         if status_code is None:
-            raise RuntimeError("Status code not present in response")
+            raise RuntimeError(f"No statusCode in http response for {final_url}: {response}")
 
-        # ❌ Fail canary on bad status (this will trigger your alarm)
-        if status_code >= 400:
+        if int(status_code) >= 400:
             raise RuntimeError(f"Canary failed: HTTP {status_code} for {final_url}")
 
         title = driver.title or ""
-        logger.info(f"Page loaded successfully. Title='{title}'")
+        logger.info(f"Loaded OK. title='{title}'")
 
     finally:
         driver.quit()
