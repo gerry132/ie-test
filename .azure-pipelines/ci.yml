@@ -164,7 +164,7 @@ stages:
           aws synthetics update-canary \
           --region eu-west-1 \
           --name "site-health-canary" \
-          --code "S3Bucket=${BUCKET},S3Key=${KEY},Handler=index.handler" \
+          --code "S3Bucket=${CANARY_BUCKET},S3Key="canaries/site-health-canary.zip",Handler=index.handler" \
           --runtime-version "syn-python-selenium-8.0"
           aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
           CODEARTIFACT_REPO_URL=$(aws codeartifact get-repository-endpoint \
@@ -199,6 +199,8 @@ stages:
         AWS_ACCOUNT_ID: $(aws_account_id)
         IMAGE_NAME: $(image_name)
         IMAGE_TAG: $(image_tag)
+        CANARY_BUCKET: $(canary_bucket)
+
 
     - template: templates/ecs-update-service.yml
   
