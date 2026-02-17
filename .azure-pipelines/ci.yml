@@ -109,6 +109,11 @@ stages:
 
               unzip -l "$ZIP_NAME"
               aws s3 cp "$ZIP_NAME" "s3://${CANARY_BUCKET}/canaries/site-health-canary.zip"
+              # Download the same object the canary will load and inspect it
+              rm -f /tmp/canary.zip
+              aws s3 cp "s3://${CANARY_BUCKET}/canaries/site-health-canary.zip" /tmp/canary.zip
+              unzip -l /tmp/canary.zip
+
               CANARY_S3_VERSION=$(aws s3api head-object \
               --bucket "$CANARY_BUCKET" \
               --key "$S3_KEY" \
