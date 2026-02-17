@@ -103,10 +103,9 @@ stages:
               rm -f "$ZIP_NAME"
               rm -rf _canary_build
 
-              mkdir -p _canary_build/python
-              cp monitoring/canaries/index.py _canary_build/python/index.py
+              cp monitoring/canaries/index.py _canary_build/index.py
 
-              (cd _canary_build && zip -r "../$ZIP_NAME" python)
+              (cd _canary_build && zip -r "../$ZIP_NAME" .)
 
               unzip -l "$ZIP_NAME"
               aws s3 cp "$ZIP_NAME" "s3://${CANARY_BUCKET}/canaries/site-health-canary.zip"
