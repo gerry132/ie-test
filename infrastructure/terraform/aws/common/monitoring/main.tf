@@ -128,7 +128,14 @@ resource "aws_synthetics_canary" "site" {
         REDEPLOY_STAMP = timestamp()
     }
     }
-
+  lifecycle {
+    ignore_changes = [
+      s3_bucket,
+      s3_key,
+      handler,
+      runtime_version,
+    ]
+  }
   start_canary = true
 }
 
