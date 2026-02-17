@@ -10,6 +10,7 @@ variable "target_url" {
 }
 
 
+
 # Optional — likely won’t deliver in your org account, but left here if you want to try.
 variable "sms_phone_number" {
   type        = string
@@ -62,9 +63,9 @@ resource "aws_iam_role" "canary_role" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_basic" {
+resource "aws_iam_role_policy_attachment" "synthetics_full" {
   role       = aws_iam_role.canary_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess"
 }
 
 resource "aws_iam_role_policy" "canary_s3_policy" {
