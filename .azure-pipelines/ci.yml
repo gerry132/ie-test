@@ -101,7 +101,7 @@ stages:
 
               ZIP_NAME="site-health-canary.zip"
               rm -f "$ZIP_NAME"
-              rm -rf _canary_build
+              mkdir -p _canary_build
 
               cp monitoring/canaries/index.py _canary_build/index.py
 
