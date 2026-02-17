@@ -63,19 +63,6 @@ resource "aws_iam_role" "canary_role" {
   })
 }
 
-resource "aws_iam_role_policy" "canary_put_metric_data" {
-  role = aws_iam_role.canary_role.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Effect   = "Allow"
-      Action   = ["cloudwatch:PutMetricData"]
-      Resource = "*"
-    }]
-  })
-}
-
 
 resource "aws_iam_role_policy" "canary_put_metric_data" {
   role = aws_iam_role.canary_role.id
