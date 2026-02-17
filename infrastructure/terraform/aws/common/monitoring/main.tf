@@ -104,12 +104,13 @@ resource "aws_synthetics_canary" "site" {
     expression = "rate(1 minute)"
   }
 
-  run_config {
+    run_config {
     timeout_in_seconds = 60
     environment_variables = {
-      TARGET_URL = var.target_url
+        TARGET_URL     = var.target_url
+        REDEPLOY_STAMP = timestamp()
     }
-  }
+    }
 
   start_canary = true
 }
@@ -127,6 +128,7 @@ resource "aws_cloudwatch_metric_alarm" "canary_failed" {
   metric_name = "Failed"
   statistic   = "Sum"
   period      = 60
+
 
   dimensions = {
     CanaryName = aws_synthetics_canary.site.name

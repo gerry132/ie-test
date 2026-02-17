@@ -97,20 +97,17 @@ stages:
               set -euo pipefail
 
               test -f monitoring/canaries/index.py
-
               ZIP_NAME="site-health-canary.zip"
               rm -f "$ZIP_NAME"
+              rm -rf _canary_build
 
-              cd monitoring/canaries
-              zip -r "../../$ZIP_NAME" .
-              cd ../..
+              mkdir -p _canary_build/python
+              cp monitoring/canaries/index.py _canary_build/python/index.py
 
-              echo "Built $ZIP_NAME"
-              ls -lah "$ZIP_NAME"
-              S3_KEY="canaries/site-health-canary.zip"
+              (cd _canary_build && zip -r "../$ZIP_NAME" python)
 
-              aws s3 cp "$ZIP_NAME" "s3://${CANARY_BUCKET}/${S3_KEY}"
-
+              unzip -l "$ZIP_NAME"
+              aws s3 cp "$ZIP_NAME" "s3://${CANARY_BUCKET}/canaries/site-health-canary.zip"
               CANARY_S3_VERSION=$(aws s3api head-object \
               --bucket "$CANARY_BUCKET" \
               --key "$S3_KEY" \
