@@ -113,7 +113,6 @@ stages:
               --key "$S3_KEY" \
               --query VersionId \
               --output text)
-              echo "##vso[task.setvariable variable=CANARY_S3_VERSION]$CANARY_S3_VERSION"
           env:
             AWS_ACCESS_KEY_ID: $(aws_access_key)
             AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
