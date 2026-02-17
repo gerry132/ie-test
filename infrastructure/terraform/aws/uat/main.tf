@@ -457,13 +457,6 @@ resource "aws_s3_bucket" "canaries" {
   
 }
 
-resource "aws_s3_bucket_versioning" "canary_code" {
-  bucket = aws_s3_bucket.canaries.id
-
-  versioning_configuration {
-    status = "Enabled"
-  }
-}
 
 resource "aws_s3_bucket" "cf-logs" {
   bucket  = "${local.environment_name}-${local.project_name}-cf-logs"
@@ -1582,7 +1575,7 @@ module "codeartifact" {
 module "monitoring" {
   source = "../common/monitoring"
   environment_name      = local.environment_name 
-  canary_code_s3_key    = "canary"
+  canary_code_s3_key    = "canaries/site-health-canary.zip"
   canary_code_s3_bucket = aws_s3_bucket.canaries.bucket
   target_url            = local.domain_ireland_ie
   sms_phone_number      = aws_ssm_parameter.sns_phone_number.value 
