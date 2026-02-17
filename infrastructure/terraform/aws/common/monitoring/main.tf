@@ -57,11 +57,40 @@ resource "aws_iam_role" "canary_role" {
     Version = "2012-10-17"
     Statement = [{
       Effect    = "Allow"
-      Principal = { Service = "lambda.amazonaws.com" }
+      Principal = { Service = ["synthetics.amazonaws.com", "lambda.amazonaws.com"] }
       Action    = "sts:AssumeRole"
     }]
   })
 }
+
+resource "aws_iam_role_policy" "canary_put_metric_data" {
+  role = aws_iam_role.canary_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect   = "Allow"
+      Action   = ["cloudwatch:PutMetricData"]
+      Resource = "*"
+    }]
+  })
+}
+
+
+resource "aws_iam_role_policy" "canary_put_metric_data" {
+  role = aws_iam_role.canary_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Sid      = "AllowPutMetricData"
+      Effect   = "Allow"
+      Action   = ["cloudwatch:PutMetricData"]
+      Resource = "*"
+    }]
+  })
+}
+
 
 resource "aws_iam_role_policy_attachment" "synthetics_full" {
   role       = aws_iam_role.canary_role.name
