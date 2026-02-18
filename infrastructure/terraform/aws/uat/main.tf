@@ -457,6 +457,15 @@ resource "aws_s3_bucket" "canaries" {
   
 }
 
+resource "aws_s3_bucket_versioning" "canary_code" {
+  bucket = aws_s3_bucket.canaries.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+
 
 resource "aws_s3_bucket" "cf-logs" {
   bucket  = "${local.environment_name}-${local.project_name}-cf-logs"

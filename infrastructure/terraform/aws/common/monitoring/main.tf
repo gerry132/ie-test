@@ -139,25 +139,26 @@ resource "aws_synthetics_canary" "site" {
   start_canary = true
 }
 
-
 resource "aws_cloudwatch_metric_alarm" "canary_failed" {
   alarm_name          = "irelandie-${var.environment_name}-heartbeat-failed"
-  alarm_description   = "Canary failed for ${var.target_url}"
-  comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = 1
-  threshold           = 1
-  treat_missing_data  = "breaching"
+  alarm_description   = "Canary unhealthy for ${var.target_url}"
 
   namespace   = "CloudWatchSynthetics"
-  metric_name = "Failed"
-  statistic   = "Sum"
+  metric_name = "SuccessPercent"
+  statistic   = "Average"
   period      = 60
 
+  comparison_operator = "LessThanThreshold"
+  evaluation_periods = 2
+  datapoints_to_alarm = 2
+  threshold = 100
 
   dimensions = {
     CanaryName = aws_synthetics_canary.site.name
   }
 
+  treat_missing_data = "breaching"   # or "notBreaching" depending on how you want “no data” handled
+
   alarm_actions = [aws_sns_topic.alerts.arn]
-  ok_actions    = [aws_sns_topic.alerts.arn] # remove if you only want DOWN alerts
+  ok_actions    = [aws_sns_topic.alerts.arn]
 }
