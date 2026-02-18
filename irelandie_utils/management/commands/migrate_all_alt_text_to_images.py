@@ -7,7 +7,7 @@ from wagtail.blocks import StructValue, StreamValue
 from wagtail.images import get_image_model
 from wagtail.snippets.models import get_snippet_models
 from wagtail.contrib.settings.models import BaseSiteSetting
-
+from wagtail.fields import StreamField
 
 Image = get_image_model()
 
@@ -28,69 +28,63 @@ class Command(BaseCommand):
             self.scan_object(page)
         self.scan_snippets()
         self.scan_site_settings()
-        self.apply_migration()
+
+        updated_count = self.apply_migration()
+        self.stdout.write(self.style.SUCCESS(f"Migration complete. Images updated: {updated_count}"))
 
     def scan_object(self, obj):
         self.scan_model_fields(obj)
         self.scan_streamfields(obj)
 
     def scan_model_fields(self, obj):
-        image_alt_pairs = []
-
         image_fields = {}
-        for field in obj._meta.fields:
-            name = field.name
-
+        for field in obj._meta.get_fields():
             if isinstance(field, ForeignKey) and field.related_model == Image:
-                image = getattr(obj, name, None)
+                image = getattr(obj, field.name, None)
                 if image:
-                    image_fields[name] = image
+                    image_fields[field.name] = image
 
+        for field in obj._meta.get_fields():
+            name = field.name
             if "alt" in name.lower():
                 alt_val = getattr(obj, name, None)
                 if alt_val:
                     alt_text = str(alt_val).strip()
                     if alt_text:
                         for img_field, image in image_fields.items():
-                            image_alt_pairs.append((image, img_field, name, alt_text))
-
-        for image, img_field, alt_field, alt_text in image_alt_pairs:
-            self.record(image, img_field, alt_field, alt_text, obj, "model_fields")
+                            self.record(image, img_field, name, alt_text, obj, "model_fields")
 
     def scan_streamfields(self, obj):
-        for field in obj._meta.fields:
-            value = getattr(obj, field.name, None)
-            if isinstance(value, StreamValue):
-                self.scan_streamvalue(value, obj, field.name)
+        for field in obj._meta.get_fields():
+            if isinstance(field, StreamField):
+                value = getattr(obj, field.name, None)
+                if value:
+                    self.scan_any(value, obj, field.name)
 
-    def scan_streamvalue(self, stream_value, obj, source):
-        if not isinstance(stream_value, StreamValue):
-            return
-        for child in stream_value:
-            self.scan_structvalue(child.value, obj, f"{source}.{child.block.name}")
+    def scan_any(self, value, obj, source):
+        if isinstance(value, StreamValue):
+            for child in value:
+                self.scan_any(child.value, obj, f"{source}.{child.block.name}")
 
-    def scan_structvalue(self, struct_value, obj, source):
-        if not isinstance(struct_value, StructValue):
-            return
+        elif isinstance(value, StructValue):
+            images = {}
+            alts = {}
 
-        images = {}
-        alts = {}
+            for key, val in value.items():
+                if hasattr(val, "id") and isinstance(val, Image):
+                    images[key] = val
 
-        for key, val in struct_value.items():
-            if hasattr(val, "id") and isinstance(val, Image):
-                images[key] = val
-            if "alt" in key.lower() and val:
-                text = str(val).strip()
-                if text:
-                    alts[key] = text
+                elif isinstance(val, str) and "alt" in key.lower():
+                    text = val.strip()
+                    if text:
+                        alts[key] = text
 
-        for img_key, image in images.items():
-            for alt_key, alt_text in alts.items():
-                self.record(image, img_key, alt_key, alt_text, obj, source)
+            for img_key, image in images.items():
+                for alt_key, alt_text in alts.items():
+                    self.record(image, img_key, alt_key, alt_text, obj, source)
 
-        for key, val in struct_value.items():
-            if isinstance(val, (StructValue, StreamValue)):
-                self.scan_structvalue(val, obj, f"{source}.{key}")
+            for key, val in value.items():
+                self.scan_any(val, obj, f"{source}.{key}")
 
     def scan_snippets(self):
         for model in get_snippet_models():
