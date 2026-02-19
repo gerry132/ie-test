@@ -1,5 +1,5 @@
 #!/bin/bash
-
+exit 1
 wagtail updatemodulepaths
 
 if $( python3 manage.py migrate  --noinput > /dev/null ); then
