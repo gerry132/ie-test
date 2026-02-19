@@ -1,15 +1,15 @@
 
 ##############MIGRATION OF IMAGE ALT TEXT - DELETE AFTER RUN ######################
-#resource "aws_ecs_task_definition" "alt-migration_task" {
-#  family                   = "${var.environment_name}-alt-migration"
-#  execution_role_arn       = var.execution_role
-#  network_mode             = "awsvpc"
-#  requires_compatibilities = ["FARGATE"]
-#  cpu                      = "256"  # Task-level CPU
-#  memory                   = "512"  # Task-level memory
+resource "aws_ecs_task_definition" "alt-migration_task" {
+  family                   = "${var.environment_name}-alt-migration"
+  execution_role_arn       = var.execution_role
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = "256"  # Task-level CPU
+  memory                   = "512"  # Task-level memory
 
-  #container_definitions    = var.alt_migration_defintions
-#}
+  container_definitions    = var.alt_migration_defintions
+}
 
 
 ##############MIGRATION OF IMAGE ALT TEXT - DELETE AFTER RUN ######################
@@ -172,4 +172,4 @@ variable "sitemap_definitions" {}
 variable "publish_task_definitions" {}
 variable "cluster" {}
 variable "execution_role" {}
-#variable "alt_migration_defintions" {}
+variable "alt_migration_defintions" {}
