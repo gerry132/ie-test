@@ -23,14 +23,31 @@ class Command(BaseCommand):
         self.alt_usage = defaultdict(lambda: defaultdict(int))
         self.backup = {}
 
-        pages = Page.objects.live().specific().iterator(chunk_size=500)
-        for page in pages:
-            self.scan_object(page)
-        self.scan_snippets()
-        self.scan_site_settings()
+        self.stdout.write("[START] Alt migration started")
 
+        # ---- Scan Pages ----
+        self.stdout.write("[INFO] Scanning pages...")
+        for page in Page.objects.live().specific().iterator(chunk_size=500):
+            self.scan_object(page)
+        self.stdout.write("[INFO] Page scan complete")
+
+        # ---- Scan Snippets ----
+        self.stdout.write("[INFO] Scanning snippets...")
+        self.scan_snippets()
+        self.stdout.write("[INFO] Snippet scan complete")
+
+        # ---- Scan Site Settings ----
+        self.stdout.write("[INFO] Scanning site settings...")
+        self.scan_site_settings()
+        self.stdout.write("[INFO] Site settings scan complete")
+
+        # ---- Apply Migration ----
+        self.stdout.write("[INFO] Applying migration...")
         updated_count = self.apply_migration()
-        self.stdout.write(self.style.SUCCESS(f"Migration complete. Images updated: {updated_count}"))
+
+        self.stdout.write(
+            self.style.SUCCESS(f"[DONE] Migration complete. Images updated: {updated_count}")
+        )
 
     def scan_object(self, obj):
         self.scan_model_fields(obj)
