@@ -2,9 +2,7 @@
 Django==5.2.6
 wagtail==7.0.0
 wagtail-localize
-wagtailmedia
-wagtail-seo
-wagtail-sitemap-seo
+wagtail-modeladmin
 python-dotenv==0.17.0
 # database
 dj-database-url==0.5.0
