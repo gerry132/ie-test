@@ -1,7 +1,8 @@
 # requirements needed for the application to run
 Django==5.2.6
 wagtail==7.0.0
-wagtail-localizewagtail
+wagtail-localize
+wagtailmedia
 wagtail-seo
 wagtail-sitemap-seo
 
