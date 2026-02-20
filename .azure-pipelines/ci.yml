@@ -41,7 +41,7 @@ stages:
 
   - job: Test
     steps:
-    - script: pip install -r requirements.txt
+    - script: pip install -r requirements-test.txt
       displayName: Install Requirements
 
     - script: |
@@ -64,7 +64,8 @@ stages:
         npm run build:prod
       displayName: Build Static Files
 
-    - script: pip install -r requirements.txt
+    - script: |
+       pip install -r requirements-test.txt
       displayName: Install Requirements
 
     - script: |
@@ -110,18 +111,12 @@ stages:
               rm -rf "$BUILD"
               mkdir -p "$BUILD/python"
 
-              # ✅ put the canary file under python/
               cp "$SRC" "$BUILD/python/index.py"
-
-              # zip should contain python/index.py (not index.py at root, not python/python/index.py)
               (cd "$BUILD" && zip -r "$ZIP_NAME" python)
 
-              # sanity check: must show python/index.py
               unzip -l "$ZIP_NAME"
 
               aws s3 cp "$ZIP_NAME" "s3://${CANARY_BUCKET}/${S3_KEY}"
-
-              # sanity check the *actual* uploaded object
               aws s3 cp "s3://${CANARY_BUCKET}/${S3_KEY}" /tmp/canary.zip
               unzip -l /tmp/canary.zip
 
