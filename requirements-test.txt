@@ -4,6 +4,7 @@ wagtail==7.0.0
 wagtail-localize
 wagtail-modeladmin
 wagtail-sitemap-seo
+wagtail-honeypot==1.0.0
 python-dotenv==0.17.0
 # database
 dj-database-url==0.5.0
