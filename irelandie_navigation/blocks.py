@@ -69,7 +69,8 @@ class MegaMenuContent(blocks.StructBlock):
                 [
                     ("image", ImageChooserBlock(required=True)),
                     ("image_alt", blocks.CharBlock(
-                        required=True,
+                        required=False,
+                        label="Page alt override",
                         help_text=_(ALT_IMAGE),
                     )),
                     ("page", blocks.PageChooserBlock(required=False)),

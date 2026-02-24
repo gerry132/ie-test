@@ -3,10 +3,10 @@
 
 <div class="pinned-stories__featured">
     <div class="pinned-stories__featured-content">
-        {% if value.image_alt %}
-            {% image value.image width-400 alt=value.image_alt %}
-        {% else %}
-            {% image value.image width-400 alt=value.image.alt_default %}
+        {% if value.image %}
+            {% with alt_text=value.image_alt|default:value.image.description %}
+                {% image value.image width-400 alt=alt_text %}
+            {% endwith %}
         {% endif %}
         <p class="pinned-stories__featured-summary">{{ value.summary }}</p>
 

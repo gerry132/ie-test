@@ -53,30 +53,18 @@
 
                 <a href="/{{ language_code }}/" role="link" aria-label="Ireland.ie" class="header__logo-wrapper">
                 {% if custom_header_settings.site_settings.site_logo %}
-                    {% if custom_header_settings.site_settings.site_logo_alt %}
+                    {% with alt_text=custom_header_settings.site_settings.site_logo_alt|default:custom_header_settings.site_settings.site_logo.description %}
                         {% if custom_header.links %}
-                            {% image custom_header_settings.site_settings.mobile_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
+                            {% image custom_header_settings.site_settings.mobile_logo original class="header__logo" alt=alt_text %}
                         {% else %}
-                            {% if custom_header_settings.site_settings.mobile_logo and custom_header_settings.site_settings.site_logo %}
-                                    {% image custom_header_settings.site_settings.site_logo original class="header__logo desktop__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
-                                    {% image custom_header_settings.site_settings.mobile_logo original class="header__logo mobile__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
+                            {% if custom_header_settings.site_settings.mobile_logo %}
+                                {% image custom_header_settings.site_settings.site_logo original class="header__logo desktop__logo" alt=alt_text %}
+                                {% image custom_header_settings.site_settings.mobile_logo original class="header__logo mobile__logo" alt=alt_text %}
                             {% else %}
-                                    {% image custom_header_settings.site_settings.site_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
-                            {% endif %}
-
-                        {% endif %}
-                    {% else %}
-                        {% if custom_header.links %}
-                            {% image custom_header_settings.site_settings.mobile_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo.alt_default %}
-                        {% else %}
-                            {% if custom_header_settings.site_settings.mobile_logo and custom_header_settings.site_settings.site_logo %}
-                                    {% image custom_header_settings.site_settings.site_logo original class="header__logo desktop__logo" alt=custom_header_settings.site_settings.site_logo_alt_default %}
-                                    {% image custom_header_settings.site_settings.mobile_logo original class="header__logo mobile__logo" alt=custom_header_settings.site_settings.site_logo_alt_default %}
-                            {% else %}
-                                    {% image custom_header_settings.site_settings.site_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt_default %}
+                                {% image custom_header_settings.site_settings.site_logo original class="header__logo" alt=alt_text %}
                             {% endif %}
                         {% endif %}
-                    {% endif %}
+                    {% endwith %}
                 {% else %}
                     {% if custom_header.links %}
                         {% image custom_header_settings.site_settings.mobile_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
@@ -212,24 +200,19 @@
                             <a href="{{block.value.page.url}}" role="link" aria-label="Ireland.ie" class="header__logo-wrapper">
                         {% endfor %}
                     {% endif %}
-                    {% if custom_header_settings.site_settings.site_logo and not custom_header.logo %}
-                        {% image custom_header_settings.site_settings.site_logo original class="header__logo" alt=custom_header_settings.site_settings.site_logo_alt %}
-                    {% elif custom_header.logo %}
-                        {% if custom_header.logo.logo_alt %}
-                            {% if custom_header.mobile_logo and custom_header.logo %}
-                                {% image custom_header.logo original class="header__logo desktop__logo" alt=custom_header.logo_alt %}
-                                {% image custom_header.mobile_logo original class="header__logo mobile__logo" alt=custom_header.logo_alt %}
+                    {% if custom_header.logo %}
+                        {% with alt_text=custom_header.logo_alt|default:custom_header.logo.description %}
+                            {% if custom_header.mobile_logo %}
+                                {% image custom_header.logo original class="header__logo desktop__logo" alt=alt_text %}
+                                {% image custom_header.mobile_logo original class="header__logo mobile__logo" alt=alt_text %}
                             {% else %}
-                                {% image custom_header.logo original class="header__logo" alt=custom_header.logo_alt %}
+                                {% image custom_header.logo original class="header__logo" alt=alt_text %}
                             {% endif %}
-                        {% else %}
-                            {% if custom_header.mobile_logo and custom_header.logo %}
-                                {% image custom_header.logo original class="header__logo desktop__logo" alt=custom_header.logo.alt_default %}
-                                {% image custom_header.mobile_logo original class="header__logo mobile__logo" alt=custom_header.logo.alt_default %}
-                            {% else %}
-                                {% image custom_header.logo original class="header__logo" alt=custom_header.logo.alt_default %}
-                            {% endif %}
-                        {% endif %}
+                        {% endwith %}
+                    {% elif custom_header_settings.site_settings.site_logo %}
+                        {% with alt_text=custom_header_settings.site_settings.site_logo_alt|default:custom_header_settings.site_settings.site_logo.description %}
+                            {% image custom_header_settings.site_settings.site_logo original class="header__logo" alt=alt_text %}
+                        {% endwith %}
                     {% else %}
                             {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="header__logo header__logo--svg" %}
                     {% endif %}

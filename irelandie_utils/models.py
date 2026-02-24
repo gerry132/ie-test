@@ -831,6 +831,7 @@ class HeroPage(BasePage):
     hero_image_credit = models.CharField(blank=True, max_length=255)
     alt_text = models.CharField(blank=True,
                                 null=True,
+                                verbose_name="Page alt override",
                                 max_length=255,
                                 help_text=ALT_HELP_TEXT)
     summary = models.CharField(blank=True, max_length=255)
@@ -1068,6 +1069,7 @@ class MinimalArticlePage(BasePage):
     )
     alt_text = models.CharField(blank=True,
                                 null=True,
+                                verbose_name="Page alt override",
                                 max_length=255,
                                 help_text=ALT_HELP_TEXT)
     hero_image_credit = models.CharField(blank=True, null=True, max_length=255)

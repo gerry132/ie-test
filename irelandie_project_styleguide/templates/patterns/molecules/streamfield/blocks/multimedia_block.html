@@ -30,10 +30,10 @@
                 <a class="multimedia__card{% if value.multimedia|length > 2 %} multimedia__card--three{% else %} multimedia__card--two{% endif %}"
                    href="{% if block.value.page.url %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}" aria-label="{% trans 'card' %}">
                     <div class="multimedia__card__image-container">
-                        {% if block.value.image_alt %}
-                            {% image block.value.image fill-400x200 alt=block.value.image_alt class="multimedia__card__image" %}
-                        {% else %}
-                            {% image block.value.image fill-400x200 alt=block.value.image.alt_default class="multimedia__card__image" %}
+                        {% if block.value.image %}
+                            {% with alt_text=block.value.image_alt|default:block.value.image.description %}
+                                {% image block.value.image fill-400x200 class="multimedia__card__image" alt=alt_text %}
+                            {% endwith %}
                         {% endif %}
                     </div>
 
