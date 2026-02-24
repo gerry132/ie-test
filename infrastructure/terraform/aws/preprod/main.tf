@@ -82,6 +82,20 @@ locals {
 # Values to fill after running terraform is ran, used for codebuild and secrets
 # -----------------------------------------------------------------------------
 
+resource "aws_ssm_parameter" "sns_phone_number" {
+  name        = "phone"
+  description = "Phone number for sns"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
+
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
+
+
 resource "aws_ssm_parameter" "OPENSEARCH_ENDPOINT" {
   name        = "${local.environment_name}_OPENSEARCH_ENDPOINT"
   description = "For use in Codebuild buildspec - ${local.environment_name}"
@@ -1468,10 +1482,26 @@ module "main_task_definition" {
   SETTINGS_CORS_ALLOWED_ORIGINS = local.SETTINGS_CORS_ALLOWED_ORIGINS
 }
 
+
+module "codeartifact" {
+  source = "../common/codeartifact"
+  environment_name      = local.environment_name
+}
+
+module "monitoring" {
+  source = "../common/monitoring"
+  environment_name      = local.environment_name 
+  canary_code_s3_key    = "canaries/site-health-canary.zip"
+  canary_code_s3_bucket = aws_s3_bucket.canaries.bucket
+  target_url            = local.domain_ireland_ie
+  sms_phone_number      = aws_ssm_parameter.sns_phone_number.value 
+}
+
 module "ecs_background_tasks" {
   source = "../common/utils"
 
   publish_task_definitions = module.main_task_definition.publish_task_definition_rendered
+  alt_migration_defintions = module.main_task_definition.alt_migration_definitions_rendered
   sitemap_definitions = data.template_file.sitemap_task_definition.rendered
   container_definitions = data.template_file.index_task_definition.rendered
   task_cpu              = "256"
