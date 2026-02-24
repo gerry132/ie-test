@@ -214,8 +214,6 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         errors = {}
         person_image = value.get('image')
         video = value.get('video')
-        image = value.get('image')
-        image_alt = value.get('image_alt')
 
         if not (bool(person_image) ^ bool(video)):
             msg = "You can't choose both an image and a video. Choose an image or a video"
