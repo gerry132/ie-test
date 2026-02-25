@@ -1946,7 +1946,7 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
                         "51.183.41.207/32",   # Deekshana
                         "51.182.250.11/32",   # Fergal
                         "62.23.128.137/32",    # DFA
-                        # "37.228.225.101/32", # gerry
+                        "37.228.229.251/32", # gerry
                         ]
 }
 
