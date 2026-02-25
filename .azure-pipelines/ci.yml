@@ -130,12 +130,8 @@ stages:
           inputs:
             targetType: inline
             script: |
-              if [ -z "${PAT:-}" ]; then
-                echo "ERROR: PAT env var is empty"
-                exit 1
-              fi
-              echo "PAT is set (length: ${#PAT})"
-              git config --global url."https://x-access-token:${PAT}@github.com/".insteadOf "https://github.com/"
+              
+              git config --global url."https://x-access-token:${GIT_PAT}@github.com/".insteadOf "https://github.com/"
               cd infrastructure/terraform/aws/$(env)/
               terraform init -input=false -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY"
               terraform apply -input=false -auto-approve
@@ -145,7 +141,7 @@ stages:
             AWS_ACCESS_KEY_ID: $(aws_access_key)
             AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
             AWS_DEFAULT_REGION: $(aws_region)
-            PAT: $(git_pat)
+            GIT_PAT: $(git_pat)
 
 - stage: deploy
   displayName: Deploy
