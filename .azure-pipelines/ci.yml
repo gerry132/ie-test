@@ -141,7 +141,7 @@ stages:
             AWS_ACCESS_KEY_ID: $(aws_access_key)
             AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
             AWS_DEFAULT_REGION: $(aws_region)
-            PAT: $(pat)
+            PAT: $(git_pat)
 
 - stage: deploy
   displayName: Deploy
