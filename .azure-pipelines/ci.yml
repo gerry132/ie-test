@@ -131,6 +131,7 @@ stages:
           inputs:
             targetType: inline
             script: |
+              git config --global url."https://x-access-token:${PAT}@github.com/".insteadOf "https://github.com/"
               cd infrastructure/terraform/aws/$(env)/
               terraform init -input=false -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY"
               terraform apply -input=false -auto-approve
@@ -140,6 +141,7 @@ stages:
             AWS_ACCESS_KEY_ID: $(aws_access_key)
             AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
             AWS_DEFAULT_REGION: $(aws_region)
+            PAT: $(pat)
 
 - stage: deploy
   displayName: Deploy
