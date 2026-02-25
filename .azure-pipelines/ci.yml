@@ -95,6 +95,7 @@ stages:
           inputs:
             targetType: inline
             script: |
+              git ls-remote https://github.com/ogcio/terraform-aws-public-network.git
               set -euo pipefail
 
               ROOT="$(pwd)"
