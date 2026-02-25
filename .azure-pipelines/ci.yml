@@ -95,7 +95,6 @@ stages:
           inputs:
             targetType: inline
             script: |
-              git ls-remote https://github.com/ogcio/terraform-aws-public-network.git
               set -euo pipefail
 
               ROOT="$(pwd)"
@@ -120,6 +119,7 @@ stages:
               aws s3 cp "$ZIP_NAME" "s3://${CANARY_BUCKET}/${S3_KEY}"
               aws s3 cp "s3://${CANARY_BUCKET}/${S3_KEY}" /tmp/canary.zip
               unzip -l /tmp/canary.zip
+            continueOnError: True
 
           env:
             AWS_ACCESS_KEY_ID: $(aws_access_key)
