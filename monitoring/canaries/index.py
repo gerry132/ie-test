@@ -25,7 +25,7 @@ def _parse_http_response(raw):
 def _get_status_with_urllib(url):
     req = urllib.request.Request(
         url,
-        headers={"User-Agent": "Mozilla/5.0"}  # helps with WAF/CDN setups
+        headers={"User-Agent": "Mozilla/5.0"}
     )
     with urllib.request.urlopen(req, timeout=20) as resp:
         return resp.getcode(), resp.geturl()
