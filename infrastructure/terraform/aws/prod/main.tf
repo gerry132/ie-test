@@ -428,6 +428,18 @@ resource "aws_security_group_rule" "ecs_to_redis_5432" {
 # -----------------------------------------------------------------------------
 # Buckets
 # -----------------------------------------------------------------------------
+resource "aws_s3_bucket" "canaries" {
+  bucket  = "${local.environment_name}-${local.project_name}-canary-code"
+  
+}
+
+resource "aws_s3_bucket_versioning" "canary_code" {
+  bucket = aws_s3_bucket.canaries.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
 
 resource "aws_s3_bucket" "assets" {
   bucket  = "${local.environment_name}-${local.project_name}-assets"
