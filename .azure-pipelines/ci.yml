@@ -169,8 +169,8 @@ stages:
           --runtime-version "syn-python-selenium-8.0"
           aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
           CODEARTIFACT_REPO_URL=$(aws codeartifact get-repository-endpoint \
-          --domain uat \
-          --domain-owner 100350071169 \
+          --domain $(env) \
+          --domain-owner $AWS_ACCOUNT_ID \
           --repository python \
           --format pypi \
           --region "$AWS_REGION" \
@@ -178,8 +178,8 @@ stages:
           --output text)
           CODEARTIFACT_REPO_HOST="${CODEARTIFACT_REPO_URL#https://}"
           CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
-            --domain uat \
-            --domain-owner 100350071169 \
+            --domain $(env) \
+            --domain-owner $AWS_ACCOUNT_ID \
             --region "$AWS_REGION" \
             --query authorizationToken \
             --output text)
