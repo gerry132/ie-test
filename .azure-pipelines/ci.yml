@@ -97,34 +97,34 @@ stages:
             script: |
               set -euo pipefail
 
-            #  ROOT="$(pwd)"
-            #  SRC="${ROOT}/monitoring/canaries/index.py"
-            #  BUILD="${ROOT}/_canary_build"
+              ROOT="$(pwd)"
+              SRC="${ROOT}/monitoring/canaries/index.py"
+              BUILD="${ROOT}/_canary_build"
               
               
-            #  ZIP_NAME="${ROOT}/site-health-canary.zip"
-            #  S3_KEY="canaries/site-health-canary.zip"
+              ZIP_NAME="${ROOT}/site-health-canary.zip"
+              S3_KEY="canaries/site-health-canary.zip"
 
-            #  test -f "$SRC"
+              test -f "$SRC"
 
-            #  rm -f "$ZIP_NAME"
-            #  rm -rf "$BUILD"
-            #  mkdir -p "$BUILD/python"
+              rm -f "$ZIP_NAME"
+              rm -rf "$BUILD"
+              mkdir -p "$BUILD/python"
 
-            #  cp "$SRC" "$BUILD/python/index.py"
-            #  (cd "$BUILD" && zip -r "$ZIP_NAME" python)
+              cp "$SRC" "$BUILD/python/index.py"
+              (cd "$BUILD" && zip -r "$ZIP_NAME" python)
 
-            #  unzip -l "$ZIP_NAME"
+              unzip -l "$ZIP_NAME"
 
-            #  aws s3 cp "$ZIP_NAME" "s3://${CANARY_BUCKET}/${S3_KEY}"
-            #  aws s3 cp "s3://${CANARY_BUCKET}/${S3_KEY}" /tmp/canary.zip
-            #  unzip -l /tmp/canary.zip
+              aws s3 cp "$ZIP_NAME" "s3://${CANARY_BUCKET}/${S3_KEY}"
+              aws s3 cp "s3://${CANARY_BUCKET}/${S3_KEY}" /tmp/canary.zip
+              unzip -l /tmp/canary.zip
 
           env:
             AWS_ACCESS_KEY_ID: $(aws_access_key)
             AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
             AWS_DEFAULT_REGION: $(aws_region)
-            # CANARY_BUCKET: $(canary_bucket)
+            CANARY_BUCKET: $(canary_bucket)
         - task: Bash@3
           displayName: Run Terraform
           inputs:
