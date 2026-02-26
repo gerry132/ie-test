@@ -123,21 +123,6 @@ resource "aws_ssm_parameter" "CLOUDFRONT_ID" {
 }
 
 
-
-resource "aws_ssm_parameter" "sns_phone_number" {
-  name        = "phone"
-  description = "Phone number for sns"
-  type        = "SecureString"
-  value       = "CHANGE-ME"
-
-  lifecycle {
-    ignore_changes = [
-      value,
-    ]
-  }
-}
-
-
 resource "aws_ssm_parameter" "OPENSEARCH_ENDPOINT" {
   name        = "${local.environment_name}_OPENSEARCH_ENDPOINT"
   description = "For use in Codebuild buildspec - ${local.environment_name}"
