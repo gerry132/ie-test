@@ -124,7 +124,7 @@ stages:
             AWS_ACCESS_KEY_ID: $(aws_access_key)
             AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
             AWS_DEFAULT_REGION: $(aws_region)
-            CANARY_BUCKET: $(canary_bucket)
+            # CANARY_BUCKET: $(canary_bucket)
         - task: Bash@3
           displayName: Run Terraform
           inputs:
