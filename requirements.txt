@@ -15,8 +15,8 @@ wagtail-localize-hydrogen
 # wagtail-localize
 wagtailmedia
 wagtail-seo
-#wagtail-sitemap-seo
-git+https://github.com/gerry132/wagtail-sitemap-seo
+wagtail-sitemap-seo
+
 # database
 dj-database-url==0.5.0
 psycopg2-binary==2.9.3
