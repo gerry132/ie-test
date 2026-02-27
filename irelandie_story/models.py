@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 import json
-import mimetypes
 
 from django.db import models
 from django.utils.formats import date_format
 from wagtail.images import get_image_model_string
+from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.edit_handlers import MediaChooserPanel
+
+import mimetypes
+from urllib.parse import urlparse, parse_qs
 
 # from wagtailseo.models import SeoMixin, SeoType
 
@@ -45,13 +48,13 @@ class StoryPage(HeroPage):
     )
 
     article_headline = models.CharField(max_length=255, blank=True)
-    article_image = models.ForeignKey(
-        IMAGE_MODEL,
-        null=True,
+    article_images = StreamField(
+        [
+            ("image", ImageChooserBlock(required=True)),
+        ],
         blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        help_text="Choose the image you wish to be displayed when this page appears in listings",
+        null=True,
+        use_json_field=True,
     )
     article_description = models.TextField(blank=True)
     article_date_published = models.DateTimeField(null=True, blank=True)
@@ -70,14 +73,18 @@ class StoryPage(HeroPage):
     article_publisher_type = models.CharField(
         max_length=20,
         choices=TYPE_CHOICES,
-        default='Organization',
-        blank=True
+        default="Organization",
+        blank=True,
     )
     article_publisher_name = models.CharField(
         max_length=255,
-        blank=True
+        default="ireland.ie",
+        blank=True,
     )
-    article_publisher_url = models.URLField(blank=True)
+    article_publisher_url = models.URLField(
+        default="https://www.ireland.ie/en/",
+        blank=True,
+    )
     article_publisher_logo = models.ForeignKey(
         IMAGE_MODEL,
         null=True,
@@ -88,13 +95,6 @@ class StoryPage(HeroPage):
     )
 
     article_audio = models.ForeignKey(
-        "wagtailmedia.Media",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    article_video = models.ForeignKey(
         "wagtailmedia.Media",
         null=True,
         blank=True,
@@ -134,7 +134,7 @@ class StoryPage(HeroPage):
             MultiFieldPanel(
                 [
                     FieldPanel("article_headline", classname="schema-article"),
-                    FieldPanel("article_image", classname="schema-article"),
+                    FieldPanel("article_images", classname="schema-article"),
                     FieldPanel("article_description", classname="schema-article"),
                     FieldPanel("article_date_published", classname="schema-article"),
                     FieldPanel("article_date_modified", classname="schema-article"),
@@ -145,7 +145,6 @@ class StoryPage(HeroPage):
                     FieldPanel("article_publisher_url", classname="schema-article"),
                     FieldPanel("article_publisher_logo", classname="schema-article"),
                     MediaChooserPanel("article_audio", media_type="audio", classname="schema-article"),
-                    MediaChooserPanel("article_video", media_type="video", classname="schema-article"),
                 ],
                 heading="Article Schema",
             ),
@@ -193,6 +192,81 @@ class StoryPage(HeroPage):
             "itemListElement": item_list
         }
 
+    def get_article_video_schema(self):
+        if not self.body:
+            return None
+
+        video_schemas = []
+
+        for block in self.body or []:
+            if block.block_type != "video":
+                continue
+
+            value = block.value
+
+            if value.get("video"):
+                video_file = value["video"]
+
+                upload_date = (
+                    video_file.created.strftime('%Y-%m-%dT%H:%M:%S%z')
+                    if hasattr(video_file, "created") and video_file.created
+                    else "2024-01-01T00:00:00+00:00"
+                )
+
+                try:
+                    thumbnail_url = video_file.get_rendition("fill-800x450").url
+                except Exception:
+                    thumbnail_url = "https://example.com/default-thumbnail.jpg"
+
+                video_schemas.append({
+                    "@type": "VideoObject",
+                    "name": getattr(video_file, "title", "Video"),
+                    "description": getattr(video_file, "description", "Video content"),
+                    "contentUrl": video_file.url,
+                    "encodingFormat": mimetypes.guess_type(video_file.url)[0],
+                    "uploadDate": upload_date,
+                    "thumbnailUrl": thumbnail_url,
+                })
+
+            elif value.get("youtube_or_vimeo_embed"):
+                embed_url = value["youtube_or_vimeo_embed"]
+
+                video_id = None
+                parsed = urlparse(embed_url)
+
+                if "youtu.be" in parsed.netloc:
+                    video_id = parsed.path.strip("/")
+
+                elif "youtube" in parsed.netloc:
+                    if parsed.path == "/watch":
+                        video_id = parse_qs(parsed.query).get("v", [None])[0]
+                    elif parsed.path.startswith("/embed/"):
+                        video_id = parsed.path.split("/embed/")[-1].split("/")[0]
+
+                thumbnail_url = f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg" if video_id else \
+                    "https://example.com/default-thumbnail.jpg"
+
+                video_schemas.append({
+                    "@type": "VideoObject",
+                    "name": value.get("title") or "Video",
+                    "description": value.get("summary") or "Video content",
+                    "embedUrl": embed_url,
+                    "thumbnailUrl": thumbnail_url,
+                })
+
+        if not video_schemas:
+            return None
+
+        return video_schemas[0] if len(video_schemas) == 1 else video_schemas
+
+    @property
+    def publisher_name(self):
+        return self.article_publisher_name or "ireland.ie"
+
+    @property
+    def publisher_url(self):
+        return self.article_publisher_url or "https://www.ireland.ie/en/"
+
     def get_schema_json(self):
         schemas = []
         if self.schema_type == "article":
@@ -209,10 +283,14 @@ class StoryPage(HeroPage):
                 },
                 "publisher": {
                     "@type": self.article_publisher_type,
-                    "name": self.article_publisher_name,
-                    "url": self.article_publisher_url,
+                    "name": self.publisher_name,
+                    "url": self.publisher_url,
                 },
-                "image": self.article_image.get_rendition("original").url if self.article_image else None,
+                "image": [
+                    block.value.get_rendition("original").url
+                    for block in self.article_images or []
+                    if block.block_type == "image"
+                ],
             }
 
             if self.article_publisher_logo:
@@ -239,21 +317,9 @@ class StoryPage(HeroPage):
                     "duration": audio_file.duration
                 }
 
-            if self.article_video:
-                video_file = self.article_video
-                article_schema["video"] = {
-                    "@type": "VideoObject",
-                    "contentUrl": video_file.url,
-                    "encodingFormat": mimetypes.guess_type(video_file.url)[0],
-                    "name": video_file.title if hasattr(video_file, 'title') else "Video",
-                    "description": video_file.description if hasattr(video_file, 'description') else "Video content",
-                    "thumbnailUrl": video_file.thumbnail.url if hasattr(video_file,
-                                                                        'thumbnail') and video_file.thumbnail
-                    else "https://example.com/default-thumbnail.jpg",
-                    "uploadDate": video_file.created.strftime('%Y-%m-%dT%H:%M:%S%z') if hasattr(video_file,
-                                                                                                'created') else
-                    "2024-01-01T00:00:00+00:00",
-                }
+            video_schema = self.get_article_video_schema()
+            if video_schema:
+                article_schema["video"] = video_schema
 
             schemas.append({k: v for k, v in article_schema.items() if v is not None})
 
@@ -269,7 +335,7 @@ class StoryPage(HeroPage):
 
     SCHEMA_FIELDS = [
         "article_headline",
-        "article_image",
+        "article_images",
         "article_description",
         "article_date_published",
         "article_date_modified",
@@ -280,7 +346,6 @@ class StoryPage(HeroPage):
         "article_publisher_url",
         "article_publisher_logo",
         "article_audio",
-        "article_video",
         "schema_type",
     ]
 

@@ -66,12 +66,7 @@ locals {
   SETTINGS_USE_S3               = 1
   SETTINGS_USE_CACHE            = 1
   gov_network_cird_blocks       = [
-    "169.254.192.0/18",
-    "137.191.224.0/19",
-    "37.228.225.101/32", # gerry
-    "193.178.64.0/19",
-    "193.178.96.0/20",
-    "139.162.239.108/32",
+    "155.190.32.0/24",
     "137.191.233.222/32" # browserstack
 
   ]
@@ -86,7 +81,7 @@ locals {
     },
     gerry_dev = {
       description = "Gerry Mcbride - OGCIO"
-      cidr_blocks = ["95.44.14.48/32", "37.228.234.184/32"]
+      cidr_blocks = ["95.44.14.48/32", "37.228.229.14/32"]
     },
     fergal_dev = {
       description = "Fergal - OGCIO"
@@ -99,7 +94,7 @@ locals {
 
     sina_dev = {
       description = "Sina - Sidero"
-      cidr_blocks  = ["31.53.148.191/32"]
+      cidr_blocks  = ["163.116.177.33/32"]
     },
     joe_dev = {
       description = "Joe D - Sidero"
@@ -112,6 +107,18 @@ locals {
 # Values to fill after running terraform is ran, used for codebuild and secrets
 # -----------------------------------------------------------------------------
 
+resource "aws_ssm_parameter" "sns_phone_number" {
+  name        = "phone"
+  description = "Phone number for sns"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
+
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
 
 resource "aws_ssm_parameter" "CLOUDFRONT_ID" {
   name        = "${local.environment_name}_CLOUDFRONT_ID"
@@ -366,6 +373,16 @@ resource "aws_security_group_rule" "non_gov_network_to_lb_443" {
   cidr_blocks               = each.value.cidr_blocks
 }
 
+
+resource "aws_security_group_rule" "gov_network_to_lb_443" {
+  type                      = "ingress"
+  from_port                 = 0
+  to_port                   = 0
+  protocol                  = "all"
+  security_group_id         = aws_security_group.lb_gov_network.id
+  cidr_blocks               = local.gov_network_cird_blocks
+}
+
 # Internal thing rules
 
 resource "aws_security_group_rule" "lb_to_internet" {
@@ -435,6 +452,20 @@ resource "aws_security_group_rule" "ecs_to_redis_5432" {
 # -----------------------------------------------------------------------------
 # Buckets
 # -----------------------------------------------------------------------------
+resource "aws_s3_bucket" "canaries" {
+  bucket  = "${local.environment_name}-${local.project_name}-canary-code"
+  
+}
+
+resource "aws_s3_bucket_versioning" "canary_code" {
+  bucket = aws_s3_bucket.canaries.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+
 
 resource "aws_s3_bucket" "cf-logs" {
   bucket  = "${local.environment_name}-${local.project_name}-cf-logs"
@@ -1439,6 +1470,35 @@ data "template_file" "index_task_definition" {
   }
 }
 
+data "template_file" "sitemap_task_definition" {
+  template    = file("../common/templates/build_sitemaps.tpl")
+
+  vars = {
+    ecr_image_url                       = "${local.account_id}.dkr.ecr.eu-west-1.amazonaws.com/${aws_ecr_repository.project_app.name}"
+    log_group                           = aws_cloudwatch_log_group.ecs_index.name
+    SETTINGS_CLOUDFRONT_ID              = local.SETTINGS_CLOUDFRONT_ID
+    name                                = "${local.environment_name}-index"
+    port                                = local.service_contrainer_port
+    region                              = local.region
+    task_cpu                            = local.task_cpu
+    task_memory                         = local.task_memory
+    assets_url                          = "assets.${local.domain_ireland_ie}"
+    assets_s3_bucket                    = aws_s3_bucket.assets.id
+
+    SETTINGS_ALLOWED_HOSTS              = local.SETTINGS_ALLOWED_HOSTS
+    SETTINGS_AWS_ACCESS_KEY_ID          = local.SETTINGS_AWS_ACCESS_KEY_ID
+    SETTINGS_AWS_SECRET_ACCESS_KEY      = local.SETTINGS_AWS_SECRET_ACCESS_KEY
+    SETTINGS_AWS_STATIC_BUCKET_NAME     = local.SETTINGS_AWS_STATIC_BUCKET_NAME
+    SETTINGS_BASE_URL                   = local.SETTINGS_BASE_URL
+    SETTINGS_DATABASE_URL               = local.SETTINGS_DATABASE_URL
+    SETTINGS_SECRET_KEY                 = local.SETTINGS_SECRET_KEY
+    SETTINGS_OPENSEARCH_KEY             = local.SETTINGS_OPENSEARCH_KEY
+    SETTINGS_OPENSEARCH_SECRET          = local.SETTINGS_OPENSEARCH_SECRET
+    SETTINGS_OPENSEARCH_ENDPOINT        = local.SETTINGS_OPENSEARCH_ENDPOINT
+    SETTINGS_CORS_ALLOWED_ORIGINS       = local.SETTINGS_CORS_ALLOWED_ORIGINS
+  }
+}
+
 data "template_file" "task_definition" {
   template    = file("../common/templates/task_definition.tpl")
 
@@ -1515,13 +1575,28 @@ module "main_task_definition" {
   SETTINGS_CORS_ALLOWED_ORIGINS = local.SETTINGS_CORS_ALLOWED_ORIGINS
 }
 
-# Task definition
 
-module "ecs_task_os_index" {
+module "codeartifact" {
+  source = "../common/codeartifact"
+  environment_name      = local.environment_name
+}
+
+module "monitoring" {
+  source = "../common/monitoring"
+  environment_name      = local.environment_name 
+  canary_code_s3_key    = "canaries/site-health-canary.zip"
+  canary_code_s3_bucket = aws_s3_bucket.canaries.bucket
+  target_url            = local.domain_ireland_ie
+  sms_phone_number      = aws_ssm_parameter.sns_phone_number.value 
+}
+
+module "ecs_background_tasks" {
   source = "../common/utils"
 
   publish_task_definitions = module.main_task_definition.publish_task_definition_rendered
+  alt_migration_defintions = module.main_task_definition.alt_migration_definitions_rendered
   container_definitions = data.template_file.index_task_definition.rendered
+  sitemap_definitions = data.template_file.sitemap_task_definition.rendered
   task_cpu              = "256"
   task_memory           = "512"
   subnets               = module.network.private_subnet_ids
@@ -2140,12 +2215,13 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
                         "193.178.64.0/19",    # gov_network_cird_blocks
                         "193.178.96.0/20",    # gov_network_cird_blocks
                         "139.162.239.108/32", # gov_network_cird_blocks
+                        "155.190.32.0/24",
 
-                        "31.53.148.191/32",   # Sina
+                        "163.116.177.33/32",   # Sina
                         "51.183.41.207/32",   # Deekshana
                         "51.182.250.11/32",   # Fergal
                         "62.23.128.137/32",    # DFA
-                        "37.228.206.182/32",  # jaikiran_dev
+                        "37.228.229.14/32" # Gerry
                         ]
 }
 
@@ -2172,6 +2248,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
       }
     }
 
+    
     visibility_config {
       cloudwatch_metrics_enabled = true
       metric_name                = "whitelistIPs"

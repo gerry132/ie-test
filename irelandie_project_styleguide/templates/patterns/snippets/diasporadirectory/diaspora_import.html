@@ -1,0 +1,52 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n wagtailadmin_tags %}
+
+{% block titletag %}{% trans "Import Diaspora Directory (CSV)" %}{% endblock %}
+
+{% block content %}
+  {% trans "Import Diaspora Directory (CSV)" as title %}
+  {% include "wagtailadmin/shared/header.html" with title=title icon="upload" %}
+
+  <div class="nice-padding">
+    <p>
+      CSV must include these columns exactly:
+      <code>main_regions, organisation_name, contact_details, city, region, website, activity</code>
+    </p>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <ul class="fields">
+        {% for field in form %}
+          <li class="field">
+            <div class="field-content">
+              <div class="input">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                  <p class="help">{{ field.help_text }}</p>
+                {% endif %}
+                {% if field.errors %}
+                  <p class="error-message">
+                    {{ field.errors|striptags }}
+                  </p>
+                {% endif %}
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <div class="button-group">
+        <button type="submit" class="button button-primary">
+          {% trans "Import CSV" %}
+        </button>
+
+        {# Back to snippet list #}
+        <a href="{% url "wagtailsnippets_utils_diasporadirectory:list" %}" class="button button-secondary">
+          {% trans "Cancel" %}
+        </a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

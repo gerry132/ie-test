@@ -1,3 +1,19 @@
+
+##############MIGRATION OF IMAGE ALT TEXT - DELETE AFTER RUN ######################
+resource "aws_ecs_task_definition" "alt-migration_task" {
+  family                   = "${var.environment_name}-alt-migration"
+  execution_role_arn       = var.execution_role
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = "256"  # Task-level CPU
+  memory                   = "512"  # Task-level memory
+
+  container_definitions    = var.alt_migration_defintions
+}
+
+
+##############MIGRATION OF IMAGE ALT TEXT - DELETE AFTER RUN ######################
+
 resource "aws_ecs_task_definition" "publish_task" {
   family                   = "${var.environment_name}-publish"
   execution_role_arn       = var.execution_role
@@ -5,8 +21,19 @@ resource "aws_ecs_task_definition" "publish_task" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"  # Task-level CPU
   memory                   = "512"  # Task-level memory
-
   container_definitions    = var.publish_task_definitions
+}
+
+
+resource "aws_ecs_task_definition" "ecs_task_build_site_maps" {
+  family                   = "${var.environment_name}-build-sitemaps"
+  execution_role_arn       = var.execution_role
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = "256"
+  memory                   = "512"
+
+  container_definitions    = var.sitemap_definitions
 }
 
 resource "aws_ecs_task_definition" "index_task" {
@@ -32,7 +59,14 @@ resource "aws_cloudwatch_event_rule" "hourly_trigger" {
 resource "aws_cloudwatch_event_rule" "weekly_trigger" {
   name        = "${var.environment_name}-weekly-update-indexes"
   description = "Triggers the ECS task to update indexes once per week"
-  schedule_expression = "cron(0 3 ? * 1 *)" # Adjust cron expression as needed
+  schedule_expression = "cron(0 3 ? * 1 *)"
+}
+
+
+resource "aws_cloudwatch_event_rule" "daily_trigger" {
+  name        = "${var.environment_name}-daily-build-sitemaps"
+  description = "Triggers the ECS task to build sitemaps"
+  schedule_expression = "cron(0 4 * * ? *)"
 }
 
 resource "aws_cloudwatch_event_target" "ecs_task_target_publish" {
@@ -42,6 +76,24 @@ resource "aws_cloudwatch_event_target" "ecs_task_target_publish" {
 
   ecs_target {
     task_definition_arn = aws_ecs_task_definition.publish_task.arn
+    launch_type         = "FARGATE"
+
+    network_configuration {
+        security_groups     = [var.security_groups]
+        subnets             = var.subnets
+    }
+  }
+    role_arn = aws_iam_role.eventbridge_to_ecs.arn
+}
+
+
+resource "aws_cloudwatch_event_target" "ecs_task_target_sitemap" {
+  rule      = aws_cloudwatch_event_rule.daily_trigger.name
+  target_id = "build-site-maps"
+  arn       = var.cluster.arn
+
+  ecs_target {
+    task_definition_arn = aws_ecs_task_definition.ecs_task_build_site_maps.arn
     launch_type         = "FARGATE"
 
     network_configuration {
@@ -99,6 +151,7 @@ resource "aws_iam_role_policy" "eventbridge_to_ecs_policy" {
         ]
         Resource = [
           aws_ecs_task_definition.index_task.arn,
+          aws_ecs_task_definition.ecs_task_build_site_maps.arn,
           aws_ecs_task_definition.publish_task.arn,
           var.execution_role
         ]
@@ -115,6 +168,8 @@ variable "task_memory" {}
 variable "subnets" {}
 variable "security_groups" {}
 variable "container_definitions" {}
+variable "sitemap_definitions" {}
 variable "publish_task_definitions" {}
 variable "cluster" {}
 variable "execution_role" {}
+variable "alt_migration_defintions" {}

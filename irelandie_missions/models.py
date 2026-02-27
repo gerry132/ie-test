@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 
 from django.db import models
 from wagtail.models import Page
@@ -10,6 +11,7 @@ from django.core.cache import cache
 from django.core.cache.utils import make_template_fragment_key
 
 from wagtail.images import get_image_model_string
+
 # from wagtailseo.models import SeoMixin
 
 from irelandie_home.blocks import SecondaryCallToAction
@@ -350,16 +352,16 @@ class JobContentPage(BasePage):
     )
 
     settings_panels = Page.settings_panels + ([
-                           MultiFieldPanel(
-                               [
-                                   FieldPanel("custom_header", permission="access_admin"),
-                                   FieldPanel("custom_footer", permission="access_admin")
-                               ],
-                               "Root Navigation"
-                           ),
-                       ] +
-                       BasePage.webchat_panel
-                       )
+                                                  MultiFieldPanel(
+                                                      [
+                                                          FieldPanel("custom_header", permission="access_admin"),
+                                                          FieldPanel("custom_footer", permission="access_admin")
+                                                      ],
+                                                      "Root Navigation"
+                                                  ),
+                                              ] +
+                                              BasePage.webchat_panel
+                                              )
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
@@ -432,7 +434,6 @@ class JobIndexPage(BasePage):
 
 
 def job_page_changed(job_page):
-
     job_index_page = Page.objects.live().type(JobIndexPage).ancestor_of(job_page).specific().first()
 
     if job_index_page:
@@ -548,6 +549,72 @@ class MissionPage(HeroPage):
         related_name='+'
     )
 
+    organization_name = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    organization_alternatename = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    organization_description = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    organization_logo = models.ForeignKey(
+        IMAGE_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+
+    parent_organization_name = models.CharField(
+        max_length=255,
+        default="Department of Foreign Affairs and Trade",
+        blank=True
+    )
+
+    parent_organization_url = models.CharField(
+        max_length=255,
+        default="https://www.ireland.ie/en/dfa/",
+        blank=True
+    )
+
+    area_served = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Area covered (shown in schema only if filled)"
+    )
+
+    opening_hours = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Embassy opening hours"
+    )
+
+    twitter_url = models.URLField(blank=True, help_text="Full X profile URL")
+    facebook_url = models.URLField(blank=True, help_text="Full Facebook page URL")
+    youtube_url = models.URLField(blank=True, help_text="Full YouTube channel URL")
+    linkedin_url = models.URLField(blank=True, help_text="Full LinkedIn profile URL")
+    instagram_url = models.URLField(blank=True, help_text="Full Instagram profile URL")
+    weibo_url = models.URLField(blank=True, help_text="Full Weibo profile URL")
+
+    social_media_panels = MultiFieldPanel(
+        [
+            FieldPanel("twitter_url", heading="X url"),
+            FieldPanel("facebook_url"),
+            FieldPanel("youtube_url"),
+            FieldPanel("linkedin_url"),
+            FieldPanel("instagram_url"),
+            FieldPanel("weibo_url"),
+        ],
+        heading="Social Media URLs",
+    )
+
     content_panels = HeroPage.content_panels + [
         MultiFieldPanel([
             FieldPanel("search_bar", permission="access_admin"),
@@ -577,6 +644,22 @@ class MissionPage(HeroPage):
             .specific()
         )
 
+    promote_panels = HeroPage.promote_panels + [
+        MultiFieldPanel(
+            [
+                FieldPanel("organization_name"),
+                FieldPanel("organization_alternatename"),
+                FieldPanel("organization_description"),
+                FieldPanel("organization_logo"),
+                FieldPanel("parent_organization_name"),
+                FieldPanel("parent_organization_url"),
+                FieldPanel("area_served"),
+                FieldPanel("opening_hours"),
+            ],
+            heading="Embassy Schema Settings",
+        ),
+    ] + [social_media_panels]
+
     settings_panels = (
         [
             FieldPanel("root_page", permission="access_admin"),
@@ -591,7 +674,7 @@ class MissionPage(HeroPage):
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(HeroPage.hero_panel, heading='Hero'),
-        ObjectList(HeroPage.promote_panels, heading='Promote', permission="superuser"),
+        ObjectList(promote_panels, heading='Promote', permission="superuser"),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
 
@@ -601,6 +684,125 @@ class MissionPage(HeroPage):
         cache.delete(key)
 
         return super().save(*args, **kwargs)
+
+    @property
+    def same_as_links(self):
+        return list(filter(None, [
+            self.twitter_url,
+            self.facebook_url,
+            self.youtube_url,
+            self.linkedin_url,
+            self.instagram_url,
+            self.weibo_url,
+        ]))
+
+    def get_person_block(self):
+        if not self.person:
+            return None
+
+        return self.person[0].value
+
+    def get_contact_block(self, contact_snippet):
+        if not contact_snippet or not hasattr(contact_snippet, "body"):
+            return None
+
+        return contact_snippet.body[0].value
+
+    def get_postal_address_schema(self, contact):
+        address_lines = list(filter(None, [
+            contact.get("address_line_1"),
+            contact.get("address_line_2"),
+            contact.get("address_line_3"),
+            contact.get("address_line_4"),
+        ]))
+
+        if not address_lines:
+            return None
+
+        post_code = contact.get("post_code")
+
+        street = ", ".join(address_lines)
+        if post_code:
+            street = f"{street}, {post_code}"
+
+        return {
+            "@type": "PostalAddress",
+            "streetAddress": street,
+        }
+
+    def get_telephone(self, contact):
+        if contact.get("international_code") and contact.get("telephone"):
+            return f"{contact['international_code']} {contact['telephone']}"
+        return contact.get("telephone")
+
+    def get_breadcrumb_schema(self):
+        ancestors = list(
+            self.get_ancestors(inclusive=True).live().filter(depth__gte=2)
+        )
+        ancestors = ancestors[-6:]
+
+        item_list = []
+        for position, ancestor in enumerate(ancestors, start=1):
+            item_list.append({
+                "@type": "ListItem",
+                "position": position,
+                "name": ancestor.title,
+                "item": ancestor.full_url
+            })
+
+        return {
+            "@type": "BreadcrumbList",
+            "itemListElement": item_list
+        }
+
+    def get_embassy_schema(self):
+        person = self.get_person_block()
+        contact_snippet = person.get("contact_details") if person else None
+        contact = self.get_contact_block(contact_snippet)
+
+        schema = {
+            "@type": "Embassy",
+            "name": self.organization_name or self.title,
+            "alternateName": self.organization_alternatename or None,
+            "description": self.organization_description,
+            "logo": self.organization_logo.get_rendition("original").url if self.organization_logo else "",
+            "url": self.full_url,
+            "parentOrganization": {
+                "@type": "GovernmentOrganization",
+                "name": self.parent_organization_name,
+                "url": self.parent_organization_url,
+            },
+            "areaServed": self.area_served or None,
+            "sameAs": self.same_as_links,
+        }
+
+        if contact:
+            address = self.get_postal_address_schema(contact)
+            if address:
+                schema["address"] = address
+            telephone = self.get_telephone(contact)
+            if telephone:
+                schema["telephone"] = telephone
+
+        if self.opening_hours:
+            schema["openingHours"] = self.opening_hours
+
+        return {k: v for k, v in schema.items() if v}
+
+    def get_schema_json(self):
+        schema = {
+            "@context": "https://schema.org",
+            "@graph": [
+                self.get_embassy_schema(),
+                self.get_breadcrumb_schema(),
+            ],
+        }
+
+        return json.dumps(schema, indent=2)
+
+    @property
+    def schema_json(self):
+        return self.get_schema_json()
 
 
 class Magazine(HeroPage):
@@ -1052,7 +1254,6 @@ class EmbassyIndexPage(BasePage):
     ]
 
     def save(self, *args, **kwargs):
-
         key = make_template_fragment_key("embassy_index")
         cache.delete(key)
 

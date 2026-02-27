@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
+
 from modelcluster.fields import ParentalKey
 
 from wagtail.admin.panels import (
@@ -625,6 +626,11 @@ class SystemMessagesSettings(BaseSiteSetting):
 class BasePage(SocialFields, ListingFields, Page):
     show_in_menus_default = True
 
+    webchat_container = models.TextField(
+        blank=True,
+        help_text="Webchat container HTML (e.g. <div class='webchat' id='chat-button'></div>)"
+    )
+
     webchat_script = models.TextField(
         blank=True,
     )
@@ -635,6 +641,7 @@ class BasePage(SocialFields, ListingFields, Page):
 
     webchat_panel = [
         MultiFieldPanel([
+            FieldPanel("webchat_container", permission="access_admin"),
             FieldPanel("webchat_script", permission="access_admin"),
             FieldPanel("web_bot_script", permission="access_admin"),
         ], "Chatbot")
@@ -1608,3 +1615,40 @@ class TravelCautionStatus(PreviewableMixin, DraftStateMixin, RevisionMixin, inde
 
     def __str__(self):
         return f"{self.level} ({self.lang})"
+
+
+REGION_CHOICES = [
+    ('USA', 'USA'),
+    ('GB', 'Great Britain'),
+    ('EU', 'Europe'),
+    ('ROW', 'Rest of World'),
+]
+
+
+class DiasporaDirectory(models.Model):
+
+    main_regions = models.CharField(
+        max_length=3,
+        choices=REGION_CHOICES,
+        default='USA'
+    )
+
+    organisation_name = models.CharField(max_length=255)
+    contact_details = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    region = models.CharField(max_length=255)
+    website = models.CharField(blank=True)
+    activity = models.CharField(max_length=255)
+
+    panels = [
+        FieldPanel('main_regions'),
+        FieldPanel('organisation_name'),
+        FieldPanel('contact_details'),
+        FieldPanel('city'),
+        FieldPanel('region'),
+        FieldPanel('website'),
+        FieldPanel('activity'),
+    ]
+
+    def __str__(self):
+        return self.organisation_name

@@ -57,7 +57,7 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 debug_on = os.environ.get("DEBUG")
 
 if debug_on == '0':
-    DEBUG = False
+    DEBUG = True
 else:
     DEBUG = False
 
@@ -74,7 +74,7 @@ INSTALLED_APPS = [
     "robots_txt",
     "health_check",
     "accview_non_admin",
-    # "wagtail_sitemap_seo",
+    "wagtail_sitemap_seo",
     "irelandie_admin",
     "irelandie_api",
     "irelandie_assets",
@@ -105,6 +105,7 @@ INSTALLED_APPS = [
     "irelandie_tags",
     "irelandie_travel",
     "irelandie_forms",
+    "irelandie_interactive_tables",
     #
     "wagtail_localize",
     "wagtail.locales",
@@ -145,6 +146,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "wagtail.contrib.simple_translation",
+    "import_export",
 ]
 
 if DEBUG_TOOLBAR is True:
@@ -168,7 +170,7 @@ MIDDLEWARE = [
     "custom_logout.middleware.custom_logout.CustomMiddleware",
     "custompasswordreset.middleware.force_reset.ForcePasswordReset",
     "irelandie_utils.middleware.ReferrerPolicyMiddleware",
-    # "sitemap_downloader.middleware.sitemap_downloader.CustomLoginChecker",
+    "sitemap_downloader.middleware.sitemap_downloader.CustomLoginChecker",
 ]
 
 if DEBUG_TOOLBAR is True:
@@ -478,7 +480,9 @@ if USE_S3:
     # URLs at domain root (no /static, no /media)
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
-    # SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
+    SITEMAP_WRITE_S3 = True
+    SITEMAP_DIR = "sitemaps"
+    SEO_MAP_URL = "https://{}/documents/test.csv".format(AWS_S3_CUSTOM_DOMAIN)
 
 else:
     STATIC_URL = "/static/"

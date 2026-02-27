@@ -8,7 +8,7 @@
     "assignPublicIp": false,
     "entryPoint": [
       "sh",
-      "/app/publish_scheduled_items.sh"
+      "/app/tasks/publish_scheduled_items.sh"
     ],
     "logConfiguration": {
       "logDriver": "awslogs",
@@ -42,6 +42,10 @@
       {
         "name": "BASE_URL",
         "value": "${SETTINGS_BASE_URL}"
+      },
+      {
+        "name": "USE_S3",
+        "value": "${SETTINGS_USE_S3}"
       },
       {
         "name": "DATABASE_URL",
