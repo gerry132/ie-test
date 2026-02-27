@@ -41,7 +41,7 @@ stages:
 
   - job: Test
     steps:
-    - script: pip install -r requirements.txt
+    - script: pip install -r requirements-test.txt
       displayName: Install Requirements
 
     - script: |
@@ -64,7 +64,8 @@ stages:
         npm run build:prod
       displayName: Build Static Files
 
-    - script: pip install -r requirements.txt
+    - script: |
+       pip install -r requirements-test.txt
       displayName: Install Requirements
 
     - script: |
@@ -90,10 +91,47 @@ stages:
           persistCredentials: true
 
         - task: Bash@3
+          displayName: Build canary zip
+          inputs:
+            targetType: inline
+            script: |
+              set -euo pipefail
+
+              ROOT="$(pwd)"
+              SRC="${ROOT}/monitoring/canaries/index.py"
+              BUILD="${ROOT}/_canary_build"
+              
+              
+              ZIP_NAME="${ROOT}/site-health-canary.zip"
+              S3_KEY="canaries/site-health-canary.zip"
+
+              test -f "$SRC"
+
+              rm -f "$ZIP_NAME"
+              rm -rf "$BUILD"
+              mkdir -p "$BUILD/python"
+
+              cp "$SRC" "$BUILD/python/index.py"
+              (cd "$BUILD" && zip -r "$ZIP_NAME" python)
+
+              unzip -l "$ZIP_NAME"
+
+              aws s3 cp "$ZIP_NAME" "s3://${CANARY_BUCKET}/${S3_KEY}"
+              aws s3 cp "s3://${CANARY_BUCKET}/${S3_KEY}" /tmp/canary.zip
+              unzip -l /tmp/canary.zip
+
+          env:
+            AWS_ACCESS_KEY_ID: $(aws_access_key)
+            AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
+            AWS_DEFAULT_REGION: $(aws_region)
+            CANARY_BUCKET: $(canary_bucket)
+        - task: Bash@3
           displayName: Run Terraform
           inputs:
             targetType: inline
             script: |
+              
+              git config --global url."https://x-access-token:${GIT_PAT}@github.com/".insteadOf "https://github.com/"
               cd infrastructure/terraform/aws/$(env)/
               terraform init -input=false -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY"
               terraform apply -input=false -auto-approve
@@ -103,6 +141,7 @@ stages:
             AWS_ACCESS_KEY_ID: $(aws_access_key)
             AWS_SECRET_ACCESS_KEY: $(aws_secret_key)
             AWS_DEFAULT_REGION: $(aws_region)
+            GIT_PAT: $(git_pat)
 
 - stage: deploy
   displayName: Deploy
@@ -126,8 +165,32 @@ stages:
       inputs:
         targetType: inline
         script: |
+          aws synthetics update-canary \
+          --region eu-west-1 \
+          --name "site-health-canary" \
+          --code "S3Bucket=${CANARY_BUCKET},S3Key="canaries/site-health-canary.zip",Handler=index.handler" \
+          --runtime-version "syn-python-selenium-8.0"
           aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
-          docker build . -t "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
+          CODEARTIFACT_REPO_URL=$(aws codeartifact get-repository-endpoint \
+          --domain $(env) \
+          --domain-owner $AWS_ACCOUNT_ID \
+          --repository python \
+          --format pypi \
+          --region "$AWS_REGION" \
+          --query repositoryEndpoint \
+          --output text)
+          CODEARTIFACT_REPO_HOST="${CODEARTIFACT_REPO_URL#https://}"
+          CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
+            --domain $(env) \
+            --domain-owner $AWS_ACCOUNT_ID \
+            --region "$AWS_REGION" \
+            --query authorizationToken \
+            --output text)
+          
+          docker build . \
+            --build-arg CODEARTIFACT_REPO_HOST="$CODEARTIFACT_REPO_HOST" \
+            --build-arg CODEARTIFACT_AUTH_TOKEN="$CODEARTIFACT_AUTH_TOKEN" \
+            -t "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
           docker push "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$IMAGE_TAG"
         failOnStderr: false
       env:
@@ -140,6 +203,8 @@ stages:
         AWS_ACCOUNT_ID: $(aws_account_id)
         IMAGE_NAME: $(image_name)
         IMAGE_TAG: $(image_tag)
+        CANARY_BUCKET: $(canary_bucket)
+
 
     - template: templates/ecs-update-service.yml
   

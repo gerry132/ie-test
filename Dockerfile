@@ -4,6 +4,10 @@ FROM ${DOCKER_IMAGE_URL}
 
 # init
 
+ARG CODEARTIFACT_REPO_HOST
+ARG CODEARTIFACT_AUTH_TOKEN
+
+
 RUN mkdir /app
 RUN mkdir /static
 WORKDIR /app
@@ -35,7 +39,9 @@ RUN apk --no-cache --update add \
     jpeg-dev \
     zlib-dev
 
+
 RUN pip install --upgrade pip --break-system-packages
+RUN pip config set global.index-url "https://aws:${CODEARTIFACT_AUTH_TOKEN}@${CODEARTIFACT_REPO_HOST}simple/"
 RUN pip install -r requirements.txt --break-system-packages
 
 

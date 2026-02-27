@@ -86,7 +86,7 @@ Node v14 is the correct version to use for building the frontend. There is a `.n
 
 - create virtual environment `python3 -m venv .venv`
 - activate virtual environment `source .venv/bin/activate`
-- install dependencies `pip install -r requirements.txt`
+- install dependencies `pip install -r requirements-test.txt`
 - copy environment variables file `cp app/.env_example app/.env`
 - apply migrations `python3 manage.py migrate`
 - run server `python3 manage.py runserver 8000`

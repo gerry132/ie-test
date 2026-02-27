@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
 
-from bs4 import BeautifulSoup
 from django.db import models
 from wagtail.models import Page
 from django.utils.functional import cached_property
@@ -12,7 +11,6 @@ from django.core.cache import cache
 from django.core.cache.utils import make_template_fragment_key
 
 from wagtail.images import get_image_model_string
-from wagtail.rich_text import expand_db_html
 
 # from wagtailseo.models import SeoMixin
 
@@ -592,6 +590,12 @@ class MissionPage(HeroPage):
         help_text="Area covered (shown in schema only if filled)"
     )
 
+    opening_hours = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Embassy opening hours"
+    )
+
     twitter_url = models.URLField(blank=True, help_text="Full X profile URL")
     facebook_url = models.URLField(blank=True, help_text="Full Facebook page URL")
     youtube_url = models.URLField(blank=True, help_text="Full YouTube channel URL")
@@ -650,6 +654,7 @@ class MissionPage(HeroPage):
                 FieldPanel("parent_organization_name"),
                 FieldPanel("parent_organization_url"),
                 FieldPanel("area_served"),
+                FieldPanel("opening_hours"),
             ],
             heading="Embassy Schema Settings",
         ),
@@ -750,22 +755,10 @@ class MissionPage(HeroPage):
             "itemListElement": item_list
         }
 
-    def get_opening_hours_url(self, opening_hours):
-        if not opening_hours:
-            return None
-
-        html = expand_db_html(opening_hours.source)
-        soup = BeautifulSoup(html, "html.parser")
-
-        link = soup.find("a", href=True)
-        return link["href"] if link else None
-
     def get_embassy_schema(self):
         person = self.get_person_block()
         contact_snippet = person.get("contact_details") if person else None
         contact = self.get_contact_block(contact_snippet)
-
-        opening_hours = person.get("opening_hours") if person else None
 
         schema = {
             "@type": "Embassy",
@@ -791,8 +784,8 @@ class MissionPage(HeroPage):
             if telephone:
                 schema["telephone"] = telephone
 
-        if opening_hours:
-            schema["openingHours"] = self.get_opening_hours_url(opening_hours)
+        if self.opening_hours:
+            schema["openingHours"] = self.opening_hours
 
         return {k: v for k, v in schema.items() if v}
 
