@@ -1643,19 +1643,23 @@ class DiasporaDirectory(models.Model):
     activity = models.CharField(max_length=255)
 
     # Need to verify and then commit
-    # country = models.CharField(max_length=255, blank=True)
-    # phone_number = models.CharField(max_length=255, blank=True)
-    # email = models.EmailField(blank=True)
-    # seeking_volunteers = models.BooleanField(default=False)
+    country = models.CharField(max_length=255, blank=True)
+    phone_number = models.CharField(max_length=255, blank=True)
+    email = models.EmailField(blank=True)
+    seeking_volunteers = models.BooleanField(default=False, blank=True)
 
     panels = [
         FieldPanel('main_regions'),
         FieldPanel('organisation_name'),
         FieldPanel('contact_details'),
         FieldPanel('city'),
+        FieldPanel('country'),
         FieldPanel('region'),
         FieldPanel('website'),
         FieldPanel('activity'),
+        FieldPanel('phone_number'),
+        FieldPanel('email'),
+        FieldPanel('seeking_volunteers'),
     ]
 
     def __str__(self):
