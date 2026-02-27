@@ -98,7 +98,8 @@ class ParallaxImageVideoBlock(blocks.StructBlock):
     video = CustomVideoChooserBlock(required=False, label="Desktop Video")
     mobile_video = CustomVideoChooserBlock(required=False, label="Mobile Video")
     alt_text = blocks.CharBlock(
-        required=True,
+        required=False,
+        label="Page alt override",
         help_text=_(ALT_HELP_TEXT_IMG_VIDEO),
     )
     image_video_credits = blocks.CharBlock(required=False)

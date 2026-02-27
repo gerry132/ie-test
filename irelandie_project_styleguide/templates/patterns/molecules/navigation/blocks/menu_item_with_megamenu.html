@@ -35,20 +35,16 @@
                             {% include_block links with links=links col='col_3' %}
                         {% else %}
                         <figure class="image-block">
-                            {% if links.value.image_alt %}
-                            <div class="{% if links.value.image_credit %}image-block__credit_wrapper{% endif %}">
-                                {% if links.value.image_credit %}
-                                <div class="story__image-credit">{{ links.value.image_credit }}</div>
-                                {% endif %}
-                                {% image links.value.image width-1000 id="image_container" class="image_container" loading="lazy" alt=links.value.image_alt %}
-                            </div>
-                            {% else %}
-                            <div class="{% if links.value.image_credit %}image-block__credit_wrapper{% endif %}">
-                                {% if links.value.image_credit %}
-                                    <span class="story__image-credit">{{ links.value.image_credit }}</span>
-                                {% endif %}
-                                {% image links.value.image width-1000 class="image_container" loading="lazy" alt=links.value.image.alt_default %}
-                            </div>
+                            {% if links.value.image %}
+                                <div class="{% if links.value.image_credit %}image-block__credit_wrapper{% endif %}">
+                                    {% if links.value.image_credit %}
+                                        <span class="story__image-credit">{{ links.value.image_credit }}</span>
+                                    {% endif %}
+
+                                    {% with alt_text=links.value.image_alt|default:links.value.image.description %}
+                                        {% image links.value.image width-1000 id="image_container" class="image_container" loading="lazy" alt=alt_text %}
+                                    {% endwith %}
+                                </div>
                             {% endif %}
                             {% if links.value.caption %}
                             <figcaption class="image-block__caption">

@@ -4,10 +4,10 @@
 <div class="story{% if value.background == 'dark' %} story--dark{% endif %}{% if value.alignment == 'right' %} story--right-aligned{% endif %} section section--padding">
     <div class="wrapper wrapper--large">
         <div class="story__container">
-            {% if value.image_alt %}
-                {% image value.image width-460 alt=value.image_alt class="story__image" %}
-            {% else %}
-                {% image value.image width-460 alt=value.image.alt_default class="story__image" %}
+            {% if value.image %}
+                {% with alt_text=value.image_alt|default:value.image.description %}
+                    {% image value.image width-460 class="story__image" alt=alt_text %}
+                {% endwith %}
             {% endif %}
             <div class="story__content">
                 <div class="story__copy">

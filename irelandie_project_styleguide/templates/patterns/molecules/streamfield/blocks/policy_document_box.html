@@ -23,7 +23,9 @@
                 {{ value.body }}
             </div>
             <div class="story__image_container">
-                {% image value.document_image original alt=value.image_alt class="image" %}
+                {% with alt_text=value.image_alt|default:value.document_image.description %}
+                    {% image value.document_image original class="image" alt=alt_text %}
+                {% endwith %}
                 <div class="document__title">
                     {{ value.document_title }}
                 </div>

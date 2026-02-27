@@ -23,8 +23,12 @@
                                 {% image article.hero_image fill-400x200 class="card__image" %}
                             {% else %}
                                 {% for block in default_image %}
-                                         {% image block.value.image fill-400x200 class="card__image"  alt=block.value.image_alt %}
-                                    {% endfor %}
+                                    {% if block.value.image %}
+                                        {% with alt_text=block.value.image_alt|default:block.value.image.description %}
+                                            {% image block.value.image fill-400x200 class="card__image" alt=alt_text %}
+                                        {% endwith %}
+                                    {% endif %}
+                                {% endfor %}
                             {% endif %}
                         </div>
                         <div class="card__content">
