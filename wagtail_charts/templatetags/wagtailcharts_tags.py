@@ -20,4 +20,3 @@ def generate_uuid4():
 @register.filter()
 def addspace(val):
     return val.replace("_", " ")
-

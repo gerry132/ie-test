@@ -16,7 +16,7 @@ from irelandie_tags.models import TagPage
 from wagtail.blocks import PageChooserBlock
 from irelandie_navigation.blocks import NoticeBarWithMessageLink
 from wagtail.images import get_image_model_string
-from wagtail_charts.blocks import EXTRA_CHART_COLOUR_CHOICES, ChartBlock
+
 
 IMAGE_MODEL = get_image_model_string()
 
