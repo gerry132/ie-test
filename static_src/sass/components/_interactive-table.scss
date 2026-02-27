@@ -1,0 +1,132 @@
+// static/css/interactive-table.scss
+.interactive-table {
+    padding-bottom: 20px !important;
+  .table-data { padding: 20px; background: #7A9995; }
+
+.show-status {
+    border-left: 4px solid #90FF5C;
+    padding: 0 10px;
+    background: #E8EFEE;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #7A9995;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 12px;
+  border-left: none;
+  border-right: none;
+  border-top: 1px solid #DAD8CD;
+  border-bottom: 1px solid #DAD8CD;
+  background: #FFF;
+}
+
+th {
+  background: #0f4c3a;
+  color: white;
+  text-align: left;
+  border-top: none;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #082F2A;
+  font-family: Lato;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 31.25px;
+  text-decoration: underline solid #008931;
+  text-decoration-thickness: 5%;
+  text-underline-offset: 27%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.toggle-btn:focus, .table-error button:focus {
+    border: 3px #FFD740 solid;
+    outline: 3px #000000 solid;
+    outline-offset: 0;
+}
+
+.details-row td {
+  border: none;
+  padding: 0;
+  background: #E8EFEE;
+  border-left: 4px solid #90FF5C;
+}
+
+.details-grid {
+  display: grid;
+  gap: 16px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.details-grid .row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 0.5px solid #565148;
+  justify-items: start;
+  margin: 0;
+}
+
+.details-grid .row div { padding: 4px 0; }
+
+.details-grid .row div.label {
+  color: #101010;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .details-grid .row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.show_hide__icon {
+  width: 8px;
+  height: 15px;
+}
+.table-error {
+    padding: 10px;
+    background: white;
+    }
+.table-error div {
+    color: #292929;
+    font-family: Lato;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 31.25px;
+    }
+.table-error button {
+    color: var(--Link-button-Default, #082F2A);
+
+    /* Link default */
+    font-family: Lato;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 31.25px; /* 156.25% */
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: auto;
+    text-decoration-color: #008931;
+    text-decoration-thickness: 5%; /* 1px */
+    text-underline-offset: 27%; /* 5.4px */
+    text-underline-position: from-font;
+    background: unset;
+    border: unset;
+    cursor: pointer;
+    }
+}
