@@ -82,6 +82,20 @@ locals {
 # Values to fill after running terraform is ran, used for codebuild and secrets
 # -----------------------------------------------------------------------------
 
+resource "aws_ssm_parameter" "sns_phone_number" {
+  name        = "phone"
+  description = "Phone number for sns"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
+
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
+
+
 resource "aws_ssm_parameter" "OPENSEARCH_ENDPOINT" {
   name        = "${local.environment_name}_OPENSEARCH_ENDPOINT"
   description = "For use in Codebuild buildspec - ${local.environment_name}"
@@ -407,6 +421,19 @@ resource "aws_security_group_rule" "ecs_to_redis_5432" {
 # -----------------------------------------------------------------------------
 # Buckets
 # -----------------------------------------------------------------------------
+resource "aws_s3_bucket" "canaries" {
+  bucket  = "${local.environment_name}-${local.project_name}-canary-code"
+  
+}
+
+
+resource "aws_s3_bucket_versioning" "canary_code" {
+  bucket = aws_s3_bucket.canaries.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
 
 resource "aws_s3_bucket" "cf-logs" {
   bucket  = "${local.environment_name}-${local.project_name}-cf-logs"
@@ -1468,10 +1495,26 @@ module "main_task_definition" {
   SETTINGS_CORS_ALLOWED_ORIGINS = local.SETTINGS_CORS_ALLOWED_ORIGINS
 }
 
+
+module "codeartifact" {
+  source = "../common/codeartifact"
+  environment_name      = local.environment_name
+}
+
+module "monitoring" {
+  source = "../common/monitoring"
+  environment_name      = local.environment_name 
+  canary_code_s3_key    = "canaries/site-health-canary.zip"
+  canary_code_s3_bucket = aws_s3_bucket.canaries.bucket
+  target_url            = local.domain_ireland_ie
+  sms_phone_number      = aws_ssm_parameter.sns_phone_number.value 
+}
+
 module "ecs_background_tasks" {
   source = "../common/utils"
 
   publish_task_definitions = module.main_task_definition.publish_task_definition_rendered
+  alt_migration_defintions = module.main_task_definition.alt_migration_definitions_rendered
   sitemap_definitions = data.template_file.sitemap_task_definition.rendered
   container_definitions = data.template_file.index_task_definition.rendered
   task_cpu              = "256"
@@ -1903,7 +1946,7 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
                         "51.183.41.207/32",   # Deekshana
                         "51.182.250.11/32",   # Fergal
                         "62.23.128.137/32",    # DFA
-                        # "37.228.225.101/32", # gerry
+                        "37.228.229.251/32", # gerry
                         ]
 }
 

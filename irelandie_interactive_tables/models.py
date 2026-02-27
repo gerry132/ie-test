@@ -208,14 +208,31 @@ class InteractiveDataTablePage(RoutablePageMixin, BasePage):
 
     def get_context(self, request):
         ctx = super().get_context(request)
-
         if not self.schema_key:
             ctx["configured"] = False
             return ctx
 
         schema = get_schema(self.schema_key)
         ctx["configured"] = True
-        ctx["schema"] = schema
         ctx["priority_cols"] = (self.priority_col_1, self.priority_col_2)
         ctx["filter_cols"] = [c for c in (self.filter_col_1, self.filter_col_2) if c]
+
+        # --- Pagination ---
+        Model = schema.model
+        qs = Model.objects.all()
+        page_num = request.GET.get("page") or 1
+        per_page = 25
+        paginator = Paginator(qs, per_page)
+        page_obj = paginator.get_page(page_num)
+
+        rows = []
+        for obj in page_obj.object_list:
+            row = {"id": obj.pk}
+            for col in schema.columns:
+                row[col] = getattr(obj, col, "")
+            rows.append(row)
+
+        ctx["rows"] = rows
+        ctx["page_obj"] = page_obj
+        ctx["other_columns"] = [c for c in schema.columns if c not in ctx["priority_cols"]]
         return ctx

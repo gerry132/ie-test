@@ -26,6 +26,8 @@ import ProgressBar from './components/progress-bar';
 import VideoModal from './components/video-modal';
 import VideoAutoplay from './components/video-autoplay';
 import VideoToggleParallax from './components/parallax-video';
+
+import './components/interactive-table.js';
 /* endfeature */
 
 // IE11 polyfills
