@@ -4,6 +4,17 @@ import urllib.request
 from aws_synthetics.selenium import synthetics_webdriver as syn_webdriver
 from aws_synthetics.selenium import synthetics_logger as logger
 
+import boto3
+import os
+
+def _get_canary_token():
+    ssm = boto3.client("ssm", region_name=os.environ.get("AWS_REGION", "eu-west-1"))
+    resp = ssm.get_parameter(
+        Name=os.environ["canary_token"],
+        WithDecryption=True
+    )
+    return resp["Parameter"]["Value"]
+
 
 def _parse_http_response(raw):
     if raw is None:
@@ -32,6 +43,7 @@ def _get_status_with_urllib(url):
 
 
 def handler(event, context):
+    auth_token = _get_canary_token()
     url = os.environ.get("TARGET_URL", "").strip()
     if not url:
         raise RuntimeError("TARGET_URL environment variable is not set")
@@ -45,7 +57,16 @@ def handler(event, context):
     try:
         logger.info(f"Navigating to {url}")
         driver.get(url)
-
+        driver.execute_cdp_cmd("Network.enable", {})
+        driver.execute_cdp_cmd(
+            "Network.setExtraHTTPHeaders",
+            {
+                "headers": {
+                    "x-canary-token": auth_token,
+                    "User-Agent": "IrelandIE-Canary/1.0"
+                }
+            },
+        )
         final_url = driver.current_url
         logger.info(f"Final URL after redirects: {final_url}")
 
@@ -55,7 +76,6 @@ def handler(event, context):
         resp = _parse_http_response(raw)
         status_code = resp.get("statusCode") if resp else None
 
-        # 🔥 Reliable fallback (no external deps)
         if status_code is None:
             logger.info("Falling back to urllib for status code")
             status_code, resolved_url = _get_status_with_urllib(final_url)

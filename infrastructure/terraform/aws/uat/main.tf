@@ -2247,27 +2247,58 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
   default_action {
     block {}
   }
- rule {
-    name     = "AllowWhitelistedIPs"
-    priority = 1
+  rule {
+    name       = "AllowCanaries"
+    priority   = 0
 
     action {
       allow {}
     }
-
     statement {
-      ip_set_reference_statement {
-        arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
+      byte_match_statement {
+        search_string = aws_ssm_parameter.canary_token.value
+        positional_constraint = "EXACTLY"
+
+        field_to_match {
+          single_header {
+            name = "x-canary-token"
+          }
+        }
+
+        text_transformation {
+          priority = 0
+          type     = "NONE"
+        }
+      }
+
+  }
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "AllowCanariesByHeader"
+    sampled_requests_enabled   = true
+  }
+  }  
+  rule {
+      name     = "AllowWhitelistedIPs"
+      priority = 1
+
+      action {
+        allow {}
+      }
+
+      statement {
+        ip_set_reference_statement {
+          arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
+        }
+      }
+
+      
+      visibility_config {
+        cloudwatch_metrics_enabled = true
+        metric_name                = "whitelistIPs"
+        sampled_requests_enabled   = true
       }
     }
-
-    
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "whitelistIPs"
-      sampled_requests_enabled   = true
-    }
-  }
 
   visibility_config {
     cloudwatch_metrics_enabled = true
