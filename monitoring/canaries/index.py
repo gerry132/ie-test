@@ -53,20 +53,21 @@ def handler(event, context):
 
     driver = syn_webdriver.Chrome()
     driver.set_page_load_timeout(30)
+    driver.execute_cdp_cmd("Network.enable", {})
+    driver.execute_cdp_cmd(
+        "Network.setExtraHTTPHeaders",
+        {
+            "headers": {
+                "x-canary-token": auth_token,
+                "User-Agent": "IrelandIE-Canary/1.0"
+            }
+        },
+    )
 
     try:
         logger.info(f"Navigating to {url}")
+
         driver.get(url)
-        driver.execute_cdp_cmd("Network.enable", {})
-        driver.execute_cdp_cmd(
-            "Network.setExtraHTTPHeaders",
-            {
-                "headers": {
-                    "x-canary-token": auth_token,
-                    "User-Agent": "IrelandIE-Canary/1.0"
-                }
-            },
-        )
         final_url = driver.current_url
         logger.info(f"Final URL after redirects: {final_url}")
 

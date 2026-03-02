@@ -84,6 +84,24 @@ resource "aws_iam_role_policy_attachment" "synthetics_full" {
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchSyntheticsFullAccess"
 }
 
+data "aws_ssm_parameter" "canary_token" {
+  name = "canary_token" # or "/canary_token"
+}
+
+resource "aws_iam_role_policy" "canary_ssm_read" {
+  role = aws_iam_role.canary_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Sid      = "ReadCanaryToken"
+      Effect   = "Allow"
+      Action   = ["ssm:GetParameter"]
+      Resource = data.aws_ssm_parameter.canary_token.arn
+    }]
+  })
+}
+
 resource "aws_iam_role_policy" "canary_s3_policy" {
   role = aws_iam_role.canary_role.id
 
@@ -93,7 +111,6 @@ resource "aws_iam_role_policy" "canary_s3_policy" {
       {
         Effect = "Allow"
         Action = [
-          "ssm:GetParameter",
           "s3:PutObject",
           "s3:GetBucketLocation",
           "s3:ListBucket"
