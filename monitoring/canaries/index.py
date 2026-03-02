@@ -7,6 +7,26 @@ from aws_synthetics.selenium import synthetics_logger as logger
 import boto3
 
 
+import urllib.error
+
+def _preflight(url, token):
+    req = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": "IrelandIE-Canary/1.0",
+            "x-canary-token": token,
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            logger.info(f"Preflight OK: {resp.getcode()} -> {resp.geturl()}")
+            return resp.getcode(), resp.geturl()
+    except urllib.error.HTTPError as e:
+        body = e.read(300).decode("utf-8", errors="replace")
+        logger.error(f"Preflight FAIL: HTTP {e.code} for {url}. body_head={body!r}")
+        raise
+
+
 def _get_canary_token():
     ssm = boto3.client("ssm", region_name=os.environ.get("AWS_REGION", "eu-west-1"))
     resp = ssm.get_parameter(
@@ -16,27 +36,13 @@ def _get_canary_token():
     return resp["Parameter"]["Value"]
 
 
-def _parse_http_response(raw):
-    if raw is None:
-        return None
-    if isinstance(raw, dict):
-        return raw
-    if isinstance(raw, str):
-        s = raw.strip()
-        if not s or s.lower() == "none":
-            return None
-        try:
-            obj = json.loads(s)
-            return obj if isinstance(obj, dict) else None
-        except json.JSONDecodeError:
-            return None
-    return None
-
-
-def _get_status_with_urllib(url):
+def _get_status_with_urllib(url, auth_token):
     req = urllib.request.Request(
         url,
-        headers={"User-Agent": "Mozilla/5.0"}
+        headers={
+            "User-Agent": "Mozilla/5.0"
+            "x-canary-token": auth_token,
+        }
     )
     with urllib.request.urlopen(req, timeout=20) as resp:
         return resp.getcode(), resp.geturl()
@@ -51,42 +57,14 @@ def handler(event, context):
     if not url.startswith(("http://", "https://")):
         url = "https://" + url
 
-    driver = syn_webdriver.Chrome()
-    driver.set_page_load_timeout(30)
-    driver.execute_cdp_cmd("Network.enable", {})
-    driver.execute_cdp_cmd(
-        "Network.setExtraHTTPHeaders",
-        {
-            "headers": {
-                "x-canary-token": auth_token,
-                "User-Agent": "IrelandIE-Canary/1.0"
-            }
-        },
-    )
-
     try:
-        logger.info(f"Navigating to {url}")
-
-        driver.get(url)
-        final_url = driver.current_url
-        logger.info(f"Final URL after redirects: {final_url}")
-
-        raw = syn_webdriver.get_http_response(final_url)
-        logger.info(f"Raw http response: {raw!r}")
-
-        resp = _parse_http_response(raw)
-        status_code = resp.get("statusCode") if resp else None
-
-        if status_code is None:
-            logger.info("Falling back to urllib for status code")
-            status_code, resolved_url = _get_status_with_urllib(final_url)
-            logger.info(f"urllib status_code={status_code}, resolved_url={resolved_url}")
+        status_code, resolved_url = _get_status_with_urllib(url)
+        logger.info(f"urllib status_code={status_code}, resolved_url={resolved_url}")
 
         if int(status_code) >= 400:
-            raise RuntimeError(f"Canary failed: HTTP {status_code} for {final_url}")
+            raise RuntimeError(f"Canary failed: HTTP {status_code} for {url}")
 
-        title = driver.title or ""
-        logger.info(f"Page OK. Title='{title}'")
+        logger.info(f"Page OK.")
 
     finally:
-        driver.quit()
+        logger.info("Health check finished.")
