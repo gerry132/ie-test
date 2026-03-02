@@ -1073,7 +1073,7 @@ resource "random_password" "password" {
 }
 
 resource "aws_ssm_parameter" "canary_token" {
-  name        = "${local.environment_name}_canary_token"
+  name        = "canary_token"
   description = "For use in Codebuild buildspec - ${local.environment_name}"
   type        = "SecureString"
   value       = "CHANGE-ME"
