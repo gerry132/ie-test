@@ -1,30 +1,9 @@
 import os
-import json
+
 import urllib.request
-from aws_synthetics.selenium import synthetics_webdriver as syn_webdriver
 from aws_synthetics.selenium import synthetics_logger as logger
 
 import boto3
-
-
-import urllib.error
-
-def _preflight(url, token):
-    req = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent": "IrelandIE-Canary/1.0",
-            "x-canary-token": token,
-        },
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=20) as resp:
-            logger.info(f"Preflight OK: {resp.getcode()} -> {resp.geturl()}")
-            return resp.getcode(), resp.geturl()
-    except urllib.error.HTTPError as e:
-        body = e.read(300).decode("utf-8", errors="replace")
-        logger.error(f"Preflight FAIL: HTTP {e.code} for {url}. body_head={body!r}")
-        raise
 
 
 def _get_canary_token():
