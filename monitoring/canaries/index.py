@@ -40,7 +40,7 @@ def _get_status_with_urllib(url, auth_token):
     req = urllib.request.Request(
         url,
         headers={
-            "User-Agent": "Mozilla/5.0"
+            "User-Agent": "Mozilla/5.0",
             "x-canary-token": auth_token,
         }
     )
