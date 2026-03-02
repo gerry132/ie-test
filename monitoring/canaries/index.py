@@ -10,7 +10,7 @@ import boto3
 def _get_canary_token():
     ssm = boto3.client("ssm", region_name=os.environ.get("AWS_REGION", "eu-west-1"))
     resp = ssm.get_parameter(
-        Name=os.environ["canary_token"],
+        Name="canary_token",
         WithDecryption=True
     )
     return resp["Parameter"]["Value"]
