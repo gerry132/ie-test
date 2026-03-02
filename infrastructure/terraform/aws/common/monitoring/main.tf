@@ -158,7 +158,7 @@ resource "aws_synthetics_canary" "site" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "canary_failed" {
-  alarm_name          = "irelandie-${var.environment_name}-heartbeat-failed"
+  alarm_name          = "irelandie-${var.environment_name}-heartbeat"
   alarm_description   = "Canary unhealthy for ${var.target_url}"
 
   namespace   = "CloudWatchSynthetics"
@@ -175,7 +175,7 @@ resource "aws_cloudwatch_metric_alarm" "canary_failed" {
     CanaryName = aws_synthetics_canary.site.name
   }
 
-  treat_missing_data = "breaching"   # or "notBreaching" depending on how you want “no data” handled
+  treat_missing_data = "breaching"
 
   alarm_actions = [aws_sns_topic.alerts.arn]
   ok_actions    = [aws_sns_topic.alerts.arn]
