@@ -58,7 +58,7 @@ def handler(event, context):
         url = "https://" + url
 
     try:
-        status_code, resolved_url = _get_status_with_urllib(url)
+        status_code, resolved_url = _get_status_with_urllib(url, auth_token)
         logger.info(f"urllib status_code={status_code}, resolved_url={resolved_url}")
 
         if int(status_code) >= 400:
