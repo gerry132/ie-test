@@ -5,7 +5,7 @@ from aws_synthetics.selenium import synthetics_webdriver as syn_webdriver
 from aws_synthetics.selenium import synthetics_logger as logger
 
 import boto3
-import os
+
 
 def _get_canary_token():
     ssm = boto3.client("ssm", region_name=os.environ.get("AWS_REGION", "eu-west-1"))
