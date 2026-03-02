@@ -1072,6 +1072,19 @@ resource "random_password" "password" {
   special = true
 }
 
+resource "aws_ssm_parameter" "canary_token" {
+  name        = "${local.environment_name}_canary_token"
+  description = "For use in Codebuild buildspec - ${local.environment_name}"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
+
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
+
 resource "aws_ssm_parameter" "opensearch_master_user" {
   name        = "MASTER_USER"
   description = "opensearch_password"
