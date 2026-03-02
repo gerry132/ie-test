@@ -93,6 +93,7 @@ resource "aws_iam_role_policy" "canary_s3_policy" {
       {
         Effect = "Allow"
         Action = [
+          "ssm:GetParameter",
           "s3:PutObject",
           "s3:GetBucketLocation",
           "s3:ListBucket"
