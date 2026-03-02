@@ -63,17 +63,17 @@
                                     <a href="{{ card.url }}" aria-label="{{card.alt_text}}" tabindex="-1">
                                     <div class="card__image-container">
                                         {% if card.hero_image %}
-                                            {% if card.alt_text %}
-                                                {% image card.hero_image fill-500x300 class="card__image" alt=card.alt_text %}
-                                            {% else %}
-                                                {% image card.hero_image fill-500x300 alt=card.image.alt_default class="card__image" %}
-                                            {% endif %}
+                                            {% with alt_text=card.alt_text|default:card.hero_image.description %}
+                                                {% image card.hero_image fill-500x300 class="card__image" alt=alt_text %}
+                                            {% endwith %}
                                         {% elif card.hero_video and card.hero_video.thumbnail %}
                                                 <img alt="hero" class="card__image" height="240" src="{{ card.hero_video.thumbnail.url }}" width="400">
                                         {% elif card.generic_hero %}
                                             {% for block in card.generic_hero %}
                                                 {% if block.value.hero_image %}
-                                                    {% image block.value.hero_image fill-500x300 class="card__image" alt=block.value.hero_image_alt %}
+                                                    {% with alt_text=block.value.hero_image_alt|default:block.value.hero_image.description %}
+                                                        {% image block.value.hero_image fill-500x300 class="card__image" alt=alt_text %}
+                                                    {% endwith %}
                                                 {% else %}
                                                     {% if block.value.hero_video.thumbnail %}
                                                             <img alt="hero" class="card__image" height="240" src="{{ block.value.hero_video.thumbnail.url }}" width="400">
@@ -83,11 +83,15 @@
                                         {% else %}
                                             {% if card.default_image %}
                                                     {% for default_image in card.default_image %}
-                                                        {% image default_image.value.image fill-500x300 class="card__image" alt=default_image.value.image_alt %}
+                                                        {% with alt_text=default_image.value.image_alt|default:default_image.value.image.description %}
+                                                            {% image default_image.value.image fill-500x300 class="card__image" alt=alt_text %}
+                                                        {% endwith %}
                                                     {% endfor %}
                                             {% else %}
                                                     {% for default_image in default_image %}
-                                                        {% image default_image.value.image fill-500x300 class="card__image" alt=default_image.value.image_alt %}
+                                                        {% with alt_text=default_image.value.image_alt|default:default_image.value.image.description %}
+                                                        {% image default_image.value.image fill-500x300 class="card__image" alt=alt_text %}
+                                                    {% endwith %}
                                                     {% endfor %}
                                             {% endif %}
                                         {% endif %}
@@ -155,17 +159,18 @@
                                         <a href="{{ card.url }}" aria-label="{% trans 'card' %}" tabindex="-1">
                                         <div class="card__image-container">
                                             {% if card.hero_image %}
-                                                {% if card.alt_text %}
-                                                    {% image card.hero_image fill-500x300 class="card__image" alt=card.alt_text %}
-                                                {% else %}
-                                                    {% image card.hero_image fill-500x300 alt=card.image.alt_default class="card__image" %}
-                                                {% endif %}
+                                                {% with alt_text=card.alt_text|default:card.hero_image.description %}
+                                                    {% image card.hero_image fill-500x300 class="card__image" alt=alt_text %}
+                                                {% endwith %}
+                                            {% endif %}
                                             {% elif card.hero_video and card.hero_video.thumbnail %}
                                                     <img alt="hero" class="card__image" height="240" src="{{ card.hero_video.thumbnail.url }}" width="400">
                                             {% elif card.generic_hero %}
                                                 {% for block in card.generic_hero %}
                                                     {% if block.value.hero_image %}
-                                                        {% image block.value.hero_image fill-500x300 class="card__image" alt=block.value.hero_image_alt %}
+                                                        {% with alt_text=block.value.hero_image_alt|default:block.value.hero_image.description %}
+                                                            {% image block.value.hero_image fill-500x300 class="card__image" alt=alt_text %}
+                                                        {% endwith %}
                                                     {% else %}
                                                         {% if block.value.hero_video.thumbnail %}
                                                             <img alt="hero" class="card__image" height="240" src="{{ block.value.hero_video.thumbnail.url }}" width="400">
@@ -175,11 +180,15 @@
                                             {% else %}
                                                 {% if card.default_image %}
                                                     {% for default_image in card.default_image %}
-                                                        {% image default_image.value.image fill-500x300 class="card__image" alt=default_image.value.image_alt %}
+                                                        {% with alt_text=default_image.value.image_alt|default:default_image.value.image.description %}
+                                                        {% image default_image.value.image fill-500x300 class="card__image" alt=alt_text %}
+                                                    {% endwith %}
                                                     {% endfor %}
                                                 {% else %}
                                                     {% for default_image in default_image %}
-                                                        {% image default_image.value.image fill-500x300 class="card__image" alt=default_image.value.image_alt %}
+                                                        {% with alt_text=default_image.value.image_alt|default:default_image.value.image.description %}
+                                                            {% image default_image.value.image fill-500x300 class="card__image" alt=alt_text %}
+                                                        {% endwith %}
                                                     {% endfor %}
                                                 {% endif %}
                                             {% endif %}

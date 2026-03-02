@@ -18,7 +18,7 @@ class CustomImage(AbstractImage):
     )
 
     description = models.TextField(
-        blank=True,
+        blank=False,
         verbose_name=_("Alt text"),
         help_text=_(
             "Say what the image means (who/what/action or essential text). "

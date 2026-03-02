@@ -16,18 +16,26 @@ Example:
 {% endif %}
         <div class="card__image-container">
         {% if card.hero_image %}
-            {% if card.image_alt %}
-                {% image card.hero_image fill-500x300 class="card__image"  alt=card.image_alt %}
-            {% else %}
-                {% image card.hero_image fill-500x300 alt=card.image.alt_default class="card__image" %}
-            {% endif %}
+            {% if card.hero_image %}
+            {% with alt_text=card.image_alt|default:card.hero_image.description %}
+                {% image card.hero_image fill-500x300 class="card__image" alt=alt_text %}
+            {% endwith %}
+        {% endif %}
         {% elif card.generic_hero %}
             {% for block in card.generic_hero %}
-                {% image block.value.hero_image fill-500x300 class="card__image"  alt=card.image_alt %}
+                {% if block.value.hero_image %}
+                    {% with alt_text=block.value.hero_image_alt|default:block.value.hero_image.description %}
+                        {% image block.value.hero_image fill-500x300 class="card__image" alt=alt_text %}
+                    {% endwith %}
+                {% endif %}
             {% endfor %}
         {% else %}
                 {% for default_image in default_image %}
-                    {% image default_image.value.image fill-500x300 class="card__image"  alt=default_image.image_alt %}
+                    {% if default_image.value.image %}
+                        {% with alt_text=default_image.value.image_alt|default:default_image.value.image.description %}
+                            {% image default_image.value.image fill-500x300 class="card__image" alt=alt_text %}
+                        {% endwith %}
+                    {% endif %}
                 {% endfor %}
 
         {% endif %}

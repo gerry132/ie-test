@@ -407,3 +407,18 @@ def explainer_text_by_locale(profile, locale):
     if profile.lang.lower() == locale_code:
         return profile.explainer_text
     return ""
+
+
+@register.filter
+def clean_label(value):
+    """
+    Replace underscores with spaces and capitalize first letter of each word.
+    """
+    if not isinstance(value, str):
+        return value
+    return " ".join(word.capitalize() for word in value.split("_"))
+
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)

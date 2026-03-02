@@ -38,7 +38,9 @@
                             {% endif %}
                         </div>
                     {% else %}
-                        {% image block_hero.value.image fill-1600x900 class="image" alt=block_hero.value.image_alt %}
+                        {% with alt_text=block_hero.value.image_alt|default:block_hero.value.image.description %}
+                            {% image block_hero.value.image fill-1600x900 class="image" alt=alt_text %}
+                        {% endwith %}
                     {% endif %}
                 {% elif block_hero.block_type == 'advanced_rich_text' %}
                     <div class="rich-text" style="padding-top: 20px;" {% if block_hero.value.section_id %} id="{{block_hero.value.section_id}}" {% endif %}>
@@ -89,10 +91,10 @@
                             <div class="homepage_feature__card{% if not card.value.summary %} card--no-summary{% endif %}{% if classes %} {{ classes }}{% endif %}" role="group">
                         {% endif %}
                                 <div class="card__image-container">
-                                {% if card.value.image_alt %}
-                                    {% image card.value.image fill-500x300 class="card__image"  alt=card.value.image_alt %}
-                                {% else %}
-                                    {% image card.value.image fill-500x300 alt=card.value.image.alt_default class="card__image" %}
+                                {% if card.value.image %}
+                                    {% with alt_text=card.value.image_alt|default:card.value.image.description %}
+                                        {% image card.value.image fill-500x300 class="card__image" alt=alt_text %}
+                                    {% endwith %}
                                 {% endif %}
                                 </div>
                                 <div class="homepage_feature__card__content">

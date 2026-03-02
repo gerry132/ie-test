@@ -2,10 +2,10 @@
 
 <a href="{{ link_url }}" aria-label="{% trans 'card' %}" class="card">
     <div class="card__image-container">
-        {% if value.image_alt %}
-            {% image value.image fill-400x200 alt=value.image_alt class="card__image" %}
-        {% else %}
-            {% image value.image fill-400x200 alt=value.image.alt_default class="card__image" %}
+        {% if value.image %}
+            {% with alt_text=value.image_alt|default:value.image.description %}
+                {% image value.image fill-400x200 alt=alt_text class="card__image" %}
+            {% endwith %}
         {% endif %}
     </div>
 

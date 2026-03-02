@@ -66,7 +66,9 @@
                 </div>
             {% endif %}
         {% else %}
-            {% image page.image fill-1600x900 class="image" alt=page.image_alt %}
+            {% with alt_text=page.image_alt|default:page.image.description %}
+                {% image page.image fill-1600x900 class="image" alt=alt_text %}
+            {% endwith %}
         {% endif %}
         <div style="padding-top: 30px;">
             <a aria-label="{% trans 'Event link' %}" href="{% if page.event_link_page %}{% pageurl page.event_link_page as href %}{{ href }}{% else %}{{ page.event_link_url }}{% endif %}">

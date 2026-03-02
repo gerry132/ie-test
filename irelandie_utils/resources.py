@@ -15,6 +15,10 @@ class DiasporaDirectoryResource(resources.ModelResource):
             "region",
             "website",
             "activity",
+            "country",
+            "phone_number",
+            "email",
+            "seeking_volunteers",
         )
         import_id_fields = ("organisation_name", "main_regions", "region")
         skip_unchanged = True

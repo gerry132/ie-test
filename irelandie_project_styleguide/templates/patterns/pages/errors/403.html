@@ -103,7 +103,9 @@
         </div>
         {% if image_error %}
             <div class="image-container">
-                {% image image_error original class="error-logo" alt=custom_header_settings.site_settings.site_logo_alt %}
+                {% with alt_text=custom_header_settings.site_settings.site_logo_alt|default:image_error.description %}
+                    {% image image_error original class="error-logo" alt=alt_text %}
+                {% endwith %}
             </div>
         {% endif %}
     </div>

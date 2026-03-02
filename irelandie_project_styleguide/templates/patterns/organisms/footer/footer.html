@@ -19,21 +19,15 @@
                     <a class="footer__logo_link" role="link" href="/{{ language_code }}/" aria-label="Ireland.ie">
             {% endif %}
             {% if custom_footer.logo %}
-                    {% if custom_footer.logo_alt %}
-                        {% if custom_footer.mobile_logo and custom_footer.logo %}
-                            {% image custom_footer.logo original class="footer__logo desktop__logo" alt=custom_footer.logo_alt %}
-                            {% image custom_footer.mobile_logo original class="footer__logo mobile__logo" alt=custom_footer.logo_alt %}
-                        {% else %}
-                            {% image custom_footer.logo original class="footer__logo" alt=custom_footer.logo_alt %}
-                    {% endif %}
-                {% else %}
-                    {% if custom_footer.mobile_logo and custom_footer.logo %}
-                        {% image custom_footer.logo original class="footer__logo desktop__logo" alt=custom_footer.logo.alt_default %}
-                        {% image custom_footer.mobile_logo original class="footer__logo mobile__logo" alt=custom_footer.logo.alt_default %}
+                {% with alt_text=custom_footer.logo_alt|default:custom_footer.logo.description %}
+
+                    {% if custom_footer.mobile_logo %}
+                        {% image custom_footer.logo original class="footer__logo desktop__logo" alt=alt_text %}
+                        {% image custom_footer.mobile_logo original class="footer__logo mobile__logo" alt=alt_text %}
                     {% else %}
-                        {% image custom_footer.logo original class="footer__logo" alt=custom_footer.logo.alt_default %}
+                        {% image custom_footer.logo original class="footer__logo" alt=alt_text %}
                     {% endif %}
-                {% endif %}
+                {% endwith %}
             {% else %}
                 {% include "patterns/atoms/icons/icon.html" with name="irelandie-logo" classname="footer__logo footer__logo--svg" %}
             {% endif %}

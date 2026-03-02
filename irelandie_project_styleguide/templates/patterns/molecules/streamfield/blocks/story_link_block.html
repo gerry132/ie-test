@@ -3,7 +3,9 @@
 {% if link_url %}
 <a href="{{ link_url }}" aria-label="{% trans 'Story link' %}" class="story-link">
     {% if value.image %}
-        {% image value.image width-100 height-100 alt=value.image_alt class="story-link__img" %}
+        {% with alt_text=value.image_alt|default:value.image.description %}
+            {% image value.image width-100 height-100 class="story-link__img" alt=alt_text %}
+        {% endwith %}
     {% elif value.icon %}
         {% include "patterns/atoms/icons/icon.html" with name=value.icon classname="story-link__icon" %}
     {% endif %}

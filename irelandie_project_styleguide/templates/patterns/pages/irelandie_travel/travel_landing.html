@@ -63,11 +63,9 @@
             {% for link_card in block.value.link_cards %}
             <a class="card" href="{% if link_card.value.page %}{{ link_card.value.page.url }}{% else %}{{ link_card.value.url }}{% endif %}" aria-label="{% trans 'card' %}">
                 <div class="card__image-container">
-                    {% if link_card.value.image_alt %}
-                    {% image link_card.value.image fill-400x200 alt=link_card.value.image_alt class="card__image" %}
-                    {% else %}
-                    {% image link_card.value.image fill-400x200 alt=link_card.value.image.alt_default class="card__image" %}
-                    {% endif %}
+                    {% with alt_text=link_card.value.image_alt|default:link_card.value.image.description %}
+                        {% image link_card.value.image fill-400x200 class="card__image" alt=alt_text %}
+                    {% endwith %}
                 </div>
 
                 <div class="card__content">
@@ -87,11 +85,9 @@
             {% for link_card in block.value.link_cards %}
             <a class="card" href="{% if link_card.value.page %}{{ link_card.value.page.url }}{% else %}{{ link_card.value.url }}{% endif %}" aria-label="{% trans 'card' %}">
                 <div class="card__image-container">
-                    {% if link_card.value.image_alt %}
-                    {% image link_card.value.image fill-400x200 alt=link_card.value.image_alt class="card__image" %}
-                    {% else %}
-                    {% image link_card.value.image fill-400x200 alt=link_card.value.image.alt_default class="card__image" %}
-                    {% endif %}
+                    {% with alt_text=link_card.value.image_alt|default:link_card.value.image.description %}
+                        {% image link_card.value.image fill-400x200 class="card__image" alt=alt_text %}
+                    {% endwith %}
                 </div>
 
                 <div class="card__content">

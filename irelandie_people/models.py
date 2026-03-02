@@ -54,7 +54,8 @@ class PersonPage(Page, TranslatableMixin):
     image_alt = models.CharField(
         max_length=255,
         blank=True,
-        verbose_name=_("Image Alt text"),
+        null=True,
+        verbose_name="Page alt override",
         help_text=_("The alt text shown for accessibility: https://axesslab.com/alt-texts/")
     )
     countries = ParentalManyToManyField("irelandie_missions.DestinationPage", blank=True)

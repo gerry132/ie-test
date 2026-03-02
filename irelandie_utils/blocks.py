@@ -165,6 +165,7 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock(required=False)
     image_alt = blocks.CharBlock(
         required=False,
+        label="Page alt override",
         help_text=_(ALT_IMAGE),
     )
     image_credit = blocks.CharBlock(required=False, max_length=255)
@@ -213,18 +214,11 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
         errors = {}
         person_image = value.get('image')
         video = value.get('video')
-        image = value.get('image')
-        image_alt = value.get('image_alt')
 
         if not (bool(person_image) ^ bool(video)):
             msg = "You can't choose both an image and a video. Choose an image or a video"
             errors['image'] = ErrorList([msg])
             errors['video'] = ErrorList([msg])
-
-        if image and not image_alt:
-            msg = "You can't have an image without alt text."
-            errors['image'] = ErrorList([msg])
-            errors['image_alt'] = ErrorList([msg])
 
         if not (bool(person_image) | bool(video)):
             msg = "You have to choose either an image or a video."
@@ -245,7 +239,8 @@ class StoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
 class TopStoryBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
-        required=True,
+        required=False,
+        label="Page alt override",
         help_text=_(ALT_IMAGE),
     )
     page = blocks.PageChooserBlock(required=False)
@@ -318,7 +313,8 @@ class AlernatePinnedStoryHeroLinkText(StructValue):
 class PinnedStoryHeroBlock(BaseBlockLinkValidation):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
-        required=True,
+        required=False,
+        label="Page alt override",
         help_text=_(ALT_IMAGE),
     )
     title = blocks.CharBlock(required=False)
@@ -338,7 +334,8 @@ class PinnedStoryHeroBlock(BaseBlockLinkValidation):
 class PinnedStoryBlock(BaseBlockLinkValidation):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
-        required=True,
+        required=False,
+        label="Page alt override",
         help_text=_(ALT_IMAGE),
     )
     page = blocks.PageChooserBlock(required=False)
@@ -357,7 +354,8 @@ class PinnedStoryBlock(BaseBlockLinkValidation):
 class ImageBlock(blocks.StructBlock):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
-        required=True,
+        required=False,
+        label="Page alt override",
         help_text=_(ALT_IMAGE),
     )
     image_credit = blocks.CharBlock(required=False, max_length=255)
@@ -604,7 +602,8 @@ class BaseSectionBlock(blocks.StructBlock):
 class LogoCardBlock(blocks.StructBlock):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
-        required=True,
+        required=False,
+        label="Page alt override",
         help_text=_(ALT_IMAGE),
     )
     title = blocks.CharBlock()
@@ -636,7 +635,8 @@ class LogoCardsBlock(blocks.StructBlock):
 class ArticleCardBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
-        required=True,
+        required=False,
+        label="Page alt override",
         help_text=_(ALT_IMAGE),
     )
     title = blocks.CharBlock()
@@ -715,7 +715,8 @@ class StatsBlock(blocks.StructBlock):
 class LinkCardBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
-        required=True,
+        required=False,
+        label="Page alt override",
         help_text=_(ALT_IMAGE),
     )
     title = blocks.CharBlock()
@@ -745,7 +746,8 @@ class LinkCardsBlock(blocks.StructBlock):
 class MiniLinkCardBlock(BaseBlockLinkValidation, BaseBlockLinkContext):
     image = ImageChooserBlock()
     image_alt = blocks.CharBlock(
-        required=True,
+        required=False,
+        label="Page alt override",
         help_text=_(ALT_IMAGE),
     )
     title = blocks.CharBlock()
@@ -837,6 +839,7 @@ class WideFeatureImageVideoBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=False)
     image_alt = blocks.CharBlock(
         required=False,
+        label="Page alt override",
         help_text=_(ALT_IMAGE),
     )
     image_credit = blocks.CharBlock(required=False, max_length=255)
@@ -858,7 +861,6 @@ class WideFeatureImageVideoBlock(blocks.StructBlock):
         image_for_video_image_alt = value.get('image_for_video_image_alt')
         video = value.get('youtube_or_vimeo_embed')
         image = value.get('image')
-        image_alt = value.get('image_alt')
 
         if not (bool(image) ^ bool(video)):
             msg = "You can't choose both an image and a video. Choose an image or a video"
@@ -869,11 +871,6 @@ class WideFeatureImageVideoBlock(blocks.StructBlock):
             msg = "You can't have an image for video without alt text."
             errors['image_for_video'] = ErrorList([msg])
             errors['image_for_video_image_alt'] = ErrorList([msg])
-
-        if image and not image_alt:
-            msg = "You can't have an image without alt text."
-            errors['image'] = ErrorList([msg])
-            errors['image_alt'] = ErrorList([msg])
 
         if not (bool(image) | bool(video)):
             msg = "You have to choose either an image or a video."
@@ -958,7 +955,7 @@ class ContactBlock(blocks.StructBlock):
 
 class TimelinePhotoBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
-    alt_text = blocks.TextBlock(required=True)
+    alt_text = blocks.TextBlock(required=False, label="Page alt override")
     rich_text_summary = blocks.RichTextBlock(required=True)
     date = blocks.TextBlock(required=True)
 
@@ -979,7 +976,8 @@ class TimelinePhotoGalleriesBlock(blocks.StructBlock):
 class StoryPhotoGalleryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
-        required=True,
+        required=False,
+        label="Page alt override",
         help_text=_(ALT_IMAGE),
     )
     heading = blocks.CharBlock(required=False)
@@ -1552,7 +1550,8 @@ class GenericHeroBlock(blocks.StructBlock):
     )
     hero_image = ImageChooserBlock(required=False)
     hero_image_alt = blocks.CharBlock(
-        required=True,
+        required=False,
+        label="Page alt override",
         help_text=_(ALT_IMAGE),
     )
     hero_image_credit = blocks.CharBlock(required=False, max_length=255)
@@ -1590,7 +1589,8 @@ class BannerImageBlock(blocks.StructBlock):
     banner_image_desktop = ImageChooserBlock(required=False)
     banner_image_mobile = ImageChooserBlock(required=False)
     banner_image_alt = blocks.CharBlock(
-        required=True,
+        required=False,
+        label="Page alt override",
         help_text=_(ALT_IMAGE),
     )
     banner_image_credit = blocks.CharBlock(required=False, max_length=255)
@@ -1688,7 +1688,8 @@ class MultimediaRowBlock(blocks.StructBlock):
 class FeaturedTaggedStoryBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
-        required=True,
+        required=False,
+        label="Page alt override",
         help_text=_(ALT_IMAGE),
     )
     title = blocks.CharBlock(required=True)
@@ -1745,6 +1746,7 @@ class HomepageFeatureImageVideoBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=False)
     image_alt = blocks.CharBlock(
         required=False,
+        label="Page alt override",
         help_text=_(ALT_IMAGE),
     )
     image_for_video = ImageChooserBlock(required=False)
@@ -1764,7 +1766,6 @@ class HomepageFeatureImageVideoBlock(blocks.StructBlock):
         image_for_video_image_alt = value.get('image_for_video_image_alt')
         video = value.get('youtube_or_vimeo_embed')
         image = value.get('image')
-        image_alt = value.get('image_alt')
 
         if not (bool(image) ^ bool(video)):
             msg = "You can't choose both an image and a video. Choose an image or a video"
@@ -1775,11 +1776,6 @@ class HomepageFeatureImageVideoBlock(blocks.StructBlock):
             msg = "You can't have an image for video without alt text."
             errors['image_for_video'] = ErrorList([msg])
             errors['image_for_video_image_alt'] = ErrorList([msg])
-
-        if image and not image_alt:
-            msg = "You can't have an image without alt text."
-            errors['image'] = ErrorList([msg])
-            errors['image_alt'] = ErrorList([msg])
 
         if not (bool(image) | bool(video)):
             msg = "You have to choose either an image or a video."

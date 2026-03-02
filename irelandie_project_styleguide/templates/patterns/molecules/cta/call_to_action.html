@@ -18,7 +18,11 @@ Example:
 
         {{ call_to_action.summary|richtext }}
 
-        {% image call_to_action.image fill-450x300 alt=call_to_action.image_alt %}
+        {% if call_to_action.image %}
+            {% with alt_text=call_to_action.image_alt|default:call_to_action.image.description %}
+                {% image call_to_action.image fill-450x300 class="card__image" alt=alt_text %}
+            {% endwith %}
+        {% endif %}
 
         <p><a href="{{ call_to_action.get_link_url }}" aria-label="{% trans 'Call to action' %}">{{ call_to_action.get_link_text }}</a></p>
 

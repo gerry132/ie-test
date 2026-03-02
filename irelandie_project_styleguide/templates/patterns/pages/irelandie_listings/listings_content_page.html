@@ -24,11 +24,9 @@
             <div class="wrapper wrapper--large wrapper--padding">
                 <div class="tag__link-box" >
                     {% if page.image %}
-                        {% if page.image_alt %}
-                            {% image page.image fill-500x300 class="tag__image" alt=page.image_alt %}
-                        {% else %}
-                            {% image page.image fill-500x300 alt=card.image.alt_default class="tag__image" %}
-                        {% endif %}
+                        {% with alt_text=page.image_alt|default:page.image.description %}
+                            {% image page.image fill-500x300 class="tag__image" alt=alt_text %}
+                        {% endwith %}
                      {% elif page.icon %}
                         {% include "patterns/atoms/icons/icon.html" with name=page.icon classname="tag__image" alt=page.icon %}
                     {% endif %}

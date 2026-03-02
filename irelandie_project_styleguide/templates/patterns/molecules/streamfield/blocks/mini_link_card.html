@@ -2,7 +2,9 @@
 
 <a href="{{ link_url }}" aria-label="{% trans 'card' %}" class="card">
     <div class="mini_link_image-container">
-            {% image value.image original alt=value.image_alt %}
+            {% with alt_text=value.image_alt|default:value.image.description %}
+                {% image value.image original alt=alt_text %}
+            {% endwith %}
     </div>
 
     <div class="mini_card__content">
