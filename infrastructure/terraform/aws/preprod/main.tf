@@ -81,6 +81,18 @@ locals {
 # -----------------------------------------------------------------------------
 # Values to fill after running terraform is ran, used for codebuild and secrets
 # -----------------------------------------------------------------------------
+resource "aws_ssm_parameter" "canary_token" {
+  name        = "canary_token"
+  description = "For use in Codebuild buildspec - ${local.environment_name}"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
+
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
 
 resource "aws_ssm_parameter" "sns_phone_number" {
   name        = "phone"
@@ -1955,7 +1967,37 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
   name  = "${local.project_name}-waf-cloudfront"
   provider                  = aws.virginia
   scope = "CLOUDFRONT"
+  rule {
+    name       = "AllowCanaries"
+    priority   = 0
 
+    action {
+      allow {}
+    }
+    statement {
+      byte_match_statement {
+        search_string = aws_ssm_parameter.canary_token.value
+        positional_constraint = "EXACTLY"
+
+        field_to_match {
+          single_header {
+            name = "x-canary-token"
+          }
+        }
+
+        text_transformation {
+          priority = 0
+          type     = "NONE"
+        }
+      }
+
+  }
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "AllowCanariesByHeader"
+    sampled_requests_enabled   = true
+  }
+  }
   default_action {
     block {}
   }
