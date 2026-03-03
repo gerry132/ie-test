@@ -17,7 +17,7 @@ from wagtail.admin.widgets.button import Button, ButtonWithDropdown
 from wagtail.snippets.models import register_snippet
 from wagtail.snippets.views.snippets import IndexView, SnippetViewSet
 
-from .models import DiasporaDirectory, REGION_CHOICES
+from .models import DiasporaDirectory
 
 
 # ============================================================
@@ -204,8 +204,6 @@ def make_snippet_csv_import_view(
 # DiasporaDirectory implementation (thin config + row handler)
 # ============================================================
 
-ALLOWED_REGIONS = {value for value, _label in REGION_CHOICES}
-
 
 def diaspora_row_handler(request, row: dict, line_no: int) -> bool:
     """
@@ -213,19 +211,14 @@ def diaspora_row_handler(request, row: dict, line_no: int) -> bool:
 
     Returns True if created, False if updated.
     """
-    main_regions = clean(row.get("main_regions") or "")
-    if main_regions not in ALLOWED_REGIONS:
-        raise ValueError(
-            f"Line {line_no}: invalid main_regions '{main_regions}'. "
-            f"Allowed values: {', '.join(sorted(ALLOWED_REGIONS))}"
-        )
 
+    country = clean(row.get("country") or "")
     organisation_name = clean(row.get("organisation_name") or "")
     region = clean(row.get("region") or "")
 
-    if not organisation_name or not main_regions or not region:
+    if not organisation_name or not country or not region:
         raise ValueError(
-            f"Line {line_no}: organisation_name, main_regions, and region must be non-empty."
+            f"Line {line_no}: organisation_name, country, and region must be non-empty."
         )
 
     defaults = {
@@ -233,7 +226,6 @@ def diaspora_row_handler(request, row: dict, line_no: int) -> bool:
         "contact_details": clean(row.get("contact_details") or ""),
         "website": clean(row.get("website") or ""),
         "activity": clean(row.get("activity") or ""),
-        "country": clean(row.get("country") or ""),
         "phone_number": clean(row.get("phone_number") or ""),
         "email": clean(row.get("email") or ""),
         "seeking_volunteers": clean(row.get("seeking_volunteers") or "") == "True",
@@ -241,7 +233,7 @@ def diaspora_row_handler(request, row: dict, line_no: int) -> bool:
 
     _obj, is_created = DiasporaDirectory.objects.update_or_create(
         organisation_name=organisation_name,
-        main_regions=main_regions,
+        country=country,
         region=region,
         defaults=defaults,
     )
@@ -254,7 +246,6 @@ diaspora_directory_import_view = make_snippet_csv_import_view(
     template_name="patterns/snippets/diasporadirectory/diaspora_import.html",
     success_url_name="wagtailsnippets_utils_diasporadirectory:list",
     required_columns=[
-        "main_regions",
         "organisation_name",
         "contact_details",
         "city",
@@ -282,7 +273,7 @@ class DiasporaDirectorySnippetViewSet(SnippetViewSet):
     menu_label = "Diaspora directory"
     menu_name = "diaspora_directory"
     icon = "group"
-    list_display = ("organisation_name", "main_regions", "city", "region", "country")
+    list_display = ("organisation_name", "city", "region", "country")
     search_fields = (
         "organisation_name",
         "city",
@@ -299,7 +290,6 @@ class DiasporaDirectorySnippetViewSet(SnippetViewSet):
 
     # Wagtail-native export
     list_export = (
-        "main_regions",
         "organisation_name",
         "contact_details",
         "city",
@@ -313,7 +303,6 @@ class DiasporaDirectorySnippetViewSet(SnippetViewSet):
     )
 
     list_filter = (
-        "main_regions",
         "organisation_name",
         "contact_details",
         "city",
