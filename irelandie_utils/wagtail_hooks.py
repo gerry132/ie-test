@@ -1,5 +1,3 @@
-# irelandie_utils/wagtail_hooks.py
-
 import csv
 import io
 from typing import Callable, Iterable, List, Optional, Tuple
@@ -14,7 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from wagtail import hooks
 from wagtail.admin.auth import permission_required
 from wagtail.admin.widgets.button import Button, ButtonWithDropdown
-from wagtail.snippets.models import register_snippet
+# from wagtail.snippets.models import register_snippet
 from wagtail.snippets.views.snippets import IndexView, SnippetViewSet
 
 from .models import DiasporaDirectory
@@ -273,7 +271,7 @@ class DiasporaDirectoryIndexView(ImportButtonHeaderMixin, IndexView):
     import_label = _("Import CSV / XLSX")
 
 
-@register_snippet
+# @register_snippet
 class DiasporaDirectorySnippetViewSet(SnippetViewSet):
     model = DiasporaDirectory
     menu_label = "Diaspora directory"
