@@ -221,6 +221,12 @@ def diaspora_row_handler(request, row: dict, line_no: int) -> bool:
             f"Line {line_no}: organisation_name, country, and region must be non-empty."
         )
 
+    seeking_volunteers = clean(row.get("seeking_volunteers") or "").lower()
+    if seeking_volunteers in ("Yes", "yes", "true", "1"):
+        seeking_volunteers = True
+    elif seeking_volunteers in ("No", "no", "false", "0"):
+        seeking_volunteers = False
+
     defaults = {
         "city": clean(row.get("city") or ""),
         "contact_details": clean(row.get("contact_details") or ""),
@@ -228,7 +234,7 @@ def diaspora_row_handler(request, row: dict, line_no: int) -> bool:
         "activity": clean(row.get("activity") or ""),
         "phone_number": clean(row.get("phone_number") or ""),
         "email": clean(row.get("email") or ""),
-        "seeking_volunteers": clean(row.get("seeking_volunteers") or "") == "True",
+        "seeking_volunteers": seeking_volunteers,
     }
 
     _obj, is_created = DiasporaDirectory.objects.update_or_create(

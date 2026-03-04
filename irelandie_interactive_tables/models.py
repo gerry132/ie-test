@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail.models import Page
+
 from irelandie_utils.models import BasePage
 from django import forms
 
@@ -16,6 +16,47 @@ from .interactive_tables import get_schema, schema_choices
 
 def humanize_col(col: str) -> str:
     return col.replace("_", " ").strip().title()
+
+
+def serialize_value(value):
+    if isinstance(value, bool):
+        return "Yes" if value else "No"
+    return value
+
+
+def serialize_row(obj, columns):
+    row = {"id": obj.pk}
+    for col in columns:
+        row[col] = serialize_value(getattr(obj, col, ""))
+    return row
+
+
+def coerce_filter_value(model, field_name: str, raw: str):
+    """
+    Convert UI filter values to DB-friendly values.
+    Currently handles booleans (Yes/No).
+    """
+    if raw is None:
+        return None
+
+    raw = str(raw).strip()
+
+    try:
+        field = model._meta.get_field(field_name)
+    except Exception:
+        return raw
+
+    # BooleanField / NullBooleanField handling
+    if isinstance(field, models.BooleanField):
+        lowered = raw.lower()
+        if lowered in ("yes", "true", "1"):
+            return True
+        if lowered in ("no", "false", "0"):
+            return False
+        # unknown -> return as-is (will error, but that's fine)
+        return raw
+
+    return raw
 
 
 class InteractiveDataTablePageForm(WagtailAdminPageForm):
@@ -46,7 +87,6 @@ class InteractiveDataTablePageForm(WagtailAdminPageForm):
                 )
                 self.initial[name] = getattr(self.instance, name, "") or ""
             return
-
         schema = get_schema(schema_value)
         cols = list(schema.columns)
 
@@ -101,7 +141,7 @@ class InteractiveDataTablePage(RoutablePageMixin, BasePage):
 
     intro = models.TextField(blank=True, default="")
 
-    content_panels = Page.content_panels + [
+    content_panels = BasePage.content_panels + [
         FieldPanel("intro"),
         MultiFieldPanel(
             [
@@ -172,9 +212,10 @@ class InteractiveDataTablePage(RoutablePageMixin, BasePage):
 
         # Up to 2 dropdown filters
         if f1_name and f1_val and f1_name in schema.columns:
-            qs = qs.filter(**{f1_name: f1_val})
+            qs = qs.filter(**{f1_name: coerce_filter_value(Model, f1_name, f1_val)})
+
         if f2_name and f2_val and f2_name in schema.columns:
-            qs = qs.filter(**{f2_name: f2_val})
+            qs = qs.filter(**{f2_name: coerce_filter_value(Model, f2_name, f2_val)})
 
         if schema.default_ordering:
             qs = qs.order_by(*schema.default_ordering)
@@ -182,12 +223,7 @@ class InteractiveDataTablePage(RoutablePageMixin, BasePage):
         paginator = Paginator(qs, per_page)
         page = paginator.get_page(page_num)
 
-        rows = []
-        for obj in page.object_list:
-            row = {"id": obj.pk}
-            for col in schema.columns:
-                row[col] = getattr(obj, col, "")
-            rows.append(row)
+        rows = [serialize_row(obj, schema.columns) for obj in page.object_list]
 
         return JsonResponse(
             {
@@ -225,12 +261,7 @@ class InteractiveDataTablePage(RoutablePageMixin, BasePage):
         paginator = Paginator(qs, per_page)
         page_obj = paginator.get_page(page_num)
 
-        rows = []
-        for obj in page_obj.object_list:
-            row = {"id": obj.pk}
-            for col in schema.columns:
-                row[col] = getattr(obj, col, "")
-            rows.append(row)
+        rows = [serialize_row(obj, schema.columns) for obj in page_obj.object_list]
 
         ctx["rows"] = rows
         ctx["page_obj"] = page_obj
