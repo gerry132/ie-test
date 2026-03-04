@@ -1619,33 +1619,33 @@ class TravelCautionStatus(PreviewableMixin, DraftStateMixin, RevisionMixin, inde
         return f"{self.level} ({self.lang})"
 
 
-# class DiasporaDirectory(models.Model):
+class DiasporaDirectory(models.Model):
 
-#     organisation_name = models.CharField(max_length=255)
-#     contact_details = models.CharField(max_length=255)
-#     city = models.CharField(max_length=255)
-#     region = models.CharField(max_length=255)
-#     website = models.CharField(blank=True)
-#     activity = models.CharField(max_length=255)
+    organisation_name = models.CharField(max_length=255)
+    contact_details = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    region = models.CharField(max_length=255)
+    website = models.CharField(blank=True)
+    activity = models.CharField(max_length=255)
 
-#     # Need to verify and then commit
-#     country = models.CharField(max_length=255, blank=True)
-#     phone_number = models.CharField(max_length=255, blank=True)
-#     email = models.EmailField(blank=True)
-#     seeking_volunteers = models.BooleanField(default=False, blank=True)
+    # Need to verify and then commit
+    country = models.CharField(max_length=255, blank=True)
+    phone_number = models.CharField(max_length=255, blank=True)
+    email = models.EmailField(blank=True)
+    seeking_volunteers = models.BooleanField(default=False, blank=True)
 
-#     panels = [
-#         FieldPanel('organisation_name'),
-#         FieldPanel('contact_details'),
-#         FieldPanel('city'),
-#         FieldPanel('country'),
-#         FieldPanel('region'),
-#         FieldPanel('website'),
-#         FieldPanel('activity'),
-#         FieldPanel('phone_number'),
-#         FieldPanel('email'),
-#         FieldPanel('seeking_volunteers'),
-#     ]
+    panels = [
+        FieldPanel('organisation_name'),
+        FieldPanel('contact_details'),
+        FieldPanel('city'),
+        FieldPanel('country'),
+        FieldPanel('region'),
+        FieldPanel('website'),
+        FieldPanel('activity'),
+        FieldPanel('phone_number'),
+        FieldPanel('email'),
+        FieldPanel('seeking_volunteers'),
+    ]
 
-#     def __str__(self):
-#         return self.organisation_name
+    def __str__(self):
+        return self.organisation_name

@@ -1,4 +1,3 @@
-'''
 import csv
 import io
 from typing import Callable, Iterable, List, Optional, Tuple
@@ -13,7 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from wagtail import hooks
 from wagtail.admin.auth import permission_required
 from wagtail.admin.widgets.button import Button, ButtonWithDropdown
-from wagtail.snippets.models import register_snippet
+# from wagtail.snippets.models import register_snippet
 from wagtail.snippets.views.snippets import IndexView, SnippetViewSet
 
 from .models import DiasporaDirectory
@@ -271,7 +270,7 @@ class DiasporaDirectoryIndexView(ImportButtonHeaderMixin, IndexView):
     import_url_name = "diaspora_directory_import"
     import_label = _("Import CSV / XLSX")
 
-@register_snippet
+# @register_snippet
 class DiasporaDirectorySnippetViewSet(SnippetViewSet):
     model = DiasporaDirectory
     menu_label = "Diaspora directory"
@@ -334,4 +333,3 @@ IMPORT_URLS = [
 @hooks.register("register_admin_urls")
 def register_admin_urls():
     return [path(url, view, name=name) for url, view, name in IMPORT_URLS]
-''' # noqa
