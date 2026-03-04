@@ -1,5 +1,4 @@
-# irelandie_utils/wagtail_hooks.py
-
+'''
 import csv
 import io
 from typing import Callable, Iterable, List, Optional, Tuple
@@ -272,7 +271,7 @@ class DiasporaDirectoryIndexView(ImportButtonHeaderMixin, IndexView):
     import_url_name = "diaspora_directory_import"
     import_label = _("Import CSV / XLSX")
 
-'''@register_snippet
+@register_snippet
 class DiasporaDirectorySnippetViewSet(SnippetViewSet):
     model = DiasporaDirectory
     menu_label = "Diaspora directory"
