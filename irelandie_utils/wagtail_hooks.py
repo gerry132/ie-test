@@ -270,6 +270,7 @@ class DiasporaDirectoryIndexView(ImportButtonHeaderMixin, IndexView):
     import_url_name = "diaspora_directory_import"
     import_label = _("Import CSV / XLSX")
 
+
 # @register_snippet
 class DiasporaDirectorySnippetViewSet(SnippetViewSet):
     model = DiasporaDirectory
