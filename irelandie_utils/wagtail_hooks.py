@@ -334,4 +334,4 @@ IMPORT_URLS = [
 @hooks.register("register_admin_urls")
 def register_admin_urls():
     return [path(url, view, name=name) for url, view, name in IMPORT_URLS]
-'''
+''' # noqa
