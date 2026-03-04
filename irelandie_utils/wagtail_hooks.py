@@ -272,8 +272,7 @@ class DiasporaDirectoryIndexView(ImportButtonHeaderMixin, IndexView):
     import_url_name = "diaspora_directory_import"
     import_label = _("Import CSV / XLSX")
 
-
-@register_snippet
+'''@register_snippet
 class DiasporaDirectorySnippetViewSet(SnippetViewSet):
     model = DiasporaDirectory
     menu_label = "Diaspora directory"
@@ -336,3 +335,4 @@ IMPORT_URLS = [
 @hooks.register("register_admin_urls")
 def register_admin_urls():
     return [path(url, view, name=name) for url, view, name in IMPORT_URLS]
+'''
