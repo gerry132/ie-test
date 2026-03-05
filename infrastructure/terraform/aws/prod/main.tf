@@ -1542,7 +1542,7 @@ module "monitoring" {
   environment_name      = local.environment_name 
   canary_code_s3_key    = "canaries/site-health-canary.zip"
   canary_code_s3_bucket = aws_s3_bucket.canaries.bucket
-  target_url            = local.domain_ireland_ie
+  target_url            = "www.${local.domain_ireland_ie}"
   sms_phone_number      = aws_ssm_parameter.sns_phone_number.value 
 }
 
