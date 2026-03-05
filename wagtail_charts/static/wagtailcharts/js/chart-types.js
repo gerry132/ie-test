@@ -5,10 +5,10 @@ function simpleDataSet(data_array, options) {
             label: options.title[j],
             data: data_array[j],
             borderColor: options.color[j],
-            backgroundColor: options.color[j]+"cc",
+            backgroundColor: options.color[j] + "cc",
         }
         if (Object.keys(options).includes('yaxis') && options.yaxis.includes("right")) {
-            if (options.yaxis[j+1] === 'right') {
+            if (options.yaxis[j] === 'right') {
                 dataset.yAxisID = 'y1'
             } else {
                 dataset.yAxisID = 'y'
@@ -30,7 +30,7 @@ function pieDataSet(data, options) {
         labels.push(options.title[j])
         colors.push(options.color[j])
 
-        for (k=0; k < ds.length; k++){
+        for (k=0; k < ds.length; k++) {
             _datasets.push(data[j][k])
         }
     }
@@ -44,7 +44,7 @@ function pieDataSet(data, options) {
 
 function areaDataSet(data, options) {
     datasets = simpleDataSet(data, options);
-    for (j=0; j < datasets.length; j++){
+    for (j=0; j < datasets.length; j++) {
        datasets[j].fill = 'origin';
     }
     return datasets
@@ -52,14 +52,15 @@ function areaDataSet(data, options) {
 
 function multiDataSet(data, options) {
     datasets = simpleDataSet(data, options);
-    for (j=0; j < datasets.length; j++){
-        if(options.type[j+1] == 'area'){
+    for (j=0; j < datasets.length; j++) {
+        if (options.type[j + 1] == 'area') {
             datasets[j].type = 'line';
             datasets[j].fill = 'origin';
-        }else{
-            datasets[j].type = options.type[j+1];
+        } else {
+            datasets[j].type = options.type[j + 1];
         }
     }
+
     return datasets
 }
 

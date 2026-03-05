@@ -174,6 +174,7 @@ class ChartSettingsBlock(StructBlock):
     # Left Axis settings
     y_left_min = CharBlock(required=False, label="Left Y axis minimum value", group="Left_Axis")
     y_left_max = CharBlock(required=False, label="Left Y axis maximum value", group="Left_Axis")
+    y_left_log_scale = BooleanBlock(default=False, required=False, label="Logarithmic (log) Scale", group="Left_Axis")
     y_left_step_size = CharBlock(required=False, label="Left Y axis step size", group="Left_Axis")
     y_left_label = CharBlock(required=False, label="Left Y axis label", group="Left_Axis")
     y_left_data_type = ChoiceBlock(
@@ -189,6 +190,7 @@ class ChartSettingsBlock(StructBlock):
     # Right Axis Settings
     y_right_min = CharBlock(required=False, label="Right Y axis minimum value", group="Right_Axis")
     y_right_max = CharBlock(required=False, label="Right Y axis maximum value", group="Right_Axis")
+    y_right_log_scale = BooleanBlock(default=False, required=False, label="Logarithmic (log) Scale", group="Right_Axis")
     y_right_step_size = CharBlock(required=False, label="Right Y axis step size", group="Right_Axis")
     y_right_label = CharBlock(required=False, label="Right Y axis label", group="Right_Axis")
     y_right_data_type = ChoiceBlock(
@@ -283,16 +285,15 @@ class ChartBlockAdapter(StructBlockAdapter):
             + [
                 "wagtailcharts/js/chart-types.js",
                 "wagtailcharts/js/chart-dataset.js",
-                "wagtailcharts/js/jspreadsheet.js",
-                "wagtailcharts/js/jsuites.js",
+                "wagtailcharts/js/jspreadsheet.min.js",
+                "wagtailcharts/js/jsuites.min.js",
             ],
             css={
                 **structblock_media._css,  # type: ignore
                 **{
                     "all": (
-                        "wagtailcharts/css/jspreadsheet.css",
-                        "wagtailcharts/css/jspreadsheet.theme.css",
-                        "wagtailcharts/css/jsuites.css",
+                        "wagtailcharts/css/jspreadsheet.min.css",
+                        "wagtailcharts/css/jsuites.min.css",
                         "wagtailcharts/css/wagtailcharts.css",
                     )
                 },
