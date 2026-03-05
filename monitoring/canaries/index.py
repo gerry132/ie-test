@@ -43,7 +43,7 @@ def handler(event, context):
         if int(status_code) >= 400:
             raise RuntimeError(f"Canary failed: HTTP {status_code} for {url}")
 
-        logger.info(f"Page OK.")
+        logger.info("Page OK.")
 
     finally:
         logger.info("Health check finished.")
