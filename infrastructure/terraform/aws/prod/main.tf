@@ -1827,7 +1827,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
   }
   rule {
     name     = "AllowInsytfulBot"
-    priority = 0
+    priority = 1
     action {
       allow {}
     }
@@ -1854,7 +1854,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
   }
   rule {
     name     = "AllowSemrushBots"
-    priority = 1
+    priority = 2
     action {
       allow {}
     }
@@ -1881,7 +1881,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
   }
   rule {
     name     = "AWS-AWSManagedRulesBotControlRuleSet"
-    priority = 2
+    priority = 3
     override_action {
       none {
       }
@@ -1911,7 +1911,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
 
   rule {
     name     = "AWS-AWSManagedRulesAmazonIpReputationList"
-    priority = 3
+    priority = 4
     override_action {
       none {
       }
@@ -1940,7 +1940,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
 
   rule {
     name     = "AWS-AWSManagedRulesAnonymousIpList"
-    priority = 4
+    priority = 5
     override_action {
       none {
       }
@@ -1976,7 +1976,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
 
   rule {
     name     = "AWS-AWSManagedRulesKnownBadInputsRuleSet"
-    priority = 5
+    priority = 6
     override_action {
       none {
       }
@@ -2005,7 +2005,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
 
   rule {
     name     = "AWS-AWSManagedRulesUnixRuleSet"
-    priority = 6
+    priority = 7
     override_action {
       none {
       }
@@ -2034,7 +2034,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
 
   rule {
     name     = "AWS-AWSManagedRulesWindowsRuleSet"
-    priority = 7
+    priority = 8
     override_action {
       none {
       }
@@ -2069,7 +2069,7 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
   }
   rule {
     name     = "AWS-AWSManagedRulesSQLiRuleSet"
-    priority = 8
+    priority = 9
     override_action {
       none {
       }
