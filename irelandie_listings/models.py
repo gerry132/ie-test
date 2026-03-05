@@ -63,6 +63,8 @@ class ListingsContents(models.Model):
     image_alt = models.CharField(
         max_length=255,
         blank=True,
+        null=True,
+        verbose_name="Page alt override",
         help_text=ALT_IMAGE
     )
     event_title = models.CharField(max_length=60, help_text="60 character limit")
@@ -129,14 +131,6 @@ class ListingsContentPage(ListingsContents, BasePage):
                     ),
                     "image": ValidationError(
                         "You must specify link icon or image. You can't use both."
-                    ),
-                }
-            )
-        if self.image and not self.image_alt:
-            raise ValidationError(
-                {
-                    "image_alt": ValidationError(
-                        "You must specify image_alt if you choose the image."
                     ),
                 }
             )
@@ -264,14 +258,6 @@ class ListingsContentUSAPage(ListingsContents, BasePage):
                     ),
                 }
             )
-        if self.image and not self.image_alt:
-            raise ValidationError(
-                {
-                    "image_alt": ValidationError(
-                        "You must specify image_alt if you choose the image."
-                    ),
-                }
-            )
 
     content_panels = BasePage.content_panels + [
         MultiFieldPanel(
@@ -365,6 +351,8 @@ class ListingsFeaturedPage(BasePage):
     image_alt = models.CharField(
         max_length=255,
         blank=True,
+        null=True,
+        verbose_name="Page alt override",
         help_text=ALT_IMAGE
     )
     youtube_or_vimeo_embed = models.CharField(max_length=255, null=True, blank=True)
@@ -438,14 +426,6 @@ class ListingsFeaturedPage(BasePage):
                     ),
                     "image": ValidationError(
                         "You must specify youtube_or_vimeo_embed or image. You can't use both."
-                    ),
-                }
-            )
-        if self.image and not self.image_alt:
-            raise ValidationError(
-                {
-                    "image_alt": ValidationError(
-                        "You must specify image_alt if you choose the image."
                     ),
                 }
             )

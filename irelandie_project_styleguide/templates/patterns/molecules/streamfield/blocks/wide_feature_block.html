@@ -57,13 +57,16 @@
                                 </div>
                             {% endif %}
 
-                            {% if block_hero.value.image_link_page or block_hero.value.image_link_url %}
-                            <a aria-label="{% trans 'Image link' %}" class="wide_feature__image_link" href="{% if block_hero.value.image_link_page %}{{block_hero.value.image_link_page.url}}{% else %}{{block_hero.value.image_link_url}}{% endif %}">
-                                {% image block_hero.value.image fill-1600x900 class="wide_feature__image" alt=block_hero.value.image_alt %}
-                            </a>
-                            {% else %}
-                                {% image block_hero.value.image fill-1600x900 class="wide_feature__image" alt=block_hero.value.image_alt %}
-                            {% endif %}
+                            {% with alt_text=block_hero.value.image_alt|default:block_hero.value.image.description %}
+                                {% if block_hero.value.image_link_page or block_hero.value.image_link_url %}
+                                    <a aria-label="{% trans 'Image link' %}" class="wide_feature__image_link"
+                                       href="{% if block_hero.value.image_link_page %}{{ block_hero.value.image_link_page.url }}{% else %}{{ block_hero.value.image_link_url }}{% endif %}">
+                                        {% image block_hero.value.image fill-1600x900 class="wide_feature__image" alt=alt_text %}
+                                    </a>
+                                {% else %}
+                                    {% image block_hero.value.image fill-1600x900 class="wide_feature__image" alt=alt_text %}
+                                {% endif %}
+                            {% endwith %}
                         </div>
                     {% endif %}
                 {% endfor %}

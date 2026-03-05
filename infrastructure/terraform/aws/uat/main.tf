@@ -94,7 +94,7 @@ locals {
 
     sina_dev = {
       description = "Sina - Sidero"
-      cidr_blocks  = ["163.116.177.33/32"]
+      cidr_blocks  = ["163.116.177.50/32"]
     },
     joe_dev = {
       description = "Joe D - Sidero"
@@ -454,7 +454,7 @@ resource "aws_security_group_rule" "ecs_to_redis_5432" {
 # -----------------------------------------------------------------------------
 resource "aws_s3_bucket" "canaries" {
   bucket  = "${local.environment_name}-${local.project_name}-canary-code"
-  
+
 }
 
 resource "aws_s3_bucket_versioning" "canary_code" {
@@ -1072,6 +1072,19 @@ resource "random_password" "password" {
   special = true
 }
 
+resource "aws_ssm_parameter" "canary_token" {
+  name        = "canary_token"
+  description = "For use in Codebuild buildspec - ${local.environment_name}"
+  type        = "SecureString"
+  value       = "CHANGE-ME"
+
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
+}
+
 resource "aws_ssm_parameter" "opensearch_master_user" {
   name        = "MASTER_USER"
   description = "opensearch_password"
@@ -1583,11 +1596,11 @@ module "codeartifact" {
 
 module "monitoring" {
   source = "../common/monitoring"
-  environment_name      = local.environment_name 
+  environment_name      = local.environment_name
   canary_code_s3_key    = "canaries/site-health-canary.zip"
   canary_code_s3_bucket = aws_s3_bucket.canaries.bucket
   target_url            = local.domain_ireland_ie
-  sms_phone_number      = aws_ssm_parameter.sns_phone_number.value 
+  sms_phone_number      = aws_ssm_parameter.sns_phone_number.value
 }
 
 module "ecs_background_tasks" {
@@ -2217,7 +2230,7 @@ resource "aws_wafv2_ip_set" "ireland_ie_ips_cloudfront" {
                         "139.162.239.108/32", # gov_network_cird_blocks
                         "155.190.32.0/24",
 
-                        "163.116.177.33/32",   # Sina
+                        "163.116.177.50/32",   # Sina
                         "51.183.41.207/32",   # Deekshana
                         "51.182.250.11/32",   # Fergal
                         "62.23.128.137/32",    # DFA
@@ -2234,27 +2247,58 @@ resource "aws_wafv2_web_acl" "ireland_ie_waf_cloudfront" {
   default_action {
     block {}
   }
- rule {
-    name     = "AllowWhitelistedIPs"
-    priority = 1
+  rule {
+    name       = "AllowCanaries"
+    priority   = 0
 
     action {
       allow {}
     }
-
     statement {
-      ip_set_reference_statement {
-        arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
+      byte_match_statement {
+        search_string = aws_ssm_parameter.canary_token.value
+        positional_constraint = "EXACTLY"
+
+        field_to_match {
+          single_header {
+            name = "x-canary-token"
+          }
+        }
+
+        text_transformation {
+          priority = 0
+          type     = "NONE"
+        }
+      }
+
+  }
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "AllowCanariesByHeader"
+    sampled_requests_enabled   = true
+  }
+  }
+  rule {
+      name     = "AllowWhitelistedIPs"
+      priority = 1
+
+      action {
+        allow {}
+      }
+
+      statement {
+        ip_set_reference_statement {
+          arn = aws_wafv2_ip_set.ireland_ie_ips_cloudfront.arn
+        }
+      }
+
+
+      visibility_config {
+        cloudwatch_metrics_enabled = true
+        metric_name                = "whitelistIPs"
+        sampled_requests_enabled   = true
       }
     }
-
-    
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "whitelistIPs"
-      sampled_requests_enabled   = true
-    }
-  }
 
   visibility_config {
     cloudwatch_metrics_enabled = true

@@ -831,6 +831,7 @@ class HeroPage(BasePage):
     hero_image_credit = models.CharField(blank=True, max_length=255)
     alt_text = models.CharField(blank=True,
                                 null=True,
+                                verbose_name="Page alt override",
                                 max_length=255,
                                 help_text=ALT_HELP_TEXT)
     summary = models.CharField(blank=True, max_length=255)
@@ -1068,6 +1069,7 @@ class MinimalArticlePage(BasePage):
     )
     alt_text = models.CharField(blank=True,
                                 null=True,
+                                verbose_name="Page alt override",
                                 max_length=255,
                                 help_text=ALT_HELP_TEXT)
     hero_image_credit = models.CharField(blank=True, null=True, max_length=255)
@@ -1617,21 +1619,7 @@ class TravelCautionStatus(PreviewableMixin, DraftStateMixin, RevisionMixin, inde
         return f"{self.level} ({self.lang})"
 
 
-REGION_CHOICES = [
-    ('USA', 'USA'),
-    ('GB', 'Great Britain'),
-    ('EU', 'Europe'),
-    ('ROW', 'Rest of World'),
-]
-
-
 class DiasporaDirectory(models.Model):
-
-    main_regions = models.CharField(
-        max_length=3,
-        choices=REGION_CHOICES,
-        default='USA'
-    )
 
     organisation_name = models.CharField(max_length=255)
     contact_details = models.CharField(max_length=255)
@@ -1640,14 +1628,23 @@ class DiasporaDirectory(models.Model):
     website = models.CharField(blank=True)
     activity = models.CharField(max_length=255)
 
+    # Need to verify and then commit
+    country = models.CharField(max_length=255, blank=True)
+    phone_number = models.CharField(max_length=255, blank=True)
+    email = models.EmailField(blank=True)
+    seeking_volunteers = models.BooleanField(default=False, blank=True)
+
     panels = [
-        FieldPanel('main_regions'),
         FieldPanel('organisation_name'),
         FieldPanel('contact_details'),
         FieldPanel('city'),
+        FieldPanel('country'),
         FieldPanel('region'),
         FieldPanel('website'),
         FieldPanel('activity'),
+        FieldPanel('phone_number'),
+        FieldPanel('email'),
+        FieldPanel('seeking_volunteers'),
     ]
 
     def __str__(self):

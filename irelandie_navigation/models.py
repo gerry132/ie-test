@@ -72,8 +72,9 @@ class SiteSettings(BaseSiteSetting, ClusterableModel):
     )
     site_logo_alt = models.CharField(
         max_length=255,
-        blank=False,
-        verbose_name=_("Logo Alt text"),
+        blank=True,
+        null=True,
+        verbose_name="Logo Alt text, Page alt override",
         help_text=_(ALT_IMAGE),
     )
 
@@ -303,8 +304,9 @@ class CustomFooter(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
 
     logo_alt = models.CharField(
         max_length=255,
-        blank=False,
-        verbose_name=_("Logo Alt text"),
+        blank=True,
+        null=True,
+        verbose_name="Logo Alt text, Page alt override",
         help_text=_(ALT_IMAGE),
     )
     _revisions = GenericRelation("wagtailcore.Revision", related_query_name="customfooter")
@@ -420,8 +422,9 @@ class CustomHeader(PreviewableMixin, DraftStateMixin, RevisionMixin, index.Index
     )
     logo_alt = models.CharField(
         max_length=255,
-        blank=False,
-        verbose_name=_("Logo Alt text"),
+        blank=True,
+        null=True,
+        verbose_name="Logo Alt text, Page alt override",
         help_text=_(ALT_IMAGE),
     )
     _revisions = GenericRelation("wagtailcore.Revision", related_query_name="customheader")

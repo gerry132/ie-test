@@ -4,14 +4,16 @@
 <a href="{{ value.page.url }}" aria-label="{% trans 'card' %}" tabindex="-1">
     <div class="card__image-container">
          {% if value.image %}
-            {% if value.image_alt %}
-                {% image value.image fill-400x200 alt=value.image_alt class="card__image" %}
-            {% else %}
-                {% image value.image fill-400x200 alt=value.image.alt_default class="card__image" %}
-            {% endif %}
+            {% with alt_text=value.image_alt|default:value.image.description %}
+                {% image value.image fill-400x200 class="card__image" alt=alt_text %}
+            {% endwith %}
         {% else %}
             {% for block in default_image %}
-                {% image block.value.image fill-400x200 class="card__image" %}
+                {% if block.value.image %}
+                    {% with alt_text=block.value.image_alt|default:block.value.image.description %}
+                        {% image block.value.image fill-400x200 class="card__image" alt=alt_text %}
+                    {% endwith %}
+                {% endif %}
             {% endfor %}
         {% endif %}
     </div>

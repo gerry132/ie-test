@@ -56,7 +56,9 @@
                                         {% image article.hero_image fill-400x200-c100 class="card__image-news" %}
                                     {% else %}
                                     {% for block in default_image %}
-                                         {% image block.value.image fill-400x200-c100 class="card__image-news"  alt=block.value.image_alt %}
+                                        {% with alt_text=block.value.image_alt|default:block.value.image.description %}
+                                            {% image block.value.image fill-400x200-c100 class="card__image-news" alt=alt_text %}
+                                        {% endwith %}
                                     {% endfor %}
                                     {% endif %}
                                 </div>

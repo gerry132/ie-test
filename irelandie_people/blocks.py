@@ -22,7 +22,7 @@ class PersonPageSectionBlock(blocks.BaseSectionBlock):
         template = "TODO"
 
     image = ImageChooserBlock()
-    image_alt = wagtail_blocks.CharBlock(required=True, help_text=ALT_IMAGE)
+    image_alt = wagtail_blocks.CharBlock(required=False, label="Page alt override", help_text=ALT_IMAGE)
     page = wagtail_blocks.PageChooserBlock(required=False)
 
     body = wagtail_blocks.StreamBlock(

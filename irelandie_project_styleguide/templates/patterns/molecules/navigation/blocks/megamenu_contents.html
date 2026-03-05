@@ -83,7 +83,12 @@
     {% else %}
     <div class="rich_text_image">
         <a href="{% if block.value.page %}{{ block.value.page.url }}{% else %}{{ block.value.url }}{% endif %}" aria-label="{% trans 'Image Links' %}" class="image__withlinks">
-            {% image block.value.image fill-400x200 alt=block.value.image_alt class="image_withlinks" %}</a>
+            {% if block.value.image %}
+                {% with alt_text=block.value.image_alt|default:block.value.image.description %}
+                    {% image block.value.image fill-400x200 alt=alt_text class="image_withlinks" %}
+                {% endwith %}
+            {% endif %}
+        </a>
     </div>
     {% endif %}
     {% endfor %}
