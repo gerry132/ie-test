@@ -12,7 +12,6 @@ wagtail-accessibility==0.2.1
 wagtail-honeypot==1.0.0
 wagtail-modeladmin
 wagtail-localize-hydrogen
-# wagtail-localize
 wagtailmedia
 wagtail-seo
 wagtail-sitemap-seo
@@ -34,3 +33,6 @@ elasticsearch==7.13.4
 requests-aws4auth==1.2.3
 
 tzdata
+
+wagtail-color-panel==1.7.1
+telepath==0.3.1

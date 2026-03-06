@@ -1,5 +1,5 @@
 {% extends "patterns/hero_page.html" %}
-{% load util_tags wagtailcore_tags wagtailimages_tags static %}
+{% load util_tags wagtailcore_tags wagtailimages_tags wagtailcharts_tags static %}
 
 {% block main %}
     {% include "patterns/molecules/freeform-components/freeform_components.html" with default_image=page.default_image  %}
@@ -15,13 +15,17 @@
     {% if page.twitter_feed %}
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     {% endif %}
-{% if page.web_bot_script %}
-    {{ page.web_bot_script|safe }}
+    {% if page.web_bot_script %}
+        {{ page.web_bot_script|safe }}
+        {% endif %}
+
+        {% if page.webchat_script %}
+        {{ page.webchat_script|safe }}
     {% endif %}
 
-    {% if page.webchat_script %}
-    {{ page.webchat_script|safe }}
-{% endif %}
+    {% if page.has_charts %}
+        {% render_charts %}
+    {% endif %}
 {% endblock %}
 
 {% block betatag %}
