@@ -40,7 +40,7 @@ Responsive hero images
     </div>
     <div class="wrapper wrapper--padding streamfield">
         <figure class="image-block">
-            {% with alt_text=page.alt_text|default:page.hero_image.description %}
+            {% with alt_text=page.alt_text|default %}
                 <div class="{% if page.hero_image_credit %}image-block__credit_wrapper{% endif %}">
                     {% if page.hero_image_credit %}
                         <button role="button" aria-label="{% trans 'See the credit for this image' %}" class="story__button-image-credit" data-image-credit>
