@@ -17,7 +17,7 @@ from irelandie_home.blocks import SecondaryCallToAction
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 
 from irelandie_utils.constants import StoryAlignment, StoryBackground, ParagraphAlignment, YoutubeSize
-from wagtail_charts.blocks import ChartBlock, EXTRA_CHART_COLOUR_CHOICES
+# from wagtail_charts.blocks import ChartBlock, EXTRA_CHART_COLOUR_CHOICES
 
 ALT_HELP_TEXT = """A short one-sentence literal description
                     of the %s is
@@ -1840,7 +1840,7 @@ class FreeFormBlocks(FreeFormBlocksBase):
     link_button = LinkButtonsBlock()
     link_box = LinkBoxesBlock()
     table = TableBlock(table_options={'renderer': 'html'}, group="HTML")
-    chart_block = ChartBlock(colors=EXTRA_CHART_COLOUR_CHOICES, group="HTML")
+    # chart_block = ChartBlock(colors=EXTRA_CHART_COLOUR_CHOICES, group="HTML")
 
     advanced_table_block = TypedTableBlock([
         ('text', blocks.CharBlock()),
