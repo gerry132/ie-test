@@ -81,6 +81,7 @@ locals {
 # -----------------------------------------------------------------------------
 # Values to fill after running terraform is ran, used for codebuild and secrets
 # -----------------------------------------------------------------------------
+
 resource "aws_ssm_parameter" "canary_token" {
   name        = "canary_token"
   description = "For use in Codebuild buildspec - ${local.environment_name}"

@@ -17,6 +17,7 @@ from wagtail.blocks import PageChooserBlock
 from irelandie_navigation.blocks import NoticeBarWithMessageLink
 from wagtail.images import get_image_model_string
 
+
 IMAGE_MODEL = get_image_model_string()
 
 
@@ -275,6 +276,21 @@ class FreeFormPage(FreeFormPageBase):
             self.instagram_url,
             self.weibo_url,
         ]))
+
+    @cached_property
+    def has_charts(self) -> bool:
+        """Check if the page contains any chart blocks.
+
+        Returns:
+            bool: True if the page has chart_block elements in its body StreamField.
+        """
+        if not hasattr(self, "body"):
+            return False
+
+        try:
+            return any(block.block_type == "chart_block" for block in self.body)
+        except (AttributeError, TypeError):
+            return False
 
     def get_schema_json(self):
         allowed_paths = [

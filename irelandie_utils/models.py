@@ -871,14 +871,6 @@ class HeroPage(BasePage):
                     )
                 }
             )
-        if self.hero_image and not self.alt_text:
-            raise ValidationError(
-                {
-                    "alt_text": ValidationError(
-                        "You must provide an alt_text."
-                    )
-                }
-            )
 
         if self.transparency and self.transparency > 100:
             raise ValidationError(
@@ -1152,16 +1144,6 @@ class MinimalArticlePage(BasePage):
         ObjectList(promote_panels, heading='Promote'),
         ObjectList(settings_panels, heading='Settings', classname="settings"),
     ])
-
-    def clean(self):
-        if self.hero_image and not self.alt_text:
-            raise ValidationError(
-                {
-                    "alt_text": ValidationError(
-                        "You must provide an alt_text."
-                    )
-                }
-            )
 
 
 class CountryGroupTag(TaggedItemBase):

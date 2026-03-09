@@ -106,6 +106,7 @@ INSTALLED_APPS = [
     "irelandie_travel",
     "irelandie_forms",
     # "irelandie_interactive_tables",
+    # "wagtail_charts",
     #
     "wagtail_localize",
     "wagtail.locales",
@@ -131,6 +132,7 @@ INSTALLED_APPS = [
     "wagtailmedia",
     "wagtail.contrib.typed_table_block",
     "wagtail.api.v2",
+    "wagtail_color_panel",
     "modelcluster",
     "taggit",
     "passwordreset",
