@@ -1,5 +1,6 @@
 {% extends "patterns/hero_page.html" %}
-{% load util_tags wagtailcore_tags wagtailimages_tags wagtailcharts_tags static %}
+{% load util_tags wagtailcore_tags wagtailimages_tags  static %}
+{% comment %} {% load wagtailcharts_tags %} {% endcomment %}
 
 {% block main %}
     {% include "patterns/molecules/freeform-components/freeform_components.html" with default_image=page.default_image  %}
@@ -23,9 +24,9 @@
         {{ page.webchat_script|safe }}
     {% endif %}
 
-    {% if page.has_charts %}
+    {% comment %} {% if page.has_charts %}
         {% render_charts %}
-    {% endif %}
+    {% endif %} {% endcomment %}
 {% endblock %}
 
 {% block betatag %}

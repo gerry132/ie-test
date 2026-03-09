@@ -105,8 +105,8 @@ INSTALLED_APPS = [
     "irelandie_tags",
     "irelandie_travel",
     "irelandie_forms",
-    "irelandie_interactive_tables",
-    "wagtail_charts",
+    # "irelandie_interactive_tables",
+    # "wagtail_charts",
     #
     "wagtail_localize",
     "wagtail.locales",
