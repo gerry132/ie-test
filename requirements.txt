@@ -11,12 +11,12 @@ wagtail==7.0.0
 wagtail-accessibility==0.2.1
 wagtail-honeypot==1.0.0
 wagtail-modeladmin
-wagtail-localize-hydrogen
+# wagtail-localize-hydrogen
 wagtailmedia
 wagtail-seo
 # wagtail-sitemap-seo
 #Fork the site and use the forked version of the package until the PR is merged
-git+https://github.com/ogcio/wagtail-sitemap-seo.git@main
+wagtail-sitemap-seo @ git+https://github.com/ogcio/wagtail-sitemap-seo.git@main
 
 # database
 dj-database-url==0.5.0
