@@ -11,7 +11,7 @@ wagtail==7.0.0
 wagtail-accessibility==0.2.1
 wagtail-honeypot==1.0.0
 wagtail-modeladmin
-# wagtail-localize-hydrogen
+wagtail-localize-hydrogen
 wagtailmedia
 wagtail-seo
 # wagtail-sitemap-seo
