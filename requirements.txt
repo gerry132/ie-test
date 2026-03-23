@@ -16,7 +16,7 @@ wagtailmedia
 wagtail-seo
 # wagtail-sitemap-seo
 #Fork the site and use the forked version of the package until the PR is merged
-git+https://github.com/ogcio/wagtail-sitemap-seo.git@main#egg=wagtail-sitemap-seo
+git+https://github.com/ogcio/wagtail-sitemap-seo.git@fix/fix-bugs#egg=wagtail-sitemap-seo
 
 # database
 dj-database-url==0.5.0
