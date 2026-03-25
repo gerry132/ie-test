@@ -162,7 +162,6 @@
                                                 {% with alt_text=card.alt_text|default:card.hero_image.description %}
                                                     {% image card.hero_image fill-500x300 class="card__image" alt=alt_text %}
                                                 {% endwith %}
-                                            {% endif %}
                                             {% elif card.hero_video and card.hero_video.thumbnail %}
                                                     <img alt="hero" class="card__image" height="240" src="{{ card.hero_video.thumbnail.url }}" width="400">
                                             {% elif card.generic_hero %}

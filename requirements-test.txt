@@ -17,7 +17,8 @@ wagtail-localize
 
 wagtailmedia
 wagtail-seo
-wagtail-sitemap-seo
+# wagtail-sitemap-seo
+git+https://github.com/ogcio/wagtail-sitemap-seo.git@main#egg=wagtail-sitemap-seo
 
 # database
 dj-database-url==0.5.0
